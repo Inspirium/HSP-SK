@@ -177,6 +177,11 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+	    Inspirium\UserManagement\UserManagementServiceProvider::class,
+	  //  Inspirium\HumanResources\HumanResourcesServiceProvider::class,
+        Inspirium\SKTemplate\SKTemplateServiceProvider::class,
+
+	    JeroenG\Packager\PackagerServiceProvider::class,
     ],
 
     /*
