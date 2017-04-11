@@ -70,10 +70,6 @@ return [
             'model' => Inspirium\UserManagement\Models\User::class,
         ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
     ],
 
     /*
