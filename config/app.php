@@ -193,6 +193,7 @@ return [
         Inspirium\SKTemplate\SKTemplateServiceProvider::class,
 
 	    JeroenG\Packager\PackagerServiceProvider::class,
+	    Phoenix\EloquentMeta\ServiceProvider::class
     ],
 
     /*
