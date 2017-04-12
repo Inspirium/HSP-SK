@@ -77,7 +77,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'hr',
 
     /*
     |--------------------------------------------------------------------------
@@ -189,7 +189,7 @@ return [
         App\Providers\RouteServiceProvider::class,
 
 	    Inspirium\UserManagement\UserManagementServiceProvider::class,
-	  //  Inspirium\HumanResources\HumanResourcesServiceProvider::class,
+	    Inspirium\HumanResources\HumanResourcesServiceProvider::class,
         Inspirium\SKTemplate\SKTemplateServiceProvider::class,
 
 	    JeroenG\Packager\PackagerServiceProvider::class,
