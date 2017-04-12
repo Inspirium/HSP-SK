@@ -13,7 +13,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+    	// Fix for MariaDB and limit on utf8mb4
+	    Schema::defaultStringLength(191);
     }
 
     /**

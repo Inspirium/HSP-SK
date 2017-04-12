@@ -9,6 +9,8 @@ This project is in development and is currently in pre-alpha state.
 ```
 $ git clone https://github.com/Inspirium/HSP-SK.git
 $ cd HSP-SK
+# git submodule init
+$ git submodule update
 $ composer install
 $ npm install
 ```
