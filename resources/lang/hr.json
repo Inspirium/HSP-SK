@@ -2,5 +2,14 @@
   "Human Resources" : "Ljudski resursi",
   "Employees" : "Zaposlenici",
   "Candidates" : "Kandidati",
-  "Proposition" : "Propozicija"
+  "Proposition" : "Propozicija",
+  "Email Address" : "Email adresa",
+  "Enter Email" : "Unesi Email",
+  "Name" : "Ime",
+  "Enter Name" : "Unesi ime",
+  "Password" : "Lozinka",
+  "Enter Password" : "Unesi lozinku",
+  "Submit" : "Pošalji",
+  "Repeat Password" : "Ponovi lozinku",
+  "Enter Password Again" : "Ponovo unesi lozinku"
 }
