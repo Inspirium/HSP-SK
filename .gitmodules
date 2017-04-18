@@ -7,3 +7,6 @@
 [submodule "packages/Inspirium/SKTemplate"]
 	path = packages/Inspirium/SKTemplate
 	url = https://mbanusic@github.com/Inspirium/SKTemplate.git
+[submodule "packages/Inspirium/FormBuilder"]
+	path = packages/Inspirium/FormBuilder
+	url = https://mbanusic@github.com/Inspirium/FormBuilder.git
