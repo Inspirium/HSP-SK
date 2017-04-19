@@ -188,7 +188,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
-        Inspirium\FormBuilder\FormBuilderServiceProvider::class,
+ //       Inspirium\FormBuilder\FormBuilderServiceProvider::class,
 
 	    Inspirium\UserManagement\UserManagementServiceProvider::class,
 	    Inspirium\HumanResources\HumanResourcesServiceProvider::class,
