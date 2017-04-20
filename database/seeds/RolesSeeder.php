@@ -11,19 +11,24 @@ class RolesSeeder extends Seeder
      */
     public function run()
     {
-	    DB::table('roles')->insert([
-	    	['name' => 'hr_admin', 'description' => 'Access to HR admin'],
-	    	['name' => 'proposition_admin', 'description' => 'Access to Propositions admin'],
+    	$roles = [
+		    ['name' => 'hr_admin', 'description' => 'Access to HR admin'],
+		    ['name' => 'proposition_admin', 'description' => 'Access to Propositions admin'],
 		    ['name' => 'user_edit', 'description' => 'Edit User'],
 		    ['name' => 'user_edit_roles', 'description' => 'Edit User Roles'],
 		    ['name' => 'main_admin', 'description' => 'Access main administration'],
-	    ]);
+	    ];
+	    DB::table('roles')->insert($roles);
 
-	    DB::table('users_roles')->insert([
-	    	['user_id' => 1, 'role_id' => 1],
-	    	['user_id' => 1, 'role_id' => 2],
-	    	['user_id' => 2, 'role_id' => 1],
-	    	['user_id' => 3, 'role_id' => 2],
-	    ]);
+	    $users = [1,2,3];
+
+	    $rels = [];
+	    foreach ($users as $user) {
+	    	for($i=1; $i<=count($roles); $i++) {
+	    		$rels[] = ['user_id' => $user, 'role_id' => $i];
+		    }
+	    }
+
+	    DB::table('users_roles')->insert($rels);
     }
 }
