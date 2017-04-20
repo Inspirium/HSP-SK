@@ -11,5 +11,19 @@
   "Enter Password" : "Unesi lozinku",
   "Submit" : "Pošalji",
   "Repeat Password" : "Ponovi lozinku",
-  "Enter Password Again" : "Ponovo unesi lozinku"
+  "Enter Password Again" : "Ponovo unesi lozinku",
+    "Roles" : "Role",
+    "Search..." : "Traži...",
+    "Add New Role" : "Dodaj novu rolu",
+    "Title" : "Naziv",
+    "Description" : "Opis",
+    "Actions" : "Akcije",
+    "Enter Description" : "Unesi opis",
+    "Add New User" : "Dodaj korisnika",
+    "Edit" : "Uredi",
+    "Delete" : "Obriši",
+    "Log Out" : "Odjavi se",
+    "My account" : "Moji podaci",
+    "Administration" : "Administracija",
+    "User Roles" : "Korisnikove role"
 }
