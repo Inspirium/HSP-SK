@@ -14,6 +14,9 @@ class RolesSeeder extends Seeder
 	    DB::table('roles')->insert([
 	    	['name' => 'hr_admin', 'description' => 'Access to HR admin'],
 	    	['name' => 'proposition_admin', 'description' => 'Access to Propositions admin'],
+		    ['name' => 'user_edit', 'description' => 'Edit User'],
+		    ['name' => 'user_edit_roles', 'description' => 'Edit User Roles'],
+		    ['name' => 'main_admin', 'description' => 'Access main administration'],
 	    ]);
 
 	    DB::table('users_roles')->insert([
