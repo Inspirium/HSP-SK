@@ -24,6 +24,7 @@
       "database"
     ],
     "psr-4": {
+            "Inspirium\\BookProposition\\": "packages/Inspirium/BookProposition/src",
             "Inspirium\\FormBuilder\\": "packages/Inspirium/FormBuilder/src",
             "Inspirium\\SKTemplate\\": "packages/Inspirium/SKTemplate/src",
       "Inspirium\\UserManagement\\": "packages/Inspirium/UserManagement/src",
@@ -33,6 +34,7 @@
   },
   "autoload-dev": {
     "psr-4": {
+            "Inspirium\\BookProposition\\": "packages/Inspirium/BookProposition/src",
             "Inspirium\\FormBuilder\\": "packages/Inspirium/FormBuilder/src",
             "Inspirium\\SKTemplate\\": "packages/Inspirium/SKTemplate/src",
       "Inspirium\\UserManagement\\": "packages/Inspirium/UserManagement/src",

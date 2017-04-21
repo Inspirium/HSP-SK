@@ -188,6 +188,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        Inspirium\BookProposition\BookPropositionServiceProvider::class,
+
  //       Inspirium\FormBuilder\FormBuilderServiceProvider::class,
 
 	    Inspirium\UserManagement\UserManagementServiceProvider::class,
