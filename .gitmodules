@@ -13,3 +13,6 @@
 [submodule "packages/Inspirium/BookProposition"]
 	path = packages/Inspirium/BookProposition
 	url = https://mbanusic@github.com/Inspirium/BookProposition.git
+[submodule "packages/Inspirium/TaskManagement"]
+	path = packages/Inspirium/TaskManagement
+	url = https://mbanusic@github.com/Inspirium/TaskManagement.git

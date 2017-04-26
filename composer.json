@@ -24,6 +24,7 @@
       "database"
     ],
     "psr-4": {
+            "Inspirium\\TaskManagement\\": "packages/Inspirium/TaskManagement/src",
             "Inspirium\\BookProposition\\": "packages/Inspirium/BookProposition/src",
             "Inspirium\\FormBuilder\\": "packages/Inspirium/FormBuilder/src",
             "Inspirium\\SKTemplate\\": "packages/Inspirium/SKTemplate/src",
@@ -34,6 +35,7 @@
   },
   "autoload-dev": {
     "psr-4": {
+            "Inspirium\\TaskManagement\\": "packages/Inspirium/TaskManagement/src",
             "Inspirium\\BookProposition\\": "packages/Inspirium/BookProposition/src",
             "Inspirium\\FormBuilder\\": "packages/Inspirium/FormBuilder/src",
             "Inspirium\\SKTemplate\\": "packages/Inspirium/SKTemplate/src",
