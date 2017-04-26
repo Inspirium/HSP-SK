@@ -14,8 +14,8 @@ mix
    /* .scripts([
         'node_modules/mdb-pro/js/boostrap.js',
         'node_modules/mdb-pro/js/mdb.js'
-    ], 'public/js/scripts.js')
+    ], 'public/js/scripts.js')*/
     .js([
         'packages/Inspirium/SKTemplate/src/assets/js/app.js'
-    ], 'public/js/app.js')*/
+    ], 'public/js/app.js')
     .sass('packages/Inspirium/SKTemplate/src/assets/sass/app.scss', 'public/css/app.css');

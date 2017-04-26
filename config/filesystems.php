@@ -55,6 +55,11 @@ return [
             'visibility' => 'public',
         ],
 
+	    'langs' => [
+	    	'driver' => 'local',
+		    'root' => resource_path('lang')
+	    ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_KEY'),
