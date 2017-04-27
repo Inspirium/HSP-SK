@@ -7,12 +7,12 @@
 [submodule "packages/Inspirium/SKTemplate"]
 	path = packages/Inspirium/SKTemplate
 	url = https://mbanusic@github.com/Inspirium/SKTemplate.git
-[submodule "packages/Inspirium/FormBuilder"]
-	path = packages/Inspirium/FormBuilder
-	url = https://mbanusic@github.com/Inspirium/FormBuilder.git
 [submodule "packages/Inspirium/BookProposition"]
 	path = packages/Inspirium/BookProposition
 	url = https://mbanusic@github.com/Inspirium/BookProposition.git
 [submodule "packages/Inspirium/TaskManagement"]
 	path = packages/Inspirium/TaskManagement
 	url = https://mbanusic@github.com/Inspirium/TaskManagement.git
+[submodule "packages/Inspirium/BookManagement"]
+	path = packages/Inspirium/BookManagement
+	url = https://mbanusic@github.com/Inspirium/BookManagement.git

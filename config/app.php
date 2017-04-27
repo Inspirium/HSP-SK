@@ -188,12 +188,9 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        Inspirium\BookManagement\BookManagementServiceProvider::class,
         Inspirium\TaskManagement\TaskManagementServiceProvider::class,
-
         Inspirium\BookProposition\BookPropositionServiceProvider::class,
-
- //       Inspirium\FormBuilder\FormBuilderServiceProvider::class,
-
 	    Inspirium\UserManagement\UserManagementServiceProvider::class,
 	    Inspirium\HumanResources\HumanResourcesServiceProvider::class,
         Inspirium\SKTemplate\SKTemplateServiceProvider::class,
