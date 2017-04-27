@@ -10,3 +10,4 @@ Homestead.yaml
 .env
 composer.lock
 npm-debug.log
+dev_database.sqlite

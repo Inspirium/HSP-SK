@@ -47,6 +47,12 @@ return [
             'strict' => true,
             'engine' => null,
         ],
+
+        'sqlite' => array(
+	        'driver'   => 'sqlite',
+	        'database' => __DIR__.'/../dev_database.sqlite',
+	        'prefix'   => '',
+        ),
     ],
 
     /*
