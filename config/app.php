@@ -195,6 +195,7 @@ return [
 	    Inspirium\HumanResources\HumanResourcesServiceProvider::class,
         Inspirium\SKTemplate\SKTemplateServiceProvider::class,
 
+	    Laravel\Passport\PassportServiceProvider::class,
 	    JeroenG\Packager\PackagerServiceProvider::class,
 	    Phoenix\EloquentMeta\ServiceProvider::class
     ],
