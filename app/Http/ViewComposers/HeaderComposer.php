@@ -23,6 +23,7 @@ class HeaderComposer {
 	public function compose(View $view)
 	{
 		$active = '';
+		$special = '';
 		$url = $this->request->getRequestUri();
 
 		if (strpos($url, 'user') !== false) {
@@ -30,10 +31,15 @@ class HeaderComposer {
 		}
 		else if (strpos($url, 'proposition') !== false) {
 			$active = 'proposition';
+			if (strpos($url, 'edit') !== false) {
+				$special = 'proposition';
+
+			}
 		}
 		else if (strpos($url, 'hr') !== false) {
 			$active = 'hr';
 		}
-		$view->with('active', $active);
+		$url = explode('/', $url);
+		$view->with(['level1' => isset($url[1])?$url[1]:'', 'level2' => isset($url[2])?$url[2]:'', 'level3' => isset($url[3])?$url[3]:'', 'special' => $special]);
 	}
 }
