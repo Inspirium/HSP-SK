@@ -1756,7 +1756,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     mounted: function mounted() {
         var _this = this;
 
-        console.log('test');
         window.axios.get('/api/user/notifications').then(function (response) {
             // get body data
             _this.notifications = response.body;
@@ -1796,7 +1795,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     data: function data() {
         return {
-            title: 'B'
+            title: 'Basic Data'
         };
     },
     components: {
@@ -2006,7 +2005,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     data: function data() {
         return {
-            files: []
+            files: [],
+            showOverlay: false
         };
     },
     methods: {
@@ -2059,11 +2059,34 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }.bind(this)
             };
             axios.post(this.action, data, config).then(function (res) {
-                this.files[index].id = res.data.id;
+                console.log(res);
+                this.files[index].id = res.data.data.id;
             }.bind(this)).catch(function (err) {
                 this.files[index].message = err.message;
                 //TODO: more error stuff
             }.bind(this));
+        },
+        fileDragEnter: function fileDragEnter() {
+            this.showOverlay = true;
+        },
+        fileDragLeave: function fileDragLeave() {
+            this.showOverlay = false;
+        },
+        fileDrop: function fileDrop(event) {
+            _.forEach(event.dataTransfer.files, function (file) {
+                this.files.push({
+                    title: file.name,
+                    link: file.name,
+                    file: file,
+                    progress: 0,
+                    edit: false,
+                    message: '',
+                    id: 0
+                });
+
+                this.fileUpload(file, this.files.length - 1);
+            }.bind(this));
+            this.showOverlay = false;
         }
     }
 });
@@ -2225,7 +2248,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 image: "https://mdbootstrap.com/img/Photos/Avatars/avatar-6.jpg"
             }],
             concept: '',
-            manuscript: '',
+            manuscript: 'delivered',
             documents: [],
             dotation: {
                 yes: 'no',
@@ -2271,7 +2294,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         author_delete: function author_delete(index) {
             this.authors.splice(index, 1);
             //TODO:make request
-            console.log("test");
         }
     }
 });
@@ -23326,11 +23348,27 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "tabindex": "-1",
       "role": "dialog",
       "aria-hidden": "true"
+    },
+    on: {
+      "dragenter": function($event) {
+        $event.preventDefault();
+        _vm.fileDragEnter($event)
+      },
+      "drop": function($event) {
+        $event.preventDefault();
+        _vm.fileDrop($event)
+      }
     }
   }, [_c('div', {
     staticClass: "modal-dialog",
     attrs: {
       "role": "document"
+    },
+    on: {
+      "dragenter": function($event) {
+        $event.preventDefault();
+        _vm.fileDragEnter($event)
+      }
     }
   }, [_c('div', {
     staticClass: "modal-content"
@@ -23446,7 +23484,18 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": _vm.fileUpload
     }
-  }, [_vm._v(_vm._s(_vm.lang('Upload')))])])])])])
+  }, [_vm._v(_vm._s(_vm.lang('Upload')))])]), _vm._v(" "), (_vm.showOverlay) ? _c('div', {
+    staticClass: "dragdrop",
+    on: {
+      "dragover": function($event) {
+        $event.preventDefault();
+      }
+    }
+  }, [_c('div', {
+    staticClass: "dragdrop-area d-flex justify-content-center align-items-center"
+  }, [_c('div', {
+    staticClass: "dragdrop-content file-box-sty text-white"
+  }, [_vm._v(_vm._s(_vm.lang('Drop files here')) + "\n                    ")])])]) : _vm._e()])])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('button', {
     staticClass: "close",
