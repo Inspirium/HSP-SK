@@ -11,3 +11,4 @@ Homestead.yaml
 composer.lock
 npm-debug.log
 dev_database.sqlite
+public/uploads
