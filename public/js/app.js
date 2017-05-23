@@ -1746,22 +1746,66 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            notifications: []
+            notifications: [{
+                tasktype: 'message',
+                created_at: 1495530618,
+                message: 'Moramo nešto završiti'
+            }, {
+                tasktype: 'message',
+                created_at: 1495530618,
+                message: 'Moramo nešto završiti'
+            }]
         };
     },
     mounted: function mounted() {
-        var _this = this;
-
         window.axios.get('/api/user/notifications').then(function (response) {
             // get body data
-            _this.notifications = response.body;
+            //this.notifications = response.body;
         }, function (response) {
             // error callback
         });
+    },
+    methods: {
+        timed: function timed(value) {
+            var unit = 'sekundi';
+            var now = Math.floor(Date.now() / 1000);
+            var timediff = now - value;
+            console.log(timediff);
+            if (timediff > 60) {
+                timediff = Math.floor(timediff / 60);
+                unit = 'minuta';
+                if (timediff > 60) {
+                    timediff = Math.floor(timediff / 60);
+                    unit = 'sati';
+                    if (timediff > 24) {
+                        timediff = Math.floor(timediff / 24);
+                        unit = 'dana';
+                    }
+                }
+            }
+
+            return '<span>' + timediff + '</span> ' + unit;
+        }
     }
 
 });
@@ -2026,6 +2070,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             };
             axios.patch(this.action + '/' + this.files[index].id, data).then(function (res) {
                 this.files[index].message = res.message;
+                this.$emit('fileNameSave', this.files[index].id, data.title);
             }.bind(this)).catch(function (err) {
                 this.files[index].message = err.message;
             }.bind(this));
@@ -2033,6 +2078,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         fileDelete: function fileDelete(index) {
             this.files.splice(index, 1);
+            this.$emit('fileDelete', this.files[index].id);
         },
         fileInputChange: function fileInputChange() {
             _.forEach(this.$refs.fileInput.files, function (file) {
@@ -2059,8 +2105,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }.bind(this)
             };
             axios.post(this.action, data, config).then(function (res) {
-                console.log(res);
                 this.files[index].id = res.data.data.id;
+                this.$emit('fileAdd', this.files[index]);
             }.bind(this)).catch(function (err) {
                 this.files[index].message = err.message;
                 //TODO: more error stuff
@@ -2233,6 +2279,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 
 
@@ -2256,8 +2305,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 ammount: ''
             },
             note: '',
-            products: ['ebook']
-
+            products: ['ebook'],
+            cancel: false,
+            author: '',
+            suggestions: []
         };
     },
     components: {
@@ -2294,6 +2345,47 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         author_delete: function author_delete(index) {
             this.authors.splice(index, 1);
             //TODO:make request
+        },
+        fileDelete: function fileDelete(id) {
+            _.remove(this.documents, {
+                id: id
+            });
+            //TODO: make request
+        },
+        fileAdd: function fileAdd(file) {
+            this.documents.push(file);
+        },
+        fileNameSave: function fileNameSave(id, title) {
+            var _this = this;
+
+            _.forEach(this.documents, function (file, key) {
+                if (file.id === id) {
+                    _this.documents[key].title = title;
+                }
+            });
+        },
+        autocomplete: function autocomplete(event) {
+            var _this2 = this;
+
+            if (this.cancel) {
+                this.cancel();
+                this.cancel = false;
+            }
+            var CancelToken = axios.CancelToken;
+            if (this.author.length > 2) {
+                axios.get('/api/author/search/' + this.author, {
+                    cancelToken: new CancelToken(function (c) {
+                        _this2.cancel = c;
+                    })
+                }).then(function (response) {
+                    _this2.suggestions = response.data;
+                }).catch(function (error) {});
+            }
+        },
+        autocomplete_select: function autocomplete_select(index) {
+            this.authors.push(this.suggestions[index]);
+            this.suggestions = [];
+            this.author = '';
         }
     }
 });
@@ -23625,10 +23717,59 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', [_c('ul', _vm._l((_vm.notifications), function(item) {
-    return _c('li', [_vm._v("\n            " + _vm._s(item[_vm.data][_vm.message]) + "\n        ")])
-  }))])
-},staticRenderFns: []}
+  return _c('div', {
+    staticClass: "dropdown"
+  }, [_c('a', {
+    staticClass: "nav-item nav-link-icon dropdown-toggle d-flex",
+    attrs: {
+      "href": "#",
+      "data-toggle": "dropdown"
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-bell"
+  }), _vm._v(" "), _c('span', {
+    staticClass: "tag tag-danger"
+  }, [_vm._v(_vm._s(_vm.notifications.length))])]), _vm._v(" "), _c('div', {
+    staticClass: "dropdown-menu dropdown-ins dropdown-menu-right dropdown-custom-login"
+  }, [_c('div', {
+    staticClass: "activity-box"
+  }, _vm._l((_vm.notifications), function(item) {
+    return _c('div', {
+      staticClass: "activity-item align-items-center d-flex"
+    }, [_vm._m(0, true), _vm._v(" "), _c('div', {
+      staticClass: "activity-content"
+    }, [_c('div', {
+      staticClass: "activity-label tasktype-1"
+    }, [_vm._v(_vm._s(item.tasktype))]), _vm._v(" "), _c('div', {
+      staticClass: "activity-time",
+      domProps: {
+        "innerHTML": _vm._s(_vm.timed(item.created_at))
+      }
+    }), _vm._v(" "), _vm._m(1, true), _vm._v(" "), _c('h5', [_vm._v(_vm._s(item.message))])])])
+  }))])])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "activity-avatar file-box-sty d-flex align-items-center"
+  }, [_c('a', {
+    attrs: {
+      "href": ""
+    }
+  }, [_c('img', {
+    staticClass: "profile-s mr-1",
+    attrs: {
+      "src": "/images/profile.jpg",
+      "href": "#"
+    }
+  })])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('h4', {
+    staticClass: "activitiy-user"
+  }, [_c('span', [_vm._v("Jozo Jozić")]), _vm._v(" poslao(la) je novu"), _c('span', [_c('a', {
+    attrs: {
+      "href": ""
+    }
+  }, [_vm._v(" poruku")])])])
+}]}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
@@ -23683,14 +23824,42 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('div', {
     staticClass: "md-form d-flex addon"
   }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.author),
+      expression: "author"
+    }],
     staticClass: "form-control mdb-autocomplete",
     attrs: {
       "type": "text",
       "id": "author",
       "name": "author",
       "placeholder": _vm.lang('Author')
+    },
+    domProps: {
+      "value": (_vm.author)
+    },
+    on: {
+      "keyup": function($event) {
+        _vm.autocomplete($event)
+      },
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.author = $event.target.value
+      }
     }
-  }), _vm._v(" "), _c('label', {
+  }), _vm._v(" "), (_vm.suggestions.length) ? _c('ul', {
+    staticClass: "mdb-autocomplete-wrap"
+  }, _vm._l((_vm.suggestions), function(item, index) {
+    return _c('li', {
+      on: {
+        "click": function($event) {
+          _vm.autocomplete_select(index)
+        }
+      }
+    }, [_vm._v(_vm._s(item.first_name) + " " + _vm._s(item.last_name))])
+  })) : _vm._e(), _vm._v(" "), _c('label', {
     attrs: {
       "for": "author"
     }
@@ -24204,6 +24373,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "action": "/api/file",
       "accept": ".pdf, .doc, .docx, .xls, .xlsx"
+    },
+    on: {
+      "fileDelete": _vm.fileDelete,
+      "fileAdd": _vm.fileAdd,
+      "fileNameSave": _vm.fileNameSave
     }
   })], 1)
 },staticRenderFns: []}
