@@ -28915,6 +28915,9 @@ window.axios.defaults.headers.common = {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash__ = __webpack_require__(157);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_lodash__);
+
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
@@ -28932,7 +28935,7 @@ window.axios.defaults.headers.common = {
             dotation_origin: '',
             manuscript: '',
             manuscript_documents: [],
-            supergroup: 1,
+            supergroup: 0,
             upgroup: 0,
             group: 0,
             categorization_note: '',
@@ -28948,7 +28951,7 @@ window.axios.defaults.headers.common = {
             biblioteca: ''
 
         },
-        step: 1,
+        step: 0,
         error: ''
     },
     mutations: {
@@ -28956,7 +28959,9 @@ window.axios.defaults.headers.common = {
             state.proposition[payload.key] = payload.value;
         },
         initProposition(state, payload) {
-            state.proposition = payload;
+            __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.forEach(payload, (value, key) => {
+                state.proposition[key] = value;
+            });
         },
         error(state, error) {
             state.error = error;
