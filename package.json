@@ -20,7 +20,9 @@
     "mdb-pro": "git+ssh://git@bitbucket.org/mbanusic/mdb-pro.git",
     "vue": "^2.1.10",
     "vue-moment": "^2.0.2",
-    "vuex": "^2.3.1"
+    "vue-router": "^2.5.3",
+    "vuex": "^2.3.1",
+    "vuex-router-sync": "^4.2.0"
   },
   "dependencies": {}
 }

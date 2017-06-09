@@ -25,6 +25,7 @@
       "database"
     ],
     "psr-4": {
+            "Inspirium\\Messaging\\": "packages/Inspirium/Messaging/src",
             "Inspirium\\FileManagement\\": "packages/Inspirium/FileManagement/src",
             "Inspirium\\BookManagement\\": "packages/Inspirium/BookManagement/src",
             "Inspirium\\TaskManagement\\": "packages/Inspirium/TaskManagement/src",
@@ -37,6 +38,7 @@
   },
   "autoload-dev": {
     "psr-4": {
+            "Inspirium\\Messaging\\": "packages/Inspirium/Messaging/src",
             "Inspirium\\FileManagement\\": "packages/Inspirium/FileManagement/src",
             "Inspirium\\BookManagement\\": "packages/Inspirium/BookManagement/src",
             "Inspirium\\TaskManagement\\": "packages/Inspirium/TaskManagement/src",

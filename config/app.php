@@ -188,6 +188,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        Inspirium\Messaging\MessagingServiceProvider::class,
+
         Inspirium\FileManagement\FileManagementServiceProvider::class,
         App\Providers\ComposerServiceProvider::class,
 

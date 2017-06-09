@@ -19,3 +19,6 @@
 [submodule "packages/Inspirium/FileManagement"]
 	path = packages/Inspirium/FileManagement
 	url = https://github.com/Inspirium/FileManagement.git
+[submodule "packages/Inspirium/Messaging"]
+	path = packages/Inspirium/Messaging
+	url = git@github.com:Inspirium/Messaging.git

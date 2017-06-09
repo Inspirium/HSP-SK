@@ -10159,12 +10159,10 @@ $(function () {
             nonLetters = [9, 13, 27, 38, 40]
           if (letter && (nonLetters.indexOf(e.which) === -1)) {
             filterQuery.push(letter)
-
             var string = filterQuery.join(''),
               newOption = options.find('li').filter(function () {
                 return $(this).text().toLowerCase().indexOf(string) === 0
               })[0]
-
             if (newOption) {
               activateOption(options, newOption)
             }
