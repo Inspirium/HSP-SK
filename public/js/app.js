@@ -45456,62 +45456,51 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                         print: {
                             enabled: true,
                             title: 'Print',
-                            path: '/proposition/print',
-                            component: true
+                            path: '/proposition/print'
                         },
                         authors_expense: {
                             enabled: true,
                             title: 'Authors Expense',
-                            path: '/proposition/authors_expense',
-                            component: true
+                            path: '/proposition/authors_expense'
                         },
                         production_expense: {
                             enabled: true,
                             title: 'Production Expense',
-                            path: '/proposition/production_expense',
-                            component: true
+                            path: '/proposition/production_expense'
                         },
                         marketing_expense: {
                             enabled: true,
                             title: 'Marketing Expense',
-                            path: '/proposition/marketing_expense',
-                            component: true
-                        },
+                            path: '/proposition/marketing_expense' },
                         distribution_expense: {
                             enabled: true,
                             title: 'Distribution Expense',
-                            path: '/proposition/distribution_expense',
-                            component: true
+                            path: '/proposition/distribution_expense'
                         },
                         layout_expense: {
                             enabled: true,
                             title: 'Layout Expense',
-                            path: '/proposition/layout_expense',
-                            component: true
+                            path: '/proposition/layout_expense'
                         },
                         deadline: {
                             enabled: true,
                             title: 'Deadline',
-                            path: '/proposition/deadline',
-                            component: true
+                            path: '/proposition/deadline'
                         },
                         precalculation: {
                             enabled: true,
                             title: 'Precalculation',
-                            path: '/proposition/precalculation',
-                            component: true
+                            path: '/proposition/precalculation'
                         },
                         calculation: {
                             enabled: true,
                             title: 'Calculation',
-                            path: '/proposition/calculation',
-                            component: true
+                            path: '/proposition/calculation'
                         },
                         work_order: {
                             enabled: true,
                             title: 'Work Order',
-                            path: '/proposition/word_order',
-                            component: true
+                            path: '/proposition/word_order'
                         }
                     }
                 };
