@@ -45892,7 +45892,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function () {
         return {};
     },
-    computed: {},
+    computed: {
+        authors: {
+            get() {
+                return this.$store.state.proposition.proposition.basic_data.authors;
+            },
+            set(value) {
+                this.$store.commit('proposition/updateProposition', { key: 'authors', group: 'basic_data', value: value });
+            }
+        }
+    },
     methods: {}
 });
 
@@ -46114,7 +46123,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
         },
         autocomplete_select: function (index) {
-            this.authors.push(this.suggestions[index]);
+            this.$store.commit('proposition/pushToArray', { key: 'authors', group: 'basic_data', value: this.suggestions[index] });
             this.suggestions = [];
             this.author = '';
         }
