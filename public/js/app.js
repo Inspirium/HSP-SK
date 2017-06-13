@@ -46990,15 +46990,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         'footer-buttons': __WEBPACK_IMPORTED_MODULE_0__partials_FooterButtons_vue___default.a
     },
     computed: {
-        local_offers: function () {
-            return _.cloneDeep(this.offers);
-        },
         offers: {
             get() {
                 return this.$store.state.proposition.proposition.print.offers;
             },
             set(value) {
-                this.$store.commit('proposition/updateProposition', { key: 'offer', group: 'print', value: value });
+                this.$store.commit('proposition/updateProposition', { key: 'offers', group: 'print', value: value });
             }
         }
     },
@@ -47014,9 +47011,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     },
     mounted: function () {
-        //$('.mdb-select').material_select();
         this.$store.commit('proposition/updateProposition', { key: 'step', value: 4 });
-        this.$store.commit('proposition/initOffers');
+        this.$store.dispatch('proposition/initOffers').then(function () {
+            $('.mdb-select').material_select();
+        });
     }
 });
 
@@ -48255,6 +48253,8 @@ const routes = [{ path: '/proposition/basic_data', component: __WEBPACK_IMPORTED
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_lodash__);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 
 
 
@@ -48319,7 +48319,7 @@ const routes = [{ path: '/proposition/basic_data', component: __WEBPACK_IMPORTED
                 note: ''
             },
             print: {
-                offers: []
+                offers: {}
             },
             authors_expense: {},
             production_expense: {
@@ -48374,6 +48374,10 @@ const routes = [{ path: '/proposition/basic_data', component: __WEBPACK_IMPORTED
                 state.proposition[payload.key] = payload.value;
             }
         },
+        pushToObject(state, payload) {
+            //Vue.set( state.proposition[payload.group][payload.key], payload.id, payload.value);
+            state.proposition[payload.group][payload.key] = _extends({}, state.proposition[payload.group][payload.key], { [payload.id]: payload.value });
+        },
         pushToArray(state, payload) {
             state.proposition[payload.group][payload.key].push(payload.value);
         },
@@ -48417,18 +48421,50 @@ const routes = [{ path: '/proposition/basic_data', component: __WEBPACK_IMPORTED
             //TODO: make request
             if (!state.proposition.id) {
                 __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/api/proposition', state.proposition).then(res => {
-                    commit('updateProposition', { key: 'id', value: res.data.id });
-                    commit('stepIncrement');
+                    //commit('updateProposition', {key: 'id', value: res.data.id});
+                    // commit('stepIncrement');
                 }).catch(err => {
                     commit('error', 'There was an error saving proposition. Please try again.');
                 });
             } else {
                 __WEBPACK_IMPORTED_MODULE_0_axios___default.a.patch('/api/proposition/' + parseInt(state.proposition.id), state.proposition).then(res => {
-                    commit('stepIncrement');
+                    //commit('stepIncrement');
                 }).catch(err => {
                     commit('error', 'There was an error saving proposition. Please try again.');
                 });
             }
+        },
+        initOffers({ state, commit }) {
+            return new Promise((resolve, reject) => {
+                let offers = state.proposition.print.offers;
+                __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.forEach(state.proposition.technical_data.circulations, function (o) {
+                    if (typeof offers[o.id] === 'undefined') {
+                        let offer = {
+                            title: o.title,
+                            note: '',
+                            price: '',
+                            cover_type: state.proposition.technical_data.cover_type,
+                            colors: state.proposition.technical_data.colors,
+                            colors_first_page: state.proposition.technical_data.colors_first_page,
+                            colors_last_page: state.proposition.technical_data.colors_last_page,
+                            additional_work: '',
+                            cover_paper_type: state.proposition.technical_data.cover_paper_type,
+                            cover_colors: state.proposition.technical_data.cover_colors,
+                            cover_plastification: state.proposition.technical_data.cover_plastification,
+                            film_print: state.proposition.technical_data.film_print,
+                            blind_print: state.proposition.technical_data.blind_print,
+                            uv_print: state.proposition.technical_data.uv_film
+                        };
+                        commit('pushToObject', {
+                            id: o.id,
+                            value: offer,
+                            group: 'print',
+                            key: 'offers'
+                        });
+                    }
+                });
+                resolve();
+            });
         }
     }
 });
@@ -49388,10 +49424,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "id": "tabs",
       "role": "tablist"
     }
-  }, _vm._l((_vm.$store.state.proposition.proposition.technical_data.circulations), function(circulation, index) {
+  }, _vm._l((_vm.local_offers), function(offer, key, index) {
     return _c('li', {
       staticClass: "nav-item"
     }, [_c('a', {
+      key: key,
       class: ['nav-link', !index ? 'active' : ''],
       attrs: {
         "data-toggle": "tab",
@@ -49403,11 +49440,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           _vm.switchTab($event)
         }
       }
-    }, [_vm._v(_vm._s(circulation))])])
+    }, [_vm._v(_vm._s(offer.title))])])
   }))]), _vm._v(" "), _c('div', {
     staticClass: "tab-content"
-  }, _vm._l((_vm.local_offers), function(offer, index) {
+  }, _vm._l((_vm.offers), function(offer, key, index) {
     return _c('div', {
+      key: key,
       class: ['tab-pane', 'fade', !index ? 'active in show' : ''],
       attrs: {
         "id": 'panel' + index,
