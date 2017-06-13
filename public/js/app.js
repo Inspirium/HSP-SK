@@ -47784,9 +47784,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -47794,18 +47791,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             circulation: '',
             addition: '',
-            option_colors: ['One Colour', 'Two Colours', 'Three Colours', 'Full Colour', 'Fifth Colour'],
-            circulations: []
+            option_colors: ['One Colour', 'Two Colours', 'Three Colours', 'Full Colour', 'Fifth Colour']
         };
     },
     components: {
         'footer-buttons': __WEBPACK_IMPORTED_MODULE_0__partials_FooterButtons_vue___default.a
     },
     computed: {
-        /* circulations: {
-             get() { return this.$store.state.proposition.proposition.technical_data.circulations; },
-             set(value) { this.$store.commit('proposition/updateProposition', {key: 'circulations', group:'technical_data', value: value}) }
-         },*/
+        circulations: {
+            get() {
+                return this.$store.state.proposition.proposition.technical_data.circulations;
+            },
+            set(value) {
+                this.$store.commit('proposition/updateProposition', { key: 'circulations', group: 'technical_data', value: value });
+            }
+        },
         additions: {
             get() {
                 return this.$store.state.proposition.proposition.technical_data.additions;
@@ -47945,23 +47945,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     methods: {
         deleteCirculation: function (value) {
-            this.circulations.splice(value, 1);
-            this.$store.commit('proposition/removeFromArray', { key: 'circulations', group: 'technical_data', index: value });
+            this.$store.commit('proposition/removeFromObjectArray', { key: 'circulations', group: 'technical_data', value: value });
         },
         deleteAddition: function (value) {
-
-            this.$store.commit('proposition/removeFromArray', { key: 'additions', group: 'technical_data', index: value });
+            this.$store.commit('proposition/removeFromObjectArray', { key: 'additions', group: 'technical_data', value: value });
         },
         addCirculation: function () {
             if (this.circulation && !isNaN(parseFloat(this.circulation)) && isFinite(this.circulation)) {
-                this.circulations.push(this.circulation);
-                this.$store.commit('proposition/pushToArray', { key: 'circulations', group: 'technical_data', value: this.circulation });
+                this.$store.commit('proposition/addToObjectArray', { key: 'circulations', group: 'technical_data', value: this.circulation });
                 this.circulation = '';
             }
         },
         addAddition: function () {
             if (this.addition) {
-                this.$store.commit('proposition/pushToArray', { key: 'additions', group: 'technical_data', value: this.addition });
+                this.$store.commit('proposition/addToObjectArray', { key: 'additions', group: 'technical_data', value: this.addition });
                 this.addition = '';
             }
         }
@@ -48399,27 +48396,20 @@ const routes = [{ path: '/proposition/basic_data', component: __WEBPACK_IMPORTED
         stepIncrement(state) {
             state.proposition.step++;
         },
-        initOffers(state) {
-            if (state.proposition.print.offers.length < state.proposition.technical_data.circulations.length) {
-                state.proposition.print.offers = __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.map(state.proposition.technical_data.circulations, function (circulation) {
-                    return {
-                        title: circulation,
-                        note: '',
-                        price: '',
-                        cover_type: state.proposition.technical_data.cover_type,
-                        colors: state.proposition.technical_data.colors,
-                        colors_first_page: state.proposition.technical_data.colors_first_page,
-                        colors_last_page: state.proposition.technical_data.colors_last_page,
-                        additional_work: state.proposition.technical_data.additional_work,
-                        cover_paper_type: state.proposition.technical_data.cover_paper_type,
-                        cover_colors: state.proposition.technical_data.cover_colors,
-                        cover_plastification: state.proposition.technical_data.cover_plastification,
-                        film_print: state.proposition.technical_data.film_print,
-                        blind_print: state.proposition.technical_data.blind_print,
-                        uv_print: state.proposition.technical_data.uv_film
-                    };
-                });
-            }
+        addToObjectArray(state, payload) {
+            state.proposition[payload.group][payload.key].push({
+                title: payload.value,
+                id: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+                    let r = Math.random() * 16 | 0,
+                        v = c === 'x' ? r : r & 0x3 | 0x8;
+                    return v.toString(16);
+                })
+            });
+        },
+        removeFromObjectArray(state, payload) {
+            state.proposition[payload.group][payload.key] = __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.filter(state.proposition[payload.group][payload.key], o => {
+                return o.id !== payload.value;
+            });
         }
     },
     actions: {
@@ -53401,17 +53391,18 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": _vm.addCirculation
     }
-  }, [_vm._v(_vm._s(_vm.lang('Add')))])])])])]), _vm._v("\n        " + _vm._s(_vm.circulations) + "\n        "), _vm._l((_vm.circulations), function(item, index) {
-    return [_c('div', {
+  }, [_vm._v(_vm._s(_vm.lang('Add')))])])])])]), _vm._v(" "), _vm._l((_vm.circulations), function(item) {
+    return _c('div', {
+      key: item.id,
       staticClass: "chip mb-3"
-    }, [_vm._v("\n            " + _vm._s(item) + "\n            "), _c('i', {
+    }, [_vm._v("\n            " + _vm._s(item.title) + "\n            "), _c('i', {
       staticClass: "close fa fa-times",
       on: {
         "click": function($event) {
-          _vm.deleteCirculation(index)
+          _vm.deleteCirculation(item.id)
         }
       }
-    })])]
+    })])
   }), _vm._v(" "), _c('div', {
     staticClass: "row"
   }, [_c('div', {
@@ -53458,14 +53449,15 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": _vm.addAddition
     }
-  }, [_vm._v(_vm._s(_vm.lang('Add')))])])])])]), _vm._v(" "), _vm._l((_vm.additions), function(item, index) {
+  }, [_vm._v(_vm._s(_vm.lang('Add')))])])])])]), _vm._v(" "), _vm._l((_vm.additions), function(item) {
     return _c('div', {
+      key: item.id,
       staticClass: "chip mb-3"
-    }, [_vm._v("\n            " + _vm._s(item) + "\n            "), _c('i', {
+    }, [_vm._v("\n            " + _vm._s(item.title) + "\n            "), _c('i', {
       staticClass: "close fa fa-times",
       on: {
         "click": function($event) {
-          _vm.deleteAddition(index)
+          _vm.deleteAddition(item.id)
         }
       }
     })])
