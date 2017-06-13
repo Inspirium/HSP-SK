@@ -23,10 +23,15 @@ class UsersTableSeeder extends Seeder
 			    'password' => bcrypt('secret'),
 		    ],
 		    [
-			    'name' => 'Siniša',
-			    'email' => 'sinisa@inspirium.hr',
+			    'name' => 'Matilda',
+			    'email' => 'matilda.bulic@skolskaknjiga.hr',
 			    'password' => bcrypt('secret'),
-		    ]
+		    ],
+		    [
+			    'name' => 'Mihovil',
+			    'email' => 'mihovil.zuzul@skolskaknjiga.hr',
+			    'password' => bcrypt('secret'),
+		    ],
 	    ]);
     }
 }

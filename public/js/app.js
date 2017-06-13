@@ -45456,17 +45456,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                         print: {
                             enabled: true,
                             title: 'Print',
-                            path: '/proposition/print'
+                            path: '/proposition/print',
+                            component: true
                         },
                         authors_expense: {
                             enabled: true,
                             title: 'Authors Expense',
-                            path: '/proposition/authors_expense'
+                            path: '/proposition/authors_expense',
+                            component: true
                         },
                         production_expense: {
                             enabled: true,
                             title: 'Production Expense',
-                            path: '/proposition/production_expense'
+                            path: '/proposition/production_expense',
+                            component: true
                         },
                         marketing_expense: {
                             enabled: true,
@@ -45891,7 +45894,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
         }
     },
-    methods: {}
+    methods: {},
+    mounted: function () {
+        this.$store.commit('proposition/updateProposition', { key: 'step', value: 5 });
+    }
 });
 
 /***/ }),
@@ -46199,7 +46205,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
         }
     },
-    mounted: function () {}
+    mounted: function () {
+        this.$store.commit('proposition/updateProposition', { key: 'step', value: 0 });
+    }
 });
 
 /***/ }),
@@ -46217,7 +46225,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {};
     },
     computed: {},
-    methods: {}
+    methods: {},
+    mounted: function () {
+        this.$store.commit('proposition/updateProposition', { key: 'step', value: 11 });
+    }
 });
 
 /***/ }),
@@ -46442,6 +46453,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         'footer-buttons': __WEBPACK_IMPORTED_MODULE_0__partials_FooterButtons_vue___default.a
     },
     mounted: function () {
+        this.$store.commit('proposition/updateProposition', { key: 'step', value: 1 });
         axios.get('/api/book/category').then(res => {
             this.categories = res.data;
         });
@@ -46589,7 +46601,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {};
     },
     computed: {},
-    methods: {}
+    methods: {},
+    mounted: function () {
+        this.$store.commit('proposition/updateProposition', { key: 'step', value: 9 });
+    }
 });
 
 /***/ }),
@@ -46607,7 +46622,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {};
     },
     computed: {},
-    methods: {}
+    methods: {},
+    mounted: function () {
+        this.$store.commit('proposition/updateProposition', { key: 'step', value: 7 });
+    }
 });
 
 /***/ }),
@@ -46625,7 +46643,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {};
     },
     computed: {},
-    methods: {}
+    methods: {},
+    mounted: function () {
+        this.$store.commit('proposition/updateProposition', { key: 'step', value: 8 });
+    }
 });
 
 /***/ }),
@@ -46710,6 +46731,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 this.$store.commit('proposition/updateProposition', { key: 'market_potential_documents', group: 'market_potential', value: value });
             }
         }
+    },
+    mounted: function () {
+        this.$store.commit('proposition/updateProposition', { key: 'step', value: 2 });
     }
 });
 
@@ -46746,7 +46770,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {};
     },
     computed: {},
-    methods: {}
+    methods: {},
+    mounted: function () {
+        this.$store.commit('proposition/updateProposition', { key: 'step', value: 10 });
+    }
 });
 
 /***/ }),
@@ -46940,23 +46967,56 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function () {
         return {
             option_colors: ['One Colour', 'Two Colours', 'Three Colours', 'Full Colour', 'Fifth Colour'],
-            circulations: this.$store.state.proposition.proposition.technical_data.circulations,
-            cover_type: ''
+            circulations: this.$store.state.proposition.proposition.technical_data.circulations
         };
     },
     components: {
         'footer-buttons': __WEBPACK_IMPORTED_MODULE_0__partials_FooterButtons_vue___default.a
     },
-    computed: {},
-    methods: {},
+    computed: {
+        local_offers: function () {
+            return _.cloneDeep(this.offers);
+        },
+        offers: {
+            get() {
+                return this.$store.state.proposition.proposition.print.offers;
+            },
+            set(value) {
+                this.$store.commit('proposition/updateProposition', { key: 'offer', group: 'print', value: value });
+            }
+        }
+    },
+    methods: {
+        switchTab: function (e) {
+            $(e.target).tab('show');
+        },
+        saveOffer: function () {
+            this.offers = this.local_offers;
+        },
+        downloadOffer: function (index, type) {
+            //TODO: make request to download offer, probably save first :)
+        }
+    },
     mounted: function () {
-        $('.mdb-select').material_select();
+        //$('.mdb-select').material_select();
+        this.$store.commit('proposition/updateProposition', { key: 'step', value: 4 });
+        this.$store.commit('proposition/initOffers');
     }
 });
 
@@ -47509,7 +47569,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
 
     },
-    methods: {}
+    methods: {},
+    mounted: function () {
+        this.$store.commit('proposition/updateProposition', { key: 'step', value: 6 });
+    }
 });
 
 /***/ }),
@@ -47721,6 +47784,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -47728,21 +47794,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             circulation: '',
             addition: '',
-            option_colors: ['One Colour', 'Two Colours', 'Three Colours', 'Full Colour', 'Fifth Colour']
+            option_colors: ['One Colour', 'Two Colours', 'Three Colours', 'Full Colour', 'Fifth Colour'],
+            circulations: []
         };
     },
     components: {
         'footer-buttons': __WEBPACK_IMPORTED_MODULE_0__partials_FooterButtons_vue___default.a
     },
     computed: {
-        circulations: {
-            get() {
-                return this.$store.state.proposition.proposition.technical_data.circulations;
-            },
-            set(value) {
-                this.$store.commit('proposition/updateProposition', { key: 'circulations', group: 'technical_data', value: value });
-            }
-        },
+        /* circulations: {
+             get() { return this.$store.state.proposition.proposition.technical_data.circulations; },
+             set(value) { this.$store.commit('proposition/updateProposition', {key: 'circulations', group:'technical_data', value: value}) }
+         },*/
         additions: {
             get() {
                 return this.$store.state.proposition.proposition.technical_data.additions;
@@ -47882,13 +47945,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     methods: {
         deleteCirculation: function (value) {
-            this.$store.commit('proposition/removeFromArray', { key: 'circulations', group: 'technical_data', value: value });
+            this.circulations.splice(value, 1);
+            this.$store.commit('proposition/removeFromArray', { key: 'circulations', group: 'technical_data', index: value });
         },
         deleteAddition: function (value) {
-            this.$store.commit('proposition/removeFromArray', { key: 'additions', group: 'technical_data', value: value });
+
+            this.$store.commit('proposition/removeFromArray', { key: 'additions', group: 'technical_data', index: value });
         },
         addCirculation: function () {
-            if (this.circulation) {
+            if (this.circulation && !isNaN(parseFloat(this.circulation)) && isFinite(this.circulation)) {
+                this.circulations.push(this.circulation);
                 this.$store.commit('proposition/pushToArray', { key: 'circulations', group: 'technical_data', value: this.circulation });
                 this.circulation = '';
             }
@@ -47902,6 +47968,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     mounted: function () {
         $('.mdb-select').material_select();
+        this.$store.commit('proposition/updateProposition', { key: 'step', value: 3 });
     }
 });
 
@@ -47920,7 +47987,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {};
     },
     computed: {},
-    methods: {}
+    methods: {},
+    mounted: function () {
+        this.$store.commit('proposition/updateProposition', { key: 'step', value: 12 });
+    }
 });
 
 /***/ }),
@@ -47929,6 +47999,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -48029,7 +48121,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         saveProposition: function () {
             this.$store.dispatch('proposition/saveProposition');
             this.$router.push({
-                path: this.$store.state.proposition.steps[this.$store.state.proposition.step + 1]
+                path: this.$store.state.proposition.steps[this.$store.state.proposition.proposition.step + 1]
             });
         },
         assignModalOpen: function () {
@@ -48066,7 +48158,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 this.employee = '';
             }
         }
-    }
+    },
+    mounted: function () {}
 });
 
 /***/ }),
@@ -48228,7 +48321,9 @@ const routes = [{ path: '/proposition/basic_data', component: __WEBPACK_IMPORTED
                 uv_film: '',
                 note: ''
             },
-            print: {},
+            print: {
+                offers: []
+            },
             authors_expense: {},
             production_expense: {
                 text_price: 0,
@@ -48267,10 +48362,10 @@ const routes = [{ path: '/proposition/basic_data', component: __WEBPACK_IMPORTED
             deadline: {},
             precalculation: {},
             calculation: {},
-            work_order: {}
+            work_order: {},
 
+            step: 0
         },
-        step: 0,
         steps: ['/proposition/basic_data', '/proposition/categorization', '/proposition/market_potential', '/proposition/technical_data', '/proposition/print', '/proposition/authors_expense', '/proposition/production_expense', '/proposition/marketing_expense', '/proposition/distribution_expense', '/proposition/layout_expense', '/proposition/deadline', '/proposition/precalculation', '/proposition/calculation', '/proposition/word_order'],
         error: ''
     },
@@ -48288,7 +48383,7 @@ const routes = [{ path: '/proposition/basic_data', component: __WEBPACK_IMPORTED
         removeFromArray(state, payload) {
             let arr = state.proposition[payload.group][payload.key];
             let index = payload.index;
-            if (!index) {
+            if (!payload.hasOwnProperty('index')) {
                 index = arr.indexOf(payload.value);
             }
             arr.splice(index, 1);
@@ -48302,7 +48397,29 @@ const routes = [{ path: '/proposition/basic_data', component: __WEBPACK_IMPORTED
             state.error = error;
         },
         stepIncrement(state) {
-            state.step++;
+            state.proposition.step++;
+        },
+        initOffers(state) {
+            if (state.proposition.print.offers.length < state.proposition.technical_data.circulations.length) {
+                state.proposition.print.offers = __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.map(state.proposition.technical_data.circulations, function (circulation) {
+                    return {
+                        title: circulation,
+                        note: '',
+                        price: '',
+                        cover_type: state.proposition.technical_data.cover_type,
+                        colors: state.proposition.technical_data.colors,
+                        colors_first_page: state.proposition.technical_data.colors_first_page,
+                        colors_last_page: state.proposition.technical_data.colors_last_page,
+                        additional_work: state.proposition.technical_data.additional_work,
+                        cover_paper_type: state.proposition.technical_data.cover_paper_type,
+                        cover_colors: state.proposition.technical_data.cover_colors,
+                        cover_plastification: state.proposition.technical_data.cover_plastification,
+                        film_print: state.proposition.technical_data.film_print,
+                        blind_print: state.proposition.technical_data.blind_print,
+                        uv_print: state.proposition.technical_data.uv_film
+                    };
+                });
+            }
         }
     },
     actions: {
@@ -49274,340 +49391,607 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   return _c('div', [_c('div', {
     staticClass: "page-name-xl mb-2"
   }, [_vm._v(_vm._s(_vm.lang('Print Offers')))]), _vm._v(" "), _c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    staticClass: "col-md-12"
-  }, [_c('h6', {
-    staticClass: "text-center no-border display-e"
-  }, [_vm._v(_vm._s(_vm.lang('Circulation')))]), _vm._v(" "), _c('h1', {
-    staticClass: "text-center display-2"
-  }, [_vm._v(_vm._s(1000))]), _vm._v(" "), _c('div', {
-    staticClass: "print-offer-box mt-2 mb-3"
-  }, [_c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    staticClass: "col-md-6 mx-auto"
-  }, [_c('div', {
-    staticClass: "md-form d-flex"
-  }, [_c('input', {
-    staticClass: "form-control",
+    staticClass: "row tabs-wrapper"
+  }, [_c('ul', {
+    staticClass: "col nav classic-tabs tabs-cyan",
     attrs: {
-      "type": "text",
-      "placeholder": _vm.lang('In Kn')
+      "id": "tabs",
+      "role": "tablist"
     }
-  }), _vm._v(" "), _c('label', [_vm._v(_vm._s(_vm.lang('Print offer')))]), _vm._v(" "), _c('span', {
-    staticClass: "d-flex"
-  }, [_c('button', {
-    staticClass: "btn btn-neutral btn-addon",
-    attrs: {
-      "type": "button"
-    }
-  }, [_vm._v(_vm._s(_vm.lang('Save')))])])])])])]), _vm._v(" "), _c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    staticClass: "col-md-6"
-  }, [_c('div', {
-    staticClass: "page-name-l mb-2"
-  }, [_vm._v(_vm._s(_vm.lang('Book Block')))]), _vm._v(" "), _c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    staticClass: "col-md-12"
-  }, [_c('select', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.cover_type),
-      expression: "cover_type"
-    }],
-    staticClass: "mdb-select",
-    on: {
-      "change": function($event) {
-        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
-          return o.selected
-        }).map(function(o) {
-          var val = "_value" in o ? o._value : o.value;
-          return val
-        });
-        _vm.cover_type = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+  }, _vm._l((_vm.$store.state.proposition.proposition.technical_data.circulations), function(circulation, index) {
+    return _c('li', {
+      staticClass: "nav-item"
+    }, [_c('a', {
+      class: ['nav-link', !index ? 'active' : ''],
+      attrs: {
+        "data-toggle": "tab",
+        "href": '#panel' + index,
+        "role": "tab"
+      },
+      on: {
+        "click": function($event) {
+          _vm.switchTab($event)
+        }
       }
-    }
-  }, [_c('option', {
-    attrs: {
-      "disabled": ""
-    }
-  }, [_vm._v(_vm._s(_vm.lang('Hard/Soft Cover')))]), _vm._v(" "), _c('option', {
-    attrs: {
-      "value": "none"
-    }
-  }, [_vm._v(_vm._s(_vm.lang('None')))]), _vm._v(" "), _c('option', {
-    attrs: {
-      "value": "hard"
-    }
-  }, [_vm._v(_vm._s(_vm.lang('Hard Cover')))]), _vm._v(" "), _c('option', {
-    attrs: {
-      "value": "soft"
-    }
-  }, [_vm._v(_vm._s(_vm.lang('Soft Cover')))]), _vm._v(" "), _c('option', {
-    attrs: {
-      "value": "both"
-    }
-  }, [_vm._v(_vm._s(_vm.lang('Hard and Soft Cover')))])]), _vm._v(" "), _c('label', [_vm._v(_vm._s(_vm.lang('Hard/Soft Cover')))])])]), _vm._v(" "), _c('div', {
-    staticClass: "row"
-  }, [(_vm.cover_type === 'soft' || _vm.cover_type === 'both') ? _c('div', {
-    staticClass: "col-md-6"
-  }, [_c('div', {
-    staticClass: "md-form"
-  }, [_c('input', {
-    staticClass: "form-control",
-    attrs: {
-      "type": "text"
-    }
-  }), _vm._v(" "), _c('label', [_vm._v(_vm._s(_vm.lang('Soft Cover Circulation')))])])]) : _vm._e(), _vm._v(" "), (_vm.cover_type === 'hard' || _vm.cover_type === 'both') ? _c('div', {
-    staticClass: "col-md-6"
-  }, [_c('div', {
-    staticClass: "md-form"
-  }, [_c('input', {
-    staticClass: "form-control",
-    attrs: {
-      "type": "text"
-    }
-  }), _vm._v(" "), _c('label', [_vm._v(_vm._s(_vm.lang('Hard Cover Circulation')))])])]) : _vm._e()]), _vm._v(" "), _c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    staticClass: "col-md-12"
-  }, [_c('select', {
-    staticClass: "mdb-select"
-  }, [_c('option', {
-    attrs: {
-      "disabled": ""
-    }
-  }, [_vm._v(_vm._s(_vm.lang('Choose Colors')))]), _vm._v(" "), _vm._l((_vm.option_colors), function(color, index) {
-    return _c('option', {
+    }, [_vm._v(_vm._s(circulation))])])
+  }))]), _vm._v(" "), _c('div', {
+    staticClass: "tab-content"
+  }, _vm._l((_vm.local_offers), function(offer, index) {
+    return _c('div', {
+      class: ['tab-pane', 'fade', !index ? 'active in show' : ''],
+      attrs: {
+        "id": 'panel' + index,
+        "role": "tabpanel"
+      }
+    }, [_c('div', {
+      staticClass: "row"
+    }, [_c('div', {
+      staticClass: "col-md-12"
+    }, [_c('h6', {
+      staticClass: "text-center no-border display-e"
+    }, [_vm._v(_vm._s(_vm.lang('Circulation')))]), _vm._v(" "), _c('h1', {
+      staticClass: "text-center display-2"
+    }, [_vm._v(_vm._s(offer.title))]), _vm._v(" "), _c('div', {
+      staticClass: "print-offer-box mt-2 mb-3"
+    }, [_c('div', {
+      staticClass: "row"
+    }, [_c('div', {
+      staticClass: "col-md-6 mx-auto"
+    }, [_c('div', {
+      staticClass: "md-form d-flex"
+    }, [_c('input', {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: (offer.price),
+        expression: "offer.price"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        "type": "text",
+        "placeholder": _vm.lang('In Kn')
+      },
       domProps: {
-        "value": index + 1
+        "value": (offer.price)
+      },
+      on: {
+        "input": function($event) {
+          if ($event.target.composing) { return; }
+          offer.price = $event.target.value
+        }
       }
-    }, [_vm._v(_vm._s(_vm.lang(color)))])
-  })], 2), _vm._v(" "), _c('label', [_vm._v(_vm._s(_vm.lang('Colors')))])])]), _vm._v(" "), _c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    staticClass: "col-md-12"
-  }, [_c('select', {
-    staticClass: "mdb-select"
-  }, [_c('option', {
-    attrs: {
-      "disabled": ""
-    }
-  }, [_vm._v(_vm._s(_vm.lang('Colors - First Pages')))]), _vm._v(" "), _vm._l((_vm.option_colors), function(color, index) {
-    return _c('option', {
+    }), _vm._v(" "), _c('label', [_vm._v(_vm._s(_vm.lang('Print offer')))]), _vm._v(" "), _c('span', {
+      staticClass: "d-flex"
+    }, [_c('button', {
+      staticClass: "btn btn-neutral btn-addon",
+      attrs: {
+        "type": "button"
+      },
+      on: {
+        "click": _vm.saveOffer
+      }
+    }, [_vm._v(_vm._s(_vm.lang('Save')))])])])])])]), _vm._v(" "), _c('div', {
+      staticClass: "row"
+    }, [_c('div', {
+      staticClass: "col-md-6"
+    }, [_c('div', {
+      staticClass: "page-name-l mb-2"
+    }, [_vm._v(_vm._s(_vm.lang('Book Block')))]), _vm._v(" "), _c('div', {
+      staticClass: "row"
+    }, [_c('div', {
+      staticClass: "col-md-12"
+    }, [_c('select', {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: (offer.cover_type),
+        expression: "offer.cover_type"
+      }],
+      staticClass: "mdb-select",
+      on: {
+        "change": function($event) {
+          var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+            return o.selected
+          }).map(function(o) {
+            var val = "_value" in o ? o._value : o.value;
+            return val
+          });
+          offer.cover_type = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+        }
+      }
+    }, [_c('option', {
+      attrs: {
+        "disabled": ""
+      }
+    }, [_vm._v(_vm._s(_vm.lang('Hard/Soft Cover')))]), _vm._v(" "), _c('option', {
+      attrs: {
+        "value": "none"
+      }
+    }, [_vm._v(_vm._s(_vm.lang('None')))]), _vm._v(" "), _c('option', {
+      attrs: {
+        "value": "hard"
+      }
+    }, [_vm._v(_vm._s(_vm.lang('Hard Cover')))]), _vm._v(" "), _c('option', {
+      attrs: {
+        "value": "soft"
+      }
+    }, [_vm._v(_vm._s(_vm.lang('Soft Cover')))]), _vm._v(" "), _c('option', {
+      attrs: {
+        "value": "both"
+      }
+    }, [_vm._v(_vm._s(_vm.lang('Hard and Soft Cover')))])]), _vm._v(" "), _c('label', [_vm._v(_vm._s(_vm.lang('Hard/Soft Cover')))])])]), _vm._v(" "), _c('div', {
+      staticClass: "row"
+    }, [(offer.cover_type === 'soft' || offer.cover_type === 'both') ? _c('div', {
+      staticClass: "col-md-6"
+    }, [_c('div', {
+      staticClass: "md-form"
+    }, [_c('input', {
+      staticClass: "form-control",
+      attrs: {
+        "type": "text"
+      }
+    }), _vm._v(" "), _c('label', [_vm._v(_vm._s(_vm.lang('Soft Cover Circulation')))])])]) : _vm._e(), _vm._v(" "), (offer.cover_type === 'hard' || offer.cover_type === 'both') ? _c('div', {
+      staticClass: "col-md-6"
+    }, [_c('div', {
+      staticClass: "md-form"
+    }, [_c('input', {
+      staticClass: "form-control",
+      attrs: {
+        "type": "text"
+      }
+    }), _vm._v(" "), _c('label', [_vm._v(_vm._s(_vm.lang('Hard Cover Circulation')))])])]) : _vm._e()]), _vm._v(" "), _c('div', {
+      staticClass: "row"
+    }, [_c('div', {
+      staticClass: "col-md-12"
+    }, [_c('select', {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: (offer.colors),
+        expression: "offer.colors"
+      }],
+      staticClass: "mdb-select",
+      on: {
+        "change": function($event) {
+          var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+            return o.selected
+          }).map(function(o) {
+            var val = "_value" in o ? o._value : o.value;
+            return val
+          });
+          offer.colors = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+        }
+      }
+    }, [_c('option', {
+      attrs: {
+        "disabled": ""
+      }
+    }, [_vm._v(_vm._s(_vm.lang('Choose Colors')))]), _vm._v(" "), _vm._l((_vm.option_colors), function(color, index) {
+      return _c('option', {
+        domProps: {
+          "value": index + 1
+        }
+      }, [_vm._v(_vm._s(_vm.lang(color)))])
+    })], 2), _vm._v(" "), _c('label', [_vm._v(_vm._s(_vm.lang('Colors')))])])]), _vm._v(" "), _c('div', {
+      staticClass: "row"
+    }, [_c('div', {
+      staticClass: "col-md-12"
+    }, [_c('select', {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: (offer.colors_first_page),
+        expression: "offer.colors_first_page"
+      }],
+      staticClass: "mdb-select",
+      on: {
+        "change": function($event) {
+          var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+            return o.selected
+          }).map(function(o) {
+            var val = "_value" in o ? o._value : o.value;
+            return val
+          });
+          offer.colors_first_page = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+        }
+      }
+    }, [_c('option', {
+      attrs: {
+        "disabled": ""
+      }
+    }, [_vm._v(_vm._s(_vm.lang('Colors - First Pages')))]), _vm._v(" "), _vm._l((_vm.option_colors), function(color, index) {
+      return _c('option', {
+        domProps: {
+          "value": index + 1
+        }
+      }, [_vm._v(_vm._s(_vm.lang(color)))])
+    })], 2), _vm._v(" "), _c('label', [_vm._v(_vm._s(_vm.lang('Colors - First Pages')))])])]), _vm._v(" "), _c('div', {
+      staticClass: "row"
+    }, [_c('div', {
+      staticClass: "col-md-12"
+    }, [_c('select', {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: (offer.colors_last_page),
+        expression: "offer.colors_last_page"
+      }],
+      staticClass: "mdb-select",
+      on: {
+        "change": function($event) {
+          var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+            return o.selected
+          }).map(function(o) {
+            var val = "_value" in o ? o._value : o.value;
+            return val
+          });
+          offer.colors_last_page = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+        }
+      }
+    }, [_c('option', {
+      attrs: {
+        "disabled": ""
+      }
+    }, [_vm._v(_vm._s(_vm.lang('Colors - Last Pages')))]), _vm._v(" "), _vm._l((_vm.option_colors), function(color, index) {
+      return _c('option', {
+        domProps: {
+          "value": index + 1
+        }
+      }, [_vm._v(_vm._s(_vm.lang(color)))])
+    })], 2), _vm._v(" "), _c('label', [_vm._v(_vm._s(_vm.lang('Colors - Last Pages')))])])]), _vm._v(" "), _c('div', {
+      staticClass: "md-form"
+    }, [_c('input', {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: (offer.additional_work),
+        expression: "offer.additional_work"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        "type": "text",
+        "id": "form1"
+      },
       domProps: {
-        "value": index + 1
+        "value": (offer.additional_work)
+      },
+      on: {
+        "input": function($event) {
+          if ($event.target.composing) { return; }
+          offer.additional_work = $event.target.value
+        }
       }
-    }, [_vm._v(_vm._s(_vm.lang(color)))])
-  })], 2), _vm._v(" "), _c('label', [_vm._v(_vm._s(_vm.lang('Colors - First Pages')))])])]), _vm._v(" "), _c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    staticClass: "col-md-12"
-  }, [_c('select', {
-    staticClass: "mdb-select"
-  }, [_c('option', {
-    attrs: {
-      "disabled": ""
-    }
-  }, [_vm._v(_vm._s(_vm.lang('Colors - Last Pages')))]), _vm._v(" "), _vm._l((_vm.option_colors), function(color, index) {
-    return _c('option', {
+    }), _vm._v(" "), _c('label', {
+      attrs: {
+        "for": "form1"
+      }
+    }, [_vm._v(_vm._s(_vm.lang('Additional Work')))])])]), _vm._v(" "), _c('div', {
+      staticClass: "col-md-6"
+    }, [_c('div', {
+      staticClass: "page-name-l mb-2"
+    }, [_vm._v(_vm._s(_vm.lang('Cover')))]), _vm._v(" "), _c('div', {
+      staticClass: "row"
+    }, [_c('div', {
+      staticClass: "col-md-12"
+    }, [_c('label', [_vm._v(_vm._s(_vm.lang('Paper Type')))]), _vm._v(" "), _c('input', {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: (offer.cover_paper_type),
+        expression: "offer.cover_paper_type"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        "type": "text"
+      },
       domProps: {
-        "value": index + 1
+        "value": (offer.cover_paper_type)
+      },
+      on: {
+        "input": function($event) {
+          if ($event.target.composing) { return; }
+          offer.cover_paper_type = $event.target.value
+        }
       }
-    }, [_vm._v(_vm._s(_vm.lang(color)))])
-  })], 2), _vm._v(" "), _c('label', [_vm._v(_vm._s(_vm.lang('Colors - Last Pages')))])])]), _vm._v(" "), _c('div', {
-    staticClass: "md-form"
-  }, [_c('input', {
-    staticClass: "form-control",
-    attrs: {
-      "type": "text",
-      "id": "form1"
-    }
-  }), _vm._v(" "), _c('label', {
-    attrs: {
-      "for": "form1"
-    }
-  }, [_vm._v(_vm._s(_vm.lang('Additional Work')))])])]), _vm._v(" "), _c('div', {
-    staticClass: "col-md-6"
-  }, [_c('div', {
-    staticClass: "page-name-l mb-2"
-  }, [_vm._v(_vm._s(_vm.lang('Cover')))]), _vm._v(" "), _c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    staticClass: "col-md-12"
-  }, [_c('select', {
-    staticClass: "mdb-select"
-  }, [_c('option', {
-    attrs: {
-      "disabled": ""
-    }
-  }, [_vm._v(_vm._s(_vm.lang('Paper Type')))])]), _vm._v(" "), _c('label', [_vm._v(_vm._s(_vm.lang('Paper Type')))])])]), _vm._v(" "), _c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    staticClass: "col-md-12"
-  }, [_c('select', {
-    staticClass: "mdb-select"
-  }, [_c('option', {
-    attrs: {
-      "disabled": ""
-    }
-  }, [_vm._v(_vm._s(_vm.lang('Choose Colors')))]), _vm._v(" "), _vm._l((_vm.option_colors), function(color, index) {
-    return _c('option', {
+    })])]), _vm._v(" "), _c('div', {
+      staticClass: "row"
+    }, [_c('div', {
+      staticClass: "col-md-12"
+    }, [_c('select', {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: (offer.cover_colors),
+        expression: "offer.cover_colors"
+      }],
+      staticClass: "mdb-select",
+      on: {
+        "change": function($event) {
+          var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+            return o.selected
+          }).map(function(o) {
+            var val = "_value" in o ? o._value : o.value;
+            return val
+          });
+          offer.cover_colors = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+        }
+      }
+    }, [_c('option', {
+      attrs: {
+        "disabled": ""
+      }
+    }, [_vm._v(_vm._s(_vm.lang('Choose Colors')))]), _vm._v(" "), _vm._l((_vm.option_colors), function(color, index) {
+      return _c('option', {
+        domProps: {
+          "value": index + 1
+        }
+      }, [_vm._v(_vm._s(_vm.lang(color)))])
+    })], 2), _vm._v(" "), _c('label', [_vm._v(_vm._s(_vm.lang('Colors')))])])]), _vm._v(" "), _c('div', {
+      staticClass: "row"
+    }, [_c('div', {
+      staticClass: "col-md-12"
+    }, [_c('select', {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: (offer.cover_plastification),
+        expression: "offer.cover_plastification"
+      }],
+      staticClass: "mdb-select",
+      on: {
+        "change": function($event) {
+          var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+            return o.selected
+          }).map(function(o) {
+            var val = "_value" in o ? o._value : o.value;
+            return val
+          });
+          offer.cover_plastification = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+        }
+      }
+    }, [_c('option', {
+      attrs: {
+        "disabled": ""
+      }
+    }, [_vm._v(_vm._s(_vm.lang('Plastification')))]), _vm._v(" "), _c('option', {
+      attrs: {
+        "value": "none"
+      }
+    }, [_vm._v(_vm._s(_vm.lang('None')))]), _vm._v(" "), _c('option', {
+      attrs: {
+        "value": "glossy"
+      }
+    }, [_vm._v(_vm._s(_vm.lang('Glossy plastification')))]), _vm._v(" "), _c('option', {
+      attrs: {
+        "value": "mat"
+      }
+    }, [_vm._v(_vm._s(_vm.lang('Mat plastification')))])]), _vm._v(" "), _c('label', [_vm._v(_vm._s(_vm.lang('Plastification')))])])]), _vm._v(" "), _c('div', {
+      staticClass: "page-name-m"
+    }, [_vm._v(_vm._s(_vm.lang('Film Print')))]), _vm._v(" "), _c('div', {
+      staticClass: "form-inline mb-3"
+    }, [_c('fieldset', {
+      staticClass: "form-group"
+    }, [_c('input', {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: (offer.film_print),
+        expression: "offer.film_print"
+      }],
+      attrs: {
+        "name": "film_print",
+        "type": "radio",
+        "id": "film_print_no",
+        "value": "no"
+      },
       domProps: {
-        "value": index + 1
+        "checked": _vm._q(offer.film_print, "no")
+      },
+      on: {
+        "__c": function($event) {
+          offer.film_print = "no"
+        }
       }
-    }, [_vm._v(_vm._s(_vm.lang(color)))])
-  })], 2), _vm._v(" "), _c('label', [_vm._v(_vm._s(_vm.lang('Colors')))])])]), _vm._v(" "), _c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    staticClass: "col-md-12"
-  }, [_c('select', {
-    staticClass: "mdb-select"
-  }, [_c('option', {
-    attrs: {
-      "disabled": ""
-    }
-  }, [_vm._v(_vm._s(_vm.lang('Plastification')))]), _vm._v(" "), _c('option', {
-    attrs: {
-      "value": "none"
-    }
-  }, [_vm._v(_vm._s(_vm.lang('None')))]), _vm._v(" "), _c('option', {
-    attrs: {
-      "value": "glossy"
-    }
-  }, [_vm._v(_vm._s(_vm.lang('Glossy plastification')))]), _vm._v(" "), _c('option', {
-    attrs: {
-      "value": "mat"
-    }
-  }, [_vm._v(_vm._s(_vm.lang('Mat plastification')))])]), _vm._v(" "), _c('label', [_vm._v(_vm._s(_vm.lang('Plastification')))])])]), _vm._v(" "), _c('div', {
-    staticClass: "page-name-m"
-  }, [_vm._v(_vm._s(_vm.lang('Film Print')))]), _vm._v(" "), _c('div', {
-    staticClass: "form-inline mb-3"
-  }, [_c('fieldset', {
-    staticClass: "form-group"
-  }, [_c('input', {
-    attrs: {
-      "name": "sex",
-      "type": "radio",
-      "id": "radio11",
-      "value": "M",
-      "required": ""
-    }
-  }), _vm._v(" "), _c('label', {
-    attrs: {
-      "for": "radio11"
-    }
-  }, [_vm._v(_vm._s(_vm.lang('No')))])]), _vm._v(" "), _c('fieldset', {
-    staticClass: "form-group"
-  }, [_c('input', {
-    attrs: {
-      "name": "sex",
-      "type": "radio",
-      "id": "radio21",
-      "value": "F",
-      "required": ""
-    }
-  }), _vm._v(" "), _c('label', {
-    attrs: {
-      "for": "radio21"
-    }
-  }, [_vm._v(_vm._s(_vm.lang('Yes')))])])]), _vm._v(" "), _c('div', {
-    staticClass: "page-name-m"
-  }, [_vm._v(_vm._s(_vm.lang('Blind Print')))]), _vm._v(" "), _c('div', {
-    staticClass: "form-inline mb-3"
-  }, [_c('fieldset', {
-    staticClass: "form-group"
-  }, [_c('input', {
-    attrs: {
-      "name": "sex",
-      "type": "radio",
-      "id": "radio11",
-      "value": "M",
-      "required": ""
-    }
-  }), _vm._v(" "), _c('label', {
-    attrs: {
-      "for": "radio11"
-    }
-  }, [_vm._v(_vm._s(_vm.lang('No')))])]), _vm._v(" "), _c('fieldset', {
-    staticClass: "form-group"
-  }, [_c('input', {
-    attrs: {
-      "name": "sex",
-      "type": "radio",
-      "id": "radio21",
-      "value": "F",
-      "required": ""
-    }
-  }), _vm._v(" "), _c('label', {
-    attrs: {
-      "for": "radio21"
-    }
-  }, [_vm._v(_vm._s(_vm.lang('Yes')))])])]), _vm._v(" "), _c('div', {
-    staticClass: "page-name-m"
-  }, [_vm._v(_vm._s(_vm.lang('UV Film')))]), _vm._v(" "), _c('div', {
-    staticClass: "form-inline mb-3"
-  }, [_c('fieldset', {
-    staticClass: "form-group"
-  }, [_c('input', {
-    attrs: {
-      "name": "sex",
-      "type": "radio",
-      "id": "radio11",
-      "value": "M",
-      "required": ""
-    }
-  }), _vm._v(" "), _c('label', {
-    attrs: {
-      "for": "radio11"
-    }
-  }, [_vm._v(_vm._s(_vm.lang('No')))])]), _vm._v(" "), _c('fieldset', {
-    staticClass: "form-group"
-  }, [_c('input', {
-    attrs: {
-      "name": "sex",
-      "type": "radio",
-      "id": "radio21",
-      "value": "F",
-      "required": ""
-    }
-  }), _vm._v(" "), _c('label', {
-    attrs: {
-      "for": "radio21"
-    }
-  }, [_vm._v(_vm._s(_vm.lang('Yes')))])])])])])])]), _vm._v(" "), _c('div', {
-    staticClass: "md-form mt-3"
-  }, [_c('textarea', {
-    staticClass: "md-textarea",
-    attrs: {
-      "id": "form76"
-    }
-  }), _vm._v(" "), _c('label', {
-    attrs: {
-      "for": "form76"
-    }
-  }, [_vm._v(_vm._s(_vm.lang('Note')))])]), _vm._v(" "), _c('div', {
-    staticClass: "page-name-l text-center"
-  }, [_vm._v(_vm._s(_vm.lang('Download as...')))]), _vm._v(" "), _vm._m(0), _vm._v(" "), _c('footer-buttons')], 1)
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "file-box file-box-l d-flex align-items-center mt-1"
-  }, [_c('a', {
-    staticClass: "file-icon",
-    attrs: {
-      "href": "http://homestead.app/images/profile.pdf"
-    }
-  }, [_vm._v(".pdf")]), _vm._v(" "), _c('a', {
-    staticClass: "file-icon",
-    attrs: {
-      "href": "http://homestead.app/images/profile.doc"
-    }
-  }, [_vm._v(".doc")])])
-}]}
+    }), _vm._v(" "), _c('label', {
+      attrs: {
+        "for": "film_print_no"
+      }
+    }, [_vm._v(_vm._s(_vm.lang('No')))])]), _vm._v(" "), _c('fieldset', {
+      staticClass: "form-group"
+    }, [_c('input', {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: (offer.film_print),
+        expression: "offer.film_print"
+      }],
+      attrs: {
+        "name": "film_print",
+        "type": "radio",
+        "id": "film_print_yes",
+        "value": "yes"
+      },
+      domProps: {
+        "checked": _vm._q(offer.film_print, "yes")
+      },
+      on: {
+        "__c": function($event) {
+          offer.film_print = "yes"
+        }
+      }
+    }), _vm._v(" "), _c('label', {
+      attrs: {
+        "for": "film_print_yes"
+      }
+    }, [_vm._v(_vm._s(_vm.lang('Yes')))])])]), _vm._v(" "), _c('div', {
+      staticClass: "page-name-m"
+    }, [_vm._v(_vm._s(_vm.lang('Blind Print')))]), _vm._v(" "), _c('div', {
+      staticClass: "form-inline mb-3"
+    }, [_c('fieldset', {
+      staticClass: "form-group"
+    }, [_c('input', {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: (offer.blind_print),
+        expression: "offer.blind_print"
+      }],
+      attrs: {
+        "name": "blind_print",
+        "type": "radio",
+        "id": "blind_print_no",
+        "value": "no"
+      },
+      domProps: {
+        "checked": _vm._q(offer.blind_print, "no")
+      },
+      on: {
+        "__c": function($event) {
+          offer.blind_print = "no"
+        }
+      }
+    }), _vm._v(" "), _c('label', {
+      attrs: {
+        "for": "blind_print_no"
+      }
+    }, [_vm._v(_vm._s(_vm.lang('No')))])]), _vm._v(" "), _c('fieldset', {
+      staticClass: "form-group"
+    }, [_c('input', {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: (offer.blind_print),
+        expression: "offer.blind_print"
+      }],
+      attrs: {
+        "name": "blind_print",
+        "type": "radio",
+        "id": "blind_print_yes",
+        "value": "yes"
+      },
+      domProps: {
+        "checked": _vm._q(offer.blind_print, "yes")
+      },
+      on: {
+        "__c": function($event) {
+          offer.blind_print = "yes"
+        }
+      }
+    }), _vm._v(" "), _c('label', {
+      attrs: {
+        "for": "blind_print_yes"
+      }
+    }, [_vm._v(_vm._s(_vm.lang('Yes')))])])]), _vm._v(" "), _c('div', {
+      staticClass: "page-name-m"
+    }, [_vm._v(_vm._s(_vm.lang('UV Film')))]), _vm._v(" "), _c('div', {
+      staticClass: "form-inline mb-3"
+    }, [_c('fieldset', {
+      staticClass: "form-group"
+    }, [_c('input', {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: (offer.uv_print),
+        expression: "offer.uv_print"
+      }],
+      attrs: {
+        "name": "uv_print",
+        "type": "radio",
+        "id": "uv_print_no",
+        "value": "no"
+      },
+      domProps: {
+        "checked": _vm._q(offer.uv_print, "no")
+      },
+      on: {
+        "__c": function($event) {
+          offer.uv_print = "no"
+        }
+      }
+    }), _vm._v(" "), _c('label', {
+      attrs: {
+        "for": "uv_print_no"
+      }
+    }, [_vm._v(_vm._s(_vm.lang('No')))])]), _vm._v(" "), _c('fieldset', {
+      staticClass: "form-group"
+    }, [_c('input', {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: (offer.uv_print),
+        expression: "offer.uv_print"
+      }],
+      attrs: {
+        "name": "uv_print",
+        "type": "radio",
+        "id": "uv_print_yes",
+        "value": "yes"
+      },
+      domProps: {
+        "checked": _vm._q(offer.uv_print, "yes")
+      },
+      on: {
+        "__c": function($event) {
+          offer.uv_print = "yes"
+        }
+      }
+    }), _vm._v(" "), _c('label', {
+      attrs: {
+        "for": "uv_print_yes"
+      }
+    }, [_vm._v(_vm._s(_vm.lang('Yes')))])])])])])])]), _vm._v(" "), _c('div', {
+      staticClass: "md-form mt-3"
+    }, [_c('textarea', {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: (offer.note),
+        expression: "offer.note"
+      }],
+      staticClass: "md-textarea",
+      attrs: {
+        "id": "form76"
+      },
+      domProps: {
+        "value": (offer.note)
+      },
+      on: {
+        "input": function($event) {
+          if ($event.target.composing) { return; }
+          offer.note = $event.target.value
+        }
+      }
+    }), _vm._v(" "), _c('label', {
+      attrs: {
+        "for": "form76"
+      }
+    }, [_vm._v(_vm._s(_vm.lang('Note')))])]), _vm._v(" "), _c('div', {
+      staticClass: "page-name-l text-center"
+    }, [_vm._v(_vm._s(_vm.lang('Download as...')))]), _vm._v(" "), _c('div', {
+      staticClass: "file-box file-box-l d-flex align-items-center mt-1"
+    }, [_c('a', {
+      staticClass: "file-icon",
+      attrs: {
+        "href": "#.pdf"
+      },
+      on: {
+        "click": function($event) {
+          _vm.downloadOffer(index, 'pdf')
+        }
+      }
+    }, [_vm._v(".pdf")]), _vm._v(" "), _c('a', {
+      staticClass: "file-icon",
+      attrs: {
+        "href": "#.docx"
+      },
+      on: {
+        "click": function($event) {
+          _vm.downloadOffer(index, 'docx')
+        }
+      }
+    }, [_vm._v(".docx")])])])
+  })), _vm._v(" "), _c('footer-buttons')], 1)
+},staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
@@ -49639,7 +50023,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "id": "centralModalAssign",
       "tabindex": "-1",
       "role": "dialog",
-      "aria-labelledby": "myModalLabel",
       "aria-hidden": "true"
     }
   }, [_c('div', {
@@ -49659,16 +50042,20 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "modal-title w-100 text-center"
   }, [_vm._v(_vm._s(_vm.lang('Assign to...')))])]), _vm._v(" "), _c('h6', {
     staticClass: "w-100 text-center"
-  }, [_vm._v(_vm._s(_vm.lang('Assign department or directly an employee')))])]), _vm._v(" "), _c('div', {
-    staticClass: "modal-body"
+  }, [_vm._v(_vm._s(_vm.lang('Assign department or directly employee')))])]), _vm._v(" "), _vm._m(1), _vm._v(" "), _c('div', {
+    staticClass: "tab-content"
+  }, [_c('div', {
+    staticClass: "modal-body tab-pane fade in show active",
+    attrs: {
+      "id": "panel51",
+      "role": "tabpanel"
+    }
   }, [_c('div', {
     staticClass: "row"
   }, [_c('div', {
     staticClass: "col-md-12"
   }, [_c('div', {
-    staticClass: "page-name-xl mb-1"
-  }, [_vm._v(_vm._s(_vm.lang('Department')))]), _vm._v(" "), _c('div', {
-    staticClass: "md-form d-flex addon"
+    staticClass: "md-form"
   }, [_c('input', {
     directives: [{
       name: "model",
@@ -49703,22 +50090,17 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         }
       }
     }, [_vm._v(_vm._s(item.name))])
-  })) : _vm._e(), _vm._v(" "), _c('span', {
-    staticClass: "d-flex"
-  }, [_c('button', {
-    staticClass: "btn btn-neutral btn-addon",
+  })) : _vm._e()])])])]), _vm._v(" "), _c('div', {
+    staticClass: "modal-body tab-pane fade",
     attrs: {
-      "type": "button"
+      "id": "panel52",
+      "role": "tabpanel"
     }
-  }, [_vm._v(_vm._s(_vm.lang('Add')))])])]), _vm._v(" "), _vm._l((_vm.departments), function(department) {
-    return _c('div', {
-      staticClass: "chip mb-1"
-    }, [_vm._v("\n                                " + _vm._s(department.name)), _c('i', {
-      staticClass: "close fa fa-times"
-    })])
-  }), _vm._v(" "), _c('div', {
-    staticClass: "page-name-xl mb-1"
-  }, [_vm._v(_vm._s(_vm.lang('Employee')))]), _vm._v(" "), _c('div', {
+  }, [_c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-md-12"
+  }, [_c('div', {
     staticClass: "md-form d-flex addon"
   }, [_c('input', {
     directives: [{
@@ -49771,7 +50153,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }), _vm._v(_vm._s(employee.name)), _c('i', {
       staticClass: "close fa fa-times"
     })])
-  })], 2)])]), _vm._v(" "), _c('div', {
+  })], 2)])])]), _vm._v(" "), _c('div', {
     staticClass: "modal-footer btn-footer"
   }, [_c('button', {
     staticClass: "btn btn-lg btn-cancel",
@@ -49782,7 +50164,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v(_vm._s(_vm.lang('Cancel')))]), _vm._v(" "), _c('button', {
     staticClass: "btn btn-lg btn-save",
     attrs: {
-      "type": "button"
+      "type": "button",
+      "data-dismiss": "modal"
     }
   }, [_vm._v(_vm._s(_vm.lang('Assign')))])])])])])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -49799,6 +50182,33 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "aria-hidden": "true"
     }
   }, [_vm._v("×")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "tabs-wrapper"
+  }, [_c('ul', {
+    staticClass: "nav classic-tabs tabs-cyan tab-full",
+    attrs: {
+      "role": "tablist"
+    }
+  }, [_c('li', {
+    staticClass: "nav-item"
+  }, [_c('a', {
+    staticClass: "nav-link waves-light active",
+    attrs: {
+      "data-toggle": "tab",
+      "href": "#panel51",
+      "role": "tab"
+    }
+  }, [_vm._v("Department")])]), _vm._v(" "), _c('li', {
+    staticClass: "nav-item"
+  }, [_c('a', {
+    staticClass: "nav-link waves-light",
+    attrs: {
+      "data-toggle": "tab",
+      "href": "#panel52",
+      "role": "tab"
+    }
+  }, [_vm._v("EMPLOYEE")])])])])
 }]}
 module.exports.render._withStripped = true
 if (false) {
@@ -51338,11 +51748,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('input', {
     directives: [{
       name: "model",
-      rawName: "v-model.lazy.trim",
+      rawName: "v-model.trim",
       value: (_vm.title),
       expression: "title",
       modifiers: {
-        "lazy": true,
         "trim": true
       }
     }],
@@ -51358,7 +51767,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": (_vm.title)
     },
     on: {
-      "change": function($event) {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
         _vm.title = $event.target.value.trim()
       },
       "blur": function($event) {
@@ -51443,11 +51853,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('textarea', {
     directives: [{
       name: "model",
-      rawName: "v-model.lazy.trim",
+      rawName: "v-model.trim",
       value: (_vm.concept),
       expression: "concept",
       modifiers: {
-        "lazy": true,
         "trim": true
       }
     }],
@@ -51460,7 +51869,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": (_vm.concept)
     },
     on: {
-      "change": function($event) {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
         _vm.concept = $event.target.value.trim()
       },
       "blur": function($event) {
@@ -51556,8 +51966,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }, [_c('img', {
       staticClass: "profile-m-1 mr-1 align-self-center",
       attrs: {
-        "src": document.author.image,
-        "href": "#"
+        "src": document.author.image
       }
     }), _vm._v("\n                            " + _vm._s(document.author.name) + "\n                        ")])]), _vm._v(" "), _c('div', {
       staticClass: "file-box-sty"
@@ -52947,15 +53356,20 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('input', {
     directives: [{
       name: "model",
-      rawName: "v-model",
+      rawName: "v-model.number",
       value: (_vm.circulation),
-      expression: "circulation"
+      expression: "circulation",
+      modifiers: {
+        "number": true
+      }
     }],
     staticClass: "form-control",
     attrs: {
-      "type": "text",
+      "type": "number",
       "id": "form1",
-      "placeholder": _vm.lang('Circulation')
+      "placeholder": _vm.lang('Circulation'),
+      "step": "1",
+      "min": "1"
     },
     domProps: {
       "value": (_vm.circulation)
@@ -52967,7 +53381,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       },
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.circulation = $event.target.value
+        _vm.circulation = _vm._n($event.target.value)
+      },
+      "blur": function($event) {
+        _vm.$forceUpdate()
       }
     }
   }), _vm._v(" "), _c('label', {
@@ -52984,17 +53401,17 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": _vm.addCirculation
     }
-  }, [_vm._v(_vm._s(_vm.lang('Add')))])])])])]), _vm._v(" "), _vm._l((_vm.circulations), function(item) {
-    return _c('div', {
+  }, [_vm._v(_vm._s(_vm.lang('Add')))])])])])]), _vm._v("\n        " + _vm._s(_vm.circulations) + "\n        "), _vm._l((_vm.circulations), function(item, index) {
+    return [_c('div', {
       staticClass: "chip mb-3"
     }, [_vm._v("\n            " + _vm._s(item) + "\n            "), _c('i', {
       staticClass: "close fa fa-times",
       on: {
         "click": function($event) {
-          _vm.deleteCirculation(item)
+          _vm.deleteCirculation(index)
         }
       }
-    })])
+    })])]
   }), _vm._v(" "), _c('div', {
     staticClass: "row"
   }, [_c('div', {
@@ -53041,14 +53458,14 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": _vm.addAddition
     }
-  }, [_vm._v(_vm._s(_vm.lang('Add')))])])])])]), _vm._v(" "), _vm._l((_vm.additions), function(item) {
+  }, [_vm._v(_vm._s(_vm.lang('Add')))])])])])]), _vm._v(" "), _vm._l((_vm.additions), function(item, index) {
     return _c('div', {
       staticClass: "chip mb-3"
     }, [_vm._v("\n            " + _vm._s(item) + "\n            "), _c('i', {
       staticClass: "close fa fa-times",
       on: {
         "click": function($event) {
-          _vm.deleteAddition(item)
+          _vm.deleteAddition(index)
         }
       }
     })])
@@ -53351,7 +53768,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "row"
   }, [_c('div', {
     staticClass: "col-md-12"
-  }, [_c('input', {
+  }, [_c('label', [_vm._v(_vm._s(_vm.lang('Paper Type')))]), _vm._v(" "), _c('input', {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -53371,7 +53788,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.cover_paper_type = $event.target.value
       }
     }
-  }), _vm._v(" "), _c('label', [_vm._v(_vm._s(_vm.lang('Paper Type')))])])]), _vm._v(" "), _c('div', {
+  })])]), _vm._v(" "), _c('div', {
     staticClass: "row"
   }, [_c('div', {
     staticClass: "col-md-12"
