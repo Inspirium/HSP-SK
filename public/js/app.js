@@ -1899,7 +1899,7 @@ function loadLocale(name) {
             module && module.exports) {
         try {
             oldLocale = globalLocale._abbr;
-            __webpack_require__(180)("./" + name);
+            __webpack_require__(181)("./" + name);
             // because defineLocale currently also sets the global locale, we
             // want to undo that for lazy loaded locales
             getSetGlobalLocale(oldLocale);
@@ -4905,7 +4905,7 @@ module.exports = {
 
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(174),
+  __webpack_require__(175),
   /* template */
   __webpack_require__(198),
   /* scopeId */
@@ -5754,7 +5754,7 @@ var index_esm = {
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(2);
-var normalizeHeaderName = __webpack_require__(152);
+var normalizeHeaderName = __webpack_require__(153);
 
 var PROTECTION_PREFIX = /^\)\]\}',?\n/;
 var DEFAULT_CONTENT_TYPE = {
@@ -5845,7 +5845,7 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 
 module.exports = defaults;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(181)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(182)))
 
 /***/ }),
 /* 6 */
@@ -15544,7 +15544,7 @@ module.exports = function(module) {
 /* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(138);
+module.exports = __webpack_require__(139);
 
 /***/ }),
 /* 10 */
@@ -15554,12 +15554,12 @@ module.exports = __webpack_require__(138);
 
 
 var utils = __webpack_require__(2);
-var settle = __webpack_require__(144);
-var buildURL = __webpack_require__(147);
-var parseHeaders = __webpack_require__(153);
-var isURLSameOrigin = __webpack_require__(151);
+var settle = __webpack_require__(145);
+var buildURL = __webpack_require__(148);
+var parseHeaders = __webpack_require__(154);
+var isURLSameOrigin = __webpack_require__(152);
 var createError = __webpack_require__(13);
-var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(146);
+var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(147);
 
 module.exports = function xhrAdapter(config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -15655,7 +15655,7 @@ module.exports = function xhrAdapter(config) {
     // This is only done if running in a standard browser environment.
     // Specifically not if we're in a web worker, or react-native.
     if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(149);
+      var cookies = __webpack_require__(150);
 
       // Add xsrf header
       var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -15775,7 +15775,7 @@ module.exports = function isCancel(value) {
 "use strict";
 
 
-var enhanceError = __webpack_require__(143);
+var enhanceError = __webpack_require__(144);
 
 /**
  * Create an Error with the specified message, config, error code, and response.
@@ -43986,9 +43986,253 @@ return zhTw;
 /* 131 */
 /***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
+
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+
+var _ = _interopDefault(__webpack_require__(180));
+var Vue = _interopDefault(__webpack_require__(6));
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
+  return typeof obj;
+} : function (obj) {
+  return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+};
+
+/*
+ * @author Branden Horiuchi <bhoriuchi@gmail.com>
+ * @description Deep set Vue.js objects
+ */
+var INVALID_KEY_RX = /^\d|[^a-zA-Z0-9_]/gm;
+
+/**
+ * returns true if object is non empty object
+ * @param obj
+ * @returns {boolean|*}
+ */
+function isHash(obj) {
+  return _.isObject(obj) && !_.isArray(obj) && !_.isDate(obj) && !_.isEmpty(obj);
+}
+
+/**
+ * joins 2 paths
+ * @param base
+ * @param path
+ * @returns {string}
+ */
+function pathJoin(base, path) {
+  try {
+    var connector = path.match(/^\[/) ? '' : '.';
+    return '' + (base ? base : '') + (base ? connector : '') + path;
+  } catch (error) {
+    return '';
+  }
+}
+
+/**
+ * generates an array of paths to use when creating an abstracted object
+ * @param obj
+ * @param current
+ * @param paths
+ * @returns {Array|*}
+ */
+function getPaths(obj) {
+  var current = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+  var paths = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
+
+  if (isHash(obj)) {
+    _.forEach(obj, function (val, key) {
+      var k = key.match(INVALID_KEY_RX) ? '["' + key + '"]' : '.' + key;
+      var cur = ('' + current + k).replace(/^\./, '');
+      paths.push(cur);
+      if (isHash(val)) getPaths(val, cur, paths);
+    });
+  }
+  return _.uniq(paths);
+}
+
+/**
+ * converts a path string to one usable by deepModel
+ * @param path
+ * @returns {*}
+ */
+function sanitizePath(path) {
+  if (!_.isString(path)) throw new Error('VueDeepSet: invalid path, must be string');
+
+  return _.reduce(_.toPath(path), function (pathString, part) {
+    var partStr = part.match(INVALID_KEY_RX) ? '["' + part + '"]' : '' + (pathString === '' ? '' : '.') + part;
+    return pathString + partStr;
+  }, '');
+}
+
+/**
+ * deep sets a Vue.js object creating reactive properties if they do not exist
+ * @param obj
+ * @param path
+ * @param value
+ */
+function vueSet(obj, path, value) {
+  var fields = _.isArray(path) ? path : _.toPath(path);
+  for (var i = 0; i < fields.length; i++) {
+    var prop = fields[i];
+    if (i === fields.length - 1) Vue.set(obj, prop, value);else if (!_.has(obj, prop)) Vue.set(obj, prop, _.isNumber(prop) ? [] : {});
+    obj = obj[prop];
+  }
+}
+
+/**
+ * deep sets a vuex object creating reactive properties if they do not exist
+ * @param path
+ * @param value
+ */
+function vuexSet(path, value) {
+  var store = _.get(this, '$store');
+  if (!store) throw new Error('VueDeepSet: could not find vuex store object on instance');
+  store[store.commit ? 'commit' : 'dispatch']('VUEX_DEEP_SET', { path: path, value: value });
+}
+
+/**
+ * vuex mutation to set an objects value at a specific path
+ * @param state
+ * @param args
+ */
+function VUEX_DEEP_SET(state, args) {
+  vueSet(state, args.path, args.value);
+}
+
+/**
+ * helper function to extend a mutation object
+ * @param mutations
+ * @returns {*}
+ */
+function extendMutation() {
+  var mutations = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+  return Object.assign(mutations, { VUEX_DEEP_SET: VUEX_DEEP_SET });
+}
+
+/**
+ * returns an object that can deep set fields in a vuex store
+ * @param vuexPath
+ * @returns {{}}
+ */
+function vuexModel(vuexPath) {
+  var _this = this;
+
+  if (!_.isString(vuexPath)) throw new Error('VueDeepSet: invalid vuex path string');
+
+  if ((typeof Proxy === 'undefined' ? 'undefined' : _typeof(Proxy)) === undefined) {
+    var model = {};
+    var obj = _.get(this.$store.state, vuexPath);
+    _.forEach(getPaths(obj), function (path) {
+      var propPath = pathJoin(vuexPath, path);
+      Object.defineProperty(model, path, {
+        configurable: true,
+        enumerable: true,
+        get: function get$$1() {
+          return _.get(_this.$store.state, propPath);
+        },
+        set: function set$$1(value) {
+          vuexSet.call(_this, propPath, value);
+        }
+      });
+    });
+    return model;
+  } else {
+    return new Proxy(_.get(this.$store.state, vuexPath, this.$store.state), {
+      get: function get$$1(target, property) {
+        return _.get(_this.$store.state, pathJoin(vuexPath, property));
+      },
+      set: function set$$1(target, property, value) {
+        vuexSet.call(_this, pathJoin(vuexPath, property), value);
+      },
+      has: function has(target, property) {
+        return true;
+      }
+    });
+  }
+}
+
+/**
+ * returns an object that can deep set fields in a vue.js object
+ * @param obj
+ * @returns {Array}
+ */
+function vueModel(obj) {
+  var _this2 = this;
+
+  if (!_.isObject(obj)) throw new Error('VueDeepSet: invalid object');
+
+  if (typeof Proxy === 'undefined') {
+    var model = {};
+    _.forEach(getPaths(obj), function (path) {
+      Object.defineProperty(model, path, {
+        configurable: true,
+        enumerable: true,
+        get: function get$$1() {
+          return _.get(obj, path);
+        },
+        set: function set$$1(value) {
+          vueSet.call(_this2, obj, path, value);
+        }
+      });
+    });
+    return model;
+  } else {
+    return new Proxy(obj, {
+      get: function get$$1(target, property) {
+        return _.get(target, property);
+      },
+      set: function set$$1(target, property, value) {
+        vueSet.call(_this2, target, property, value);
+      },
+      has: function has(target, property) {
+        return true;
+      }
+    });
+  }
+}
+
+/**
+ * creates a vuex model if the arg is a string, vue model otherwise
+ * @param arg
+ * @returns {{}}
+ */
+function deepModel(arg) {
+  return _.isString(arg) ? vuexModel.call(this, arg) : vueModel.call(this, arg);
+}
+
+/**
+ * plugin
+ * @param Vue
+ */
+function install(Vue$$1) {
+  Vue$$1.prototype.$deepModel = deepModel;
+  Vue$$1.prototype.$vueSet = vueSet;
+  Vue$$1.prototype.$vuexSet = vuexSet;
+}
+
+exports.sanitizePath = sanitizePath;
+exports.vueSet = vueSet;
+exports.vuexSet = vuexSet;
+exports.VUEX_DEEP_SET = VUEX_DEEP_SET;
+exports.extendMutation = extendMutation;
+exports.vuexModel = vuexModel;
+exports.vueModel = vueModel;
+exports.deepModel = deepModel;
+exports.install = install;
+
+
+/***/ }),
+/* 132 */
+/***/ (function(module, exports, __webpack_require__) {
+
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(160),
+  __webpack_require__(161),
   /* template */
   __webpack_require__(208),
   /* scopeId */
@@ -44017,12 +44261,12 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 132 */
+/* 133 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(161),
+  __webpack_require__(162),
   /* template */
   __webpack_require__(210),
   /* scopeId */
@@ -44051,12 +44295,12 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 133 */
+/* 134 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(163),
+  __webpack_require__(164),
   /* template */
   __webpack_require__(212),
   /* scopeId */
@@ -44085,12 +44329,12 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 134 */
+/* 135 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(167),
+  __webpack_require__(168),
   /* template */
   __webpack_require__(216),
   /* scopeId */
@@ -44119,12 +44363,12 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 135 */
+/* 136 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(172),
+  __webpack_require__(173),
   /* template */
   __webpack_require__(213),
   /* scopeId */
@@ -44153,7 +44397,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 136 */
+/* 137 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -44163,10 +44407,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_moment__ = __webpack_require__(217);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_moment__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_router__ = __webpack_require__(218);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vue_deepset__ = __webpack_require__(182);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vue_deepset__ = __webpack_require__(131);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vue_deepset___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_vue_deepset__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__vuex_store__ = __webpack_require__(178);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__routes__ = __webpack_require__(176);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__vuex_store__ = __webpack_require__(179);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__routes__ = __webpack_require__(177);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_vuex_router_sync__ = __webpack_require__(219);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_vuex_router_sync___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_vuex_router_sync__);
 
@@ -44176,7 +44420,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-__webpack_require__(175);
+__webpack_require__(176);
 
 window.breakpoints = {
     'sm': 576,
@@ -44247,13 +44491,13 @@ $(function () {
 });
 
 /***/ }),
-/* 137 */
+/* 138 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 138 */
+/* 139 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -44261,7 +44505,7 @@ $(function () {
 
 var utils = __webpack_require__(2);
 var bind = __webpack_require__(14);
-var Axios = __webpack_require__(140);
+var Axios = __webpack_require__(141);
 var defaults = __webpack_require__(5);
 
 /**
@@ -44296,14 +44540,14 @@ axios.create = function create(instanceConfig) {
 
 // Expose Cancel & CancelToken
 axios.Cancel = __webpack_require__(11);
-axios.CancelToken = __webpack_require__(139);
+axios.CancelToken = __webpack_require__(140);
 axios.isCancel = __webpack_require__(12);
 
 // Expose all/spread
 axios.all = function all(promises) {
   return Promise.all(promises);
 };
-axios.spread = __webpack_require__(154);
+axios.spread = __webpack_require__(155);
 
 module.exports = axios;
 
@@ -44312,7 +44556,7 @@ module.exports.default = axios;
 
 
 /***/ }),
-/* 139 */
+/* 140 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -44376,7 +44620,7 @@ module.exports = CancelToken;
 
 
 /***/ }),
-/* 140 */
+/* 141 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -44384,10 +44628,10 @@ module.exports = CancelToken;
 
 var defaults = __webpack_require__(5);
 var utils = __webpack_require__(2);
-var InterceptorManager = __webpack_require__(141);
-var dispatchRequest = __webpack_require__(142);
-var isAbsoluteURL = __webpack_require__(150);
-var combineURLs = __webpack_require__(148);
+var InterceptorManager = __webpack_require__(142);
+var dispatchRequest = __webpack_require__(143);
+var isAbsoluteURL = __webpack_require__(151);
+var combineURLs = __webpack_require__(149);
 
 /**
  * Create a new instance of Axios
@@ -44468,7 +44712,7 @@ module.exports = Axios;
 
 
 /***/ }),
-/* 141 */
+/* 142 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -44527,14 +44771,14 @@ module.exports = InterceptorManager;
 
 
 /***/ }),
-/* 142 */
+/* 143 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(2);
-var transformData = __webpack_require__(145);
+var transformData = __webpack_require__(146);
 var isCancel = __webpack_require__(12);
 var defaults = __webpack_require__(5);
 
@@ -44613,7 +44857,7 @@ module.exports = function dispatchRequest(config) {
 
 
 /***/ }),
-/* 143 */
+/* 144 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -44639,7 +44883,7 @@ module.exports = function enhanceError(error, config, code, response) {
 
 
 /***/ }),
-/* 144 */
+/* 145 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -44671,7 +44915,7 @@ module.exports = function settle(resolve, reject, response) {
 
 
 /***/ }),
-/* 145 */
+/* 146 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -44698,7 +44942,7 @@ module.exports = function transformData(data, headers, fns) {
 
 
 /***/ }),
-/* 146 */
+/* 147 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -44741,7 +44985,7 @@ module.exports = btoa;
 
 
 /***/ }),
-/* 147 */
+/* 148 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -44816,7 +45060,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 
 /***/ }),
-/* 148 */
+/* 149 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -44835,7 +45079,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 
 
 /***/ }),
-/* 149 */
+/* 150 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -44895,7 +45139,7 @@ module.exports = (
 
 
 /***/ }),
-/* 150 */
+/* 151 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -44916,7 +45160,7 @@ module.exports = function isAbsoluteURL(url) {
 
 
 /***/ }),
-/* 151 */
+/* 152 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -44991,7 +45235,7 @@ module.exports = (
 
 
 /***/ }),
-/* 152 */
+/* 153 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45010,7 +45254,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 
 /***/ }),
-/* 153 */
+/* 154 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45054,7 +45298,7 @@ module.exports = function parseHeaders(headers) {
 
 
 /***/ }),
-/* 154 */
+/* 155 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45088,7 +45332,7 @@ module.exports = function spread(callback) {
 
 
 /***/ }),
-/* 155 */
+/* 156 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -45168,20 +45412,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 156 */
+/* 157 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__proposition_BasicData_vue__ = __webpack_require__(132);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__proposition_BasicData_vue__ = __webpack_require__(133);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__proposition_BasicData_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__proposition_BasicData_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__proposition_Categorization_vue__ = __webpack_require__(133);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__proposition_Categorization_vue__ = __webpack_require__(134);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__proposition_Categorization_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__proposition_Categorization_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__proposition_MarketPotential_vue__ = __webpack_require__(134);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__proposition_MarketPotential_vue__ = __webpack_require__(135);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__proposition_MarketPotential_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__proposition_MarketPotential_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__proposition_TechnicalData_vue__ = __webpack_require__(135);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__proposition_TechnicalData_vue__ = __webpack_require__(136);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__proposition_TechnicalData_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__proposition_TechnicalData_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__proposition_AuthorsExpense_vue__ = __webpack_require__(131);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__proposition_AuthorsExpense_vue__ = __webpack_require__(132);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__proposition_AuthorsExpense_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__proposition_AuthorsExpense_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_vuex__ = __webpack_require__(4);
 //
@@ -45259,7 +45503,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 157 */
+/* 158 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -45478,36 +45722,44 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                         marketing_expense: {
                             enabled: true,
                             title: 'Marketing Expense',
-                            path: '/proposition/marketing_expense' },
+                            path: '/proposition/marketing_expense',
+                            component: true
+                        },
                         distribution_expense: {
                             enabled: true,
                             title: 'Distribution Expense',
-                            path: '/proposition/distribution_expense'
+                            path: '/proposition/distribution_expense',
+                            component: true
                         },
                         layout_expense: {
                             enabled: true,
                             title: 'Layout Expense',
-                            path: '/proposition/layout_expense'
+                            path: '/proposition/layout_expense',
+                            component: true
                         },
                         deadline: {
                             enabled: true,
                             title: 'Deadline',
-                            path: '/proposition/deadline'
+                            path: '/proposition/deadline',
+                            component: true
                         },
                         precalculation: {
                             enabled: true,
                             title: 'Precalculation',
-                            path: '/proposition/precalculation'
+                            path: '/proposition/precalculation',
+                            component: true
                         },
                         calculation: {
                             enabled: true,
                             title: 'Calculation',
-                            path: '/proposition/calculation'
+                            path: '/proposition/calculation',
+                            component: true
                         },
                         work_order: {
                             enabled: true,
                             title: 'Work Order',
-                            path: '/proposition/word_order'
+                            path: '/proposition/word_order',
+                            component: true
                         }
                     }
                 };
@@ -45540,7 +45792,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 158 */
+/* 159 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -45661,7 +45913,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 159 */
+/* 160 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -45830,7 +46082,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 160 */
+/* 161 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -45903,7 +46155,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 161 */
+/* 162 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -46134,7 +46386,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 162 */
+/* 163 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -46489,12 +46741,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     methods: {},
     mounted: function () {
+        $('.mdb-select').material_select('destroy');
+        $('.mdb-select').material_select();
         this.$store.commit('proposition/updateProposition', { key: 'step', value: 12 });
     }
 });
 
 /***/ }),
-/* 163 */
+/* 164 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -46737,6 +46991,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         $('.mdb-select').material_select();
     },
     computed: {
+        categorization() {
+            return this.$deepModel('proposition.proposition.categorization');
+        },
         supergroup: {
             get() {
                 return this.$store.state.proposition.proposition.categorization.supergroup;
@@ -46774,29 +47031,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 this.$store.commit('proposition/updateProposition', { key: 'book_type', group: 'categorization', value: 0 });
             }
         },
-
         book_type: {
             get() {
                 return this.$store.state.proposition.proposition.categorization.book_type;
             },
             set(value) {
                 this.$store.commit('proposition/updateProposition', { key: 'book_type', group: 'categorization', value: value });
-            }
-        },
-        school_type: {
-            get() {
-                return this.$store.state.proposition.proposition.categorization.school_type;
-            },
-            set(value) {
-                this.$store.commit('proposition/updateProposition', { key: 'school_type', group: 'categorization', value: value });
-            }
-        },
-        school_level: {
-            get() {
-                return this.$store.state.proposition.proposition.categorization.school_level;
-            },
-            set(value) {
-                this.$store.commit('proposition/updateProposition', { key: 'school_level', group: 'categorization', value: value });
             }
         },
         school_assignment: {
@@ -46823,103 +47063,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             set(value) {
                 this.$store.commit('proposition/updateProposition', { key: 'school_subject_detailed', group: 'categorization', value: value });
             }
-        },
-        biblioteca: {
-            get() {
-                return this.$store.state.proposition.proposition.categorization.biblioteca;
-            },
-            set(value) {
-                this.$store.commit('proposition/updateProposition', { key: 'biblioteca', group: 'categorization', value: value });
-            }
-        },
-        note: {
-            get() {
-                return this.$store.state.proposition.proposition.categorization.note;
-            },
-            set(value) {
-                this.$store.commit('proposition/updateProposition', { key: 'note', group: 'categorization', value: value });
-            }
         }
     },
-    methods: {
-        test: function () {
-            console.log("test");
-        }
-    }
-});
-
-/***/ }),
-/* 164 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__partials_FooterButtons_vue__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__partials_FooterButtons_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__partials_FooterButtons_vue__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    data: function () {
-        return {};
-    },
-    computed: {},
-    components: {
-        'footer-buttons': __WEBPACK_IMPORTED_MODULE_0__partials_FooterButtons_vue___default.a
-    },
-    methods: {},
-    mounted: function () {
-        $('.mdb-select').material_select();
-        this.$store.commit('proposition/updateProposition', { key: 'step', value: 10 });
-    }
+    methods: {}
 });
 
 /***/ }),
@@ -46962,20 +47108,41 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function () {
         return {};
     },
-    computed: {},
+    computed: {
+        deadline() {
+            return this.$deepModel('proposition.proposition.deadline');
+        }
+    },
     components: {
         'footer-buttons': __WEBPACK_IMPORTED_MODULE_0__partials_FooterButtons_vue___default.a
     },
     methods: {},
     mounted: function () {
-        $('.mdb-select').material_select();
-        this.$store.commit('proposition/updateProposition', { key: 'step', value: 8 });
+        $('.datepicker').pickadate();
+        this.$store.commit('proposition/updateProposition', { key: 'step', value: 10 });
     }
 });
 
@@ -47019,6 +47186,66 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function () {
+        return {};
+    },
+    computed: {
+        distribution() {
+            return this.$deepModel('proposition.proposition.distribution_expense');
+        }
+    },
+    components: {
+        'footer-buttons': __WEBPACK_IMPORTED_MODULE_0__partials_FooterButtons_vue___default.a
+    },
+    methods: {},
+    mounted: function () {
+        this.$store.commit('proposition/updateProposition', { key: 'step', value: 8 });
+    }
+});
+
+/***/ }),
+/* 167 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__partials_FooterButtons_vue__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__partials_FooterButtons_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__partials_FooterButtons_vue__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -47104,7 +47331,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function () {
         return {};
     },
-    computed: {},
+    computed: {
+        layout() {
+            return this.$deepModel('proposition.proposition.layout_expense');
+        }
+    },
     components: {
         'footer-buttons': __WEBPACK_IMPORTED_MODULE_0__partials_FooterButtons_vue___default.a
     },
@@ -47116,7 +47347,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 167 */
+/* 168 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -47173,29 +47404,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         'footer-buttons': __WEBPACK_IMPORTED_MODULE_0__partials_FooterButtons_vue___default.a
     },
     computed: {
-        note: {
-            get() {
-                return this.$store.state.proposition.proposition.market_potential.note;
-            },
-            set(value) {
-                this.$store.commit('proposition/updateProposition', { key: 'note', group: 'market_potential', value: value });
-            }
-        },
-        main_target: {
-            get() {
-                return this.$store.state.proposition.proposition.market_potential.main_target;
-            },
-            set(value) {
-                this.$store.commit('proposition/updateProposition', { key: 'main_target', group: 'market_potential', value: value });
-            }
-        },
-        market_potential_documents: {
-            get() {
-                return this.$store.state.proposition.proposition.market_potential.market_potential_documents;
-            },
-            set(value) {
-                this.$store.commit('proposition/updateProposition', { key: 'market_potential_documents', group: 'market_potential', value: value });
-            }
+        market_potential() {
+            return this.$deepModel('proposition.proposition.market_potential');
         }
     },
     mounted: function () {
@@ -47204,7 +47414,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 168 */
+/* 169 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -47254,24 +47464,39 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
+//TODO: fix deepset
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function () {
         return {};
     },
-    computed: {},
+    computed: {
+        expenses() {
+            return this.$deepModel('proposition.proposition.marketing_expense');
+        },
+        total: function () {
+            return _.sumBy(this.expenses, function (o) {
+                return parseFloat(o.ammount);
+            });
+        }
+    },
     components: {
         'footer-buttons': __WEBPACK_IMPORTED_MODULE_0__partials_FooterButtons_vue___default.a
     },
-    methods: {},
+    methods: {
+        addExpense: function () {
+            //let expenses = this.expenses;
+            this.expenses.push({ ammount: 0, note: '' });
+            // this.vueSet(this.expenses, expenses);
+        }
+    },
     mounted: function () {
-        $('.mdb-select').material_select();
         this.$store.commit('proposition/updateProposition', { key: 'step', value: 7 });
     }
 });
 
 /***/ }),
-/* 169 */
+/* 170 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -47361,7 +47586,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 170 */
+/* 171 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -47575,9 +47800,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     components: {
         'footer-buttons': __WEBPACK_IMPORTED_MODULE_0__partials_FooterButtons_vue___default.a
     },
-    computed: __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1_vuex__["b" /* mapState */])({
-        offers: state => state.proposition.proposition.print.offers
-    }),
+    computed: {
+        offers() {
+            return this.$deepModel('proposition.proposition.print.offers');
+        }
+    },
     methods: {
         switchTab: function (e) {
             $(e.target).tab('show');
@@ -47589,21 +47816,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             //TODO: make request to download offer, probably save first :)
         },
         changeInput: function (e, field, id) {
-            console.log(id);
-            console.log(this.$store.state.proposition.proposition.print.offers[id]);
             this.$store.commit('proposition/updateOffer', { id: id, field: field, value: e.target.value });
         }
     },
     mounted: function () {
         this.$store.commit('proposition/updateProposition', { key: 'step', value: 4 });
         this.$store.dispatch('proposition/initOffers').then(function () {
+            $('.mdb-select').material_select('destroy');
             $('.mdb-select').material_select();
         });
     }
 });
 
 /***/ }),
-/* 171 */
+/* 172 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -47917,239 +48143,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {};
     },
     computed: {
-        note: {
-            get() {
-                return this.$store.state.proposition.proposition.production_expense.note;
-            },
-            set(value) {
-                this.$store.commit('proposition/updateProposition', { key: 'note', group: 'production_expense', value: value });
-            }
-        },
-        text_price: {
-            get() {
-                return this.$store.state.proposition.proposition.production_expense.text_price;
-            },
-            set(value) {
-                this.$store.commit('proposition/updateProposition', { key: 'text_price', group: 'production_expense', value: value });
-            }
-        },
-        text_price_amount: {
-            get() {
-                return this.$store.state.proposition.proposition.production_expense.text_price_amount;
-            },
-            set(value) {
-                this.$store.commit('proposition/updateProposition', { key: 'text_price_amount', group: 'production_expense', value: value });
-            }
-        },
-        accontation: {
-            get() {
-                return this.$store.state.proposition.proposition.production_expense.accontation;
-            },
-            set(value) {
-                this.$store.commit('proposition/updateProposition', { key: 'accontation', group: 'production_expense', value: value });
-            }
-        },
-        netto_price_percentage: {
-            get() {
-                return this.$store.state.proposition.proposition.production_expense.netto_price_percentage;
-            },
-            set(value) {
-                this.$store.commit('proposition/updateProposition', { key: 'netto_price_percentage', group: 'production_expense', value: value });
-            }
-        },
-        reviews: {
-            get() {
-                return this.$store.state.proposition.proposition.production_expense.reviews;
-            },
-            set(value) {
-                this.$store.commit('proposition/updateProposition', { key: 'reviews', group: 'production_expense', value: value });
-            }
-        },
-        lecture: {
-            get() {
-                return this.$store.state.proposition.proposition.production_expense.lecture;
-            },
-            set(value) {
-                this.$store.commit('proposition/updateProposition', { key: 'lecture', group: 'production_expense', value: value });
-            }
-        },
-        lecture_amount: {
-            get() {
-                return this.$store.state.proposition.proposition.production_expense.lecture_amount;
-            },
-            set(value) {
-                this.$store.commit('proposition/updateProposition', { key: 'lecture_amount', group: 'production_expense', value: value });
-            }
-        },
-        correction_amount: {
-            get() {
-                return this.$store.state.proposition.proposition.production_expense.correction_amount;
-            },
-            set(value) {
-                this.$store.commit('proposition/updateProposition', { key: 'correction_amount', group: 'production_expense', value: value });
-            }
-        },
-        correction: {
-            get() {
-                return this.$store.state.proposition.proposition.production_expense.correction;
-            },
-            set(value) {
-                this.$store.commit('proposition/updateProposition', { key: 'correction', group: 'production_expense', value: value });
-            }
-        },
-        translation: {
-            get() {
-                return this.$store.state.proposition.proposition.production_expense.translation;
-            },
-            set(value) {
-                this.$store.commit('proposition/updateProposition', { key: 'translation', group: 'production_expense', value: value });
-            }
-        },
-        translation_amount: {
-            get() {
-                return this.$store.state.proposition.proposition.production_expense.translation_amount;
-            },
-            set(value) {
-                this.$store.commit('proposition/updateProposition', { key: 'translation_amount', group: 'production_expense', value: value });
-            }
-        },
-        proofreading: {
-            get() {
-                return this.$store.state.proposition.proposition.production_expense.proofreading;
-            },
-            set(value) {
-                this.$store.commit('proposition/updateProposition', { key: 'proofreading', group: 'production_expense', value: value });
-            }
-        },
-        proofreading_amount: {
-            get() {
-                return this.$store.state.proposition.proposition.production_expense.proofreading_amount;
-            },
-            set(value) {
-                this.$store.commit('proposition/updateProposition', { key: 'proofreading_amount', group: 'production_expense', value: value });
-            }
-        },
-        index: {
-            get() {
-                return this.$store.state.proposition.proposition.production_expense.index;
-            },
-            set(value) {
-                this.$store.commit('proposition/updateProposition', { key: 'index', group: 'production_expense', value: value });
-            }
-        },
-        index_amount: {
-            get() {
-                return this.$store.state.proposition.proposition.production_expense.index_amount;
-            },
-            set(value) {
-                this.$store.commit('proposition/updateProposition', { key: 'index_amount', group: 'production_expense', value: value });
-            }
-        },
-        reviews2: {
-            get() {
-                return this.$store.state.proposition.proposition.production_expense.reviews2;
-            },
-            set(value) {
-                this.$store.commit('proposition/updateProposition', { key: 'reviews2', group: 'production_expense', value: value });
-            }
-        },
-        photos: {
-            get() {
-                return this.$store.state.proposition.proposition.production_expense.photos;
-            },
-            set(value) {
-                this.$store.commit('proposition/updateProposition', { key: 'photos', group: 'production_expense', value: value });
-            }
-        },
-        photos_amount: {
-            get() {
-                return this.$store.state.proposition.proposition.production_expense.photos_amount;
-            },
-            set(value) {
-                this.$store.commit('proposition/updateProposition', { key: 'photos_amount', group: 'production_expense', value: value });
-            }
-        },
-        illustrations: {
-            get() {
-                return this.$store.state.proposition.proposition.production_expense.illustrations;
-            },
-            set(value) {
-                this.$store.commit('proposition/updateProposition', { key: 'illustrations', group: 'production_expense', value: value });
-            }
-        },
-        illustrations_amount: {
-            get() {
-                return this.$store.state.proposition.proposition.production_expense.illustrations_amount;
-            },
-            set(value) {
-                this.$store.commit('proposition/updateProposition', { key: 'illustrations_amount', group: 'production_expense', value: value });
-            }
-        },
-        technical_drawings: {
-            get() {
-                return this.$store.state.proposition.proposition.production_expense.technical_drawings;
-            },
-            set(value) {
-                this.$store.commit('proposition/updateProposition', { key: 'technical_drawings', group: 'production_expense', value: value });
-            }
-        },
-        technical_drawings_amount: {
-            get() {
-                return this.$store.state.proposition.proposition.production_expense.technical_drawings_amount;
-            },
-            set(value) {
-                this.$store.commit('proposition/updateProposition', { key: 'technical_drawings_amount', group: 'production_expense', value: value });
-            }
-        },
-        expert_report: {
-            get() {
-                return this.$store.state.proposition.proposition.production_expense.expert_report;
-            },
-            set(value) {
-                this.$store.commit('proposition/updateProposition', { key: 'expert_report', group: 'production_expense', value: value });
-            }
-        },
-        copyright: {
-            get() {
-                return this.$store.state.proposition.proposition.production_expense.copyright;
-            },
-            set(value) {
-                this.$store.commit('proposition/updateProposition', { key: 'copyright', group: 'production_expense', value: value });
-            }
-        },
-        copyright_mediator: {
-            get() {
-                return this.$store.state.proposition.proposition.production_expense.copyright_mediator;
-            },
-            set(value) {
-                this.$store.commit('proposition/updateProposition', { key: 'copyright_mediator', group: 'production_expense', value: value });
-            }
-        },
-        selection: {
-            get() {
-                return this.$store.state.proposition.proposition.production_expense.selection;
-            },
-            set(value) {
-                this.$store.commit('proposition/updateProposition', { key: 'selection', group: 'production_expense', value: value });
-            }
-        },
-        powerpoint_presentation: {
-            get() {
-                return this.$store.state.proposition.proposition.production_expense.powerpoint_presentation;
-            },
-            set(value) {
-                this.$store.commit('proposition/updateProposition', { key: 'powerpoint_presentation', group: 'production_expense', value: value });
-            }
-        },
-        methodical_instrumentarium: {
-            get() {
-                return this.$store.state.proposition.proposition.production_expense.methodical_instrumentarium;
-            },
-            set(value) {
-                this.$store.commit('proposition/updateProposition', { key: 'methodical_instrumentarium', group: 'production_expense', value: value });
-            }
+        expense() {
+            return this.$deepModel('proposition.proposition.print.production_expense');
         }
-
     },
     methods: {},
     mounted: function () {
@@ -48158,7 +48154,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 172 */
+/* 173 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -48380,149 +48376,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         'footer-buttons': __WEBPACK_IMPORTED_MODULE_0__partials_FooterButtons_vue___default.a
     },
     computed: {
-        circulations: {
-            get() {
-                return this.$store.state.proposition.proposition.technical_data.circulations;
-            },
-            set(value) {
-                this.$store.commit('proposition/updateProposition', { key: 'circulations', group: 'technical_data', value: value });
-            }
-        },
-        additions: {
-            get() {
-                return this.$store.state.proposition.proposition.technical_data.additions;
-            },
-            set(value) {
-                this.$store.commit('proposition/updateProposition', { key: 'additions', group: 'technical_data', value: value });
-            }
-        },
-        number_of_pages: {
-            get() {
-                return this.$store.state.proposition.proposition.technical_data.number_of_pages;
-            },
-            set(value) {
-                this.$store.commit('proposition/updateProposition', { key: 'number_of_pages', group: 'technical_data', value: value });
-            }
-        },
-        width: {
-            get() {
-                return this.$store.state.proposition.proposition.technical_data.width;
-            },
-            set(value) {
-                this.$store.commit('proposition/updateProposition', { key: 'width', group: 'technical_data', value: value });
-            }
-        },
-        height: {
-            get() {
-                return this.$store.state.proposition.proposition.technical_data.height;
-            },
-            set(value) {
-                this.$store.commit('proposition/updateProposition', { key: 'height', group: 'technical_data', value: value });
-            }
-        },
-        paper_type: {
-            get() {
-                return this.$store.state.proposition.proposition.technical_data.paper_type;
-            },
-            set(value) {
-                this.$store.commit('proposition/updateProposition', { key: 'paper_type', group: 'technical_data', value: value });
-            }
-        },
-        additional_work: {
-            get() {
-                return this.$store.state.proposition.proposition.technical_data.additional_work;
-            },
-            set(value) {
-                this.$store.commit('proposition/updateProposition', { key: 'additional_work', group: 'technical_data', value: value });
-            }
-        },
-        colors: {
-            get() {
-                return this.$store.state.proposition.proposition.technical_data.colors;
-            },
-            set(value) {
-                this.$store.commit('proposition/updateProposition', { key: 'colors', group: 'technical_data', value: value });
-            }
-        },
-        colors_first_page: {
-            get() {
-                return this.$store.state.proposition.proposition.technical_data.colors_first_page;
-            },
-            set(value) {
-                this.$store.commit('proposition/updateProposition', { key: 'colors_first_page', group: 'technical_data', value: value });
-            }
-        },
-        colors_last_page: {
-            get() {
-                return this.$store.state.proposition.proposition.technical_data.colors_last_page;
-            },
-            set(value) {
-                this.$store.commit('proposition/updateProposition', { key: 'colors_last_page', group: 'technical_data', value: value });
-            }
-        },
-        cover_type: {
-            get() {
-                return this.$store.state.proposition.proposition.technical_data.cover_type;
-            },
-            set(value) {
-                this.$store.commit('proposition/updateProposition', { key: 'cover_type', group: 'technical_data', value: value });
-            }
-        },
-        cover_paper_type: {
-            get() {
-                return this.$store.state.proposition.proposition.technical_data.cover_paper_type;
-            },
-            set(value) {
-                this.$store.commit('proposition/updateProposition', { key: 'cover_paper_type', group: 'technical_data', value: value });
-            }
-        },
-        cover_colors: {
-            get() {
-                return this.$store.state.proposition.proposition.technical_data.cover_colors;
-            },
-            set(value) {
-                this.$store.commit('proposition/updateProposition', { key: 'cover_colors', group: 'technical_data', value: value });
-            }
-        },
-        cover_plastification: {
-            get() {
-                return this.$store.state.proposition.proposition.technical_data.cover_plastification;
-            },
-            set(value) {
-                this.$store.commit('proposition/updateProposition', { key: 'cover_plastification', group: 'technical_data', value: value });
-            }
-        },
-        film_print: {
-            get() {
-                return this.$store.state.proposition.proposition.technical_data.film_print;
-            },
-            set(value) {
-                this.$store.commit('proposition/updateProposition', { key: 'film_print', group: 'technical_data', value: value });
-            }
-        },
-        blind_print: {
-            get() {
-                return this.$store.state.proposition.proposition.technical_data.blind_print;
-            },
-            set(value) {
-                this.$store.commit('proposition/updateProposition', { key: 'blind_print', group: 'technical_data', value: value });
-            }
-        },
-        uv_film: {
-            get() {
-                return this.$store.state.proposition.proposition.technical_data.uv_film;
-            },
-            set(value) {
-                this.$store.commit('proposition/updateProposition', { key: 'uv_film', group: 'technical_data', value: value });
-            }
-        },
-        note: {
-            get() {
-                return this.$store.state.proposition.proposition.technical_data.note;
-            },
-            set(value) {
-                this.$store.commit('proposition/updateProposition', { key: 'note', group: 'technical_data', value: value });
-            }
+        technical_data() {
+            return this.$deepModel('proposition.proposition.technical_data');
         }
     },
     methods: {
@@ -48546,13 +48401,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     },
     mounted: function () {
+        $('.mdb-select').material_select('destroy');
         $('.mdb-select').material_select();
         this.$store.commit('proposition/updateProposition', { key: 'step', value: 3 });
     }
 });
 
 /***/ }),
-/* 173 */
+/* 174 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -48573,7 +48429,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 174 */
+/* 175 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -48731,7 +48587,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 175 */
+/* 176 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -48766,19 +48622,19 @@ window.axios.defaults.headers.common = {
 // });
 
 /***/ }),
-/* 176 */
+/* 177 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_proposition_BasicData_vue__ = __webpack_require__(132);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_proposition_BasicData_vue__ = __webpack_require__(133);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_proposition_BasicData_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_proposition_BasicData_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_proposition_Categorization_vue__ = __webpack_require__(133);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_proposition_Categorization_vue__ = __webpack_require__(134);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_proposition_Categorization_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_proposition_Categorization_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_proposition_MarketPotential_vue__ = __webpack_require__(134);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_proposition_MarketPotential_vue__ = __webpack_require__(135);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_proposition_MarketPotential_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_proposition_MarketPotential_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_proposition_TechnicalData_vue__ = __webpack_require__(135);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_proposition_TechnicalData_vue__ = __webpack_require__(136);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_proposition_TechnicalData_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_proposition_TechnicalData_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_proposition_AuthorsExpense_vue__ = __webpack_require__(131);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_proposition_AuthorsExpense_vue__ = __webpack_require__(132);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_proposition_AuthorsExpense_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_proposition_AuthorsExpense_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_proposition_Print_vue__ = __webpack_require__(194);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_proposition_Print_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__components_proposition_Print_vue__);
@@ -48818,7 +48674,7 @@ const routes = [{ path: '/proposition/basic_data', component: __WEBPACK_IMPORTED
 
 
 /***/ }),
-/* 177 */
+/* 178 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -48928,10 +48784,20 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 powerpoint_presentation: 0,
                 methodical_instrumentarium: 0
             },
-            marketing_expense: {},
-            distribution_expense: {},
+            marketing_expense: [{
+                ammount: 0,
+                note: ''
+            }],
+            distribution_expense: {
+                note: '',
+                margin: ''
+            },
             layout_expense: {},
-            deadline: {},
+            deadline: {
+                date: '',
+                priority: '',
+                note: ''
+            },
             precalculation: {},
             calculation: {},
             work_order: {},
@@ -49060,16 +48926,16 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 });
 
 /***/ }),
-/* 178 */
+/* 179 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_deepset__ = __webpack_require__(182);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_deepset__ = __webpack_require__(131);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_deepset___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_vue_deepset__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modules_proposition__ = __webpack_require__(177);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modules_proposition__ = __webpack_require__(178);
 
 
 
@@ -49086,7 +48952,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
 }));
 
 /***/ }),
-/* 179 */
+/* 180 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, module) {var __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -49229,7 +49095,7 @@ var n=this.__index__>=this.__values__.length;return{done:n,value:n?F:this.__valu
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7), __webpack_require__(8)(module)))
 
 /***/ }),
-/* 180 */
+/* 181 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
@@ -49478,10 +49344,10 @@ webpackContext.keys = function webpackContextKeys() {
 };
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
-webpackContext.id = 180;
+webpackContext.id = 181;
 
 /***/ }),
-/* 181 */
+/* 182 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -49671,256 +49537,12 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 182 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, '__esModule', { value: true });
-
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
-
-var _ = _interopDefault(__webpack_require__(179));
-var Vue = _interopDefault(__webpack_require__(6));
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
-  return typeof obj;
-} : function (obj) {
-  return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-};
-
-/*
- * @author Branden Horiuchi <bhoriuchi@gmail.com>
- * @description Deep set Vue.js objects
- */
-var INVALID_KEY_RX = /^\d|[^a-zA-Z0-9_]/gm;
-
-/**
- * returns true if object is non empty object
- * @param obj
- * @returns {boolean|*}
- */
-function isHash(obj) {
-  return _.isObject(obj) && !_.isArray(obj) && !_.isDate(obj) && !_.isEmpty(obj);
-}
-
-/**
- * joins 2 paths
- * @param base
- * @param path
- * @returns {string}
- */
-function pathJoin(base, path) {
-  try {
-    var connector = path.match(/^\[/) ? '' : '.';
-    return '' + (base ? base : '') + (base ? connector : '') + path;
-  } catch (error) {
-    return '';
-  }
-}
-
-/**
- * generates an array of paths to use when creating an abstracted object
- * @param obj
- * @param current
- * @param paths
- * @returns {Array|*}
- */
-function getPaths(obj) {
-  var current = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
-  var paths = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
-
-  if (isHash(obj)) {
-    _.forEach(obj, function (val, key) {
-      var k = key.match(INVALID_KEY_RX) ? '["' + key + '"]' : '.' + key;
-      var cur = ('' + current + k).replace(/^\./, '');
-      paths.push(cur);
-      if (isHash(val)) getPaths(val, cur, paths);
-    });
-  }
-  return _.uniq(paths);
-}
-
-/**
- * converts a path string to one usable by deepModel
- * @param path
- * @returns {*}
- */
-function sanitizePath(path) {
-  if (!_.isString(path)) throw new Error('VueDeepSet: invalid path, must be string');
-
-  return _.reduce(_.toPath(path), function (pathString, part) {
-    var partStr = part.match(INVALID_KEY_RX) ? '["' + part + '"]' : '' + (pathString === '' ? '' : '.') + part;
-    return pathString + partStr;
-  }, '');
-}
-
-/**
- * deep sets a Vue.js object creating reactive properties if they do not exist
- * @param obj
- * @param path
- * @param value
- */
-function vueSet(obj, path, value) {
-  var fields = _.isArray(path) ? path : _.toPath(path);
-  for (var i = 0; i < fields.length; i++) {
-    var prop = fields[i];
-    if (i === fields.length - 1) Vue.set(obj, prop, value);else if (!_.has(obj, prop)) Vue.set(obj, prop, _.isNumber(prop) ? [] : {});
-    obj = obj[prop];
-  }
-}
-
-/**
- * deep sets a vuex object creating reactive properties if they do not exist
- * @param path
- * @param value
- */
-function vuexSet(path, value) {
-  var store = _.get(this, '$store');
-  if (!store) throw new Error('VueDeepSet: could not find vuex store object on instance');
-  store[store.commit ? 'commit' : 'dispatch']('VUEX_DEEP_SET', { path: path, value: value });
-}
-
-/**
- * vuex mutation to set an objects value at a specific path
- * @param state
- * @param args
- */
-function VUEX_DEEP_SET(state, args) {
-  vueSet(state, args.path, args.value);
-}
-
-/**
- * helper function to extend a mutation object
- * @param mutations
- * @returns {*}
- */
-function extendMutation() {
-  var mutations = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
-  return Object.assign(mutations, { VUEX_DEEP_SET: VUEX_DEEP_SET });
-}
-
-/**
- * returns an object that can deep set fields in a vuex store
- * @param vuexPath
- * @returns {{}}
- */
-function vuexModel(vuexPath) {
-  var _this = this;
-
-  if (!_.isString(vuexPath)) throw new Error('VueDeepSet: invalid vuex path string');
-
-  if ((typeof Proxy === 'undefined' ? 'undefined' : _typeof(Proxy)) === undefined) {
-    var model = {};
-    var obj = _.get(this.$store.state, vuexPath);
-    _.forEach(getPaths(obj), function (path) {
-      var propPath = pathJoin(vuexPath, path);
-      Object.defineProperty(model, path, {
-        configurable: true,
-        enumerable: true,
-        get: function get$$1() {
-          return _.get(_this.$store.state, propPath);
-        },
-        set: function set$$1(value) {
-          vuexSet.call(_this, propPath, value);
-        }
-      });
-    });
-    return model;
-  } else {
-    return new Proxy(_.get(this.$store.state, vuexPath, this.$store.state), {
-      get: function get$$1(target, property) {
-        return _.get(_this.$store.state, pathJoin(vuexPath, property));
-      },
-      set: function set$$1(target, property, value) {
-        vuexSet.call(_this, pathJoin(vuexPath, property), value);
-      },
-      has: function has(target, property) {
-        return true;
-      }
-    });
-  }
-}
-
-/**
- * returns an object that can deep set fields in a vue.js object
- * @param obj
- * @returns {Array}
- */
-function vueModel(obj) {
-  var _this2 = this;
-
-  if (!_.isObject(obj)) throw new Error('VueDeepSet: invalid object');
-
-  if (typeof Proxy === 'undefined') {
-    var model = {};
-    _.forEach(getPaths(obj), function (path) {
-      Object.defineProperty(model, path, {
-        configurable: true,
-        enumerable: true,
-        get: function get$$1() {
-          return _.get(obj, path);
-        },
-        set: function set$$1(value) {
-          vueSet.call(_this2, obj, path, value);
-        }
-      });
-    });
-    return model;
-  } else {
-    return new Proxy(obj, {
-      get: function get$$1(target, property) {
-        return _.get(target, property);
-      },
-      set: function set$$1(target, property, value) {
-        vueSet.call(_this2, target, property, value);
-      },
-      has: function has(target, property) {
-        return true;
-      }
-    });
-  }
-}
-
-/**
- * creates a vuex model if the arg is a string, vue model otherwise
- * @param arg
- * @returns {{}}
- */
-function deepModel(arg) {
-  return _.isString(arg) ? vuexModel.call(this, arg) : vueModel.call(this, arg);
-}
-
-/**
- * plugin
- * @param Vue
- */
-function install(Vue$$1) {
-  Vue$$1.prototype.$deepModel = deepModel;
-  Vue$$1.prototype.$vueSet = vueSet;
-  Vue$$1.prototype.$vuexSet = vuexSet;
-}
-
-exports.sanitizePath = sanitizePath;
-exports.vueSet = vueSet;
-exports.vuexSet = vuexSet;
-exports.VUEX_DEEP_SET = VUEX_DEEP_SET;
-exports.extendMutation = extendMutation;
-exports.vuexModel = vuexModel;
-exports.vueModel = vueModel;
-exports.deepModel = deepModel;
-exports.install = install;
-
-
-/***/ }),
 /* 183 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(155),
+  __webpack_require__(156),
   /* template */
   __webpack_require__(203),
   /* scopeId */
@@ -49954,7 +49576,7 @@ module.exports = Component.exports
 
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(156),
+  __webpack_require__(157),
   /* template */
   __webpack_require__(211),
   /* scopeId */
@@ -49988,7 +49610,7 @@ module.exports = Component.exports
 
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(157),
+  __webpack_require__(158),
   /* template */
   __webpack_require__(205),
   /* scopeId */
@@ -50022,7 +49644,7 @@ module.exports = Component.exports
 
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(158),
+  __webpack_require__(159),
   /* template */
   __webpack_require__(200),
   /* scopeId */
@@ -50056,7 +49678,7 @@ module.exports = Component.exports
 
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(159),
+  __webpack_require__(160),
   /* template */
   __webpack_require__(199),
   /* scopeId */
@@ -50090,7 +49712,7 @@ module.exports = Component.exports
 
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(162),
+  __webpack_require__(163),
   /* template */
   __webpack_require__(206),
   /* scopeId */
@@ -50124,7 +49746,7 @@ module.exports = Component.exports
 
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(164),
+  __webpack_require__(165),
   /* template */
   __webpack_require__(215),
   /* scopeId */
@@ -50158,7 +49780,7 @@ module.exports = Component.exports
 
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(165),
+  __webpack_require__(166),
   /* template */
   __webpack_require__(201),
   /* scopeId */
@@ -50192,7 +49814,7 @@ module.exports = Component.exports
 
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(166),
+  __webpack_require__(167),
   /* template */
   __webpack_require__(209),
   /* scopeId */
@@ -50226,7 +49848,7 @@ module.exports = Component.exports
 
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(168),
+  __webpack_require__(169),
   /* template */
   __webpack_require__(202),
   /* scopeId */
@@ -50260,7 +49882,7 @@ module.exports = Component.exports
 
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(169),
+  __webpack_require__(170),
   /* template */
   __webpack_require__(207),
   /* scopeId */
@@ -50294,7 +49916,7 @@ module.exports = Component.exports
 
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(170),
+  __webpack_require__(171),
   /* template */
   __webpack_require__(197),
   /* scopeId */
@@ -50328,7 +49950,7 @@ module.exports = Component.exports
 
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(171),
+  __webpack_require__(172),
   /* template */
   __webpack_require__(204),
   /* scopeId */
@@ -50362,7 +49984,7 @@ module.exports = Component.exports
 
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(173),
+  __webpack_require__(174),
   /* template */
   __webpack_require__(214),
   /* scopeId */
@@ -50449,17 +50071,30 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }, [_c('div', {
       staticClass: "md-form d-flex"
     }, [_c('input', {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: (_vm.offers[key + '[price]']),
+        expression: "offers[key+'[price]']"
+      }],
       staticClass: "form-control",
       attrs: {
         "type": "text",
         "placeholder": _vm.lang('In Kn')
       },
       domProps: {
-        "value": offer.price
+        "value": (_vm.offers[key + '[price]'])
       },
       on: {
         "input": function($event) {
-          _vm.changeInput($event, 'price', key)
+          if ($event.target.composing) { return; }
+          var $$exp = _vm.offers,
+            $$idx = key + '[price]';
+          if (!Array.isArray($$exp)) {
+            _vm.offers[key + '[price]'] = $event.target.value
+          } else {
+            $$exp.splice($$idx, 1, $event.target.value)
+          }
         }
       }
     }), _vm._v(" "), _c('label', [_vm._v(_vm._s(_vm.lang('Print offer')))]), _vm._v(" "), _c('span', {
@@ -51050,7 +50685,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "type": "button"
     }
-  }, [_vm._v(_vm._s(_vm.lang('Add')))])])]), _vm._v(" "), _vm._l((_vm.employees), function(employee) {
+  }, [_vm._v(_vm._s(_vm.lang('Add')))])])]), _vm._v(" "), _vm._l((_vm.assigned['employees']), function(employee) {
     return _c('div', {
       staticClass: "chip mb-1"
     }, [_c('img', {
@@ -51427,10 +51062,25 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('div', {
     staticClass: "md-form input-group d-flex addon"
   }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.distribution.margin),
+      expression: "distribution.margin"
+    }],
     staticClass: "form-control",
     attrs: {
       "type": "text",
       "id": "form1"
+    },
+    domProps: {
+      "value": (_vm.distribution.margin)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.distribution.margin = $event.target.value
+      }
     }
   }), _vm._v(" "), _c('label', {
     attrs: {
@@ -51445,10 +51095,24 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('div', {
     staticClass: "md-form mt-1"
   }, [_c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.distribution.note),
+      expression: "distribution.note"
+    }],
     staticClass: "md-textarea",
     attrs: {
-      "type": "text",
       "id": "form76"
+    },
+    domProps: {
+      "value": (_vm.distribution.note)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.distribution.note = $event.target.value
+      }
     }
   }), _vm._v(" "), _c('label', {
     attrs: {
@@ -51481,48 +51145,82 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "text-center no-border display-e"
   }, [_vm._v(_vm._s(_vm.lang('Total')))]), _vm._v(" "), _c('h1', {
     staticClass: "text-center display-2"
-  }, [_vm._v("0 kn")])]), _vm._v(" "), _c('div', {
-    staticClass: "page-name-l mt-1 mb-2"
-  }, [_vm._v(_vm._s(_vm.lang('Marketing Budget')))]), _vm._v(" "), _c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    staticClass: "col-md-5"
-  }, [_c('div', {
-    staticClass: "md-form input-group d-flex addon"
-  }, [_c('input', {
-    staticClass: "form-control",
-    attrs: {
-      "type": "text",
-      "id": "form1"
-    }
-  }), _vm._v(" "), _c('label', {
-    attrs: {
-      "for": "form1"
-    }
-  }, [_vm._v(_vm._s(_vm.lang('Expense')))]), _vm._v(" "), _c('span', {
-    staticClass: "input-group-addon"
-  }, [_vm._v(_vm._s(_vm.lang('Kn')))])])])]), _vm._v(" "), _c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    staticClass: "col-md-12"
-  }, [_c('div', {
-    staticClass: "md-form mt-1"
-  }, [_c('textarea', {
-    staticClass: "md-textarea",
-    attrs: {
-      "type": "text",
-      "id": "form76"
-    }
-  }), _vm._v(" "), _c('label', {
-    attrs: {
-      "for": "form76"
-    }
-  }, [_vm._v(_vm._s(_vm.lang('Note')))])])])])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.total) + " kn")])]), _vm._v(" "), _vm._l((_vm.expenses), function(item, index) {
+    return [_c('div', {
+      staticClass: "page-name-l mt-1 mb-2"
+    }, [_vm._v(_vm._s(_vm.lang('Marketing Budget')))]), _vm._v(" "), _c('div', {
+      staticClass: "row"
+    }, [_c('div', {
+      staticClass: "col-md-5"
+    }, [_c('div', {
+      staticClass: "md-form input-group d-flex addon"
+    }, [_c('input', {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: (item.ammount),
+        expression: "item.ammount"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        "type": "text",
+        "id": "form1"
+      },
+      domProps: {
+        "value": (item.ammount)
+      },
+      on: {
+        "input": function($event) {
+          if ($event.target.composing) { return; }
+          item.ammount = $event.target.value
+        }
+      }
+    }), _vm._v(" "), _c('label', {
+      attrs: {
+        "for": "form1"
+      }
+    }, [_vm._v(_vm._s(_vm.lang('Expense')))]), _vm._v(" "), _c('span', {
+      staticClass: "input-group-addon"
+    }, [_vm._v(_vm._s(_vm.lang('Kn')))])])])]), _vm._v(" "), _c('div', {
+      staticClass: "row"
+    }, [_c('div', {
+      staticClass: "col-md-12"
+    }, [_c('div', {
+      staticClass: "md-form mt-1"
+    }, [_c('textarea', {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: (item.note),
+        expression: "item.note"
+      }],
+      staticClass: "md-textarea",
+      attrs: {
+        "id": "form76"
+      },
+      domProps: {
+        "value": (item.note)
+      },
+      on: {
+        "input": function($event) {
+          if ($event.target.composing) { return; }
+          item.note = $event.target.value
+        }
+      }
+    }), _vm._v(" "), _c('label', {
+      attrs: {
+        "for": "form76"
+      }
+    }, [_vm._v(_vm._s(_vm.lang('Note')))])])])])]
+  })], 2)]), _vm._v(" "), _c('div', {
     staticClass: "page-name-l mb-1"
   }, [_vm._v(_vm._s(_vm.lang('Add Expenses')))]), _vm._v(" "), _c('button', {
     staticClass: "btn btn-neutral btn-addon",
     attrs: {
       "type": "button"
+    },
+    on: {
+      "click": _vm.addExpense
     }
   }, [_vm._v(_vm._s(_vm.lang('Add New Expense')))]), _vm._v(" "), _c('footer-buttons')], 1)
 },staticRenderFns: []}
@@ -51631,12 +51329,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('input', {
     directives: [{
       name: "model",
-      rawName: "v-model.number",
-      value: (_vm.text_price),
-      expression: "text_price",
-      modifiers: {
-        "number": true
-      }
+      rawName: "v-model",
+      value: (_vm.expense['text_price']),
+      expression: "expense['text_price']"
     }],
     staticClass: "form-control",
     attrs: {
@@ -51644,15 +51339,18 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "id": "text-price"
     },
     domProps: {
-      "value": (_vm.text_price)
+      "value": (_vm.expense['text_price'])
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.text_price = _vm._n($event.target.value)
-      },
-      "blur": function($event) {
-        _vm.$forceUpdate()
+        var $$exp = _vm.expense,
+          $$idx = 'text_price';
+        if (!Array.isArray($$exp)) {
+          _vm.expense['text_price'] = $event.target.value
+        } else {
+          $$exp.splice($$idx, 1, $event.target.value)
+        }
       }
     }
   }), _vm._v(" "), _c('label', {
@@ -51668,12 +51366,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('input', {
     directives: [{
       name: "model",
-      rawName: "v-model.number",
-      value: (_vm.text_price_amount),
-      expression: "text_price_amount",
-      modifiers: {
-        "number": true
-      }
+      rawName: "v-model",
+      value: (_vm.expense['text_price_amount']),
+      expression: "expense['text_price_amount']"
     }],
     staticClass: "form-control",
     attrs: {
@@ -51681,15 +51376,18 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "id": "text-price-amount"
     },
     domProps: {
-      "value": (_vm.text_price_amount)
+      "value": (_vm.expense['text_price_amount'])
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.text_price_amount = _vm._n($event.target.value)
-      },
-      "blur": function($event) {
-        _vm.$forceUpdate()
+        var $$exp = _vm.expense,
+          $$idx = 'text_price_amount';
+        if (!Array.isArray($$exp)) {
+          _vm.expense['text_price_amount'] = $event.target.value
+        } else {
+          $$exp.splice($$idx, 1, $event.target.value)
+        }
       }
     }
   }), _vm._v(" "), _c('label', {
@@ -51700,14 +51398,14 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "col-md-3"
   }, [_c('div', [_c('label', [_vm._v(_vm._s(_vm.lang('Total')))]), _vm._v(" "), _c('div', {
     staticClass: "total-sty color-nav-sub"
-  }, [_vm._v(_vm._s(_vm.text_price * _vm.text_price_amount) + " kn")])])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.expense['text_price'] * _vm.expense['text_price_amount']) + " kn")])])])]), _vm._v(" "), _c('div', {
     staticClass: "md-form input-group"
   }, [_c('input', {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.accontation),
-      expression: "accontation"
+      value: (_vm.expense['accontation']),
+      expression: "expense['accontation']"
     }],
     staticClass: "form-control",
     attrs: {
@@ -51715,12 +51413,18 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "id": "accontation"
     },
     domProps: {
-      "value": (_vm.accontation)
+      "value": (_vm.expense['accontation'])
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.accontation = $event.target.value
+        var $$exp = _vm.expense,
+          $$idx = 'accontation';
+        if (!Array.isArray($$exp)) {
+          _vm.expense['accontation'] = $event.target.value
+        } else {
+          $$exp.splice($$idx, 1, $event.target.value)
+        }
       }
     }
   }), _vm._v(" "), _c('label', {
@@ -51735,8 +51439,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.netto_price_percentage),
-      expression: "netto_price_percentage"
+      value: (_vm.expense['netto_price_percentage']),
+      expression: "expense['netto_price_percentage']"
     }],
     staticClass: "form-control",
     attrs: {
@@ -51744,12 +51448,18 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "id": "netto-price-percentage"
     },
     domProps: {
-      "value": (_vm.netto_price_percentage)
+      "value": (_vm.expense['netto_price_percentage'])
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.netto_price_percentage = $event.target.value
+        var $$exp = _vm.expense,
+          $$idx = 'netto_price_percentage';
+        if (!Array.isArray($$exp)) {
+          _vm.expense['netto_price_percentage'] = $event.target.value
+        } else {
+          $$exp.splice($$idx, 1, $event.target.value)
+        }
       }
     }
   }), _vm._v(" "), _c('label', {
@@ -51764,8 +51474,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.reviews),
-      expression: "reviews"
+      value: (_vm.expense['reviews']),
+      expression: "expense['reviews']"
     }],
     staticClass: "form-control",
     attrs: {
@@ -51773,12 +51483,18 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "id": "reviews"
     },
     domProps: {
-      "value": (_vm.reviews)
+      "value": (_vm.expense['reviews'])
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.reviews = $event.target.value
+        var $$exp = _vm.expense,
+          $$idx = 'reviews';
+        if (!Array.isArray($$exp)) {
+          _vm.expense['reviews'] = $event.target.value
+        } else {
+          $$exp.splice($$idx, 1, $event.target.value)
+        }
       }
     }
   }), _vm._v(" "), _c('label', {
@@ -51797,8 +51513,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.lecture),
-      expression: "lecture"
+      value: (_vm.expense['lecture']),
+      expression: "expense['lecture']"
     }],
     staticClass: "form-control",
     attrs: {
@@ -51806,12 +51522,18 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "id": "lecture"
     },
     domProps: {
-      "value": (_vm.lecture)
+      "value": (_vm.expense['lecture'])
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.lecture = $event.target.value
+        var $$exp = _vm.expense,
+          $$idx = 'lecture';
+        if (!Array.isArray($$exp)) {
+          _vm.expense['lecture'] = $event.target.value
+        } else {
+          $$exp.splice($$idx, 1, $event.target.value)
+        }
       }
     }
   }), _vm._v(" "), _c('label', {
@@ -51828,8 +51550,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.lecture_amount),
-      expression: "lecture_amount"
+      value: (_vm.expense['lecture_amount']),
+      expression: "expense['lecture_amount']"
     }],
     staticClass: "form-control",
     attrs: {
@@ -51837,12 +51559,18 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "id": "lecture-amount"
     },
     domProps: {
-      "value": (_vm.lecture_amount)
+      "value": (_vm.expense['lecture_amount'])
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.lecture_amount = $event.target.value
+        var $$exp = _vm.expense,
+          $$idx = 'lecture_amount';
+        if (!Array.isArray($$exp)) {
+          _vm.expense['lecture_amount'] = $event.target.value
+        } else {
+          $$exp.splice($$idx, 1, $event.target.value)
+        }
       }
     }
   }), _vm._v(" "), _c('label', {
@@ -51853,7 +51581,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "col-md-3"
   }, [_c('div', {}, [_c('label', [_vm._v(_vm._s(_vm.lang('Total')))]), _vm._v(" "), _c('div', {
     staticClass: "total-sty color-nav-sub"
-  }, [_vm._v(_vm._s(_vm.lecture * _vm.lecture_amount) + " kn")])])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.expense['lecture'] * _vm.expense['lecture_amount']) + " kn")])])])]), _vm._v(" "), _c('div', {
     staticClass: "row"
   }, [_c('div', {
     staticClass: "col-md-5"
@@ -51863,8 +51591,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.correction),
-      expression: "correction"
+      value: (_vm.expense['correction']),
+      expression: "expense['correction']"
     }],
     staticClass: "form-control",
     attrs: {
@@ -51872,12 +51600,18 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "id": "correction"
     },
     domProps: {
-      "value": (_vm.correction)
+      "value": (_vm.expense['correction'])
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.correction = $event.target.value
+        var $$exp = _vm.expense,
+          $$idx = 'correction';
+        if (!Array.isArray($$exp)) {
+          _vm.expense['correction'] = $event.target.value
+        } else {
+          $$exp.splice($$idx, 1, $event.target.value)
+        }
       }
     }
   }), _vm._v(" "), _c('label', {
@@ -51894,8 +51628,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.correction_amount),
-      expression: "correction_amount"
+      value: (_vm.expense['correction_amount']),
+      expression: "expense['correction_amount']"
     }],
     staticClass: "form-control",
     attrs: {
@@ -51903,12 +51637,18 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "id": "correction-amount"
     },
     domProps: {
-      "value": (_vm.correction_amount)
+      "value": (_vm.expense['correction_amount'])
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.correction_amount = $event.target.value
+        var $$exp = _vm.expense,
+          $$idx = 'correction_amount';
+        if (!Array.isArray($$exp)) {
+          _vm.expense['correction_amount'] = $event.target.value
+        } else {
+          $$exp.splice($$idx, 1, $event.target.value)
+        }
       }
     }
   }), _vm._v(" "), _c('label', {
@@ -51919,7 +51659,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "col-md-3"
   }, [_c('div', {}, [_c('label', [_vm._v(_vm._s(_vm.lang('Total')))]), _vm._v(" "), _c('div', {
     staticClass: "total-sty color-nav-sub"
-  }, [_vm._v(_vm._s(_vm.correction * _vm.correction_amount) + " kn")])])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.expense['correction'] * _vm.expense['correction_amount']) + " kn")])])])]), _vm._v(" "), _c('div', {
     staticClass: "row"
   }, [_c('div', {
     staticClass: "col-md-5"
@@ -51929,8 +51669,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.proofreading),
-      expression: "proofreading"
+      value: (_vm.expense['proofreading']),
+      expression: "expense['proofreading']"
     }],
     staticClass: "form-control",
     attrs: {
@@ -51938,12 +51678,18 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "id": "proofreading"
     },
     domProps: {
-      "value": (_vm.proofreading)
+      "value": (_vm.expense['proofreading'])
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.proofreading = $event.target.value
+        var $$exp = _vm.expense,
+          $$idx = 'proofreading';
+        if (!Array.isArray($$exp)) {
+          _vm.expense['proofreading'] = $event.target.value
+        } else {
+          $$exp.splice($$idx, 1, $event.target.value)
+        }
       }
     }
   }), _vm._v(" "), _c('label', {
@@ -51960,8 +51706,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.proofreading_amount),
-      expression: "proofreading_amount"
+      value: (_vm.expense['proofreading_amount']),
+      expression: "expense['proofreading_amount']"
     }],
     staticClass: "form-control",
     attrs: {
@@ -51969,12 +51715,18 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "id": "proofreading-amount"
     },
     domProps: {
-      "value": (_vm.proofreading_amount)
+      "value": (_vm.expense['proofreading_amount'])
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.proofreading_amount = $event.target.value
+        var $$exp = _vm.expense,
+          $$idx = 'proofreading_amount';
+        if (!Array.isArray($$exp)) {
+          _vm.expense['proofreading_amount'] = $event.target.value
+        } else {
+          $$exp.splice($$idx, 1, $event.target.value)
+        }
       }
     }
   }), _vm._v(" "), _c('label', {
@@ -51985,7 +51737,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "col-md-3"
   }, [_c('div', {}, [_c('label', [_vm._v(_vm._s(_vm.lang('Total')))]), _vm._v(" "), _c('div', {
     staticClass: "total-sty color-nav-sub"
-  }, [_vm._v(_vm._s(_vm.proofreading * _vm.proofreading_amount) + " kn")])])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.expense['proofreading'] * _vm.expense['proofreading_amount']) + " kn")])])])]), _vm._v(" "), _c('div', {
     staticClass: "row"
   }, [_c('div', {
     staticClass: "col-md-5"
@@ -51995,8 +51747,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.translation),
-      expression: "translation"
+      value: (_vm.expense['translation']),
+      expression: "expense['translation']"
     }],
     staticClass: "form-control",
     attrs: {
@@ -52004,12 +51756,18 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "id": "translation"
     },
     domProps: {
-      "value": (_vm.translation)
+      "value": (_vm.expense['translation'])
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.translation = $event.target.value
+        var $$exp = _vm.expense,
+          $$idx = 'translation';
+        if (!Array.isArray($$exp)) {
+          _vm.expense['translation'] = $event.target.value
+        } else {
+          $$exp.splice($$idx, 1, $event.target.value)
+        }
       }
     }
   }), _vm._v(" "), _c('label', {
@@ -52026,8 +51784,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.translation_amount),
-      expression: "translation_amount"
+      value: (_vm.expense['translation_amount']),
+      expression: "expense['translation_amount']"
     }],
     staticClass: "form-control",
     attrs: {
@@ -52035,12 +51793,18 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "id": "translation-amount"
     },
     domProps: {
-      "value": (_vm.translation_amount)
+      "value": (_vm.expense['translation_amount'])
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.translation_amount = $event.target.value
+        var $$exp = _vm.expense,
+          $$idx = 'translation_amount';
+        if (!Array.isArray($$exp)) {
+          _vm.expense['translation_amount'] = $event.target.value
+        } else {
+          $$exp.splice($$idx, 1, $event.target.value)
+        }
       }
     }
   }), _vm._v(" "), _c('label', {
@@ -52051,7 +51815,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "col-md-3"
   }, [_c('div', {}, [_c('label', [_vm._v(_vm._s(_vm.lang('Total')))]), _vm._v(" "), _c('div', {
     staticClass: "total-sty color-nav-sub"
-  }, [_vm._v(_vm._s(_vm.translation * _vm.translation_amount) + " kn")])])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.expense['translation'] * _vm.expense['translation_amount']) + " kn")])])])]), _vm._v(" "), _c('div', {
     staticClass: "row"
   }, [_c('div', {
     staticClass: "col-md-5"
@@ -52061,8 +51825,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.index),
-      expression: "index"
+      value: (_vm.expense['index']),
+      expression: "expense['index']"
     }],
     staticClass: "form-control",
     attrs: {
@@ -52070,12 +51834,18 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "id": "index"
     },
     domProps: {
-      "value": (_vm.index)
+      "value": (_vm.expense['index'])
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.index = $event.target.value
+        var $$exp = _vm.expense,
+          $$idx = 'index';
+        if (!Array.isArray($$exp)) {
+          _vm.expense['index'] = $event.target.value
+        } else {
+          $$exp.splice($$idx, 1, $event.target.value)
+        }
       }
     }
   }), _vm._v(" "), _c('label', {
@@ -52092,8 +51862,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.index_amount),
-      expression: "index_amount"
+      value: (_vm.expense['index_amount']),
+      expression: "expense['index_amount']"
     }],
     staticClass: "form-control",
     attrs: {
@@ -52101,12 +51871,18 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "id": "index-amount"
     },
     domProps: {
-      "value": (_vm.index_amount)
+      "value": (_vm.expense['index_amount'])
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.index_amount = $event.target.value
+        var $$exp = _vm.expense,
+          $$idx = 'index_amount';
+        if (!Array.isArray($$exp)) {
+          _vm.expense['index_amount'] = $event.target.value
+        } else {
+          $$exp.splice($$idx, 1, $event.target.value)
+        }
       }
     }
   }), _vm._v(" "), _c('label', {
@@ -52117,14 +51893,14 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "col-md-3"
   }, [_c('div', {}, [_c('label', [_vm._v(_vm._s(_vm.lang('Total')))]), _vm._v(" "), _c('div', {
     staticClass: "total-sty color-nav-sub"
-  }, [_vm._v(_vm._s(_vm.index * _vm.index_amount) + " kn")])])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.expense['index'] * _vm.expense['index_amount']) + " kn")])])])]), _vm._v(" "), _c('div', {
     staticClass: "md-form input-group"
   }, [_c('input', {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.reviews2),
-      expression: "reviews2"
+      value: (_vm.expense['reviews2']),
+      expression: "expense['reviews2']"
     }],
     staticClass: "form-control",
     attrs: {
@@ -52132,12 +51908,18 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "id": "reviews2"
     },
     domProps: {
-      "value": (_vm.reviews2)
+      "value": (_vm.expense['reviews2'])
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.reviews2 = $event.target.value
+        var $$exp = _vm.expense,
+          $$idx = 'reviews2';
+        if (!Array.isArray($$exp)) {
+          _vm.expense['reviews2'] = $event.target.value
+        } else {
+          $$exp.splice($$idx, 1, $event.target.value)
+        }
       }
     }
   }), _vm._v(" "), _c('label', {
@@ -52160,8 +51942,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.photos),
-      expression: "photos"
+      value: (_vm.expense['photos']),
+      expression: "expense['photos']"
     }],
     staticClass: "form-control",
     attrs: {
@@ -52169,12 +51951,18 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "id": "photos"
     },
     domProps: {
-      "value": (_vm.photos)
+      "value": (_vm.expense['photos'])
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.photos = $event.target.value
+        var $$exp = _vm.expense,
+          $$idx = 'photos';
+        if (!Array.isArray($$exp)) {
+          _vm.expense['photos'] = $event.target.value
+        } else {
+          $$exp.splice($$idx, 1, $event.target.value)
+        }
       }
     }
   }), _vm._v(" "), _c('label', {
@@ -52191,8 +51979,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.photos_amount),
-      expression: "photos_amount"
+      value: (_vm.expense['photos_amount']),
+      expression: "expense['photos_amount']"
     }],
     staticClass: "form-control",
     attrs: {
@@ -52200,12 +51988,18 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "id": "photos-amount"
     },
     domProps: {
-      "value": (_vm.photos_amount)
+      "value": (_vm.expense['photos_amount'])
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.photos_amount = $event.target.value
+        var $$exp = _vm.expense,
+          $$idx = 'photos_amount';
+        if (!Array.isArray($$exp)) {
+          _vm.expense['photos_amount'] = $event.target.value
+        } else {
+          $$exp.splice($$idx, 1, $event.target.value)
+        }
       }
     }
   }), _vm._v(" "), _c('label', {
@@ -52216,7 +52010,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "col-md-3"
   }, [_c('div', {}, [_c('label', [_vm._v(_vm._s(_vm.lang('Total')))]), _vm._v(" "), _c('div', {
     staticClass: "total-sty color-nav-sub"
-  }, [_vm._v(_vm._s(_vm.photos * _vm.photos_amount) + " kn")])])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.expense['photos'] * _vm.expense['photos_amount']) + " kn")])])])]), _vm._v(" "), _c('div', {
     staticClass: "row"
   }, [_c('div', {
     staticClass: "col-md-5"
@@ -52226,8 +52020,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.illustrations),
-      expression: "illustrations"
+      value: (_vm.expense['illustrations']),
+      expression: "expense['illustrations']"
     }],
     staticClass: "form-control",
     attrs: {
@@ -52235,12 +52029,18 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "id": "illustrations"
     },
     domProps: {
-      "value": (_vm.illustrations)
+      "value": (_vm.expense['illustrations'])
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.illustrations = $event.target.value
+        var $$exp = _vm.expense,
+          $$idx = 'illustrations';
+        if (!Array.isArray($$exp)) {
+          _vm.expense['illustrations'] = $event.target.value
+        } else {
+          $$exp.splice($$idx, 1, $event.target.value)
+        }
       }
     }
   }), _vm._v(" "), _c('label', {
@@ -52257,8 +52057,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.illustrations_amount),
-      expression: "illustrations_amount"
+      value: (_vm.expense['illustrations_amount']),
+      expression: "expense['illustrations_amount']"
     }],
     staticClass: "form-control",
     attrs: {
@@ -52266,12 +52066,18 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "id": "illustrations-amount"
     },
     domProps: {
-      "value": (_vm.illustrations_amount)
+      "value": (_vm.expense['illustrations_amount'])
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.illustrations_amount = $event.target.value
+        var $$exp = _vm.expense,
+          $$idx = 'illustrations_amount';
+        if (!Array.isArray($$exp)) {
+          _vm.expense['illustrations_amount'] = $event.target.value
+        } else {
+          $$exp.splice($$idx, 1, $event.target.value)
+        }
       }
     }
   }), _vm._v(" "), _c('label', {
@@ -52282,7 +52088,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "col-md-3"
   }, [_c('div', {}, [_c('label', [_vm._v(_vm._s(_vm.lang('Total')))]), _vm._v(" "), _c('div', {
     staticClass: "total-sty color-nav-sub"
-  }, [_vm._v(_vm._s(_vm.illustrations * _vm.illustrations_amount) + " kn")])])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.expense['illustrations'] * _vm.expense['illustrations_amount']) + " kn")])])])]), _vm._v(" "), _c('div', {
     staticClass: "row"
   }, [_c('div', {
     staticClass: "col-md-5"
@@ -52292,8 +52098,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.technical_drawings),
-      expression: "technical_drawings"
+      value: (_vm.expense['technical_drawings']),
+      expression: "expense['technical_drawings']"
     }],
     staticClass: "form-control",
     attrs: {
@@ -52301,12 +52107,18 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "id": "technical-drawings"
     },
     domProps: {
-      "value": (_vm.technical_drawings)
+      "value": (_vm.expense['technical_drawings'])
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.technical_drawings = $event.target.value
+        var $$exp = _vm.expense,
+          $$idx = 'technical_drawings';
+        if (!Array.isArray($$exp)) {
+          _vm.expense['technical_drawings'] = $event.target.value
+        } else {
+          $$exp.splice($$idx, 1, $event.target.value)
+        }
       }
     }
   }), _vm._v(" "), _c('label', {
@@ -52323,8 +52135,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.technical_drawings_amount),
-      expression: "technical_drawings_amount"
+      value: (_vm.expense['technical_drawings_amount']),
+      expression: "expense['technical_drawings_amount']"
     }],
     staticClass: "form-control",
     attrs: {
@@ -52332,12 +52144,18 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "id": "technical-drawings-amount"
     },
     domProps: {
-      "value": (_vm.technical_drawings_amount)
+      "value": (_vm.expense['technical_drawings_amount'])
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.technical_drawings_amount = $event.target.value
+        var $$exp = _vm.expense,
+          $$idx = 'technical_drawings_amount';
+        if (!Array.isArray($$exp)) {
+          _vm.expense['technical_drawings_amount'] = $event.target.value
+        } else {
+          $$exp.splice($$idx, 1, $event.target.value)
+        }
       }
     }
   }), _vm._v(" "), _c('label', {
@@ -52348,14 +52166,14 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "col-md-3"
   }, [_c('div', {}, [_c('label', [_vm._v(_vm._s(_vm.lang('Total')))]), _vm._v(" "), _c('div', {
     staticClass: "total-sty color-nav-sub"
-  }, [_vm._v(_vm._s(_vm.technical_drawings * _vm.technical_drawings_amount) + " kn")])])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.expense['technical_drawings'] * _vm.expense['technical_drawings_amount']) + " kn")])])])]), _vm._v(" "), _c('div', {
     staticClass: "md-form input-group"
   }, [_c('input', {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.expert_report),
-      expression: "expert_report"
+      value: (_vm.expense['expert_report']),
+      expression: "expense['expert_report']"
     }],
     staticClass: "form-control",
     attrs: {
@@ -52363,12 +52181,18 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "id": "expert-report"
     },
     domProps: {
-      "value": (_vm.expert_report)
+      "value": (_vm.expense['expert_report'])
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.expert_report = $event.target.value
+        var $$exp = _vm.expense,
+          $$idx = 'expert_report';
+        if (!Array.isArray($$exp)) {
+          _vm.expense['expert_report'] = $event.target.value
+        } else {
+          $$exp.splice($$idx, 1, $event.target.value)
+        }
       }
     }
   }), _vm._v(" "), _c('label', {
@@ -52383,8 +52207,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.copyright),
-      expression: "copyright"
+      value: (_vm.expense['copyright']),
+      expression: "expense['copyright']"
     }],
     staticClass: "form-control",
     attrs: {
@@ -52392,12 +52216,18 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "id": "copyright"
     },
     domProps: {
-      "value": (_vm.copyright)
+      "value": (_vm.expense['copyright'])
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.copyright = $event.target.value
+        var $$exp = _vm.expense,
+          $$idx = 'copyright';
+        if (!Array.isArray($$exp)) {
+          _vm.expense['copyright'] = $event.target.value
+        } else {
+          $$exp.splice($$idx, 1, $event.target.value)
+        }
       }
     }
   }), _vm._v(" "), _c('label', {
@@ -52412,8 +52242,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.copyright_mediator),
-      expression: "copyright_mediator"
+      value: (_vm.expense['copyright_mediator']),
+      expression: "expense['copyright_mediator']"
     }],
     staticClass: "form-control",
     attrs: {
@@ -52421,12 +52251,18 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "id": "copyright-mediator"
     },
     domProps: {
-      "value": (_vm.copyright_mediator)
+      "value": (_vm.expense['copyright_mediator'])
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.copyright_mediator = $event.target.value
+        var $$exp = _vm.expense,
+          $$idx = 'copyright_mediator';
+        if (!Array.isArray($$exp)) {
+          _vm.expense['copyright_mediator'] = $event.target.value
+        } else {
+          $$exp.splice($$idx, 1, $event.target.value)
+        }
       }
     }
   }), _vm._v(" "), _c('label', {
@@ -52441,8 +52277,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.methodical_instrumentarium),
-      expression: "methodical_instrumentarium"
+      value: (_vm.expense['methodical_instrumentarium']),
+      expression: "expense['methodical_instrumentarium']"
     }],
     staticClass: "form-control",
     attrs: {
@@ -52450,12 +52286,18 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "id": "methodical-instrumentarium"
     },
     domProps: {
-      "value": (_vm.methodical_instrumentarium)
+      "value": (_vm.expense['methodical_instrumentarium'])
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.methodical_instrumentarium = $event.target.value
+        var $$exp = _vm.expense,
+          $$idx = 'methodical_instrumentarium';
+        if (!Array.isArray($$exp)) {
+          _vm.expense['methodical_instrumentarium'] = $event.target.value
+        } else {
+          $$exp.splice($$idx, 1, $event.target.value)
+        }
       }
     }
   }), _vm._v(" "), _c('label', {
@@ -52470,8 +52312,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.selection),
-      expression: "selection"
+      value: (_vm.expense['selection']),
+      expression: "expense['selection']"
     }],
     staticClass: "form-control",
     attrs: {
@@ -52479,12 +52321,18 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "id": "selection"
     },
     domProps: {
-      "value": (_vm.selection)
+      "value": (_vm.expense['selection'])
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.selection = $event.target.value
+        var $$exp = _vm.expense,
+          $$idx = 'selection';
+        if (!Array.isArray($$exp)) {
+          _vm.expense['selection'] = $event.target.value
+        } else {
+          $$exp.splice($$idx, 1, $event.target.value)
+        }
       }
     }
   }), _vm._v(" "), _c('label', {
@@ -52499,8 +52347,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.powerpoint_presentation),
-      expression: "powerpoint_presentation"
+      value: (_vm.expense['powerpoint_presentation']),
+      expression: "expense['powerpoint_presentation']"
     }],
     staticClass: "form-control",
     attrs: {
@@ -52508,12 +52356,18 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "id": "powerpoint-presentation"
     },
     domProps: {
-      "value": (_vm.powerpoint_presentation)
+      "value": (_vm.expense['powerpoint_presentation'])
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.powerpoint_presentation = $event.target.value
+        var $$exp = _vm.expense,
+          $$idx = 'powerpoint_presentation';
+        if (!Array.isArray($$exp)) {
+          _vm.expense['powerpoint_presentation'] = $event.target.value
+        } else {
+          $$exp.splice($$idx, 1, $event.target.value)
+        }
       }
     }
   }), _vm._v(" "), _c('label', {
@@ -52535,20 +52389,26 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.note),
-      expression: "note"
+      value: (_vm.expense['note']),
+      expression: "expense['note']"
     }],
     staticClass: "md-textarea",
     attrs: {
       "id": "form76"
     },
     domProps: {
-      "value": (_vm.note)
+      "value": (_vm.expense['note'])
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.note = $event.target.value
+        var $$exp = _vm.expense,
+          $$idx = 'note';
+        if (!Array.isArray($$exp)) {
+          _vm.expense['note'] = $event.target.value
+        } else {
+          $$exp.splice($$idx, 1, $event.target.value)
+        }
       }
     }
   }), _vm._v(" "), _c('label', {
@@ -53361,7 +53221,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('textarea', {
     staticClass: "md-textarea",
     attrs: {
-      "type": "text",
       "id": "form76"
     }
   }), _vm._v(" "), _c('label', {
@@ -53425,7 +53284,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('textarea', {
     staticClass: "md-textarea",
     attrs: {
-      "type": "text",
       "id": "form76"
     }
   }), _vm._v(" "), _c('label', {
@@ -54352,8 +54210,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.school_type),
-      expression: "school_type"
+      value: (_vm.categorization['school_type']),
+      expression: "categorization['school_type']"
     }],
     staticClass: "mdb-select",
     attrs: {
@@ -54367,7 +54225,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           var val = "_value" in o ? o._value : o.value;
           return val
         });
-        _vm.school_type = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+        var $$exp = _vm.categorization,
+          $$idx = 'school_type';
+        if (!Array.isArray($$exp)) {
+          _vm.categorization['school_type'] = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+        } else {
+          $$exp.splice($$idx, 1, $event.target.multiple ? $$selectedVal : $$selectedVal[0])
+        }
       }
     }
   }, [_c('option', {
@@ -54392,8 +54256,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.school_assignment),
-      expression: "school_assignment"
+      value: (_vm.categorization['school_assignment']),
+      expression: "categorization['school_assignment']"
     }],
     attrs: {
       "name": "sex",
@@ -54402,11 +54266,17 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": "yes"
     },
     domProps: {
-      "checked": _vm._q(_vm.school_assignment, "yes")
+      "checked": _vm._q(_vm.categorization['school_assignment'], "yes")
     },
     on: {
       "__c": function($event) {
-        _vm.school_assignment = "yes"
+        var $$exp = _vm.categorization,
+          $$idx = 'school_assignment';
+        if (!Array.isArray($$exp)) {
+          _vm.categorization['school_assignment'] = "yes"
+        } else {
+          $$exp.splice($$idx, 1, "yes")
+        }
       }
     }
   }), _vm._v(" "), _c('label', {
@@ -54419,8 +54289,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.school_assignment),
-      expression: "school_assignment"
+      value: (_vm.categorization['school_assignment']),
+      expression: "categorization['school_assignment']"
     }],
     attrs: {
       "name": "sex",
@@ -54429,11 +54299,17 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": "no"
     },
     domProps: {
-      "checked": _vm._q(_vm.school_assignment, "no")
+      "checked": _vm._q(_vm.categorization['school_assignment'], "no")
     },
     on: {
       "__c": function($event) {
-        _vm.school_assignment = "no"
+        var $$exp = _vm.categorization,
+          $$idx = 'school_assignment';
+        if (!Array.isArray($$exp)) {
+          _vm.categorization['school_assignment'] = "no"
+        } else {
+          $$exp.splice($$idx, 1, "no")
+        }
       }
     }
   }), _vm._v(" "), _c('label', {
@@ -54450,8 +54326,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.school_level),
-      expression: "school_level"
+      value: (_vm.categorization['school_level']),
+      expression: "categorization['school_level']"
     }],
     attrs: {
       "name": "sex",
@@ -54460,23 +54336,29 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": "1"
     },
     domProps: {
-      "checked": Array.isArray(_vm.school_level) ? _vm._i(_vm.school_level, "1") > -1 : (_vm.school_level)
+      "checked": Array.isArray(_vm.categorization['school_level']) ? _vm._i(_vm.categorization['school_level'], "1") > -1 : (_vm.categorization['school_level'])
     },
     on: {
       "__c": function($event) {
-        var $$a = _vm.school_level,
+        var $$a = _vm.categorization['school_level'],
           $$el = $event.target,
           $$c = $$el.checked ? (true) : (false);
         if (Array.isArray($$a)) {
           var $$v = "1",
             $$i = _vm._i($$a, $$v);
           if ($$c) {
-            $$i < 0 && (_vm.school_level = $$a.concat($$v))
+            $$i < 0 && (_vm.categorization['school_level'] = $$a.concat($$v))
           } else {
-            $$i > -1 && (_vm.school_level = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
+            $$i > -1 && (_vm.categorization['school_level'] = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
           }
         } else {
-          _vm.school_level = $$c
+          var $$exp = _vm.categorization,
+            $$idx = 'school_level';
+          if (!Array.isArray($$exp)) {
+            _vm.categorization['school_level'] = $$c
+          } else {
+            $$exp.splice($$idx, 1, $$c)
+          }
         }
       }
     }
@@ -54490,8 +54372,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.school_level),
-      expression: "school_level"
+      value: (_vm.categorization['school_level']),
+      expression: "categorization['school_level']"
     }],
     attrs: {
       "name": "sex",
@@ -54500,23 +54382,29 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": "2"
     },
     domProps: {
-      "checked": Array.isArray(_vm.school_level) ? _vm._i(_vm.school_level, "2") > -1 : (_vm.school_level)
+      "checked": Array.isArray(_vm.categorization['school_level']) ? _vm._i(_vm.categorization['school_level'], "2") > -1 : (_vm.categorization['school_level'])
     },
     on: {
       "__c": function($event) {
-        var $$a = _vm.school_level,
+        var $$a = _vm.categorization['school_level'],
           $$el = $event.target,
           $$c = $$el.checked ? (true) : (false);
         if (Array.isArray($$a)) {
           var $$v = "2",
             $$i = _vm._i($$a, $$v);
           if ($$c) {
-            $$i < 0 && (_vm.school_level = $$a.concat($$v))
+            $$i < 0 && (_vm.categorization['school_level'] = $$a.concat($$v))
           } else {
-            $$i > -1 && (_vm.school_level = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
+            $$i > -1 && (_vm.categorization['school_level'] = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
           }
         } else {
-          _vm.school_level = $$c
+          var $$exp = _vm.categorization,
+            $$idx = 'school_level';
+          if (!Array.isArray($$exp)) {
+            _vm.categorization['school_level'] = $$c
+          } else {
+            $$exp.splice($$idx, 1, $$c)
+          }
         }
       }
     }
@@ -54530,8 +54418,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.school_level),
-      expression: "school_level"
+      value: (_vm.categorization['school_level']),
+      expression: "categorization['school_level']"
     }],
     attrs: {
       "name": "sex",
@@ -54540,23 +54428,29 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": "3"
     },
     domProps: {
-      "checked": Array.isArray(_vm.school_level) ? _vm._i(_vm.school_level, "3") > -1 : (_vm.school_level)
+      "checked": Array.isArray(_vm.categorization['school_level']) ? _vm._i(_vm.categorization['school_level'], "3") > -1 : (_vm.categorization['school_level'])
     },
     on: {
       "__c": function($event) {
-        var $$a = _vm.school_level,
+        var $$a = _vm.categorization['school_level'],
           $$el = $event.target,
           $$c = $$el.checked ? (true) : (false);
         if (Array.isArray($$a)) {
           var $$v = "3",
             $$i = _vm._i($$a, $$v);
           if ($$c) {
-            $$i < 0 && (_vm.school_level = $$a.concat($$v))
+            $$i < 0 && (_vm.categorization['school_level'] = $$a.concat($$v))
           } else {
-            $$i > -1 && (_vm.school_level = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
+            $$i > -1 && (_vm.categorization['school_level'] = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
           }
         } else {
-          _vm.school_level = $$c
+          var $$exp = _vm.categorization,
+            $$idx = 'school_level';
+          if (!Array.isArray($$exp)) {
+            _vm.categorization['school_level'] = $$c
+          } else {
+            $$exp.splice($$idx, 1, $$c)
+          }
         }
       }
     }
@@ -54570,8 +54464,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.school_level),
-      expression: "school_level"
+      value: (_vm.categorization['school_level']),
+      expression: "categorization['school_level']"
     }],
     attrs: {
       "name": "sex",
@@ -54580,23 +54474,29 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": "4"
     },
     domProps: {
-      "checked": Array.isArray(_vm.school_level) ? _vm._i(_vm.school_level, "4") > -1 : (_vm.school_level)
+      "checked": Array.isArray(_vm.categorization['school_level']) ? _vm._i(_vm.categorization['school_level'], "4") > -1 : (_vm.categorization['school_level'])
     },
     on: {
       "__c": function($event) {
-        var $$a = _vm.school_level,
+        var $$a = _vm.categorization['school_level'],
           $$el = $event.target,
           $$c = $$el.checked ? (true) : (false);
         if (Array.isArray($$a)) {
           var $$v = "4",
             $$i = _vm._i($$a, $$v);
           if ($$c) {
-            $$i < 0 && (_vm.school_level = $$a.concat($$v))
+            $$i < 0 && (_vm.categorization['school_level'] = $$a.concat($$v))
           } else {
-            $$i > -1 && (_vm.school_level = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
+            $$i > -1 && (_vm.categorization['school_level'] = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
           }
         } else {
-          _vm.school_level = $$c
+          var $$exp = _vm.categorization,
+            $$idx = 'school_level';
+          if (!Array.isArray($$exp)) {
+            _vm.categorization['school_level'] = $$c
+          } else {
+            $$exp.splice($$idx, 1, $$c)
+          }
         }
       }
     }
@@ -54610,8 +54510,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.school_level),
-      expression: "school_level"
+      value: (_vm.categorization['school_level']),
+      expression: "categorization['school_level']"
     }],
     attrs: {
       "name": "sex",
@@ -54620,23 +54520,29 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": "5"
     },
     domProps: {
-      "checked": Array.isArray(_vm.school_level) ? _vm._i(_vm.school_level, "5") > -1 : (_vm.school_level)
+      "checked": Array.isArray(_vm.categorization['school_level']) ? _vm._i(_vm.categorization['school_level'], "5") > -1 : (_vm.categorization['school_level'])
     },
     on: {
       "__c": function($event) {
-        var $$a = _vm.school_level,
+        var $$a = _vm.categorization['school_level'],
           $$el = $event.target,
           $$c = $$el.checked ? (true) : (false);
         if (Array.isArray($$a)) {
           var $$v = "5",
             $$i = _vm._i($$a, $$v);
           if ($$c) {
-            $$i < 0 && (_vm.school_level = $$a.concat($$v))
+            $$i < 0 && (_vm.categorization['school_level'] = $$a.concat($$v))
           } else {
-            $$i > -1 && (_vm.school_level = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
+            $$i > -1 && (_vm.categorization['school_level'] = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
           }
         } else {
-          _vm.school_level = $$c
+          var $$exp = _vm.categorization,
+            $$idx = 'school_level';
+          if (!Array.isArray($$exp)) {
+            _vm.categorization['school_level'] = $$c
+          } else {
+            $$exp.splice($$idx, 1, $$c)
+          }
         }
       }
     }
@@ -54650,8 +54556,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.school_level),
-      expression: "school_level"
+      value: (_vm.categorization['school_level']),
+      expression: "categorization['school_level']"
     }],
     attrs: {
       "name": "sex",
@@ -54660,23 +54566,29 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": "6"
     },
     domProps: {
-      "checked": Array.isArray(_vm.school_level) ? _vm._i(_vm.school_level, "6") > -1 : (_vm.school_level)
+      "checked": Array.isArray(_vm.categorization['school_level']) ? _vm._i(_vm.categorization['school_level'], "6") > -1 : (_vm.categorization['school_level'])
     },
     on: {
       "__c": function($event) {
-        var $$a = _vm.school_level,
+        var $$a = _vm.categorization['school_level'],
           $$el = $event.target,
           $$c = $$el.checked ? (true) : (false);
         if (Array.isArray($$a)) {
           var $$v = "6",
             $$i = _vm._i($$a, $$v);
           if ($$c) {
-            $$i < 0 && (_vm.school_level = $$a.concat($$v))
+            $$i < 0 && (_vm.categorization['school_level'] = $$a.concat($$v))
           } else {
-            $$i > -1 && (_vm.school_level = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
+            $$i > -1 && (_vm.categorization['school_level'] = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
           }
         } else {
-          _vm.school_level = $$c
+          var $$exp = _vm.categorization,
+            $$idx = 'school_level';
+          if (!Array.isArray($$exp)) {
+            _vm.categorization['school_level'] = $$c
+          } else {
+            $$exp.splice($$idx, 1, $$c)
+          }
         }
       }
     }
@@ -54690,8 +54602,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.school_level),
-      expression: "school_level"
+      value: (_vm.categorization['school_level']),
+      expression: "categorization['school_level']"
     }],
     attrs: {
       "name": "sex",
@@ -54700,23 +54612,29 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": "7"
     },
     domProps: {
-      "checked": Array.isArray(_vm.school_level) ? _vm._i(_vm.school_level, "7") > -1 : (_vm.school_level)
+      "checked": Array.isArray(_vm.categorization['school_level']) ? _vm._i(_vm.categorization['school_level'], "7") > -1 : (_vm.categorization['school_level'])
     },
     on: {
       "__c": function($event) {
-        var $$a = _vm.school_level,
+        var $$a = _vm.categorization['school_level'],
           $$el = $event.target,
           $$c = $$el.checked ? (true) : (false);
         if (Array.isArray($$a)) {
           var $$v = "7",
             $$i = _vm._i($$a, $$v);
           if ($$c) {
-            $$i < 0 && (_vm.school_level = $$a.concat($$v))
+            $$i < 0 && (_vm.categorization['school_level'] = $$a.concat($$v))
           } else {
-            $$i > -1 && (_vm.school_level = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
+            $$i > -1 && (_vm.categorization['school_level'] = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
           }
         } else {
-          _vm.school_level = $$c
+          var $$exp = _vm.categorization,
+            $$idx = 'school_level';
+          if (!Array.isArray($$exp)) {
+            _vm.categorization['school_level'] = $$c
+          } else {
+            $$exp.splice($$idx, 1, $$c)
+          }
         }
       }
     }
@@ -54730,8 +54648,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.school_level),
-      expression: "school_level"
+      value: (_vm.categorization['school_level']),
+      expression: "categorization['school_level']"
     }],
     attrs: {
       "name": "sex",
@@ -54740,23 +54658,29 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": "8"
     },
     domProps: {
-      "checked": Array.isArray(_vm.school_level) ? _vm._i(_vm.school_level, "8") > -1 : (_vm.school_level)
+      "checked": Array.isArray(_vm.categorization['school_level']) ? _vm._i(_vm.categorization['school_level'], "8") > -1 : (_vm.categorization['school_level'])
     },
     on: {
       "__c": function($event) {
-        var $$a = _vm.school_level,
+        var $$a = _vm.categorization['school_level'],
           $$el = $event.target,
           $$c = $$el.checked ? (true) : (false);
         if (Array.isArray($$a)) {
           var $$v = "8",
             $$i = _vm._i($$a, $$v);
           if ($$c) {
-            $$i < 0 && (_vm.school_level = $$a.concat($$v))
+            $$i < 0 && (_vm.categorization['school_level'] = $$a.concat($$v))
           } else {
-            $$i > -1 && (_vm.school_level = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
+            $$i > -1 && (_vm.categorization['school_level'] = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
           }
         } else {
-          _vm.school_level = $$c
+          var $$exp = _vm.categorization,
+            $$idx = 'school_level';
+          if (!Array.isArray($$exp)) {
+            _vm.categorization['school_level'] = $$c
+          } else {
+            $$exp.splice($$idx, 1, $$c)
+          }
         }
       }
     }
@@ -54774,8 +54698,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.school_level),
-      expression: "school_level"
+      value: (_vm.categorization['school_level']),
+      expression: "categorization['school_level']"
     }],
     attrs: {
       "type": "checkbox",
@@ -54783,23 +54707,29 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": "1s"
     },
     domProps: {
-      "checked": Array.isArray(_vm.school_level) ? _vm._i(_vm.school_level, "1s") > -1 : (_vm.school_level)
+      "checked": Array.isArray(_vm.categorization['school_level']) ? _vm._i(_vm.categorization['school_level'], "1s") > -1 : (_vm.categorization['school_level'])
     },
     on: {
       "__c": function($event) {
-        var $$a = _vm.school_level,
+        var $$a = _vm.categorization['school_level'],
           $$el = $event.target,
           $$c = $$el.checked ? (true) : (false);
         if (Array.isArray($$a)) {
           var $$v = "1s",
             $$i = _vm._i($$a, $$v);
           if ($$c) {
-            $$i < 0 && (_vm.school_level = $$a.concat($$v))
+            $$i < 0 && (_vm.categorization['school_level'] = $$a.concat($$v))
           } else {
-            $$i > -1 && (_vm.school_level = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
+            $$i > -1 && (_vm.categorization['school_level'] = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
           }
         } else {
-          _vm.school_level = $$c
+          var $$exp = _vm.categorization,
+            $$idx = 'school_level';
+          if (!Array.isArray($$exp)) {
+            _vm.categorization['school_level'] = $$c
+          } else {
+            $$exp.splice($$idx, 1, $$c)
+          }
         }
       }
     }
@@ -54813,8 +54743,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.school_level),
-      expression: "school_level"
+      value: (_vm.categorization['school_level']),
+      expression: "categorization['school_level']"
     }],
     attrs: {
       "type": "checkbox",
@@ -54822,23 +54752,29 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": "2s"
     },
     domProps: {
-      "checked": Array.isArray(_vm.school_level) ? _vm._i(_vm.school_level, "2s") > -1 : (_vm.school_level)
+      "checked": Array.isArray(_vm.categorization['school_level']) ? _vm._i(_vm.categorization['school_level'], "2s") > -1 : (_vm.categorization['school_level'])
     },
     on: {
       "__c": function($event) {
-        var $$a = _vm.school_level,
+        var $$a = _vm.categorization['school_level'],
           $$el = $event.target,
           $$c = $$el.checked ? (true) : (false);
         if (Array.isArray($$a)) {
           var $$v = "2s",
             $$i = _vm._i($$a, $$v);
           if ($$c) {
-            $$i < 0 && (_vm.school_level = $$a.concat($$v))
+            $$i < 0 && (_vm.categorization['school_level'] = $$a.concat($$v))
           } else {
-            $$i > -1 && (_vm.school_level = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
+            $$i > -1 && (_vm.categorization['school_level'] = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
           }
         } else {
-          _vm.school_level = $$c
+          var $$exp = _vm.categorization,
+            $$idx = 'school_level';
+          if (!Array.isArray($$exp)) {
+            _vm.categorization['school_level'] = $$c
+          } else {
+            $$exp.splice($$idx, 1, $$c)
+          }
         }
       }
     }
@@ -54852,8 +54788,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.school_level),
-      expression: "school_level"
+      value: (_vm.categorization['school_level']),
+      expression: "categorization['school_level']"
     }],
     attrs: {
       "type": "checkbox",
@@ -54861,23 +54797,29 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": "3s"
     },
     domProps: {
-      "checked": Array.isArray(_vm.school_level) ? _vm._i(_vm.school_level, "3s") > -1 : (_vm.school_level)
+      "checked": Array.isArray(_vm.categorization['school_level']) ? _vm._i(_vm.categorization['school_level'], "3s") > -1 : (_vm.categorization['school_level'])
     },
     on: {
       "__c": function($event) {
-        var $$a = _vm.school_level,
+        var $$a = _vm.categorization['school_level'],
           $$el = $event.target,
           $$c = $$el.checked ? (true) : (false);
         if (Array.isArray($$a)) {
           var $$v = "3s",
             $$i = _vm._i($$a, $$v);
           if ($$c) {
-            $$i < 0 && (_vm.school_level = $$a.concat($$v))
+            $$i < 0 && (_vm.categorization['school_level'] = $$a.concat($$v))
           } else {
-            $$i > -1 && (_vm.school_level = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
+            $$i > -1 && (_vm.categorization['school_level'] = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
           }
         } else {
-          _vm.school_level = $$c
+          var $$exp = _vm.categorization,
+            $$idx = 'school_level';
+          if (!Array.isArray($$exp)) {
+            _vm.categorization['school_level'] = $$c
+          } else {
+            $$exp.splice($$idx, 1, $$c)
+          }
         }
       }
     }
@@ -54891,8 +54833,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.school_level),
-      expression: "school_level"
+      value: (_vm.categorization['school_level']),
+      expression: "categorization['school_level']"
     }],
     attrs: {
       "type": "checkbox",
@@ -54900,23 +54842,29 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": "4s"
     },
     domProps: {
-      "checked": Array.isArray(_vm.school_level) ? _vm._i(_vm.school_level, "4s") > -1 : (_vm.school_level)
+      "checked": Array.isArray(_vm.categorization['school_level']) ? _vm._i(_vm.categorization['school_level'], "4s") > -1 : (_vm.categorization['school_level'])
     },
     on: {
       "__c": function($event) {
-        var $$a = _vm.school_level,
+        var $$a = _vm.categorization['school_level'],
           $$el = $event.target,
           $$c = $$el.checked ? (true) : (false);
         if (Array.isArray($$a)) {
           var $$v = "4s",
             $$i = _vm._i($$a, $$v);
           if ($$c) {
-            $$i < 0 && (_vm.school_level = $$a.concat($$v))
+            $$i < 0 && (_vm.categorization['school_level'] = $$a.concat($$v))
           } else {
-            $$i > -1 && (_vm.school_level = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
+            $$i > -1 && (_vm.categorization['school_level'] = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
           }
         } else {
-          _vm.school_level = $$c
+          var $$exp = _vm.categorization,
+            $$idx = 'school_level';
+          if (!Array.isArray($$exp)) {
+            _vm.categorization['school_level'] = $$c
+          } else {
+            $$exp.splice($$idx, 1, $$c)
+          }
         }
       }
     }
@@ -54930,8 +54878,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.school_level),
-      expression: "school_level"
+      value: (_vm.categorization['school_level']),
+      expression: "categorization['school_level']"
     }],
     attrs: {
       "type": "checkbox",
@@ -54939,23 +54887,29 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": "5s"
     },
     domProps: {
-      "checked": Array.isArray(_vm.school_level) ? _vm._i(_vm.school_level, "5s") > -1 : (_vm.school_level)
+      "checked": Array.isArray(_vm.categorization['school_level']) ? _vm._i(_vm.categorization['school_level'], "5s") > -1 : (_vm.categorization['school_level'])
     },
     on: {
       "__c": function($event) {
-        var $$a = _vm.school_level,
+        var $$a = _vm.categorization['school_level'],
           $$el = $event.target,
           $$c = $$el.checked ? (true) : (false);
         if (Array.isArray($$a)) {
           var $$v = "5s",
             $$i = _vm._i($$a, $$v);
           if ($$c) {
-            $$i < 0 && (_vm.school_level = $$a.concat($$v))
+            $$i < 0 && (_vm.categorization['school_level'] = $$a.concat($$v))
           } else {
-            $$i > -1 && (_vm.school_level = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
+            $$i > -1 && (_vm.categorization['school_level'] = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
           }
         } else {
-          _vm.school_level = $$c
+          var $$exp = _vm.categorization,
+            $$idx = 'school_level';
+          if (!Array.isArray($$exp)) {
+            _vm.categorization['school_level'] = $$c
+          } else {
+            $$exp.splice($$idx, 1, $$c)
+          }
         }
       }
     }
@@ -55039,8 +54993,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.biblioteca),
-      expression: "biblioteca"
+      value: (_vm.categorization['biblioteca']),
+      expression: "categorization['biblioteca']"
     }],
     staticClass: "mdb-select",
     on: {
@@ -55051,7 +55005,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           var val = "_value" in o ? o._value : o.value;
           return val
         });
-        _vm.biblioteca = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+        var $$exp = _vm.categorization,
+          $$idx = 'biblioteca';
+        if (!Array.isArray($$exp)) {
+          _vm.categorization['biblioteca'] = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+        } else {
+          $$exp.splice($$idx, 1, $event.target.multiple ? $$selectedVal : $$selectedVal[0])
+        }
       }
     }
   }, [_c('option', {
@@ -55070,20 +55030,26 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.note),
-      expression: "note"
+      value: (_vm.categorization['note']),
+      expression: "categorization['note']"
     }],
     staticClass: "md-textarea",
     attrs: {
       "id": "categorization_note"
     },
     domProps: {
-      "value": (_vm.note)
+      "value": (_vm.categorization['note'])
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.note = $event.target.value
+        var $$exp = _vm.categorization,
+          $$idx = 'note';
+        if (!Array.isArray($$exp)) {
+          _vm.categorization['note'] = $event.target.value
+        } else {
+          $$exp.splice($$idx, 1, $event.target.value)
+        }
       }
     }
   }), _vm._v(" "), _c('label', {
@@ -55165,7 +55131,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": _vm.addCirculation
     }
-  }, [_vm._v(_vm._s(_vm.lang('Add')))])])])])]), _vm._v(" "), _vm._l((_vm.circulations), function(item) {
+  }, [_vm._v(_vm._s(_vm.lang('Add')))])])])])]), _vm._v(" "), _vm._l((_vm.technical_data['circulations']), function(item) {
     return _c('div', {
       key: item.id,
       staticClass: "chip mb-3"
@@ -55223,7 +55189,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": _vm.addAddition
     }
-  }, [_vm._v(_vm._s(_vm.lang('Add')))])])])])]), _vm._v(" "), _vm._l((_vm.additions), function(item) {
+  }, [_vm._v(_vm._s(_vm.lang('Add')))])])])])]), _vm._v(" "), _vm._l((_vm.technical_data['additions']), function(item) {
     return _c('div', {
       key: item.id,
       staticClass: "chip mb-3"
@@ -55247,8 +55213,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.number_of_pages),
-      expression: "number_of_pages"
+      value: (_vm.technical_data['number_of_pages']),
+      expression: "technical_data['number_of_pages']"
     }],
     staticClass: "form-control",
     attrs: {
@@ -55256,12 +55222,18 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "id": "form3"
     },
     domProps: {
-      "value": (_vm.number_of_pages)
+      "value": (_vm.technical_data['number_of_pages'])
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.number_of_pages = $event.target.value
+        var $$exp = _vm.technical_data,
+          $$idx = 'number_of_pages';
+        if (!Array.isArray($$exp)) {
+          _vm.technical_data['number_of_pages'] = $event.target.value
+        } else {
+          $$exp.splice($$idx, 1, $event.target.value)
+        }
       }
     }
   }), _vm._v(" "), _c('label', {
@@ -55278,8 +55250,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.width),
-      expression: "width"
+      value: (_vm.technical_data['width']),
+      expression: "technical_data['width']"
     }],
     staticClass: "form-control",
     attrs: {
@@ -55288,12 +55260,18 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "placeholder": _vm.lang('mm')
     },
     domProps: {
-      "value": (_vm.width)
+      "value": (_vm.technical_data['width'])
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.width = $event.target.value
+        var $$exp = _vm.technical_data,
+          $$idx = 'width';
+        if (!Array.isArray($$exp)) {
+          _vm.technical_data['width'] = $event.target.value
+        } else {
+          $$exp.splice($$idx, 1, $event.target.value)
+        }
       }
     }
   }), _vm._v(" "), _c('label', {
@@ -55308,8 +55286,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.height),
-      expression: "height"
+      value: (_vm.technical_data['height']),
+      expression: "technical_data['height']"
     }],
     staticClass: "form-control",
     attrs: {
@@ -55318,12 +55296,18 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "placeholder": _vm.lang('mm')
     },
     domProps: {
-      "value": (_vm.height)
+      "value": (_vm.technical_data['height'])
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.height = $event.target.value
+        var $$exp = _vm.technical_data,
+          $$idx = 'height';
+        if (!Array.isArray($$exp)) {
+          _vm.technical_data['height'] = $event.target.value
+        } else {
+          $$exp.splice($$idx, 1, $event.target.value)
+        }
       }
     }
   }), _vm._v(" "), _c('label', {
@@ -55336,8 +55320,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.paper_type),
-      expression: "paper_type"
+      value: (_vm.technical_data['paper_type']),
+      expression: "technical_data['paper_type']"
     }],
     staticClass: "form-control",
     attrs: {
@@ -55345,12 +55329,18 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "id": "form6"
     },
     domProps: {
-      "value": (_vm.paper_type)
+      "value": (_vm.technical_data['paper_type'])
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.paper_type = $event.target.value
+        var $$exp = _vm.technical_data,
+          $$idx = 'paper_type';
+        if (!Array.isArray($$exp)) {
+          _vm.technical_data['paper_type'] = $event.target.value
+        } else {
+          $$exp.splice($$idx, 1, $event.target.value)
+        }
       }
     }
   }), _vm._v(" "), _c('label', {
@@ -55365,8 +55355,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.colors),
-      expression: "colors"
+      value: (_vm.technical_data['colors']),
+      expression: "technical_data['colors']"
     }],
     staticClass: "mdb-select",
     on: {
@@ -55377,7 +55367,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           var val = "_value" in o ? o._value : o.value;
           return val
         });
-        _vm.colors = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+        var $$exp = _vm.technical_data,
+          $$idx = 'colors';
+        if (!Array.isArray($$exp)) {
+          _vm.technical_data['colors'] = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+        } else {
+          $$exp.splice($$idx, 1, $event.target.multiple ? $$selectedVal : $$selectedVal[0])
+        }
       }
     }
   }, [_c('option', {
@@ -55398,8 +55394,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.colors_first_page),
-      expression: "colors_first_page"
+      value: (_vm.technical_data['colors_first_page']),
+      expression: "technical_data['colors_first_page']"
     }],
     staticClass: "mdb-select",
     on: {
@@ -55410,7 +55406,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           var val = "_value" in o ? o._value : o.value;
           return val
         });
-        _vm.colors_first_page = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+        var $$exp = _vm.technical_data,
+          $$idx = 'colors_first_page';
+        if (!Array.isArray($$exp)) {
+          _vm.technical_data['colors_first_page'] = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+        } else {
+          $$exp.splice($$idx, 1, $event.target.multiple ? $$selectedVal : $$selectedVal[0])
+        }
       }
     }
   }, [_c('option', {
@@ -55431,8 +55433,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.colors_last_page),
-      expression: "colors_last_page"
+      value: (_vm.technical_data['colors_last_page']),
+      expression: "technical_data['colors_last_page']"
     }],
     staticClass: "mdb-select",
     on: {
@@ -55443,7 +55445,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           var val = "_value" in o ? o._value : o.value;
           return val
         });
-        _vm.colors_last_page = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+        var $$exp = _vm.technical_data,
+          $$idx = 'colors_last_page';
+        if (!Array.isArray($$exp)) {
+          _vm.technical_data['colors_last_page'] = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+        } else {
+          $$exp.splice($$idx, 1, $event.target.multiple ? $$selectedVal : $$selectedVal[0])
+        }
       }
     }
   }, [_c('option', {
@@ -55462,8 +55470,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.additional_work),
-      expression: "additional_work"
+      value: (_vm.technical_data['additional_work']),
+      expression: "technical_data['additional_work']"
     }],
     staticClass: "form-control",
     attrs: {
@@ -55471,12 +55479,18 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "id": "form7"
     },
     domProps: {
-      "value": (_vm.additional_work)
+      "value": (_vm.technical_data['additional_work'])
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.additional_work = $event.target.value
+        var $$exp = _vm.technical_data,
+          $$idx = 'additional_work';
+        if (!Array.isArray($$exp)) {
+          _vm.technical_data['additional_work'] = $event.target.value
+        } else {
+          $$exp.splice($$idx, 1, $event.target.value)
+        }
       }
     }
   }), _vm._v(" "), _c('label', {
@@ -55495,8 +55509,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.cover_type),
-      expression: "cover_type"
+      value: (_vm.technical_data['cover_type']),
+      expression: "technical_data['cover_type']"
     }],
     staticClass: "mdb-select",
     on: {
@@ -55507,7 +55521,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           var val = "_value" in o ? o._value : o.value;
           return val
         });
-        _vm.cover_type = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+        var $$exp = _vm.technical_data,
+          $$idx = 'cover_type';
+        if (!Array.isArray($$exp)) {
+          _vm.technical_data['cover_type'] = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+        } else {
+          $$exp.splice($$idx, 1, $event.target.multiple ? $$selectedVal : $$selectedVal[0])
+        }
       }
     }
   }, [_c('option', {
@@ -55538,20 +55558,26 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.cover_paper_type),
-      expression: "cover_paper_type"
+      value: (_vm.technical_data['cover_paper_type']),
+      expression: "technical_data['cover_paper_type']"
     }],
     staticClass: "form-control",
     attrs: {
       "type": "text"
     },
     domProps: {
-      "value": (_vm.cover_paper_type)
+      "value": (_vm.technical_data['cover_paper_type'])
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.cover_paper_type = $event.target.value
+        var $$exp = _vm.technical_data,
+          $$idx = 'cover_paper_type';
+        if (!Array.isArray($$exp)) {
+          _vm.technical_data['cover_paper_type'] = $event.target.value
+        } else {
+          $$exp.splice($$idx, 1, $event.target.value)
+        }
       }
     }
   })])]), _vm._v(" "), _c('div', {
@@ -55562,8 +55588,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.cover_colors),
-      expression: "cover_colors"
+      value: (_vm.technical_data['cover_colors']),
+      expression: "technical_data['cover_colors']"
     }],
     staticClass: "mdb-select",
     on: {
@@ -55574,7 +55600,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           var val = "_value" in o ? o._value : o.value;
           return val
         });
-        _vm.cover_colors = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+        var $$exp = _vm.technical_data,
+          $$idx = 'cover_colors';
+        if (!Array.isArray($$exp)) {
+          _vm.technical_data['cover_colors'] = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+        } else {
+          $$exp.splice($$idx, 1, $event.target.multiple ? $$selectedVal : $$selectedVal[0])
+        }
       }
     }
   }, [_c('option', {
@@ -55595,8 +55627,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.cover_plastification),
-      expression: "cover_plastification"
+      value: (_vm.technical_data['cover_plastification']),
+      expression: "technical_data['cover_plastification']"
     }],
     staticClass: "mdb-select",
     on: {
@@ -55607,7 +55639,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           var val = "_value" in o ? o._value : o.value;
           return val
         });
-        _vm.cover_plastification = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+        var $$exp = _vm.technical_data,
+          $$idx = 'cover_plastification';
+        if (!Array.isArray($$exp)) {
+          _vm.technical_data['cover_plastification'] = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+        } else {
+          $$exp.splice($$idx, 1, $event.target.multiple ? $$selectedVal : $$selectedVal[0])
+        }
       }
     }
   }, [_c('option', {
@@ -55636,8 +55674,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.film_print),
-      expression: "film_print"
+      value: (_vm.technical_data['film_print']),
+      expression: "technical_data['film_print']"
     }],
     attrs: {
       "name": "film",
@@ -55646,11 +55684,17 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": "no"
     },
     domProps: {
-      "checked": _vm._q(_vm.film_print, "no")
+      "checked": _vm._q(_vm.technical_data['film_print'], "no")
     },
     on: {
       "__c": function($event) {
-        _vm.film_print = "no"
+        var $$exp = _vm.technical_data,
+          $$idx = 'film_print';
+        if (!Array.isArray($$exp)) {
+          _vm.technical_data['film_print'] = "no"
+        } else {
+          $$exp.splice($$idx, 1, "no")
+        }
       }
     }
   }), _vm._v(" "), _c('label', {
@@ -55663,8 +55707,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.film_print),
-      expression: "film_print"
+      value: (_vm.technical_data['film_print']),
+      expression: "technical_data['film_print']"
     }],
     attrs: {
       "name": "film",
@@ -55673,11 +55717,17 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": "yes"
     },
     domProps: {
-      "checked": _vm._q(_vm.film_print, "yes")
+      "checked": _vm._q(_vm.technical_data['film_print'], "yes")
     },
     on: {
       "__c": function($event) {
-        _vm.film_print = "yes"
+        var $$exp = _vm.technical_data,
+          $$idx = 'film_print';
+        if (!Array.isArray($$exp)) {
+          _vm.technical_data['film_print'] = "yes"
+        } else {
+          $$exp.splice($$idx, 1, "yes")
+        }
       }
     }
   }), _vm._v(" "), _c('label', {
@@ -55694,8 +55744,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.blind_print),
-      expression: "blind_print"
+      value: (_vm.technical_data['blind_print']),
+      expression: "technical_data['blind_print']"
     }],
     attrs: {
       "name": "blind",
@@ -55704,11 +55754,17 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": "no"
     },
     domProps: {
-      "checked": _vm._q(_vm.blind_print, "no")
+      "checked": _vm._q(_vm.technical_data['blind_print'], "no")
     },
     on: {
       "__c": function($event) {
-        _vm.blind_print = "no"
+        var $$exp = _vm.technical_data,
+          $$idx = 'blind_print';
+        if (!Array.isArray($$exp)) {
+          _vm.technical_data['blind_print'] = "no"
+        } else {
+          $$exp.splice($$idx, 1, "no")
+        }
       }
     }
   }), _vm._v(" "), _c('label', {
@@ -55721,8 +55777,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.blind_print),
-      expression: "blind_print"
+      value: (_vm.technical_data['blind_print']),
+      expression: "technical_data['blind_print']"
     }],
     attrs: {
       "name": "blind",
@@ -55731,11 +55787,17 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": "yes"
     },
     domProps: {
-      "checked": _vm._q(_vm.blind_print, "yes")
+      "checked": _vm._q(_vm.technical_data['blind_print'], "yes")
     },
     on: {
       "__c": function($event) {
-        _vm.blind_print = "yes"
+        var $$exp = _vm.technical_data,
+          $$idx = 'blind_print';
+        if (!Array.isArray($$exp)) {
+          _vm.technical_data['blind_print'] = "yes"
+        } else {
+          $$exp.splice($$idx, 1, "yes")
+        }
       }
     }
   }), _vm._v(" "), _c('label', {
@@ -55752,8 +55814,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.uv_film),
-      expression: "uv_film"
+      value: (_vm.technical_data['uv_film']),
+      expression: "technical_data['uv_film']"
     }],
     attrs: {
       "name": "uv",
@@ -55762,11 +55824,17 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": "no"
     },
     domProps: {
-      "checked": _vm._q(_vm.uv_film, "no")
+      "checked": _vm._q(_vm.technical_data['uv_film'], "no")
     },
     on: {
       "__c": function($event) {
-        _vm.uv_film = "no"
+        var $$exp = _vm.technical_data,
+          $$idx = 'uv_film';
+        if (!Array.isArray($$exp)) {
+          _vm.technical_data['uv_film'] = "no"
+        } else {
+          $$exp.splice($$idx, 1, "no")
+        }
       }
     }
   }), _vm._v(" "), _c('label', {
@@ -55779,8 +55847,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.uv_film),
-      expression: "uv_film"
+      value: (_vm.technical_data['uv_film']),
+      expression: "technical_data['uv_film']"
     }],
     attrs: {
       "name": "uv",
@@ -55789,11 +55857,17 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": "yes"
     },
     domProps: {
-      "checked": _vm._q(_vm.uv_film, "yes")
+      "checked": _vm._q(_vm.technical_data['uv_film'], "yes")
     },
     on: {
       "__c": function($event) {
-        _vm.uv_film = "yes"
+        var $$exp = _vm.technical_data,
+          $$idx = 'uv_film';
+        if (!Array.isArray($$exp)) {
+          _vm.technical_data['uv_film'] = "yes"
+        } else {
+          $$exp.splice($$idx, 1, "yes")
+        }
       }
     }
   }), _vm._v(" "), _c('label', {
@@ -55806,20 +55880,26 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.note),
-      expression: "note"
+      value: (_vm.technical_data['note']),
+      expression: "technical_data['note']"
     }],
     staticClass: "md-textarea",
     attrs: {
       "id": "form76"
     },
     domProps: {
-      "value": (_vm.note)
+      "value": (_vm.technical_data['note'])
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.note = $event.target.value
+        var $$exp = _vm.technical_data,
+          $$idx = 'note';
+        if (!Array.isArray($$exp)) {
+          _vm.technical_data['note'] = $event.target.value
+        } else {
+          $$exp.splice($$idx, 1, $event.target.value)
+        }
       }
     }
   }), _vm._v(" "), _c('label', {
@@ -55871,11 +55951,26 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('div', {
     staticClass: "md-form"
   }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.deadline.date),
+      expression: "deadline.date"
+    }],
     staticClass: "form-control datepicker btn-white",
     attrs: {
       "placeholder": "Selected date",
       "type": "text",
       "id": "date-picker-example"
+    },
+    domProps: {
+      "value": (_vm.deadline.date)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.deadline.date = $event.target.value
+      }
     }
   }), _vm._v(" "), _c('label', {
     attrs: {
@@ -55888,12 +55983,25 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('fieldset', {
     staticClass: "form-group"
   }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.deadline.priority),
+      expression: "deadline.priority"
+    }],
     attrs: {
       "name": "sex",
       "type": "radio",
       "id": "radio11",
-      "value": "High",
-      "required": ""
+      "value": "High"
+    },
+    domProps: {
+      "checked": _vm._q(_vm.deadline.priority, "High")
+    },
+    on: {
+      "__c": function($event) {
+        _vm.deadline.priority = "High"
+      }
     }
   }), _vm._v(" "), _c('label', {
     attrs: {
@@ -55902,12 +56010,25 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v(_vm._s(_vm.lang('High')))])]), _vm._v(" "), _c('fieldset', {
     staticClass: "form-group"
   }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.deadline.priority),
+      expression: "deadline.priority"
+    }],
     attrs: {
       "name": "sex",
       "type": "radio",
       "id": "radio21",
-      "value": "Medium",
-      "required": ""
+      "value": "Medium"
+    },
+    domProps: {
+      "checked": _vm._q(_vm.deadline.priority, "Medium")
+    },
+    on: {
+      "__c": function($event) {
+        _vm.deadline.priority = "Medium"
+      }
     }
   }), _vm._v(" "), _c('label', {
     attrs: {
@@ -55916,12 +56037,25 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v(_vm._s(_vm.lang('Medium')))])]), _vm._v(" "), _c('fieldset', {
     staticClass: "form-group"
   }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.deadline.priority),
+      expression: "deadline.priority"
+    }],
     attrs: {
       "name": "sex",
       "type": "radio",
       "id": "radio31",
-      "value": "Low",
-      "required": ""
+      "value": "Low"
+    },
+    domProps: {
+      "checked": _vm._q(_vm.deadline.priority, "Low")
+    },
+    on: {
+      "__c": function($event) {
+        _vm.deadline.priority = "Low"
+      }
     }
   }), _vm._v(" "), _c('label', {
     attrs: {
@@ -55934,10 +56068,24 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('div', {
     staticClass: "md-form"
   }, [_c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.deadline.note),
+      expression: "deadline.note"
+    }],
     staticClass: "md-textarea",
     attrs: {
-      "type": "text",
       "id": "form76"
+    },
+    domProps: {
+      "value": (_vm.deadline.note)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.deadline.note = $event.target.value
+      }
     }
   }), _vm._v(" "), _c('label', {
     attrs: {
@@ -55970,8 +56118,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.main_target),
-      expression: "main_target"
+      value: (_vm.market_potential['main_target']),
+      expression: "market_potential['main_target']"
     }],
     staticClass: "form-control",
     attrs: {
@@ -55980,12 +56128,18 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "placeholder": _vm.lang('Title')
     },
     domProps: {
-      "value": (_vm.main_target)
+      "value": (_vm.market_potential['main_target'])
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.main_target = $event.target.value
+        var $$exp = _vm.market_potential,
+          $$idx = 'main_target';
+        if (!Array.isArray($$exp)) {
+          _vm.market_potential['main_target'] = $event.target.value
+        } else {
+          $$exp.splice($$idx, 1, $event.target.value)
+        }
       }
     }
   }), _vm._v(" "), _c('label', {
@@ -55998,20 +56152,26 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.note),
-      expression: "note"
+      value: (_vm.market_potential['note']),
+      expression: "market_potential['note']"
     }],
     staticClass: "md-textarea",
     attrs: {
       "id": "form76"
     },
     domProps: {
-      "value": (_vm.note)
+      "value": (_vm.market_potential['note'])
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.note = $event.target.value
+        var $$exp = _vm.market_potential,
+          $$idx = 'note';
+        if (!Array.isArray($$exp)) {
+          _vm.market_potential['note'] = $event.target.value
+        } else {
+          $$exp.splice($$idx, 1, $event.target.value)
+        }
       }
     }
   }), _vm._v(" "), _c('label', {
@@ -56027,7 +56187,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_vm._v(_vm._s(_vm.lang('Add Documents')))]), _vm._v(" "), _c('div', {
     staticClass: "files mt-2 mb-2"
-  }, _vm._l((_vm.market_potential_documents), function(item) {
+  }, _vm._l((_vm.market_potential['market_potential_documents']), function(item) {
     return _c('div', {
       staticClass: "file-box file-box-l d-flex align-items-center"
     }, [_c('a', {
@@ -58749,8 +58909,8 @@ function cloneRoute (to, from) {
 /* 220 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(136);
-module.exports = __webpack_require__(137);
+__webpack_require__(137);
+module.exports = __webpack_require__(138);
 
 
 /***/ })
