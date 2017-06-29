@@ -143,7 +143,7 @@ class BookSeeder extends Seeder {
 				'parent'      => '6', 'coefficient' => 40
 			],
 
-			[ 'name' => 'IGRAČKE', 'designation' => '07RR', 'parent' => '7' ],
+			[ 'name' => 'IGRAČKE', 'designation' => '07RR', 'parent' => '7', 'coefficient' => 60 ],
 			[
 				'name'        => 'Gift/pokloni',
 				'designation' => '08PP',
@@ -222,7 +222,7 @@ class BookSeeder extends Seeder {
 				'designation' => '12MI',
 				'parent'      => '12', 'coefficient' => 60
 			],
-			[ 'name' => 'Mobiteli', 'designation' => '12MM', 'parent' => '12' ],
+			[ 'name' => 'Mobiteli', 'designation' => '12MM', 'parent' => '12', 'coefficient' => 60 ],
 			[
 				'name'        => 'Računalna periferija',
 				'designation' => '12MP',
@@ -371,7 +371,7 @@ class BookSeeder extends Seeder {
 				'parent'      => '18', 'coefficient' => 0
 			],
 
-			[ 'name' => 'Bojanke', 'designation' => '02DN1', 'parent' => '19' ],
+			[ 'name' => 'Bojanke', 'designation' => '02DN1', 'parent' => '19', 'coefficient' => 60 ],
 			[
 				'name'        => 'Slikovnice sa naljepnicama',
 				'designation' => '02DN2',
