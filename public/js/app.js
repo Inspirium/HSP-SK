@@ -47027,7 +47027,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             set(value) {
                 this.$store.commit('proposition/updateProposition', { key: 'upgroup', group: 'categorization', value: value });
                 this.$store.commit('proposition/updateProposition', { key: 'group', group: 'categorization', value: 0 });
-                this.$store.commit('proposition/updateProposition', { key: 'group_text', group: 'categorization', value: '' });
+                this.$store.commit('proposition/updateProposition', { key: 'upgroup_coef', group: 'categorization', value: this.categories[this.supergroup].groups[value].coefficient });
             }
         },
         group: {
@@ -47366,7 +47366,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             return this.$deepModel('proposition.proposition.layout_expense');
         },
         number_of_hours() {
-            let category = this.$store.state.proposition.proposition.categorization.supergroup_coef / 60,
+            let category = this.$store.state.proposition.proposition.categorization.upgroup_coef / 60,
                 pages = this.technical.number_of_pages,
                 photos = this.production.photos_amount / 30,
                 illustrations = this.production.illustrations_amount / 30,
@@ -48798,8 +48798,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             categorization: {
                 supergroup: 0,
                 supergroup_text: '',
-                supergroup_coef: 0,
                 upgroup: 0,
+                upgroup_coef: 0,
                 group_text: '',
                 note: '',
                 book_type_group: 0,
