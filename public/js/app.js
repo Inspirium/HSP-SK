@@ -44459,6 +44459,20 @@ const router = new __WEBPACK_IMPORTED_MODULE_2_vue_router__["a" /* default */]({
 __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_6_vuex_router_sync__["sync"])(__WEBPACK_IMPORTED_MODULE_4__vuex_store__["a" /* default */], router);
 window.vueRouter = router;
 
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.filter('flexCurrency', function (value, currency, decimals) {
+    const digitsRE = /(\d{3})(?=\d)/g;
+    value = parseFloat(value);
+    if (!isFinite(value) || !value && value !== 0) return '0.00 kn';
+    currency = currency !== null ? currency : '$';
+    let stringified = Math.abs(value).toFixed(decimals);
+    let _int = stringified.slice(0, -1 - decimals);
+    let i = _int.length % 3;
+    let head = i > 0 ? _int.slice(0, i) + (_int.length > 3 ? ',' : '') : '';
+    let _float = stringified.slice(-1 - decimals);
+    let sign = value < 0 ? '-' : '';
+    return sign + head + _int.slice(i).replace(digitsRE, '$1,') + _float + currency;
+});
+
 const app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
     el: '#app',
     store: __WEBPACK_IMPORTED_MODULE_4__vuex_store__["a" /* default */],
@@ -47000,8 +47014,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             },
             set(value) {
                 this.$store.commit('proposition/updateProposition', { key: 'supergroup', group: 'categorization', value: value });
+                this.$store.commit('proposition/updateProposition', { key: 'supergroup_text', group: 'categorization', value: this.categories[value].name });
                 this.$store.commit('proposition/updateProposition', { key: 'upgroup', group: 'categorization', value: 0 });
                 this.$store.commit('proposition/updateProposition', { key: 'group', group: 'categorization', value: 0 });
+                this.$store.commit('proposition/updateProposition', { key: 'group_text', group: 'categorization', value: '' });
             }
         },
         upgroup: {
@@ -47011,6 +47027,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             set(value) {
                 this.$store.commit('proposition/updateProposition', { key: 'upgroup', group: 'categorization', value: value });
                 this.$store.commit('proposition/updateProposition', { key: 'group', group: 'categorization', value: 0 });
+                this.$store.commit('proposition/updateProposition', { key: 'group_text', group: 'categorization', value: '' });
             }
         },
         group: {
@@ -47019,6 +47036,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             },
             set(value) {
                 this.$store.commit('proposition/updateProposition', { key: 'group', group: 'categorization', value: value });
+                this.$store.commit('proposition/updateProposition', { key: 'group_text', group: 'categorization', value: this.categories[this.supergroup]['groups'][this.upgroup]['groups'][value].name });
             }
         },
 
@@ -47332,8 +47350,50 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {};
     },
     computed: {
+        supergroup_text() {
+            return this.$store.state.proposition.proposition.categorization.supergroup_text;
+        },
+        group_text() {
+            return this.$store.state.proposition.proposition.categorization.group_text;
+        },
+        technical() {
+            return this.$deepModel('proposition.proposition.technical_data');
+        },
+        production() {
+            return this.$deepModel('proposition.proposition.production_expense');
+        },
         layout() {
             return this.$deepModel('proposition.proposition.layout_expense');
+        },
+        number_of_hours() {
+            let category = this.$store.state.proposition.proposition.categorization.supergroup_coef / 60,
+                pages = this.technical.number_of_pages,
+                photos = this.production.photos_amount / 30,
+                illustrations = this.production.illustrations_amount / 30,
+                drawings = this.production.technical_drawings_amount / 30;
+            const complexity = {
+                1: 0.65,
+                2: 0.8,
+                3: 1,
+                4: 1.2,
+                5: 1.35
+            };
+            return (category * pages + photos + illustrations + drawings) * complexity[this.layout.layout_complexity];
+        },
+        layout_total() {
+            let price = 8000 / 175;
+            return this.number_of_hours * price;
+        },
+        design_total() {
+            let price = 15000 / 175;
+            const complexity = {
+                1: 0.4,
+                2: 0.7,
+                3: 1,
+                4: 1.3,
+                5: 1.6
+            };
+            return this.number_of_hours * price * complexity[this.layout.design_complexity] / 2;
         }
     },
     components: {
@@ -48137,6 +48197,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function () {
@@ -48144,10 +48220,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     computed: {
         expense() {
-            return this.$deepModel('proposition.proposition.print.production_expense');
+            return this.$deepModel('proposition.proposition.production_expense');
+        },
+        total: function () {
+            let sum = Number(this.expense.text_price) * Number(this.expense.text_price_amount) + Number(this.expense.lecture) * Number(this.expense.lecture_amount) + Number(this.expense.correction) * Number(this.expense.correction_amount) + Number(this.expense.proofreading) * Number(this.expense.proofreading_amount) + Number(this.expense.translation) * Number(this.expense.translation_amount) + Number(this.expense.index) * Number(this.expense.index_amount) + Number(this.expense.photos) * Number(this.expense.photos_amount) + Number(this.expense.illustrations) * Number(this.expense.illustrations_amount) + Number(this.expense.technical_drawings) * Number(this.expense.technical_drawings_amount) + Number(this.expense.accontation) + Number(this.expense.reviews) + Number(this.expense.epilogue) + Number(this.expense.expert_report) + Number(this.expense.copyright) + Number(this.expense.copyright_mediator) + Number(this.expense.methodical_instrumentarium) + Number(this.expense.selection) + Number(this.expense.powerpoint_presentation);
+            let additional = _.sumBy(this.expense.additional_expense, o => {
+                return Number(o.amount);
+            });
+            return sum + additional;
         }
     },
-    methods: {},
+    methods: {
+        addExpense: function () {
+            this.$store.commit('proposition/pushToArray', { group: 'production_expense', key: 'additional_expense', value: { expense: '', amount: '' } });
+        }
+    },
     mounted: function () {
         this.$store.commit('proposition/updateProposition', { key: 'step', value: 6 });
     }
@@ -48710,8 +48797,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             },
             categorization: {
                 supergroup: 0,
+                supergroup_text: '',
+                supergroup_coef: 0,
                 upgroup: 0,
-                group: 0,
+                group_text: '',
                 note: '',
                 book_type_group: 0,
                 book_type: 0,
@@ -48754,35 +48843,36 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 expenses: {}
             },
             production_expense: {
-                text_price: 0,
-                text_price_amount: 0,
+                text_price: '',
+                text_price_amount: '',
                 note: '',
-                accontation: 0,
-                netto_price_percentage: 0,
-                reviews: 0,
-                lecture: 0,
-                lecture_amount: 0,
-                correction: 0,
-                correction_amount: 0,
-                proofreading: 0,
-                proofreading_amount: 0,
-                translation: 0,
-                translation_amount: 0,
-                index: 0,
-                index_amount: 0,
-                reviews2: 0,
-                photos: 0,
-                photos_amount: 0,
-                illustrations: 0,
-                illustrations_amount: 0,
-                technical_drawings: 0,
-                technical_drawings_amount: 0,
-                expert_report: 0,
-                copyright: 0,
-                copyright_mediator: 0,
-                selection: 0,
-                powerpoint_presentation: 0,
-                methodical_instrumentarium: 0
+                accontation: '',
+                netto_price_percentage: '',
+                reviews: '',
+                lecture: '',
+                lecture_amount: '',
+                correction: '',
+                correction_amount: '',
+                proofreading: '',
+                proofreading_amount: '',
+                translation: '',
+                translation_amount: '',
+                index: '',
+                index_amount: '',
+                epilogue: '',
+                photos: '',
+                photos_amount: '',
+                illustrations: '',
+                illustrations_amount: '',
+                technical_drawings: '',
+                technical_drawings_amount: '',
+                expert_report: '',
+                copyright: '',
+                copyright_mediator: '',
+                selection: '',
+                powerpoint_presentation: '',
+                methodical_instrumentarium: '',
+                additional_expense: []
             },
             marketing_expense: [{
                 ammount: 0,
@@ -48792,7 +48882,14 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 note: '',
                 margin: ''
             },
-            layout_expense: {},
+            layout_expense: {
+                layout_complexity: '',
+                layout_include: '',
+                layout_note: '',
+                design_complexity: '',
+                design_include: '',
+                design_note: ''
+            },
             deadline: {
                 date: '',
                 priority: '',
@@ -51310,7 +51407,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "text-center no-border display-e"
   }, [_vm._v(_vm._s(_vm.lang('Circulation')))]), _vm._v(" "), _c('h1', {
     staticClass: "text-center display-2"
-  }, [_vm._v("52.354 kn")])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.total, ' kn', 2)))])]), _vm._v(" "), _c('div', {
     staticClass: "row"
   }, [_c('div', {
     staticClass: "col-md-12"
@@ -51398,7 +51495,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "col-md-3"
   }, [_c('div', [_c('label', [_vm._v(_vm._s(_vm.lang('Total')))]), _vm._v(" "), _c('div', {
     staticClass: "total-sty color-nav-sub"
-  }, [_vm._v(_vm._s(_vm.expense['text_price'] * _vm.expense['text_price_amount']) + " kn")])])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.expense['text_price'] * _vm.expense['text_price_amount'], ' kn', 2)))])])])]), _vm._v(" "), _c('div', {
     staticClass: "md-form input-group"
   }, [_c('input', {
     directives: [{
@@ -51581,7 +51678,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "col-md-3"
   }, [_c('div', {}, [_c('label', [_vm._v(_vm._s(_vm.lang('Total')))]), _vm._v(" "), _c('div', {
     staticClass: "total-sty color-nav-sub"
-  }, [_vm._v(_vm._s(_vm.expense['lecture'] * _vm.expense['lecture_amount']) + " kn")])])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.expense['lecture'] * _vm.expense['lecture_amount'], ' kn', 2)))])])])]), _vm._v(" "), _c('div', {
     staticClass: "row"
   }, [_c('div', {
     staticClass: "col-md-5"
@@ -51659,7 +51756,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "col-md-3"
   }, [_c('div', {}, [_c('label', [_vm._v(_vm._s(_vm.lang('Total')))]), _vm._v(" "), _c('div', {
     staticClass: "total-sty color-nav-sub"
-  }, [_vm._v(_vm._s(_vm.expense['correction'] * _vm.expense['correction_amount']) + " kn")])])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.expense['correction'] * _vm.expense['correction_amount'], ' kn', 2)))])])])]), _vm._v(" "), _c('div', {
     staticClass: "row"
   }, [_c('div', {
     staticClass: "col-md-5"
@@ -51737,7 +51834,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "col-md-3"
   }, [_c('div', {}, [_c('label', [_vm._v(_vm._s(_vm.lang('Total')))]), _vm._v(" "), _c('div', {
     staticClass: "total-sty color-nav-sub"
-  }, [_vm._v(_vm._s(_vm.expense['proofreading'] * _vm.expense['proofreading_amount']) + " kn")])])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.expense['proofreading'] * _vm.expense['proofreading_amount'], ' kn', 2)))])])])]), _vm._v(" "), _c('div', {
     staticClass: "row"
   }, [_c('div', {
     staticClass: "col-md-5"
@@ -51815,7 +51912,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "col-md-3"
   }, [_c('div', {}, [_c('label', [_vm._v(_vm._s(_vm.lang('Total')))]), _vm._v(" "), _c('div', {
     staticClass: "total-sty color-nav-sub"
-  }, [_vm._v(_vm._s(_vm.expense['translation'] * _vm.expense['translation_amount']) + " kn")])])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.expense['translation'] * _vm.expense['translation_amount'], ' kn', 2)))])])])]), _vm._v(" "), _c('div', {
     staticClass: "row"
   }, [_c('div', {
     staticClass: "col-md-5"
@@ -51893,30 +51990,30 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "col-md-3"
   }, [_c('div', {}, [_c('label', [_vm._v(_vm._s(_vm.lang('Total')))]), _vm._v(" "), _c('div', {
     staticClass: "total-sty color-nav-sub"
-  }, [_vm._v(_vm._s(_vm.expense['index'] * _vm.expense['index_amount']) + " kn")])])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.expense['index'] * _vm.expense['index_amount'], ' kn', 2)))])])])]), _vm._v(" "), _c('div', {
     staticClass: "md-form input-group"
   }, [_c('input', {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.expense['reviews2']),
-      expression: "expense['reviews2']"
+      value: (_vm.expense['epilogue']),
+      expression: "expense['epilogue']"
     }],
     staticClass: "form-control",
     attrs: {
       "type": "text",
-      "id": "reviews2"
+      "id": "epilogue"
     },
     domProps: {
-      "value": (_vm.expense['reviews2'])
+      "value": (_vm.expense['epilogue'])
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
         var $$exp = _vm.expense,
-          $$idx = 'reviews2';
+          $$idx = 'epilogue';
         if (!Array.isArray($$exp)) {
-          _vm.expense['reviews2'] = $event.target.value
+          _vm.expense['epilogue'] = $event.target.value
         } else {
           $$exp.splice($$idx, 1, $event.target.value)
         }
@@ -51924,9 +52021,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }), _vm._v(" "), _c('label', {
     attrs: {
-      "for": "reviews2"
+      "for": "epilogue"
     }
-  }, [_vm._v(_vm._s(_vm.lang('Reviews')))]), _vm._v(" "), _c('span', {
+  }, [_vm._v(_vm._s(_vm.lang('Epilogue')))]), _vm._v(" "), _c('span', {
     staticClass: "input-group-addon"
   }, [_vm._v(_vm._s(_vm.lang('Kn')))])])]), _vm._v(" "), _c('div', {
     staticClass: "col-md-6"
@@ -52010,7 +52107,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "col-md-3"
   }, [_c('div', {}, [_c('label', [_vm._v(_vm._s(_vm.lang('Total')))]), _vm._v(" "), _c('div', {
     staticClass: "total-sty color-nav-sub"
-  }, [_vm._v(_vm._s(_vm.expense['photos'] * _vm.expense['photos_amount']) + " kn")])])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.expense['photos'] * _vm.expense['photos_amount'], ' kn', 2)))])])])]), _vm._v(" "), _c('div', {
     staticClass: "row"
   }, [_c('div', {
     staticClass: "col-md-5"
@@ -52088,7 +52185,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "col-md-3"
   }, [_c('div', {}, [_c('label', [_vm._v(_vm._s(_vm.lang('Total')))]), _vm._v(" "), _c('div', {
     staticClass: "total-sty color-nav-sub"
-  }, [_vm._v(_vm._s(_vm.expense['illustrations'] * _vm.expense['illustrations_amount']) + " kn")])])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.expense['illustrations'] * _vm.expense['illustrations_amount'], ' kn', 2)))])])])]), _vm._v(" "), _c('div', {
     staticClass: "row"
   }, [_c('div', {
     staticClass: "col-md-5"
@@ -52166,7 +52263,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "col-md-3"
   }, [_c('div', {}, [_c('label', [_vm._v(_vm._s(_vm.lang('Total')))]), _vm._v(" "), _c('div', {
     staticClass: "total-sty color-nav-sub"
-  }, [_vm._v(_vm._s(_vm.expense['technical_drawings'] * _vm.expense['technical_drawings_amount']) + " kn")])])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.expense['technical_drawings'] * _vm.expense['technical_drawings_amount'], ' kn', 2)))])])])]), _vm._v(" "), _c('div', {
     staticClass: "md-form input-group"
   }, [_c('input', {
     directives: [{
@@ -52378,10 +52475,79 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "input-group-addon"
   }, [_vm._v(_vm._s(_vm.lang('Kn')))])])])])])]), _vm._v(" "), _c('div', {
     staticClass: "page-name-l mb-1"
-  }, [_vm._v(_vm._s(_vm.lang('Additional Expenses')))]), _vm._v(" "), _c('button', {
+  }, [_vm._v(_vm._s(_vm.lang('Additional Expenses')))]), _vm._v(" "), _vm._l((_vm.expense['additional_expense']), function(item, index) {
+    return [_c('div', {
+      staticClass: "row"
+    }, [_c('div', {
+      staticClass: "col-md-6"
+    }, [_c('div', {
+      staticClass: "md-form input-group"
+    }, [_c('input', {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: (_vm.expense['additional_expense[' + index + '.expense]']),
+        expression: "expense['additional_expense['+index+'.expense]']"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        "type": "text"
+      },
+      domProps: {
+        "value": (_vm.expense['additional_expense[' + index + '.expense]'])
+      },
+      on: {
+        "input": function($event) {
+          if ($event.target.composing) { return; }
+          var $$exp = _vm.expense,
+            $$idx = 'additional_expense[' + index + '.expense]';
+          if (!Array.isArray($$exp)) {
+            _vm.expense['additional_expense[' + index + '.expense]'] = $event.target.value
+          } else {
+            $$exp.splice($$idx, 1, $event.target.value)
+          }
+        }
+      }
+    }), _vm._v(" "), _c('label', [_vm._v(_vm._s(_vm.lang('Expense')))])])]), _vm._v(" "), _c('div', {
+      staticClass: "col-md-6"
+    }, [_c('div', {
+      staticClass: "md-form input-group"
+    }, [_c('input', {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: (_vm.expense['additional_expense[' + index + '.amount]']),
+        expression: "expense['additional_expense['+index+'.amount]']"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        "type": "text"
+      },
+      domProps: {
+        "value": (_vm.expense['additional_expense[' + index + '.amount]'])
+      },
+      on: {
+        "input": function($event) {
+          if ($event.target.composing) { return; }
+          var $$exp = _vm.expense,
+            $$idx = 'additional_expense[' + index + '.amount]';
+          if (!Array.isArray($$exp)) {
+            _vm.expense['additional_expense[' + index + '.amount]'] = $event.target.value
+          } else {
+            $$exp.splice($$idx, 1, $event.target.value)
+          }
+        }
+      }
+    }), _vm._v(" "), _c('label', [_vm._v(_vm._s(_vm.lang('Ammount')))]), _vm._v(" "), _c('span', {
+      staticClass: "input-group-addon"
+    }, [_vm._v(_vm._s(_vm.lang('Kn')))])])])])]
+  }), _vm._v(" "), _c('button', {
     staticClass: "btn btn-neutral btn-addon",
     attrs: {
       "type": "button"
+    },
+    on: {
+      "click": _vm.addExpense
     }
   }, [_vm._v(_vm._s(_vm.lang('Add New Expense')))]), _vm._v(" "), _c('div', {
     staticClass: "md-form mt-3"
@@ -52415,7 +52581,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "for": "form76"
     }
-  }, [_vm._v(_vm._s(_vm.lang('Note')))])])])
+  }, [_vm._v(_vm._s(_vm.lang('Note')))])])], 2)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -53132,37 +53298,37 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "white-label"
   }, [_vm._v(_vm._s(_vm.lang('Number of Pages')))]), _vm._v(" "), _c('h3', {
     staticClass: "mb-1 text-white"
-  }, [_vm._v("110")])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.technical['number_of_pages']))])]), _vm._v(" "), _c('div', {
     staticClass: "col-md-2"
   }, [_c('h6', {
     staticClass: "white-label"
   }, [_vm._v(_vm._s(_vm.lang('Photos')))]), _vm._v(" "), _c('h3', {
     staticClass: "mb-1 text-white"
-  }, [_vm._v("553")])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.production['photos_amount']))])]), _vm._v(" "), _c('div', {
     staticClass: "col-md-2"
   }, [_c('h6', {
     staticClass: "white-label"
   }, [_vm._v(_vm._s(_vm.lang('Illustrations')))]), _vm._v(" "), _c('h3', {
     staticClass: "mb-1 text-white"
-  }, [_vm._v("21")])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.production['illustrations_amount']))])]), _vm._v(" "), _c('div', {
     staticClass: "col-md-2"
   }, [_c('h6', {
     staticClass: "white-label"
   }, [_vm._v(_vm._s(_vm.lang('Tehnical Drawings')))]), _vm._v(" "), _c('h3', {
     staticClass: "mb-1 text-white"
-  }, [_vm._v("—")])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.production['technical_drawings_amount']))])]), _vm._v(" "), _c('div', {
     staticClass: "col-md-2"
   }, [_c('h6', {
     staticClass: "white-label"
   }, [_vm._v(_vm._s(_vm.lang('Category')))]), _vm._v(" "), _c('h3', {
     staticClass: "mb-1 text-white"
-  }, [_vm._v("Udžbenik")])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.supergroup_text))])]), _vm._v(" "), _c('div', {
     staticClass: "col-md-2"
   }, [_c('h6', {
     staticClass: "white-label"
   }, [_vm._v(_vm._s(_vm.lang('Što još...')))]), _vm._v(" "), _c('h3', {
     staticClass: "mb-1 text-white"
-  }, [_vm._v("ime")])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.group_text))])])]), _vm._v(" "), _c('div', {
     staticClass: "row"
   }, [_c('div', {
     staticClass: "col-md-6 mt-2"
@@ -53170,33 +53336,90 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "text-center no-border display-e"
   }, [_vm._v(_vm._s(_vm.lang('Layout Expense')))]), _vm._v(" "), _c('h1', {
     staticClass: "text-center display-2"
-  }, [_vm._v("9.700 kn")]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.layout_total, ' kn', 2)))]), _vm._v(" "), _c('div', {
     staticClass: "col-md-6 mx-auto mt-3"
   }, [_c('div', {
     staticClass: "pos-rel"
   }, [_c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.layout['layout_complexity']),
+      expression: "layout['layout_complexity']"
+    }],
     staticClass: "mdb-select",
-    attrs: {
-      "name": "department_id",
-      "required": ""
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        var $$exp = _vm.layout,
+          $$idx = 'layout_complexity';
+        if (!Array.isArray($$exp)) {
+          _vm.layout['layout_complexity'] = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+        } else {
+          $$exp.splice($$idx, 1, $event.target.multiple ? $$selectedVal : $$selectedVal[0])
+        }
+      }
     }
   }, [_c('option', {
     attrs: {
       "disabled": ""
     }
-  }, [_vm._v(_vm._s(_vm.lang('Choose')))]), _vm._v(" "), _c('option', [_vm._v(_vm._s(_vm.lang('1 - Very Easy')))]), _vm._v(" "), _c('option', [_vm._v(_vm._s(_vm.lang('2 - Easy')))]), _vm._v(" "), _c('option', [_vm._v(_vm._s(_vm.lang('3 - Medium')))]), _vm._v(" "), _c('option', [_vm._v(_vm._s(_vm.lang('4 - Demanding')))]), _vm._v(" "), _c('option', [_vm._v(_vm._s(_vm.lang('5 - Very Demanding')))])]), _vm._v(" "), _c('label', [_vm._v(_vm._s(_vm.lang('Layout Complexity')))])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.lang('Choose')))]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "1"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('1 - Very Easy')))]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "2"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('2 - Easy')))]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "3"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('3 - Medium')))]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "4"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('4 - Demanding')))]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "5"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('5 - Very Demanding')))])]), _vm._v(" "), _c('label', [_vm._v(_vm._s(_vm.lang('Layout Complexity')))])]), _vm._v(" "), _c('div', {
     staticClass: "page-name-m mt-2"
   }, [_vm._v(_vm._s(_vm.lang('Include Layout Expense')))]), _vm._v(" "), _c('div', {
     staticClass: "form-inline mb-3 "
   }, [_c('fieldset', {
     staticClass: "form-group"
   }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.layout['layout_include']),
+      expression: "layout['layout_include']"
+    }],
     attrs: {
       "name": "layout-expense-1",
       "type": "radio",
-      "id": "layout-expense-y",
-      "value": "M",
-      "required": ""
+      "id": "layout-expense-y"
+    },
+    domProps: {
+      "checked": _vm._q(_vm.layout['layout_include'], null)
+    },
+    on: {
+      "__c": function($event) {
+        var $$exp = _vm.layout,
+          $$idx = 'layout_include';
+        if (!Array.isArray($$exp)) {
+          _vm.layout['layout_include'] = null
+        } else {
+          $$exp.splice($$idx, 1, null)
+        }
+      }
     }
   }), _vm._v(" "), _c('label', {
     attrs: {
@@ -53205,12 +53428,30 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v(_vm._s(_vm.lang('Yes')))])]), _vm._v(" "), _c('fieldset', {
     staticClass: "form-group"
   }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.layout['layout_include']),
+      expression: "layout['layout_include']"
+    }],
     attrs: {
       "name": "layout-expense-1",
       "type": "radio",
-      "id": "layout-expense-n",
-      "value": "F",
-      "required": ""
+      "id": "layout-expense-n"
+    },
+    domProps: {
+      "checked": _vm._q(_vm.layout['layout_include'], null)
+    },
+    on: {
+      "__c": function($event) {
+        var $$exp = _vm.layout,
+          $$idx = 'layout_include';
+        if (!Array.isArray($$exp)) {
+          _vm.layout['layout_include'] = null
+        } else {
+          $$exp.splice($$idx, 1, null)
+        }
+      }
     }
   }), _vm._v(" "), _c('label', {
     attrs: {
@@ -53219,47 +53460,121 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v(_vm._s(_vm.lang('No')))])])])]), _vm._v(" "), _c('div', {
     staticClass: "md-form"
   }, [_c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.layout['layout_note']),
+      expression: "layout['layout_note']"
+    }],
     staticClass: "md-textarea",
-    attrs: {
-      "id": "form76"
+    domProps: {
+      "value": (_vm.layout['layout_note'])
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        var $$exp = _vm.layout,
+          $$idx = 'layout_note';
+        if (!Array.isArray($$exp)) {
+          _vm.layout['layout_note'] = $event.target.value
+        } else {
+          $$exp.splice($$idx, 1, $event.target.value)
+        }
+      }
     }
-  }), _vm._v(" "), _c('label', {
-    attrs: {
-      "for": "form76"
-    }
-  }, [_vm._v(_vm._s(_vm.lang('Note')))])])]), _vm._v(" "), _c('div', {
+  }), _vm._v(" "), _c('label', [_vm._v(_vm._s(_vm.lang('Note')))])])]), _vm._v(" "), _c('div', {
     staticClass: "col-md-6 mt-2"
   }, [_c('h6', {
     staticClass: "text-center no-border display-e"
   }, [_vm._v(_vm._s(_vm.lang('Design Expense')))]), _vm._v(" "), _c('h1', {
     staticClass: "text-center display-2"
-  }, [_vm._v("6.250 kn")]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.design_total, ' kn', 2)))]), _vm._v(" "), _c('div', {
     staticClass: "col-md-6 mx-auto mt-3"
   }, [_c('div', {
     staticClass: "pos-rel"
   }, [_c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.layout['design_complexity']),
+      expression: "layout['design_complexity']"
+    }],
     staticClass: "mdb-select",
     attrs: {
-      "name": "department_id",
-      "required": ""
+      "name": "department_id"
+    },
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        var $$exp = _vm.layout,
+          $$idx = 'design_complexity';
+        if (!Array.isArray($$exp)) {
+          _vm.layout['design_complexity'] = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+        } else {
+          $$exp.splice($$idx, 1, $event.target.multiple ? $$selectedVal : $$selectedVal[0])
+        }
+      }
     }
   }, [_c('option', {
     attrs: {
       "disabled": ""
     }
-  }, [_vm._v(_vm._s(_vm.lang('Choose')))]), _vm._v(" "), _c('option', [_vm._v(_vm._s(_vm.lang('1 - Very Easy')))]), _vm._v(" "), _c('option', [_vm._v(_vm._s(_vm.lang('2 - Easy')))]), _vm._v(" "), _c('option', [_vm._v(_vm._s(_vm.lang('3 - Medium')))]), _vm._v(" "), _c('option', [_vm._v(_vm._s(_vm.lang('4 - Demanding')))]), _vm._v(" "), _c('option', [_vm._v(_vm._s(_vm.lang('5 - Very Demanding')))])]), _vm._v(" "), _c('label', [_vm._v(_vm._s(_vm.lang('Design Complexity')))])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.lang('Choose')))]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "1"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('1 - Very Easy')))]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "2"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('2 - Easy')))]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "3"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('3 - Medium')))]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "4"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('4 - Demanding')))]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "5"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('5 - Very Demanding')))])]), _vm._v(" "), _c('label', [_vm._v(_vm._s(_vm.lang('Design Complexity')))])]), _vm._v(" "), _c('div', {
     staticClass: "page-name-m mt-2"
   }, [_vm._v(_vm._s(_vm.lang('Include Design Expense')))]), _vm._v(" "), _c('div', {
     staticClass: "form-inline mb-3 "
   }, [_c('fieldset', {
     staticClass: "form-group"
   }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.layout['design_include']),
+      expression: "layout['design_include']"
+    }],
     attrs: {
       "name": "layout-expense-2",
       "type": "radio",
-      "id": "design-expense-y",
-      "value": "M",
-      "required": ""
+      "id": "design-expense-y"
+    },
+    domProps: {
+      "checked": _vm._q(_vm.layout['design_include'], null)
+    },
+    on: {
+      "__c": function($event) {
+        var $$exp = _vm.layout,
+          $$idx = 'design_include';
+        if (!Array.isArray($$exp)) {
+          _vm.layout['design_include'] = null
+        } else {
+          $$exp.splice($$idx, 1, null)
+        }
+      }
     }
   }), _vm._v(" "), _c('label', {
     attrs: {
@@ -53268,12 +53583,30 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v(_vm._s(_vm.lang('Yes')))])]), _vm._v(" "), _c('fieldset', {
     staticClass: "form-group"
   }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.layout['design_include']),
+      expression: "layout['design_include']"
+    }],
     attrs: {
       "name": "layout-expense-2",
       "type": "radio",
-      "id": "design-expense-n",
-      "value": "F",
-      "required": ""
+      "id": "design-expense-n"
+    },
+    domProps: {
+      "checked": _vm._q(_vm.layout['design_include'], null)
+    },
+    on: {
+      "__c": function($event) {
+        var $$exp = _vm.layout,
+          $$idx = 'design_include';
+        if (!Array.isArray($$exp)) {
+          _vm.layout['design_include'] = null
+        } else {
+          $$exp.splice($$idx, 1, null)
+        }
+      }
     }
   }), _vm._v(" "), _c('label', {
     attrs: {
@@ -53282,15 +53615,29 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v(_vm._s(_vm.lang('No')))])])])]), _vm._v(" "), _c('div', {
     staticClass: "md-form"
   }, [_c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.layout['design_note']),
+      expression: "layout['design_note']"
+    }],
     staticClass: "md-textarea",
-    attrs: {
-      "id": "form76"
+    domProps: {
+      "value": (_vm.layout['design_note'])
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        var $$exp = _vm.layout,
+          $$idx = 'design_note';
+        if (!Array.isArray($$exp)) {
+          _vm.layout['design_note'] = $event.target.value
+        } else {
+          $$exp.splice($$idx, 1, $event.target.value)
+        }
+      }
     }
-  }), _vm._v(" "), _c('label', {
-    attrs: {
-      "for": "form76"
-    }
-  }, [_vm._v(_vm._s(_vm.lang('Note')))])])])]), _vm._v(" "), _c('footer-buttons')], 1)
+  }), _vm._v(" "), _c('label', [_vm._v(_vm._s(_vm.lang('Note')))])])])]), _vm._v(" "), _c('footer-buttons')], 1)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
