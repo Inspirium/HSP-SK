@@ -46159,7 +46159,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     }),
     methods: {
         addExpense: function (id) {
-            this.$store.commit('proposition/pushToArray', {});
+            //TODO:
         }
     },
     mounted: function () {
@@ -53326,7 +53326,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "col-md-2"
   }, [_c('h6', {
     staticClass: "white-label"
-  }, [_vm._v(_vm._s(_vm.lang('Što još...')))]), _vm._v(" "), _c('h3', {
+  }, [_vm._v(_vm._s(_vm.lang('Group')))]), _vm._v(" "), _c('h3', {
     staticClass: "mb-1 text-white"
   }, [_vm._v(_vm._s(_vm.group_text))])])]), _vm._v(" "), _c('div', {
     staticClass: "row"
@@ -53403,21 +53403,22 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       expression: "layout['layout_include']"
     }],
     attrs: {
-      "name": "layout-expense-1",
+      "name": "layout-expense",
       "type": "radio",
-      "id": "layout-expense-y"
+      "id": "layout-expense-y",
+      "value": "yes"
     },
     domProps: {
-      "checked": _vm._q(_vm.layout['layout_include'], null)
+      "checked": _vm._q(_vm.layout['layout_include'], "yes")
     },
     on: {
       "__c": function($event) {
         var $$exp = _vm.layout,
           $$idx = 'layout_include';
         if (!Array.isArray($$exp)) {
-          _vm.layout['layout_include'] = null
+          _vm.layout['layout_include'] = "yes"
         } else {
-          $$exp.splice($$idx, 1, null)
+          $$exp.splice($$idx, 1, "yes")
         }
       }
     }
@@ -53435,21 +53436,22 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       expression: "layout['layout_include']"
     }],
     attrs: {
-      "name": "layout-expense-1",
+      "name": "layout-expense",
       "type": "radio",
-      "id": "layout-expense-n"
+      "id": "layout-expense-n",
+      "value": "no"
     },
     domProps: {
-      "checked": _vm._q(_vm.layout['layout_include'], null)
+      "checked": _vm._q(_vm.layout['layout_include'], "no")
     },
     on: {
       "__c": function($event) {
         var $$exp = _vm.layout,
           $$idx = 'layout_include';
         if (!Array.isArray($$exp)) {
-          _vm.layout['layout_include'] = null
+          _vm.layout['layout_include'] = "no"
         } else {
-          $$exp.splice($$idx, 1, null)
+          $$exp.splice($$idx, 1, "no")
         }
       }
     }
@@ -53558,21 +53560,22 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       expression: "layout['design_include']"
     }],
     attrs: {
-      "name": "layout-expense-2",
+      "name": "design-expense",
       "type": "radio",
-      "id": "design-expense-y"
+      "id": "design-expense-y",
+      "value": "yes"
     },
     domProps: {
-      "checked": _vm._q(_vm.layout['design_include'], null)
+      "checked": _vm._q(_vm.layout['design_include'], "yes")
     },
     on: {
       "__c": function($event) {
         var $$exp = _vm.layout,
           $$idx = 'design_include';
         if (!Array.isArray($$exp)) {
-          _vm.layout['design_include'] = null
+          _vm.layout['design_include'] = "yes"
         } else {
-          $$exp.splice($$idx, 1, null)
+          $$exp.splice($$idx, 1, "yes")
         }
       }
     }
@@ -53590,21 +53593,22 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       expression: "layout['design_include']"
     }],
     attrs: {
-      "name": "layout-expense-2",
+      "name": "design-expense",
       "type": "radio",
-      "id": "design-expense-n"
+      "id": "design-expense-n",
+      "value": "no"
     },
     domProps: {
-      "checked": _vm._q(_vm.layout['design_include'], null)
+      "checked": _vm._q(_vm.layout['design_include'], "no")
     },
     on: {
       "__c": function($event) {
         var $$exp = _vm.layout,
           $$idx = 'design_include';
         if (!Array.isArray($$exp)) {
-          _vm.layout['design_include'] = null
+          _vm.layout['design_include'] = "no"
         } else {
-          $$exp.splice($$idx, 1, null)
+          $$exp.splice($$idx, 1, "no")
         }
       }
     }
