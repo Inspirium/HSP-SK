@@ -48506,6 +48506,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     methods: {
         deleteCirculation: function (value) {
             this.$store.commit('proposition/removeFromObjectArray', { key: 'circulations', group: 'technical_data', value: value });
+            this.$store.commit('proposition/deletePrintOffer', { id: value });
         },
         deleteAddition: function (value) {
             this.$store.commit('proposition/removeFromObjectArray', { key: 'additions', group: 'technical_data', value: value });
@@ -48829,7 +48830,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 concept: '',
                 note: '',
                 possible_products: [],
-                dotation: 0,
+                dotation: 'no',
                 dotation_amount: '',
                 dotation_origin: '',
                 manuscript: '',
@@ -48873,7 +48874,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 cover_plastification: '',
                 film_print: 0,
                 blind_print: 0,
-                uv_film: 0,
+                uv_print: 0,
                 note: ''
             },
             print: {
@@ -48996,6 +48997,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         },
         updateOffer(state, payload) {
             state.proposition.print.offers[payload.id][payload.field] = payload.value;
+        },
+        deletePrintOffer(state, payload) {
+            delete state.proposition.print.offers[payload.id];
         }
     },
     actions: {
@@ -49043,7 +49047,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                             cover_plastification: state.proposition.technical_data.cover_plastification,
                             film_print: state.proposition.technical_data.film_print,
                             blind_print: state.proposition.technical_data.blind_print,
-                            uv_print: state.proposition.technical_data.uv_film,
+                            uv_print: state.proposition.technical_data.uv_print,
                             number_of_pages: state.proposition.technical_data.number_of_pages
                         };
                         commit('pushToObject', {
@@ -50542,11 +50546,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       attrs: {
         "name": 'film_print' + index,
         "type": "radio",
-        "id": "film_print_no",
-        "value": "0"
+        "id": 'film_print_no' + index,
+        "value": "no"
       },
       domProps: {
-        "checked": offer.film_print === 0
+        "checked": offer.film_print === 'no'
       },
       on: {
         "change": function($event) {
@@ -50555,7 +50559,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }), _vm._v(" "), _c('label', {
       attrs: {
-        "for": "film_print_no"
+        "for": 'film_print_no' + index
       }
     }, [_vm._v(_vm._s(_vm.lang('No')))])]), _vm._v(" "), _c('fieldset', {
       staticClass: "form-group"
@@ -50563,11 +50567,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       attrs: {
         "name": 'film_print' + index,
         "type": "radio",
-        "id": "film_print_yes",
-        "value": "1"
+        "id": 'film_print_yes' + index,
+        "value": "yes"
       },
       domProps: {
-        "checked": offer.film_print === 1
+        "checked": offer.film_print === 'yes'
       },
       on: {
         "change": function($event) {
@@ -50576,7 +50580,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }), _vm._v(" "), _c('label', {
       attrs: {
-        "for": "film_print_yes"
+        "for": 'film_print_yes' + index
       }
     }, [_vm._v(_vm._s(_vm.lang('Yes')))])])]), _vm._v(" "), _c('div', {
       staticClass: "page-name-m"
@@ -50588,11 +50592,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       attrs: {
         "name": 'blind_print' + index,
         "type": "radio",
-        "id": "blind_print_no",
-        "value": "0"
+        "id": 'blind_print_no' + index,
+        "value": "no"
       },
       domProps: {
-        "checked": offer.blind_print === 0
+        "checked": offer.blind_print === 'no'
       },
       on: {
         "change": function($event) {
@@ -50601,7 +50605,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }), _vm._v(" "), _c('label', {
       attrs: {
-        "for": "blind_print_no"
+        "for": 'blind_print_no' + index
       }
     }, [_vm._v(_vm._s(_vm.lang('No')))])]), _vm._v(" "), _c('fieldset', {
       staticClass: "form-group"
@@ -50609,11 +50613,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       attrs: {
         "name": 'blind_print' + index,
         "type": "radio",
-        "id": "blind_print_yes",
-        "value": "1"
+        "id": 'blind_print_yes' + index,
+        "value": "yes"
       },
       domProps: {
-        "checked": offer.blind_print === 1
+        "checked": offer.blind_print === 'yes'
       },
       on: {
         "change": function($event) {
@@ -50622,7 +50626,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }), _vm._v(" "), _c('label', {
       attrs: {
-        "for": "blind_print_yes"
+        "for": 'blind_print_yes' + index
       }
     }, [_vm._v(_vm._s(_vm.lang('Yes')))])])]), _vm._v(" "), _c('div', {
       staticClass: "page-name-m"
@@ -50634,11 +50638,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       attrs: {
         "name": 'uv_print' + index,
         "type": "radio",
-        "id": "uv_print_no",
-        "value": "0"
+        "id": 'uv_print_no' + index,
+        "value": "no"
       },
       domProps: {
-        "checked": offer.uv_print === 0
+        "checked": offer.uv_print === 'no'
       },
       on: {
         "change": function($event) {
@@ -50647,7 +50651,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }), _vm._v(" "), _c('label', {
       attrs: {
-        "for": "uv_print_no"
+        "for": 'uv_print_no' + index
       }
     }, [_vm._v(_vm._s(_vm.lang('No')))])]), _vm._v(" "), _c('fieldset', {
       staticClass: "form-group"
@@ -50655,11 +50659,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       attrs: {
         "name": 'uv_print' + index,
         "type": "radio",
-        "id": "uv_print_yes",
-        "value": "1"
+        "id": 'uv_print_yes' + index,
+        "value": "yes"
       },
       domProps: {
-        "checked": offer.uv_print === 1
+        "checked": offer.uv_print === 'yes'
       },
       on: {
         "change": function($event) {
@@ -50668,7 +50672,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }), _vm._v(" "), _c('label', {
       attrs: {
-        "for": "uv_print_yes"
+        "for": 'uv_print_yes' + index
       }
     }, [_vm._v(_vm._s(_vm.lang('Yes')))])])])])])])]), _vm._v(" "), _c('div', {
       staticClass: "md-form mt-3"
@@ -53518,19 +53522,19 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "name": "layout-expense",
       "type": "radio",
       "id": "layout-expense-y",
-      "value": "1"
+      "value": "yes"
     },
     domProps: {
-      "checked": _vm._q(_vm.layout['layout_include'], "1")
+      "checked": _vm._q(_vm.layout['layout_include'], "yes")
     },
     on: {
       "__c": function($event) {
         var $$exp = _vm.layout,
           $$idx = 'layout_include';
         if (!Array.isArray($$exp)) {
-          _vm.layout['layout_include'] = "1"
+          _vm.layout['layout_include'] = "yes"
         } else {
-          $$exp.splice($$idx, 1, "1")
+          $$exp.splice($$idx, 1, "yes")
         }
       }
     }
@@ -53551,19 +53555,19 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "name": "layout-expense",
       "type": "radio",
       "id": "layout-expense-n",
-      "value": "0"
+      "value": "no"
     },
     domProps: {
-      "checked": _vm._q(_vm.layout['layout_include'], "0")
+      "checked": _vm._q(_vm.layout['layout_include'], "no")
     },
     on: {
       "__c": function($event) {
         var $$exp = _vm.layout,
           $$idx = 'layout_include';
         if (!Array.isArray($$exp)) {
-          _vm.layout['layout_include'] = "0"
+          _vm.layout['layout_include'] = "no"
         } else {
-          $$exp.splice($$idx, 1, "0")
+          $$exp.splice($$idx, 1, "no")
         }
       }
     }
@@ -53675,19 +53679,19 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "name": "design-expense",
       "type": "radio",
       "id": "design-expense-y",
-      "value": "1"
+      "value": "yes"
     },
     domProps: {
-      "checked": _vm._q(_vm.layout['design_include'], "1")
+      "checked": _vm._q(_vm.layout['design_include'], "yes")
     },
     on: {
       "__c": function($event) {
         var $$exp = _vm.layout,
           $$idx = 'design_include';
         if (!Array.isArray($$exp)) {
-          _vm.layout['design_include'] = "1"
+          _vm.layout['design_include'] = "yes"
         } else {
-          $$exp.splice($$idx, 1, "1")
+          $$exp.splice($$idx, 1, "yes")
         }
       }
     }
@@ -53708,19 +53712,19 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "name": "design-expense",
       "type": "radio",
       "id": "design-expense-n",
-      "value": "0"
+      "value": "no"
     },
     domProps: {
-      "checked": _vm._q(_vm.layout['design_include'], "0")
+      "checked": _vm._q(_vm.layout['design_include'], "no")
     },
     on: {
       "__c": function($event) {
         var $$exp = _vm.layout,
           $$idx = 'design_include';
         if (!Array.isArray($$exp)) {
-          _vm.layout['design_include'] = "0"
+          _vm.layout['design_include'] = "no"
         } else {
-          $$exp.splice($$idx, 1, "0")
+          $$exp.splice($$idx, 1, "no")
         }
       }
     }
@@ -54045,19 +54049,19 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "name": "dotation",
       "type": "radio",
       "id": "dot-yes",
-      "value": "1"
+      "value": "yes"
     },
     domProps: {
-      "checked": _vm._q(_vm.basic_data['dotation'], "1")
+      "checked": _vm._q(_vm.basic_data['dotation'], "yes")
     },
     on: {
       "__c": function($event) {
         var $$exp = _vm.basic_data,
           $$idx = 'dotation';
         if (!Array.isArray($$exp)) {
-          _vm.basic_data['dotation'] = "1"
+          _vm.basic_data['dotation'] = "yes"
         } else {
-          $$exp.splice($$idx, 1, "1")
+          $$exp.splice($$idx, 1, "yes")
         }
       }
     }
@@ -54078,19 +54082,19 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "name": "dotation",
       "type": "radio",
       "id": "dot-no",
-      "value": "0"
+      "value": "no"
     },
     domProps: {
-      "checked": _vm._q(_vm.basic_data['dotation'], "0")
+      "checked": _vm._q(_vm.basic_data['dotation'], "no")
     },
     on: {
       "__c": function($event) {
         var $$exp = _vm.basic_data,
           $$idx = 'dotation';
         if (!Array.isArray($$exp)) {
-          _vm.basic_data['dotation'] = "0"
+          _vm.basic_data['dotation'] = "no"
         } else {
-          $$exp.splice($$idx, 1, "0")
+          $$exp.splice($$idx, 1, "no")
         }
       }
     }
@@ -54726,19 +54730,19 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "name": "sex",
       "type": "radio",
       "id": "radio01",
-      "value": "1"
+      "value": "yes"
     },
     domProps: {
-      "checked": _vm._q(_vm.categorization['school_assignment'], "1")
+      "checked": _vm._q(_vm.categorization['school_assignment'], "yes")
     },
     on: {
       "__c": function($event) {
         var $$exp = _vm.categorization,
           $$idx = 'school_assignment';
         if (!Array.isArray($$exp)) {
-          _vm.categorization['school_assignment'] = "1"
+          _vm.categorization['school_assignment'] = "yes"
         } else {
-          $$exp.splice($$idx, 1, "1")
+          $$exp.splice($$idx, 1, "yes")
         }
       }
     }
@@ -54759,19 +54763,19 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "name": "sex",
       "type": "radio",
       "id": "radio02",
-      "value": "0"
+      "value": "no"
     },
     domProps: {
-      "checked": _vm._q(_vm.categorization['school_assignment'], "0")
+      "checked": _vm._q(_vm.categorization['school_assignment'], "no")
     },
     on: {
       "__c": function($event) {
         var $$exp = _vm.categorization,
           $$idx = 'school_assignment';
         if (!Array.isArray($$exp)) {
-          _vm.categorization['school_assignment'] = "0"
+          _vm.categorization['school_assignment'] = "no"
         } else {
-          $$exp.splice($$idx, 1, "0")
+          $$exp.splice($$idx, 1, "no")
         }
       }
     }
@@ -56144,19 +56148,19 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "name": "film",
       "type": "radio",
       "id": "film11",
-      "value": "0"
+      "value": "no"
     },
     domProps: {
-      "checked": _vm._q(_vm.technical_data['film_print'], "0")
+      "checked": _vm._q(_vm.technical_data['film_print'], "no")
     },
     on: {
       "__c": function($event) {
         var $$exp = _vm.technical_data,
           $$idx = 'film_print';
         if (!Array.isArray($$exp)) {
-          _vm.technical_data['film_print'] = "0"
+          _vm.technical_data['film_print'] = "no"
         } else {
-          $$exp.splice($$idx, 1, "0")
+          $$exp.splice($$idx, 1, "no")
         }
       }
     }
@@ -56177,19 +56181,19 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "name": "film",
       "type": "radio",
       "id": "film21",
-      "value": "1"
+      "value": "yes"
     },
     domProps: {
-      "checked": _vm._q(_vm.technical_data['film_print'], "1")
+      "checked": _vm._q(_vm.technical_data['film_print'], "yes")
     },
     on: {
       "__c": function($event) {
         var $$exp = _vm.technical_data,
           $$idx = 'film_print';
         if (!Array.isArray($$exp)) {
-          _vm.technical_data['film_print'] = "1"
+          _vm.technical_data['film_print'] = "yes"
         } else {
-          $$exp.splice($$idx, 1, "1")
+          $$exp.splice($$idx, 1, "yes")
         }
       }
     }
@@ -56214,19 +56218,19 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "name": "blind",
       "type": "radio",
       "id": "blind11",
-      "value": "0"
+      "value": "no"
     },
     domProps: {
-      "checked": _vm._q(_vm.technical_data['blind_print'], "0")
+      "checked": _vm._q(_vm.technical_data['blind_print'], "no")
     },
     on: {
       "__c": function($event) {
         var $$exp = _vm.technical_data,
           $$idx = 'blind_print';
         if (!Array.isArray($$exp)) {
-          _vm.technical_data['blind_print'] = "0"
+          _vm.technical_data['blind_print'] = "no"
         } else {
-          $$exp.splice($$idx, 1, "0")
+          $$exp.splice($$idx, 1, "no")
         }
       }
     }
@@ -56247,19 +56251,19 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "name": "blind",
       "type": "radio",
       "id": "blind21",
-      "value": "1"
+      "value": "yes"
     },
     domProps: {
-      "checked": _vm._q(_vm.technical_data['blind_print'], "1")
+      "checked": _vm._q(_vm.technical_data['blind_print'], "yes")
     },
     on: {
       "__c": function($event) {
         var $$exp = _vm.technical_data,
           $$idx = 'blind_print';
         if (!Array.isArray($$exp)) {
-          _vm.technical_data['blind_print'] = "1"
+          _vm.technical_data['blind_print'] = "yes"
         } else {
-          $$exp.splice($$idx, 1, "1")
+          $$exp.splice($$idx, 1, "yes")
         }
       }
     }
@@ -56277,26 +56281,26 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.technical_data['uv_film']),
-      expression: "technical_data['uv_film']"
+      value: (_vm.technical_data['uv_print']),
+      expression: "technical_data['uv_print']"
     }],
     attrs: {
       "name": "uv",
       "type": "radio",
       "id": "uv11",
-      "value": "0"
+      "value": "no"
     },
     domProps: {
-      "checked": _vm._q(_vm.technical_data['uv_film'], "0")
+      "checked": _vm._q(_vm.technical_data['uv_print'], "no")
     },
     on: {
       "__c": function($event) {
         var $$exp = _vm.technical_data,
-          $$idx = 'uv_film';
+          $$idx = 'uv_print';
         if (!Array.isArray($$exp)) {
-          _vm.technical_data['uv_film'] = "0"
+          _vm.technical_data['uv_print'] = "no"
         } else {
-          $$exp.splice($$idx, 1, "0")
+          $$exp.splice($$idx, 1, "no")
         }
       }
     }
@@ -56310,26 +56314,26 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.technical_data['uv_film']),
-      expression: "technical_data['uv_film']"
+      value: (_vm.technical_data['uv_print']),
+      expression: "technical_data['uv_print']"
     }],
     attrs: {
       "name": "uv",
       "type": "radio",
       "id": "uv21",
-      "value": "1"
+      "value": "yes"
     },
     domProps: {
-      "checked": _vm._q(_vm.technical_data['uv_film'], "1")
+      "checked": _vm._q(_vm.technical_data['uv_print'], "yes")
     },
     on: {
       "__c": function($event) {
         var $$exp = _vm.technical_data,
-          $$idx = 'uv_film';
+          $$idx = 'uv_print';
         if (!Array.isArray($$exp)) {
-          _vm.technical_data['uv_film'] = "1"
+          _vm.technical_data['uv_print'] = "yes"
         } else {
-          $$exp.splice($$idx, 1, "1")
+          $$exp.splice($$idx, 1, "yes")
         }
       }
     }
