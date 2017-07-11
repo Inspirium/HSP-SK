@@ -48168,7 +48168,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     mounted: function () {
         this.$store.commit('proposition/updateProposition', { key: 'step', value: 11 });
-        this.$store.dispatch('proposition/initPrecalculation');
         $('.mdb-select').material_select('destroy');
         $('.mdb-select').material_select();
     }
@@ -49758,37 +49757,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                         }
                     });
                 }
-            });
-        },
-        initPrecalculation({ state, commit }) {
-            __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.forEach(state.proposition.print.offers, function (o, key) {
-                commit('updateOffer', {
-                    id: o.id,
-                    field: 'authors_total',
-                    value: __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.sumBy(Object.keys(state.proposition.authors_expense.expenses), key => {
-                        let e = state.proposition.authors_expense.expenses[key];
-                        let additional = __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.sumBy(e.additional_expenses, a => {
-                            return a.amount;
-                        });
-                        return Number(e.amount) + Number(additional);
-                    })
-                });
-                commit('updateOffer', {
-                    id: o.id,
-                    field: 'authors_advance',
-                    value: __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.sumBy(Object.keys(state.proposition.authors_expense.expenses), key => {
-                        return state.proposition.authors_expense.expenses[key].accontation;
-                    })
-                });
-                commit('updateOffer', {
-                    id: o.id,
-                    field: 'authors_other',
-                    value: __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.sumBy(Object.keys(state.proposition.authors_expense.expenses), key => {
-                        return __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.sumBy(state.proposition.authors_expense.expenses[key].additional_expenses, a => {
-                            return a.amount;
-                        });
-                    })
-                });
             });
         }
     }
@@ -54489,13 +54457,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticClass: " page-name-l-white border-white"
     }, [_vm._v(_vm._s(_vm.lang('Direct Cost Cover')))]), _vm._v(" "), _c('div', [_c('h6', {
       staticClass: "no-border text-white"
-    }, [_vm._v(_vm._s(_vm.lang('Number of Sold Copies')))]), _vm._v(" "), _c('h3', {}, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[key].direct_cost / option.price_proposal, '', 0)))])])]), _vm._v(" "), _c('div', {
+    }, [_vm._v(_vm._s(_vm.lang('Number of Sold Copies')))]), _vm._v(" "), (typeof(_vm.totals[key]) !== 'undefined') ? _c('h3', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[key].direct_cost / option.price_proposal, '', 0)))]) : _vm._e()])]), _vm._v(" "), _c('div', {
       staticClass: "col-md-3"
     }, [_c('div', {
       staticClass: " page-name-l-white"
     }, [_vm._v(_vm._s(_vm.lang('Complete Cost Cover')))]), _vm._v(" "), _c('div', [_c('h6', {
       staticClass: "no-border text-white"
-    }, [_vm._v(_vm._s(_vm.lang('Number of Sold Copies')))]), _vm._v(" "), _c('h3', {}, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[key].cost_coverage / option.price_proposal, '', 0)))])])]), _vm._v(" "), _vm._m(0, true)])])]
+    }, [_vm._v(_vm._s(_vm.lang('Number of Sold Copies')))]), _vm._v(" "), (typeof(_vm.totals[key]) !== 'undefined') ? _c('h3', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[key].cost_coverage / option.price_proposal, '', 0)))]) : _vm._e()])]), _vm._v(" "), _vm._m(0, true)])])]
   })], 2), _vm._v(" "), _vm._l((_vm.options), function(option, key, index) {
     return _c('div', {
       key: key,
