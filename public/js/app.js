@@ -54457,13 +54457,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticClass: " page-name-l-white border-white"
     }, [_vm._v(_vm._s(_vm.lang('Direct Cost Cover')))]), _vm._v(" "), _c('div', [_c('h6', {
       staticClass: "no-border text-white"
-    }, [_vm._v(_vm._s(_vm.lang('Number of Sold Copies')))]), _vm._v(" "), (typeof(_vm.totals[key]) !== 'undefined') ? _c('h3', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[key].direct_cost / option.price_proposal, '', 0)))]) : _vm._e()])]), _vm._v(" "), _c('div', {
+    }, [_vm._v(_vm._s(_vm.lang('Number of Sold Copies')))]), _vm._v(" "), _c('h3', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].direct_cost / option.price_proposal, '', 0)))])])]), _vm._v(" "), _c('div', {
       staticClass: "col-md-3"
     }, [_c('div', {
       staticClass: " page-name-l-white"
     }, [_vm._v(_vm._s(_vm.lang('Complete Cost Cover')))]), _vm._v(" "), _c('div', [_c('h6', {
       staticClass: "no-border text-white"
-    }, [_vm._v(_vm._s(_vm.lang('Number of Sold Copies')))]), _vm._v(" "), (typeof(_vm.totals[key]) !== 'undefined') ? _c('h3', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[key].cost_coverage / option.price_proposal, '', 0)))]) : _vm._e()])]), _vm._v(" "), _vm._m(0, true)])])]
+    }, [_vm._v(_vm._s(_vm.lang('Number of Sold Copies')))]), _vm._v(" "), _c('h3', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].cost_coverage / option.price_proposal, '', 0)))])])]), _vm._v(" "), _vm._m(0, true)])])]
   })], 2), _vm._v(" "), _vm._l((_vm.options), function(option, key, index) {
     return _c('div', {
       key: key,
@@ -54518,7 +54518,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticClass: "no-border text-white"
     }, [_vm._v(_vm._s(_vm.lang('Number of Sold Copies')))]), _vm._v(" "), _c('h3', {
       staticClass: "mb-2"
-    }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[key].direct_cost / option.price_proposal, '', 0)))])])]), _vm._v(" "), _c('div', {
+    }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].direct_cost / option.price_proposal, '', 0)))])])]), _vm._v(" "), _c('div', {
       staticClass: "col-md-4"
     }, [_c('div', {
       staticClass: "page-name-l-white text-center"
@@ -54526,7 +54526,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticClass: "no-border text-white"
     }, [_vm._v(_vm._s(_vm.lang('Number of Sold Copies')))]), _vm._v(" "), _c('h3', {
       staticClass: "mb-2"
-    }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[key].cost_coverage / option.price_proposal, '', 0)))])])])])]), _vm._v(" "), _c('div', {}, [_c('div', {
+    }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].cost_coverage / option.price_proposal, '', 0)))])])])])]), _vm._v(" "), _c('div', {}, [_c('div', {
       staticClass: "row"
     }, [_c('div', {
       staticClass: "col-md-12"
