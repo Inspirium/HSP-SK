@@ -47152,6 +47152,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__partials_FooterButtons_vue__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__partials_FooterButtons_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__partials_FooterButtons_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_deepset__ = __webpack_require__(131);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_deepset___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_deepset__);
 //
 //
 //
@@ -47201,6 +47203,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -47215,9 +47218,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     components: {
         'footer-buttons': __WEBPACK_IMPORTED_MODULE_0__partials_FooterButtons_vue___default.a
     },
-    methods: {},
+    methods: {
+        vuexSet: __WEBPACK_IMPORTED_MODULE_1_vue_deepset__["vuexSet"]
+    },
     mounted: function () {
-        $('.datepicker').pickadate();
+        $('.datepicker').pickadate({
+            format: 'dd. mm. yyyy.',
+            onSet: context => {
+                let date = new Date(context.select);
+                date = this.$options.filters.moment(date, 'DD. MM. YYYY.');
+                this.vuexSet('proposition.proposition.deadline.date', date);
+            }
+        });
         this.$store.commit('proposition/updateProposition', { key: 'step', value: 10 });
     }
 });
@@ -48110,7 +48122,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             return field === this.activeEdit;
         },
         closeEdit: function () {
-            console.log("close");
             this.activeEdit = '';
         }
     },
@@ -58368,12 +58379,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('div', {
     staticClass: "md-form"
   }, [_c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.deadline.date),
-      expression: "deadline.date"
-    }],
     staticClass: "form-control datepicker btn-white",
     attrs: {
       "placeholder": "Selected date",
@@ -58381,13 +58386,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "id": "date-picker-example"
     },
     domProps: {
-      "value": (_vm.deadline.date)
-    },
-    on: {
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.deadline.date = $event.target.value
-      }
+      "value": _vm.deadline.date
     }
   }), _vm._v(" "), _c('label', {
     attrs: {
@@ -58403,8 +58402,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.deadline.priority),
-      expression: "deadline.priority"
+      value: (_vm.deadline['priority']),
+      expression: "deadline['priority']"
     }],
     attrs: {
       "name": "sex",
@@ -58413,11 +58412,17 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": "High"
     },
     domProps: {
-      "checked": _vm._q(_vm.deadline.priority, "High")
+      "checked": _vm._q(_vm.deadline['priority'], "High")
     },
     on: {
       "__c": function($event) {
-        _vm.deadline.priority = "High"
+        var $$exp = _vm.deadline,
+          $$idx = 'priority';
+        if (!Array.isArray($$exp)) {
+          _vm.deadline['priority'] = "High"
+        } else {
+          $$exp.splice($$idx, 1, "High")
+        }
       }
     }
   }), _vm._v(" "), _c('label', {
@@ -58430,8 +58435,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.deadline.priority),
-      expression: "deadline.priority"
+      value: (_vm.deadline['priority']),
+      expression: "deadline['priority']"
     }],
     attrs: {
       "name": "sex",
@@ -58440,11 +58445,17 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": "Medium"
     },
     domProps: {
-      "checked": _vm._q(_vm.deadline.priority, "Medium")
+      "checked": _vm._q(_vm.deadline['priority'], "Medium")
     },
     on: {
       "__c": function($event) {
-        _vm.deadline.priority = "Medium"
+        var $$exp = _vm.deadline,
+          $$idx = 'priority';
+        if (!Array.isArray($$exp)) {
+          _vm.deadline['priority'] = "Medium"
+        } else {
+          $$exp.splice($$idx, 1, "Medium")
+        }
       }
     }
   }), _vm._v(" "), _c('label', {
@@ -58457,8 +58468,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.deadline.priority),
-      expression: "deadline.priority"
+      value: (_vm.deadline['priority']),
+      expression: "deadline['priority']"
     }],
     attrs: {
       "name": "sex",
@@ -58467,11 +58478,17 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": "Low"
     },
     domProps: {
-      "checked": _vm._q(_vm.deadline.priority, "Low")
+      "checked": _vm._q(_vm.deadline['priority'], "Low")
     },
     on: {
       "__c": function($event) {
-        _vm.deadline.priority = "Low"
+        var $$exp = _vm.deadline,
+          $$idx = 'priority';
+        if (!Array.isArray($$exp)) {
+          _vm.deadline['priority'] = "Low"
+        } else {
+          $$exp.splice($$idx, 1, "Low")
+        }
       }
     }
   }), _vm._v(" "), _c('label', {
@@ -58488,20 +58505,26 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.deadline.note),
-      expression: "deadline.note"
+      value: (_vm.deadline['note']),
+      expression: "deadline['note']"
     }],
     staticClass: "md-textarea",
     attrs: {
       "id": "form76"
     },
     domProps: {
-      "value": (_vm.deadline.note)
+      "value": (_vm.deadline['note'])
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.deadline.note = $event.target.value
+        var $$exp = _vm.deadline,
+          $$idx = 'note';
+        if (!Array.isArray($$exp)) {
+          _vm.deadline['note'] = $event.target.value
+        } else {
+          $$exp.splice($$idx, 1, $event.target.value)
+        }
       }
     }
   }), _vm._v(" "), _c('label', {
