@@ -46177,6 +46177,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -46200,6 +46217,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         deleteExpense: function (author, index) {
             this.$store.commit('proposition/deleteAuthorExpense', { author: author, index: index });
+        },
+        addOtherExpense: function () {
+            this.$store.commit('proposition/pushToArray', { group: 'authors_expense', key: 'other', value: { expense: '', amount: '' } });
+        },
+        deleteOtherExpense: function (index) {
+            this.$store.commit('proposition/removeFromArray', { group: 'authors_expense', key: 'other', index: index });
         }
     },
     mounted: function () {
@@ -47608,8 +47631,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
 
 //TODO: fix deepset
 
@@ -47622,8 +47643,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             return this.$deepModel('proposition.proposition.marketing_expense');
         },
         total: function () {
-            return _.sumBy(this.expenses, function (o) {
-                return parseFloat(o.ammount);
+            return Number(this.expenses['expense']) + _.sumBy(this.expenses['additional_expense'], function (o) {
+                return Number(o.amount);
             });
         }
     },
@@ -48079,6 +48100,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     return a.amount;
                 });
                 return Number(e.amount) + Number(additional);
+            }) + _.sumBy(this.$store.state.proposition.proposition.authors_expense.other, o => {
+                return Number(o.amount);
             });
         },
         authors_advance() {
@@ -48754,7 +48777,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             let additional = _.sumBy(this.expense.additional_expense, o => {
                 return Number(o.amount);
             });
-            console.log(sum);
             return sum + additional;
         }
     },
@@ -49599,7 +49621,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             state.proposition[payload.group][payload.key] = _extends({}, state.proposition[payload.group][payload.key], { [payload.id]: payload.value });
         },
         pushToArray(state, payload) {
-            console.log(state.proposition['marketing_expense']);
             state.proposition[payload.group][payload.key].push(payload.value);
         },
         removeFromArray(state, payload) {
@@ -55398,12 +55419,91 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_vm._v(_vm._s(_vm.lang('Note')))])])])])], 2)]), _vm._v(" "), _c('div', {
     staticClass: "page-name-l mb-1"
-  }, [_vm._v(_vm._s(_vm.lang('Other Expenses')))]), _vm._v(" "), _c('button', {
+  }, [_vm._v(_vm._s(_vm.lang('Other Expenses')))]), _vm._v(" "), _vm._l((_vm.expenses.other), function(a, i) {
+    return _c('div', {
+      key: i,
+      staticClass: "row"
+    }, [_c('div', {
+      staticClass: "col-md-4"
+    }, [_c('div', {
+      staticClass: "md-form d-flex addon"
+    }, [_c('input', {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: (_vm.expenses['additional_expense[' + i + '].expense']),
+        expression: "expenses['additional_expense['+i+'].expense']"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        "type": "text",
+        "placeholder": _vm.lang('Expense Name')
+      },
+      domProps: {
+        "value": (_vm.expenses['additional_expense[' + i + '].expense'])
+      },
+      on: {
+        "input": function($event) {
+          if ($event.target.composing) { return; }
+          var $$exp = _vm.expenses,
+            $$idx = 'additional_expense[' + i + '].expense';
+          if (!Array.isArray($$exp)) {
+            _vm.expenses['additional_expense[' + i + '].expense'] = $event.target.value
+          } else {
+            $$exp.splice($$idx, 1, $event.target.value)
+          }
+        }
+      }
+    }), _vm._v(" "), _c('label', [_vm._v(_vm._s(_vm.lang('Expense Name')))])])]), _vm._v(" "), _c('div', {
+      staticClass: "col-md-4"
+    }, [_c('div', {
+      staticClass: "md-form d-flex addon"
+    }, [_c('input', {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: (_vm.expenses['additional_expense[' + i + '].amount']),
+        expression: "expenses['additional_expense['+i+'].amount']"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        "type": "text",
+        "placeholder": _vm.lang('Amount')
+      },
+      domProps: {
+        "value": (_vm.expenses['additional_expense[' + i + '].amount'])
+      },
+      on: {
+        "input": function($event) {
+          if ($event.target.composing) { return; }
+          var $$exp = _vm.expenses,
+            $$idx = 'additional_expense[' + i + '].amount';
+          if (!Array.isArray($$exp)) {
+            _vm.expenses['additional_expense[' + i + '].amount'] = $event.target.value
+          } else {
+            $$exp.splice($$idx, 1, $event.target.value)
+          }
+        }
+      }
+    }), _vm._v(" "), _c('label', [_vm._v(_vm._s(_vm.lang('Amount')))])])]), _vm._v(" "), _c('div', {
+      staticClass: "col-md-4"
+    }, [_c('button', {
+      staticClass: "btn btn-danger",
+      on: {
+        "click": function($event) {
+          _vm.deleteOtherExpense(i)
+        }
+      }
+    }, [_vm._v(_vm._s(_vm.lang('Delete Expense')))])])])
+  }), _vm._v(" "), _c('button', {
     staticClass: "btn btn-neutral btn-addon",
     attrs: {
       "type": "button"
+    },
+    on: {
+      "click": _vm.addOtherExpense
     }
-  }, [_vm._v(_vm._s(_vm.lang('Add New Author Expense')))]), _vm._v(" "), _c('footer-buttons')], 1)
+  }, [_vm._v(_vm._s(_vm.lang('Add New Author Expense')))]), _vm._v(" "), _c('footer-buttons')], 2)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
