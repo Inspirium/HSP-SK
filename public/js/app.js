@@ -46419,8 +46419,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.documents.splice(index, 1);
             //TODO: make request
         },
-        authorDelete: function (index) {
-            this.$store.commit('proposition/removeFromArray', { key: 'authors', group: 'basic_data', index: index });
+        authorDelete: function (id) {
+            this.$store.commit('proposition/removeFromObjectArray', { key: 'authors', group: 'basic_data', value: id });
         },
         fileDelete: function (id) {
             _.remove(this.documents, {
@@ -46455,7 +46455,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
         },
         autocompleteSelect: function (index) {
-            this.$store.commit('proposition/pushToArray', { key: 'authors', group: 'basic_data', value: this.suggestions[index] });
+            this.$store.commit('proposition/addToObjectArray', { key: 'authors', group: 'basic_data', value: this.suggestions[index] });
             this.suggestions = [];
             this.author = '';
         },
@@ -49110,13 +49110,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         addCirculation: function () {
             if (this.circulation && !isNaN(parseFloat(this.circulation)) && isFinite(this.circulation)) {
-                this.$store.commit('proposition/addToObjectArray', { key: 'circulations', group: 'technical_data', value: this.circulation });
+                this.$store.commit('proposition/addToObjectArray', { key: 'circulations', group: 'technical_data', value: { title: this.circulation } });
                 this.circulation = '';
             }
         },
         addAddition: function () {
             if (this.addition) {
-                this.$store.commit('proposition/addToObjectArray', { key: 'additions', group: 'technical_data', value: this.addition });
+                this.$store.commit('proposition/addToObjectArray', { key: 'additions', group: 'technical_data', value: { title: this.addition } });
                 this.addition = '';
             }
         }
@@ -49535,7 +49535,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             id: 0,
             basic_data: {
                 title: '',
-                authors: [],
+                authors: {},
                 concept: '',
                 note: '',
                 possible_products: [],
@@ -49696,14 +49696,15 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             state.proposition.step++;
         },
         addToObjectArray(state, payload) {
-            state.proposition[payload.group][payload.key].push({
-                title: payload.value,
-                id: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+            let object = payload.value;
+            if (typeof object.id === 'undefined') {
+                object.id = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
                     let r = Math.random() * 16 | 0,
                         v = c === 'x' ? r : r & 0x3 | 0x8;
                     return v.toString(16);
-                })
-            });
+                });
+            }
+            state.proposition[payload.group][payload.key].push(object);
         },
         removeFromObjectArray(state, payload) {
             state.proposition[payload.group][payload.key] = __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.filter(state.proposition[payload.group][payload.key], o => {
@@ -56055,6 +56056,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_vm._v(_vm._s(_vm.lang('Add Author')))]), _vm._v(" "), _vm._l((_vm.basic_data['authors']), function(author, index) {
     return _c('div', {
+      key: author.id,
       staticClass: "chip mb-3"
     }, [_c('img', {
       attrs: {
@@ -56064,7 +56066,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticClass: "close fa fa-times",
       on: {
         "click": function($event) {
-          _vm.authorDelete(index)
+          _vm.authorDelete(author.id)
         }
       }
     })])
