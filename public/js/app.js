@@ -48847,7 +48847,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             return this.$deepModel('proposition.proposition');
         }
     },
-    methods: {},
+    methods: {
+        propDelete: function () {
+            axios.delete('/api/proposition/' + this.proposition.id).then(res => {
+                window.location.href = '/propositions';
+            });
+        }
+    },
     mounted: function () {
         if (this.$route.params.id && !this.$store.state.proposition.proposition.loaded) {
             this.$store.dispatch('proposition/initProposition', { id: this.$route.params.id });
@@ -52429,7 +52435,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v(_vm._s(_vm.lang('Send on Approval')))]), _vm._v(" "), _c('button', {
     staticClass: "btn btn-lg btn-cancel",
     attrs: {
-      "type": "submit"
+      "type": "button"
+    },
+    on: {
+      "click": _vm.propDelete
     }
   }, [_vm._v(_vm._s(_vm.lang('Delete')))])])])
 },staticRenderFns: []}
