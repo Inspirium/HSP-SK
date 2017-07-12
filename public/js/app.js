@@ -46419,8 +46419,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.documents.splice(index, 1);
             //TODO: make request
         },
-        authorDelete: function (id) {
-            this.$store.commit('proposition/removeFromObjectArray', { key: 'authors', group: 'basic_data', value: id });
+        authorDelete: function (index) {
+            this.$store.commit('proposition/removeFromArray', { key: 'authors', group: 'basic_data', index: index });
         },
         fileDelete: function (id) {
             _.remove(this.documents, {
@@ -46455,7 +46455,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
         },
         autocompleteSelect: function (index) {
-            this.$store.commit('proposition/addToObjectArray', { key: 'authors', group: 'basic_data', value: this.suggestions[index] });
+            this.$store.commit('proposition/pushToArray', { key: 'authors', group: 'basic_data', value: this.suggestions[index] });
             this.suggestions = [];
             this.author = '';
         },
@@ -49535,7 +49535,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             id: 0,
             basic_data: {
                 title: '',
-                authors: {},
+                authors: [],
                 concept: '',
                 note: '',
                 possible_products: [],
@@ -56064,7 +56064,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticClass: "close fa fa-times",
       on: {
         "click": function($event) {
-          _vm.authorDelete(author.id)
+          _vm.authorDelete(index)
         }
       }
     })])
