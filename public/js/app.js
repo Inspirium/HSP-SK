@@ -45696,6 +45696,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                             path: '/propositions',
                             title: 'Propositions'
                         },
+                        start: {
+                            enabled: typeof this.$route.params.id !== 'undefined',
+                            path: '/proposition/' + this.$route.params.id + '/start',
+                            title: 'Start',
+                            component: true
+                        },
                         basic_data: {
                             enabled: true,
                             title: 'Basic Data',
@@ -46413,9 +46419,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.documents.splice(index, 1);
             //TODO: make request
         },
-        authorDelete: function (index) {
-            this.authors.splice(index, 1);
-            //TODO:make request
+        authorDelete: function (id) {
+            this.$store.commit('proposition/removeFromObjectArray', { key: 'authors', group: 'basic_data', value: id });
         },
         fileDelete: function (id) {
             _.remove(this.documents, {
@@ -46450,7 +46455,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
         },
         autocompleteSelect: function (index) {
-            this.$store.commit('proposition/pushToArray', { key: 'authors', group: 'basic_data', value: this.suggestions[index] });
+            this.$store.commit('proposition/addToObjectArray', { key: 'authors', group: 'basic_data', value: this.suggestions[index] });
             this.suggestions = [];
             this.author = '';
         },
@@ -48798,14 +48803,55 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function () {
         return {};
     },
-    computed: {},
+    computed: {
+        proposition() {
+            return this.$deepModel('proposition.proposition');
+        }
+    },
     methods: {},
     mounted: function () {
+        if (this.$route.params.id && !this.$store.state.proposition.proposition.loaded) {
+            this.$store.dispatch('proposition/initProposition', { id: this.$route.params.id });
+        }
         this.$store.commit('proposition/updateProposition', { key: 'step', value: 10 });
     }
 });
@@ -49453,7 +49499,7 @@ window.axios.defaults.headers.common = {
 
 
 
-const routes = [{ path: '/proposition/basic_data', component: __WEBPACK_IMPORTED_MODULE_0__components_proposition_BasicData_vue___default.a }, { path: '/proposition/:id/basic_data', component: __WEBPACK_IMPORTED_MODULE_0__components_proposition_BasicData_vue___default.a }, { path: '/proposition/categorization', component: __WEBPACK_IMPORTED_MODULE_1__components_proposition_Categorization_vue___default.a }, { path: '/proposition/:id/categorization', component: __WEBPACK_IMPORTED_MODULE_1__components_proposition_Categorization_vue___default.a }, { path: '/proposition/market_potential', component: __WEBPACK_IMPORTED_MODULE_2__components_proposition_MarketPotential_vue___default.a }, { path: '/proposition/:id/market_potential', component: __WEBPACK_IMPORTED_MODULE_2__components_proposition_MarketPotential_vue___default.a }, { path: '/proposition/technical_data', component: __WEBPACK_IMPORTED_MODULE_3__components_proposition_TechnicalData_vue___default.a }, { path: '/proposition/:id/technical_data', component: __WEBPACK_IMPORTED_MODULE_3__components_proposition_TechnicalData_vue___default.a }, { path: '/proposition/print', component: __WEBPACK_IMPORTED_MODULE_5__components_proposition_Print_vue___default.a }, { path: '/proposition/:id/print', component: __WEBPACK_IMPORTED_MODULE_5__components_proposition_Print_vue___default.a }, { path: '/proposition/authors_expense', component: __WEBPACK_IMPORTED_MODULE_4__components_proposition_AuthorsExpense_vue___default.a }, { path: '/proposition/:id/authors_expense', component: __WEBPACK_IMPORTED_MODULE_4__components_proposition_AuthorsExpense_vue___default.a }, { path: '/proposition/production_expense', component: __WEBPACK_IMPORTED_MODULE_6__components_proposition_ProductionExpense_vue___default.a }, { path: '/proposition/:id/production_expense', component: __WEBPACK_IMPORTED_MODULE_6__components_proposition_ProductionExpense_vue___default.a }, { path: '/proposition/marketing_expense', component: __WEBPACK_IMPORTED_MODULE_7__components_proposition_MarketingExpense_vue___default.a }, { path: '/proposition/:id/marketing_expense', component: __WEBPACK_IMPORTED_MODULE_7__components_proposition_MarketingExpense_vue___default.a }, { path: '/proposition/distribution_expense', component: __WEBPACK_IMPORTED_MODULE_8__components_proposition_DistributionExpense_vue___default.a }, { path: '/proposition/:id/distribution_expense', component: __WEBPACK_IMPORTED_MODULE_8__components_proposition_DistributionExpense_vue___default.a }, { path: '/proposition/layout_expense', component: __WEBPACK_IMPORTED_MODULE_9__components_proposition_LayoutExpense_vue___default.a }, { path: '/proposition/:id/layout_expense', component: __WEBPACK_IMPORTED_MODULE_9__components_proposition_LayoutExpense_vue___default.a }, { path: '/proposition/deadline', component: __WEBPACK_IMPORTED_MODULE_10__components_proposition_Deadline_vue___default.a }, { path: '/proposition/:id/deadline', component: __WEBPACK_IMPORTED_MODULE_10__components_proposition_Deadline_vue___default.a }, { path: '/proposition/precalculation', component: __WEBPACK_IMPORTED_MODULE_11__components_proposition_Precalculation_vue___default.a }, { path: '/proposition/:id/precalculation', component: __WEBPACK_IMPORTED_MODULE_11__components_proposition_Precalculation_vue___default.a }, { path: '/proposition/calculation', component: __WEBPACK_IMPORTED_MODULE_12__components_proposition_Calculation_vue___default.a }, { path: '/proposition/:id/calculation', component: __WEBPACK_IMPORTED_MODULE_12__components_proposition_Calculation_vue___default.a }, { path: '/proposition/work_order', component: __WEBPACK_IMPORTED_MODULE_13__components_proposition_WorkOrder_vue___default.a }];
+const routes = [{ path: '/proposition/basic_data', component: __WEBPACK_IMPORTED_MODULE_0__components_proposition_BasicData_vue___default.a }, { path: '/proposition/:id/start', component: __WEBPACK_IMPORTED_MODULE_14__components_proposition_PropositionStart_vue___default.a }, { path: '/proposition/:id/basic_data', component: __WEBPACK_IMPORTED_MODULE_0__components_proposition_BasicData_vue___default.a }, { path: '/proposition/categorization', component: __WEBPACK_IMPORTED_MODULE_1__components_proposition_Categorization_vue___default.a }, { path: '/proposition/:id/categorization', component: __WEBPACK_IMPORTED_MODULE_1__components_proposition_Categorization_vue___default.a }, { path: '/proposition/market_potential', component: __WEBPACK_IMPORTED_MODULE_2__components_proposition_MarketPotential_vue___default.a }, { path: '/proposition/:id/market_potential', component: __WEBPACK_IMPORTED_MODULE_2__components_proposition_MarketPotential_vue___default.a }, { path: '/proposition/technical_data', component: __WEBPACK_IMPORTED_MODULE_3__components_proposition_TechnicalData_vue___default.a }, { path: '/proposition/:id/technical_data', component: __WEBPACK_IMPORTED_MODULE_3__components_proposition_TechnicalData_vue___default.a }, { path: '/proposition/print', component: __WEBPACK_IMPORTED_MODULE_5__components_proposition_Print_vue___default.a }, { path: '/proposition/:id/print', component: __WEBPACK_IMPORTED_MODULE_5__components_proposition_Print_vue___default.a }, { path: '/proposition/authors_expense', component: __WEBPACK_IMPORTED_MODULE_4__components_proposition_AuthorsExpense_vue___default.a }, { path: '/proposition/:id/authors_expense', component: __WEBPACK_IMPORTED_MODULE_4__components_proposition_AuthorsExpense_vue___default.a }, { path: '/proposition/production_expense', component: __WEBPACK_IMPORTED_MODULE_6__components_proposition_ProductionExpense_vue___default.a }, { path: '/proposition/:id/production_expense', component: __WEBPACK_IMPORTED_MODULE_6__components_proposition_ProductionExpense_vue___default.a }, { path: '/proposition/marketing_expense', component: __WEBPACK_IMPORTED_MODULE_7__components_proposition_MarketingExpense_vue___default.a }, { path: '/proposition/:id/marketing_expense', component: __WEBPACK_IMPORTED_MODULE_7__components_proposition_MarketingExpense_vue___default.a }, { path: '/proposition/distribution_expense', component: __WEBPACK_IMPORTED_MODULE_8__components_proposition_DistributionExpense_vue___default.a }, { path: '/proposition/:id/distribution_expense', component: __WEBPACK_IMPORTED_MODULE_8__components_proposition_DistributionExpense_vue___default.a }, { path: '/proposition/layout_expense', component: __WEBPACK_IMPORTED_MODULE_9__components_proposition_LayoutExpense_vue___default.a }, { path: '/proposition/:id/layout_expense', component: __WEBPACK_IMPORTED_MODULE_9__components_proposition_LayoutExpense_vue___default.a }, { path: '/proposition/deadline', component: __WEBPACK_IMPORTED_MODULE_10__components_proposition_Deadline_vue___default.a }, { path: '/proposition/:id/deadline', component: __WEBPACK_IMPORTED_MODULE_10__components_proposition_Deadline_vue___default.a }, { path: '/proposition/precalculation', component: __WEBPACK_IMPORTED_MODULE_11__components_proposition_Precalculation_vue___default.a }, { path: '/proposition/:id/precalculation', component: __WEBPACK_IMPORTED_MODULE_11__components_proposition_Precalculation_vue___default.a }, { path: '/proposition/calculation', component: __WEBPACK_IMPORTED_MODULE_12__components_proposition_Calculation_vue___default.a }, { path: '/proposition/:id/calculation', component: __WEBPACK_IMPORTED_MODULE_12__components_proposition_Calculation_vue___default.a }, { path: '/proposition/work_order', component: __WEBPACK_IMPORTED_MODULE_13__components_proposition_WorkOrder_vue___default.a }];
 /* harmony export (immutable) */ __webpack_exports__["a"] = routes;
 
 
@@ -49483,7 +49529,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             id: 0,
             basic_data: {
                 title: '',
-                authors: [],
+                authors: {},
                 concept: '',
                 note: '',
                 possible_products: [],
@@ -49602,6 +49648,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 options: {}
             },
             work_order: {},
+            owner: {},
+            created_at: 0,
 
             step: 0
         },
@@ -51413,7 +51461,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           }
         }
       }
-    }), _vm._v(" "), _c('label', [_vm._v(_vm._s(_vm.lang('Soft Cover Circulation')))])])]) : _vm._e(), _vm._v(" "), (_vm.offers[key + '[cover_type]'] === 'hard' || _vm.offers + [key + '[cover_type]'] === 'both') ? _c('div', {
+    }), _vm._v(" "), _c('label', [_vm._v(_vm._s(_vm.lang('Soft Cover Circulation')))])])]) : _vm._e(), _vm._v(" "), (_vm.offers[key + '[cover_type]'] === 'hard' || _vm.offers[key + '[cover_type]'] === 'both') ? _c('div', {
       staticClass: "col-md-6"
     }, [_c('div', {
       staticClass: "md-form"
@@ -52339,7 +52387,51 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c("div")
+  return _c('div', [_c('div', {
+    staticClass: "profile-head pb-2 row"
+  }, [_c('div', {
+    staticClass: "col-md-4"
+  }, [(_vm.proposition.owner) ? _c('a', {
+    attrs: {
+      "href": "#"
+    }
+  }, [_c('img', {
+    staticClass: "profile-m-2 mr-1 float-left",
+    attrs: {
+      "src": _vm.proposition.owner.image
+    }
+  }), _vm._v(" "), _c('h6', {
+    staticClass: "white-label"
+  }, [_vm._v(_vm._s(_vm.lang('Assigner')))]), _vm._v(" "), _c('h3', {
+    staticClass: "mb-1 text-white"
+  }, [_vm._v(_vm._s(_vm.proposition.owner.name))])]) : _vm._e()]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-4"
+  }, [_c('h6', {
+    staticClass: "white-label"
+  }, [_vm._v(_vm._s(_vm.lang('Starting Date')))]), _vm._v(" "), _c('h3', {
+    staticClass: "mb-1 text-white"
+  }, [_vm._v(_vm._s(_vm._f("moment")(_vm.proposition.created_at.date, 'DD.MM.YYYY.')))])]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-4"
+  }, [_c('h6', {
+    staticClass: "white-label"
+  }, [_vm._v(_vm._s(_vm.lang('Total Time')))]), _vm._v(" "), _c('h3', {
+    staticClass: "mb-1 text-white"
+  }, [_vm._v(_vm._s(_vm._f("moment")(_vm.proposition.created_at.date, "from", true)))])])]), _vm._v(" "), _c('div', {
+    staticClass: "btn-footer mt-2 mb-5 flex-column flex-md-row d-flex p-2"
+  }, [_c('button', {
+    staticClass: "btn btn-lg btn-save",
+    attrs: {
+      "data-toggle": "tooltip",
+      "title": _vm.lang('You need to finish your proposition first'),
+      "type": "submit",
+      "disabled": ""
+    }
+  }, [_vm._v(_vm._s(_vm.lang('Send on Approval')))]), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-lg btn-cancel",
+    attrs: {
+      "type": "submit"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('Delete')))])])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -55954,19 +56046,18 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_vm._v(_vm._s(_vm.lang('Add Author')))]), _vm._v(" "), _vm._l((_vm.basic_data['authors']), function(author, index) {
     return _c('div', {
-      staticClass: "chip mb-3",
-      on: {
-        "chip": function($event) {
-          if (!('button' in $event) && _vm._k($event.keyCode, "delete", [8, 46])) { return null; }
-          _vm.authorDelete($event)
-        }
-      }
+      staticClass: "chip mb-3"
     }, [_c('img', {
       attrs: {
         "src": author.image
       }
     }), _vm._v(" " + _vm._s(author.name)), _c('i', {
-      staticClass: "close fa fa-times"
+      staticClass: "close fa fa-times",
+      on: {
+        "click": function($event) {
+          _vm.authorDelete(author.id)
+        }
+      }
     })])
   }), _vm._v(" "), _c('div', {
     staticClass: "md-form mt-2"
