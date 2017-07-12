@@ -49375,9 +49375,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     methods: {
         saveProposition: function () {
             this.$store.dispatch('proposition/saveProposition');
-            this.$router.push({
-                path: '/proposition/' + (typeof this.$route.params.id !== 'undefined' ? this.$route.params.id + '/' : '') + this.$store.state.proposition.steps[this.$store.state.proposition.proposition.step + 1]
-            });
+            if (this.$store.state.proposition.proposition.step === 11) {
+                window.location.href = '/propositions';
+            } else {
+                this.$router.push({
+                    path: '/proposition/' + (typeof this.$route.params.id !== 'undefined' ? this.$route.params.id + '/' : '') + this.$store.state.proposition.steps[this.$store.state.proposition.proposition.step + 1]
+                });
+            }
         },
         assignModalOpen: function () {
             jQuery('#centralModalAssign').modal('show');
@@ -49731,7 +49735,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             }).catch(err => {});
         },
         saveProposition({ commit, state }) {
-            //TODO: make request
+            let step = state.proposition.step;
+            if (step === 11) {
+                step = 4;
+            }
             let data = {
                 step: state.steps[state.proposition.step],
                 data: state.proposition[state.steps[state.proposition.step]]
