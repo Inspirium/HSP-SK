@@ -23,9 +23,10 @@
     "vue-moment": "^2.0.2",
     "vue-router": "^2.5.3",
     "vuex": "^2.3.1",
-    "vuex-router-sync": "^4.2.0"
+    "vuex-router-sync": "^4.2.0",
+    "vue-clickaway": "^2.1.0",
+    "vuedraggable": "^2.14.1"
   },
   "dependencies": {
-    "vue-clickaway": "^2.1.0"
   }
 }
