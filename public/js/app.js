@@ -49374,7 +49374,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             user: '',
             department: '',
-            suggestions: [],
+            e_suggestions: [],
+            d_suggestions: [],
             task: {
                 name: '',
                 description: '',
@@ -49400,13 +49401,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                         this.cancel = c;
                     })
                 }).then(response => {
-                    this.suggestions = response.data;
+                    this.e_suggestions = response.data;
                 }).catch(error => {});
             }
         },
         employeeCompleteSelect: function (index) {
-            this.task.users.push(this.suggestions[index]);
-            this.suggestions = [];
+            this.task.users.push(this.e_suggestions[index]);
+            this.e_suggestions = [];
             this.user = '';
         },
         departmentComplete: function (event) {
@@ -49421,13 +49422,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                         this.cancel = c;
                     })
                 }).then(response => {
-                    this.suggestions = response.data;
+                    this.d_suggestions = response.data;
                 }).catch(error => {});
             }
         },
         departmentCompleteSelect: function (index) {
-            this.task.departments.push(this.suggestions[index]);
-            this.suggestions = [];
+            this.task.departments.push(this.d_suggestions[index]);
+            this.d_suggestions = [];
             this.department = '';
         },
         submitTask() {
@@ -54548,9 +54549,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.user = $event.target.value
       }
     }
-  }), _vm._v(" "), (_vm.suggestions.length) ? _c('ul', {
+  }), _vm._v(" "), (_vm.e_suggestions.length) ? _c('ul', {
     staticClass: "mdb-autocomplete-wrap"
-  }, _vm._l((_vm.suggestions), function(item, index) {
+  }, _vm._l((_vm.e_suggestions), function(item, index) {
     return _c('li', {
       on: {
         "click": function($event) {
@@ -54599,9 +54600,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.department = $event.target.value
       }
     }
-  }), _vm._v(" "), (_vm.suggestions.length) ? _c('ul', {
+  }), _vm._v(" "), (_vm.d_suggestions.length) ? _c('ul', {
     staticClass: "mdb-autocomplete-wrap"
-  }, _vm._l((_vm.suggestions), function(item, index) {
+  }, _vm._l((_vm.d_suggestions), function(item, index) {
     return _c('li', {
       on: {
         "click": function($event) {
@@ -55023,9 +55024,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }, [_c('img', {
       staticClass: "profile-m mr-1",
       attrs: {
-        "src": "/images/profile.jpg"
+        "src": element.assigner.image
       }
-    }), _vm._v("Jelena Lončarić")])]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("moment")(element.created_at, 'DD.MM.')))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("moment")(element.deadline, 'DD.MM.')))]), _vm._v(" "), _c('td', [_vm._v("4 h")]), _vm._v(" "), _c('td', {
+    }), _vm._v(_vm._s(element.assigner.name))])]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("moment")(element.created_at, 'DD.MM.')))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("moment")(element.deadline, 'DD.MM.')))]), _vm._v(" "), _c('td', [_vm._v("4 h")]), _vm._v(" "), _c('td', {
       staticClass: "text-right"
     }, [_c('div', {
       staticClass: "file-box-sty icon icon-assign"
