@@ -49653,7 +49653,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 },
                 user: {
                     name: ''
-                }
+                },
+                status: ''
             },
             document_statuses: {
                 pending: {
@@ -49677,7 +49678,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         };
     },
     computed: {},
-    methods: {},
+    methods: {
+        acceptTask: function () {
+            axios.post('/api/task/' + this.task.id + '/accept').then(res => {
+                this.task.status = 'old';
+            }).catch(err => {});
+        }
+    },
     mounted: function () {
         let id = this.$route.params.id;
         axios.get('/api/task/' + id).then(res => {
@@ -49694,6 +49701,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuedraggable__ = __webpack_require__(230);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuedraggable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vuedraggable__);
+//
 //
 //
 //
@@ -49826,7 +49834,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     methods: {},
     mounted: function () {
         axios.get('api/tasks').then(res => {
-            this.old_tasks = res.data.tasks;
+            this.new_tasks = res.data.new_tasks;
+            this.old_tasks = res.data.old_tasks;
         });
     }
 });
@@ -54958,9 +54967,15 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       attrs: {
         "scope": "row"
       }
-    }, [_vm._v(_vm._s(element.id))]), _vm._v(" "), _c('td', {
+    }, [_vm._v(_vm._s(index + 1))]), _vm._v(" "), _c('td', {
       staticClass: "table-title"
-    }, [_vm._v(_vm._s(element.title))]), _vm._v(" "), _c('td', [_c('div', {
+    }, [_c('a', {
+      attrs: {
+        "href": '/task/show/' + element.id
+      }
+    }, [_vm._v(_vm._s(element.name))])]), _vm._v(" "), _c('td', [_c('div', {
+      class: _vm.task_types[element.type].className
+    }, [_vm._v(_vm._s(_vm.task_types[element.type].title))])]), _vm._v(" "), _c('td', [_c('div', {
       class: _vm.task_types[element.type].className
     }, [_vm._v(_vm._s(_vm.task_types[element.type].title))])]), _vm._v(" "), _c('td', [_c('a', {
       staticClass: "text-uppercase file-box-sty",
@@ -54970,9 +54985,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }, [_c('img', {
       staticClass: "profile-m mr-1",
       attrs: {
-        "src": "/images/profile.jpg"
+        "src": element.assigner.image
       }
-    }), _vm._v("Jelena Lončarić")])]), _vm._v(" "), _c('td', [_vm._v("21.09.")]), _vm._v(" "), _c('td', [_vm._v("25.09.")]), _vm._v(" "), _c('td', {
+    }), _vm._v(_vm._s(element.assigner.name))])]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("moment")(element.created_at, 'DD.MM.')))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("moment")(element.deadline, 'DD.MM.')))]), _vm._v(" "), _c('td', {
       staticClass: "text-right"
     }, [_c('div', {
       staticClass: "file-box-sty icon icon-assign"
@@ -55008,7 +55023,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticClass: "icon icon-handler"
     })]), _vm._v(" "), _c('th', {
       staticClass: "display-e w-30"
-    }, [_vm._v(_vm._s(element.id))]), _vm._v(" "), _c('td', {
+    }, [_vm._v(_vm._s(index + 1))]), _vm._v(" "), _c('td', {
       staticClass: "table-title"
     }, [_c('a', {
       attrs: {
@@ -60416,12 +60431,15 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "file-box-sty icon icon-approval-yes"
   }, [_vm._v(_vm._s(_vm.lang('Approved')))])])], 2)] : _vm._e(), _vm._v(" "), _c('div', {
     staticClass: "btn-footer mt-2 mb-2 flex-column flex-md-row d-flex p-2"
-  }, [_c('button', {
+  }, [(_vm.task.status === 'new') ? _c('button', {
     staticClass: "btn btn-lg btn-save",
     attrs: {
       "type": "submit"
+    },
+    on: {
+      "click": _vm.acceptTask
     }
-  }, [_vm._v(_vm._s(_vm.lang('Accept')))]), _vm._v(" "), _c('button', {
+  }, [_vm._v(_vm._s(_vm.lang('Accept')))]) : _vm._e(), _vm._v(" "), _c('button', {
     staticClass: "btn btn-lg btn-cancel",
     attrs: {
       "type": "submit"
