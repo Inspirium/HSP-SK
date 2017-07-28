@@ -60439,7 +60439,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('a', {
     staticClass: "file-icon",
     attrs: {
-      "src": "",
       "href": "http://homestead.app/images/profile.pdf"
     }
   }, [_vm._v("Fizika i društvo.doc")]), _vm._v(" "), _c('div', {
