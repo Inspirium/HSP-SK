@@ -45758,7 +45758,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                             enabled: true,
                             path: '/tasks',
                             title: 'Tasks',
-                            component: true
+                            component: false
                         }
                     }
                 },
@@ -49187,6 +49187,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function () {
@@ -49195,14 +49197,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             e_suggestions: [],
             department: '',
             d_suggestions: [],
+            employees: [],
+            departments: [],
             cancel: false
         };
     },
-    computed: {
-        assigned() {
-            return this.$deepModel('proposition.proposition.assigned');
-        }
-    },
+    computed: {},
     methods: {
         saveProposition: function () {
             this.$store.dispatch('proposition/saveProposition');
@@ -49240,15 +49240,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         autocomplete_select: function (index, type) {
             if (type === 'department') {
                 //this.$store.commit('proposition/pushToArray', {key: 'departments', group: 'assigned', value: this.d_suggestions[index]});
-                this.assigned['departments'] = this.d_suggestions[index];
+                this.departments.push(this.d_suggestions[index]);
                 this.d_suggestions = [];
                 this.department = '';
             } else {
                 //this.$store.commit('proposition/pushToArray', {key: 'employees', group: 'assigned', value: this.e_suggestions[index]});
-                this.assigned['employees'] = this.e_suggestions[index];
+                this.employees.push(this.e_suggestions[index]);
                 this.e_suggestions = [];
                 this.employee = '';
             }
+        },
+        assignValues: function () {
+            axios.post('/api/proposition/assign/' + this.$route.params.id, { employees: this.employees, departments: this.departments }).then(res => {}).catch(err => {});
         }
     },
     mounted: function () {}
@@ -49260,6 +49263,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
 //
 //
 //
@@ -49382,7 +49388,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     computed: {},
     methods: {
-        userComplete: function (event) {
+        employeeComplete: function (event) {
             if (this.cancel) {
                 this.cancel();
                 this.cancel = false;
@@ -49398,10 +49404,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }).catch(error => {});
             }
         },
-        userCompleteSelect: function (index) {
+        employeeCompleteSelect: function (index) {
             this.task.users.push(this.suggestions[index]);
             this.suggestions = [];
             this.user = '';
+        },
+        departmentComplete: function (event) {
+            if (this.cancel) {
+                this.cancel();
+                this.cancel = false;
+            }
+            let CancelToken = axios.CancelToken;
+            if (this.user.length > 2) {
+                axios.get('/api/human_resources/department/search/' + this.department, {
+                    cancelToken: new CancelToken(c => {
+                        this.cancel = c;
+                    })
+                }).then(response => {
+                    this.suggestions = response.data;
+                }).catch(error => {});
+            }
+        },
+        departmentCompleteSelect: function (index) {
+            this.task.departments.push(this.suggestions[index]);
+            this.suggestions = [];
+            this.department = '';
         },
         submitTask() {
             if (typeof this.$route.params.id !== 'undefined') {
@@ -49602,10 +49629,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function () {
         return {
+            task_types: {
+                1: {
+                    title: 'Project',
+                    className: 'tasktype-1'
+                },
+                2: {
+                    title: 'Assignment',
+                    className: 'tasktype-2'
+                }
+            },
             documents: false,
             task: {
                 id: '',
@@ -53947,7 +53985,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         }
       }
     }, [_vm._v(_vm._s(item.name))])
-  })) : _vm._e()])])])]), _vm._v(" "), _c('div', {
+  })) : _vm._e()]), _vm._v(" "), _vm._l((_vm.departments), function(department) {
+    return _c('div', {
+      staticClass: "chip mb-1"
+    }, [_vm._v("\n                                    " + _vm._s(department.name)), _c('i', {
+      staticClass: "close fa fa-times"
+    })])
+  })], 2)])]), _vm._v(" "), _c('div', {
     staticClass: "modal-body tab-pane fade",
     attrs: {
       "id": "panel52",
@@ -54000,7 +54044,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "type": "button"
     }
-  }, [_vm._v(_vm._s(_vm.lang('Add')))])])]), _vm._v(" "), _vm._l((_vm.assigned['employees']), function(employee) {
+  }, [_vm._v(_vm._s(_vm.lang('Add')))])])]), _vm._v(" "), _vm._l((_vm.employees), function(employee) {
     return _c('div', {
       staticClass: "chip mb-1"
     }, [_c('img', {
@@ -54023,6 +54067,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "type": "button",
       "data-dismiss": "modal"
+    },
+    on: {
+      "click": _vm.assignValues
     }
   }, [_vm._v(_vm._s(_vm.lang('Assign')))])])])])])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -54494,7 +54541,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     },
     on: {
       "keyup": function($event) {
-        _vm.userComplete($event)
+        _vm.employeeComplete($event)
       },
       "input": function($event) {
         if ($event.target.composing) { return; }
@@ -54507,7 +54554,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     return _c('li', {
       on: {
         "click": function($event) {
-          _vm.userCompleteSelect(index)
+          _vm.employeeCompleteSelect(index)
         }
       }
     }, [_vm._v(_vm._s(item.first_name) + " " + _vm._s(item.last_name))])
@@ -54544,12 +54591,25 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": (_vm.department)
     },
     on: {
+      "keyup": function($event) {
+        _vm.departmentComplete($event)
+      },
       "input": function($event) {
         if ($event.target.composing) { return; }
         _vm.department = $event.target.value
       }
     }
-  }), _vm._v(" "), _c('label', {
+  }), _vm._v(" "), (_vm.suggestions.length) ? _c('ul', {
+    staticClass: "mdb-autocomplete-wrap"
+  }, _vm._l((_vm.suggestions), function(item, index) {
+    return _c('li', {
+      on: {
+        "click": function($event) {
+          _vm.departmentCompleteSelect(index)
+        }
+      }
+    }, [_vm._v(_vm._s(item.title))])
+  })) : _vm._e(), _vm._v(" "), _c('label', {
     attrs: {
       "for": "form1"
     }
@@ -60252,13 +60312,17 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "page-name-l mt-2 mb-1"
   }, [_vm._v(_vm._s(_vm.lang('Task Description')))]), _vm._v(" "), _c('div', [_c('h4', {
     staticClass: "mb-1"
-  }, [_vm._v(_vm._s(_vm.task.description))])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.task.description))]), _vm._v(" "), (_vm.task.related_link) ? _c('a', {
+    attrs: {
+      "href": _vm.task.related_link
+    }
+  }, [_vm._v(_vm._s(_vm.lang('View')))]) : _vm._e()])]), _vm._v(" "), _c('div', {
     staticClass: "col-md-3"
   }, [_c('div', {
     staticClass: "page-name-l mt-2 mb-1"
   }, [_vm._v(_vm._s(_vm.lang('Task Type')))]), _vm._v(" "), _c('div', [_c('h4', {
-    staticClass: "mb-1"
-  }, [_vm._v(_vm._s(_vm.task.type))])])])]), _vm._v(" "), (_vm.documents) ? [_c('div', {
+    class: ['mb-1', _vm.task_types[_vm.task.type].className]
+  }, [_vm._v(_vm._s(_vm.task_types[_vm.task.type].title))])])])]), _vm._v(" "), (_vm.documents) ? [_c('div', {
     staticClass: "page-name-l mb-1 mt-2"
   }, [_vm._v(_vm._s(_vm.lang('Documents')))]), _vm._v(" "), _vm._m(0), _vm._v(" "), _c('div', {
     staticClass: "btn-footer mt-2 mb-2 flex-column flex-md-row d-flex p-2"
