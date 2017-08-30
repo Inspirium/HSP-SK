@@ -6,22 +6,22 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
-use Inspirium\BookProposition\Models\BookProposition;
+use Inspirium\TaskManagement\Models\Task;
 
 class TaskAssigned extends Notification
 {
     use Queueable;
 
-    private $proposition;
+    private $task;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(BookProposition $proposition)
+    public function __construct(Task $task)
     {
-        $this->proposition = $proposition;
+        $this->task = $task;
     }
 
     /**
@@ -58,10 +58,9 @@ class TaskAssigned extends Notification
     public function toArray($notifiable)
     {
         return [
-            'proposition_id' => $this->proposition->id,
 	        'message' => 'Please add more data',
 	        'tasktype' => 'assignment',
-	        'link' => '/proposition/'.$this->proposition->id
+	        'link' => '/task/show/'.$this->task->id
         ];
     }
 }
