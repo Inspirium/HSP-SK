@@ -55,6 +55,13 @@ return [
             'visibility' => 'public',
         ],
 
+        'proposition' => [
+	        'driver' => 'local',
+	        'root' => storage_path('app/public/proposition'),
+	        'url' => env('APP_URL').'/storage/proposition',
+	        'visibility' => 'public',
+        ],
+
 	    'langs' => [
 	    	'driver' => 'local',
 		    'root' => resource_path('lang')
