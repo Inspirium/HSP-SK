@@ -57045,6 +57045,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       staticClass: "form-control",
       attrs: {
         "type": "text",
+        "id": "soft-cover",
         "disabled": ""
       },
       domProps: {
@@ -57052,7 +57053,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       }
     }), _vm._v(" "), _c('label', {
       attrs: {
-        "for": "form1"
+        "for": "soft-cover"
       }
     }, [_vm._v(_vm._s(_vm.lang('Soft Cover Circulation')))])])]), _vm._v(" "), _c('div', {
       staticClass: "col-md-6"
@@ -57062,6 +57063,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       staticClass: "form-control",
       attrs: {
         "type": "text",
+        "id": "hard-cover",
         "disabled": ""
       },
       domProps: {
@@ -57069,7 +57071,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       }
     }), _vm._v(" "), _c('label', {
       attrs: {
-        "for": "form1"
+        "for": "hard-cover"
       }
     }, [_vm._v(_vm._s(_vm.lang('Hard Cover Circulation')))])])])]), _vm._v(" "), _c('div', {
       staticClass: "row"
@@ -57203,36 +57205,58 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }, [_c('fieldset', {
       staticClass: "form-group"
     }, [_c('input', {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: (option.film_print),
+        expression: "option.film_print"
+      }],
       attrs: {
         "name": "film_print",
         "type": "radio",
-        "id": "radio11",
+        "id": "film_print_no",
         "value": "no",
         "disabled": ""
       },
       domProps: {
-        "value": option.film_print
+        "checked": _vm._q(option.film_print, "no")
+      },
+      on: {
+        "__c": function($event) {
+          option.film_print = "no"
+        }
       }
     }), _vm._v(" "), _c('label', {
       attrs: {
-        "for": "radio11"
+        "for": "film_print_no"
       }
     }, [_vm._v(_vm._s(_vm.lang('No')))])]), _vm._v(" "), _c('fieldset', {
       staticClass: "form-group"
     }, [_c('input', {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: (option.film_print),
+        expression: "option.film_print"
+      }],
       attrs: {
         "name": "film_print",
         "type": "radio",
-        "id": "radio21",
-        "value": "ye",
+        "id": "film_print_yes",
+        "value": "yes",
         "disabled": ""
       },
       domProps: {
-        "value": option.film_print
+        "checked": _vm._q(option.film_print, "yes")
+      },
+      on: {
+        "__c": function($event) {
+          option.film_print = "yes"
+        }
       }
     }), _vm._v(" "), _c('label', {
       attrs: {
-        "for": "radio21"
+        "for": "film_print_yes"
       }
     }, [_vm._v(_vm._s(_vm.lang('Yes')))])])]), _vm._v(" "), _c('div', {
       staticClass: "page-name-m"
@@ -57241,36 +57265,58 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }, [_c('fieldset', {
       staticClass: "form-group"
     }, [_c('input', {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: (option.blind_print),
+        expression: "option.blind_print"
+      }],
       attrs: {
         "name": "blind_print",
         "type": "radio",
-        "id": "radio11",
+        "id": "blind_print_no",
         "value": "no",
         "disabled": ""
       },
       domProps: {
-        "value": option.blind_print
+        "checked": _vm._q(option.blind_print, "no")
+      },
+      on: {
+        "__c": function($event) {
+          option.blind_print = "no"
+        }
       }
     }), _vm._v(" "), _c('label', {
       attrs: {
-        "for": "radio11"
+        "for": "blind_print_no"
       }
     }, [_vm._v(_vm._s(_vm.lang('No')))])]), _vm._v(" "), _c('fieldset', {
       staticClass: "form-group"
     }, [_c('input', {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: (option.blind_print),
+        expression: "option.blind_print"
+      }],
       attrs: {
         "name": "blind_print",
         "type": "radio",
-        "id": "radio21",
+        "id": "blind_print_yes",
         "value": "yes",
         "disabled": ""
       },
       domProps: {
-        "value": option.blind_print
+        "checked": _vm._q(option.blind_print, "yes")
+      },
+      on: {
+        "__c": function($event) {
+          option.blind_print = "yes"
+        }
       }
     }), _vm._v(" "), _c('label', {
       attrs: {
-        "for": "radio21"
+        "for": "blind_print_yes"
       }
     }, [_vm._v(_vm._s(_vm.lang('Yes')))])])]), _vm._v(" "), _c('div', {
       staticClass: "page-name-m"
@@ -57279,36 +57325,58 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }, [_c('fieldset', {
       staticClass: "form-group"
     }, [_c('input', {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: (option.uv_print),
+        expression: "option.uv_print"
+      }],
       attrs: {
         "name": "uv_print",
         "type": "radio",
-        "id": "radio11",
+        "id": "uv_film_no",
         "value": "no",
         "disabled": ""
       },
       domProps: {
-        "value": option.uv_print
+        "checked": _vm._q(option.uv_print, "no")
+      },
+      on: {
+        "__c": function($event) {
+          option.uv_print = "no"
+        }
       }
     }), _vm._v(" "), _c('label', {
       attrs: {
-        "for": "radio11"
+        "for": "uv_film_no"
       }
     }, [_vm._v(_vm._s(_vm.lang('No')))])]), _vm._v(" "), _c('fieldset', {
       staticClass: "form-group"
     }, [_c('input', {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: (option.uv_print),
+        expression: "option.uv_print"
+      }],
       attrs: {
         "name": "uv_print",
         "type": "radio",
-        "id": "radio21",
+        "id": "uv_film_yes",
         "value": "yes",
         "disabled": ""
       },
       domProps: {
-        "value": option.uv_print
+        "checked": _vm._q(option.uv_print, "yes")
+      },
+      on: {
+        "__c": function($event) {
+          option.uv_print = "yes"
+        }
       }
     }), _vm._v(" "), _c('label', {
       attrs: {
-        "for": "radio21"
+        "for": "uv_film_yes"
       }
     }, [_vm._v(_vm._s(_vm.lang('Yes')))])])])])])])]), _vm._v(" "), _c('div', {
       staticClass: "page-name-xl mb-1"
