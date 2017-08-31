@@ -47404,14 +47404,17 @@ module.exports = function spread(callback) {
                     return e.percentage * option.title * option.price_proposal / 100;
                 }),
                     complete = Number(this.authors_total) + Number(option.print_offer) + Number(option.compensation) + Number(option.indirect_expenses) + Number(remainder),
-                    mprice = (Number(complete) - Number(this.dotation)) * (100 + Number(option.calculated_profit_percent)) / 100;
+                    mprice = (Number(complete) - Number(this.dotation)) * (100 + Number(option.calculated_profit_percent)) / 100,
+                    price = mprice * (100 + Number(option.shop_percent)) / 100;
+
                 options[option.id] = {
                     direct_cost: Number(this.authors_total) + Number(option.print_offer) + Number(option.compensation),
                     remainder_after_sales: remainder,
                     complete_expense: complete,
                     cost_coverage: Number(complete) - Number(this.dotation),
                     manufacturer_price: mprice,
-                    price: mprice * (100 + Number(option.shop_percent)) / 100
+                    price: price,
+                    total_cost: price * (100 + Number(option.vat_percent)) / 100
                 };
             });
             return options;
@@ -50433,8 +50436,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 step = 4;
             }
             let data = {
-                step: state.steps[state.proposition.step],
-                data: state.proposition[state.steps[state.proposition.step]]
+                step: state.steps[step],
+                data: state.proposition[state.steps[step]]
             };
             if (!state.proposition.id) {
                 __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/api/proposition', data).then(res => {
@@ -56989,7 +56992,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       staticClass: "no-border display-b text-white"
     }, [_vm._v(_vm._s(_vm.lang('Total Cost')))]), _vm._v(" "), _c('h1', {
       staticClass: "mb-1 text-white"
-    }, [_vm._v(_vm._s(_vm._f("flexCurrency")(option.total_cost, ' kn', 2)))])]), _vm._v(" "), _c('div', {
+    }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].total_cost, ' kn', 2)))])]), _vm._v(" "), _c('div', {
       staticClass: "col-md-2"
     }, [_c('div', {
       staticClass: " page-name-l-white border-white"
@@ -57022,20 +57025,20 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       directives: [{
         name: "model",
         rawName: "v-model",
-        value: (_vm.options[key].price_proposal),
-        expression: "options[key].price_proposal"
+        value: (option.price_proposal),
+        expression: "option.price_proposal"
       }],
       staticClass: "form-control",
       attrs: {
         "type": "text"
       },
       domProps: {
-        "value": (_vm.options[key].price_proposal)
+        "value": (option.price_proposal)
       },
       on: {
         "input": function($event) {
           if ($event.target.composing) { return; }
-          _vm.options[key].price_proposal = $event.target.value
+          option.price_proposal = $event.target.value
         }
       }
     }), _vm._v(" "), _c('label', [_vm._v(_vm._s(_vm.lang('Price proposal')))])])])])]), _vm._v(" "), _c('div', {
