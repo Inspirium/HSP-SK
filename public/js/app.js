@@ -44935,22 +44935,6 @@ const router = new __WEBPACK_IMPORTED_MODULE_2_vue_router__["a" /* default */]({
     routes: __WEBPACK_IMPORTED_MODULE_5__routes__["a" /* routes */]
 });
 
-router.beforeEach((to, from, next) => {
-    if (from.name === 'basic_data') {
-        if (!__WEBPACK_IMPORTED_MODULE_4__vuex_store__["a" /* default */].state.proposition.proposition.basic_data.authors.length) {
-            alert('Authors missing');
-            return false;
-        }
-    }
-    if (from.name === 'technical_data') {
-        if (!__WEBPACK_IMPORTED_MODULE_4__vuex_store__["a" /* default */].state.proposition.proposition.technical_data.circulations.length) {
-            alert('Please enter some circulations');
-            return false;
-        }
-    }
-    next();
-});
-
 __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_6_vuex_router_sync__["sync"])(__WEBPACK_IMPORTED_MODULE_4__vuex_store__["a" /* default */], router);
 window.vueRouter = router;
 
