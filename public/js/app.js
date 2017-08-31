@@ -47381,7 +47381,10 @@ module.exports = function spread(callback) {
     },
     mounted: function () {
         if (this.$route.params.id && !this.$store.state.proposition.proposition.loaded) {
-            this.$store.dispatch('proposition/initProposition', { id: this.$route.params.id });
+            this.$store.dispatch('proposition/initProposition', { id: this.$route.params.id }).then(() => {
+                $('.mdb-select').material_select('destroy');
+                $('.mdb-select').material_select();
+            });
         }
         this.$store.commit('proposition/updateProposition', { key: 'step', value: 11 });
         $('.mdb-select').material_select('destroy');
@@ -50353,9 +50356,12 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     },
     actions: {
         initProposition({ commit, state }, payload) {
-            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/api/proposition/' + payload.id).then(res => {
-                commit('initProposition', res.data);
-            }).catch(err => {});
+            return new Promise((resolve, reject) => {
+                __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/api/proposition/' + payload.id).then(res => {
+                    commit('initProposition', res.data);
+                    resolve();
+                }).catch(err => {});
+            });
         },
         saveProposition({ commit, state }) {
             let step = state.proposition.step;
