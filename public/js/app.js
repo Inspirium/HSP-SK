@@ -47393,7 +47393,7 @@ module.exports = function spread(callback) {
                 4: 1.3,
                 5: 1.6
             };
-            let design_price = this.number_of_hours * 15000 / 175 * rcomplexity[this.$store.state.proposition.proposition.layout_expense.design_complexity] / 2;
+            let design_price = number_of_hours * 15000 / 175 * rcomplexity[this.$store.state.proposition.proposition.layout_expense.design_complexity] / 2;
             return layout_price + design_price;
         },
         totals() {
