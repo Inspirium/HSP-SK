@@ -46642,7 +46642,9 @@ module.exports = function spread(callback) {
     },
     mounted: function () {
         if (this.$route.params.id && !this.$store.state.proposition.proposition.loaded) {
-            this.$store.dispatch('proposition/initProposition', { id: this.$route.params.id });
+            this.$store.dispatch('proposition/initProposition', { id: this.$route.params.id }).then(() => {
+                this.$store.dispatch('proposition/initAuthorExpenses');
+            });
         }
         this.$store.commit('proposition/updateProposition', { key: 'step', value: 5 });
         this.$store.dispatch('proposition/initAuthorExpenses');
@@ -47293,6 +47295,30 @@ module.exports = function spread(callback) {
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -47331,6 +47357,44 @@ module.exports = function spread(callback) {
         },
         options() {
             return this.$deepModel('proposition.proposition.print.offers');
+        },
+        marketing_expense() {
+            return Number(this.$store.state.proposition.proposition.marketing_expense.expense) + _.sumBy(this.$store.state.proposition.proposition.marketing_expense.additional_expenses, function (o) {
+                return Number(o.amount);
+            });
+        },
+        production_expense() {
+            let expense = this.$store.state.proposition.proposition.production_expense;
+            let sum = Number(expense.text_price) * Number(expense.text_price_amount) + Number(expense.lecture) * Number(expense.lecture_amount) + Number(expense.correction) * Number(expense.correction_amount) + Number(expense.proofreading) * Number(expense.proofreading_amount) + Number(expense.translation) * Number(expense.translation_amount) + Number(expense.index) * Number(expense.index_amount) + Number(expense.photos) * Number(expense.photos_amount) + Number(expense.illustrations) * Number(expense.illustrations_amount) + Number(expense.technical_drawings) * Number(expense.technical_drawings_amount) + Number(expense.accontation) + Number(expense.reviews) + Number(expense.epilogue) + Number(expense.expert_report) + Number(expense.copyright) + Number(expense.copyright_mediator) + Number(expense.methodical_instrumentarium) + Number(expense.selection) + Number(expense.powerpoint_presentation);
+            let additional = _.sumBy(expense.additional_expense, o => {
+                return Number(o.amount);
+            });
+            return sum + additional;
+        },
+        design_layout_expense() {
+            let category = this.$store.state.proposition.proposition.categorization.upgroup_coef / 60,
+                pages = this.$store.state.proposition.proposition.technical_data.number_of_pages,
+                photos = this.$store.state.proposition.proposition.production_expense.photos_amount / 30,
+                illustrations = this.$store.state.proposition.proposition.production_expense.illustrations_amount / 30,
+                drawings = this.$store.state.proposition.proposition.production_expense.technical_drawings_amount / 30;
+            const lcomplexity = {
+                1: 0.65,
+                2: 0.8,
+                3: 1,
+                4: 1.2,
+                5: 1.35
+            };
+            let number_of_hours = (category * pages + photos + illustrations + drawings) * lcomplexity[this.$store.state.proposition.proposition.layout_expense.layout_complexity];
+            let layout_price = number_of_hours * 8000 / 175;
+            const rcomplexity = {
+                1: 0.4,
+                2: 0.7,
+                3: 1,
+                4: 1.3,
+                5: 1.6
+            };
+            let design_price = this.number_of_hours * 15000 / 175 * rcomplexity[this.$store.state.proposition.proposition.layout_expense.design_complexity] / 2;
+            return layout_price + design_price;
         },
         totals() {
             let options = {};
@@ -57202,7 +57266,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       staticClass: "page-name-m"
     }, [_vm._v(_vm._s(_vm.lang('Film Print')))]), _vm._v(" "), _c('div', {
       staticClass: "form-inline mb-3"
-    }, [_c('fieldset', {
+    }, [_vm._v("\n                                    " + _vm._s() + "\n                                    "), _c('fieldset', {
       staticClass: "form-group"
     }, [_c('input', {
       directives: [{
@@ -57396,27 +57460,45 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       attrs: {
         "scope": "row"
       }
-    }, [_vm._v("1.1")]), _vm._v(" "), _c('td', [_vm._v("Autorski honorar ukupno")]), _vm._v(" "), _c('td'), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.authors_advance, '', 2)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.authors_advance / option.title, ' kn', 2)))])]), _vm._v(" "), _c('tr', [_c('th', {
+    }, [_vm._v("1.1")]), _vm._v(" "), _c('td', [_vm._v("Akontacija")]), _vm._v(" "), _c('td'), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.authors_advance, '', 2)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.authors_advance / option.title, ' kn', 2)))])]), _vm._v(" "), _c('tr', [_c('th', {
       attrs: {
         "scope": "row"
       }
     }, [_vm._v("1.2")]), _vm._v(" "), _c('td', [_vm._v("Ostali autorski ugovori")]), _vm._v(" "), _c('td'), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.authors_other, '', 2)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.authors_other, ' kn', 2)))])]), _vm._v(" "), _c('tr', {
-      staticClass: "table-display-2"
+      staticClass: "table-display-1"
     }, [_c('th', {
       attrs: {
         "scope": "row"
       }
     }, [_vm._v("2")]), _vm._v(" "), _c('td', [_vm._v("Tiskarski troškovi")]), _vm._v(" "), _c('td'), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(option.print_offer, '', 2)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(option.print_offer / option.title, ' kn', 2)))])]), _vm._v(" "), _c('tr', {
+      staticClass: "table-display-1"
+    }, [_c('th', {
+      attrs: {
+        "scope": "row"
+      }
+    }, [_vm._v("3")]), _vm._v(" "), _c('td', [_vm._v("Marketinški trošak")]), _vm._v(" "), _c('td'), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.marketing_expense, '', 2)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.marketing_expense / option.title, ' kn', 2)))])]), _vm._v(" "), _c('tr', {
+      staticClass: "table-display-1"
+    }, [_c('th', {
+      attrs: {
+        "scope": "row"
+      }
+    }, [_vm._v("4")]), _vm._v(" "), _c('td', [_vm._v("Produkcijski trošak")]), _vm._v(" "), _c('td'), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense, '', 2)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense / option.title, ' kn', 2)))])]), _vm._v(" "), _c('tr', {
+      staticClass: "table-display-1"
+    }, [_c('th', {
+      attrs: {
+        "scope": "row"
+      }
+    }, [_vm._v("5")]), _vm._v(" "), _c('td', [_vm._v("Trošak prijeloma i dizajna")]), _vm._v(" "), _c('td'), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.design_layout_expense, '', 2)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.design_layout_expense / option.title, ' kn', 2)))])]), _vm._v(" "), _c('tr', {
       staticClass: "table-display-2"
     }, [_c('th', {
       attrs: {
         "scope": "row"
       }
-    }, [_vm._v("3")]), _vm._v(" "), _c('td', [_vm._v("Ukupno 1 i 2")]), _vm._v(" "), _c('td'), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(Number(_vm.authors_total) + Number(option.print_offer), '', 2)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")((Number(_vm.authors_total) + Number(option.print_offer)) / option.title, ' kn', 2)))])]), _vm._v(" "), _c('tr', [_c('th', {
+    }, [_vm._v("6")]), _vm._v(" "), _c('td', [_vm._v("Ukupno 1, 2, 3, 4, 5")]), _vm._v(" "), _c('td'), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(Number(_vm.authors_total) + Number(option.print_offer) + Number(_vm.marketing_expense) + Number(_vm.production_expense) + Number(_vm.design_layout_expense), '', 2)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")((Number(_vm.authors_total) + Number(option.print_offer) + Number(_vm.marketing_expense) + Number(_vm.production_expense) + Number(_vm.design_layout_expense)) / option.title, ' kn', 2)))])]), _vm._v(" "), _c('tr', [_c('th', {
       attrs: {
         "scope": "row"
       }
-    }, [_vm._v("4")]), _vm._v(" "), _c('td', [_vm._v("Plaće izdavačkog sektora")]), _vm._v(" "), _c('td'), _vm._v(" "), (_vm.currentEdit('compensation')) ? [_c('td', [_c('input', {
+    }, [_vm._v("7")]), _vm._v(" "), _c('td', [_vm._v("Plaće izdavačkog sektora")]), _vm._v(" "), _c('td'), _vm._v(" "), (_vm.currentEdit('compensation')) ? [_c('td', [_c('input', {
       directives: [{
         name: "model",
         rawName: "v-model",
@@ -57454,13 +57536,13 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       attrs: {
         "scope": "row"
       }
-    }, [_vm._v("5")]), _vm._v(" "), _c('td', [_vm._v("Direktni troškovi")]), _vm._v(" "), _c('td'), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].direct_cost, '', 2)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].direct_cost / option.title, ' kn', 2)))])]), _vm._v(" "), _c('tr', {
+    }, [_vm._v("8")]), _vm._v(" "), _c('td', [_vm._v("Direktni troškovi")]), _vm._v(" "), _c('td'), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].direct_cost, '', 2)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].direct_cost / option.title, ' kn', 2)))])]), _vm._v(" "), _c('tr', {
       staticClass: "table-display-1"
     }, [_c('th', {
       attrs: {
         "scope": "row"
       }
-    }, [_vm._v("6")]), _vm._v(" "), _c('td', [_vm._v("Indirektni troškovi")]), _vm._v(" "), _c('td'), _vm._v(" "), (_vm.currentEdit('indirect_expenses')) ? [_c('td', [_c('input', {
+    }, [_vm._v("9")]), _vm._v(" "), _c('td', [_vm._v("Indirektni troškovi")]), _vm._v(" "), _c('td'), _vm._v(" "), (_vm.currentEdit('indirect_expenses')) ? [_c('td', [_c('input', {
       directives: [{
         name: "model",
         rawName: "v-model",
@@ -57499,31 +57581,31 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       attrs: {
         "scope": "row"
       }
-    }, [_vm._v("7")]), _vm._v(" "), _c('td', [_vm._v("Direktni + Indirektni")]), _vm._v(" "), _c('td'), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(Number(_vm.totals[option.id].direct_cost) + Number(option.indirect_expenses), '', 2)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")((Number(_vm.totals[option.id].direct_cost) + Number(option.indirect_expenses)) / option.title, ' kn', 2)))])]), _vm._v(" "), _c('tr', [_c('th', {
+    }, [_vm._v("10")]), _vm._v(" "), _c('td', [_vm._v("Direktni + Indirektni")]), _vm._v(" "), _c('td'), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(Number(_vm.totals[option.id].direct_cost) + Number(option.indirect_expenses), '', 2)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")((Number(_vm.totals[option.id].direct_cost) + Number(option.indirect_expenses)) / option.title, ' kn', 2)))])]), _vm._v(" "), _c('tr', [_c('th', {
       attrs: {
         "scope": "row"
       }
-    }, [_vm._v("8")]), _vm._v(" "), _c('td', [_vm._v("Ostatak AH ugovorenog po prodaji")]), _vm._v(" "), _c('td'), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].remainder_after_sales, '', 2)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].remainder_after_sales / option.title, ' kn', 2)))])]), _vm._v(" "), _c('tr', {
+    }, [_vm._v("11")]), _vm._v(" "), _c('td', [_vm._v("Ostatak AH ugovorenog po prodaji")]), _vm._v(" "), _c('td'), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].remainder_after_sales, '', 2)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].remainder_after_sales / option.title, ' kn', 2)))])]), _vm._v(" "), _c('tr', {
       staticClass: "table-display-2"
     }, [_c('th', {
       attrs: {
         "scope": "row"
       }
-    }, [_vm._v("9")]), _vm._v(" "), _c('td', [_vm._v("Ukupno pokrivanje troška")]), _vm._v(" "), _c('td'), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].complete_expense, '', 2)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].complete_expense / option.title, ' kn', 2)))])]), _vm._v(" "), _c('tr', [_c('th', {
+    }, [_vm._v("12")]), _vm._v(" "), _c('td', [_vm._v("Ukupno pokrivanje troška")]), _vm._v(" "), _c('td'), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].complete_expense, '', 2)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].complete_expense / option.title, ' kn', 2)))])]), _vm._v(" "), _c('tr', [_c('th', {
       attrs: {
         "scope": "row"
       }
-    }, [_vm._v("10")]), _vm._v(" "), _c('td', [_vm._v("Dotacija")]), _vm._v(" "), _c('td'), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.dotation, '', 2)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.dotation / option.title, ' kn', 2)))])]), _vm._v(" "), _c('tr', {
+    }, [_vm._v("13")]), _vm._v(" "), _c('td', [_vm._v("Dotacija")]), _vm._v(" "), _c('td'), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.dotation, '', 2)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.dotation / option.title, ' kn', 2)))])]), _vm._v(" "), _c('tr', {
       staticClass: "table-display-1"
     }, [_c('th', {
       attrs: {
         "scope": "row"
       }
-    }, [_vm._v("11")]), _vm._v(" "), _c('td', [_vm._v("Ukupno pokrivanje troška - dotacije")]), _vm._v(" "), _c('td'), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].cost_coverage, '', 2)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].cost_coverage / option.title, ' kn', 2)))])]), _vm._v(" "), _c('tr', [_c('th', {
+    }, [_vm._v("14")]), _vm._v(" "), _c('td', [_vm._v("Ukupno pokrivanje troška - dotacije")]), _vm._v(" "), _c('td'), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].cost_coverage, '', 2)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].cost_coverage / option.title, ' kn', 2)))])]), _vm._v(" "), _c('tr', [_c('th', {
       attrs: {
         "scope": "row"
       }
-    }, [_vm._v("12")]), _vm._v(" "), _c('td', [_vm._v("Ukalkulirana dobit")]), _vm._v(" "), (_vm.currentEdit('calculated_profit_percent')) ? [_c('td', [_c('input', {
+    }, [_vm._v("15")]), _vm._v(" "), _c('td', [_vm._v("Ukalkulirana dobit")]), _vm._v(" "), (_vm.currentEdit('calculated_profit_percent')) ? [_c('td', [_c('input', {
       directives: [{
         name: "model",
         rawName: "v-model",
@@ -57560,11 +57642,11 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       attrs: {
         "scope": "row"
       }
-    }, [_vm._v("13")]), _vm._v(" "), _c('td', [_vm._v("Prodajna cijena proizvođača")]), _vm._v(" "), _c('td'), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].manufacturer_price, '', 2)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].manufacturer_price / option.title, ' kn', 2)))])]), _vm._v(" "), _c('tr', [_c('th', {
+    }, [_vm._v("16")]), _vm._v(" "), _c('td', [_vm._v("Prodajna cijena proizvođača")]), _vm._v(" "), _c('td'), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].manufacturer_price, '', 2)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].manufacturer_price / option.title, ' kn', 2)))])]), _vm._v(" "), _c('tr', [_c('th', {
       attrs: {
         "scope": "row"
       }
-    }, [_vm._v("14")]), _vm._v(" "), _c('td', [_vm._v("Udio trgovine")]), _vm._v(" "), (_vm.currentEdit('shop_percent')) ? [_c('td', [_c('input', {
+    }, [_vm._v("17")]), _vm._v(" "), _c('td', [_vm._v("Udio trgovine")]), _vm._v(" "), (_vm.currentEdit('shop_percent')) ? [_c('td', [_c('input', {
       directives: [{
         name: "model",
         rawName: "v-model",
@@ -57601,11 +57683,11 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       attrs: {
         "scope": "row"
       }
-    }, [_vm._v("15")]), _vm._v(" "), _c('td', [_vm._v("Maloprodajna cijena")]), _vm._v(" "), _c('td'), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].price, '', 2)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].price / option.title, ' kn', 2)))])]), _vm._v(" "), _c('tr', [_c('th', {
+    }, [_vm._v("18")]), _vm._v(" "), _c('td', [_vm._v("Maloprodajna cijena")]), _vm._v(" "), _c('td'), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].price, '', 2)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].price / option.title, ' kn', 2)))])]), _vm._v(" "), _c('tr', [_c('th', {
       attrs: {
         "scope": "row"
       }
-    }, [_vm._v("16")]), _vm._v(" "), _c('td', [_vm._v("PDV")]), _vm._v(" "), (_vm.currentEdit('vat_percent')) ? [_c('td', [_c('input', {
+    }, [_vm._v("19")]), _vm._v(" "), _c('td', [_vm._v("PDV")]), _vm._v(" "), (_vm.currentEdit('vat_percent')) ? [_c('td', [_c('input', {
       directives: [{
         name: "model",
         rawName: "v-model",
@@ -57644,7 +57726,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       attrs: {
         "scope": "row"
       }
-    }, [_vm._v("17")]), _vm._v(" "), _c('td', [_vm._v("MPC + PDV")]), _vm._v(" "), _c('td'), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].price * (100 + Number(option.vat_percent)) / 100, '', 2)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].price * (100 + Number(option.vat_percent)) / 100 / option.title, ' kn', 2)))])])])])])])
+    }, [_vm._v("20")]), _vm._v(" "), _c('td', [_vm._v("MPC + PDV")]), _vm._v(" "), _c('td'), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].price * (100 + Number(option.vat_percent)) / 100, '', 2)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].price * (100 + Number(option.vat_percent)) / 100 / option.title, ' kn', 2)))])])])])])])
   })], 2), _vm._v(" "), _c('footer-buttons')], 1)
 }
 var staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
