@@ -47408,7 +47408,7 @@ module.exports = function spread(callback) {
                     price = mprice * (100 + Number(option.shop_percent)) / 100;
 
                 options[option.id] = {
-                    direct_cost: Number(this.authors_total) + Number(option.print_offer) + Number(option.compensation),
+                    direct_cost: Number(this.authors_total) + Number(option.print_offer) + Number(option.compensation) + Number(this.marketing_expense) + Number(this.production_expense) + Number(this.design_layout_expense),
                     remainder_after_sales: remainder,
                     complete_expense: complete,
                     cost_coverage: Number(complete) - Number(this.dotation),
@@ -57279,9 +57279,9 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         expression: "option.film_print"
       }],
       attrs: {
-        "name": "film_print",
+        "name": 'film_print' + index,
         "type": "radio",
-        "id": "film_print_no",
+        "id": 'film_print_no' + index,
         "value": "no",
         "disabled": ""
       },
@@ -57295,7 +57295,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       }
     }), _vm._v(" "), _c('label', {
       attrs: {
-        "for": "film_print_no"
+        "for": 'film_print_no' + index
       }
     }, [_vm._v(_vm._s(_vm.lang('No')))])]), _vm._v(" "), _c('fieldset', {
       staticClass: "form-group"
@@ -57307,9 +57307,9 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         expression: "option.film_print"
       }],
       attrs: {
-        "name": "film_print",
+        "name": 'film_print' + index,
         "type": "radio",
-        "id": "film_print_yes",
+        "id": 'film_print_yes' + index,
         "value": "yes",
         "disabled": ""
       },
@@ -57323,7 +57323,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       }
     }), _vm._v(" "), _c('label', {
       attrs: {
-        "for": "film_print_yes"
+        "for": 'film_print_yes' + index
       }
     }, [_vm._v(_vm._s(_vm.lang('Yes')))])])]), _vm._v(" "), _c('div', {
       staticClass: "page-name-m"
@@ -57339,9 +57339,9 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         expression: "option.blind_print"
       }],
       attrs: {
-        "name": "blind_print",
+        "name": 'blind_print' + index,
         "type": "radio",
-        "id": "blind_print_no",
+        "id": 'blind_print_no' + index,
         "value": "no",
         "disabled": ""
       },
@@ -57355,7 +57355,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       }
     }), _vm._v(" "), _c('label', {
       attrs: {
-        "for": "blind_print_no"
+        "for": 'blind_print_no' + index
       }
     }, [_vm._v(_vm._s(_vm.lang('No')))])]), _vm._v(" "), _c('fieldset', {
       staticClass: "form-group"
@@ -57367,9 +57367,9 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         expression: "option.blind_print"
       }],
       attrs: {
-        "name": "blind_print",
+        "name": 'blind_print' + index,
         "type": "radio",
-        "id": "blind_print_yes",
+        "id": 'blind_print_yes' + index,
         "value": "yes",
         "disabled": ""
       },
@@ -57383,7 +57383,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       }
     }), _vm._v(" "), _c('label', {
       attrs: {
-        "for": "blind_print_yes"
+        "for": 'blind_print_yes' + index
       }
     }, [_vm._v(_vm._s(_vm.lang('Yes')))])])]), _vm._v(" "), _c('div', {
       staticClass: "page-name-m"
@@ -57399,9 +57399,9 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         expression: "option.uv_print"
       }],
       attrs: {
-        "name": "uv_print",
+        "name": 'uv_print' + index,
         "type": "radio",
-        "id": "uv_film_no",
+        "id": 'uv_film_no' + index,
         "value": "no",
         "disabled": ""
       },
@@ -57415,7 +57415,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       }
     }), _vm._v(" "), _c('label', {
       attrs: {
-        "for": "uv_film_no"
+        "for": 'uv_film_no' + index
       }
     }, [_vm._v(_vm._s(_vm.lang('No')))])]), _vm._v(" "), _c('fieldset', {
       staticClass: "form-group"
@@ -57427,9 +57427,9 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         expression: "option.uv_print"
       }],
       attrs: {
-        "name": "uv_print",
+        "name": 'uv_print' + index,
         "type": "radio",
-        "id": "uv_film_yes",
+        "id": 'uv_film_yes' + index,
         "value": "yes",
         "disabled": ""
       },
@@ -57443,7 +57443,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       }
     }), _vm._v(" "), _c('label', {
       attrs: {
-        "for": "uv_film_yes"
+        "for": 'uv_film_yes' + index
       }
     }, [_vm._v(_vm._s(_vm.lang('Yes')))])])])])])])]), _vm._v(" "), _c('div', {
       staticClass: "page-name-xl mb-1"
