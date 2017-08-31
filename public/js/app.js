@@ -47337,9 +47337,9 @@ module.exports = function spread(callback) {
             _.forEach(this.options, option => {
                 let remainder = _.sumBy(Object.keys(this.$store.state.proposition.proposition.authors_expense.expenses), key => {
                     let e = this.$store.state.proposition.proposition.authors_expense.expenses[key];
-                    return e.percentage * option.title * option.price_proposal - Number(e.accontation);
+                    return e.percentage * option.title * option.price_proposal;
                 }),
-                    complete = Number(this.authors_total) + Number(option.print_offer) + Number(option.compensation) + Number(option.indirect_expenses) - Number(remainder),
+                    complete = Number(this.authors_total) + Number(option.print_offer) + Number(option.compensation) + Number(option.indirect_expenses) + Number(remainder),
                     mprice = (Number(complete) - Number(this.dotation)) * (100 + Number(option.calculated_profit_percent)) / 100;
                 options[option.id] = {
                     direct_cost: Number(this.authors_total) + Number(option.print_offer) + Number(option.compensation),
