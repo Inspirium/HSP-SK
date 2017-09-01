@@ -56986,7 +56986,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       staticClass: "no-border display-b text-white"
     }, [_vm._v(_vm._s(_vm.lang('Circulation')))]), _vm._v(" "), _c('h1', {
       staticClass: "mb-1 text-white weight-700"
-    }, [_vm._v(_vm._s(option.number_of_pages))])]), _vm._v(" "), _c('div', {
+    }, [_vm._v(_vm._s(option.title))])]), _vm._v(" "), _c('div', {
       staticClass: "col-md-3"
     }, [_c('h6', {
       staticClass: "no-border display-b text-white"
