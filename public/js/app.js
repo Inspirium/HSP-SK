@@ -50447,7 +50447,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 });
             } else {
                 __WEBPACK_IMPORTED_MODULE_0_axios___default.a.patch('/api/proposition/' + parseInt(state.proposition.id), data).then(res => {
-                    //commit('stepIncrement');
+                    commit('initProposition', res.data);
                 }).catch(err => {
                     commit('error', 'There was an error saving proposition. Please try again.');
                 });
