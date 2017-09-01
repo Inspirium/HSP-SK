@@ -48560,10 +48560,10 @@ module.exports = function spread(callback) {
             this.$store.dispatch('proposition/initProposition', { id: this.$route.params.id });
         }
         this.$store.commit('proposition/updateProposition', { key: 'step', value: 4 });
-        this.$store.dispatch('proposition/initOffers').then(function () {
-            $('.mdb-select').material_select('destroy');
-            $('.mdb-select').material_select();
-        });
+        //this.$store.dispatch('proposition/initOffers').then(function() {
+        $('.mdb-select').material_select('destroy');
+        $('.mdb-select').material_select();
+        //});
     }
 });
 
@@ -57694,8 +57694,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       directives: [{
         name: "model",
         rawName: "v-model",
-        value: (_vm.options[key + '[vat_percent]']),
-        expression: "options[key+'[vat_percent]']"
+        value: (option.vat_percent),
+        expression: "option.vat_percent"
       }],
       staticClass: "form-control",
       attrs: {
@@ -57704,7 +57704,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         "autofocus": ""
       },
       domProps: {
-        "value": (_vm.options[key + '[vat_percent]'])
+        "value": (option.vat_percent)
       },
       on: {
         "keyup": function($event) {
@@ -57713,7 +57713,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         },
         "input": function($event) {
           if ($event.target.composing) { return; }
-          _vm.$set(_vm.options, key + '[vat_percent]', $event.target.value)
+          option.vat_percent = $event.target.value
         }
       }
     })])] : [_c('td', {
