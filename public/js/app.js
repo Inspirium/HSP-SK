@@ -48546,7 +48546,7 @@ module.exports = function spread(callback) {
             $(e.target).tab('show');
         },
         saveOffer: function () {
-            this.offers = this.local_offers;
+            this.$store.dispatch('proposition/saveProposition');
         },
         downloadOffer: function (index, type) {
             //TODO: make request to download offer, probably save first :)
@@ -49503,14 +49503,6 @@ module.exports = function spread(callback) {
     methods: {
         saveProposition: function () {
             this.$store.dispatch('proposition/saveProposition');
-            /*if (this.$store.state.proposition.proposition.step === 11) {
-                window.location.href= '/propositions';
-            }
-            else {
-                this.$router.push({
-                    path: '/proposition/' + ((typeof(this.$route.params.id) !== 'undefined') ? this.$route.params.id + '/' : '') + this.$store.state.proposition.steps[this.$store.state.proposition.proposition.step + 1]
-                });
-            }*/
         },
         assignModalOpen: function () {
             jQuery('#centralModalAssign').modal('show');
@@ -53788,7 +53780,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
           _vm.switchTab($event)
         }
       }
-    }, [_vm._v(_vm._s(_vm.offers[key].title))])])
+    }, [_vm._v(_vm._s(offer.title))])])
   }))]), _vm._v(" "), _c('div', {
     staticClass: "page-name-xl mb-2 mt-2"
   }, [_vm._v(_vm._s(_vm.lang('Print Offers')))]), _vm._v(" "), _c('div', {
@@ -53809,7 +53801,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       staticClass: "text-center no-border display-e"
     }, [_vm._v(_vm._s(_vm.lang('Circulation')))]), _vm._v(" "), _c('h1', {
       staticClass: "text-center display-2"
-    }, [_vm._v(_vm._s(_vm.offers[key].title))]), _vm._v(" "), _c('div', {
+    }, [_vm._v(_vm._s(offer.title))]), _vm._v(" "), _c('div', {
       staticClass: "print-offer-box mt-2 mb-3"
     }, [_c('div', {
       staticClass: "row"
