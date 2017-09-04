@@ -53810,8 +53810,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       directives: [{
         name: "model",
         rawName: "v-model",
-        value: (_vm.offers[key].print_offer),
-        expression: "offers[key].print_offer"
+        value: (offer.print_offer),
+        expression: "offer.print_offer"
       }],
       staticClass: "form-control",
       attrs: {
@@ -53819,12 +53819,12 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         "placeholder": _vm.lang('In Kn')
       },
       domProps: {
-        "value": (_vm.offers[key].print_offer)
+        "value": (offer.print_offer)
       },
       on: {
         "input": function($event) {
           if ($event.target.composing) { return; }
-          _vm.offers[key].print_offer = $event.target.value
+          offer.print_offer = $event.target.value
         }
       }
     }), _vm._v(" "), _c('label', [_vm._v(_vm._s(_vm.lang('Print offer')))]), _vm._v(" "), _c('span', {
@@ -53849,20 +53849,20 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       directives: [{
         name: "model",
         rawName: "v-model",
-        value: (_vm.offers[key].paper_type),
-        expression: "offers[key].paper_type"
+        value: (offer.paper_type),
+        expression: "offer.paper_type"
       }],
       staticClass: "form-control",
       attrs: {
         "type": "text"
       },
       domProps: {
-        "value": (_vm.offers[key].paper_type)
+        "value": (offer.paper_type)
       },
       on: {
         "input": function($event) {
           if ($event.target.composing) { return; }
-          _vm.offers[key].paper_type = $event.target.value
+          offer.paper_type = $event.target.value
         }
       }
     }), _vm._v(" "), _c('label', [_vm._v(_vm._s(_vm.lang('Paper Type')))])]), _vm._v(" "), _c('div', {
@@ -53873,8 +53873,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       directives: [{
         name: "model",
         rawName: "v-model",
-        value: (_vm.offers[key].book_binding),
-        expression: "offers[key].book_binding"
+        value: (offer.book_binding),
+        expression: "offer.book_binding"
       }],
       staticClass: "mdb-select",
       on: {
@@ -53885,7 +53885,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
             var val = "_value" in o ? o._value : o.value;
             return val
           });
-          _vm.offers[key].book_binding = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+          offer.book_binding = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
         }
       }
     }, [_c('option', {
@@ -53916,8 +53916,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       directives: [{
         name: "model",
         rawName: "v-model",
-        value: (_vm.offers[key].colors),
-        expression: "offers[key].colors"
+        value: (offer.colors),
+        expression: "offer.colors"
       }],
       staticClass: "mdb-select",
       on: {
@@ -53928,7 +53928,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
             var val = "_value" in o ? o._value : o.value;
             return val
           });
-          _vm.offers[key].colors = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+          offer.colors = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
         }
       }
     }, [_c('option', {
@@ -53949,8 +53949,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       directives: [{
         name: "model",
         rawName: "v-model",
-        value: (_vm.offers[key].colors_first_page),
-        expression: "offers[key].colors_first_page"
+        value: (offer.colors_first_page),
+        expression: "offer.colors_first_page"
       }],
       staticClass: "mdb-select",
       on: {
@@ -53961,7 +53961,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
             var val = "_value" in o ? o._value : o.value;
             return val
           });
-          _vm.offers[key].colors_first_page = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+          offer.colors_first_page = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
         }
       }
     }, [_c('option', {
@@ -53982,8 +53982,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       directives: [{
         name: "model",
         rawName: "v-model",
-        value: (_vm.offers[key].colors_last_page),
-        expression: "offers[key].colors_last_page"
+        value: (offer.colors_last_page),
+        expression: "offer.colors_last_page"
       }],
       staticClass: "mdb-select",
       on: {
@@ -53994,7 +53994,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
             var val = "_value" in o ? o._value : o.value;
             return val
           });
-          _vm.offers[key].colors_last_page = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+          offer.colors_last_page = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
         }
       }
     }, [_c('option', {
@@ -54046,8 +54046,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       directives: [{
         name: "model",
         rawName: "v-model",
-        value: (_vm.offers[key].cover_type),
-        expression: "offers[key].cover_type"
+        value: (offer.cover_type),
+        expression: "offer.cover_type"
       }],
       staticClass: "mdb-select",
       on: {
@@ -54058,7 +54058,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
             var val = "_value" in o ? o._value : o.value;
             return val
           });
-          _vm.offers[key].cover_type = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+          offer.cover_type = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
         }
       }
     }, [_c('option', {
@@ -54083,7 +54083,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       }
     }, [_vm._v(_vm._s(_vm.lang('Hard and Soft Cover')))])]), _vm._v(" "), _c('label', [_vm._v(_vm._s(_vm.lang('Hard/Soft Cover')))])])]), _vm._v(" "), _c('div', {
       staticClass: "row"
-    }, [(_vm.offers[key].cover_type === 'soft' || _vm.offers[key + '[cover_type]'] === 'both') ? _c('div', {
+    }, [(_vm.offers[key + '[cover_type]'] === 'both') ? _c('div', {
       staticClass: "col-md-6"
     }, [_c('div', {
       staticClass: "md-form"
@@ -54107,7 +54107,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
           _vm.$set(_vm.offers, key + '[soft_cover_circulation]', $event.target.value)
         }
       }
-    }), _vm._v(" "), _c('label', [_vm._v(_vm._s(_vm.lang('Soft Cover Circulation')))])])]) : _vm._e(), _vm._v(" "), (_vm.offers[key].cover_type === 'hard' || _vm.offers[key + '[cover_type]'] === 'both') ? _c('div', {
+    }), _vm._v(" "), _c('label', [_vm._v(_vm._s(_vm.lang('Soft Cover Circulation')))])])]) : _vm._e(), _vm._v(" "), (_vm.offers[key + '[cover_type]'] === 'both') ? _c('div', {
       staticClass: "col-md-6"
     }, [_c('div', {
       staticClass: "md-form"
@@ -54137,20 +54137,20 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       directives: [{
         name: "model",
         rawName: "v-model",
-        value: (_vm.offers[key].cover_paper_type),
-        expression: "offers[key].cover_paper_type"
+        value: (offer.cover_paper_type),
+        expression: "offer.cover_paper_type"
       }],
       staticClass: "form-control",
       attrs: {
         "type": "text"
       },
       domProps: {
-        "value": (_vm.offers[key].cover_paper_type)
+        "value": (offer.cover_paper_type)
       },
       on: {
         "input": function($event) {
           if ($event.target.composing) { return; }
-          _vm.offers[key].cover_paper_type = $event.target.value
+          offer.cover_paper_type = $event.target.value
         }
       }
     }), _vm._v(" "), _c('label', [_vm._v(_vm._s(_vm.lang('Paper Type')))])]), _vm._v(" "), _c('div', {
@@ -54161,8 +54161,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       directives: [{
         name: "model",
         rawName: "v-model",
-        value: (_vm.offers[key].cover_colors),
-        expression: "offers[key].cover_colors"
+        value: (offer.cover_colors),
+        expression: "offer.cover_colors"
       }],
       staticClass: "mdb-select",
       on: {
@@ -54173,7 +54173,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
             var val = "_value" in o ? o._value : o.value;
             return val
           });
-          _vm.offers[key].cover_colors = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+          offer.cover_colors = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
         }
       }
     }, [_c('option', {
@@ -54194,8 +54194,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       directives: [{
         name: "model",
         rawName: "v-model",
-        value: (_vm.offers[key].cover_plastification),
-        expression: "offers[key].cover_plastification"
+        value: (offer.cover_plastification),
+        expression: "offer.cover_plastification"
       }],
       staticClass: "mdb-select",
       on: {
@@ -54206,7 +54206,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
             var val = "_value" in o ? o._value : o.value;
             return val
           });
-          _vm.offers[key].cover_plastification = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+          offer.cover_plastification = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
         }
       }
     }, [_c('option', {
@@ -54235,8 +54235,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       directives: [{
         name: "model",
         rawName: "v-model",
-        value: (_vm.offers[key].film_print),
-        expression: "offers[key].film_print"
+        value: (offer.film_print),
+        expression: "offer.film_print"
       }],
       attrs: {
         "name": 'film_print' + index,
@@ -54245,11 +54245,11 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         "value": "no"
       },
       domProps: {
-        "checked": _vm._q(_vm.offers[key].film_print, "no")
+        "checked": _vm._q(offer.film_print, "no")
       },
       on: {
         "__c": function($event) {
-          _vm.offers[key].film_print = "no"
+          offer.film_print = "no"
         }
       }
     }), _vm._v(" "), _c('label', {
@@ -54262,8 +54262,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       directives: [{
         name: "model",
         rawName: "v-model",
-        value: (_vm.offers[key].film_print),
-        expression: "offers[key].film_print"
+        value: (offer.film_print),
+        expression: "offer.film_print"
       }],
       attrs: {
         "name": 'film_print' + index,
@@ -54272,11 +54272,11 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         "value": "yes"
       },
       domProps: {
-        "checked": _vm._q(_vm.offers[key].film_print, "yes")
+        "checked": _vm._q(offer.film_print, "yes")
       },
       on: {
         "__c": function($event) {
-          _vm.offers[key].film_print = "yes"
+          offer.film_print = "yes"
         }
       }
     }), _vm._v(" "), _c('label', {
@@ -54293,8 +54293,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       directives: [{
         name: "model",
         rawName: "v-model",
-        value: (_vm.offers[key].blind_print),
-        expression: "offers[key].blind_print"
+        value: (offer.blind_print),
+        expression: "offer.blind_print"
       }],
       attrs: {
         "name": 'blind_print' + index,
@@ -54303,11 +54303,11 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         "value": "no"
       },
       domProps: {
-        "checked": _vm._q(_vm.offers[key].blind_print, "no")
+        "checked": _vm._q(offer.blind_print, "no")
       },
       on: {
         "__c": function($event) {
-          _vm.offers[key].blind_print = "no"
+          offer.blind_print = "no"
         }
       }
     }), _vm._v(" "), _c('label', {
@@ -54320,8 +54320,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       directives: [{
         name: "model",
         rawName: "v-model",
-        value: (_vm.offers[key].blind_print),
-        expression: "offers[key].blind_print"
+        value: (offer.blind_print),
+        expression: "offer.blind_print"
       }],
       attrs: {
         "name": 'blind_print' + index,
@@ -54330,11 +54330,11 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         "value": "yes"
       },
       domProps: {
-        "checked": _vm._q(_vm.offers[key].blind_print, "yes")
+        "checked": _vm._q(offer.blind_print, "yes")
       },
       on: {
         "__c": function($event) {
-          _vm.offers[key].blind_print = "yes"
+          offer.blind_print = "yes"
         }
       }
     }), _vm._v(" "), _c('label', {
@@ -54351,8 +54351,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       directives: [{
         name: "model",
         rawName: "v-model",
-        value: (_vm.offers[key].uv_print),
-        expression: "offers[key].uv_print"
+        value: (offer.uv_print),
+        expression: "offer.uv_print"
       }],
       attrs: {
         "name": 'uv_print' + index,
@@ -54361,11 +54361,11 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         "value": "no"
       },
       domProps: {
-        "checked": _vm._q(_vm.offers[key].uv_print, "no")
+        "checked": _vm._q(offer.uv_print, "no")
       },
       on: {
         "__c": function($event) {
-          _vm.offers[key].uv_print = "no"
+          offer.uv_print = "no"
         }
       }
     }), _vm._v(" "), _c('label', {
@@ -54378,8 +54378,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       directives: [{
         name: "model",
         rawName: "v-model",
-        value: (_vm.offers[key].uv_print),
-        expression: "offers[key].uv_print"
+        value: (offer.uv_print),
+        expression: "offer.uv_print"
       }],
       attrs: {
         "name": 'uv_print' + index,
@@ -54388,11 +54388,11 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         "value": "yes"
       },
       domProps: {
-        "checked": _vm._q(_vm.offers[key].uv_print, "yes")
+        "checked": _vm._q(offer.uv_print, "yes")
       },
       on: {
         "__c": function($event) {
-          _vm.offers[key].uv_print = "yes"
+          offer.uv_print = "yes"
         }
       }
     }), _vm._v(" "), _c('label', {
@@ -54405,20 +54405,20 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       directives: [{
         name: "model",
         rawName: "v-model",
-        value: (_vm.offers[key].note),
-        expression: "offers[key].note"
+        value: (offer.note),
+        expression: "offer.note"
       }],
       staticClass: "md-textarea",
       attrs: {
         "id": "form76"
       },
       domProps: {
-        "value": (_vm.offers[key].note)
+        "value": (offer.note)
       },
       on: {
         "input": function($event) {
           if ($event.target.composing) { return; }
-          _vm.offers[key].note = $event.target.value
+          offer.note = $event.target.value
         }
       }
     }), _vm._v(" "), _c('label', {
