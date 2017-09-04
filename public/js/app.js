@@ -46404,7 +46404,6 @@ module.exports = function spread(callback) {
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["a"] = ({
     props: {
@@ -46443,14 +46442,6 @@ module.exports = function spread(callback) {
             let data = {
                 title: f.title
             };
-            /*axios.patch(this.action + '/'+id, data)
-                .then(function(res) {
-                    this.files[index].message = res.message;
-                    this.$emit('fileNameSave', this.files[index].id, data.title);
-                }.bind(this))
-                .catch(function(err){
-                    this.files[index].message = err.message;
-                }.bind(this));*/
             f.edit = false;
         },
         fileDelete: function (index) {
@@ -46458,7 +46449,7 @@ module.exports = function spread(callback) {
             this.files.splice(index, 1);
         },
         fileInputChange: function () {
-            _.forEach(this.$refs.fileInput.files, function (file) {
+            _.forEach(this.$refs.fileInput.files, (file, index) => {
                 this.files.push({
                     title: file.name,
                     link: file.name,
@@ -46468,9 +46459,11 @@ module.exports = function spread(callback) {
                     message: '',
                     id: 0
                 });
-
                 this.fileUpload(file, this.files.length - 1);
-            }.bind(this));
+                if (index === this.$refs.fileInput.files.length - 1) {
+                    this.$refs.fileInput.value = [];
+                }
+            });
         },
         fileUpload: function (file, index) {
             let data = new FormData();
@@ -46512,6 +46505,10 @@ module.exports = function spread(callback) {
                 this.fileUpload(file, this.files.length - 1);
             }.bind(this));
             this.showOverlay = false;
+        },
+        closeModal() {
+            this.files = [];
+            jQuery('#upload-modal').modal('hide');
         }
     }
 });
@@ -54837,18 +54834,12 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }, [_c('button', {
     staticClass: "btn btn-lg btn-cancel",
     attrs: {
-      "type": "button",
-      "data-dismiss": "modal"
-    }
-  }, [_vm._v(_vm._s(_vm.lang('Close')))]), _vm._v(" "), _c('button', {
-    staticClass: "btn btn-lg btn-save",
-    attrs: {
       "type": "button"
     },
     on: {
-      "click": _vm.fileUpload
+      "click": _vm.closeModal
     }
-  }, [_vm._v(_vm._s(_vm.lang('Upload')))])]), _vm._v(" "), (_vm.showOverlay) ? _c('div', {
+  }, [_vm._v(_vm._s(_vm.lang('Close')))])]), _vm._v(" "), (_vm.showOverlay) ? _c('div', {
     staticClass: "dragdrop",
     on: {
       "dragover": function($event) {
