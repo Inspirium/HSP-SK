@@ -48187,6 +48187,13 @@ module.exports = function spread(callback) {
         }
     },
     methods: {
+        documentAdd: function () {
+            jQuery('#upload-modal').modal('show');
+        },
+        documentDownload: function (link) {
+            window.open(link, "_blank");
+            return false;
+        },
         fileDelete: function (id) {
             this.$store.dispatch('proposition/deleteFile', { group: 'market_potential', key: 'market_potential_documents', id: id });
         },
@@ -61586,42 +61593,60 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     staticClass: "btn btn-neutral btn-addon",
     attrs: {
       "type": "button"
+    },
+    on: {
+      "click": _vm.documentAdd
     }
   }, [_vm._v(_vm._s(_vm.lang('Add Documents')))]), _vm._v(" "), _c('div', {
     staticClass: "files mt-2 mb-2"
-  }, _vm._l((_vm.market_potential['market_potential_documents']), function(item) {
+  }, _vm._l((_vm.market_potential.market_potential_documents), function(item) {
     return _c('div', {
       staticClass: "file-box file-box-l d-flex align-items-center"
     }, [_c('a', {
       staticClass: "file-icon",
       attrs: {
-        "href": "http://homestead.app/images/profile.pdf"
+        "href": item.link
+      },
+      on: {
+        "click": function($event) {
+          $event.preventDefault();
+          _vm.documentDownload(item.link)
+        }
       }
     }, [_vm._v(_vm._s(item.title))]), _vm._v(" "), _c('div', {
       staticClass: "file-box-sty ml-auto d-flex"
     }, [_c('a', {
       attrs: {
-        "href": ""
+        "href": 'human_resources/employee/show/' + item.owner.id
       }
     }, [_c('img', {
       staticClass: "profile-m-1 mr-1 align-self-center",
       attrs: {
-        "src": "/images/profile.jpg",
-        "href": "#"
+        "src": item.owner.image
       }
-    }), _vm._v(_vm._s(item.author) + "\n                    ")])]), _vm._v(" "), _c('div', {
+    }), _vm._v(_vm._s(item.owner.name) + "\n                    ")])]), _vm._v(" "), _c('div', {
       staticClass: "file-box-sty"
     }, [_vm._v(_vm._s(_vm._f("moment")(item.created_at, "d.m.Y")))]), _vm._v(" "), _c('div', {
-      staticClass: "file-box-sty icon icon-download"
+      staticClass: "file-box-sty icon icon-download",
+      on: {
+        "click": function($event) {
+          _vm.documentDownload(item.link)
+        }
+      }
     }, [_vm._v("Preuzmi")]), _vm._v(" "), _c('div', {
-      staticClass: "file-box-sty icon icon-cancel"
+      staticClass: "file-box-sty icon icon-cancel",
+      on: {
+        "click": function($event) {
+          _vm.fileDelete(item.id)
+        }
+      }
     }, [_vm._v("Obriši")])])
   }))])]), _vm._v(" "), _c('upload-modal', {
     attrs: {
       "action": "/api/file",
       "accept": ".pdf, .doc, .docx, .xls, .xlsx",
       "disk": "proposition",
-      "dir": "manuscripts"
+      "dir": "market_potential"
     },
     on: {
       "fileDelete": _vm.fileDelete,
