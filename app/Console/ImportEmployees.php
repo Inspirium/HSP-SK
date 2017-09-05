@@ -72,13 +72,17 @@ class ImportEmployees extends Command
                 'first_name' => $employee['first_name'],
                 'last_name' => $employee['last_name'],
                 'department_id' => $department->id,
+	            'mobile_pre' => $employee['mobile_pre'],
+	            'mobile' => $employee['mobile'],
+	            'mobile_vpn' => $employee['mobile_vpn'],
+	            'phone_pre' => $employee['phone_pre'],
+	            'phone' => $employee['phone'],
+	            'phone_vpn' => $employee['phone_vpn'],
+	            'address' => $employee['address'],
+	            'city' => $employee['city'],
+	            'postal_code' => $employee['postal_code'],
+	            'room' => $employee['room']
             ]);
-            $keys = ['mobile_pre', 'mobile', 'mobile_vpn', 'phone_pre', 'phone', 'phone_vpn', 'address', 'city', 'postal_code', 'room'];
-            foreach ($keys as $key) {
-                if ($employee[$key]) {
-                    $new->updateMeta( $key, $employee[ $key ] );
-                }
-            }
         }
     }
 }
