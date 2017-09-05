@@ -47356,7 +47356,7 @@ module.exports = function spread(callback) {
             return this.$deepModel('proposition.proposition.print.offers');
         },
         marketing_expense() {
-            return Number(this.$store.state.proposition.proposition.marketing_expense.expense) + _.sumBy(this.$store.state.proposition.proposition.marketing_expense.additional_expenses, function (o) {
+            return Number(this.$store.state.proposition.proposition.marketing_expense.expense) + _.sumBy(this.$store.state.proposition.proposition.marketing_expense.additional_expense, function (o) {
                 return Number(o.amount);
             });
         },
@@ -55737,8 +55737,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       directives: [{
         name: "model",
         rawName: "v-model",
-        value: (_vm.expenses['additional_expense[' + i + '].expense']),
-        expression: "expenses['additional_expense['+i+'].expense']"
+        value: (_vm.expenses.additional_expense[i].expense),
+        expression: "expenses.additional_expense[i].expense"
       }],
       staticClass: "form-control",
       attrs: {
@@ -55746,12 +55746,12 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         "placeholder": _vm.lang('Expense Name')
       },
       domProps: {
-        "value": (_vm.expenses['additional_expense[' + i + '].expense'])
+        "value": (_vm.expenses.additional_expense[i].expense)
       },
       on: {
         "input": function($event) {
           if ($event.target.composing) { return; }
-          _vm.$set(_vm.expenses, 'additional_expense[' + i + '].expense', $event.target.value)
+          _vm.expenses.additional_expense[i].expense = $event.target.value
         }
       }
     }), _vm._v(" "), _c('label', [_vm._v(_vm._s(_vm.lang('Expense Name')))])])]), _vm._v(" "), _c('div', {
@@ -55762,8 +55762,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       directives: [{
         name: "model",
         rawName: "v-model",
-        value: (_vm.expenses['additional_expense[' + i + '].amount']),
-        expression: "expenses['additional_expense['+i+'].amount']"
+        value: (_vm.expenses.additional_expense[i].amount),
+        expression: "expenses.additional_expense[i].amount"
       }],
       staticClass: "form-control",
       attrs: {
@@ -55771,12 +55771,12 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         "placeholder": _vm.lang('Amount')
       },
       domProps: {
-        "value": (_vm.expenses['additional_expense[' + i + '].amount'])
+        "value": (_vm.expenses.additional_expense[i].amount)
       },
       on: {
         "input": function($event) {
           if ($event.target.composing) { return; }
-          _vm.$set(_vm.expenses, 'additional_expense[' + i + '].amount', $event.target.value)
+          _vm.expenses.additional_expense[i].amount = $event.target.value
         }
       }
     }), _vm._v(" "), _c('label', [_vm._v(_vm._s(_vm.lang('Amount')))])])]), _vm._v(" "), _c('div', {
