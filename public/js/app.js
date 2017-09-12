@@ -48946,6 +48946,13 @@ module.exports = function spread(callback) {
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["a"] = ({
     data: function () {
@@ -48960,6 +48967,11 @@ module.exports = function spread(callback) {
         propDelete: function () {
             axios.delete('/api/proposition/' + this.proposition.id).then(res => {
                 window.location.href = '/propositions';
+            });
+        },
+        propRestore: function () {
+            axios.post('/api/proposition/restore/' + this.proposition.id).then(res => {
+                window.location.href = '/proposition/' + this.proposition.id + '/start';
             });
         }
     },
@@ -55019,7 +55031,15 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       "type": "submit",
       "disabled": ""
     }
-  }, [_vm._v(_vm._s(_vm.lang('Send on Approval')))]), _vm._v(" "), _c('button', {
+  }, [_vm._v(_vm._s(_vm.lang('Send on Approval')))]), _vm._v(" "), (_vm.proposition.deleted_at) ? [_c('button', {
+    staticClass: "btn btn-lg btn-cancel",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": _vm.propRestore
+    }
+  }, [_vm._v(_vm._s(_vm.lang('Restore')))])] : [_c('button', {
     staticClass: "btn btn-lg btn-cancel",
     attrs: {
       "type": "button"
@@ -55027,7 +55047,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     on: {
       "click": _vm.propDelete
     }
-  }, [_vm._v(_vm._s(_vm.lang('Delete')))])])])
+  }, [_vm._v(_vm._s(_vm.lang('Delete')))])]], 2)])
 }
 var staticRenderFns = []
 render._withStripped = true
