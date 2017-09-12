@@ -48031,30 +48031,6 @@ module.exports = function spread(callback) {
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
@@ -53785,7 +53761,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       }
     }, [_vm._v(_vm._s(offer.title))])])
   }))]), _vm._v(" "), _c('div', {
-    staticClass: "page-name-xl mb-2 mt-2"
+    staticClass: "page-name-xl mb-2 mt-3 mt-2"
   }, [_vm._v(_vm._s(_vm.lang('Print Offers')))]), _vm._v(" "), _c('div', {
     staticClass: "tab-content"
   }, _vm._l((_vm.offers), function(offer, key, index) {
@@ -54511,7 +54487,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }), _vm._v(" "), _c('h1', {
     staticClass: "modal-title w-100 text-center"
   }, [_vm._v(_vm._s(_vm.lang('Assign to...')))])]), _vm._v(" "), _c('h6', {
-    staticClass: "w-100 text-center"
+    staticClass: "w-100 text-center mb-4"
   }, [_vm._v(_vm._s(_vm.lang('Assign department or directly employee')))])]), _vm._v(" "), _vm._m(1), _vm._v(" "), _c('div', {
     staticClass: "tab-content"
   }, [_c('div', {
@@ -54892,7 +54868,7 @@ if (false) {
 "use strict";
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', [_c('div', {
-    staticClass: "page-name-xl mb-2"
+    staticClass: "page-name-xl mb-2 mt-3"
   }, [_vm._v(_vm._s(_vm.lang(_vm.strings['title'])))]), _vm._v(" "), _c('div', {
     staticClass: "md-form input-group search-big"
   }, [_c('input', {
@@ -55077,7 +55053,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }, [_vm._v(_vm._s(_vm.lang('New Task')))])]), _vm._v(" "), _c('div', {
     staticClass: "content"
   }, [_c('div', {
-    staticClass: "page-name-xl mb-2 mt-2"
+    staticClass: "page-name-xl mb-2 mt-3 mt-2"
   }, [_vm._v(_vm._s(_vm.lang('Task Details')))]), _vm._v(" "), _c('div', {
     staticClass: "row"
   }, [_c('div', {
@@ -55458,7 +55434,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }, [_c('div', {
     staticClass: "col-md-12"
   }, [_c('div', {
-    staticClass: "md-form mt-1"
+    staticClass: "md-form mt-3"
   }, [_c('textarea', {
     directives: [{
       name: "model",
@@ -55653,7 +55629,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   return _c('div', {
     staticClass: "content"
   }, [_c('div', {
-    staticClass: "page-name-xl mb-1"
+    staticClass: "page-name-xl mt-3 mb-1"
   }, [_vm._v(_vm._s(_vm.lang('Marketing Budget')))]), _vm._v(" "), _c('div', {
     staticClass: "row"
   }, [_c('div', {
@@ -55704,7 +55680,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }, [_c('div', {
     staticClass: "col-md-12"
   }, [_c('div', {
-    staticClass: "md-form mt-1"
+    staticClass: "md-form mt-3"
   }, [_c('textarea', {
     directives: [{
       name: "model",
@@ -55892,12 +55868,12 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   return _c('div', {
     staticClass: "content"
   }, [_c('div', {
-    staticClass: "page-name-xl mb-2"
+    staticClass: "page-name-xl mb-2 mt-3"
   }, [_vm._v(_vm._s(_vm.lang('Production Expense')))]), _vm._v(" "), _c('div', {
-    staticClass: "col-md-12 mb-3"
+    staticClass: "col-md-12 mb-5"
   }, [_c('h6', {
     staticClass: "text-center no-border display-e"
-  }, [_vm._v(_vm._s(_vm.lang('Circulation')))]), _vm._v(" "), _c('h1', {
+  }, [_vm._v(_vm._s(_vm.lang('Total')))]), _vm._v(" "), _c('h1', {
     staticClass: "text-center display-2"
   }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.total, ' kn', 2)))])]), _vm._v(" "), _c('div', {
     staticClass: "row"
@@ -57055,7 +57031,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }, [_c('div', {
       staticClass: "col-md-12"
     }, [_c('div', {
-      staticClass: "page-name-xl mb-2 mt-2"
+      staticClass: "page-name-xl mb-2 mt-3 mt-2"
     }, [_vm._v(_vm._s(option.title))]), _vm._v(" "), _c('div', {
       staticClass: "row"
     }, [_c('div', {
@@ -57944,11 +57920,11 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       "for": "form76"
     }
   }, [_vm._v(_vm._s(_vm.lang('Note')))])])])])], 2)]), _vm._v(" "), _c('div', {
-    staticClass: "page-name-l mb-4"
+    staticClass: "page-name-l mb-3"
   }, [_vm._v(_vm._s(_vm.lang('Other Expenses')))]), _vm._v(" "), _vm._l((_vm.expenses.other), function(a, i) {
     return _c('div', {
       key: i,
-      staticClass: "row"
+      staticClass: "row mt-4"
     }, [_c('div', {
       staticClass: "col-md-4"
     }, [_c('div', {
@@ -58037,7 +58013,7 @@ if (false) {
 "use strict";
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', [_c('div', {
-    staticClass: "profile-head row pt-3 pb-2 d-flex flex-column justify-content-center align-items-center"
+    staticClass: "profile-head row py-4 d-flex flex-column justify-content-center align-items-center"
   }, [_c('h1', {
     staticClass: "display-3 text-white text-center"
   }, [_vm._v(_vm._s(_vm.lang('Layout and Design')))])]), _vm._v(" "), _c('div', {
@@ -58089,7 +58065,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }, [_vm._v(_vm._s(_vm.lang('Layout Expense')))]), _vm._v(" "), _c('h1', {
     staticClass: "text-center display-2"
   }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.layout_total, ' kn', 2)))]), _vm._v(" "), _c('div', {
-    staticClass: "col-md-6 mx-auto mt-3"
+    staticClass: "col-md-6 mx-auto mt-4"
   }, [_c('div', {
     staticClass: "pos-rel"
   }, [_c('select', {
@@ -58135,65 +58111,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     attrs: {
       "value": "5"
     }
-  }, [_vm._v(_vm._s(_vm.lang('5 - Very Demanding')))])]), _vm._v(" "), _c('label', [_vm._v(_vm._s(_vm.lang('Layout Complexity')))])]), _vm._v(" "), _c('div', {
-    staticClass: "page-name-m mt-2"
-  }, [_vm._v(_vm._s(_vm.lang('Include Layout Expense')))]), _vm._v(" "), _c('div', {
-    staticClass: "form-inline mb-3 "
-  }, [_c('fieldset', {
-    staticClass: "form-group"
-  }, [_c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.layout['layout_include']),
-      expression: "layout['layout_include']"
-    }],
-    attrs: {
-      "name": "layout-expense",
-      "type": "radio",
-      "id": "layout-expense-y",
-      "value": "yes"
-    },
-    domProps: {
-      "checked": _vm._q(_vm.layout['layout_include'], "yes")
-    },
-    on: {
-      "__c": function($event) {
-        _vm.$set(_vm.layout, 'layout_include', "yes")
-      }
-    }
-  }), _vm._v(" "), _c('label', {
-    attrs: {
-      "for": "layout-expense-y"
-    }
-  }, [_vm._v(_vm._s(_vm.lang('Yes')))])]), _vm._v(" "), _c('fieldset', {
-    staticClass: "form-group"
-  }, [_c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.layout['layout_include']),
-      expression: "layout['layout_include']"
-    }],
-    attrs: {
-      "name": "layout-expense",
-      "type": "radio",
-      "id": "layout-expense-n",
-      "value": "no"
-    },
-    domProps: {
-      "checked": _vm._q(_vm.layout['layout_include'], "no")
-    },
-    on: {
-      "__c": function($event) {
-        _vm.$set(_vm.layout, 'layout_include', "no")
-      }
-    }
-  }), _vm._v(" "), _c('label', {
-    attrs: {
-      "for": "layout-expense-n"
-    }
-  }, [_vm._v(_vm._s(_vm.lang('No')))])])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.lang('5 - Very Demanding')))])]), _vm._v(" "), _c('label', [_vm._v(_vm._s(_vm.lang('Layout Complexity')))])])]), _vm._v(" "), _c('div', {
     staticClass: "md-form"
   }, [_c('textarea', {
     directives: [{
@@ -58219,7 +58137,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }, [_vm._v(_vm._s(_vm.lang('Design Expense')))]), _vm._v(" "), _c('h1', {
     staticClass: "text-center display-2"
   }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.design_total, ' kn', 2)))]), _vm._v(" "), _c('div', {
-    staticClass: "col-md-6 mx-auto mt-3"
+    staticClass: "col-md-6 mx-auto mt-4"
   }, [_c('div', {
     staticClass: "pos-rel"
   }, [_c('select', {
@@ -58268,65 +58186,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     attrs: {
       "value": "5"
     }
-  }, [_vm._v(_vm._s(_vm.lang('5 - Very Demanding')))])]), _vm._v(" "), _c('label', [_vm._v(_vm._s(_vm.lang('Design Complexity')))])]), _vm._v(" "), _c('div', {
-    staticClass: "page-name-m mt-2"
-  }, [_vm._v(_vm._s(_vm.lang('Include Design Expense')))]), _vm._v(" "), _c('div', {
-    staticClass: "form-inline mb-3 "
-  }, [_c('fieldset', {
-    staticClass: "form-group"
-  }, [_c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.layout['design_include']),
-      expression: "layout['design_include']"
-    }],
-    attrs: {
-      "name": "design-expense",
-      "type": "radio",
-      "id": "design-expense-y",
-      "value": "yes"
-    },
-    domProps: {
-      "checked": _vm._q(_vm.layout['design_include'], "yes")
-    },
-    on: {
-      "__c": function($event) {
-        _vm.$set(_vm.layout, 'design_include', "yes")
-      }
-    }
-  }), _vm._v(" "), _c('label', {
-    attrs: {
-      "for": "design-expense-y"
-    }
-  }, [_vm._v(_vm._s(_vm.lang('Yes')))])]), _vm._v(" "), _c('fieldset', {
-    staticClass: "form-group"
-  }, [_c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.layout['design_include']),
-      expression: "layout['design_include']"
-    }],
-    attrs: {
-      "name": "design-expense",
-      "type": "radio",
-      "id": "design-expense-n",
-      "value": "no"
-    },
-    domProps: {
-      "checked": _vm._q(_vm.layout['design_include'], "no")
-    },
-    on: {
-      "__c": function($event) {
-        _vm.$set(_vm.layout, 'design_include', "no")
-      }
-    }
-  }), _vm._v(" "), _c('label', {
-    attrs: {
-      "for": "design-expense-n"
-    }
-  }, [_vm._v(_vm._s(_vm.lang('No')))])])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.lang('5 - Very Demanding')))])]), _vm._v(" "), _c('label', [_vm._v(_vm._s(_vm.lang('Design Complexity')))])])]), _vm._v(" "), _c('div', {
     staticClass: "md-form"
   }, [_c('textarea', {
     directives: [{
@@ -58473,7 +58333,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       }
     })])
   }), _vm._v(" "), _c('div', {
-    staticClass: "md-form mt-2"
+    staticClass: "md-form mt-4"
   }, [_c('textarea', {
     directives: [{
       name: "model",
@@ -58668,7 +58528,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       "for": "dot-no"
     }
   }, [_vm._v(_vm._s(_vm.lang('No')))])])]), _vm._v(" "), (_vm.basic_data['dotation'] === 'yes') ? [_c('div', {
-    staticClass: "row"
+    staticClass: "row  mt-3"
   }, [_c('div', {
     staticClass: "col-md-6"
   }, [_c('div', {
@@ -60739,7 +60599,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   return _c('div', {
     staticClass: "content change"
   }, [_c('div', {
-    staticClass: "page-name-xl mb-1"
+    staticClass: "page-name-xl mb-1 mt-3"
   }, [_vm._v(_vm._s(_vm.lang('Deadline')))]), _vm._v(" "), _c('div', {
     staticClass: "row"
   }, [_c('div', {
@@ -60856,7 +60716,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }, [_c('div', {
     staticClass: "col-md-12"
   }, [_c('div', {
-    staticClass: "md-form"
+    staticClass: "md-form mt-4"
   }, [_c('textarea', {
     directives: [{
       name: "model",
