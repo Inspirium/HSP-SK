@@ -46795,7 +46795,6 @@ module.exports = function spread(callback) {
 //
 //
 //
-//
 
 
 
@@ -53849,7 +53848,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }, [_c('div', {
       staticClass: "col-md-6"
     }, [_c('div', {
-      staticClass: "page-name-l mb-2"
+      staticClass: "page-name-l mb-4"
     }, [_vm._v(_vm._s(_vm.lang('Book Block')))]), _vm._v(" "), _c('div', {
       staticClass: "md-form"
     }, [_c('input', {
@@ -54044,7 +54043,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }, [_vm._v(_vm._s(_vm.lang('Additional Work')))])])]), _vm._v(" "), _c('div', {
       staticClass: "col-md-6"
     }, [_c('div', {
-      staticClass: "page-name-l mb-2"
+      staticClass: "page-name-l mb-4"
     }, [_vm._v(_vm._s(_vm.lang('Cover')))]), _vm._v(" "), _c('div', {
       staticClass: "row"
     }, [_c('div', {
@@ -54477,7 +54476,7 @@ if (false) {
 "use strict";
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', [_c('div', {
-    staticClass: "btn-footer mt-2 mb-5 flex-column flex-md-row d-flex p-2"
+    staticClass: "btn-footer mt-4 mb-5 flex-column flex-md-row d-flex p-2"
   }, [_c('button', {
     staticClass: "btn btn-lg btn-save",
     on: {
@@ -55416,7 +55415,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   return _c('div', {
     staticClass: "content"
   }, [_c('div', {
-    staticClass: "page-name-xl mb-3"
+    staticClass: "page-name-xl mb-4 mt-3"
   }, [_vm._v(_vm._s(_vm.lang('Distribution')))]), _vm._v(" "), _c('div', {
     staticClass: "row"
   }, [_c('div', {
@@ -55666,7 +55665,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }, [_vm._v(_vm._s(_vm.lang('Total')))]), _vm._v(" "), _c('h1', {
     staticClass: "text-center display-2"
   }, [_vm._v(_vm._s(_vm.total) + " kn")])]), _vm._v(" "), _c('div', {
-    staticClass: "page-name-l mt-1 mb-2"
+    staticClass: "page-name-l mt-1 mb-4"
   }, [_vm._v(_vm._s(_vm.lang('Marketing Budget')))]), _vm._v(" "), _c('div', {
     staticClass: "row"
   }, [_c('div', {
@@ -56795,7 +56794,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }, [_vm._v(_vm._s(_vm.lang('PowerPoint Presentation')))]), _vm._v(" "), _c('span', {
     staticClass: "input-group-addon"
   }, [_vm._v(_vm._s(_vm.lang('Kn')))])])])])])]), _vm._v(" "), _c('div', {
-    staticClass: "page-name-l mb-2"
+    staticClass: "page-name-l mb-4"
   }, [_vm._v(_vm._s(_vm.lang('Additional Expenses')))]), _vm._v(" "), _vm._l((_vm.expense['additional_expense']), function(item, index) {
     return [_c('div', {
       staticClass: "row"
@@ -57062,7 +57061,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }, [_c('div', {
       staticClass: "col-md-6"
     }, [_c('div', {
-      staticClass: "page-name-l mb-2"
+      staticClass: "page-name-l mb-4"
     }, [_vm._v(_vm._s(_vm.lang('Book Block')))]), _vm._v(" "), _c('div', {
       staticClass: "row"
     }, [_c('div', {
@@ -57198,7 +57197,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }), _vm._v(" "), _c('label', {}, [_vm._v(_vm._s(_vm.lang('Additional Work')))])])]), _vm._v(" "), _c('div', {
       staticClass: "col-md-6"
     }, [_c('div', {
-      staticClass: "page-name-l mb-2"
+      staticClass: "page-name-l mb-4"
     }, [_vm._v(_vm._s(_vm.lang('Cover')))]), _vm._v(" "), _c('div', {
       staticClass: "row"
     }, [_c('div', {
@@ -57751,14 +57750,14 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   return _c('div', {
     staticClass: "content"
   }, [_c('div', {
-    staticClass: "page-name-xl mb-3"
+    staticClass: "page-name-xl mb-4 mt-3"
   }, [_vm._v(_vm._s(_vm.lang('Authors Expenses')))]), _vm._v(" "), _c('div', {
     staticClass: "row"
   }, [_c('div', {
     staticClass: "col-md-12"
   }, [_vm._l((_vm.authors), function(author) {
     return [_c('div', {
-      staticClass: "page-name-l mt-1 mb-2"
+      staticClass: "page-name-l mt-1 mb-4"
     }, [_vm._v(_vm._s(author.name))]), _vm._v(" "), (Object.keys(_vm.expenses['expenses']).length) ? _c('div', {
       staticClass: "row"
     }, [_c('div', {
@@ -57945,7 +57944,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       "for": "form76"
     }
   }, [_vm._v(_vm._s(_vm.lang('Note')))])])])])], 2)]), _vm._v(" "), _c('div', {
-    staticClass: "page-name-l mb-1"
+    staticClass: "page-name-l mb-4"
   }, [_vm._v(_vm._s(_vm.lang('Other Expenses')))]), _vm._v(" "), _vm._l((_vm.expenses.other), function(a, i) {
     return _c('div', {
       key: i,
@@ -58003,7 +58002,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }), _vm._v(" "), _c('label', [_vm._v(_vm._s(_vm.lang('Amount')))])])]), _vm._v(" "), _c('div', {
       staticClass: "col-md-4"
     }, [_c('button', {
-      staticClass: "btn btn-danger",
+      staticClass: "btn btn-danger btn-addon",
       on: {
         "click": function($event) {
           _vm.deleteOtherExpense(i)
@@ -58368,7 +58367,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   return _c('div', {
     staticClass: "content"
   }, [_c('div', {
-    staticClass: "page-name-xl mb-3"
+    staticClass: "page-name-xl mb-4 mt-3"
   }, [_vm._v(_vm._s(_vm.lang('Basic Data')))]), _vm._v(" "), _c('div', {
     staticClass: "row"
   }, [_c('div', {
@@ -58450,7 +58449,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       "for": "author"
     }
   }, [_vm._v(_vm._s(_vm.lang('Author')))])])])]), _vm._v(" "), _c('button', {
-    staticClass: "btn btn-neutral btn-addon mb-2",
+    staticClass: "btn btn-neutral btn-addon mb-4 mr-5",
     attrs: {
       "type": "button"
     },
@@ -58611,9 +58610,9 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       }
     }, [_vm._v(_vm._s(_vm.lang('Delete')))])])
   }))] : _vm._e(), _vm._v(" "), _c('div', {
-    staticClass: "page-name-m mt-2"
+    staticClass: "page-name-m mt-4"
   }, [_vm._v(_vm._s(_vm.lang('Dotation')))]), _vm._v(" "), _c('div', {
-    staticClass: "form-inline mb-2"
+    staticClass: "form-inline mb-3"
   }, [_c('fieldset', {
     staticClass: "form-group"
   }, [_c('input', {
@@ -58731,33 +58730,6 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       "for": "dot-amount"
     }
   }, [_vm._v(_vm._s(_vm.lang('Amount')))])])])])] : _vm._e(), _vm._v(" "), _c('div', {
-    staticClass: "md-form mt-1"
-  }, [_c('textarea', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.basic_data['basic_data_note']),
-      expression: "basic_data['basic_data_note']"
-    }],
-    staticClass: "md-textarea",
-    attrs: {
-      "id": "note",
-      "name": "note"
-    },
-    domProps: {
-      "value": (_vm.basic_data['basic_data_note'])
-    },
-    on: {
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.$set(_vm.basic_data, 'basic_data_note', $event.target.value)
-      }
-    }
-  }), _vm._v(" "), _c('label', {
-    attrs: {
-      "for": "note"
-    }
-  }, [_vm._v(_vm._s(_vm.lang('Note')))])]), _vm._v(" "), _c('div', {
     staticClass: "page-name-m mt-2"
   }, [_vm._v(_vm._s(_vm.lang('Possible Products')))]), _vm._v(" "), _c('div', {
     staticClass: "form-inline"
@@ -58961,7 +58933,34 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     attrs: {
       "for": "products-short"
     }
-  }, [_vm._v(_vm._s(_vm.lang('Short Edition')))])])])], 2), _vm._v(" "), _c('upload-modal', {
+  }, [_vm._v(_vm._s(_vm.lang('Short Edition')))])])]), _vm._v(" "), _c('div', {
+    staticClass: "md-form mt-5"
+  }, [_c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.basic_data['basic_data_note']),
+      expression: "basic_data['basic_data_note']"
+    }],
+    staticClass: "md-textarea",
+    attrs: {
+      "id": "note",
+      "name": "note"
+    },
+    domProps: {
+      "value": (_vm.basic_data['basic_data_note'])
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.$set(_vm.basic_data, 'basic_data_note', $event.target.value)
+      }
+    }
+  }), _vm._v(" "), _c('label', {
+    attrs: {
+      "for": "note"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('Note')))])])], 2), _vm._v(" "), _c('upload-modal', {
     attrs: {
       "action": "/api/file",
       "accept": ".pdf, .doc, .docx, .xls, .xlsx",
@@ -58999,9 +58998,9 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   return _c('div', {
     staticClass: "content"
   }, [_c('div', {
-    staticClass: "page-name-xl mb-3"
+    staticClass: "page-name-xl mb-4 mt-3"
   }, [_vm._v(_vm._s(_vm.lang('Categorization')))]), _vm._v(" "), _c('div', {
-    staticClass: "page-name-l mb-2"
+    staticClass: "page-name-l mb-4"
   }, [_vm._v(_vm._s(_vm.lang('Basic Categorization')))]), _vm._v(" "), _c('div', {
     staticClass: "row"
   }, [_c('div', {
@@ -59103,7 +59102,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       }
     }, [_vm._v(_vm._s(item.name))])
   }) : _vm._e()], 2), _vm._v(" "), _c('label', [_vm._v(_vm._s(_vm.lang('Group')))])])])])]), _vm._v(" "), _c('div', {
-    staticClass: "page-name-l mt-1 mb-2"
+    staticClass: "page-name-l mt-1 mb-4"
   }, [_vm._v(_vm._s(_vm.lang('Book Type')))]), _vm._v(" "), _c('div', {
     staticClass: "row"
   }, [_c('div', {
@@ -59169,7 +59168,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       }
     }, [_vm._v(_vm._s(item.name))])
   }) : _vm._e()], 2), _vm._v(" "), _c('label', [_vm._v(_vm._s(_vm.lang('Group')))])])]), _vm._v(" "), _c('div', {
-    staticClass: "page-name-l mt-1 mb-2"
+    staticClass: "page-name-l mt-1 mb-4"
   }, [_vm._v(_vm._s(_vm.lang('School')))]), _vm._v(" "), _c('div', {
     staticClass: "row"
   }, [_c('div', {
@@ -59790,7 +59789,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       "for": "checkbox51a"
     }
   }, [_vm._v(_vm._s(_vm.lang('5.')))])])]), _vm._v(" "), _c('div', {
-    staticClass: "page-name-l mt-2 mb-2"
+    staticClass: "page-name-l mt-4 mb-4"
   }, [_vm._v(_vm._s(_vm.lang('Subjects')))]), _vm._v(" "), _c('div', {
     staticClass: "row"
   }, [_c('div', {
@@ -59856,7 +59855,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       }
     }, [_vm._v(_vm._s(item.name))])
   }) : _vm._e()], 2), _vm._v(" "), _c('label', [_vm._v(_vm._s(_vm.lang('Field Detailed')))])])]), _vm._v(" "), _c('div', {
-    staticClass: "page-name-l mt-1 mb-2"
+    staticClass: "page-name-l mt-1 mb-4"
   }, [_vm._v(_vm._s(_vm.lang('Bibliography')))]), _vm._v(" "), _c('div', {
     staticClass: "row"
   }, [_c('div', {
@@ -59938,7 +59937,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   return _c('div', {
     staticClass: "content"
   }, [_c('div', {
-    staticClass: "page-name-xl mb-3"
+    staticClass: "page-name-xl mb-4 mt-3"
   }, [_vm._v(_vm._s(_vm.lang('Technical Data')))]), _vm._v(" "), _c('div', {
     staticClass: "row"
   }, [_c('div', {
@@ -60072,7 +60071,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }, [_c('div', {
     staticClass: "col-md-6"
   }, [_c('div', {
-    staticClass: "page-name-l mb-2"
+    staticClass: "page-name-l mb-4"
   }, [_vm._v(_vm._s(_vm.lang('Book Block')))]), _vm._v(" "), _c('div', {
     staticClass: "md-form"
   }, [_c('input', {
@@ -60356,7 +60355,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }, [_vm._v(_vm._s(_vm.lang('Additional Work')))])])]), _vm._v(" "), _c('div', {
     staticClass: "col-md-6"
   }, [_c('div', {
-    staticClass: "page-name-l mb-2"
+    staticClass: "page-name-l mb-4"
   }, [_vm._v(_vm._s(_vm.lang('Cover')))]), _vm._v(" "), _c('div', {
     staticClass: "row"
   }, [_c('div', {
@@ -60738,7 +60737,7 @@ if (false) {
 "use strict";
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
-    staticClass: "content"
+    staticClass: "content change"
   }, [_c('div', {
     staticClass: "page-name-xl mb-1"
   }, [_vm._v(_vm._s(_vm.lang('Deadline')))]), _vm._v(" "), _c('div', {
@@ -60746,7 +60745,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }, [_c('div', {
     staticClass: "col-md-12"
   }, [_c('div', {
-    staticClass: "page-name-l mt-1 mb-2"
+    staticClass: "page-name-l mt-1 mb-4"
   }, [_vm._v(_vm._s(_vm.lang('Desired Publishing Date')))]), _vm._v(" "), _c('div', {
     staticClass: "row"
   }, [_c('div', {
@@ -60783,7 +60782,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     attrs: {
       "name": "sex",
       "type": "radio",
-      "id": "radio11",
+      "id": "razzzdio11",
       "value": "High"
     },
     domProps: {
@@ -61528,7 +61527,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   return _c('div', {
     staticClass: "content"
   }, [_c('div', {
-    staticClass: "page-name-xl mb-3"
+    staticClass: "page-name-xl mb-4 mt-3"
   }, [_vm._v(_vm._s(_vm.lang('Market Potential')))]), _vm._v(" "), _c('div', {
     staticClass: "row"
   }, [_c('div', {
