@@ -47709,7 +47709,13 @@ module.exports = function spread(callback) {
             },
             set(value) {
                 this.$store.commit('proposition/updateProposition', { key: 'supergroup', group: 'categorization', value: value });
-                this.$store.commit('proposition/updateProposition', { key: 'supergroup_text', group: 'categorization', value: this.categories[value].name });
+                if (this.categories.length) {
+                    this.$store.commit('proposition/updateProposition', {
+                        key: 'supergroup_text',
+                        group: 'categorization',
+                        value: this.categories[value].name
+                    });
+                }
                 this.$store.commit('proposition/updateProposition', { key: 'upgroup', group: 'categorization', value: 0 });
                 this.$store.commit('proposition/updateProposition', { key: 'group', group: 'categorization', value: 0 });
             }
