@@ -27,7 +27,7 @@ mix.js(['packages/Inspirium/SKTemplate/src/assets/js/app.js'], 'public/js/app.js
         'node_modules/mdb-pro/js/modules (optional)/preloading.js',
         'node_modules/mdb-pro/js/modules (optional)/card-reveal.js',
         'node_modules/mdb-pro/js/modules (optional)/character-counter.js',
-        'node_modules/mdb-pro/js/modules (optional)/toasts.js',
+        'node_modules/mdb-pro/js/modules (optional)/toastr.js',
         'node_modules/mdb-pro/js/modules (optional)/smooth-scroll.js',
         'node_modules/mdb-pro/js/modules (optional)/dropdown.js',
         'node_modules/mdb-pro/js/modules (optional)/buttons.js',
