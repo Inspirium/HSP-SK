@@ -34,10 +34,10 @@ class UsersTableSeeder extends Seeder
 		    ],
 	    ]);
 	    DB::table('employees')->insert([
-	    	['first_name' => 'Marko', 'last_name' => 'B', 'user_id' => 1],
-	    	['first_name' => 'Stjepan', 'last_name' => 'Drmić', 'user_id' => 2],
-	    	['first_name' => 'Matilda', 'last_name' => 'Bulić', 'user_id' => 3],
-	    	['first_name' => 'Mihovil', 'last_name' => 'Žužul', 'user_id' => 4]
+	    	['first_name' => 'Marko', 'last_name' => 'B', 'user_id' => 1, 'department_id' => 1],
+	    	['first_name' => 'Stjepan', 'last_name' => 'Drmić', 'user_id' => 2, 'department_id' => 1],
+	    	['first_name' => 'Matilda', 'last_name' => 'Bulić', 'user_id' => 3, 'department_id' => 1],
+	    	['first_name' => 'Mihovil', 'last_name' => 'Žužul', 'user_id' => 4, 'department_id' => 1]
 	    ]);
     }
 }
