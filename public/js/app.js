@@ -56119,6 +56119,9 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     staticClass: "btn-footer mt-4 mb-5 flex-column flex-md-row d-flex p-2"
   }, [_c('button', {
     staticClass: "btn btn-lg btn-save",
+    attrs: {
+      "onclick": "toastr.info('Hi! I am info message.');"
+    },
     on: {
       "click": _vm.saveProposition
     }
@@ -56559,7 +56562,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   })]), _vm._v(" "), _c('div', {
     staticClass: "btn-header d-flex p-2"
   }, [_c('a', {
-    staticClass: "btn btn-lg btn-unique",
+    staticClass: "btn btn-lg btn-blank",
     attrs: {
       "href": _vm.links['add_new']
     }
@@ -60500,7 +60503,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }, [_c('div', {
     staticClass: "col-md-12"
   }, [_c('div', {
-    staticClass: "md-form"
+    staticClass: "md-form mt-4"
   }, [_c('textarea', {
     staticClass: "md-textarea",
     attrs: {
@@ -61002,7 +61005,9 @@ if (false) {
 
 "use strict";
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', [_c('router-view')], 1)
+  return _c('div', [_c('router-view', {
+    key: _vm.$route.fullPath
+  })], 1)
 }
 var staticRenderFns = []
 render._withStripped = true
