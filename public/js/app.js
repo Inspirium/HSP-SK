@@ -45088,7 +45088,7 @@ $(function () {
 /* 134 */
 /***/ (function(module, exports) {
 
-// removed by extract-text-webpack-plugin
+throw new Error("Module build failed: ModuleNotFoundError: Module not found: Error: Can't resolve './images/book_index.jpg' in '/Users/marko/Development/web/hsp/hsp/packages/Inspirium/SKTemplate/src/assets/sass'\n    at factoryCallback (/Users/marko/Development/web/hsp/hsp/node_modules/webpack/lib/Compilation.js:260:39)\n    at /Users/marko/Development/web/hsp/hsp/node_modules/webpack/lib/NormalModuleFactory.js:243:19\n    at onDoneResolving (/Users/marko/Development/web/hsp/hsp/node_modules/webpack/lib/NormalModuleFactory.js:59:20)\n    at /Users/marko/Development/web/hsp/hsp/node_modules/webpack/lib/NormalModuleFactory.js:132:20\n    at /Users/marko/Development/web/hsp/hsp/node_modules/webpack/node_modules/async/dist/async.js:3861:9\n    at /Users/marko/Development/web/hsp/hsp/node_modules/webpack/node_modules/async/dist/async.js:421:16\n    at iteratorCallback (/Users/marko/Development/web/hsp/hsp/node_modules/webpack/node_modules/async/dist/async.js:996:13)\n    at /Users/marko/Development/web/hsp/hsp/node_modules/webpack/node_modules/async/dist/async.js:906:16\n    at /Users/marko/Development/web/hsp/hsp/node_modules/webpack/node_modules/async/dist/async.js:3858:13\n    at /Users/marko/Development/web/hsp/hsp/node_modules/webpack/lib/NormalModuleFactory.js:124:22\n    at onError (/Users/marko/Development/web/hsp/hsp/node_modules/enhanced-resolve/lib/Resolver.js:65:10)\n    at loggingCallbackWrapper (/Users/marko/Development/web/hsp/hsp/node_modules/enhanced-resolve/lib/createInnerCallback.js:31:19)\n    at afterInnerCallback (/Users/marko/Development/web/hsp/hsp/node_modules/enhanced-resolve/lib/Resolver.js:146:10)\n    at loggingCallbackWrapper (/Users/marko/Development/web/hsp/hsp/node_modules/enhanced-resolve/lib/createInnerCallback.js:31:19)\n    at Resolver.applyPluginsAsyncSeriesBailResult1 (/Users/marko/Development/web/hsp/hsp/node_modules/tapable/lib/Tapable.js:181:46)\n    at innerCallback (/Users/marko/Development/web/hsp/hsp/node_modules/enhanced-resolve/lib/Resolver.js:133:19)\n    at loggingCallbackWrapper (/Users/marko/Development/web/hsp/hsp/node_modules/enhanced-resolve/lib/createInnerCallback.js:31:19)\n    at /Users/marko/Development/web/hsp/hsp/node_modules/tapable/lib/Tapable.js:283:15\n    at /Users/marko/Development/web/hsp/hsp/node_modules/enhanced-resolve/lib/UnsafeCachePlugin.js:40:4\n    at loggingCallbackWrapper (/Users/marko/Development/web/hsp/hsp/node_modules/enhanced-resolve/lib/createInnerCallback.js:31:19)\n    at afterInnerCallback (/Users/marko/Development/web/hsp/hsp/node_modules/enhanced-resolve/lib/Resolver.js:146:10)\n    at loggingCallbackWrapper (/Users/marko/Development/web/hsp/hsp/node_modules/enhanced-resolve/lib/createInnerCallback.js:31:19)\n    at Resolver.applyPluginsAsyncSeriesBailResult1 (/Users/marko/Development/web/hsp/hsp/node_modules/tapable/lib/Tapable.js:181:46)\n    at innerCallback (/Users/marko/Development/web/hsp/hsp/node_modules/enhanced-resolve/lib/Resolver.js:133:19)\n    at loggingCallbackWrapper (/Users/marko/Development/web/hsp/hsp/node_modules/enhanced-resolve/lib/createInnerCallback.js:31:19)\n    at /Users/marko/Development/web/hsp/hsp/node_modules/tapable/lib/Tapable.js:283:15\n    at innerCallback (/Users/marko/Development/web/hsp/hsp/node_modules/enhanced-resolve/lib/Resolver.js:131:11)\n    at loggingCallbackWrapper (/Users/marko/Development/web/hsp/hsp/node_modules/enhanced-resolve/lib/createInnerCallback.js:31:19)\n    at /Users/marko/Development/web/hsp/hsp/node_modules/tapable/lib/Tapable.js:283:15\n    at resolver.doResolve.createInnerCallback (/Users/marko/Development/web/hsp/hsp/node_modules/enhanced-resolve/lib/DescriptionFilePlugin.js:44:6)");
 
 /***/ }),
 /* 135 */
@@ -47637,6 +47637,7 @@ module.exports = function spread(callback) {
 //
 //
 //
+//
 
 
 
@@ -48493,7 +48494,11 @@ module.exports = function spread(callback) {
             return this.$deepModel('proposition.proposition.basic_data.authors');
         },
         author_expenses() {
-            this.$deepModel('proposition.proposition.authors_expense');
+            __WEBPACK_IMPORTED_MODULE_0_lodash___default.a.mapValues(this.$store.state.proposition.proposition.authors_expense, a => {
+                return Number(a.amount) + Number(__WEBPACK_IMPORTED_MODULE_0_lodash___default.a.sumBy(a.additional_expenses, a => {
+                    return Number(a.amount);
+                }));
+            });
         },
         production_expense() {
             return this.$deepModel('proposition.proposition.production_expense');
@@ -48508,6 +48513,22 @@ module.exports = function spread(callback) {
             return __WEBPACK_IMPORTED_MODULE_0_lodash___default.a.sumBy(this.production_expense.additional_expense, o => {
                 return Number(o.amount);
             });
+        },
+        total_budget() {
+            let total_authors = 0;
+            if (this.author_expenses) {
+                total_authors = Object.values(this.author_expenses).reduce((a, b) => a + b);
+            }
+            return total_authors + this.production_expense.text_price * this.production_expense.text_price_amount + this.production_expense.reviews + this.production_expense.lecture * this.production_expense.lecture_amount + this.production_expense.correction * this.production_expense.correction_amount + this.production_expense.proofreading * this.production_expense.proofreading_amount + this.production_expense.translation * this.production_expense.translation_amount + this.production_expense.index * this.production_expense.index_amount + this.production_expense.epilogue + this.production_expense.photos * this.production_expense.photos_amount + this.production_expense.illustrations * this.production_expense.illustrations_amount + this.production_expense.technical_drawings * this.production_expense.technical_drawings_amount + this.production_expense.expert_report + this.production_expense.copyright + this.production_expense.copyright_mediator + this.production_expense.methodical_instrumentarium + this.production_expense.selection + this.production_expense.powerpoint_presentation + this.additional_expense + this.marketing_expense;
+        },
+        total_expenses() {
+            return Object.values(this.expenses).reduce((a, b) => a + b);
+        },
+        total_difference() {
+            return this.total_budget - this.total_expenses;
+        },
+        total_percent_difference() {
+            return Math.round(this.total_difference / this.total_budget * 100);
         }
     },
     methods: {
@@ -57444,25 +57465,25 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     staticClass: "white-label"
   }, [_vm._v(_vm._s(_vm.lang('Budget')))]), _vm._v(" "), _c('h3', {
     staticClass: "mb-1 text-white"
-  }, [_vm._v("123.450 kn")])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.total_budget) + " kn")])]), _vm._v(" "), _c('div', {
     staticClass: "col-md-3"
   }, [_c('h6', {
     staticClass: "white-label"
   }, [_vm._v(_vm._s(_vm.lang('Expenses')))]), _vm._v(" "), _c('h3', {
     staticClass: "mb-1 text-white"
-  }, [_vm._v("155.446 kn")])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.total_expenses) + " kn")])]), _vm._v(" "), _c('div', {
     staticClass: "col-md-3"
   }, [_c('h6', {
     staticClass: "white-label"
   }, [_vm._v(_vm._s(_vm.lang('Difference')))]), _vm._v(" "), _c('h3', {
     staticClass: "mb-1 text-white"
-  }, [_vm._v("22.985 kn")])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.total_difference) + " kn")])]), _vm._v(" "), _c('div', {
     staticClass: "col-md-3"
   }, [_c('h6', {
     staticClass: "white-label"
   }, [_vm._v(_vm._s(_vm.lang('Difference in precentage')))]), _vm._v(" "), _c('h3', {
     staticClass: "mb-1 text-white"
-  }, [_vm._v("18%")])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.total_percent_difference) + "%")])])]), _vm._v(" "), _c('div', {
     staticClass: "page-name-xl mb-3 mt-3"
   }, [_vm._v(_vm._s(_vm.lang('Authors Expenses')))]), _vm._v(" "), _c('table', {
     staticClass: "table"
@@ -57475,7 +57496,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       attrs: {
         "scope": "row"
       }
-    }, [_vm._v("1")]), _vm._v(" "), _c('td', [_vm._v(_vm._s(author.name))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.author_expenses) + " kn")]), _vm._v(" "), _c('td', [_vm._v("15.500 kn")]), _vm._v(" "), _c('td', [_vm._v("5.500 kn")]), _vm._v(" "), _c('td', [_c('div', {
+    }, [_vm._v("1")]), _vm._v(" "), _c('td', [_vm._v(_vm._s(author.name))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.author_expenses[author.id]) + " kn")]), _vm._v(" "), _c('td', [_vm._v("15.500 kn")]), _vm._v(" "), _c('td', [_vm._v("5.500 kn")]), _vm._v(" "), _c('td', [_c('div', {
       staticClass: "file-box-sty icon icon-cost-approval"
     }, [_vm._v(_vm._s(_vm.lang('Send for Approval')))])])])
   }))]), _vm._v(" "), _c('div', {
@@ -59578,10 +59599,12 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }, [_c('div', {
       staticClass: "profile-head"
     }, [_c('div', {
-      staticClass: "row"
+      staticClass: "row justify-content-center pt-4"
     }, [_c('div', {
-      staticClass: "col-md-4 offset-md-4"
+      staticClass: "col-md-4"
     }, [_c('div', {
+      staticClass: " page-name-l-white border-white text-white mb-3 text-center"
+    }, [_vm._v(_vm._s(_vm.lang('Direct Cost Cover')))]), _vm._v(" "), _c('div', {
       staticClass: "md-form"
     }, [_c('input', {
       directives: [{
@@ -59624,6 +59647,290 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }, [_vm._v(_vm._s(_vm.lang('Number of Sold Copies')))]), _vm._v(" "), _c('h3', {
       staticClass: "mb-2"
     }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].cost_coverage / option.price_proposal, '', 0)))])])])])]), _vm._v(" "), _c('div', {}, [_c('div', {
+      staticClass: "page-name-xl mb-1"
+    }, [_vm._v(_vm._s(_vm.lang('Calculation')))]), _vm._v(" "), _c('table', {
+      staticClass: "table"
+    }, [_c('thead', {
+      staticClass: "thead-inverse"
+    }, [_c('tr', [_c('th', [_vm._v("#")]), _vm._v(" "), _c('th', [_vm._v(_vm._s(_vm.lang('Expense')))]), _vm._v(" "), _c('th', [_vm._v(_vm._s(_vm.lang('Precentage')))]), _vm._v(" "), _c('th', [_vm._v(_vm._s(_vm.lang('Expense Total')))]), _vm._v(" "), _c('th', [_vm._v(_vm._s(_vm.lang('Expense Per Unit')))])])]), _vm._v(" "), _c('tbody', {
+      staticClass: "white"
+    }, [_c('tr', {
+      staticClass: "table-display-1"
+    }, [_c('th', {
+      attrs: {
+        "scope": "row"
+      }
+    }, [_vm._v("1")]), _vm._v(" "), _c('td', [_vm._v("Autorski honorar ukupno")]), _vm._v(" "), _c('td'), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.authors_total, '', 2)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.authors_total / option.title, ' kn', 2)))])]), _vm._v(" "), _c('tr', [_c('th', {
+      attrs: {
+        "scope": "row"
+      }
+    }, [_vm._v("1.1")]), _vm._v(" "), _c('td', [_vm._v("Akontacija")]), _vm._v(" "), _c('td'), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.authors_advance, '', 2)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.authors_advance / option.title, ' kn', 2)))])]), _vm._v(" "), _c('tr', [_c('th', {
+      attrs: {
+        "scope": "row"
+      }
+    }, [_vm._v("1.2")]), _vm._v(" "), _c('td', [_vm._v("Ostali autorski ugovori")]), _vm._v(" "), _c('td'), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.authors_other, '', 2)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.authors_other, ' kn', 2)))])]), _vm._v(" "), _c('tr', {
+      staticClass: "table-display-1"
+    }, [_c('th', {
+      attrs: {
+        "scope": "row"
+      }
+    }, [_vm._v("2")]), _vm._v(" "), _c('td', [_vm._v("Tiskarski troškovi")]), _vm._v(" "), _c('td'), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(option.print_offer, '', 2)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(option.print_offer / option.title, ' kn', 2)))])]), _vm._v(" "), _c('tr', {
+      staticClass: "table-display-1"
+    }, [_c('th', {
+      attrs: {
+        "scope": "row"
+      }
+    }, [_vm._v("3")]), _vm._v(" "), _c('td', [_vm._v("Marketinški trošak")]), _vm._v(" "), _c('td'), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.marketing_expense, '', 2)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.marketing_expense / option.title, ' kn', 2)))])]), _vm._v(" "), _c('tr', {
+      staticClass: "table-display-1"
+    }, [_c('th', {
+      attrs: {
+        "scope": "row"
+      }
+    }, [_vm._v("4")]), _vm._v(" "), _c('td', [_vm._v("Produkcijski trošak")]), _vm._v(" "), _c('td'), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense, '', 2)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense / option.title, ' kn', 2)))])]), _vm._v(" "), _c('tr', {
+      staticClass: "table-display-1"
+    }, [_c('th', {
+      attrs: {
+        "scope": "row"
+      }
+    }, [_vm._v("5")]), _vm._v(" "), _c('td', [_vm._v("Trošak prijeloma i dizajna")]), _vm._v(" "), _c('td'), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.design_layout_expense, '', 2)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.design_layout_expense / option.title, ' kn', 2)))])]), _vm._v(" "), _c('tr', {
+      staticClass: "table-display-2"
+    }, [_c('th', {
+      attrs: {
+        "scope": "row"
+      }
+    }, [_vm._v("6")]), _vm._v(" "), _c('td', [_vm._v("Ukupno 1, 2, 3, 4, 5")]), _vm._v(" "), _c('td'), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(Number(_vm.authors_total) + Number(option.print_offer) + Number(_vm.marketing_expense) + Number(_vm.production_expense) + Number(_vm.design_layout_expense), '', 2)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")((Number(_vm.authors_total) + Number(option.print_offer) + Number(_vm.marketing_expense) + Number(_vm.production_expense) + Number(_vm.design_layout_expense)) / option.title, ' kn', 2)))])]), _vm._v(" "), _c('tr', [_c('th', {
+      attrs: {
+        "scope": "row"
+      }
+    }, [_vm._v("7")]), _vm._v(" "), _c('td', [_vm._v("Plaće izdavačkog sektora")]), _vm._v(" "), _c('td'), _vm._v(" "), (_vm.currentEdit('compensation')) ? [_c('td', [_c('input', {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: (_vm.options[key].compensation),
+        expression: "options[key].compensation"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        "type": "text",
+        "autofocus": ""
+      },
+      domProps: {
+        "value": (_vm.options[key].compensation)
+      },
+      on: {
+        "keyup": function($event) {
+          if (!('button' in $event) && _vm._k($event.keyCode, "enter", 13)) { return null; }
+          _vm.closeEdit($event)
+        },
+        "input": function($event) {
+          if ($event.target.composing) { return; }
+          _vm.options[key].compensation = $event.target.value
+        }
+      }
+    })])] : [_c('td', {
+      staticClass: "table-editable text-center",
+      on: {
+        "click": function($event) {
+          _vm.editField('compensation')
+        }
+      }
+    }, [_vm._v(_vm._s(_vm._f("flexCurrency")(option.compensation, '', 2)))])], _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(option.compensation / option.title, ' kn', 2)))])], 2), _vm._v(" "), _c('tr', {
+      staticClass: "table-display-1"
+    }, [_c('th', {
+      attrs: {
+        "scope": "row"
+      }
+    }, [_vm._v("8")]), _vm._v(" "), _c('td', [_vm._v("Direktni troškovi")]), _vm._v(" "), _c('td'), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].direct_cost, '', 2)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].direct_cost / option.title, ' kn', 2)))])]), _vm._v(" "), _c('tr', {
+      staticClass: "table-display-1"
+    }, [_c('th', {
+      attrs: {
+        "scope": "row"
+      }
+    }, [_vm._v("9")]), _vm._v(" "), _c('td', [_vm._v("Indirektni troškovi")]), _vm._v(" "), _c('td'), _vm._v(" "), (_vm.currentEdit('indirect_expenses')) ? [_c('td', [_c('input', {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: (_vm.options[key].indirect_expenses),
+        expression: "options[key].indirect_expenses"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        "type": "text",
+        "size": "3",
+        "autofocus": ""
+      },
+      domProps: {
+        "value": (_vm.options[key].indirect_expenses)
+      },
+      on: {
+        "keyup": function($event) {
+          if (!('button' in $event) && _vm._k($event.keyCode, "enter", 13)) { return null; }
+          _vm.closeEdit($event)
+        },
+        "input": function($event) {
+          if ($event.target.composing) { return; }
+          _vm.options[key].indirect_expenses = $event.target.value
+        }
+      }
+    })])] : [_c('td', {
+      staticClass: "table-editable text-center",
+      on: {
+        "click": function($event) {
+          _vm.editField('indirect_expenses')
+        }
+      }
+    }, [_vm._v(_vm._s(_vm._f("flexCurrency")(option.indirect_expenses, '', 2)))])], _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(option.indirect_expenses / option.title, ' kn', 2)))])], 2), _vm._v(" "), _c('tr', {
+      staticClass: "table-display-2"
+    }, [_c('th', {
+      attrs: {
+        "scope": "row"
+      }
+    }, [_vm._v("10")]), _vm._v(" "), _c('td', [_vm._v("Direktni + Indirektni")]), _vm._v(" "), _c('td'), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(Number(_vm.totals[option.id].direct_cost) + Number(option.indirect_expenses), '', 2)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")((Number(_vm.totals[option.id].direct_cost) + Number(option.indirect_expenses)) / option.title, ' kn', 2)))])]), _vm._v(" "), _c('tr', [_c('th', {
+      attrs: {
+        "scope": "row"
+      }
+    }, [_vm._v("11")]), _vm._v(" "), _c('td', [_vm._v("Ostatak AH ugovorenog po prodaji")]), _vm._v(" "), _c('td'), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].remainder_after_sales, '', 2)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].remainder_after_sales / option.title, ' kn', 2)))])]), _vm._v(" "), _c('tr', {
+      staticClass: "table-display-2"
+    }, [_c('th', {
+      attrs: {
+        "scope": "row"
+      }
+    }, [_vm._v("12")]), _vm._v(" "), _c('td', [_vm._v("Ukupno pokrivanje troška")]), _vm._v(" "), _c('td'), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].complete_expense, '', 2)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].complete_expense / option.title, ' kn', 2)))])]), _vm._v(" "), _c('tr', [_c('th', {
+      attrs: {
+        "scope": "row"
+      }
+    }, [_vm._v("13")]), _vm._v(" "), _c('td', [_vm._v("Dotacija")]), _vm._v(" "), _c('td'), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.dotation, '', 2)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.dotation / option.title, ' kn', 2)))])]), _vm._v(" "), _c('tr', {
+      staticClass: "table-display-1"
+    }, [_c('th', {
+      attrs: {
+        "scope": "row"
+      }
+    }, [_vm._v("14")]), _vm._v(" "), _c('td', [_vm._v("Ukupno pokrivanje troška - dotacije")]), _vm._v(" "), _c('td'), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].cost_coverage, '', 2)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].cost_coverage / option.title, ' kn', 2)))])]), _vm._v(" "), _c('tr', [_c('th', {
+      attrs: {
+        "scope": "row"
+      }
+    }, [_vm._v("15")]), _vm._v(" "), _c('td', [_vm._v("Ukalkulirana dobit")]), _vm._v(" "), (_vm.currentEdit('calculated_profit_percent')) ? [_c('td', [_c('input', {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: (_vm.options[key].calculated_profit_percent),
+        expression: "options[key].calculated_profit_percent"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        "type": "text",
+        "size": "3",
+        "autofocus": ""
+      },
+      domProps: {
+        "value": (_vm.options[key].calculated_profit_percent)
+      },
+      on: {
+        "keyup": function($event) {
+          if (!('button' in $event) && _vm._k($event.keyCode, "enter", 13)) { return null; }
+          _vm.closeEdit($event)
+        },
+        "input": function($event) {
+          if ($event.target.composing) { return; }
+          _vm.options[key].calculated_profit_percent = $event.target.value
+        }
+      }
+    })])] : [_c('td', {
+      staticClass: "table-editable text-center",
+      on: {
+        "click": function($event) {
+          _vm.editField('calculated_profit_percent')
+        }
+      }
+    }, [_vm._v(_vm._s(_vm._f("percent")(option.calculated_profit_percent)))])], _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].cost_coverage * (option.calculated_profit_percent) / 100, '', 2)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].cost_coverage * (option.calculated_profit_percent) / 100 / option.title, ' kn', 2)))])], 2), _vm._v(" "), _c('tr', [_c('th', {
+      attrs: {
+        "scope": "row"
+      }
+    }, [_vm._v("16")]), _vm._v(" "), _c('td', [_vm._v("Prodajna cijena proizvođača")]), _vm._v(" "), _c('td'), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].manufacturer_price, '', 2)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].manufacturer_price / option.title, ' kn', 2)))])]), _vm._v(" "), _c('tr', [_c('th', {
+      attrs: {
+        "scope": "row"
+      }
+    }, [_vm._v("17")]), _vm._v(" "), _c('td', [_vm._v("Udio trgovine")]), _vm._v(" "), (_vm.currentEdit('shop_percent')) ? [_c('td', [_c('input', {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: (_vm.options[key + '[shop_percent]']),
+        expression: "options[key+'[shop_percent]']"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        "type": "text",
+        "size": "3",
+        "autofocus": ""
+      },
+      domProps: {
+        "value": (_vm.options[key + '[shop_percent]'])
+      },
+      on: {
+        "keyup": function($event) {
+          if (!('button' in $event) && _vm._k($event.keyCode, "enter", 13)) { return null; }
+          _vm.closeEdit($event)
+        },
+        "input": function($event) {
+          if ($event.target.composing) { return; }
+          _vm.$set(_vm.options, key + '[shop_percent]', $event.target.value)
+        }
+      }
+    })])] : [_c('td', {
+      staticClass: "table-editable text-center",
+      on: {
+        "click": function($event) {
+          _vm.editField('shop_percent')
+        }
+      }
+    }, [_vm._v(_vm._s(_vm._f("percent")(option.shop_percent)))])], _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].manufacturer_price * option.shop_percent / 100, '', 2)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].manufacturer_price * option.shop_percent / 100 / option.title, ' kn', 2)))])], 2), _vm._v(" "), _c('tr', [_c('th', {
+      attrs: {
+        "scope": "row"
+      }
+    }, [_vm._v("18")]), _vm._v(" "), _c('td', [_vm._v("Maloprodajna cijena")]), _vm._v(" "), _c('td'), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].price, '', 2)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].price / option.title, ' kn', 2)))])]), _vm._v(" "), _c('tr', [_c('th', {
+      attrs: {
+        "scope": "row"
+      }
+    }, [_vm._v("19")]), _vm._v(" "), _c('td', [_vm._v("PDV")]), _vm._v(" "), (_vm.currentEdit('vat_percent')) ? [_c('td', [_c('input', {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: (option.vat_percent),
+        expression: "option.vat_percent"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        "type": "text",
+        "size": "3",
+        "autofocus": ""
+      },
+      domProps: {
+        "value": (option.vat_percent)
+      },
+      on: {
+        "keyup": function($event) {
+          if (!('button' in $event) && _vm._k($event.keyCode, "enter", 13)) { return null; }
+          _vm.closeEdit($event)
+        },
+        "input": function($event) {
+          if ($event.target.composing) { return; }
+          option.vat_percent = $event.target.value
+        }
+      }
+    })])] : [_c('td', {
+      staticClass: "table-editable text-center",
+      on: {
+        "click": function($event) {
+          _vm.editField('vat_percent')
+        }
+      }
+    }, [_vm._v(_vm._s(_vm._f("percent")(option.vat_percent)))])], _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].price * option.vat_percent / 100, '', 2)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].price * option.vat_percent / 100 / option.title, ' kn', 2)))])], 2), _vm._v(" "), _c('tr'), _c('tr', {
+      staticClass: "table-display-3"
+    }, [_c('th', {
+      attrs: {
+        "scope": "row"
+      }
+    }, [_vm._v("20")]), _vm._v(" "), _c('td', [_vm._v("MPC + PDV")]), _vm._v(" "), _c('td'), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].price * (100 + Number(option.vat_percent)) / 100, '', 2)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].price * (100 + Number(option.vat_percent)) / 100 / option.title, ' kn', 2)))])])])]), _vm._v(" "), _c('div', {
       staticClass: "row"
     }, [_c('div', {
       staticClass: "col-md-12"
@@ -60007,291 +60314,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       attrs: {
         "for": 'uv_film_yes' + index
       }
-    }, [_vm._v(_vm._s(_vm.lang('Yes')))])])])])])])]), _vm._v(" "), _c('div', {
-      staticClass: "page-name-xl mb-1"
-    }, [_vm._v(_vm._s(_vm.lang('Calculation')))]), _vm._v(" "), _c('table', {
-      staticClass: "table"
-    }, [_c('thead', {
-      staticClass: "thead-inverse"
-    }, [_c('tr', [_c('th', [_vm._v("#")]), _vm._v(" "), _c('th', [_vm._v(_vm._s(_vm.lang('Expense')))]), _vm._v(" "), _c('th', [_vm._v(_vm._s(_vm.lang('Precentage')))]), _vm._v(" "), _c('th', [_vm._v(_vm._s(_vm.lang('Expense Total')))]), _vm._v(" "), _c('th', [_vm._v(_vm._s(_vm.lang('Expense Per Unit')))])])]), _vm._v(" "), _c('tbody', {
-      staticClass: "white"
-    }, [_c('tr', {
-      staticClass: "table-display-1"
-    }, [_c('th', {
-      attrs: {
-        "scope": "row"
-      }
-    }, [_vm._v("1")]), _vm._v(" "), _c('td', [_vm._v("Autorski honorar ukupno")]), _vm._v(" "), _c('td'), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.authors_total, '', 2)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.authors_total / option.title, ' kn', 2)))])]), _vm._v(" "), _c('tr', [_c('th', {
-      attrs: {
-        "scope": "row"
-      }
-    }, [_vm._v("1.1")]), _vm._v(" "), _c('td', [_vm._v("Akontacija")]), _vm._v(" "), _c('td'), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.authors_advance, '', 2)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.authors_advance / option.title, ' kn', 2)))])]), _vm._v(" "), _c('tr', [_c('th', {
-      attrs: {
-        "scope": "row"
-      }
-    }, [_vm._v("1.2")]), _vm._v(" "), _c('td', [_vm._v("Ostali autorski ugovori")]), _vm._v(" "), _c('td'), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.authors_other, '', 2)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.authors_other, ' kn', 2)))])]), _vm._v(" "), _c('tr', {
-      staticClass: "table-display-1"
-    }, [_c('th', {
-      attrs: {
-        "scope": "row"
-      }
-    }, [_vm._v("2")]), _vm._v(" "), _c('td', [_vm._v("Tiskarski troškovi")]), _vm._v(" "), _c('td'), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(option.print_offer, '', 2)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(option.print_offer / option.title, ' kn', 2)))])]), _vm._v(" "), _c('tr', {
-      staticClass: "table-display-1"
-    }, [_c('th', {
-      attrs: {
-        "scope": "row"
-      }
-    }, [_vm._v("3")]), _vm._v(" "), _c('td', [_vm._v("Marketinški trošak")]), _vm._v(" "), _c('td'), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.marketing_expense, '', 2)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.marketing_expense / option.title, ' kn', 2)))])]), _vm._v(" "), _c('tr', {
-      staticClass: "table-display-1"
-    }, [_c('th', {
-      attrs: {
-        "scope": "row"
-      }
-    }, [_vm._v("4")]), _vm._v(" "), _c('td', [_vm._v("Produkcijski trošak")]), _vm._v(" "), _c('td'), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense, '', 2)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense / option.title, ' kn', 2)))])]), _vm._v(" "), _c('tr', {
-      staticClass: "table-display-1"
-    }, [_c('th', {
-      attrs: {
-        "scope": "row"
-      }
-    }, [_vm._v("5")]), _vm._v(" "), _c('td', [_vm._v("Trošak prijeloma i dizajna")]), _vm._v(" "), _c('td'), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.design_layout_expense, '', 2)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.design_layout_expense / option.title, ' kn', 2)))])]), _vm._v(" "), _c('tr', {
-      staticClass: "table-display-2"
-    }, [_c('th', {
-      attrs: {
-        "scope": "row"
-      }
-    }, [_vm._v("6")]), _vm._v(" "), _c('td', [_vm._v("Ukupno 1, 2, 3, 4, 5")]), _vm._v(" "), _c('td'), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(Number(_vm.authors_total) + Number(option.print_offer) + Number(_vm.marketing_expense) + Number(_vm.production_expense) + Number(_vm.design_layout_expense), '', 2)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")((Number(_vm.authors_total) + Number(option.print_offer) + Number(_vm.marketing_expense) + Number(_vm.production_expense) + Number(_vm.design_layout_expense)) / option.title, ' kn', 2)))])]), _vm._v(" "), _c('tr', [_c('th', {
-      attrs: {
-        "scope": "row"
-      }
-    }, [_vm._v("7")]), _vm._v(" "), _c('td', [_vm._v("Plaće izdavačkog sektora")]), _vm._v(" "), _c('td'), _vm._v(" "), (_vm.currentEdit('compensation')) ? [_c('td', [_c('input', {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: (_vm.options[key].compensation),
-        expression: "options[key].compensation"
-      }],
-      staticClass: "form-control",
-      attrs: {
-        "type": "text",
-        "autofocus": ""
-      },
-      domProps: {
-        "value": (_vm.options[key].compensation)
-      },
-      on: {
-        "keyup": function($event) {
-          if (!('button' in $event) && _vm._k($event.keyCode, "enter", 13)) { return null; }
-          _vm.closeEdit($event)
-        },
-        "input": function($event) {
-          if ($event.target.composing) { return; }
-          _vm.options[key].compensation = $event.target.value
-        }
-      }
-    })])] : [_c('td', {
-      staticClass: "table-editable text-center",
-      on: {
-        "click": function($event) {
-          _vm.editField('compensation')
-        }
-      }
-    }, [_vm._v(_vm._s(_vm._f("flexCurrency")(option.compensation, '', 2)))])], _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(option.compensation / option.title, ' kn', 2)))])], 2), _vm._v(" "), _c('tr', {
-      staticClass: "table-display-1"
-    }, [_c('th', {
-      attrs: {
-        "scope": "row"
-      }
-    }, [_vm._v("8")]), _vm._v(" "), _c('td', [_vm._v("Direktni troškovi")]), _vm._v(" "), _c('td'), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].direct_cost, '', 2)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].direct_cost / option.title, ' kn', 2)))])]), _vm._v(" "), _c('tr', {
-      staticClass: "table-display-1"
-    }, [_c('th', {
-      attrs: {
-        "scope": "row"
-      }
-    }, [_vm._v("9")]), _vm._v(" "), _c('td', [_vm._v("Indirektni troškovi")]), _vm._v(" "), _c('td'), _vm._v(" "), (_vm.currentEdit('indirect_expenses')) ? [_c('td', [_c('input', {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: (_vm.options[key].indirect_expenses),
-        expression: "options[key].indirect_expenses"
-      }],
-      staticClass: "form-control",
-      attrs: {
-        "type": "text",
-        "size": "3",
-        "autofocus": ""
-      },
-      domProps: {
-        "value": (_vm.options[key].indirect_expenses)
-      },
-      on: {
-        "keyup": function($event) {
-          if (!('button' in $event) && _vm._k($event.keyCode, "enter", 13)) { return null; }
-          _vm.closeEdit($event)
-        },
-        "input": function($event) {
-          if ($event.target.composing) { return; }
-          _vm.options[key].indirect_expenses = $event.target.value
-        }
-      }
-    })])] : [_c('td', {
-      staticClass: "table-editable text-center",
-      on: {
-        "click": function($event) {
-          _vm.editField('indirect_expenses')
-        }
-      }
-    }, [_vm._v(_vm._s(_vm._f("flexCurrency")(option.indirect_expenses, '', 2)))])], _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(option.indirect_expenses / option.title, ' kn', 2)))])], 2), _vm._v(" "), _c('tr', {
-      staticClass: "table-display-2"
-    }, [_c('th', {
-      attrs: {
-        "scope": "row"
-      }
-    }, [_vm._v("10")]), _vm._v(" "), _c('td', [_vm._v("Direktni + Indirektni")]), _vm._v(" "), _c('td'), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(Number(_vm.totals[option.id].direct_cost) + Number(option.indirect_expenses), '', 2)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")((Number(_vm.totals[option.id].direct_cost) + Number(option.indirect_expenses)) / option.title, ' kn', 2)))])]), _vm._v(" "), _c('tr', [_c('th', {
-      attrs: {
-        "scope": "row"
-      }
-    }, [_vm._v("11")]), _vm._v(" "), _c('td', [_vm._v("Ostatak AH ugovorenog po prodaji")]), _vm._v(" "), _c('td'), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].remainder_after_sales, '', 2)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].remainder_after_sales / option.title, ' kn', 2)))])]), _vm._v(" "), _c('tr', {
-      staticClass: "table-display-2"
-    }, [_c('th', {
-      attrs: {
-        "scope": "row"
-      }
-    }, [_vm._v("12")]), _vm._v(" "), _c('td', [_vm._v("Ukupno pokrivanje troška")]), _vm._v(" "), _c('td'), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].complete_expense, '', 2)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].complete_expense / option.title, ' kn', 2)))])]), _vm._v(" "), _c('tr', [_c('th', {
-      attrs: {
-        "scope": "row"
-      }
-    }, [_vm._v("13")]), _vm._v(" "), _c('td', [_vm._v("Dotacija")]), _vm._v(" "), _c('td'), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.dotation, '', 2)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.dotation / option.title, ' kn', 2)))])]), _vm._v(" "), _c('tr', {
-      staticClass: "table-display-1"
-    }, [_c('th', {
-      attrs: {
-        "scope": "row"
-      }
-    }, [_vm._v("14")]), _vm._v(" "), _c('td', [_vm._v("Ukupno pokrivanje troška - dotacije")]), _vm._v(" "), _c('td'), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].cost_coverage, '', 2)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].cost_coverage / option.title, ' kn', 2)))])]), _vm._v(" "), _c('tr', [_c('th', {
-      attrs: {
-        "scope": "row"
-      }
-    }, [_vm._v("15")]), _vm._v(" "), _c('td', [_vm._v("Ukalkulirana dobit")]), _vm._v(" "), (_vm.currentEdit('calculated_profit_percent')) ? [_c('td', [_c('input', {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: (_vm.options[key].calculated_profit_percent),
-        expression: "options[key].calculated_profit_percent"
-      }],
-      staticClass: "form-control",
-      attrs: {
-        "type": "text",
-        "size": "3",
-        "autofocus": ""
-      },
-      domProps: {
-        "value": (_vm.options[key].calculated_profit_percent)
-      },
-      on: {
-        "keyup": function($event) {
-          if (!('button' in $event) && _vm._k($event.keyCode, "enter", 13)) { return null; }
-          _vm.closeEdit($event)
-        },
-        "input": function($event) {
-          if ($event.target.composing) { return; }
-          _vm.options[key].calculated_profit_percent = $event.target.value
-        }
-      }
-    })])] : [_c('td', {
-      staticClass: "table-editable text-center",
-      on: {
-        "click": function($event) {
-          _vm.editField('calculated_profit_percent')
-        }
-      }
-    }, [_vm._v(_vm._s(_vm._f("percent")(option.calculated_profit_percent)))])], _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].cost_coverage * (option.calculated_profit_percent) / 100, '', 2)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].cost_coverage * (option.calculated_profit_percent) / 100 / option.title, ' kn', 2)))])], 2), _vm._v(" "), _c('tr', [_c('th', {
-      attrs: {
-        "scope": "row"
-      }
-    }, [_vm._v("16")]), _vm._v(" "), _c('td', [_vm._v("Prodajna cijena proizvođača")]), _vm._v(" "), _c('td'), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].manufacturer_price, '', 2)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].manufacturer_price / option.title, ' kn', 2)))])]), _vm._v(" "), _c('tr', [_c('th', {
-      attrs: {
-        "scope": "row"
-      }
-    }, [_vm._v("17")]), _vm._v(" "), _c('td', [_vm._v("Udio trgovine")]), _vm._v(" "), (_vm.currentEdit('shop_percent')) ? [_c('td', [_c('input', {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: (_vm.options[key + '[shop_percent]']),
-        expression: "options[key+'[shop_percent]']"
-      }],
-      staticClass: "form-control",
-      attrs: {
-        "type": "text",
-        "size": "3",
-        "autofocus": ""
-      },
-      domProps: {
-        "value": (_vm.options[key + '[shop_percent]'])
-      },
-      on: {
-        "keyup": function($event) {
-          if (!('button' in $event) && _vm._k($event.keyCode, "enter", 13)) { return null; }
-          _vm.closeEdit($event)
-        },
-        "input": function($event) {
-          if ($event.target.composing) { return; }
-          _vm.$set(_vm.options, key + '[shop_percent]', $event.target.value)
-        }
-      }
-    })])] : [_c('td', {
-      staticClass: "table-editable text-center",
-      on: {
-        "click": function($event) {
-          _vm.editField('shop_percent')
-        }
-      }
-    }, [_vm._v(_vm._s(_vm._f("percent")(option.shop_percent)))])], _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].manufacturer_price * option.shop_percent / 100, '', 2)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].manufacturer_price * option.shop_percent / 100 / option.title, ' kn', 2)))])], 2), _vm._v(" "), _c('tr', [_c('th', {
-      attrs: {
-        "scope": "row"
-      }
-    }, [_vm._v("18")]), _vm._v(" "), _c('td', [_vm._v("Maloprodajna cijena")]), _vm._v(" "), _c('td'), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].price, '', 2)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].price / option.title, ' kn', 2)))])]), _vm._v(" "), _c('tr', [_c('th', {
-      attrs: {
-        "scope": "row"
-      }
-    }, [_vm._v("19")]), _vm._v(" "), _c('td', [_vm._v("PDV")]), _vm._v(" "), (_vm.currentEdit('vat_percent')) ? [_c('td', [_c('input', {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: (option.vat_percent),
-        expression: "option.vat_percent"
-      }],
-      staticClass: "form-control",
-      attrs: {
-        "type": "text",
-        "size": "3",
-        "autofocus": ""
-      },
-      domProps: {
-        "value": (option.vat_percent)
-      },
-      on: {
-        "keyup": function($event) {
-          if (!('button' in $event) && _vm._k($event.keyCode, "enter", 13)) { return null; }
-          _vm.closeEdit($event)
-        },
-        "input": function($event) {
-          if ($event.target.composing) { return; }
-          option.vat_percent = $event.target.value
-        }
-      }
-    })])] : [_c('td', {
-      staticClass: "table-editable text-center",
-      on: {
-        "click": function($event) {
-          _vm.editField('vat_percent')
-        }
-      }
-    }, [_vm._v(_vm._s(_vm._f("percent")(option.vat_percent)))])], _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].price * option.vat_percent / 100, '', 2)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].price * option.vat_percent / 100 / option.title, ' kn', 2)))])], 2), _vm._v(" "), _c('tr'), _c('tr', {
-      staticClass: "table-display-3"
-    }, [_c('th', {
-      attrs: {
-        "scope": "row"
-      }
-    }, [_vm._v("20")]), _vm._v(" "), _c('td', [_vm._v("MPC + PDV")]), _vm._v(" "), _c('td'), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].price * (100 + Number(option.vat_percent)) / 100, '', 2)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].price * (100 + Number(option.vat_percent)) / 100 / option.title, ' kn', 2)))])])])])])])
+    }, [_vm._v(_vm._s(_vm.lang('Yes')))])])])])])])])])])
   })], 2), _vm._v(" "), _c('footer-buttons')], 1)
 }
 var staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -60488,7 +60511,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         }
       }, [_vm._v(_vm._s(_vm.lang('Delete Expense')))])])])
     }) : _vm._e(), _vm._v(" "), _c('button', {
-      staticClass: "btn btn-neutral btn-addon mb-3",
+      staticClass: "btn btn-neutral btn-addon mb-5",
       attrs: {
         "type": "button"
       },
