@@ -38,7 +38,7 @@ mix.js(['packages/Inspirium/SKTemplate/src/assets/js/app.js'], 'public/js/app.js
         'node_modules/mdb-pro/js/modules (optional)/jquery.easypiechart.js',
         'node_modules/mdb-pro/js/modules (optional)/range-input.js',
         'node_modules/mdb-pro/js/modules (optional)/file-input.js',
-        'node_modules/mdb-pro/js/modules (optional)/material-select.js',
+        'packages/Inspirium/SKTemplate/src/assets/js/fixes/material-select.js',
         'node_modules/mdb-pro/js/modules (optional)/picker.js',
         'node_modules/mdb-pro/js/modules (optional)/picker-date.js',
         'node_modules/mdb-pro/js/modules (optional)/picker-time.js',

@@ -18870,13 +18870,13 @@ $.fn.easyPieChart = function(options) {
 
       //Added to search
       var applySeachInList = function() {
-        
-        var ul = $(this).closest('ul');         
-        var searchValue = $(this).val();        
+
+        var ul = $(this).closest('ul');
+        var searchValue = $(this).val();
         var options = ul.find('li')
                         .find('span.filtrable');
-                
-        options.each(function() {                 
+
+        options.each(function() {
           if (typeof(this.outerText) == 'string') {
             var liValue = this.outerText.toLowerCase();
 
@@ -18888,7 +18888,7 @@ $.fn.easyPieChart = function(options) {
               $(this).parent().hide();
             }
           }
-        });     
+        });
       }
 
       //Added to search
@@ -18898,11 +18898,11 @@ $.fn.easyPieChart = function(options) {
         options.append(element);
         element.find('.search').keyup(applySeachInList);
       }
-      
+
       //Added to search
       var searchable = $select.attr('searchable') ? true : false;
-      
-      //Added to search   
+
+      //Added to search
       if (searchable) {
         setSearchableOption();
       }
@@ -18930,7 +18930,7 @@ $.fn.easyPieChart = function(options) {
           if (type === 'multiple') {
             options.append($('<li class="' + disabledClass + '"><img alt="" src="' + icon_url + '"' + classString + '><span class="filtrable"><input type="checkbox"' + disabledClass + '/><label></label>' + option.html() + '</span></li>'));
           } else {
-            
+
             options.append($('<li class="' + disabledClass + optgroupClass + '"><img alt="" src="' + icon_url + '"' + classString + '><span class="filtrable">' + option.html() + '</span></li>'));
           }
           return true;
@@ -19001,6 +19001,10 @@ $.fn.easyPieChart = function(options) {
             $select.find('option').eq(i).prop('selected', selected);
             // Trigger onchange() event
             $select.trigger('change');
+              //https://github.com/vuejs/Discussion/issues/157
+              let e = document.createEvent('HTMLEvents');
+              e.initEvent('change', true, true);
+              $select[0].dispatchEvent(e);
             if (typeof callback !== 'undefined') callback();
           }
 
@@ -19056,13 +19060,13 @@ $.fn.easyPieChart = function(options) {
 
       //Changed to search to treat search
       $newSelect.on('blur', function() {
-        
+
         if (!multiple && !searchable) {
           $(this).trigger('close');
         }
         options.find('li.selected').removeClass('selected');
       });
-      
+
       //Added to search
       if (!multiple && searchable) {
           options.find('li').on('click', function() {
@@ -19241,7 +19245,7 @@ jQuery('select').siblings('input.select-dropdown').on('mousedown', function (e) 
   }
 });
 
-/* How it Works !!!! 
+/* How it Works !!!!
 
 <select class="mdb-select" searchable="search here..">
 <option value="" disabled selected>Choose your option</option>
@@ -19252,7 +19256,7 @@ jQuery('select').siblings('input.select-dropdown').on('mousedown', function (e) 
 </select>
 <label>Example label</label>
 
-Without searchable it's a normal material select 
+Without searchable it's a normal material select
 
 */
 
