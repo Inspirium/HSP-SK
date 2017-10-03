@@ -45960,7 +45960,6 @@ module.exports = function spread(callback) {
             return this.$route.path.split('/');
         },
         id: function () {
-            console.log(this.$store.state.proposition);
             return this.$store.state.proposition.id;
         },
         editing_proposition: function () {
@@ -46361,7 +46360,7 @@ module.exports = function spread(callback) {
                             add_new: {
                                 enabled: true,
                                 title: 'Add new',
-                                path: '/proposition/basic_data'
+                                path: '/proposition/start'
                             }
                         }
                     },
@@ -51523,6 +51522,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 state.proposition[key] = value;
             });
             state.proposition.loaded = true;
+            state.id = payload.id;
         },
         error(state, error) {
             state.error = error;
