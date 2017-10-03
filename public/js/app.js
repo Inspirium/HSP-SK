@@ -46830,7 +46830,7 @@ module.exports = function spread(callback) {
         },
         closeModal() {
             this.files = [];
-            jQuery('#upload-modal').modal('hide');
+            jQuery('#' + this.id).modal('hide');
         }
     }
 });
@@ -50327,6 +50327,18 @@ module.exports = function spread(callback) {
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
@@ -50376,6 +50388,7 @@ module.exports = function spread(callback) {
     mounted() {
         axios.get('/api/proposition/' + this.$route.params.id + '/files/' + this.$route.meta.dir).then(res => {
             this.files = res.data.files;
+            this.final = res.data.final;
         });
     }
 });
@@ -60666,6 +60679,50 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }, [_vm._v(_vm._s(_vm.lang('Save')))])]), _vm._v(" "), _c('div', {
     staticClass: "page-name-xl mb-4 mt-5"
   }, [_vm._v(_vm._s(_vm.lang('Final Document')))]), _vm._v(" "), _c('div', {
+    staticClass: "files mt-2 mb-2"
+  }, _vm._l((_vm.final), function(file) {
+    return _c('div', {
+      staticClass: "file-box file-box-l d-flex align-items-center"
+    }, [_c('a', {
+      staticClass: "file-icon",
+      attrs: {
+        "href": file.link
+      },
+      on: {
+        "click": function($event) {
+          $event.preventDefault();
+          _vm.documentDownload(file.link)
+        }
+      }
+    }, [_vm._v(_vm._s(file.title))]), _vm._v(" "), _c('div', {
+      staticClass: "file-box-sty ml-auto d-flex"
+    }, [_c('a', {
+      attrs: {
+        "href": 'human_resources/employee/show/' + file.owner.id
+      }
+    }, [_c('img', {
+      staticClass: "profile-m-1 mr-1 align-self-center",
+      attrs: {
+        "src": file.owner.image
+      }
+    }), _vm._v(_vm._s(file.owner.name))])]), _vm._v(" "), _c('div', {
+      staticClass: "file-box-sty"
+    }, [_vm._v(_vm._s(_vm._f("moment")(file.created_at.date, 'DD.MM.YYYY.')))]), _vm._v(" "), _c('div', {
+      staticClass: "file-box-sty icon icon-download",
+      on: {
+        "click": function($event) {
+          _vm.documentDownload(file.link)
+        }
+      }
+    }, [_vm._v("Preuzmi")]), _vm._v(" "), _c('div', {
+      staticClass: "file-box-sty icon icon-cancel",
+      on: {
+        "click": function($event) {
+          _vm.fileDelete(file.id)
+        }
+      }
+    }, [_vm._v("Obriši")])])
+  })), _vm._v(" "), _c('div', {
     staticClass: "justify-content-center d-flex mb-4"
   }, [_c('button', {
     staticClass: "btn btn-neutral",
