@@ -46736,7 +46736,7 @@ module.exports = function spread(callback) {
         },
         id: {
             type: String,
-            default: 'upload-module'
+            default: 'upload-modal'
         }
     },
     data: function () {
@@ -50341,8 +50341,8 @@ module.exports = function spread(callback) {
     },
     computed: {},
     methods: {
-        documentAdd: function () {
-            jQuery('#upload-modal').modal('show');
+        documentAdd: function (modal) {
+            jQuery('#' + modal).modal('show');
         },
         documentDownload: function (link) {
             window.open(link, "_blank");
@@ -50370,7 +50370,7 @@ module.exports = function spread(callback) {
             });
         },
         saveFiles: function () {
-            axios.post('/api/proposition/' + this.$route.params.id + '/files/' + this.$route.meta.dir, { initila: this.files, final: this.final }).then(res => {});
+            axios.post('/api/proposition/' + this.$route.params.id + '/files/' + this.$route.meta.dir, { initial: this.files, final: this.final }).then(res => {});
         }
     },
     mounted() {
@@ -60649,7 +60649,9 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       "type": "button"
     },
     on: {
-      "click": _vm.documentAdd
+      "click": function($event) {
+        _vm.documentAdd('initial-documents')
+      }
     }
   }, [_vm._v(_vm._s(_vm.lang('Upload')))])]), _vm._v(" "), _c('div', {
     staticClass: "modal-footer btn-footer"
@@ -60671,7 +60673,9 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       "type": "button"
     },
     on: {
-      "click": _vm.documentAdd
+      "click": function($event) {
+        _vm.documentAdd('final-document')
+      }
     }
   }, [_vm._v(_vm._s(_vm.lang('Upload')))])]), _vm._v(" "), _c('div', {
     staticClass: "modal-footer btn-footer"
