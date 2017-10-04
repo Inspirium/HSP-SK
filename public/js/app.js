@@ -57465,19 +57465,19 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     staticClass: "white-label"
   }, [_vm._v(_vm._s(_vm.lang('Budget')))]), _vm._v(" "), _c('h3', {
     staticClass: "mb-1 text-white"
-  }, [_vm._v(_vm._s(_vm.total_budget) + " kn")])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.total_budget, ' kn', 2)))])]), _vm._v(" "), _c('div', {
     staticClass: "col-md-3"
   }, [_c('h6', {
     staticClass: "white-label"
   }, [_vm._v(_vm._s(_vm.lang('Expenses')))]), _vm._v(" "), _c('h3', {
     staticClass: "mb-1 text-white"
-  }, [_vm._v(_vm._s(_vm.total_expenses) + " kn")])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.total_expenses, ' kn', 2)))])]), _vm._v(" "), _c('div', {
     staticClass: "col-md-3"
   }, [_c('h6', {
     staticClass: "white-label"
   }, [_vm._v(_vm._s(_vm.lang('Difference')))]), _vm._v(" "), _c('h3', {
     staticClass: "mb-1 text-white"
-  }, [_vm._v(_vm._s(_vm.total_difference) + " kn")])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.total_difference, ' kn', 2)))])]), _vm._v(" "), _c('div', {
     staticClass: "col-md-3"
   }, [_c('h6', {
     staticClass: "white-label"
@@ -57496,7 +57496,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       attrs: {
         "scope": "row"
       }
-    }, [_vm._v("1")]), _vm._v(" "), _c('td', [_vm._v(_vm._s(author.name))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.author_expenses[author.id]) + " kn")]), _vm._v(" "), _c('td', [_vm._v("15.500 kn")]), _vm._v(" "), _c('td', [_vm._v("5.500 kn")]), _vm._v(" "), _c('td', [_c('div', {
+    }, [_vm._v("1")]), _vm._v(" "), _c('td', [_vm._v(_vm._s(author.name))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.author_expenses[author.id], ' kn', 2)))]), _vm._v(" "), _c('td', [_vm._v("15.500 kn")]), _vm._v(" "), _c('td', [_vm._v("5.500 kn")]), _vm._v(" "), _c('td', [_c('div', {
       staticClass: "file-box-sty icon icon-cost-approval"
     }, [_vm._v(_vm._s(_vm.lang('Send for Approval')))])])])
   }))]), _vm._v(" "), _c('div', {
@@ -57511,7 +57511,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     attrs: {
       "scope": "row"
     }
-  }, [_vm._v("1")]), _vm._v(" "), _c('td', [_vm._v("Text")]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.production_expense.text_price * _vm.production_expense.text_price_amount) + " kn")]), _vm._v(" "), (_vm.currentEdit('text_price')) ? [_c('td', [_c('input', {
+  }, [_vm._v("1")]), _vm._v(" "), _c('td', [_vm._v("Text")]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense.text_price * _vm.production_expense.text_price_amount, ' kn', 2)))]), _vm._v(" "), (_vm.currentEdit('text_price')) ? [_c('td', [_c('input', {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -57542,13 +57542,13 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         _vm.editField('text_price')
       }
     }
-  }, [_vm._v(_vm._s(_vm.expenses.text_price) + " kn")])], _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.production_expense.text_price * _vm.production_expense.text_price_amount - _vm.expenses.text_price) + " kn")]), _vm._v(" "), _c('td', [_c('div', {
+  }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.expenses.text_price, ' kn', 2)))])], _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense.text_price * _vm.production_expense.text_price_amount - _vm.expenses.text_price, ' kn', 2)))]), _vm._v(" "), _c('td', [_c('div', {
     staticClass: "file-box-sty icon icon-cost-approval"
   }, [_vm._v(_vm._s(_vm.lang('Send for Approval')))])])], 2), _vm._v(" "), _c('tr', [_c('th', {
     attrs: {
       "scope": "row"
     }
-  }, [_vm._v("2")]), _vm._v(" "), _c('td', [_vm._v("Reviews")]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.production_expense.reviews) + " kn")]), _vm._v(" "), (_vm.currentEdit('reviews')) ? [_c('td', [_c('input', {
+  }, [_vm._v("2")]), _vm._v(" "), _c('td', [_vm._v("Reviews")]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense.reviews, ' kn', 2)))]), _vm._v(" "), (_vm.currentEdit('reviews')) ? [_c('td', [_c('input', {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -57579,13 +57579,13 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         _vm.editField('reviews')
       }
     }
-  }, [_vm._v(_vm._s(_vm.expenses.reviews) + " kn")])], _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.production_expense.reviews - _vm.expenses.reviews) + " kn")]), _vm._v(" "), _c('td', [_c('div', {
+  }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.expenses.reviews, ' kn', 2)))])], _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense.reviews - _vm.expenses.reviews, ' kn', 2)))]), _vm._v(" "), _c('td', [_c('div', {
     staticClass: "file-box-sty icon icon-cost-approval"
   }, [_vm._v(_vm._s(_vm.lang('Send for Approval')))])])], 2), _vm._v(" "), _c('tr', [_c('th', {
     attrs: {
       "scope": "row"
     }
-  }, [_vm._v("2")]), _vm._v(" "), _c('td', [_vm._v("Lecture")]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.production_expense.lecture * _vm.production_expense.lecture_amount) + " kn")]), _vm._v(" "), (_vm.currentEdit('lecture')) ? [_c('td', [_c('input', {
+  }, [_vm._v("2")]), _vm._v(" "), _c('td', [_vm._v("Lecture")]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense.lecture * _vm.production_expense.lecture_amount, ' kn', 2)))]), _vm._v(" "), (_vm.currentEdit('lecture')) ? [_c('td', [_c('input', {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -57616,13 +57616,13 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         _vm.editField('lecture')
       }
     }
-  }, [_vm._v(_vm._s(_vm.expenses.lecture) + " kn")])], _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.production_expense.lecture * _vm.production_expense.lecture_amount - _vm.expenses.lecture) + " kn")]), _vm._v(" "), _c('td', [_c('div', {
+  }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.expenses.lecture, ' kn', 2)))])], _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense.lecture * _vm.production_expense.lecture_amount - _vm.expenses.lecture, ' kn', 2)))]), _vm._v(" "), _c('td', [_c('div', {
     staticClass: "file-box-sty icon icon-cost-approval"
   }, [_vm._v(_vm._s(_vm.lang('Send for Approval')))])])], 2), _vm._v(" "), _c('tr', [_c('th', {
     attrs: {
       "scope": "row"
     }
-  }, [_vm._v("2")]), _vm._v(" "), _c('td', [_vm._v("Correction")]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.production_expense.correction * _vm.production_expense.correction_amount) + " kn")]), _vm._v(" "), (_vm.currentEdit('correction')) ? [_c('td', [_c('input', {
+  }, [_vm._v("2")]), _vm._v(" "), _c('td', [_vm._v("Correction")]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense.correction * _vm.production_expense.correction_amount, ' kn', 2)))]), _vm._v(" "), (_vm.currentEdit('correction')) ? [_c('td', [_c('input', {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -57653,13 +57653,13 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         _vm.editField('correction')
       }
     }
-  }, [_vm._v(_vm._s(_vm.expenses.correction) + " kn")])], _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.production_expense.correction * _vm.production_expense.correction_amount - _vm.expenses.correction) + " kn")]), _vm._v(" "), _c('td', [_c('div', {
+  }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.expenses.correction, ' kn', 2)))])], _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense.correction * _vm.production_expense.correction_amount - _vm.expenses.correction, ' kn', 2)))]), _vm._v(" "), _c('td', [_c('div', {
     staticClass: "file-box-sty icon icon-cost-approval"
   }, [_vm._v(_vm._s(_vm.lang('Send for Approval')))])])], 2), _vm._v(" "), _c('tr', [_c('th', {
     attrs: {
       "scope": "row"
     }
-  }, [_vm._v("2")]), _vm._v(" "), _c('td', [_vm._v("Proofreading")]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.production_expense.proofreading * _vm.production_expense.proofreading_amount) + " kn")]), _vm._v(" "), (_vm.currentEdit('proofreading')) ? [_c('td', [_c('input', {
+  }, [_vm._v("2")]), _vm._v(" "), _c('td', [_vm._v("Proofreading")]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense.proofreading * _vm.production_expense.proofreading_amount, ' kn', 2)))]), _vm._v(" "), (_vm.currentEdit('proofreading')) ? [_c('td', [_c('input', {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -57690,13 +57690,13 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         _vm.editField('proofreading')
       }
     }
-  }, [_vm._v(_vm._s(_vm.expenses.proofreading) + " kn")])], _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.production_expense.proofreading * _vm.production_expense.proofreading_amount - _vm.expenses.proofreading) + " kn")]), _vm._v(" "), _c('td', [_c('div', {
+  }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.expenses.proofreading, ' kn', 2)))])], _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense.proofreading * _vm.production_expense.proofreading_amount - _vm.expenses.proofreading, ' kn', 2)))]), _vm._v(" "), _c('td', [_c('div', {
     staticClass: "file-box-sty icon icon-cost-approval"
   }, [_vm._v(_vm._s(_vm.lang('Send for Approval')))])])], 2), _vm._v(" "), _c('tr', [_c('th', {
     attrs: {
       "scope": "row"
     }
-  }, [_vm._v("2")]), _vm._v(" "), _c('td', [_vm._v("Translation")]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.production_expense.translation * _vm.production_expense.translation_amount) + " kn")]), _vm._v(" "), (_vm.currentEdit('translation')) ? [_c('td', [_c('input', {
+  }, [_vm._v("2")]), _vm._v(" "), _c('td', [_vm._v("Translation")]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense.translation * _vm.production_expense.translation_amount, ' kn', 2)))]), _vm._v(" "), (_vm.currentEdit('translation')) ? [_c('td', [_c('input', {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -57727,13 +57727,13 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         _vm.editField('translation')
       }
     }
-  }, [_vm._v(_vm._s(_vm.expenses.translation) + " kn")])], _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.production_expense.translation * _vm.production_expense.translation_amount - _vm.expenses.translation) + " kn")]), _vm._v(" "), _c('td', [_c('div', {
+  }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.expenses.translation, ' kn', 2)))])], _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense.translation * _vm.production_expense.translation_amount - _vm.expenses.translation, ' kn', 2)))]), _vm._v(" "), _c('td', [_c('div', {
     staticClass: "file-box-sty icon icon-cost-approval"
   }, [_vm._v(_vm._s(_vm.lang('Send for Approval')))])])], 2), _vm._v(" "), _c('tr', [_c('th', {
     attrs: {
       "scope": "row"
     }
-  }, [_vm._v("2")]), _vm._v(" "), _c('td', [_vm._v("Index")]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.production_expense.index * _vm.production_expense.index_amount) + " kn")]), _vm._v(" "), (_vm.currentEdit('index')) ? [_c('td', [_c('input', {
+  }, [_vm._v("2")]), _vm._v(" "), _c('td', [_vm._v("Index")]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense.index * _vm.production_expense.index_amount, ' kn', 2)))]), _vm._v(" "), (_vm.currentEdit('index')) ? [_c('td', [_c('input', {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -57764,13 +57764,13 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         _vm.editField('index')
       }
     }
-  }, [_vm._v(_vm._s(_vm.expenses.index) + " kn")])], _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.production_expense.index * _vm.production_expense.index_amount - _vm.expenses.index) + " kn")]), _vm._v(" "), _c('td', [_c('div', {
+  }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.expenses.index, ' kn', 2)))])], _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense.index * _vm.production_expense.index_amount - _vm.expenses.index, ' kn', 2)))]), _vm._v(" "), _c('td', [_c('div', {
     staticClass: "file-box-sty icon icon-cost-approval"
   }, [_vm._v(_vm._s(_vm.lang('Send for Approval')))])])], 2), _vm._v(" "), _c('tr', [_c('th', {
     attrs: {
       "scope": "row"
     }
-  }, [_vm._v("2")]), _vm._v(" "), _c('td', [_vm._v("Epilogue")]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.production_expense.epilogue) + " kn")]), _vm._v(" "), (_vm.currentEdit('epilogue')) ? [_c('td', [_c('input', {
+  }, [_vm._v("2")]), _vm._v(" "), _c('td', [_vm._v("Epilogue")]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense.epilogue, ' kn', 2)))]), _vm._v(" "), (_vm.currentEdit('epilogue')) ? [_c('td', [_c('input', {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -57801,13 +57801,13 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         _vm.editField('epilogue')
       }
     }
-  }, [_vm._v(_vm._s(_vm.expenses.epilogue) + " kn")])], _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.production_expense.epilogue - _vm.expenses.epilogue) + " kn")]), _vm._v(" "), _c('td', [_c('div', {
+  }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.expenses.epilogue, ' kn', 2)))])], _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense.epilogue - _vm.expenses.epilogue, ' kn', 2)))]), _vm._v(" "), _c('td', [_c('div', {
     staticClass: "file-box-sty icon icon-cost-approval"
   }, [_vm._v(_vm._s(_vm.lang('Send for Approval')))])])], 2), _vm._v(" "), _c('tr', [_c('th', {
     attrs: {
       "scope": "row"
     }
-  }, [_vm._v("2")]), _vm._v(" "), _c('td', [_vm._v("Photos")]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.production_expense.photos * _vm.production_expense.photos_amount) + " kn")]), _vm._v(" "), (_vm.currentEdit('photos')) ? [_c('td', [_c('input', {
+  }, [_vm._v("2")]), _vm._v(" "), _c('td', [_vm._v("Photos")]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense.photos * _vm.production_expense.photos_amount, ' kn', 2)))]), _vm._v(" "), (_vm.currentEdit('photos')) ? [_c('td', [_c('input', {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -57838,13 +57838,13 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         _vm.editField('photos')
       }
     }
-  }, [_vm._v(_vm._s(_vm.expenses.photos) + " kn")])], _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.production_expense.photos * _vm.production_expense.photos_amount - _vm.expenses.photos) + " kn")]), _vm._v(" "), _c('td', [_c('div', {
+  }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.expenses.photos, ' kn', 2)))])], _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense.photos * _vm.production_expense.photos_amount - _vm.expenses.photos, ' kn', 2)))]), _vm._v(" "), _c('td', [_c('div', {
     staticClass: "file-box-sty icon icon-cost-approval"
   }, [_vm._v(_vm._s(_vm.lang('Send for Approval')))])])], 2), _vm._v(" "), _c('tr', [_c('th', {
     attrs: {
       "scope": "row"
     }
-  }, [_vm._v("2")]), _vm._v(" "), _c('td', [_vm._v("illustrations")]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.production_expense.illustrations * _vm.production_expense.illustrations_amount) + " kn")]), _vm._v(" "), (_vm.currentEdit('illustrations')) ? [_c('td', [_c('input', {
+  }, [_vm._v("2")]), _vm._v(" "), _c('td', [_vm._v("illustrations")]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense.illustrations * _vm.production_expense.illustrations_amount, ' kn', 2)))]), _vm._v(" "), (_vm.currentEdit('illustrations')) ? [_c('td', [_c('input', {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -57875,13 +57875,13 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         _vm.editField('illustrations')
       }
     }
-  }, [_vm._v(_vm._s(_vm.expenses.illustrations) + " kn")])], _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.production_expense.illustrations * _vm.production_expense.illustrations_amount - _vm.expenses.illustrations) + " kn")]), _vm._v(" "), _c('td', [_c('div', {
+  }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.expenses.illustrations, ' kn', 2)))])], _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense.illustrations * _vm.production_expense.illustrations_amount - _vm.expenses.illustrations, ' kn', 2)))]), _vm._v(" "), _c('td', [_c('div', {
     staticClass: "file-box-sty icon icon-cost-approval"
   }, [_vm._v(_vm._s(_vm.lang('Send for Approval')))])])], 2), _vm._v(" "), _c('tr', [_c('th', {
     attrs: {
       "scope": "row"
     }
-  }, [_vm._v("2")]), _vm._v(" "), _c('td', [_vm._v("Tehnical drawings")]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.production_expense.technical_drawings * _vm.production_expense.technical_drawings_amount) + " kn")]), _vm._v(" "), (_vm.currentEdit('technical_drawings')) ? [_c('td', [_c('input', {
+  }, [_vm._v("2")]), _vm._v(" "), _c('td', [_vm._v("Tehnical drawings")]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense.technical_drawings * _vm.production_expense.technical_drawings_amount, ' kn', 2)))]), _vm._v(" "), (_vm.currentEdit('technical_drawings')) ? [_c('td', [_c('input', {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -57912,13 +57912,13 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         _vm.editField('technical_drawings')
       }
     }
-  }, [_vm._v(_vm._s(_vm.expenses.technical_drawings) + " kn")])], _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.production_expense.technical_drawings * _vm.production_expense.technical_drawings_amount - _vm.expenses.technical_drawings) + " kn")]), _vm._v(" "), _c('td', [_c('div', {
+  }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.expenses.technical_drawings, ' kn', 2)))])], _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense.technical_drawings * _vm.production_expense.technical_drawings_amount - _vm.expenses.technical_drawings, ' kn', 2)))]), _vm._v(" "), _c('td', [_c('div', {
     staticClass: "file-box-sty icon icon-cost-approval"
   }, [_vm._v(_vm._s(_vm.lang('Send for Approval')))])])], 2), _vm._v(" "), _c('tr', [_c('th', {
     attrs: {
       "scope": "row"
     }
-  }, [_vm._v("2")]), _vm._v(" "), _c('td', [_vm._v("Expert report")]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.production_expense.expert_report) + " kn")]), _vm._v(" "), (_vm.currentEdit('expert_report')) ? [_c('td', [_c('input', {
+  }, [_vm._v("2")]), _vm._v(" "), _c('td', [_vm._v("Expert report")]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense.expert_report, ' kn', 2)))]), _vm._v(" "), (_vm.currentEdit('expert_report')) ? [_c('td', [_c('input', {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -57949,13 +57949,13 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         _vm.editField('expert_report')
       }
     }
-  }, [_vm._v(_vm._s(_vm.expenses.expert_report) + " kn")])], _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.production_expense.expert_report - _vm.expenses.expert_report) + " kn")]), _vm._v(" "), _c('td', [_c('div', {
+  }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.expenses.expert_report, ' kn', 2)))])], _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense.expert_report - _vm.expenses.expert_report, ' kn', 2)))]), _vm._v(" "), _c('td', [_c('div', {
     staticClass: "file-box-sty icon icon-cost-approval"
   }, [_vm._v(_vm._s(_vm.lang('Send for Approval')))])])], 2), _vm._v(" "), _c('tr', [_c('th', {
     attrs: {
       "scope": "row"
     }
-  }, [_vm._v("2")]), _vm._v(" "), _c('td', [_vm._v("Copyright")]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.production_expense.copyright) + " kn")]), _vm._v(" "), (_vm.currentEdit('copyright')) ? [_c('td', [_c('input', {
+  }, [_vm._v("2")]), _vm._v(" "), _c('td', [_vm._v("Copyright")]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense.copyright, ' kn', 2)))]), _vm._v(" "), (_vm.currentEdit('copyright')) ? [_c('td', [_c('input', {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -57986,13 +57986,13 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         _vm.editField('copyright')
       }
     }
-  }, [_vm._v(_vm._s(_vm.expenses.copyright) + " kn")])], _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.production_expense.copyright - _vm.expenses.copyright) + " kn")]), _vm._v(" "), _c('td', [_c('div', {
+  }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.expenses.copyright, ' kn', 2)))])], _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense.copyright - _vm.expenses.copyright, ' kn', 2)))]), _vm._v(" "), _c('td', [_c('div', {
     staticClass: "file-box-sty icon icon-cost-approval"
   }, [_vm._v(_vm._s(_vm.lang('Send for Approval')))])])], 2), _vm._v(" "), _c('tr', [_c('th', {
     attrs: {
       "scope": "row"
     }
-  }, [_vm._v("2")]), _vm._v(" "), _c('td', [_vm._v("Copyright mediator")]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.production_expense.copyright_mediator) + " kn")]), _vm._v(" "), (_vm.currentEdit('copyright_mediator')) ? [_c('td', [_c('input', {
+  }, [_vm._v("2")]), _vm._v(" "), _c('td', [_vm._v("Copyright mediator")]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense.copyright_mediator, ' kn', 2)))]), _vm._v(" "), (_vm.currentEdit('copyright_mediator')) ? [_c('td', [_c('input', {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -58023,13 +58023,13 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         _vm.editField('copyright_mediator')
       }
     }
-  }, [_vm._v(_vm._s(_vm.expenses.copyright_mediator) + " kn")])], _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.production_expense.copyright_mediator - _vm.expenses.copyright_mediator) + " kn")]), _vm._v(" "), _c('td', [_c('div', {
+  }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.expenses.copyright_mediator, ' kn', 2)))])], _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense.copyright_mediator - _vm.expenses.copyright_mediator, ' kn', 2)))]), _vm._v(" "), _c('td', [_c('div', {
     staticClass: "file-box-sty icon icon-cost-approval"
   }, [_vm._v(_vm._s(_vm.lang('Send for Approval')))])])], 2), _vm._v(" "), _c('tr', [_c('th', {
     attrs: {
       "scope": "row"
     }
-  }, [_vm._v("2")]), _vm._v(" "), _c('td', [_vm._v("METHODICAL INSTRUMENTARIUM")]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.production_expense.methodical_instrumentarium) + " kn")]), _vm._v(" "), (_vm.currentEdit('methodical_instrumentarium')) ? [_c('td', [_c('input', {
+  }, [_vm._v("2")]), _vm._v(" "), _c('td', [_vm._v("METHODICAL INSTRUMENTARIUM")]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense.methodical_instrumentarium, ' kn', 2)))]), _vm._v(" "), (_vm.currentEdit('methodical_instrumentarium')) ? [_c('td', [_c('input', {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -58060,13 +58060,13 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         _vm.editField('methodical_instrumentarium')
       }
     }
-  }, [_vm._v(_vm._s(_vm.expenses.methodical_instrumentarium) + " kn")])], _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.production_expense.methodical_instrumentarium - _vm.expenses.methodical_instrumentarium) + " kn")]), _vm._v(" "), _c('td', [_c('div', {
+  }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.expenses.methodical_instrumentarium, ' kn', 2)))])], _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense.methodical_instrumentarium - _vm.expenses.methodical_instrumentarium, ' kn', 2)))]), _vm._v(" "), _c('td', [_c('div', {
     staticClass: "file-box-sty icon icon-cost-approval"
   }, [_vm._v(_vm._s(_vm.lang('Send for Approval')))])])], 2), _vm._v(" "), _c('tr', [_c('th', {
     attrs: {
       "scope": "row"
     }
-  }, [_vm._v("2")]), _vm._v(" "), _c('td', [_vm._v("Selection")]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.production_expense.selection) + " kn")]), _vm._v(" "), (_vm.currentEdit('selection')) ? [_c('td', [_c('input', {
+  }, [_vm._v("2")]), _vm._v(" "), _c('td', [_vm._v("Selection")]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense.selection, ' kn', 2)))]), _vm._v(" "), (_vm.currentEdit('selection')) ? [_c('td', [_c('input', {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -58097,13 +58097,13 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         _vm.editField('selection')
       }
     }
-  }, [_vm._v(_vm._s(_vm.expenses.selection) + " kn")])], _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.production_expense.selection - _vm.expenses.selection) + " kn")]), _vm._v(" "), _c('td', [_c('div', {
+  }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.expenses.selection, ' kn', 2)))])], _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense.selection - _vm.expenses.selection, ' kn', 2)))]), _vm._v(" "), _c('td', [_c('div', {
     staticClass: "file-box-sty icon icon-cost-approval"
   }, [_vm._v(_vm._s(_vm.lang('Send for Approval')))])])], 2), _vm._v(" "), _c('tr', [_c('th', {
     attrs: {
       "scope": "row"
     }
-  }, [_vm._v("2")]), _vm._v(" "), _c('td', [_vm._v("Powerpoint presentation")]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.production_expense.powerpoint_presentation) + " kn")]), _vm._v(" "), (_vm.currentEdit('powerpoint_presentation')) ? [_c('td', [_c('input', {
+  }, [_vm._v("2")]), _vm._v(" "), _c('td', [_vm._v("Powerpoint presentation")]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense.powerpoint_presentation, ' kn', 2)))]), _vm._v(" "), (_vm.currentEdit('powerpoint_presentation')) ? [_c('td', [_c('input', {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -58134,13 +58134,13 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         _vm.editField('powerpoint_presentation')
       }
     }
-  }, [_vm._v(_vm._s(_vm.expenses.powerpoint_presentation) + " kn")])], _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.production_expense.powerpoint_presentation - _vm.expenses.powerpoint_presentation) + " kn")]), _vm._v(" "), _c('td', [_c('div', {
+  }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.expenses.powerpoint_presentation, ' kn', 2)))])], _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense.powerpoint_presentation - _vm.expenses.powerpoint_presentation, ' kn', 2)))]), _vm._v(" "), _c('td', [_c('div', {
     staticClass: "file-box-sty icon icon-cost-approval"
   }, [_vm._v(_vm._s(_vm.lang('Send for Approval')))])])], 2), _vm._v(" "), _c('tr', [_c('th', {
     attrs: {
       "scope": "row"
     }
-  }, [_vm._v("2")]), _vm._v(" "), _c('td', [_vm._v("Additional expenses")]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.additional_expense) + " kn")]), _vm._v(" "), (_vm.currentEdit('additional_expense')) ? [_c('td', [_c('input', {
+  }, [_vm._v("2")]), _vm._v(" "), _c('td', [_vm._v("Additional expenses")]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.additional_expense, ' kn', 2)))]), _vm._v(" "), (_vm.currentEdit('additional_expense')) ? [_c('td', [_c('input', {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -58171,7 +58171,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         _vm.editField('additional_expense')
       }
     }
-  }, [_vm._v(_vm._s(_vm.expenses.additional_expense) + " kn")])], _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.additional_expense - _vm.expenses.additional_expense) + " kn")]), _vm._v(" "), _c('td', [_c('div', {
+  }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.expenses.additional_expense, ' kn', 2)))])], _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.additional_expense - _vm.expenses.additional_expense, ' kn', 2)))]), _vm._v(" "), _c('td', [_c('div', {
     staticClass: "file-box-sty icon icon-cost-approval"
   }, [_vm._v(_vm._s(_vm.lang('Send for Approval')))])])], 2)])]), _vm._v(" "), _c('div', {
     staticClass: "page-name-xl mb-3 mt-3"
@@ -58185,7 +58185,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     attrs: {
       "scope": "row"
     }
-  }, [_vm._v("1")]), _vm._v(" "), _c('td', [_vm._v("Marketing budget")]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.marketing_expense) + " kn")]), _vm._v(" "), (_vm.currentEdit('marketing_expense')) ? [_c('td', [_c('input', {
+  }, [_vm._v("1")]), _vm._v(" "), _c('td', [_vm._v("Marketing budget")]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.marketing_expense, ' kn', 2)))]), _vm._v(" "), (_vm.currentEdit('marketing_expense')) ? [_c('td', [_c('input', {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -58216,7 +58216,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         _vm.editField('marketing_expense')
       }
     }
-  }, [_vm._v(_vm._s(_vm.expenses.marketing_expense) + " kn")])], _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.marketing_expense - _vm.expenses.marketing_expense) + " kn")]), _vm._v(" "), _c('td', [_c('div', {
+  }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.expenses.marketing_expense, ' kn', 2)))])], _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.marketing_expense - _vm.expenses.marketing_expense, ' kn', 2)))]), _vm._v(" "), _c('td', [_c('div', {
     staticClass: "file-box-sty icon icon-cost-approval"
   }, [_vm._v(_vm._s(_vm.lang('Send for Approval')))])])], 2)])]), _vm._v(" "), _c('div', {
     staticClass: "btn-footer mt-4 mb-5 flex-column flex-md-row d-flex p-2"
