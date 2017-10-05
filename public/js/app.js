@@ -47637,7 +47637,6 @@ module.exports = function spread(callback) {
 //
 //
 //
-//
 
 
 
@@ -49126,6 +49125,7 @@ module.exports = function spread(callback) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__partials_FooterButtons_vue__ = __webpack_require__(2);
 //
 //
 //
@@ -49228,6 +49228,7 @@ module.exports = function spread(callback) {
 //
 //
 //
+
 
 /* harmony default export */ __webpack_exports__["a"] = ({
     data: function () {
@@ -50553,6 +50554,41 @@ module.exports = function spread(callback) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -56139,9 +56175,24 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   return _c('div', [_c('div', {
     staticClass: "btn-footer mt-4 mb-5 flex-column flex-md-row d-flex p-2"
   }, [_c('button', {
+    staticClass: "btn btn-primary",
+    attrs: {
+      "type": "button",
+      "data-toggle": "modal",
+      "data-target": "#modal-warning"
+    }
+  }, [_vm._v("Upozorenje modal")]), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-lg btn-cancel",
+    attrs: {
+      "onclick": "toastr.error('Došlo je do problema. Pokušajte ponovno');"
+    },
+    on: {
+      "click": _vm.saveProposition
+    }
+  }, [_vm._v(_vm._s(_vm.lang('Error')))]), _vm._v(" "), _c('button', {
     staticClass: "btn btn-lg btn-save",
     attrs: {
-      "onclick": "toastr.info('Hi! I am info message.');"
+      "onclick": "toastr.success('Uspješno obavljeno');"
     },
     on: {
       "click": _vm.saveProposition
@@ -56175,8 +56226,33 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }), _vm._v(" "), _c('h1', {
     staticClass: "modal-title w-100 text-center"
   }, [_vm._v(_vm._s(_vm.lang('Assign to...')))])]), _vm._v(" "), _c('h6', {
-    staticClass: "w-100 text-center mb-4"
-  }, [_vm._v(_vm._s(_vm.lang('Assign department or directly employee')))])]), _vm._v(" "), _vm._m(1), _vm._v(" "), _c('div', {
+    staticClass: "w-100 text-center mb-2"
+  }, [_vm._v(_vm._s(_vm.lang('Assign department or directly employee')))])]), _vm._v(" "), _c('div', {
+    staticClass: "tabs-wrapper"
+  }, [_c('ul', {
+    staticClass: "nav classic-tabs tabs-cyan tab-full",
+    attrs: {
+      "role": "tablist"
+    }
+  }, [_c('li', {
+    staticClass: "nav-item"
+  }, [_c('a', {
+    staticClass: "nav-link waves-light active",
+    attrs: {
+      "data-toggle": "tab",
+      "href": "#panel51",
+      "role": "tab"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('Department')))])]), _vm._v(" "), _c('li', {
+    staticClass: "nav-item"
+  }, [_c('a', {
+    staticClass: "nav-link waves-light",
+    attrs: {
+      "data-toggle": "tab",
+      "href": "#panel52",
+      "role": "tab"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('Employee')))])])])]), _vm._v(" "), _c('div', {
     staticClass: "tab-content"
   }, [_c('div', {
     staticClass: "modal-body tab-pane fade in show active",
@@ -56200,7 +56276,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     staticClass: "form-control",
     attrs: {
       "type": "text",
-      "name": "department"
+      "name": "department",
+      "placeholder": "Pretraži odjele"
     },
     domProps: {
       "value": (_vm.department)
@@ -56252,7 +56329,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     staticClass: "form-control",
     attrs: {
       "type": "text",
-      "name": "employee"
+      "name": "employee",
+      "placeholder": "Pretraži osobe"
     },
     domProps: {
       "value": (_vm.employee)
@@ -56276,14 +56354,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         }
       }
     }, [_vm._v(_vm._s(item.name))])
-  })) : _vm._e(), _vm._v(" "), _c('span', {
-    staticClass: "d-flex"
-  }, [_c('button', {
-    staticClass: "btn btn-neutral btn-addon",
-    attrs: {
-      "type": "button"
-    }
-  }, [_vm._v(_vm._s(_vm.lang('Add')))])])]), _vm._v(" "), _vm._l((_vm.employees), function(employee) {
+  })) : _vm._e()]), _vm._v(" "), _vm._l((_vm.employees), function(employee) {
     return _c('div', {
       staticClass: "chip mb-1"
     }, [_c('img', {
@@ -56310,7 +56381,50 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     on: {
       "click": _vm.assignValues
     }
-  }, [_vm._v(_vm._s(_vm.lang('Assign')))])])])])])])
+  }, [_vm._v(_vm._s(_vm.lang('Assign')))])])])])]), _vm._v(" "), _c('div', {
+    staticClass: "modal fade",
+    attrs: {
+      "id": "modal-warning",
+      "tabindex": "-1",
+      "role": "dialog",
+      "aria-hidden": "true"
+    }
+  }, [_c('div', {
+    staticClass: "modal-dialog",
+    attrs: {
+      "role": "document"
+    }
+  }, [_c('div', {
+    staticClass: "modal-content"
+  }, [_c('div', {
+    staticClass: "modal-header flex-column px-3 pt-3"
+  }, [_vm._m(1), _vm._v(" "), _c('div', {
+    staticClass: "d-flex"
+  }, [_c('i', {
+    staticClass: "fa fa-exclamation-triangle fa-4x animated flash"
+  }), _vm._v(" "), _c('h1', {
+    staticClass: "modal-title w-100 text-center"
+  }, [_vm._v(_vm._s(_vm.lang('Warning')))])]), _vm._v(" "), _c('h4', {
+    staticClass: "w-100 text-center mt-5"
+  }, [_vm._v(_vm._s(_vm.lang('Are you sure you want to proceed?')))])]), _vm._v(" "), _vm._m(2), _vm._v(" "), _c('div', {
+    staticClass: "modal-footer btn-footer"
+  }, [_c('button', {
+    staticClass: "btn btn-lg btn-save",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": _vm.closeModal
+    }
+  }, [_vm._v(_vm._s(_vm.lang('Yes')))]), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-lg btn-cancel",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": _vm.closeModal
+    }
+  }, [_vm._v(_vm._s(_vm.lang('No')))])])])])])])
 }
 var staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('button', {
@@ -56327,32 +56441,19 @@ var staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _
     }
   }, [_vm._v("×")])])
 },function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('button', {
+    staticClass: "close",
+    attrs: {
+      "type": "button",
+      "data-dismiss": "modal"
+    }
+  }, [_c('span', [_vm._v("×")])])
+},function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
-    staticClass: "tabs-wrapper"
-  }, [_c('ul', {
-    staticClass: "nav classic-tabs tabs-cyan tab-full",
-    attrs: {
-      "role": "tablist"
-    }
-  }, [_c('li', {
-    staticClass: "nav-item"
-  }, [_c('a', {
-    staticClass: "nav-link waves-light active",
-    attrs: {
-      "data-toggle": "tab",
-      "href": "#panel51",
-      "role": "tab"
-    }
-  }, [_vm._v("Department")])]), _vm._v(" "), _c('li', {
-    staticClass: "nav-item"
-  }, [_c('a', {
-    staticClass: "nav-link waves-light",
-    attrs: {
-      "data-toggle": "tab",
-      "href": "#panel52",
-      "role": "tab"
-    }
-  }, [_vm._v("EMPLOYEE")])])])])
+    staticClass: "modal-body"
+  }, [_c('div', {
+    staticClass: "text-center mb-1"
+  })])
 }]
 render._withStripped = true
 var esExports = { render: render, staticRenderFns: staticRenderFns }
@@ -58328,7 +58429,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }, [_vm._v(_vm._s(_vm.lang('Additional Expenses')))]), _vm._v(" "), _vm._l((_vm.expenses.additional_expense), function(a, i) {
     return _c('div', {
       key: i,
-      staticClass: "row"
+      staticClass: "row mt-4"
     }, [_c('div', {
       staticClass: "col-md-4"
     }, [_c('div', {
@@ -58382,7 +58483,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }), _vm._v(" "), _c('label', [_vm._v(_vm._s(_vm.lang('Amount')))])])]), _vm._v(" "), _c('div', {
       staticClass: "col-md-4"
     }, [_c('button', {
-      staticClass: "btn btn-danger",
+      staticClass: "btn btn-danger btn-addon",
       on: {
         "click": function($event) {
           _vm.deleteExpense(i)
@@ -59604,7 +59705,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       staticClass: "col-md-4"
     }, [_c('div', {
       staticClass: " page-name-l-white border-white text-white mb-3 text-center"
-    }, [_vm._v(_vm._s(_vm.lang('Direct Cost Cover')))]), _vm._v(" "), _c('div', {
+    }, [_vm._v(_vm._s(_vm.lang('Price Proposal')))]), _vm._v(" "), _c('div', {
       staticClass: "md-form"
     }, [_c('input', {
       directives: [{
@@ -59626,7 +59727,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
           option.price_proposal = $event.target.value
         }
       }
-    }), _vm._v(" "), _c('label', [_vm._v(_vm._s(_vm.lang('Price proposal')))])])])])]), _vm._v(" "), _c('div', {
+    })])])])]), _vm._v(" "), _c('div', {
       staticClass: "profile-head"
     }, [_c('div', {
       staticClass: "row text-white d-flex justify-content-center text-center"
@@ -59647,7 +59748,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }, [_vm._v(_vm._s(_vm.lang('Number of Sold Copies')))]), _vm._v(" "), _c('h3', {
       staticClass: "mb-2"
     }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].cost_coverage / option.price_proposal, '', 0)))])])])])]), _vm._v(" "), _c('div', {}, [_c('div', {
-      staticClass: "page-name-xl mb-1"
+      staticClass: "page-name-xl mb-1 mt-4"
     }, [_vm._v(_vm._s(_vm.lang('Calculation')))]), _vm._v(" "), _c('table', {
       staticClass: "table"
     }, [_c('thead', {
@@ -59936,7 +60037,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       staticClass: "col-md-12"
     }, [_c('div', {
       staticClass: "page-name-xl mb-2 mt-3 mt-2"
-    }, [_vm._v(_vm._s(option.title))]), _vm._v(" "), _c('div', {
+    }, [_vm._v(_vm._s(_vm.lang('Circulation — ')) + _vm._s(option.title))]), _vm._v(" "), _c('div', {
       staticClass: "row"
     }, [_c('div', {
       staticClass: "col-md-6"
@@ -60503,7 +60604,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       }), _vm._v(" "), _c('label', [_vm._v(_vm._s(_vm.lang('Amount')))])])]), _vm._v(" "), _c('div', {
         staticClass: "col-md-4"
       }, [_c('button', {
-        staticClass: "btn btn-danger",
+        staticClass: "btn btn-danger btn-addon",
         on: {
           "click": function($event) {
             _vm.deleteExpense(author.id, i)
@@ -60598,7 +60699,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }), _vm._v(" "), _c('label', [_vm._v(_vm._s(_vm.lang('Amount')))])])]), _vm._v(" "), _c('div', {
       staticClass: "col-md-4"
     }, [_c('button', {
-      staticClass: "btn btn-danger btn-addon",
+      staticClass: "btn btn-danger btn-addon btn-addon",
       on: {
         "click": function($event) {
           _vm.deleteOtherExpense(i)
