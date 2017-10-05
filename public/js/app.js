@@ -47188,14 +47188,13 @@ module.exports = function spread(callback) {
     },
     computed: {
         basic_data() {
-            return this.$deepModel('proposition.proposition.basic_data');
+            return this.$deepModel('proposition.basic_data');
         }
     },
     mounted: function () {
-        if (this.$route.params.id && !this.$store.state.proposition.proposition.loaded) {
-            this.$store.dispatch('proposition/initProposition', { id: this.$route.params.id });
+        if (this.$route.params.id) {
+            this.$store.dispatch('proposition/basic_data/getData', this.$route.params.id);
         }
-        this.$store.commit('proposition/updateProposition', { key: 'step', value: 0 });
     }
 });
 
@@ -47984,56 +47983,45 @@ module.exports = function spread(callback) {
 
 /* harmony default export */ __webpack_exports__["a"] = ({
     data: function () {
-        return {
-            categories: {},
-            book_types: {},
-            school_types: {},
-            school_subjects: {},
-            bibliotecas: {}
-        };
+        return {};
     },
     components: {
         'footer-buttons': __WEBPACK_IMPORTED_MODULE_0__partials_FooterButtons_vue__["a" /* default */]
     },
     mounted: function () {
-        if (this.$route.params.id && !this.$store.state.proposition.proposition.loaded) {
-            this.$store.dispatch('proposition/initProposition', { id: this.$route.params.id });
+        if (this.$route.params.id) {
+            this.$store.dispatch('proposition/categorization/getData', this.$route.params.id);
         }
-        this.$store.commit('proposition/updateProposition', { key: 'step', value: 1 });
-        axios.get('/api/book/category').then(res => {
-            this.categories = res.data;
-        });
-        axios.get('/api/book/types').then(res => {
-            this.book_types = res.data;
-        });
-        axios.get('/api/book/schools').then(res => {
-            this.school_types = res.data;
-        });
-        axios.get('/api/book/subjects').then(res => {
-            this.school_subjects = res.data;
-        });
-        axios.get('/api/book/bibliotecas').then(res => {
-            this.bibliotecas = res.data;
-        });
+        this.$store.dispatch('categorization/getData');
     },
     updated: function () {
         $('.mdb-select').material_select('destroy');
         $('.mdb-select').material_select();
     },
     computed: {
+        categories() {
+            return this.$store.state.categorization.categories;
+        },
+        book_types() {
+            return this.$store.state.categorization.types;
+        },
+        school_types() {
+            return this.$store.state.categorization.schools;
+        },
+        school_subjects() {
+            return this.$store.state.categorization.subjects;
+        },
+        bibliotecas() {
+            return this.$store.state.categorization.bibliotecas;
+        },
         categorization() {
-            return this.$deepModel('proposition.proposition.categorization');
+            return this.$deepModel('proposition.categorization');
         },
         supergroup: {
             get() {
-                return this.$store.state.proposition.proposition.categorization.supergroup;
+                return this.$store.state.proposition.categorization.supergroup;
             },
-            set(value) {
-                this.$store.commit('proposition/updateProposition', { key: 'supergroup', group: 'categorization', value: value });
-                this.$store.commit('proposition/updateProposition', { key: 'supergroup_text', group: 'categorization', value: this.categories[value].name });
-                this.$store.commit('proposition/updateProposition', { key: 'upgroup', group: 'categorization', value: 0 });
-                this.$store.commit('proposition/updateProposition', { key: 'group', group: 'categorization', value: 0 });
-            }
+            set(value) {}
         },
         upgroup: {
             get() {
@@ -48048,59 +48036,7 @@ module.exports = function spread(callback) {
             get() {
                 return this.$store.state.proposition.proposition.categorization.group;
             },
-            set(value) {
-                this.$store.commit('proposition/updateProposition', { key: 'group', group: 'categorization', value: value });
-                if (value) {
-                    this.$store.commit('proposition/updateProposition', {
-                        key: 'group_text',
-                        group: 'categorization',
-                        value: this.categories[this.supergroup]['groups'][this.upgroup]['groups'][value].name
-                    });
-                }
-            }
-        },
-
-        book_type_group: {
-            get() {
-                return this.$store.state.proposition.proposition.categorization.book_type_group;
-            },
-            set(value) {
-                this.$store.commit('proposition/updateProposition', { key: 'book_type_group', group: 'categorization', value: value });
-                this.$store.commit('proposition/updateProposition', { key: 'book_type', group: 'categorization', value: 0 });
-            }
-        },
-        book_type: {
-            get() {
-                return this.$store.state.proposition.proposition.categorization.book_type;
-            },
-            set(value) {
-                this.$store.commit('proposition/updateProposition', { key: 'book_type', group: 'categorization', value: value });
-            }
-        },
-        school_assignment: {
-            get() {
-                return this.$store.state.proposition.proposition.categorization.school_assignment;
-            },
-            set(value) {
-                this.$store.commit('proposition/updateProposition', { key: 'school_assignment', group: 'categorization', value: value });
-            }
-        },
-        school_subject: {
-            get() {
-                return this.$store.state.proposition.proposition.categorization.school_subject;
-            },
-            set(value) {
-                this.$store.commit('proposition/updateProposition', { key: 'school_subject', group: 'categorization', value: value });
-                this.$store.commit('proposition/updateProposition', { key: 'school_subject_detailed', group: 'categorization', value: 0 });
-            }
-        },
-        school_subject_detailed: {
-            get() {
-                return this.$store.state.proposition.proposition.categorization.school_subject_detailed;
-            },
-            set(value) {
-                this.$store.commit('proposition/updateProposition', { key: 'school_subject_detailed', group: 'categorization', value: value });
-            }
+            set(value) {}
         }
     },
     methods: {}
@@ -49822,6 +49758,11 @@ module.exports = function spread(callback) {
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
@@ -50684,6 +50625,11 @@ module.exports = function spread(callback) {
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["a"] = ({
     data: function () {
@@ -51414,7 +51360,9 @@ const routes = [{ path: '/proposition/start', component: __WEBPACK_IMPORTED_MODU
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_lodash__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__proposition_basic_data__ = __webpack_require__(186);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__proposition_start__ = __webpack_require__(187);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__proposition_categorization__ = __webpack_require__(279);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 
 
 
@@ -51426,7 +51374,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     namespaced: true,
     modules: {
         start: __WEBPACK_IMPORTED_MODULE_3__proposition_start__["a" /* default */],
-        basic_data: __WEBPACK_IMPORTED_MODULE_2__proposition_basic_data__["a" /* default */]
+        basic_data: __WEBPACK_IMPORTED_MODULE_2__proposition_basic_data__["a" /* default */],
+        categorization: __WEBPACK_IMPORTED_MODULE_4__proposition_categorization__["a" /* default */]
     },
     state: {
         id: 0,
@@ -51779,7 +51728,16 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     },
     mutations: {
         initData(state, payload) {
-            state = payload;
+            state.title = payload.title;
+            state.authors = payload.authors;
+            state.concept = payload.concept;
+            state.note = payload.note;
+            state.possible_products = payload.possible_products;
+            state.dotation = payload.dotation;
+            state.dotation_amount = payload.dotation_amount;
+            state.dotation_origin = payload.dotation_origin;
+            state.manuscript = payload.manuscript;
+            state.manuscript_documents = payload.manuscript_documents;
         }
     },
     actions: {
@@ -51787,6 +51745,17 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/api/proposition/' + id + '/basic_data').then(res => {
                 commit('initData', res.data);
             });
+        },
+        saveData({ state, commit }, id) {
+            if (id) {
+                __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/api/proposition/' + id + '/basic_data', state).then(res => {});
+            } else {
+                __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/api/proposition/basic_data', state).then(res => {
+                    if (res.data.id) {
+                        commit('proposition/setId', res.data.id, { root: true });
+                    }
+                });
+            }
         }
     }
 });
@@ -51805,13 +51774,15 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     state: {
         project_number: '',
         project_name: '',
-        additional_project_number: ''
+        additional_project_number: '',
+        note: ''
     },
     mutations: {
         initData(state, payload) {
             state.project_number = payload.project_number;
             state.additional_project_number = payload.additional_project_number;
             state.project_name = payload.project_name;
+            state.note = payload.note;
         }
     },
     actions: {
@@ -51845,6 +51816,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_deepset__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_deepset___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_vue_deepset__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modules_proposition__ = __webpack_require__(185);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__modules_categorization__ = __webpack_require__(280);
+
 
 
 
@@ -51854,7 +51827,8 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
 
 /* harmony default export */ __webpack_exports__["a"] = (new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
     modules: {
-        'proposition': __WEBPACK_IMPORTED_MODULE_3__modules_proposition__["a" /* default */]
+        'proposition': __WEBPACK_IMPORTED_MODULE_3__modules_proposition__["a" /* default */],
+        'categorization': __WEBPACK_IMPORTED_MODULE_4__modules_categorization__["a" /* default */]
     },
     mutations: __WEBPACK_IMPORTED_MODULE_2_vue_deepset__["extendMutation"]({}),
     strict: false
@@ -56380,7 +56354,18 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }), _vm._v(_vm._s(employee.name)), _c('i', {
       staticClass: "close fa fa-times"
     })])
-  })], 2)])])]), _vm._v(" "), _c('div', {
+  }), _vm._v(" "), _c('div', {
+    staticClass: "md-form mt-2 mb-2"
+  }, [_c('textarea', {
+    staticClass: "md-textarea",
+    attrs: {
+      "id": "form76"
+    }
+  }), _vm._v(" "), _c('label', {
+    attrs: {
+      "for": "form76"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('Task Description')))])])], 2)])])]), _vm._v(" "), _c('div', {
     staticClass: "modal-footer btn-footer"
   }, [_c('button', {
     staticClass: "btn btn-lg btn-cancel",
@@ -56428,17 +56413,11 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     staticClass: "btn btn-lg btn-save",
     attrs: {
       "type": "button"
-    },
-    on: {
-      "click": _vm.closeModal
     }
   }, [_vm._v(_vm._s(_vm.lang('Yes')))]), _vm._v(" "), _c('button', {
     staticClass: "btn btn-lg btn-cancel",
     attrs: {
       "type": "button"
-    },
-    on: {
-      "click": _vm.closeModal
     }
   }, [_vm._v(_vm._s(_vm.lang('No')))])])])])])])
 }
@@ -57478,7 +57457,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         "href": ""
       }
     }, [_c('img', {
-      staticClass: "profile-m mr-1",
+      staticClass: "profile-m mr-2",
       attrs: {
         "src": element.assigner.image
       }
@@ -57535,7 +57514,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         "href": ""
       }
     }, [_c('img', {
-      staticClass: "profile-m mr-1",
+      staticClass: "profile-m mr-2",
       attrs: {
         "src": element.assigner.image
       }
@@ -59512,7 +59491,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     return [_c('div', {
       staticClass: "row"
     }, [_c('div', {
-      staticClass: "col-md-6"
+      staticClass: "col-md-4"
     }, [_c('div', {
       staticClass: "md-form input-group"
     }, [_c('input', {
@@ -59536,7 +59515,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         }
       }
     }), _vm._v(" "), _c('label', [_vm._v(_vm._s(_vm.lang('Expense')))])])]), _vm._v(" "), _c('div', {
-      staticClass: "col-md-6"
+      staticClass: "col-md-4"
     }, [_c('div', {
       staticClass: "md-form input-group"
     }, [_c('input', {
@@ -59561,7 +59540,16 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       }
     }), _vm._v(" "), _c('label', [_vm._v(_vm._s(_vm.lang('Ammount')))]), _vm._v(" "), _c('span', {
       staticClass: "input-group-addon"
-    }, [_vm._v(_vm._s(_vm.lang('Kn')))])])])])]
+    }, [_vm._v(_vm._s(_vm.lang('Kn')))])])]), _vm._v(" "), _c('div', {
+      staticClass: "col-md-4"
+    }, [_c('button', {
+      staticClass: "btn btn-danger btn-addon",
+      on: {
+        "click": function($event) {
+          _vm.deleteExpense(index)
+        }
+      }
+    }, [_vm._v(_vm._s(_vm.lang('Delete Expense')))])])])]
   }), _vm._v(" "), _c('button', {
     staticClass: "btn btn-neutral btn-addon",
     attrs: {
@@ -61845,8 +61833,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.supergroup),
-      expression: "supergroup"
+      value: (_vm.categorization.supergroup),
+      expression: "categorization.supergroup"
     }],
     staticClass: "mdb-select",
     attrs: {
@@ -61860,7 +61848,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
           var val = "_value" in o ? o._value : o.value;
           return val
         });
-        _vm.supergroup = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+        _vm.categorization.supergroup = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
       }
     }
   }, [_c('option', {
@@ -61881,8 +61869,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.upgroup),
-      expression: "upgroup"
+      value: (_vm.categorization.upgroup),
+      expression: "categorization.upgroup"
     }],
     staticClass: "mdb-select",
     on: {
@@ -61893,14 +61881,14 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
           var val = "_value" in o ? o._value : o.value;
           return val
         });
-        _vm.upgroup = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+        _vm.categorization.upgroup = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
       }
     }
   }, [_c('option', {
     attrs: {
       "disabled": ""
     }
-  }, [_vm._v(_vm._s(_vm.lang('Choose Category')))]), _vm._v(" "), (_vm.supergroup && Object.keys(_vm.categories).length) ? _vm._l((_vm.categories[_vm.supergroup]['groups']), function(item, key) {
+  }, [_vm._v(_vm._s(_vm.lang('Choose Category')))]), _vm._v(" "), (_vm.supergroup && Object.keys(_vm.categories).length) ? _vm._l((_vm.categories[_vm.categorization.supergroup]['groups']), function(item, key) {
     return _c('option', {
       domProps: {
         "value": key
@@ -61912,8 +61900,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.group),
-      expression: "group"
+      value: (_vm.categorization.group),
+      expression: "categorization.group"
     }],
     staticClass: "mdb-select",
     on: {
@@ -61924,14 +61912,14 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
           var val = "_value" in o ? o._value : o.value;
           return val
         });
-        _vm.group = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+        _vm.categorization.group = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
       }
     }
   }, [_c('option', {
     attrs: {
       "disabled": ""
     }
-  }, [_vm._v(_vm._s(_vm.lang('Choose Category')))]), _vm._v(" "), (_vm.upgroup && Object.keys(_vm.categories).length) ? _vm._l((_vm.categories[_vm.supergroup]['groups'][_vm.upgroup]['groups']), function(item, key) {
+  }, [_vm._v(_vm._s(_vm.lang('Choose Category')))]), _vm._v(" "), (_vm.categorization.upgroup && Object.keys(_vm.categories).length) ? _vm._l((_vm.categories[_vm.categorization.supergroup]['groups'][_vm.categorization.upgroup]['groups']), function(item, key) {
     return _c('option', {
       domProps: {
         "value": key
@@ -61947,8 +61935,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.book_type_group),
-      expression: "book_type_group"
+      value: (_vm.categorization.book_type_group),
+      expression: "categorization.book_type_group"
     }],
     staticClass: "mdb-select",
     on: {
@@ -61959,7 +61947,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
           var val = "_value" in o ? o._value : o.value;
           return val
         });
-        _vm.book_type_group = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+        _vm.categorization.book_type_group = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
       }
     }
   }, [_c('option', {
@@ -61978,8 +61966,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.book_type),
-      expression: "book_type"
+      value: (_vm.categorization.book_type),
+      expression: "categorization.book_type"
     }],
     staticClass: "mdb-select",
     on: {
@@ -61990,14 +61978,14 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
           var val = "_value" in o ? o._value : o.value;
           return val
         });
-        _vm.book_type = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+        _vm.categorization.book_type = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
       }
     }
   }, [_c('option', {
     attrs: {
       "disabled": ""
     }
-  }, [_vm._v(_vm._s(_vm.lang('Choose Category')))]), _vm._v(" "), (_vm.book_type_group && Object.keys(_vm.book_types).length) ? _vm._l((_vm.book_types[_vm.book_type_group].groups), function(item, key) {
+  }, [_vm._v(_vm._s(_vm.lang('Choose Category')))]), _vm._v(" "), (_vm.categorization.book_type_group && Object.keys(_vm.book_types).length) ? _vm._l((_vm.book_types[_vm.categorization.book_type_group].groups), function(item, key) {
     return _c('option', {
       domProps: {
         "value": key
@@ -62013,13 +62001,13 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.categorization['school_type']),
-      expression: "categorization['school_type']"
+      value: (_vm.categorization.school_type),
+      expression: "categorization.school_type"
     }],
     staticClass: "mdb-select",
     attrs: {
       "multiple": "",
-      "searchable": "Search here.."
+      "searchable": _vm.lang('Search here...')
     },
     on: {
       "change": function($event) {
@@ -62029,7 +62017,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
           var val = "_value" in o ? o._value : o.value;
           return val
         });
-        _vm.$set(_vm.categorization, 'school_type', $event.target.multiple ? $$selectedVal : $$selectedVal[0])
+        _vm.categorization.school_type = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
       }
     }
   }, _vm._l((_vm.school_types), function(item, key) {
@@ -62050,8 +62038,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.categorization['school_assignment']),
-      expression: "categorization['school_assignment']"
+      value: (_vm.categorization.school_assignment),
+      expression: "categorization.school_assignment"
     }],
     attrs: {
       "name": "sex",
@@ -62060,11 +62048,11 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       "value": "yes"
     },
     domProps: {
-      "checked": _vm._q(_vm.categorization['school_assignment'], "yes")
+      "checked": _vm._q(_vm.categorization.school_assignment, "yes")
     },
     on: {
       "__c": function($event) {
-        _vm.$set(_vm.categorization, 'school_assignment', "yes")
+        _vm.categorization.school_assignment = "yes"
       }
     }
   }), _vm._v(" "), _c('label', {
@@ -62077,8 +62065,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.categorization['school_assignment']),
-      expression: "categorization['school_assignment']"
+      value: (_vm.categorization.school_assignment),
+      expression: "categorization.school_assignment"
     }],
     attrs: {
       "name": "sex",
@@ -62087,11 +62075,11 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       "value": "no"
     },
     domProps: {
-      "checked": _vm._q(_vm.categorization['school_assignment'], "no")
+      "checked": _vm._q(_vm.categorization.school_assignment, "no")
     },
     on: {
       "__c": function($event) {
-        _vm.$set(_vm.categorization, 'school_assignment', "no")
+        _vm.categorization.school_assignment = "no"
       }
     }
   }), _vm._v(" "), _c('label', {
@@ -62108,8 +62096,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.categorization['school_level']),
-      expression: "categorization['school_level']"
+      value: (_vm.categorization.school_level),
+      expression: "categorization.school_level"
     }],
     attrs: {
       "name": "sex",
@@ -62118,23 +62106,23 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       "value": "1"
     },
     domProps: {
-      "checked": Array.isArray(_vm.categorization['school_level']) ? _vm._i(_vm.categorization['school_level'], "1") > -1 : (_vm.categorization['school_level'])
+      "checked": Array.isArray(_vm.categorization.school_level) ? _vm._i(_vm.categorization.school_level, "1") > -1 : (_vm.categorization.school_level)
     },
     on: {
       "__c": function($event) {
-        var $$a = _vm.categorization['school_level'],
+        var $$a = _vm.categorization.school_level,
           $$el = $event.target,
           $$c = $$el.checked ? (true) : (false);
         if (Array.isArray($$a)) {
           var $$v = "1",
             $$i = _vm._i($$a, $$v);
           if ($$el.checked) {
-            $$i < 0 && (_vm.categorization['school_level'] = $$a.concat([$$v]))
+            $$i < 0 && (_vm.categorization.school_level = $$a.concat([$$v]))
           } else {
-            $$i > -1 && (_vm.categorization['school_level'] = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
+            $$i > -1 && (_vm.categorization.school_level = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
           }
         } else {
-          _vm.$set(_vm.categorization, 'school_level', $$c)
+          _vm.categorization.school_level = $$c
         }
       }
     }
@@ -62148,8 +62136,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.categorization['school_level']),
-      expression: "categorization['school_level']"
+      value: (_vm.categorization.school_level),
+      expression: "categorization.school_level"
     }],
     attrs: {
       "name": "sex",
@@ -62158,23 +62146,23 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       "value": "2"
     },
     domProps: {
-      "checked": Array.isArray(_vm.categorization['school_level']) ? _vm._i(_vm.categorization['school_level'], "2") > -1 : (_vm.categorization['school_level'])
+      "checked": Array.isArray(_vm.categorization.school_level) ? _vm._i(_vm.categorization.school_level, "2") > -1 : (_vm.categorization.school_level)
     },
     on: {
       "__c": function($event) {
-        var $$a = _vm.categorization['school_level'],
+        var $$a = _vm.categorization.school_level,
           $$el = $event.target,
           $$c = $$el.checked ? (true) : (false);
         if (Array.isArray($$a)) {
           var $$v = "2",
             $$i = _vm._i($$a, $$v);
           if ($$el.checked) {
-            $$i < 0 && (_vm.categorization['school_level'] = $$a.concat([$$v]))
+            $$i < 0 && (_vm.categorization.school_level = $$a.concat([$$v]))
           } else {
-            $$i > -1 && (_vm.categorization['school_level'] = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
+            $$i > -1 && (_vm.categorization.school_level = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
           }
         } else {
-          _vm.$set(_vm.categorization, 'school_level', $$c)
+          _vm.categorization.school_level = $$c
         }
       }
     }
@@ -62188,8 +62176,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.categorization['school_level']),
-      expression: "categorization['school_level']"
+      value: (_vm.categorization.school_level),
+      expression: "categorization.school_level"
     }],
     attrs: {
       "name": "sex",
@@ -62198,23 +62186,23 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       "value": "3"
     },
     domProps: {
-      "checked": Array.isArray(_vm.categorization['school_level']) ? _vm._i(_vm.categorization['school_level'], "3") > -1 : (_vm.categorization['school_level'])
+      "checked": Array.isArray(_vm.categorization.school_level) ? _vm._i(_vm.categorization.school_level, "3") > -1 : (_vm.categorization.school_level)
     },
     on: {
       "__c": function($event) {
-        var $$a = _vm.categorization['school_level'],
+        var $$a = _vm.categorization.school_level,
           $$el = $event.target,
           $$c = $$el.checked ? (true) : (false);
         if (Array.isArray($$a)) {
           var $$v = "3",
             $$i = _vm._i($$a, $$v);
           if ($$el.checked) {
-            $$i < 0 && (_vm.categorization['school_level'] = $$a.concat([$$v]))
+            $$i < 0 && (_vm.categorization.school_level = $$a.concat([$$v]))
           } else {
-            $$i > -1 && (_vm.categorization['school_level'] = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
+            $$i > -1 && (_vm.categorization.school_level = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
           }
         } else {
-          _vm.$set(_vm.categorization, 'school_level', $$c)
+          _vm.categorization.school_level = $$c
         }
       }
     }
@@ -62228,8 +62216,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.categorization['school_level']),
-      expression: "categorization['school_level']"
+      value: (_vm.categorization.school_level),
+      expression: "categorization.school_level"
     }],
     attrs: {
       "name": "sex",
@@ -62238,23 +62226,23 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       "value": "4"
     },
     domProps: {
-      "checked": Array.isArray(_vm.categorization['school_level']) ? _vm._i(_vm.categorization['school_level'], "4") > -1 : (_vm.categorization['school_level'])
+      "checked": Array.isArray(_vm.categorization.school_level) ? _vm._i(_vm.categorization.school_level, "4") > -1 : (_vm.categorization.school_level)
     },
     on: {
       "__c": function($event) {
-        var $$a = _vm.categorization['school_level'],
+        var $$a = _vm.categorization.school_level,
           $$el = $event.target,
           $$c = $$el.checked ? (true) : (false);
         if (Array.isArray($$a)) {
           var $$v = "4",
             $$i = _vm._i($$a, $$v);
           if ($$el.checked) {
-            $$i < 0 && (_vm.categorization['school_level'] = $$a.concat([$$v]))
+            $$i < 0 && (_vm.categorization.school_level = $$a.concat([$$v]))
           } else {
-            $$i > -1 && (_vm.categorization['school_level'] = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
+            $$i > -1 && (_vm.categorization.school_level = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
           }
         } else {
-          _vm.$set(_vm.categorization, 'school_level', $$c)
+          _vm.categorization.school_level = $$c
         }
       }
     }
@@ -62268,8 +62256,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.categorization['school_level']),
-      expression: "categorization['school_level']"
+      value: (_vm.categorization.school_level),
+      expression: "categorization.school_level"
     }],
     attrs: {
       "name": "sex",
@@ -62278,23 +62266,23 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       "value": "5"
     },
     domProps: {
-      "checked": Array.isArray(_vm.categorization['school_level']) ? _vm._i(_vm.categorization['school_level'], "5") > -1 : (_vm.categorization['school_level'])
+      "checked": Array.isArray(_vm.categorization.school_level) ? _vm._i(_vm.categorization.school_level, "5") > -1 : (_vm.categorization.school_level)
     },
     on: {
       "__c": function($event) {
-        var $$a = _vm.categorization['school_level'],
+        var $$a = _vm.categorization.school_level,
           $$el = $event.target,
           $$c = $$el.checked ? (true) : (false);
         if (Array.isArray($$a)) {
           var $$v = "5",
             $$i = _vm._i($$a, $$v);
           if ($$el.checked) {
-            $$i < 0 && (_vm.categorization['school_level'] = $$a.concat([$$v]))
+            $$i < 0 && (_vm.categorization.school_level = $$a.concat([$$v]))
           } else {
-            $$i > -1 && (_vm.categorization['school_level'] = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
+            $$i > -1 && (_vm.categorization.school_level = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
           }
         } else {
-          _vm.$set(_vm.categorization, 'school_level', $$c)
+          _vm.categorization.school_level = $$c
         }
       }
     }
@@ -62308,8 +62296,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.categorization['school_level']),
-      expression: "categorization['school_level']"
+      value: (_vm.categorization.school_level),
+      expression: "categorization.school_level"
     }],
     attrs: {
       "name": "sex",
@@ -62318,23 +62306,23 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       "value": "6"
     },
     domProps: {
-      "checked": Array.isArray(_vm.categorization['school_level']) ? _vm._i(_vm.categorization['school_level'], "6") > -1 : (_vm.categorization['school_level'])
+      "checked": Array.isArray(_vm.categorization.school_level) ? _vm._i(_vm.categorization.school_level, "6") > -1 : (_vm.categorization.school_level)
     },
     on: {
       "__c": function($event) {
-        var $$a = _vm.categorization['school_level'],
+        var $$a = _vm.categorization.school_level,
           $$el = $event.target,
           $$c = $$el.checked ? (true) : (false);
         if (Array.isArray($$a)) {
           var $$v = "6",
             $$i = _vm._i($$a, $$v);
           if ($$el.checked) {
-            $$i < 0 && (_vm.categorization['school_level'] = $$a.concat([$$v]))
+            $$i < 0 && (_vm.categorization.school_level = $$a.concat([$$v]))
           } else {
-            $$i > -1 && (_vm.categorization['school_level'] = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
+            $$i > -1 && (_vm.categorization.school_level = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
           }
         } else {
-          _vm.$set(_vm.categorization, 'school_level', $$c)
+          _vm.categorization.school_level = $$c
         }
       }
     }
@@ -62348,8 +62336,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.categorization['school_level']),
-      expression: "categorization['school_level']"
+      value: (_vm.categorization.school_level),
+      expression: "categorization.school_level"
     }],
     attrs: {
       "name": "sex",
@@ -62358,23 +62346,23 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       "value": "7"
     },
     domProps: {
-      "checked": Array.isArray(_vm.categorization['school_level']) ? _vm._i(_vm.categorization['school_level'], "7") > -1 : (_vm.categorization['school_level'])
+      "checked": Array.isArray(_vm.categorization.school_level) ? _vm._i(_vm.categorization.school_level, "7") > -1 : (_vm.categorization.school_level)
     },
     on: {
       "__c": function($event) {
-        var $$a = _vm.categorization['school_level'],
+        var $$a = _vm.categorization.school_level,
           $$el = $event.target,
           $$c = $$el.checked ? (true) : (false);
         if (Array.isArray($$a)) {
           var $$v = "7",
             $$i = _vm._i($$a, $$v);
           if ($$el.checked) {
-            $$i < 0 && (_vm.categorization['school_level'] = $$a.concat([$$v]))
+            $$i < 0 && (_vm.categorization.school_level = $$a.concat([$$v]))
           } else {
-            $$i > -1 && (_vm.categorization['school_level'] = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
+            $$i > -1 && (_vm.categorization.school_level = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
           }
         } else {
-          _vm.$set(_vm.categorization, 'school_level', $$c)
+          _vm.categorization.school_level = $$c
         }
       }
     }
@@ -62388,8 +62376,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.categorization['school_level']),
-      expression: "categorization['school_level']"
+      value: (_vm.categorization.school_level),
+      expression: "categorization.school_level"
     }],
     attrs: {
       "name": "sex",
@@ -62398,23 +62386,23 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       "value": "8"
     },
     domProps: {
-      "checked": Array.isArray(_vm.categorization['school_level']) ? _vm._i(_vm.categorization['school_level'], "8") > -1 : (_vm.categorization['school_level'])
+      "checked": Array.isArray(_vm.categorization.school_level) ? _vm._i(_vm.categorization.school_level, "8") > -1 : (_vm.categorization.school_level)
     },
     on: {
       "__c": function($event) {
-        var $$a = _vm.categorization['school_level'],
+        var $$a = _vm.categorization.school_level,
           $$el = $event.target,
           $$c = $$el.checked ? (true) : (false);
         if (Array.isArray($$a)) {
           var $$v = "8",
             $$i = _vm._i($$a, $$v);
           if ($$el.checked) {
-            $$i < 0 && (_vm.categorization['school_level'] = $$a.concat([$$v]))
+            $$i < 0 && (_vm.categorization.school_level = $$a.concat([$$v]))
           } else {
-            $$i > -1 && (_vm.categorization['school_level'] = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
+            $$i > -1 && (_vm.categorization.school_level = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
           }
         } else {
-          _vm.$set(_vm.categorization, 'school_level', $$c)
+          _vm.categorization.school_level = $$c
         }
       }
     }
@@ -62432,8 +62420,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.categorization['school_level']),
-      expression: "categorization['school_level']"
+      value: (_vm.categorization.school_level),
+      expression: "categorization.school_level"
     }],
     attrs: {
       "type": "checkbox",
@@ -62441,23 +62429,23 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       "value": "1s"
     },
     domProps: {
-      "checked": Array.isArray(_vm.categorization['school_level']) ? _vm._i(_vm.categorization['school_level'], "1s") > -1 : (_vm.categorization['school_level'])
+      "checked": Array.isArray(_vm.categorization.school_level) ? _vm._i(_vm.categorization.school_level, "1s") > -1 : (_vm.categorization.school_level)
     },
     on: {
       "__c": function($event) {
-        var $$a = _vm.categorization['school_level'],
+        var $$a = _vm.categorization.school_level,
           $$el = $event.target,
           $$c = $$el.checked ? (true) : (false);
         if (Array.isArray($$a)) {
           var $$v = "1s",
             $$i = _vm._i($$a, $$v);
           if ($$el.checked) {
-            $$i < 0 && (_vm.categorization['school_level'] = $$a.concat([$$v]))
+            $$i < 0 && (_vm.categorization.school_level = $$a.concat([$$v]))
           } else {
-            $$i > -1 && (_vm.categorization['school_level'] = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
+            $$i > -1 && (_vm.categorization.school_level = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
           }
         } else {
-          _vm.$set(_vm.categorization, 'school_level', $$c)
+          _vm.categorization.school_level = $$c
         }
       }
     }
@@ -62471,8 +62459,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.categorization['school_level']),
-      expression: "categorization['school_level']"
+      value: (_vm.categorization.school_level),
+      expression: "categorization.school_level"
     }],
     attrs: {
       "type": "checkbox",
@@ -62480,23 +62468,23 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       "value": "2s"
     },
     domProps: {
-      "checked": Array.isArray(_vm.categorization['school_level']) ? _vm._i(_vm.categorization['school_level'], "2s") > -1 : (_vm.categorization['school_level'])
+      "checked": Array.isArray(_vm.categorization.school_level) ? _vm._i(_vm.categorization.school_level, "2s") > -1 : (_vm.categorization.school_level)
     },
     on: {
       "__c": function($event) {
-        var $$a = _vm.categorization['school_level'],
+        var $$a = _vm.categorization.school_level,
           $$el = $event.target,
           $$c = $$el.checked ? (true) : (false);
         if (Array.isArray($$a)) {
           var $$v = "2s",
             $$i = _vm._i($$a, $$v);
           if ($$el.checked) {
-            $$i < 0 && (_vm.categorization['school_level'] = $$a.concat([$$v]))
+            $$i < 0 && (_vm.categorization.school_level = $$a.concat([$$v]))
           } else {
-            $$i > -1 && (_vm.categorization['school_level'] = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
+            $$i > -1 && (_vm.categorization.school_level = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
           }
         } else {
-          _vm.$set(_vm.categorization, 'school_level', $$c)
+          _vm.categorization.school_level = $$c
         }
       }
     }
@@ -62510,8 +62498,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.categorization['school_level']),
-      expression: "categorization['school_level']"
+      value: (_vm.categorization.school_level),
+      expression: "categorization.school_level"
     }],
     attrs: {
       "type": "checkbox",
@@ -62519,23 +62507,23 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       "value": "3s"
     },
     domProps: {
-      "checked": Array.isArray(_vm.categorization['school_level']) ? _vm._i(_vm.categorization['school_level'], "3s") > -1 : (_vm.categorization['school_level'])
+      "checked": Array.isArray(_vm.categorization.school_level) ? _vm._i(_vm.categorization.school_level, "3s") > -1 : (_vm.categorization.school_level)
     },
     on: {
       "__c": function($event) {
-        var $$a = _vm.categorization['school_level'],
+        var $$a = _vm.categorization.school_level,
           $$el = $event.target,
           $$c = $$el.checked ? (true) : (false);
         if (Array.isArray($$a)) {
           var $$v = "3s",
             $$i = _vm._i($$a, $$v);
           if ($$el.checked) {
-            $$i < 0 && (_vm.categorization['school_level'] = $$a.concat([$$v]))
+            $$i < 0 && (_vm.categorization.school_level = $$a.concat([$$v]))
           } else {
-            $$i > -1 && (_vm.categorization['school_level'] = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
+            $$i > -1 && (_vm.categorization.school_level = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
           }
         } else {
-          _vm.$set(_vm.categorization, 'school_level', $$c)
+          _vm.categorization.school_level = $$c
         }
       }
     }
@@ -62549,8 +62537,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.categorization['school_level']),
-      expression: "categorization['school_level']"
+      value: (_vm.categorization.school_level),
+      expression: "categorization.school_level"
     }],
     attrs: {
       "type": "checkbox",
@@ -62558,23 +62546,23 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       "value": "4s"
     },
     domProps: {
-      "checked": Array.isArray(_vm.categorization['school_level']) ? _vm._i(_vm.categorization['school_level'], "4s") > -1 : (_vm.categorization['school_level'])
+      "checked": Array.isArray(_vm.categorization.school_level) ? _vm._i(_vm.categorization.school_level, "4s") > -1 : (_vm.categorization.school_level)
     },
     on: {
       "__c": function($event) {
-        var $$a = _vm.categorization['school_level'],
+        var $$a = _vm.categorization.school_level,
           $$el = $event.target,
           $$c = $$el.checked ? (true) : (false);
         if (Array.isArray($$a)) {
           var $$v = "4s",
             $$i = _vm._i($$a, $$v);
           if ($$el.checked) {
-            $$i < 0 && (_vm.categorization['school_level'] = $$a.concat([$$v]))
+            $$i < 0 && (_vm.categorization.school_level = $$a.concat([$$v]))
           } else {
-            $$i > -1 && (_vm.categorization['school_level'] = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
+            $$i > -1 && (_vm.categorization.school_level = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
           }
         } else {
-          _vm.$set(_vm.categorization, 'school_level', $$c)
+          _vm.categorization.school_level = $$c
         }
       }
     }
@@ -62588,8 +62576,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.categorization['school_level']),
-      expression: "categorization['school_level']"
+      value: (_vm.categorization.school_level),
+      expression: "categorization.school_level"
     }],
     attrs: {
       "type": "checkbox",
@@ -62597,23 +62585,23 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       "value": "5s"
     },
     domProps: {
-      "checked": Array.isArray(_vm.categorization['school_level']) ? _vm._i(_vm.categorization['school_level'], "5s") > -1 : (_vm.categorization['school_level'])
+      "checked": Array.isArray(_vm.categorization.school_level) ? _vm._i(_vm.categorization.school_level, "5s") > -1 : (_vm.categorization.school_level)
     },
     on: {
       "__c": function($event) {
-        var $$a = _vm.categorization['school_level'],
+        var $$a = _vm.categorization.school_level,
           $$el = $event.target,
           $$c = $$el.checked ? (true) : (false);
         if (Array.isArray($$a)) {
           var $$v = "5s",
             $$i = _vm._i($$a, $$v);
           if ($$el.checked) {
-            $$i < 0 && (_vm.categorization['school_level'] = $$a.concat([$$v]))
+            $$i < 0 && (_vm.categorization.school_level = $$a.concat([$$v]))
           } else {
-            $$i > -1 && (_vm.categorization['school_level'] = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
+            $$i > -1 && (_vm.categorization.school_level = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
           }
         } else {
-          _vm.$set(_vm.categorization, 'school_level', $$c)
+          _vm.categorization.school_level = $$c
         }
       }
     }
@@ -62631,8 +62619,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.school_subject),
-      expression: "school_subject"
+      value: (_vm.categorization.school_subject),
+      expression: "categorization.school_subject"
     }],
     staticClass: "mdb-select",
     on: {
@@ -62643,7 +62631,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
           var val = "_value" in o ? o._value : o.value;
           return val
         });
-        _vm.school_subject = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+        _vm.categorization.school_subject = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
       }
     }
   }, [_c('option', {
@@ -62662,8 +62650,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.school_subject_detailed),
-      expression: "school_subject_detailed"
+      value: (_vm.categorization.school_subject_detailed),
+      expression: "categorization.school_subject_detailed"
     }],
     staticClass: "mdb-select",
     on: {
@@ -62674,14 +62662,14 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
           var val = "_value" in o ? o._value : o.value;
           return val
         });
-        _vm.school_subject_detailed = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+        _vm.categorization.school_subject_detailed = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
       }
     }
   }, [_c('option', {
     attrs: {
       "disabled": ""
     }
-  }, [_vm._v(_vm._s(_vm.lang('Choose Category')))]), _vm._v(" "), (_vm.school_subject && Object.keys(_vm.school_subjects).length) ? _vm._l((_vm.school_subjects[_vm.school_subject].subjects), function(item, key) {
+  }, [_vm._v(_vm._s(_vm.lang('Choose Category')))]), _vm._v(" "), (_vm.categorization.school_subject && Object.keys(_vm.school_subjects).length) ? _vm._l((_vm.school_subjects[_vm.categorization.school_subject].subjects), function(item, key) {
     return _c('option', {
       domProps: {
         "value": key
@@ -62697,8 +62685,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.categorization['biblioteca']),
-      expression: "categorization['biblioteca']"
+      value: (_vm.categorization.biblioteca),
+      expression: "categorization.biblioteca"
     }],
     staticClass: "mdb-select",
     on: {
@@ -62709,7 +62697,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
           var val = "_value" in o ? o._value : o.value;
           return val
         });
-        _vm.$set(_vm.categorization, 'biblioteca', $event.target.multiple ? $$selectedVal : $$selectedVal[0])
+        _vm.categorization.biblioteca = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
       }
     }
   }, [_c('option', {
@@ -62728,20 +62716,20 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.categorization['note']),
-      expression: "categorization['note']"
+      value: (_vm.categorization.note),
+      expression: "categorization.note"
     }],
     staticClass: "md-textarea",
     attrs: {
       "id": "categorization_note"
     },
     domProps: {
-      "value": (_vm.categorization['note'])
+      "value": (_vm.categorization.note)
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.$set(_vm.categorization, 'note', $event.target.value)
+        _vm.categorization.note = $event.target.value
       }
     }
   }), _vm._v(" "), _c('label', {
@@ -64125,7 +64113,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }, [_c('div', {
     staticClass: "col-md-6"
   }, [_c('div', {
-    staticClass: "md-form input-group"
+    staticClass: "md-form"
   }, [_c('input', {
     staticClass: "form-control",
     attrs: {
@@ -64139,7 +64127,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }, [_vm._v(_vm._s(_vm.lang('Hours')))])])]), _vm._v(" "), _c('div', {
     staticClass: "col-md-6"
   }, [_c('div', {
-    staticClass: "md-form input-group"
+    staticClass: "md-form"
   }, [_c('input', {
     staticClass: "form-control",
     attrs: {
@@ -68029,6 +68017,153 @@ function cloneRoute (to, from) {
 __webpack_require__(133);
 module.exports = __webpack_require__(134);
 
+
+/***/ }),
+/* 259 */,
+/* 260 */,
+/* 261 */,
+/* 262 */,
+/* 263 */,
+/* 264 */,
+/* 265 */,
+/* 266 */,
+/* 267 */,
+/* 268 */,
+/* 269 */,
+/* 270 */,
+/* 271 */,
+/* 272 */,
+/* 273 */,
+/* 274 */,
+/* 275 */,
+/* 276 */,
+/* 277 */,
+/* 278 */,
+/* 279 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+    namespaced: true,
+    state: {
+        supergroup: 0,
+        upgroup: 0,
+        group: 0,
+        note: '',
+        book_type_group: 0,
+        book_type: 0,
+        school_type: [],
+        school_level: [],
+        school_assignment: 0,
+        school_subject: 0,
+        school_subject_detailed: 0,
+        biblioteca: 0
+    },
+    mutations: {
+        initData(state, payload) {
+            state.supergroup = payload.supergroup;
+            state.upgroup = payload.upgroup;
+            state.group = payload.group;
+            state.book_type_group = payload.book_type_group;
+            state.book_type = payload.book_type;
+            state.school_type = payload.school_type;
+            state.school_level = payload.school_level;
+            state.school_assignment = payload.school_assignment;
+            state.school_subject = payload.school_subject;
+            state.school_subject_detailed = payload.school_subject_detailed;
+            state.biblioteca = payload.biblioteca;
+            state.note = payload.note;
+        }
+    },
+    actions: {
+        getData({ commit }, id) {
+            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/api/proposition/' + id + '/categorization').then(res => {
+                commit('initData', res.data);
+            });
+        },
+        saveData({ state, commit }, id) {
+            if (id) {
+                __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/api/proposition/' + id + '/categorization', state).then(res => {});
+            } else {
+                __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/api/proposition/categorization', state).then(res => {
+                    if (res.data.id) {
+                        commit('proposition/setId', res.data.id, { root: true });
+                    }
+                });
+            }
+        }
+    }
+});
+
+/***/ }),
+/* 280 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios_index__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios_index___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios_index__);
+
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+    namespaced: true,
+    state: {
+        categories: 0,
+        types: 0,
+        schools: 0,
+        subjects: 0,
+        bibliotecas: 0
+    },
+    mutations: {
+        setCategories(state, payload) {
+            state.categories = payload;
+        },
+        setTypes(state, payload) {
+            state.types = payload;
+        },
+        setSchools(state, payload) {
+            state.schools = payload;
+        },
+        setSubjects(state, payload) {
+            state.subjects = payload;
+        },
+        setBibliotecas(state, payload) {
+            state.bibliotecas = payload;
+        }
+    },
+    actions: {
+        getData({ commit, state }) {
+            if (!state.categories) {
+                __WEBPACK_IMPORTED_MODULE_0_axios_index___default.a.get('/api/book/category').then(res => {
+                    commit('setCategories', res.data);
+                });
+            }
+            if (!state.types) {
+                __WEBPACK_IMPORTED_MODULE_0_axios_index___default.a.get('/api/book/types').then(res => {
+                    commit('setTypes', res.data);
+                });
+            }
+            if (!state.schools) {
+                __WEBPACK_IMPORTED_MODULE_0_axios_index___default.a.get('/api/book/schools').then(res => {
+                    commit('setSchools', res.data);
+                });
+            }
+            if (!state.subjects) {
+                __WEBPACK_IMPORTED_MODULE_0_axios_index___default.a.get('/api/book/subjects').then(res => {
+                    commit('setSubjects', res.data);
+                });
+            }
+            if (!state.bibliotecas) {
+                __WEBPACK_IMPORTED_MODULE_0_axios_index___default.a.get('/api/book/bibliotecas').then(res => {
+                    commit('setBibliotecas', res.data);
+                });
+            }
+        }
+    }
+});
 
 /***/ })
 /******/ ]);
