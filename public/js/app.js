@@ -50679,6 +50679,11 @@ module.exports = function spread(callback) {
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["a"] = ({
     data: function () {
@@ -56277,7 +56282,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     attrs: {
       "type": "text",
       "name": "department",
-      "placeholder": "Pretraži odjele"
+      "placeholder": "Pronađi odjel"
     },
     domProps: {
       "value": (_vm.department)
@@ -56303,11 +56308,22 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }, [_vm._v(_vm._s(item.name))])
   })) : _vm._e()]), _vm._v(" "), _vm._l((_vm.departments), function(department) {
     return _c('div', {
-      staticClass: "chip mb-1"
+      staticClass: "chip mb-4"
     }, [_vm._v("\n                                    " + _vm._s(department.name)), _c('i', {
       staticClass: "close fa fa-times"
     })])
-  })], 2)])]), _vm._v(" "), _c('div', {
+  }), _vm._v(" "), _c('div', {
+    staticClass: "md-form mt-2 mb-2"
+  }, [_c('textarea', {
+    staticClass: "md-textarea",
+    attrs: {
+      "id": "form76"
+    }
+  }), _vm._v(" "), _c('label', {
+    attrs: {
+      "for": "form76"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('Task Description')))])])], 2)])]), _vm._v(" "), _c('div', {
     staticClass: "modal-body tab-pane fade",
     attrs: {
       "id": "panel52",
@@ -56330,7 +56346,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     attrs: {
       "type": "text",
       "name": "employee",
-      "placeholder": "Pretraži osobe"
+      "placeholder": "Pronađi osobu"
     },
     domProps: {
       "value": (_vm.employee)
@@ -56977,7 +56993,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }, [_vm._v(_vm._s(_vm.lang('New Task')))])]), _vm._v(" "), _c('div', {
     staticClass: "content"
   }, [_c('div', {
-    staticClass: "page-name-xl mb-2 mt-3 mt-2"
+    staticClass: "page-name-xl mb-4 mt-3"
   }, [_vm._v(_vm._s(_vm.lang('Task Details')))]), _vm._v(" "), _c('div', {
     staticClass: "row"
   }, [_c('div', {
@@ -57010,7 +57026,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       "for": "name"
     }
   }, [_vm._v(_vm._s(_vm.lang('Task Name')))])]), _vm._v(" "), _c('div', {
-    staticClass: "md-form d-flex addon"
+    staticClass: "md-form d-flex mt-5 addon"
   }, [_c('input', {
     directives: [{
       name: "model",
@@ -57021,7 +57037,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     staticClass: "form-control mdb-autocomplete",
     attrs: {
       "type": "text",
-      "id": "users"
+      "id": "users",
+      "placeholder": "Pronađi osobu"
     },
     domProps: {
       "value": (_vm.user)
@@ -57061,7 +57078,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       staticClass: "close fa fa-times"
     })])
   }), _vm._v(" "), _c('div', {
-    staticClass: "md-form d-flex addon"
+    staticClass: "md-form d-flex mt-5 addon"
   }, [_c('input', {
     directives: [{
       name: "model",
@@ -57072,7 +57089,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     staticClass: "form-control",
     attrs: {
       "type": "text",
-      "id": "form1"
+      "id": "form1",
+      "placeholder": "Pronađi odjeljenje"
     },
     domProps: {
       "value": (_vm.department)
@@ -57227,7 +57245,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       "for": "radio31"
     }
   }, [_vm._v(_vm._s(_vm.lang('Low')))])])]), _vm._v(" "), _c('div', {
-    staticClass: "md-form"
+    staticClass: "md-form mt-5"
   }, [_c('textarea', {
     directives: [{
       name: "model",
@@ -57252,7 +57270,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     attrs: {
       "for": "form76"
     }
-  }, [_vm._v(_vm._s(_vm.lang('Task description')))])])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.lang('Task Description')))])])])]), _vm._v(" "), _c('div', {
     staticClass: "page-name-l mb-1"
   }, [_vm._v(_vm._s(_vm.lang('Documents')))]), _vm._v(" "), _c('button', {
     staticClass: "btn btn-neutral btn-addon",
@@ -57414,7 +57432,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       }
     }
   }, [_vm._v(_vm._s(_vm.lang('Create new')))])]), _vm._v(" "), (_vm.new_tasks.length) ? [_c('div', {
-    staticClass: "page-name-xl mb-1 mt-2"
+    staticClass: "page-name-xl mb-3 mt-2"
   }, [_vm._v(_vm._s(_vm.lang('New Task')) + "\n        "), _c('span', {
     staticClass: "tag tag-neutral text-white"
   }, [_vm._v(_vm._s(_vm.new_tasks.length))])]), _vm._v(" "), _c('table', {
@@ -59698,11 +59716,11 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         "role": "tabpanel"
       }
     }, [_c('div', {
-      staticClass: "profile-head"
+      staticClass: "profile-head-clear"
     }, [_c('div', {
       staticClass: "row justify-content-center pt-4"
     }, [_c('div', {
-      staticClass: "col-md-4"
+      staticClass: "col-md-4 col-sm-10"
     }, [_c('div', {
       staticClass: " page-name-l-white border-white text-white mb-3 text-center"
     }, [_vm._v(_vm._s(_vm.lang('Price Proposal')))]), _vm._v(" "), _c('div', {
@@ -59728,7 +59746,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         }
       }
     })])])])]), _vm._v(" "), _c('div', {
-      staticClass: "profile-head"
+      staticClass: "profile-head-clear"
     }, [_c('div', {
       staticClass: "row text-white d-flex justify-content-center text-center"
     }, [_c('div', {
@@ -60188,6 +60206,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }, [_c('input', {
       staticClass: "form-control",
       attrs: {
+        "type": "text",
         "disabled": ""
       },
       domProps: {
@@ -64042,7 +64061,7 @@ if (false) {
 "use strict";
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', [_c('div', {
-    staticClass: "profile-head pt-3 pb-2 d-flex flex-column justify-content-center align-items-center"
+    staticClass: "profile-head py-4 d-flex flex-column justify-content-center align-items-center"
   }, [_c('h1', {
     staticClass: "display-3 text-white text-center"
   }, [_vm._v(_vm._s(_vm.task.name))])]), _vm._v(" "), _c('div', {
@@ -64094,9 +64113,9 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }, [_vm._v(_vm._s(_vm.lang(_vm.priorities[_vm.task.priority])))])]), _vm._v(" "), _c('h3', {
     staticClass: "mb-1 text-white"
   }, [_vm._v(_vm._s(_vm._f("moment")(_vm.task.deadline, "DD.MM.")))])])]), _vm._v(" "), _c('div', {
-    staticClass: "page-name-xl mt-2"
+    staticClass: "page-name-xl mt-4"
   }, [_vm._v(_vm._s(_vm.lang('Task Completion Time')))]), _vm._v(" "), _c('div', {
-    staticClass: "grey-box mb-3 pt-3 px-1 mx-auto"
+    staticClass: "grey-box mb-5 pt-5 pb-3 px-3 mx-auto"
   }, [_c('div', {
     staticClass: "row"
   }, [_c('div', {
@@ -64139,11 +64158,13 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     staticClass: "page-name-l mt-2 mb-1"
   }, [_vm._v(_vm._s(_vm.lang('Task Description')))]), _vm._v(" "), _c('div', [_c('h4', {
     staticClass: "mb-1"
-  }, [_vm._v(_vm._s(_vm.task.description))]), _vm._v(" "), (_vm.task.related_link) ? _c('a', {
+  }, [_vm._v(_vm._s(_vm.task.description))]), _vm._v(" "), (_vm.task.related_link) ? _c('button', {
+    staticClass: "btn btn-neutral btn-addon mb-4 mr-5",
     attrs: {
+      "type": "button",
       "href": _vm.task.related_link
     }
-  }, [_vm._v(_vm._s(_vm.lang('View')))]) : _vm._e()])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.lang('Go To Project')))]) : _vm._e()])]), _vm._v(" "), _c('div', {
     staticClass: "col-md-3"
   }, [_c('div', {
     staticClass: "page-name-l mt-2 mb-1"
