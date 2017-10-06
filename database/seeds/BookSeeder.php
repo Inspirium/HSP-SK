@@ -1356,7 +1356,7 @@ class BookSeeder extends Seeder {
 			]
 		] );
 
-		DB::table( 'book_type_groups' )->insert( [
+		DB::table( 'book_types' )->insert( [
 			[ 'name' => 'OBLIK KNJIGE - književni rodovi i vrste' ],
 			[ 'name' => 'OBLIK KNJIGE - vrste romana' ],
 			[ 'name' => 'OBLIK KNJIGE - knjige za djecu - slikovnice' ],
@@ -1372,549 +1372,549 @@ class BookSeeder extends Seeder {
 			[
 				'name'        => 'Poezija',
 				'designation' => 'VP100',
-				'group_id'    => '1'
+				'parent'    => '1'
 			],
-			[ 'name' => 'Drama', 'designation' => 'VP101', 'group_id' => '1' ],
+			[ 'name' => 'Drama', 'designation' => 'VP101', 'parent' => '1' ],
 			[
 				'name'        => 'Klasici',
 				'designation' => 'VP102',
-				'group_id'    => '1'
+				'parent'    => '1'
 			],
 			[
 				'name'        => 'Triler, špijunski',
 				'designation' => 'VP103',
-				'group_id'    => '2'
+				'parent'    => '2'
 			],
-			[ 'name' => 'Krimić', 'designation' => 'VP104', 'group_id' => '2' ],
+			[ 'name' => 'Krimić', 'designation' => 'VP104', 'parent' => '2' ],
 			[
 				'name'        => 'Akcija i avantura',
 				'designation' => 'VP105',
-				'group_id'    => '2'
+				'parent'    => '2'
 			],
-			[ 'name' => 'Horor', 'designation' => 'VP106', 'group_id' => '2' ],
+			[ 'name' => 'Horor', 'designation' => 'VP106', 'parent' => '2' ],
 			[
 				'name'        => 'Fantastika - Fantasy',
 				'designation' => 'VP107',
-				'group_id'    => '2'
+				'parent'    => '2'
 			],
 			[
 				'name'        => 'New age',
 				'designation' => 'VP108',
-				'group_id'    => '2'
+				'parent'    => '2'
 			],
 			[
 				'name'        => 'Znastvena fantastika - Science Fiction',
 				'designation' => 'VP109',
-				'group_id'    => '2'
+				'parent'    => '2'
 			],
 			[
 				'name'        => 'Ljubavni roman',
 				'designation' => 'VP110',
-				'group_id'    => '2'
+				'parent'    => '2'
 			],
 			[
 				'name'        => 'Žensko pismo - Chick lit',
 				'designation' => 'VP111',
-				'group_id'    => '2'
+				'parent'    => '2'
 			],
 			[
 				'name'        => 'Humor, vicevi, humoristični roman',
 				'designation' => 'VP112',
-				'group_id'    => '2'
+				'parent'    => '2'
 			],
 			[
 				'name'        => 'Putopisi',
 				'designation' => 'VP113',
-				'group_id'    => '1'
+				'parent'    => '1'
 			],
 			[
 				'name'        => 'Socijalna i psihološka proza',
 				'designation' => 'VP114',
-				'group_id'    => '1'
+				'parent'    => '1'
 			],
 			[
 				'name'        => 'Biografije i memoari',
 				'designation' => 'VP115',
-				'group_id'    => '1'
+				'parent'    => '1'
 			],
 			[
 				'name'        => 'Povijesni roman',
 				'designation' => 'VP116',
-				'group_id'    => '2'
+				'parent'    => '2'
 			],
 			[
 				'name'        => 'Duhovna literatura',
 				'designation' => 'VP117',
-				'group_id'    => '1'
+				'parent'    => '1'
 			],
 			[
 				'name'        => 'Beletristika',
 				'designation' => 'VP118',
-				'group_id'    => '1'
+				'parent'    => '1'
 			],
 			[
 				'name'        => 'Antolgije i izbori',
 				'designation' => 'VP119',
-				'group_id'    => '1'
+				'parent'    => '1'
 			],
 			[
 				'name'        => 'Mitologija',
 				'designation' => 'VP120',
-				'group_id'    => '1'
+				'parent'    => '1'
 			],
 			[
 				'name'        => 'Roman - nerazvrstano',
 				'designation' => 'VP121',
-				'group_id'    => '2'
+				'parent'    => '2'
 			],
 			[
 				'name'        => 'Publicistika',
 				'designation' => 'VP122',
-				'group_id'    => '1'
+				'parent'    => '1'
 			],
 			[
 				'name'        => 'Govori, aforizmi, poslovice, misli',
 				'designation' => 'VP123',
-				'group_id'    => '1'
+				'parent'    => '1'
 			],
 			[
 				'name'        => 'Novele i kratke priče, pripovijetke',
 				'designation' => 'VP124',
-				'group_id'    => '1'
+				'parent'    => '1'
 			],
 			[
 				'name'        => 'Eseji i kritike',
 				'designation' => 'VP125',
-				'group_id'    => '1'
+				'parent'    => '1'
 			],
-			[ 'name' => 'Ep', 'designation' => 'VP126', 'group_id' => '1' ],
+			[ 'name' => 'Ep', 'designation' => 'VP126', 'parent' => '1' ],
 			[
 				'name'        => 'Slikovnice - ostalo',
 				'designation' => 'VP200',
-				'group_id'    => '3'
+				'parent'    => '3'
 			],
 			[
 				'name'        => 'Audio slikovnice',
 				'designation' => 'VP201',
-				'group_id'    => '3'
+				'parent'    => '3'
 			],
 			[
 				'name'        => 'Bojanke',
 				'designation' => 'VP202',
-				'group_id'    => '3'
+				'parent'    => '3'
 			],
 			[
 				'name'        => 'Slikovnice sa igračkama',
 				'designation' => 'VP203',
-				'group_id'    => '3'
+				'parent'    => '3'
 			],
 			[
 				'name'        => 'Slikovnice sa naljepnicama',
 				'designation' => 'VP204',
-				'group_id'    => '3'
+				'parent'    => '3'
 			],
 			[
 				'name'        => 'Slikovnice pjesmarice',
 				'designation' => 'VP205',
-				'group_id'    => '3'
+				'parent'    => '3'
 			],
 			[
 				'name'        => 'Religijske slikovnice',
 				'designation' => 'VP206',
-				'group_id'    => '3'
+				'parent'    => '3'
 			],
 			[
 				'name'        => 'Slikovnice za igru i učenje',
 				'designation' => 'VP207',
-				'group_id'    => '3'
+				'parent'    => '3'
 			],
 			[
 				'name'        => '3D slikovnice',
 				'designation' => 'VP208',
-				'group_id'    => '3'
+				'parent'    => '3'
 			],
 			[
 				'name'        => 'Sezonske slikovnice - Uskrs, Božić',
 				'designation' => 'VP209',
-				'group_id'    => '3'
+				'parent'    => '3'
 			],
 			[
 				'name'        => 'Slikovnice o životinjama',
 				'designation' => 'VP210',
-				'group_id'    => '3'
+				'parent'    => '3'
 			],
 			[
 				'name'        => 'Bajke i basne',
 				'designation' => 'VP211',
-				'group_id'    => '4'
+				'parent'    => '4'
 			],
 			[
 				'name'        => 'Priče i pripovijetke za djecu',
 				'designation' => 'VP212',
-				'group_id'    => '4'
+				'parent'    => '4'
 			],
 			[
 				'name'        => 'Dječji roman',
 				'designation' => 'VP213',
-				'group_id'    => '4'
+				'parent'    => '4'
 			],
 			[
 				'name'        => 'Teen roman',
 				'designation' => 'VP214',
-				'group_id'    => '4'
+				'parent'    => '4'
 			],
 			[
 				'name'        => 'Dječja publicistika i priručnici',
 				'designation' => 'VP215',
-				'group_id'    => '4'
+				'parent'    => '4'
 			],
 			[
 				'name'        => 'Dječja popularna znanost',
 				'designation' => 'VP216',
-				'group_id'    => '4'
+				'parent'    => '4'
 			],
 			[
 				'name'        => 'Enciklopedija za djecu',
 				'designation' => 'VP217',
-				'group_id'    => '4'
+				'parent'    => '4'
 			],
 			[
 				'name'        => 'Enciklopedija za mlade',
 				'designation' => 'VP218',
-				'group_id'    => '4'
+				'parent'    => '4'
 			],
 			[
 				'name'        => 'Čitanka',
 				'designation' => 'VP300',
-				'group_id'    => '5'
+				'parent'    => '5'
 			],
 			[
 				'name'        => 'Udžbenik',
 				'designation' => 'VP301',
-				'group_id'    => '5'
+				'parent'    => '5'
 			],
 			[
 				'name'        => 'Sveučilišni udžbenik',
 				'designation' => 'VP302',
-				'group_id'    => '5'
+				'parent'    => '5'
 			],
 			[
 				'name'        => 'Vježbenica, radna bilježnica',
 				'designation' => 'VP303',
-				'group_id'    => '5'
+				'parent'    => '5'
 			],
 			[
 				'name'        => 'Slovarica',
 				'designation' => 'VP304',
-				'group_id'    => '5'
+				'parent'    => '5'
 			],
 			[
 				'name'        => 'Zbirka zadataka',
 				'designation' => 'VP305',
-				'group_id'    => '5'
+				'parent'    => '5'
 			],
 			[
 				'name'        => 'Kontrolni zadatci',
 				'designation' => 'VP306',
-				'group_id'    => '5'
+				'parent'    => '5'
 			],
 			[
 				'name'        => 'Nastavni listići',
 				'designation' => 'VP307',
-				'group_id'    => '5'
+				'parent'    => '5'
 			],
 			[
 				'name'        => 'Testovi',
 				'designation' => 'VP308',
-				'group_id'    => '5'
+				'parent'    => '5'
 			],
 			[
 				'name'        => 'Vježbe - laboratorijske vježbe, pokusi, praktikum',
 				'designation' => 'VP309',
-				'group_id'    => '5'
+				'parent'    => '5'
 			],
 			[
 				'name'        => 'Radni listovi',
 				'designation' => 'VP310',
-				'group_id'    => '5'
+				'parent'    => '5'
 			],
 			[
 				'name'        => 'Zadatci za dodatnu nastavu',
 				'designation' => 'VP311',
-				'group_id'    => '5'
+				'parent'    => '5'
 			],
 			[
 				'name'        => 'Mapa za vježbe, tehničko pismo, tablice',
 				'designation' => 'VP312',
-				'group_id'    => '5'
+				'parent'    => '5'
 			],
 			[
 				'name'        => 'Plakati',
 				'designation' => 'VP313',
-				'group_id'    => '5'
+				'parent'    => '5'
 			],
 			[
 				'name'        => 'Prozirnice',
 				'designation' => 'VP314',
-				'group_id'    => '5'
+				'parent'    => '5'
 			],
 			[
 				'name'        => 'Memento',
 				'designation' => 'VP315',
-				'group_id'    => '5'
+				'parent'    => '5'
 			],
 			[
 				'name'        => 'Priručnik za maturu, repetitorij',
 				'designation' => 'VP316',
-				'group_id'    => '5'
+				'parent'    => '5'
 			],
 			[
 				'name'        => 'Mapa za likovni',
 				'designation' => 'VP317',
-				'group_id'    => '5'
+				'parent'    => '5'
 			],
-			[ 'name' => 'Kolaž', 'designation' => 'VP318', 'group_id' => '5' ],
+			[ 'name' => 'Kolaž', 'designation' => 'VP318', 'parent' => '5' ],
 			[
 				'name'        => 'Crtaći blok',
 				'designation' => 'VP319',
-				'group_id'    => '5'
+				'parent'    => '5'
 			],
 			[
 				'name'        => 'Cd, Dvd',
 				'designation' => 'VP320',
-				'group_id'    => '5'
+				'parent'    => '5'
 			],
 			[
 				'name'        => 'Kompjutorski program',
 				'designation' => 'VP321',
-				'group_id'    => '5'
+				'parent'    => '5'
 			],
 			[
 				'name'        => 'Bilježnice, kajdanke',
 				'designation' => 'VP322',
-				'group_id'    => '5'
+				'parent'    => '5'
 			],
 			[
 				'name'        => 'Vodič kroz lektiru',
 				'designation' => 'VP323',
-				'group_id'    => '5'
+				'parent'    => '5'
 			],
 			[
 				'name'        => 'Tečajevi',
 				'designation' => 'VP324',
-				'group_id'    => '5'
+				'parent'    => '5'
 			],
 			[
 				'name'        => 'Herbarij',
 				'designation' => 'VP325',
-				'group_id'    => '5'
+				'parent'    => '5'
 			],
 			[
 				'name'        => 'Flash kartice',
 				'designation' => 'VP326',
-				'group_id'    => '5'
+				'parent'    => '5'
 			],
 			[
 				'name'        => 'Zavičajni priručnik',
 				'designation' => 'VP327',
-				'group_id'    => '5'
+				'parent'    => '5'
 			],
 			[
 				'name'        => 'Radna bilježnica za lektiru',
 				'designation' => 'VP328',
-				'group_id'    => '5'
+				'parent'    => '5'
 			],
 			[
 				'name'        => 'Strana lektira',
 				'designation' => 'VP329',
-				'group_id'    => '5'
+				'parent'    => '5'
 			],
 			[
 				'name'        => 'Bilježnice - prazne',
 				'designation' => 'VP330',
-				'group_id'    => '8'
+				'parent'    => '8'
 			],
 			[
 				'name'        => 'Karta - geografska',
 				'designation' => 'VP400',
-				'group_id'    => '6'
+				'parent'    => '6'
 			],
 			[
 				'name'        => 'Auto karta',
 				'designation' => 'VP401',
-				'group_id'    => '6'
+				'parent'    => '6'
 			],
 			[
 				'name'        => 'Karta - planinarska',
 				'designation' => 'VP402',
-				'group_id'    => '6'
+				'parent'    => '6'
 			],
 			[
 				'name'        => 'Karta - povijesna',
 				'designation' => 'VP403',
-				'group_id'    => '6'
+				'parent'    => '6'
 			],
-			[ 'name' => 'Atlas', 'designation' => 'VP404', 'group_id' => '6' ],
+			[ 'name' => 'Atlas', 'designation' => 'VP404', 'parent' => '6' ],
 			[
 				'name'        => 'Auto atlas',
 				'designation' => 'VP405',
-				'group_id'    => '6'
+				'parent'    => '6'
 			],
 			[
 				'name'        => 'Blok razglednica',
 				'designation' => 'VP406',
-				'group_id'    => '6'
+				'parent'    => '6'
 			],
 			[
 				'name'        => 'Dječja karta',
 				'designation' => 'VP407',
-				'group_id'    => '6'
+				'parent'    => '6'
 			],
 			[
 				'name'        => 'Dječji atlas',
 				'designation' => 'VP408',
-				'group_id'    => '6'
+				'parent'    => '6'
 			],
 			[
 				'name'        => 'Plan grada',
 				'designation' => 'VP409',
-				'group_id'    => '6'
+				'parent'    => '6'
 			],
 			[
 				'name'        => 'Nautička karta',
 				'designation' => 'VP410',
-				'group_id'    => '6'
+				'parent'    => '6'
 			],
 			[
 				'name'        => 'Nautički atlas',
 				'designation' => 'VP411',
-				'group_id'    => '6'
+				'parent'    => '6'
 			],
 			[
 				'name'        => 'Karta - turistička',
 				'designation' => 'VP412',
-				'group_id'    => '6'
+				'parent'    => '6'
 			],
 			[
 				'name'        => 'Stručna knjiga',
 				'designation' => 'VP500',
-				'group_id'    => '7'
+				'parent'    => '7'
 			],
 			[
 				'name'        => 'Praktični priručnik',
 				'designation' => 'VP501',
-				'group_id'    => '7'
+				'parent'    => '7'
 			],
 			[
 				'name'        => 'Priručnik za samostalno učenje uz jezike',
 				'designation' => 'VP502',
-				'group_id'    => '7'
+				'parent'    => '7'
 			],
 			[
 				'name'        => 'Priručnik za profesore, roditelje, odgajatelje',
 				'designation' => 'VP503',
-				'group_id'    => '7'
+				'parent'    => '7'
 			],
 			[
 				'name'        => 'Popularna znanost',
 				'designation' => 'VP504',
-				'group_id'    => '7'
+				'parent'    => '7'
 			],
-			[ 'name' => 'Strip', 'designation' => 'VP600', 'group_id' => '8' ],
+			[ 'name' => 'Strip', 'designation' => 'VP600', 'parent' => '8' ],
 			[
 				'name'        => 'Likovna monografija',
 				'designation' => 'VP601',
-				'group_id'    => '8'
+				'parent'    => '8'
 			],
 			[
 				'name'        => 'Monografija',
 				'designation' => 'VP602',
-				'group_id'    => '8'
+				'parent'    => '8'
 			],
 			[
 				'name'        => 'Turistička monografija',
 				'designation' => 'VP603',
-				'group_id'    => '8'
+				'parent'    => '8'
 			],
 			[
 				'name'        => 'Turistički vodič',
 				'designation' => 'VP604',
-				'group_id'    => '8'
+				'parent'    => '8'
 			],
 			[
 				'name'        => 'Kuharica',
 				'designation' => 'VP605',
-				'group_id'    => '8'
+				'parent'    => '8'
 			],
 			[
 				'name'        => 'Zakoni i Ustav',
 				'designation' => 'VP606',
-				'group_id'    => '8'
+				'parent'    => '8'
 			],
 			[
 				'name'        => 'Biblija - Stari i Novi zavjet',
 				'designation' => 'VP607',
-				'group_id'    => '8'
+				'parent'    => '8'
 			],
 			[
 				'name'        => 'Zbornik radova',
 				'designation' => 'VP608',
-				'group_id'    => '8'
+				'parent'    => '8'
 			],
 			[
 				'name'        => 'Notni zapisi - note',
 				'designation' => 'VP609',
-				'group_id'    => '8'
+				'parent'    => '8'
 			],
 			[
 				'name'        => 'Rječnik - stručni',
 				'designation' => 'VP700',
-				'group_id'    => '9'
+				'parent'    => '9'
 			],
 			[
 				'name'        => 'Rječnik - džepni',
 				'designation' => 'VP701',
-				'group_id'    => '9'
+				'parent'    => '9'
 			],
 			[
 				'name'        => 'Rječnik - praktični',
 				'designation' => 'VP702',
-				'group_id'    => '9'
+				'parent'    => '9'
 			],
 			[
 				'name'        => 'Rječnik - veliki (opći)',
 				'designation' => 'VP703',
-				'group_id'    => '9'
+				'parent'    => '9'
 			],
 			[
 				'name'        => 'Rječnik - slikovni',
 				'designation' => 'VP704',
-				'group_id'    => '9'
+				'parent'    => '9'
 			],
 			[
 				'name'        => 'Rječnik - dječji',
 				'designation' => 'VP705',
-				'group_id'    => '9'
+				'parent'    => '9'
 			],
 			[
 				'name'        => 'Gramatika',
 				'designation' => 'VP706',
-				'group_id'    => '9'
+				'parent'    => '9'
 			],
 			[
 				'name'        => 'Pravopis',
 				'designation' => 'VP707',
-				'group_id'    => '9'
+				'parent'    => '9'
 			],
 			[
 				'name'        => 'Leksikon',
 				'designation' => 'VP708',
-				'group_id'    => '9'
+				'parent'    => '9'
 			],
 			[
 				'name'        => 'Enciklopedija',
 				'designation' => 'VP709',
-				'group_id'    => '9'
+				'parent'    => '9'
 			],
 		] );
 
@@ -2370,7 +2370,7 @@ class BookSeeder extends Seeder {
 			],
 		] );
 
-		DB::table( 'school_subject_groups' )->insert( [
+		DB::table( 'school_subjects' )->insert( [
 			[ 'name' => 'JEZICI' ],
 			[ 'name' => 'KNJIŽEVNOSTI' ],
 			[ 'name' => 'STRUČNI PREDMET' ],
@@ -2399,830 +2399,830 @@ class BookSeeder extends Seeder {
 		DB::table( 'school_subjects' )->insert( [
 			[ 'name'        => 'Hrvatski  jezik',
 			  'designation' => 'PR0101',
-			  'group_id'    => '1'
+			  'parent'    => '1'
 			],
 			[ 'name'        => 'Engleski  jezik',
 			  'designation' => 'PR0102',
-			  'group_id'    => '1'
+			  'parent'    => '1'
 			],
 			[ 'name'        => 'Francuski  jezik',
 			  'designation' => 'PR0103',
-			  'group_id'    => '1'
+			  'parent'    => '1'
 			],
 			[ 'name'        => 'Njemački  jezik',
 			  'designation' => 'PR0104',
-			  'group_id'    => '1'
+			  'parent'    => '1'
 			],
 			[ 'name'        => 'Talijanski  jezik',
 			  'designation' => 'PR0105',
-			  'group_id'    => '1'
+			  'parent'    => '1'
 			],
 			[ 'name'        => 'Španjolski  jezik',
 			  'designation' => 'PR0106',
-			  'group_id'    => '1'
+			  'parent'    => '1'
 			],
 			[ 'name'        => 'Ruski  jezik',
 			  'designation' => 'PR0107',
-			  'group_id'    => '1'
+			  'parent'    => '1'
 			],
 			[ 'name'        => 'Poljski  jezik',
 			  'designation' => 'PR0108',
-			  'group_id'    => '1'
+			  'parent'    => '1'
 			],
 			[ 'name'        => 'Portugalski  jezik',
 			  'designation' => 'PR0109',
-			  'group_id'    => '1'
+			  'parent'    => '1'
 			],
 			[ 'name'        => 'Slovački  jezik',
 			  'designation' => 'PR0110',
-			  'group_id'    => '1'
+			  'parent'    => '1'
 			],
 			[ 'name'        => 'Slovenski  jezik',
 			  'designation' => 'PR0111',
-			  'group_id'    => '1'
+			  'parent'    => '1'
 			],
 			[ 'name'        => 'Turski  jezik',
 			  'designation' => 'PR0112',
-			  'group_id'    => '1'
+			  'parent'    => '1'
 			],
 			[ 'name'        => 'Češki  jezik',
 			  'designation' => 'PR0113',
-			  'group_id'    => '1'
+			  'parent'    => '1'
 			],
 			[ 'name'        => 'Latinski jezik',
 			  'designation' => 'PR0114',
-			  'group_id'    => '1'
+			  'parent'    => '1'
 			],
 			[ 'name'        => 'Grčki  jezik',
 			  'designation' => 'PR0115',
-			  'group_id'    => '1'
+			  'parent'    => '1'
 			],
 			[ 'name'        => 'Mađarski  jezik',
 			  'designation' => 'PR0116',
-			  'group_id'    => '1'
+			  'parent'    => '1'
 			],
 			[ 'name'        => 'Albanski jezik',
 			  'designation' => 'PR0117',
-			  'group_id'    => '1'
+			  'parent'    => '1'
 			],
 			[ 'name'        => 'Norveški jezik',
 			  'designation' => 'PR0118',
-			  'group_id'    => '1'
+			  'parent'    => '1'
 			],
 			[ 'name'        => 'Bugarski jezik',
 			  'designation' => 'PR0119',
-			  'group_id'    => '1'
+			  'parent'    => '1'
 			],
 			[ 'name'        => 'Ukrajinski jezik',
 			  'designation' => 'PR0120',
-			  'group_id'    => '1'
+			  'parent'    => '1'
 			],
 			[ 'name'        => 'Švedski jezik',
 			  'designation' => 'PR0121',
-			  'group_id'    => '1'
+			  'parent'    => '1'
 			],
 			[ 'name'        => 'Strani jezici',
 			  'designation' => 'PR0122',
-			  'group_id'    => '1'
+			  'parent'    => '1'
 			],
 			[ 'name'        => 'Rumunjski jezik',
 			  'designation' => 'PR0123',
-			  'group_id'    => '1'
+			  'parent'    => '1'
 			],
 			[ 'name'        => 'Srpski jezik',
 			  'designation' => 'PR0124',
-			  'group_id'    => '1'
+			  'parent'    => '1'
 			],
 
 			[ 'name'        => 'Ostale književnosti',
 			  'designation' => 'PR0300',
-			  'group_id'    => '2'
+			  'parent'    => '2'
 			],
 			[ 'name'        => 'Hrvatska  književnost',
 			  'designation' => 'PR0301',
-			  'group_id'    => '2'
+			  'parent'    => '2'
 			],
 			[ 'name'        => 'Američka  književnost',
 			  'designation' => 'PR0302',
-			  'group_id'    => '2'
+			  'parent'    => '2'
 			],
 			[ 'name'        => 'Engleska  književnost',
 			  'designation' => 'PR0303',
-			  'group_id'    => '2'
+			  'parent'    => '2'
 			],
 			[ 'name'        => 'Francuska  književnost',
 			  'designation' => 'PR0304',
-			  'group_id'    => '2'
+			  'parent'    => '2'
 			],
 			[ 'name'        => 'Njemačka  književnost',
 			  'designation' => 'PR0305',
-			  'group_id'    => '2'
+			  'parent'    => '2'
 			],
 			[ 'name'        => 'Talijanska  književnost',
 			  'designation' => 'PR0306',
-			  'group_id'    => '2'
+			  'parent'    => '2'
 			],
 			[ 'name'        => 'Španjolska  književnost',
 			  'designation' => 'PR0307',
-			  'group_id'    => '2'
+			  'parent'    => '2'
 			],
 			[ 'name'        => 'Ruska književnost',
 			  'designation' => 'PR0308',
-			  'group_id'    => '2'
+			  'parent'    => '2'
 			],
 			[ 'name'        => 'Poljska književnost',
 			  'designation' => 'PR0309',
-			  'group_id'    => '2'
+			  'parent'    => '2'
 			],
 			[ 'name'        => 'Portugalska  književnost',
 			  'designation' => 'PR0310',
-			  'group_id'    => '2'
+			  'parent'    => '2'
 			],
 			[ 'name'        => 'Skandinavske književnosti',
 			  'designation' => 'PR0311',
-			  'group_id'    => '2'
+			  'parent'    => '2'
 			],
 			[ 'name'        => 'Latinoameričke književnosti',
 			  'designation' => 'PR0312',
-			  'group_id'    => '2'
+			  'parent'    => '2'
 			],
 			[ 'name'        => 'Antička književnost - grčka i rimska',
 			  'designation' => 'PR0313',
-			  'group_id'    => '2'
+			  'parent'    => '2'
 			],
 
 			[ 'name'        => 'Stručni predmet (za srednje škole)',
 			  'designation' => 'PR0400',
-			  'group_id'    => '3'
+			  'parent'    => '3'
 			],
 
 			[ 'name'        => 'Matematika',
 			  'designation' => 'PR0401',
-			  'group_id'    => '4'
+			  'parent'    => '4'
 			],
 			[ 'name'        => 'Fizika',
 			  'designation' => 'PR0402',
-			  'group_id'    => '4'
+			  'parent'    => '4'
 			],
 			[ 'name'        => 'Nuklearna fizika',
 			  'designation' => 'PR0403',
-			  'group_id'    => '4'
+			  'parent'    => '4'
 			],
 			[ 'name'        => 'Geologija',
 			  'designation' => 'PR0404',
-			  'group_id'    => '4'
+			  'parent'    => '4'
 			],
 			[ 'name'        => 'Kemija',
 			  'designation' => 'PR0405',
-			  'group_id'    => '4'
+			  'parent'    => '4'
 			],
 			[ 'name'        => 'Priroda i društvo (za osnovnu školu)',
 			  'designation' => 'PR0406',
-			  'group_id'    => '4'
+			  'parent'    => '4'
 			],
 			[ 'name'        => 'Priroda (za osnovnu školu)',
 			  'designation' => 'PR0407',
-			  'group_id'    => '4'
+			  'parent'    => '4'
 			],
 			[ 'name'        => 'Biologija',
 			  'designation' => 'PR0408',
-			  'group_id'    => '4'
+			  'parent'    => '4'
 			],
 			[ 'name'        => 'Geofizika',
 			  'designation' => 'PR0409',
-			  'group_id'    => '4'
+			  'parent'    => '4'
 			],
 			[ 'name'        => 'Zemljopis (GEOGRAFIJA)',
 			  'designation' => 'PR0410',
-			  'group_id'    => '4'
+			  'parent'    => '4'
 			],
 			[ 'name'        => 'Ekologija',
 			  'designation' => 'PR0411',
-			  'group_id'    => '4'
+			  'parent'    => '4'
 			],
 			[ 'name'        => 'Astronomija (SVEMIR)',
 			  'designation' => 'PR0412',
-			  'group_id'    => '4'
+			  'parent'    => '4'
 			],
 
 			[ 'name'        => 'Tehnički odgoj (za osnovnu školu)',
 			  'designation' => 'PR0500',
-			  'group_id'    => '5'
+			  'parent'    => '5'
 			],
 			[ 'name'        => 'Elektrotehnika',
 			  'designation' => 'PR0501',
-			  'group_id'    => '5'
+			  'parent'    => '5'
 			],
 			[ 'name'        => 'Graditeljstvo',
 			  'designation' => 'PR0502',
-			  'group_id'    => '5'
+			  'parent'    => '5'
 			],
 			[ 'name'        => 'Geodezija',
 			  'designation' => 'PR0503',
-			  'group_id'    => '5'
+			  'parent'    => '5'
 			],
 			[ 'name'        => 'Grafička tehnologija',
 			  'designation' => 'PR0504',
-			  'group_id'    => '5'
+			  'parent'    => '5'
 			],
 			[ 'name'        => 'Kemijsko inženjerstvo',
 			  'designation' => 'PR0505',
-			  'group_id'    => '5'
+			  'parent'    => '5'
 			],
 			[ 'name'        => 'Metalurgija',
 			  'designation' => 'PR0506',
-			  'group_id'    => '5'
+			  'parent'    => '5'
 			],
 			[ 'name'        => 'Rudarstvo, nafta i geološko inženjerstvo',
 			  'designation' => 'PR0507',
-			  'group_id'    => '5'
+			  'parent'    => '5'
 			],
 			[ 'name'        => 'Strojarstvo i brodogradnja',
 			  'designation' => 'PR0508',
-			  'group_id'    => '5'
+			  'parent'    => '5'
 			],
 			[ 'name'        => 'Promet',
 			  'designation' => 'PR0509',
-			  'group_id'    => '5'
+			  'parent'    => '5'
 			],
 			[ 'name'        => 'Zrakoplovstvo, raketna i svemirska tehnika',
 			  'designation' => 'PR0510',
-			  'group_id'    => '5'
+			  'parent'    => '5'
 			],
 
 			[ 'name'        => 'Informatika (za osnovnu i srednju školu)',
 			  'designation' => 'PR0511',
-			  'group_id'    => '6'
+			  'parent'    => '6'
 			],
 			[ 'name'        => 'Baze podataka, operativni sustavi i programiranje',
 			  'designation' => 'PR0512',
-			  'group_id'    => '6'
+			  'parent'    => '6'
 			],
 			[ 'name'        => 'Software',
 			  'designation' => 'PR0513',
-			  'group_id'    => '6'
+			  'parent'    => '6'
 			],
 			[ 'name'        => 'Microsoft',
 			  'designation' => 'PR0514',
-			  'group_id'    => '6'
+			  'parent'    => '6'
 			],
 			[ 'name'        => 'Hardware',
 			  'designation' => 'PR0515',
-			  'group_id'    => '6'
+			  'parent'    => '6'
 			],
-			[ 'name' => 'Mreže', 'designation' => 'PR0516', 'group_id' => '6' ],
+			[ 'name' => 'Mreže', 'designation' => 'PR0516', 'parent' => '6' ],
 			[ 'name'        => 'Internet',
 			  'designation' => 'PR0517',
-			  'group_id'    => '6'
+			  'parent'    => '6'
 			],
 			[ 'name'        => 'Web design',
 			  'designation' => 'PR0518',
-			  'group_id'    => '6'
+			  'parent'    => '6'
 			],
 			[ 'name'        => 'Kompjuterska grafika',
 			  'designation' => 'PR0519',
-			  'group_id'    => '6'
+			  'parent'    => '6'
 			],
 
 			[ 'name'        => 'Medicina',
 			  'designation' => 'PR0600',
-			  'group_id'    => '7'
+			  'parent'    => '7'
 			],
 			[ 'name'        => 'Veterina',
 			  'designation' => 'PR0601',
-			  'group_id'    => '7'
+			  'parent'    => '7'
 			],
 			[ 'name'        => 'Stomatologija',
 			  'designation' => 'PR0602',
-			  'group_id'    => '7'
+			  'parent'    => '7'
 			],
 			[ 'name'        => 'Farmacija',
 			  'designation' => 'PR0603',
-			  'group_id'    => '7'
+			  'parent'    => '7'
 			],
 
 			[ 'name'        => 'Poljoprivreda (agronomija)',
 			  'designation' => 'PR0700',
-			  'group_id'    => '8'
+			  'parent'    => '8'
 			],
 			[ 'name'        => 'Šumarstvo',
 			  'designation' => 'PR0701',
-			  'group_id'    => '8'
+			  'parent'    => '8'
 			],
 			[ 'name'        => 'Drvna tehnologija',
 			  'designation' => 'PR0702',
-			  'group_id'    => '8'
+			  'parent'    => '8'
 			],
 			[ 'name'        => 'Biotehnologija',
 			  'designation' => 'PR0703',
-			  'group_id'    => '8'
+			  'parent'    => '8'
 			],
 
-			[ 'name' => 'Pravo', 'designation' => 'PR0800', 'group_id' => '9' ],
+			[ 'name' => 'Pravo', 'designation' => 'PR0800', 'parent' => '9' ],
 			[ 'name'        => 'Politika i gospodarstvo (za srednje škole)',
 			  'designation' => 'PR0801',
-			  'group_id'    => '9'
+			  'parent'    => '9'
 			],
 			[ 'name'        => 'Politika i politologija',
 			  'designation' => 'PR0802',
-			  'group_id'    => '9'
+			  'parent'    => '9'
 			],
 			[ 'name'        => 'Novinarstvo',
 			  'designation' => 'PR0803',
-			  'group_id'    => '9'
+			  'parent'    => '9'
 			],
 
 			[ 'name'        => 'Ekonomija',
 			  'designation' => 'PR0804',
-			  'group_id'    => '10'
+			  'parent'    => '10'
 			],
 			[ 'name'        => 'Menadžment i poduzetništvo',
 			  'designation' => 'PR0805',
-			  'group_id'    => '10'
+			  'parent'    => '10'
 			],
 			[ 'name'        => 'Financije i računovodstvo',
 			  'designation' => 'PR0804',
-			  'group_id'    => '10'
+			  'parent'    => '10'
 			],
 			[ 'name'        => 'Marketing',
 			  'designation' => 'PR0807',
-			  'group_id'    => '10'
+			  'parent'    => '10'
 			],
 			[ 'name'        => 'Popularna ekonomija',
 			  'designation' => 'PR0808',
-			  'group_id'    => '10'
+			  'parent'    => '10'
 			],
 
 			[ 'name'        => 'Turizam i ugostiteljstvo',
 			  'designation' => 'PR0809',
-			  'group_id'    => '9'
+			  'parent'    => '9'
 			],
 			[ 'name'        => 'Sociologija',
 			  'designation' => 'PR0810',
-			  'group_id'    => '9'
+			  'parent'    => '9'
 			],
 			[ 'name'        => 'Psihologija',
 			  'designation' => 'PR0811',
-			  'group_id'    => '9'
+			  'parent'    => '9'
 			],
 			[ 'name'        => 'Pedagogija',
 			  'designation' => 'PR0812',
-			  'group_id'    => '9'
+			  'parent'    => '9'
 			],
 			[ 'name'        => 'Edukacijsko-rehabilitacijske znanosti',
 			  'designation' => 'PR0813',
-			  'group_id'    => '9'
+			  'parent'    => '9'
 			],
 			[ 'name'        => 'Logopedija',
 			  'designation' => 'PR0814',
-			  'group_id'    => '9'
+			  'parent'    => '9'
 			],
 			[ 'name'        => 'Kineziologija',
 			  'designation' => 'PR0815',
-			  'group_id'    => '9'
+			  'parent'    => '9'
 			],
 			[ 'name'        => 'Demografija',
 			  'designation' => 'PR0816',
-			  'group_id'    => '9'
+			  'parent'    => '9'
 			],
 			[ 'name'        => 'Socijalne djelatnosti',
 			  'designation' => 'PR0817',
-			  'group_id'    => '9'
+			  'parent'    => '9'
 			],
 			[ 'name'        => 'Sigurnosne i obrambene znanosti',
 			  'designation' => 'PR0818',
-			  'group_id'    => '9'
+			  'parent'    => '9'
 			],
 
 			[ 'name'        => 'Povijest',
 			  'designation' => 'PR0900',
-			  'group_id'    => '11'
+			  'parent'    => '11'
 			],
 			[ 'name'        => 'Arheologija',
 			  'designation' => 'PR0901',
-			  'group_id'    => '11'
+			  'parent'    => '11'
 			],
 			[ 'name'        => 'Bibliotekarstvo, informacijske znanosti',
 			  'designation' => 'PR0902',
-			  'group_id'    => '11'
+			  'parent'    => '11'
 			],
 			[ 'name'        => 'Etnologija i antropologija',
 			  'designation' => 'PR0903',
-			  'group_id'    => '11'
+			  'parent'    => '11'
 			],
 			[ 'name'        => 'Filologija (lingvistika)',
 			  'designation' => 'PR0904',
-			  'group_id'    => '11'
+			  'parent'    => '11'
 			],
 			[ 'name'        => 'Teorija i povijest književnosti',
 			  'designation' => 'PR0905',
-			  'group_id'    => '11'
+			  'parent'    => '11'
 			],
 			[ 'name'        => 'Filozofija',
 			  'designation' => 'PR0906',
-			  'group_id'    => '11'
+			  'parent'    => '11'
 			],
 			[ 'name'        => 'Logika',
 			  'designation' => 'PR0907',
-			  'group_id'    => '11'
+			  'parent'    => '11'
 			],
 			[ 'name'        => 'Etika',
 			  'designation' => 'PR0908',
-			  'group_id'    => '11'
+			  'parent'    => '11'
 			],
 
 			[ 'name'        => 'Vjeronauk OŠ I SŠ',
 			  'designation' => 'PR1000',
-			  'group_id'    => '12'
+			  'parent'    => '12'
 			],
 			[ 'name'        => 'Teologija',
 			  'designation' => 'PR1001',
-			  'group_id'    => '12'
+			  'parent'    => '12'
 			],
 			[ 'name'        => 'Kršćanska literatura',
 			  'designation' => 'PR1002',
-			  'group_id'    => '12'
+			  'parent'    => '12'
 			],
 			[ 'name'        => 'Islam',
 			  'designation' => 'PR1003',
-			  'group_id'    => '12'
+			  'parent'    => '12'
 			],
 			[ 'name'        => 'Budizam',
 			  'designation' => 'PR1004',
-			  'group_id'    => '12'
+			  'parent'    => '12'
 			],
 			[ 'name'        => 'Hinduizam',
 			  'designation' => 'PR1005',
-			  'group_id'    => '12'
+			  'parent'    => '12'
 			],
 			[ 'name'        => 'Judaizam',
 			  'designation' => 'PR1006',
-			  'group_id'    => '12'
+			  'parent'    => '12'
 			],
 			[ 'name'        => 'Ostale religije',
 			  'designation' => 'PR1007',
-			  'group_id'    => '12'
+			  'parent'    => '12'
 			],
 			[ 'name'        => 'Mitologija',
 			  'designation' => 'PR1008',
-			  'group_id'    => '12'
+			  'parent'    => '12'
 			],
 
 			[ 'name'        => 'Likovna umjetnost OŠ i SŠ',
 			  'designation' => 'PR1100',
-			  'group_id'    => '13'
+			  'parent'    => '13'
 			],
 			[ 'name'        => 'Slikarstvo',
 			  'designation' => 'PR1101',
-			  'group_id'    => '13'
+			  'parent'    => '13'
 			],
 			[ 'name'        => 'Kiparstvo',
 			  'designation' => 'PR1102',
-			  'group_id'    => '13'
+			  'parent'    => '13'
 			],
 			[ 'name'        => 'Crteži i grafika (priručnici za crtanje)',
 			  'designation' => 'PR1103',
-			  'group_id'    => '13'
+			  'parent'    => '13'
 			],
 			[ 'name'        => 'Kazalište',
 			  'designation' => 'PR1104',
-			  'group_id'    => '13'
+			  'parent'    => '13'
 			],
 			[ 'name'        => 'Film, TV',
 			  'designation' => 'PR1105',
-			  'group_id'    => '13'
+			  'parent'    => '13'
 			],
 			[ 'name'        => 'Glazbena umjetnost',
 			  'designation' => 'PR1106',
-			  'group_id'    => '13'
+			  'parent'    => '13'
 			],
 			[ 'name'        => 'Fotografija',
 			  'designation' => 'PR1107',
-			  'group_id'    => '13'
+			  'parent'    => '13'
 			],
-			[ 'name' => 'Ples', 'designation' => 'PR1108', 'group_id' => '13' ],
+			[ 'name' => 'Ples', 'designation' => 'PR1108', 'parent' => '13' ],
 			[ 'name'        => 'Dizajn i primijenjena umjetnost',
 			  'designation' => 'PR1109',
-			  'group_id'    => '13'
+			  'parent'    => '13'
 			],
 			[ 'name'        => 'Povijest umjetnosti',
 			  'designation' => 'PR1110',
-			  'group_id'    => '13'
+			  'parent'    => '13'
 			],
 			[ 'name'        => 'Prapovijesna i antička umjetnost',
 			  'designation' => 'PR1111',
-			  'group_id'    => '13'
+			  'parent'    => '13'
 			],
 			[ 'name'        => 'Srednjovjekovna umjetnost',
 			  'designation' => 'PR1112',
-			  'group_id'    => '13'
+			  'parent'    => '13'
 			],
 			[ 'name'        => 'Renesansna umjetnost',
 			  'designation' => 'PR1113',
-			  'group_id'    => '13'
+			  'parent'    => '13'
 			],
 			[ 'name'        => 'Barokna umjetnost',
 			  'designation' => 'PR1114',
-			  'group_id'    => '13'
+			  'parent'    => '13'
 			],
 			[ 'name'        => 'Klasicizam i prosvjetiteljstvo',
 			  'designation' => 'PR1115',
-			  'group_id'    => '13'
+			  'parent'    => '13'
 			],
 			[ 'name'        => 'Romantizam',
 			  'designation' => 'PR1116',
-			  'group_id'    => '13'
+			  'parent'    => '13'
 			],
 			[ 'name'        => 'Suvremena umjetnost',
 			  'designation' => 'PR1117',
-			  'group_id'    => '13'
+			  'parent'    => '13'
 			],
 			[ 'name'        => 'Strip',
 			  'designation' => 'PR1118',
-			  'group_id'    => '13'
+			  'parent'    => '13'
 			],
 			[ 'name'        => 'Arhitektura i urbanizam',
 			  'designation' => 'PR1119',
-			  'group_id'    => '13'
+			  'parent'    => '13'
 			],
-			[ 'name' => 'Moda', 'designation' => 'PR1120', 'group_id' => '13' ],
+			[ 'name' => 'Moda', 'designation' => 'PR1120', 'parent' => '13' ],
 
 			[ 'name'        => 'Trudnoća',
 			  'designation' => 'PR1400',
-			  'group_id'    => '14'
+			  'parent'    => '14'
 			],
 			[ 'name'        => 'Odgoj djeteta',
 			  'designation' => 'PR1401',
-			  'group_id'    => '14'
+			  'parent'    => '14'
 			],
 
 			[ 'name'        => 'Zdrava prehrana',
 			  'designation' => 'PR1402',
-			  'group_id'    => '15'
+			  'parent'    => '15'
 			],
 			[ 'name'        => 'Razne dijete',
 			  'designation' => 'PR1403',
-			  'group_id'    => '15'
+			  'parent'    => '15'
 			],
 			[ 'name'        => 'Lječenje biljem, ljekovito bilje',
 			  'designation' => 'PR1404',
-			  'group_id'    => '15'
+			  'parent'    => '15'
 			],
 			[ 'name'        => 'Ljubav i odnosi',
 			  'designation' => 'PR1405',
-			  'group_id'    => '15'
+			  'parent'    => '15'
 			],
 			[ 'name'        => 'Seksualnost',
 			  'designation' => 'PR1406',
-			  'group_id'    => '15'
+			  'parent'    => '15'
 			],
 			[ 'name'        => 'Samopomoć',
 			  'designation' => 'PR1407',
-			  'group_id'    => '15'
+			  'parent'    => '15'
 			],
 			[ 'name'        => 'Zrele godine',
 			  'designation' => 'PR1408',
-			  'group_id'    => '15'
+			  'parent'    => '15'
 			],
 			[ 'name'        => 'Ljepota (kozmetika, make up)',
 			  'designation' => 'PR1409',
-			  'group_id'    => '15'
+			  'parent'    => '15'
 			],
 			[ 'name'        => 'Fitness',
 			  'designation' => 'PR1410',
-			  'group_id'    => '15'
+			  'parent'    => '15'
 			],
 			[ 'name'        => 'Masaža',
 			  'designation' => 'PR1411',
-			  'group_id'    => '15'
+			  'parent'    => '15'
 			],
-			[ 'name' => 'Joga', 'designation' => 'PR1412', 'group_id' => '15' ],
+			[ 'name' => 'Joga', 'designation' => 'PR1412', 'parent' => '15' ],
 
 			[ 'name'        => 'Alternativna medicina',
 			  'designation' => 'PR1500',
-			  'group_id'    => '16'
+			  'parent'    => '16'
 			],
 			[ 'name'        => 'Akupunktura',
 			  'designation' => 'PR1501',
-			  'group_id'    => '16'
+			  'parent'    => '16'
 			],
 			[ 'name'        => 'Feng shui',
 			  'designation' => 'PR1502',
-			  'group_id'    => '16'
+			  'parent'    => '16'
 			],
 			[ 'name'        => 'Kristaloterapija',
 			  'designation' => 'PR1503',
-			  'group_id'    => '16'
+			  'parent'    => '16'
 			],
 			[ 'name'        => 'Psihologija i psihoterapija',
 			  'designation' => 'PR1504',
-			  'group_id'    => '16'
+			  'parent'    => '16'
 			],
 			[ 'name'        => 'Astrologija',
 			  'designation' => 'PR1505',
-			  'group_id'    => '16'
+			  'parent'    => '16'
 			],
 			[ 'name'        => 'Duhovnost',
 			  'designation' => 'PR1506',
-			  'group_id'    => '16'
+			  'parent'    => '16'
 			],
 			[ 'name'        => 'Tai chi',
 			  'designation' => 'PR1507',
-			  'group_id'    => '16'
+			  'parent'    => '16'
 			],
 			[ 'name'        => 'Tantra',
 			  'designation' => 'PR1508',
-			  'group_id'    => '16'
+			  'parent'    => '16'
 			],
 			[ 'name'        => 'Okultizam, magija, parapsihologija',
 			  'designation' => 'PR1509',
-			  'group_id'    => '16'
+			  'parent'    => '16'
 			],
 			[ 'name'        => 'Proricanje, gatanje, vidovnjaštvo',
 			  'designation' => 'PR1510',
-			  'group_id'    => '16'
+			  'parent'    => '16'
 			],
 			[ 'name'        => 'Numerologija',
 			  'designation' => 'PR1511',
-			  'group_id'    => '16'
+			  'parent'    => '16'
 			],
 			[ 'name'        => 'Snovi',
 			  'designation' => 'PR1512',
-			  'group_id'    => '16'
+			  'parent'    => '16'
 			],
 			[ 'name'        => 'Tarot',
 			  'designation' => 'PR1513',
-			  'group_id'    => '16'
+			  'parent'    => '16'
 			],
 			[ 'name'        => 'Religija, religiologija i mistika',
 			  'designation' => 'PR1514',
-			  'group_id'    => '16'
+			  'parent'    => '16'
 			],
 			[ 'name'        => 'Ostala alternativna područja',
 			  'designation' => 'PR1515',
-			  'group_id'    => '16'
+			  'parent'    => '16'
 			],
 
 			[ 'name'        => 'TJELESNA I ZDRAVSTVENA KULTURA (OŠ I SŠ)',
 			  'designation' => 'PR1600',
-			  'group_id'    => '17'
+			  'parent'    => '17'
 			],
 			[ 'name'        => 'Društvene igre',
 			  'designation' => 'PR1601',
-			  'group_id'    => '17'
+			  'parent'    => '17'
 			],
 			[ 'name'        => 'Igre na sreću',
 			  'designation' => 'PR1602',
-			  'group_id'    => '17'
+			  'parent'    => '17'
 			],
 			[ 'name'        => 'Sport, tjelesno vježbanje, sportske igre',
 			  'designation' => 'PR1603',
-			  'group_id'    => '17'
+			  'parent'    => '17'
 			],
 			[ 'name'        => 'Sportovi na vodi, sportovi u zraku',
 			  'designation' => 'PR1604',
-			  'group_id'    => '17'
+			  'parent'    => '17'
 			],
 			[ 'name'        => 'Jahanje i vožnja',
 			  'designation' => 'PR1605',
-			  'group_id'    => '17'
+			  'parent'    => '17'
 			],
 			[ 'name'        => 'Streljaštvo',
 			  'designation' => 'PR1606',
-			  'group_id'    => '17'
+			  'parent'    => '17'
 			],
 			[ 'name'        => 'Tenis',
 			  'designation' => 'PR1607',
-			  'group_id'    => '17'
+			  'parent'    => '17'
 			],
 			[ 'name'        => 'Atletika',
 			  'designation' => 'PR1608',
-			  'group_id'    => '17'
+			  'parent'    => '17'
 			],
-			[ 'name' => 'Šah', 'designation' => 'PR1609', 'group_id' => '17' ],
+			[ 'name' => 'Šah', 'designation' => 'PR1609', 'parent' => '17' ],
 			[ 'name'        => 'Borilački sportovi',
 			  'designation' => 'PR1610',
-			  'group_id'    => '17'
+			  'parent'    => '17'
 			],
 			[ 'name'        => 'Lov, ribolov',
 			  'designation' => 'PR1611',
-			  'group_id'    => '17'
+			  'parent'    => '17'
 			],
 			[ 'name'        => 'Planinarenje',
 			  'designation' => 'PR1612',
-			  'group_id'    => '17'
+			  'parent'    => '17'
 			],
 			[ 'name'        => 'Nogomet',
 			  'designation' => 'PR1613',
-			  'group_id'    => '17'
+			  'parent'    => '17'
 			],
 
 			[ 'name'        => 'Kuharstvo',
 			  'designation' => 'PR1700',
-			  'group_id'    => '18'
+			  'parent'    => '18'
 			],
 			[ 'name'        => 'PIĆA (Pivo, Vina, žestoka pića)',
 			  'designation' => 'PR1701',
-			  'group_id'    => '18'
+			  'parent'    => '18'
 			],
 			[ 'name'        => 'Tradicionalna i domaća kuhinja',
 			  'designation' => 'PR1702',
-			  'group_id'    => '18'
+			  'parent'    => '18'
 			],
 			[ 'name'        => 'Internacionalna kuhinja',
 			  'designation' => 'PR1703',
-			  'group_id'    => '18'
+			  'parent'    => '18'
 			],
 			[ 'name'        => 'Vegetarijanska kuhinja',
 			  'designation' => 'PR1704',
-			  'group_id'    => '18'
+			  'parent'    => '18'
 			],
 			[ 'name'        => 'Riblje kuharice',
 			  'designation' => 'PR1705',
-			  'group_id'    => '18'
+			  'parent'    => '18'
 			],
 			[ 'name'        => 'Deserti',
 			  'designation' => 'PR1706',
-			  'group_id'    => '18'
+			  'parent'    => '18'
 			],
 			[ 'name'        => 'Kokteli',
 			  'designation' => 'PR1707',
-			  'group_id'    => '18'
+			  'parent'    => '18'
 			],
 			[ 'name'        => 'Salate',
 			  'designation' => 'PR1708',
-			  'group_id'    => '18'
+			  'parent'    => '18'
 			],
-			[ 'name' => 'Sir', 'designation' => 'PR1709', 'group_id' => '18' ],
+			[ 'name' => 'Sir', 'designation' => 'PR1709', 'parent' => '18' ],
 			[ 'name'        => 'Tjestenina',
 			  'designation' => 'PR1710',
-			  'group_id'    => '18'
+			  'parent'    => '18'
 			],
-			[ 'name' => 'Meso', 'designation' => 'PR1711', 'group_id' => '18' ],
+			[ 'name' => 'Meso', 'designation' => 'PR1711', 'parent' => '18' ],
 			[ 'name'        => 'Ostale kuharice',
 			  'designation' => 'PR1712',
-			  'group_id'    => '18'
+			  'parent'    => '18'
 			],
 
 			[ 'name'        => 'Uređenje doma',
 			  'designation' => 'PR1800',
-			  'group_id'    => '19'
+			  'parent'    => '19'
 			],
 			[ 'name'        => 'Vrtlarstvo i hortikultura',
 			  'designation' => 'PR1801',
-			  'group_id'    => '19'
+			  'parent'    => '19'
 			],
 			[ 'name'        => 'Voćnjak',
 			  'designation' => 'PR1802',
-			  'group_id'    => '19'
+			  'parent'    => '19'
 			],
 			[ 'name'        => 'Sobno bilje, cvijeće',
 			  'designation' => 'PR1803',
-			  'group_id'    => '19'
+			  'parent'    => '19'
 			],
 			[ 'name'        => 'Kućni ljubimci',
 			  'designation' => 'PR1804',
-			  'group_id'    => '19'
+			  'parent'    => '19'
 			],
 
 			[ 'name'        => 'Uradi sam',
 			  'designation' => 'PR1805',
-			  'group_id'    => '20'
+			  'parent'    => '20'
 			],
 			[ 'name'        => 'Automobili',
 			  'designation' => 'PR1806',
-			  'group_id'    => '20'
+			  'parent'    => '20'
 			],
 			[ 'name'        => 'Oružje',
 			  'designation' => 'PR1807',
-			  'group_id'    => '20'
+			  'parent'    => '20'
 			],
 			[ 'name'        => 'Modelarstvo',
 			  'designation' => 'PR1808',
-			  'group_id'    => '20'
+			  'parent'    => '20'
 			],
 			[ 'name'        => 'Filatelija i numizmatika',
 			  'designation' => 'PR1809',
-			  'group_id'    => '20'
+			  'parent'    => '20'
 			],
 			[ 'name'        => 'Ostalo',
 			  'designation' => 'PR1810',
-			  'group_id'    => '20'
+			  'parent'    => '20'
 			],
 
 			[ 'name'        => 'Turistika',
 			  'designation' => 'PR1811',
-			  'group_id'    => '21'
+			  'parent'    => '21'
 			],
 
 			[ 'name'        => 'Svi predmeti',
 			  'designation' => 'PR1812',
-			  'group_id'    => '22'
+			  'parent'    => '22'
 			],
 
 			[ 'name'        => 'Boravak',
 			  'designation' => 'PR1813',
-			  'group_id'    => '23'
+			  'parent'    => '23'
 			],
 		] );
 	}
