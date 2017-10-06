@@ -50646,7 +50646,7 @@ module.exports = function spread(callback) {
     computed: {},
     methods: {
         saveProposition: function () {
-            this.$store.dispatch('proposition/saveProposition');
+            this.$store.dispatch('proposition/' + this.$route.meta.save + '/saveData', this.$route.params.id);
         },
         assignModalOpen: function () {
             jQuery('#centralModalAssign').modal('show');
@@ -51341,7 +51341,7 @@ window.axios.defaults.headers.common = {
 
 
 const routes = [{ path: '/proposition/start', component: __WEBPACK_IMPORTED_MODULE_13__components_proposition_PropositionStart__["a" /* default */] }, { path: '/proposition/:id(\\d+)', component: __WEBPACK_IMPORTED_MODULE_0__components_proposition_Proposition__["a" /* default */],
-    children: [{ path: 'start', component: __WEBPACK_IMPORTED_MODULE_13__components_proposition_PropositionStart__["a" /* default */] }, { path: 'edit/basic_data', component: __WEBPACK_IMPORTED_MODULE_1__components_proposition_BasicData__["a" /* default */] }, { path: 'edit/categorization', component: __WEBPACK_IMPORTED_MODULE_2__components_proposition_Categorization__["a" /* default */] }, { path: 'edit/market_potential', component: __WEBPACK_IMPORTED_MODULE_3__components_proposition_MarketPotential__["a" /* default */] }, { path: 'edit/technical_data', component: __WEBPACK_IMPORTED_MODULE_4__components_proposition_TechnicalData__["a" /* default */] }, { path: 'edit/print', component: __WEBPACK_IMPORTED_MODULE_6__components_proposition_Print__["a" /* default */] }, { path: 'edit/authors_expense', component: __WEBPACK_IMPORTED_MODULE_5__components_proposition_AuthorsExpense__["a" /* default */] }, { path: 'edit/production_expense', component: __WEBPACK_IMPORTED_MODULE_7__components_proposition_ProductionExpense__["a" /* default */] }, { path: 'edit/marketing_expense', component: __WEBPACK_IMPORTED_MODULE_8__components_proposition_MarketingExpense__["a" /* default */] }, { path: 'edit/distribution_expense', component: __WEBPACK_IMPORTED_MODULE_9__components_proposition_DistributionExpense__["a" /* default */] }, { path: 'edit/layout_expense', component: __WEBPACK_IMPORTED_MODULE_10__components_proposition_LayoutExpense__["a" /* default */] }, { path: 'edit/deadline', component: __WEBPACK_IMPORTED_MODULE_11__components_proposition_Deadline__["a" /* default */] }, { path: 'edit/calculation', component: __WEBPACK_IMPORTED_MODULE_12__components_proposition_Calculation__["a" /* default */] }, { path: 'preparation/translation', component: __WEBPACK_IMPORTED_MODULE_15__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'translation' } }, { path: 'preparation/technical_preparation', component: __WEBPACK_IMPORTED_MODULE_15__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'technical_preparation' } }, { path: 'preparation/proofreading', component: __WEBPACK_IMPORTED_MODULE_15__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'proofreading' } }, { path: 'preparation/additional_materials', component: __WEBPACK_IMPORTED_MODULE_15__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'additional_materials' } }, { path: 'preparation/reviews', component: __WEBPACK_IMPORTED_MODULE_15__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'reviews' } }, { path: 'preparation/lecture', component: __WEBPACK_IMPORTED_MODULE_15__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'lecture' } }, { path: 'preparation/technical_correction', component: __WEBPACK_IMPORTED_MODULE_15__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'technical_correction' } }, { path: 'preparation/final_review', component: __WEBPACK_IMPORTED_MODULE_15__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'final_review' } }, { path: 'expenses/authors_expense', component: __WEBPACK_IMPORTED_MODULE_5__components_proposition_AuthorsExpense__["a" /* default */] }, { path: 'expenses/production_expense', component: __WEBPACK_IMPORTED_MODULE_7__components_proposition_ProductionExpense__["a" /* default */] }, { path: 'expenses/marketing_expense', component: __WEBPACK_IMPORTED_MODULE_8__components_proposition_MarketingExpense__["a" /* default */] }, { path: 'expenses/distribution_expense', component: __WEBPACK_IMPORTED_MODULE_9__components_proposition_DistributionExpense__["a" /* default */] }, { path: 'expenses/layout_expense', component: __WEBPACK_IMPORTED_MODULE_10__components_proposition_LayoutExpense__["a" /* default */] }, { path: 'expenses/compare', component: __WEBPACK_IMPORTED_MODULE_14__components_proposition_Compare__["a" /* default */], meta: {} }, { path: 'design/cover_design', component: __WEBPACK_IMPORTED_MODULE_15__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'cover_design' } }, { path: 'design/layout_design', component: __WEBPACK_IMPORTED_MODULE_15__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'layout_design' } }, { path: 'layout/first_block_layout', component: __WEBPACK_IMPORTED_MODULE_15__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'first_block_layout' } }, { path: 'layout/cover', component: __WEBPACK_IMPORTED_MODULE_15__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'cover' } }, { path: 'layout/layout', component: __WEBPACK_IMPORTED_MODULE_15__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'layout' } }, { path: 'layout/first_revision', component: __WEBPACK_IMPORTED_MODULE_15__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'first_revision' } }, { path: 'layout/correction', component: __WEBPACK_IMPORTED_MODULE_15__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'correction' } }, { path: 'layout/correction_input', component: __WEBPACK_IMPORTED_MODULE_15__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'correction_input' } }, { path: 'layout/revisions', component: __WEBPACK_IMPORTED_MODULE_16__components_proposition_Revisions__["a" /* default */] }, { path: 'final_price/price_definition', component: __WEBPACK_IMPORTED_MODULE_17__components_proposition_PriceDefinition__["a" /* default */] }, { path: 'prepress/print_proof', component: __WEBPACK_IMPORTED_MODULE_15__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'print_proof' } }, { path: 'prepress/print_proof_correction', component: __WEBPACK_IMPORTED_MODULE_15__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'print_proof_correction' } }, { path: 'prepress/print', component: __WEBPACK_IMPORTED_MODULE_15__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'print' } }, { path: 'prepress/warehouse', component: __WEBPACK_IMPORTED_MODULE_18__components_proposition_Warehouse__["a" /* default */] }, { path: 'additionals/multimedia', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_Multimedia__["a" /* default */] }, { path: 'additionals/marketing', component: __WEBPACK_IMPORTED_MODULE_19__components_proposition_Marketing__["a" /* default */] }]
+    children: [{ path: 'start', component: __WEBPACK_IMPORTED_MODULE_13__components_proposition_PropositionStart__["a" /* default */], meta: { save: 'start' } }, { path: 'edit/basic_data', component: __WEBPACK_IMPORTED_MODULE_1__components_proposition_BasicData__["a" /* default */], meta: { save: 'basic_data' } }, { path: 'edit/categorization', component: __WEBPACK_IMPORTED_MODULE_2__components_proposition_Categorization__["a" /* default */], meta: { save: 'categorization' } }, { path: 'edit/market_potential', component: __WEBPACK_IMPORTED_MODULE_3__components_proposition_MarketPotential__["a" /* default */], meta: { save: 'market_potential' } }, { path: 'edit/technical_data', component: __WEBPACK_IMPORTED_MODULE_4__components_proposition_TechnicalData__["a" /* default */], meta: { save: 'technical_data' } }, { path: 'edit/print', component: __WEBPACK_IMPORTED_MODULE_6__components_proposition_Print__["a" /* default */] }, { path: 'edit/authors_expense', component: __WEBPACK_IMPORTED_MODULE_5__components_proposition_AuthorsExpense__["a" /* default */] }, { path: 'edit/production_expense', component: __WEBPACK_IMPORTED_MODULE_7__components_proposition_ProductionExpense__["a" /* default */] }, { path: 'edit/marketing_expense', component: __WEBPACK_IMPORTED_MODULE_8__components_proposition_MarketingExpense__["a" /* default */] }, { path: 'edit/distribution_expense', component: __WEBPACK_IMPORTED_MODULE_9__components_proposition_DistributionExpense__["a" /* default */] }, { path: 'edit/layout_expense', component: __WEBPACK_IMPORTED_MODULE_10__components_proposition_LayoutExpense__["a" /* default */] }, { path: 'edit/deadline', component: __WEBPACK_IMPORTED_MODULE_11__components_proposition_Deadline__["a" /* default */] }, { path: 'edit/calculation', component: __WEBPACK_IMPORTED_MODULE_12__components_proposition_Calculation__["a" /* default */] }, { path: 'preparation/translation', component: __WEBPACK_IMPORTED_MODULE_15__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'translation' } }, { path: 'preparation/technical_preparation', component: __WEBPACK_IMPORTED_MODULE_15__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'technical_preparation' } }, { path: 'preparation/proofreading', component: __WEBPACK_IMPORTED_MODULE_15__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'proofreading' } }, { path: 'preparation/additional_materials', component: __WEBPACK_IMPORTED_MODULE_15__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'additional_materials' } }, { path: 'preparation/reviews', component: __WEBPACK_IMPORTED_MODULE_15__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'reviews' } }, { path: 'preparation/lecture', component: __WEBPACK_IMPORTED_MODULE_15__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'lecture' } }, { path: 'preparation/technical_correction', component: __WEBPACK_IMPORTED_MODULE_15__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'technical_correction' } }, { path: 'preparation/final_review', component: __WEBPACK_IMPORTED_MODULE_15__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'final_review' } }, { path: 'expenses/authors_expense', component: __WEBPACK_IMPORTED_MODULE_5__components_proposition_AuthorsExpense__["a" /* default */] }, { path: 'expenses/production_expense', component: __WEBPACK_IMPORTED_MODULE_7__components_proposition_ProductionExpense__["a" /* default */] }, { path: 'expenses/marketing_expense', component: __WEBPACK_IMPORTED_MODULE_8__components_proposition_MarketingExpense__["a" /* default */] }, { path: 'expenses/distribution_expense', component: __WEBPACK_IMPORTED_MODULE_9__components_proposition_DistributionExpense__["a" /* default */] }, { path: 'expenses/layout_expense', component: __WEBPACK_IMPORTED_MODULE_10__components_proposition_LayoutExpense__["a" /* default */] }, { path: 'expenses/compare', component: __WEBPACK_IMPORTED_MODULE_14__components_proposition_Compare__["a" /* default */], meta: {} }, { path: 'design/cover_design', component: __WEBPACK_IMPORTED_MODULE_15__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'cover_design' } }, { path: 'design/layout_design', component: __WEBPACK_IMPORTED_MODULE_15__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'layout_design' } }, { path: 'layout/first_block_layout', component: __WEBPACK_IMPORTED_MODULE_15__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'first_block_layout' } }, { path: 'layout/cover', component: __WEBPACK_IMPORTED_MODULE_15__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'cover' } }, { path: 'layout/layout', component: __WEBPACK_IMPORTED_MODULE_15__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'layout' } }, { path: 'layout/first_revision', component: __WEBPACK_IMPORTED_MODULE_15__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'first_revision' } }, { path: 'layout/correction', component: __WEBPACK_IMPORTED_MODULE_15__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'correction' } }, { path: 'layout/correction_input', component: __WEBPACK_IMPORTED_MODULE_15__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'correction_input' } }, { path: 'layout/revisions', component: __WEBPACK_IMPORTED_MODULE_16__components_proposition_Revisions__["a" /* default */] }, { path: 'final_price/price_definition', component: __WEBPACK_IMPORTED_MODULE_17__components_proposition_PriceDefinition__["a" /* default */] }, { path: 'prepress/print_proof', component: __WEBPACK_IMPORTED_MODULE_15__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'print_proof' } }, { path: 'prepress/print_proof_correction', component: __WEBPACK_IMPORTED_MODULE_15__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'print_proof_correction' } }, { path: 'prepress/print', component: __WEBPACK_IMPORTED_MODULE_15__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'print' } }, { path: 'prepress/warehouse', component: __WEBPACK_IMPORTED_MODULE_18__components_proposition_Warehouse__["a" /* default */] }, { path: 'additionals/multimedia', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_Multimedia__["a" /* default */] }, { path: 'additionals/marketing', component: __WEBPACK_IMPORTED_MODULE_19__components_proposition_Marketing__["a" /* default */] }]
 },
 /*{ path: '/propositions', component: PropositionList },*/
 
@@ -51853,17 +51853,17 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     },
     mutations: {
         initData(state, payload) {
-            state.supergroup = payload.supergroup;
-            state.upgroup = payload.upgroup;
-            state.group = payload.group;
-            state.book_type_group = payload.book_type_group;
-            state.book_type = payload.book_type;
-            state.school_type = payload.school_type;
+            state.supergroup = payload.group.parent.parent.id;
+            state.upgroup = payload.group.parent.id;
+            state.group = payload.group.id;
+            state.book_type_group = payload.book_type.parent_id;
+            state.book_type = payload.book_type.id;
+            state.school_type = payload.school_type.id;
             state.school_level = payload.school_level;
             state.school_assignment = payload.school_assignment;
-            state.school_subject = payload.school_subject;
-            state.school_subject_detailed = payload.school_subject_detailed;
-            state.biblioteca = payload.biblioteca;
+            state.school_subject = payload.school_subject.parent_id;
+            state.school_subject_detailed = payload.school_subject.id;
+            state.biblioteca = payload.biblioteca.id;
             state.note = payload.note;
         }
     },
@@ -61298,8 +61298,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.basic_data['title']),
-      expression: "basic_data['title']"
+      value: (_vm.basic_data.title),
+      expression: "basic_data.title"
     }],
     staticClass: "form-control",
     attrs: {
@@ -61310,12 +61310,12 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       "required": ""
     },
     domProps: {
-      "value": (_vm.basic_data['title'])
+      "value": (_vm.basic_data.title)
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.$set(_vm.basic_data, 'title', $event.target.value)
+        _vm.basic_data.title = $event.target.value
       }
     }
   }), _vm._v(" "), _c('label', {
@@ -61376,7 +61376,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     on: {
       "click": _vm.openAuthorModal
     }
-  }, [_vm._v(_vm._s(_vm.lang('Add New Author')))]), _vm._v(" "), _vm._l((_vm.basic_data['authors']), function(author, index) {
+  }, [_vm._v(_vm._s(_vm.lang('Add New Author')))]), _vm._v(" "), _vm._l((_vm.basic_data.authors), function(author, index) {
     return _c('div', {
       key: author.id,
       staticClass: "chip mb-3"
@@ -61398,8 +61398,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.basic_data['concept']),
-      expression: "basic_data['concept']"
+      value: (_vm.basic_data.concept),
+      expression: "basic_data.concept"
     }],
     staticClass: "md-textarea",
     attrs: {
@@ -61407,12 +61407,12 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       "name": "concept"
     },
     domProps: {
-      "value": (_vm.basic_data['concept'])
+      "value": (_vm.basic_data.concept)
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.$set(_vm.basic_data, 'concept', $event.target.value)
+        _vm.basic_data.concept = $event.target.value
       }
     }
   }), _vm._v(" "), _c('label', {
@@ -61429,8 +61429,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.basic_data['manuscript']),
-      expression: "basic_data['manuscript']"
+      value: (_vm.basic_data.manuscript),
+      expression: "basic_data.manuscript"
     }],
     attrs: {
       "name": "manuscript",
@@ -61439,11 +61439,11 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       "value": "ordered"
     },
     domProps: {
-      "checked": _vm._q(_vm.basic_data['manuscript'], "ordered")
+      "checked": _vm._q(_vm.basic_data.manuscript, "ordered")
     },
     on: {
       "__c": function($event) {
-        _vm.$set(_vm.basic_data, 'manuscript', "ordered")
+        _vm.basic_data.manuscript = "ordered"
       }
     }
   }), _vm._v(" "), _c('label', {
@@ -61456,8 +61456,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.basic_data['manuscript']),
-      expression: "basic_data['manuscript']"
+      value: (_vm.basic_data.manuscript),
+      expression: "basic_data.manuscript"
     }],
     attrs: {
       "name": "manuscript",
@@ -61466,18 +61466,18 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       "value": "delivered"
     },
     domProps: {
-      "checked": _vm._q(_vm.basic_data['manuscript'], "delivered")
+      "checked": _vm._q(_vm.basic_data.manuscript, "delivered")
     },
     on: {
       "__c": function($event) {
-        _vm.$set(_vm.basic_data, 'manuscript', "delivered")
+        _vm.basic_data.manuscript = "delivered"
       }
     }
   }), _vm._v(" "), _c('label', {
     attrs: {
       "for": "delivered"
     }
-  }, [_vm._v(_vm._s(_vm.lang('Delivered')))])])]), _vm._v(" "), (_vm.basic_data['manuscript'] === 'delivered') ? [_c('button', {
+  }, [_vm._v(_vm._s(_vm.lang('Delivered')))])])]), _vm._v(" "), (_vm.basic_data.manuscript === 'delivered') ? [_c('button', {
     staticClass: "btn btn-neutral btn-addon mt-2",
     attrs: {
       "type": "button"
@@ -61487,7 +61487,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }
   }, [_vm._v(_vm._s(_vm.lang('Add Documents')))]), _vm._v(" "), _c('div', {
     staticClass: "files mt-2 mb-2"
-  }, _vm._l((_vm.basic_data['manuscript_documents']), function(document, index) {
+  }, _vm._l((_vm.basic_data.manuscript_documents), function(document, index) {
     return _c('div', {
       staticClass: "file-box file-box-l d-flex align-items-center"
     }, [_c('a', {
@@ -61539,8 +61539,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.basic_data['dotation']),
-      expression: "basic_data['dotation']"
+      value: (_vm.basic_data.dotation),
+      expression: "basic_data.dotation"
     }],
     attrs: {
       "name": "dotation",
@@ -61549,11 +61549,11 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       "value": "yes"
     },
     domProps: {
-      "checked": _vm._q(_vm.basic_data['dotation'], "yes")
+      "checked": _vm._q(_vm.basic_data.dotation, "yes")
     },
     on: {
       "__c": function($event) {
-        _vm.$set(_vm.basic_data, 'dotation', "yes")
+        _vm.basic_data.dotation = "yes"
       }
     }
   }), _vm._v(" "), _c('label', {
@@ -61566,8 +61566,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.basic_data['dotation']),
-      expression: "basic_data['dotation']"
+      value: (_vm.basic_data.dotation),
+      expression: "basic_data.dotation"
     }],
     attrs: {
       "name": "dotation",
@@ -61576,18 +61576,18 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       "value": "no"
     },
     domProps: {
-      "checked": _vm._q(_vm.basic_data['dotation'], "no")
+      "checked": _vm._q(_vm.basic_data.dotation, "no")
     },
     on: {
       "__c": function($event) {
-        _vm.$set(_vm.basic_data, 'dotation', "no")
+        _vm.basic_data.dotation = "no"
       }
     }
   }), _vm._v(" "), _c('label', {
     attrs: {
       "for": "dot-no"
     }
-  }, [_vm._v(_vm._s(_vm.lang('No')))])])]), _vm._v(" "), (_vm.basic_data['dotation'] === 'yes') ? [_c('div', {
+  }, [_vm._v(_vm._s(_vm.lang('No')))])])]), _vm._v(" "), (_vm.basic_data.dotation === 'yes') ? [_c('div', {
     staticClass: "row  mt-4"
   }, [_c('div', {
     staticClass: "col-md-6"
@@ -61597,8 +61597,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.basic_data['dotation_origin']),
-      expression: "basic_data['dotation_origin']"
+      value: (_vm.basic_data.dotation_origin),
+      expression: "basic_data.dotation_origin"
     }],
     staticClass: "form-control",
     attrs: {
@@ -61607,12 +61607,12 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       "name": "dotation-origin"
     },
     domProps: {
-      "value": (_vm.basic_data['dotation_origin'])
+      "value": (_vm.basic_data.dotation_origin)
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.$set(_vm.basic_data, 'dotation_origin', $event.target.value)
+        _vm.basic_data.dotation_origin = $event.target.value
       }
     }
   }), _vm._v(" "), _c('label', {
@@ -61627,8 +61627,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.basic_data['dotation_amount']),
-      expression: "basic_data['dotation_amount']"
+      value: (_vm.basic_data.dotation_amount),
+      expression: "basic_data.dotation_amount"
     }],
     staticClass: "form-control",
     attrs: {
@@ -61637,12 +61637,12 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       "name": "dotation-ammount"
     },
     domProps: {
-      "value": (_vm.basic_data['dotation_amount'])
+      "value": (_vm.basic_data.dotation_amount)
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.$set(_vm.basic_data, 'dotation_amount', $event.target.value)
+        _vm.basic_data.dotation_amount = $event.target.value
       }
     }
   }), _vm._v(" "), _c('label', {
@@ -61659,8 +61659,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.basic_data['possible_products']),
-      expression: "basic_data['possible_products']"
+      value: (_vm.basic_data.possible_products),
+      expression: "basic_data.possible_products"
     }],
     attrs: {
       "name": "products",
@@ -61669,23 +61669,23 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       "value": "ebook"
     },
     domProps: {
-      "checked": Array.isArray(_vm.basic_data['possible_products']) ? _vm._i(_vm.basic_data['possible_products'], "ebook") > -1 : (_vm.basic_data['possible_products'])
+      "checked": Array.isArray(_vm.basic_data.possible_products) ? _vm._i(_vm.basic_data.possible_products, "ebook") > -1 : (_vm.basic_data.possible_products)
     },
     on: {
       "__c": function($event) {
-        var $$a = _vm.basic_data['possible_products'],
+        var $$a = _vm.basic_data.possible_products,
           $$el = $event.target,
           $$c = $$el.checked ? (true) : (false);
         if (Array.isArray($$a)) {
           var $$v = "ebook",
             $$i = _vm._i($$a, $$v);
           if ($$el.checked) {
-            $$i < 0 && (_vm.basic_data['possible_products'] = $$a.concat([$$v]))
+            $$i < 0 && (_vm.basic_data.possible_products = $$a.concat([$$v]))
           } else {
-            $$i > -1 && (_vm.basic_data['possible_products'] = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
+            $$i > -1 && (_vm.basic_data.possible_products = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
           }
         } else {
-          _vm.$set(_vm.basic_data, 'possible_products', $$c)
+          _vm.basic_data.possible_products = $$c
         }
       }
     }
@@ -61699,8 +61699,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.basic_data['possible_products']),
-      expression: "basic_data['possible_products']"
+      value: (_vm.basic_data.possible_products),
+      expression: "basic_data.possible_products"
     }],
     attrs: {
       "name": "products",
@@ -61709,23 +61709,23 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       "value": "website"
     },
     domProps: {
-      "checked": Array.isArray(_vm.basic_data['possible_products']) ? _vm._i(_vm.basic_data['possible_products'], "website") > -1 : (_vm.basic_data['possible_products'])
+      "checked": Array.isArray(_vm.basic_data.possible_products) ? _vm._i(_vm.basic_data.possible_products, "website") > -1 : (_vm.basic_data.possible_products)
     },
     on: {
       "__c": function($event) {
-        var $$a = _vm.basic_data['possible_products'],
+        var $$a = _vm.basic_data.possible_products,
           $$el = $event.target,
           $$c = $$el.checked ? (true) : (false);
         if (Array.isArray($$a)) {
           var $$v = "website",
             $$i = _vm._i($$a, $$v);
           if ($$el.checked) {
-            $$i < 0 && (_vm.basic_data['possible_products'] = $$a.concat([$$v]))
+            $$i < 0 && (_vm.basic_data.possible_products = $$a.concat([$$v]))
           } else {
-            $$i > -1 && (_vm.basic_data['possible_products'] = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
+            $$i > -1 && (_vm.basic_data.possible_products = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
           }
         } else {
-          _vm.$set(_vm.basic_data, 'possible_products', $$c)
+          _vm.basic_data.possible_products = $$c
         }
       }
     }
@@ -61739,8 +61739,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.basic_data['possible_products']),
-      expression: "basic_data['possible_products']"
+      value: (_vm.basic_data.possible_products),
+      expression: "basic_data.possible_products"
     }],
     attrs: {
       "name": "products",
@@ -61749,23 +61749,23 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       "value": "app"
     },
     domProps: {
-      "checked": Array.isArray(_vm.basic_data['possible_products']) ? _vm._i(_vm.basic_data['possible_products'], "app") > -1 : (_vm.basic_data['possible_products'])
+      "checked": Array.isArray(_vm.basic_data.possible_products) ? _vm._i(_vm.basic_data.possible_products, "app") > -1 : (_vm.basic_data.possible_products)
     },
     on: {
       "__c": function($event) {
-        var $$a = _vm.basic_data['possible_products'],
+        var $$a = _vm.basic_data.possible_products,
           $$el = $event.target,
           $$c = $$el.checked ? (true) : (false);
         if (Array.isArray($$a)) {
           var $$v = "app",
             $$i = _vm._i($$a, $$v);
           if ($$el.checked) {
-            $$i < 0 && (_vm.basic_data['possible_products'] = $$a.concat([$$v]))
+            $$i < 0 && (_vm.basic_data.possible_products = $$a.concat([$$v]))
           } else {
-            $$i > -1 && (_vm.basic_data['possible_products'] = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
+            $$i > -1 && (_vm.basic_data.possible_products = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
           }
         } else {
-          _vm.$set(_vm.basic_data, 'possible_products', $$c)
+          _vm.basic_data.possible_products = $$c
         }
       }
     }
@@ -61779,8 +61779,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.basic_data['possible_products']),
-      expression: "basic_data['possible_products']"
+      value: (_vm.basic_data.possible_products),
+      expression: "basic_data.possible_products"
     }],
     attrs: {
       "name": "products",
@@ -61789,23 +61789,23 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       "value": "language"
     },
     domProps: {
-      "checked": Array.isArray(_vm.basic_data['possible_products']) ? _vm._i(_vm.basic_data['possible_products'], "language") > -1 : (_vm.basic_data['possible_products'])
+      "checked": Array.isArray(_vm.basic_data.possible_products) ? _vm._i(_vm.basic_data.possible_products, "language") > -1 : (_vm.basic_data.possible_products)
     },
     on: {
       "__c": function($event) {
-        var $$a = _vm.basic_data['possible_products'],
+        var $$a = _vm.basic_data.possible_products,
           $$el = $event.target,
           $$c = $$el.checked ? (true) : (false);
         if (Array.isArray($$a)) {
           var $$v = "language",
             $$i = _vm._i($$a, $$v);
           if ($$el.checked) {
-            $$i < 0 && (_vm.basic_data['possible_products'] = $$a.concat([$$v]))
+            $$i < 0 && (_vm.basic_data.possible_products = $$a.concat([$$v]))
           } else {
-            $$i > -1 && (_vm.basic_data['possible_products'] = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
+            $$i > -1 && (_vm.basic_data.possible_products = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
           }
         } else {
-          _vm.$set(_vm.basic_data, 'possible_products', $$c)
+          _vm.basic_data.possible_products = $$c
         }
       }
     }
@@ -61819,8 +61819,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.basic_data['possible_products']),
-      expression: "basic_data['possible_products']"
+      value: (_vm.basic_data.possible_products),
+      expression: "basic_data.possible_products"
     }],
     attrs: {
       "name": "products",
@@ -61829,23 +61829,23 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       "value": "short"
     },
     domProps: {
-      "checked": Array.isArray(_vm.basic_data['possible_products']) ? _vm._i(_vm.basic_data['possible_products'], "short") > -1 : (_vm.basic_data['possible_products'])
+      "checked": Array.isArray(_vm.basic_data.possible_products) ? _vm._i(_vm.basic_data.possible_products, "short") > -1 : (_vm.basic_data.possible_products)
     },
     on: {
       "__c": function($event) {
-        var $$a = _vm.basic_data['possible_products'],
+        var $$a = _vm.basic_data.possible_products,
           $$el = $event.target,
           $$c = $$el.checked ? (true) : (false);
         if (Array.isArray($$a)) {
           var $$v = "short",
             $$i = _vm._i($$a, $$v);
           if ($$el.checked) {
-            $$i < 0 && (_vm.basic_data['possible_products'] = $$a.concat([$$v]))
+            $$i < 0 && (_vm.basic_data.possible_products = $$a.concat([$$v]))
           } else {
-            $$i > -1 && (_vm.basic_data['possible_products'] = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
+            $$i > -1 && (_vm.basic_data.possible_products = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
           }
         } else {
-          _vm.$set(_vm.basic_data, 'possible_products', $$c)
+          _vm.basic_data.possible_products = $$c
         }
       }
     }
@@ -61859,8 +61859,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.basic_data['basic_data_note']),
-      expression: "basic_data['basic_data_note']"
+      value: (_vm.basic_data.note),
+      expression: "basic_data.note"
     }],
     staticClass: "md-textarea",
     attrs: {
@@ -61868,12 +61868,12 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       "name": "note"
     },
     domProps: {
-      "value": (_vm.basic_data['basic_data_note'])
+      "value": (_vm.basic_data.note)
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.$set(_vm.basic_data, 'basic_data_note', $event.target.value)
+        _vm.basic_data.note = $event.target.value
       }
     }
   }), _vm._v(" "), _c('label', {

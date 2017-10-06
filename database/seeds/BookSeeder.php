@@ -10,1349 +10,1349 @@ class BookSeeder extends Seeder {
 	 */
 	public function run() {
 		DB::table( 'book_categories' )->insert( [
-			[ 'name' => 'ŠKOLSKI PROGRAM', 'designation' => '01E', 'parent' => 0, 'coefficient' => 0 ], //1
-			[ 'name' => 'Dječja knjiga', 'designation' => '02D', 'parent' => 0, 'coefficient' => 0 ], //2
-			[ 'name' => 'Književnost', 'designation' => '03K', 'parent' => 0, 'coefficient' => 0 ], //3
-			[ 'name' => 'STRUČNA IZDANJA', 'designation' => '04Z', 'parent' => 0, 'coefficient' => 0 ], //4
-			[ 'name' => 'LEKSIKOGRAFIJA', 'designation' => '05J', 'parent' => 0, 'coefficient' => 0 ], //5
-			[ 'name' => 'POPULARNA KNJIGA', 'designation' => '06I', 'parent' => 0, 'coefficient' => 0 ], //6
-			[ 'name' => 'IGRAČKE', 'designation' => '07R', 'parent' => 0, 'coefficient' => 0 ], // 7
-			[ 'name' => 'Gift/pokloni', 'designation' => '08P', 'parent' => 0, 'coefficient' => 0 ], // 8
-			[ 'name' => 'Školski pribor', 'designation' => '09S', 'parent' => 0, 'coefficient' => 0 ], // 9
-			[ 'name' => 'UREDSKI PRIBOR', 'designation' => '10B', 'parent' => 0, 'coefficient' => 0 ], // 10
-			[ 'name' => 'GALANTERIJA', 'designation' => '11G', 'parent' => 0, 'coefficient' => 0 ], // 11
-			[ 'name' => 'MULTIMEDIJA', 'designation' => '12M', 'parent' => 0, 'coefficient' => 0 ], // 12
-			[ 'name' => 'LEKTIRA', 'designation' => '03L', 'parent' => 0, 'coefficient' => 0 ], // 13
+			[ 'name' => 'ŠKOLSKI PROGRAM', 'designation' => '01E', 'parent_id' => 0, 'coefficient' => 0 ], //1
+			[ 'name' => 'Dječja knjiga', 'designation' => '02D', 'parent_id' => 0, 'coefficient' => 0 ], //2
+			[ 'name' => 'Književnost', 'designation' => '03K', 'parent_id' => 0, 'coefficient' => 0 ], //3
+			[ 'name' => 'STRUČNA IZDANJA', 'designation' => '04Z', 'parent_id' => 0, 'coefficient' => 0 ], //4
+			[ 'name' => 'LEKSIKOGRAFIJA', 'designation' => '05J', 'parent_id' => 0, 'coefficient' => 0 ], //5
+			[ 'name' => 'POPULARNA KNJIGA', 'designation' => '06I', 'parent_id' => 0, 'coefficient' => 0 ], //6
+			[ 'name' => 'IGRAČKE', 'designation' => '07R', 'parent_id' => 0, 'coefficient' => 0 ], // 7
+			[ 'name' => 'Gift/pokloni', 'designation' => '08P', 'parent_id' => 0, 'coefficient' => 0 ], // 8
+			[ 'name' => 'Školski pribor', 'designation' => '09S', 'parent_id' => 0, 'coefficient' => 0 ], // 9
+			[ 'name' => 'UREDSKI PRIBOR', 'designation' => '10B', 'parent_id' => 0, 'coefficient' => 0 ], // 10
+			[ 'name' => 'GALANTERIJA', 'designation' => '11G', 'parent_id' => 0, 'coefficient' => 0 ], // 11
+			[ 'name' => 'MULTIMEDIJA', 'designation' => '12M', 'parent_id' => 0, 'coefficient' => 0 ], // 12
+			[ 'name' => 'LEKTIRA', 'designation' => '03L', 'parent_id' => 0, 'coefficient' => 0 ], // 13
 
-			[ 'name' => 'Didaktika', 'designation' => '01ED', 'parent' => '1', 'coefficient' => 60 ],
+			[ 'name' => 'Didaktika', 'designation' => '01ED', 'parent_id' => '1', 'coefficient' => 60 ],
 			[
 				'name'        => 'OSNOVNA ŠKOLA',
 				'designation' => '01EO',
-				'parent'      => '1', 'coefficient' => 45
+				'parent_id'      => '1', 'coefficient' => 45
 			],
 			[
 				'name'        => 'SREDNJA ŠKOLA',
 				'designation' => '01ES',
-				'parent'      => '1', 'coefficient' => 45
+				'parent_id'      => '1', 'coefficient' => 45
 			],
 			[
 				'name'        => 'Tečajevi jezika',
 				'designation' => '01ET',
-				'parent'      => '1', 'coefficient' => 40
+				'parent_id'      => '1', 'coefficient' => 40
 			],
 
-			[ 'name' => 'Predškola', 'designation' => '02DE', 'parent' => '2', 'coefficient' => 60 ],
+			[ 'name' => 'Predškola', 'designation' => '02DE', 'parent_id' => '2', 'coefficient' => 60 ],
 			[
 				'name'        => 'Bojanke + naljepnice',
 				'designation' => '02DN',
-				'parent'      => '2', 'coefficient' => 60
+				'parent_id'      => '2', 'coefficient' => 60
 			],
 			[
 				'name'        => 'Slikovnice',
 				'designation' => '02DS',
-				'parent'      => '2', 'coefficient' => 60
+				'parent_id'      => '2', 'coefficient' => 60
 			],
 			[
 				'name'        => 'Pjesništvo',
 				'designation' => '03KL',
-				'parent'      => '3', 'coefficient' => 60
+				'parent_id'      => '3', 'coefficient' => 60
 			],
-			[ 'name' => 'Proza', 'designation' => '03KP', 'parent' => '3', 'coefficient' => 60 ],
+			[ 'name' => 'Proza', 'designation' => '03KP', 'parent_id' => '3', 'coefficient' => 60 ],
 
 			[
 				'name'        => 'Društvene znanosti',
 				'designation' => '04ZD',
-				'parent'      => '4', 'coefficient' => 60
+				'parent_id'      => '4', 'coefficient' => 60
 			],
 			[
 				'name'        => 'Humanističke znanosti',
 				'designation' => '04ZH',
-				'parent'      => '4', 'coefficient' => 60
+				'parent_id'      => '4', 'coefficient' => 60
 			],
 			[
 				'name'        => 'Medicinske znanosti',
 				'designation' => '04ZM',
-				'parent'      => '4', 'coefficient' => 60
+				'parent_id'      => '4', 'coefficient' => 60
 			],
 			[
 				'name'        => 'Prirodne i tehničke znanosti',
 				'designation' => '04ZP',
-				'parent'      => '4', 'coefficient' => 40
+				'parent_id'      => '4', 'coefficient' => 40
 			],
 			[
 				'name'        => 'Šumarstvo,poljoprivreda, ribarstvo',
 				'designation' => '04ZS',
-				'parent'      => '4', 'coefficient' => 60
+				'parent_id'      => '4', 'coefficient' => 60
 			],
-			[ 'name' => 'Umjetnost', 'designation' => '04ZU', 'parent' => '4', 'coefficient' => 60 ],
+			[ 'name' => 'Umjetnost', 'designation' => '04ZU', 'parent_id' => '4', 'coefficient' => 60 ],
 
 			[
 				'name'        => 'Enciklopedije',
 				'designation' => '05JE',
-				'parent'      => '5', 'coefficient' => 40
+				'parent_id'      => '5', 'coefficient' => 40
 			],
 			[
 				'name'        => 'Gramatike i pravopisi',
 				'designation' => '05JG',
-				'parent'      => '5', 'coefficient' => 40
+				'parent_id'      => '5', 'coefficient' => 40
 			],
-			[ 'name' => 'Leksikoni', 'designation' => '05JL', 'parent' => '5', 'coefficient' => 60 ],
-			[ 'name' => 'Rječnici', 'designation' => '05JR', 'parent' => '5', 'coefficient' => 60 ],
+			[ 'name' => 'Leksikoni', 'designation' => '05JL', 'parent_id' => '5', 'coefficient' => 60 ],
+			[ 'name' => 'Rječnici', 'designation' => '05JR', 'parent_id' => '5', 'coefficient' => 60 ],
 
 			[
 				'name'        => 'Popularna psihologija, samopomoć, alternativa, na rubu znanosti',
 				'designation' => '06IA',
-				'parent'      => '6', 'coefficient' => 60
+				'parent_id'      => '6', 'coefficient' => 60
 			],
 			[
 				'name'        => 'Dom, Priroda,  vrt i kućni ljubimci',
 				'designation' => '06ID',
-				'parent'      => '6', 'coefficient' => 40
+				'parent_id'      => '6', 'coefficient' => 40
 			],
 			[
 				'name'        => 'Gastronomija i enologija',
 				'designation' => '06IG',
-				'parent'      => '6', 'coefficient' => 45
+				'parent_id'      => '6', 'coefficient' => 45
 			],
 			[
 				'name'        => 'Hobi i slobodno vrijeme',
 				'designation' => '06IH',
-				'parent'      => '6', 'coefficient' => 45
+				'parent_id'      => '6', 'coefficient' => 45
 			],
 			[
 				'name'        => 'Popularne monografije',
 				'designation' => '06IM',
-				'parent'      => '6', 'coefficient' => 40
+				'parent_id'      => '6', 'coefficient' => 40
 			],
 			[
 				'name'        => 'Zdravlje, obitelj roditeljstvo',
 				'designation' => '06IO',
-				'parent'      => '6', 'coefficient' => 40
+				'parent_id'      => '6', 'coefficient' => 40
 			],
 			[
 				'name'        => 'Publicistika',
 				'designation' => '06IP',
-				'parent'      => '6', 'coefficient' => 60
+				'parent_id'      => '6', 'coefficient' => 60
 			],
-			[ 'name' => 'Sport', 'designation' => '06IS', 'parent' => '6', 'coefficient' => 40 ],
-			[ 'name' => 'Turistika', 'designation' => '06IT', 'parent' => '6', 'coefficient' => 45 ],
-			[ 'name' => 'Umjetnost', 'designation' => '06IU', 'parent' => '6', 'coefficient' => 45 ],
+			[ 'name' => 'Sport', 'designation' => '06IS', 'parent_id' => '6', 'coefficient' => 40 ],
+			[ 'name' => 'Turistika', 'designation' => '06IT', 'parent_id' => '6', 'coefficient' => 45 ],
+			[ 'name' => 'Umjetnost', 'designation' => '06IU', 'parent_id' => '6', 'coefficient' => 45 ],
 			[
 				'name'        => 'Popularna znanost',
 				'designation' => '06IZ',
-				'parent'      => '6', 'coefficient' => 40
+				'parent_id'      => '6', 'coefficient' => 40
 			],
 
-			[ 'name' => 'IGRAČKE', 'designation' => '07RR', 'parent' => '7', 'coefficient' => 60 ],
+			[ 'name' => 'IGRAČKE', 'designation' => '07RR', 'parent_id' => '7', 'coefficient' => 60 ],
 			[
 				'name'        => 'Gift/pokloni',
 				'designation' => '08PP',
-				'parent'      => '8', 'coefficient' => 60
+				'parent_id'      => '8', 'coefficient' => 60
 			],
 			[
 				'name'        => 'Školski pribor ',
 				'designation' => '09SS',
-				'parent'      => '9', 'coefficient' => 60
+				'parent_id'      => '9', 'coefficient' => 60
 			],
 			[
 				'name'        => 'Pribor za arhiviranje',
 				'designation' => '10BA',
-				'parent'      => '10', 'coefficient' => 60
+				'parent_id'      => '10', 'coefficient' => 60
 			],
-			[ 'name' => 'Ostalo', 'designation' => '10BO', 'parent' => '10', 'coefficient' => 60 ],
+			[ 'name' => 'Ostalo', 'designation' => '10BO', 'parent_id' => '10', 'coefficient' => 60 ],
 			[
 				'name'        => 'Pisaći pribor',
 				'designation' => '10BP',
-				'parent'      => '10', 'coefficient' => 60
+				'parent_id'      => '10', 'coefficient' => 60
 			],
 			[
 				'name'        => 'Stolni pribor',
 				'designation' => '10BS',
-				'parent'      => '10', 'coefficient' => 60
+				'parent_id'      => '10', 'coefficient' => 60
 			],
 			[
 				'name'        => 'Pribor za  uvezivanje, pečatiranje',
 				'designation' => '10BU',
-				'parent'      => '10', 'coefficient' => 60
+				'parent_id'      => '10', 'coefficient' => 60
 			],
 			[
 				'name'        => 'Dodaci za torbe',
 				'designation' => '11GD',
-				'parent'      => '11', 'coefficient' => 60
+				'parent_id'      => '11', 'coefficient' => 60
 			],
 			[
 				'name'        => 'Futrole i etui, mape',
 				'designation' => '11GF',
-				'parent'      => '11', 'coefficient' => 60
+				'parent_id'      => '11', 'coefficient' => 60
 			],
 			[
 				'name'        => 'Novčanici',
 				'designation' => '11GN',
-				'parent'      => '11', 'coefficient' => 60
+				'parent_id'      => '11', 'coefficient' => 60
 			],
-			[ 'name' => 'Pernice', 'designation' => '11GP', 'parent' => '11', 'coefficient' => 60 ],
-			[ 'name' => 'Sezona', 'designation' => '11GS', 'parent' => '11', 'coefficient' => 60 ],
+			[ 'name' => 'Pernice', 'designation' => '11GP', 'parent_id' => '11', 'coefficient' => 60 ],
+			[ 'name' => 'Sezona', 'designation' => '11GS', 'parent_id' => '11', 'coefficient' => 60 ],
 			[
 				'name'        => 'Torbe i ruksaci',
 				'designation' => '11GT',
-				'parent'      => '11', 'coefficient' => 60
+				'parent_id'      => '11', 'coefficient' => 60
 			],
 			[
 				'name'        => 'Podatkovni mediji',
 				'designation' => '12MB',
-				'parent'      => '12', 'coefficient' => 60
+				'parent_id'      => '12', 'coefficient' => 60
 			],
 			[
 				'name'        => 'Dodaci računalnoj opremi',
 				'designation' => '12MD',
-				'parent'      => '12', 'coefficient' => 60
+				'parent_id'      => '12', 'coefficient' => 60
 			],
 			[
 				'name'        => 'Edukacija',
 				'designation' => '12ME',
-				'parent'      => '12', 'coefficient' => 60
+				'parent_id'      => '12', 'coefficient' => 60
 			],
 			[
 				'name'        => 'Fotoaparati, kamere',
 				'designation' => '12MF',
-				'parent'      => '12', 'coefficient' => 60
+				'parent_id'      => '12', 'coefficient' => 60
 			],
 			[
 				'name'        => 'Potošni informatički materijal',
 				'designation' => '12MI',
-				'parent'      => '12', 'coefficient' => 60
+				'parent_id'      => '12', 'coefficient' => 60
 			],
-			[ 'name' => 'Mobiteli', 'designation' => '12MM', 'parent' => '12', 'coefficient' => 60 ],
+			[ 'name' => 'Mobiteli', 'designation' => '12MM', 'parent_id' => '12', 'coefficient' => 60 ],
 			[
 				'name'        => 'Računalna periferija',
 				'designation' => '12MP',
-				'parent'      => '12', 'coefficient' => 60
+				'parent_id'      => '12', 'coefficient' => 60
 			],
 			[
 				'name'        => 'Računalna oprema',
 				'designation' => '12MR',
-				'parent'      => '12', 'coefficient' => 60
+				'parent_id'      => '12', 'coefficient' => 60
 			],
-			[ 'name' => 'Sezona', 'designation' => '12MS', 'parent' => '12', 'coefficient' => 60 ],
-			[ 'name' => 'Zabava', 'designation' => '12MZ', 'parent' => '12', 'coefficient' => 60 ],
+			[ 'name' => 'Sezona', 'designation' => '12MS', 'parent_id' => '12', 'coefficient' => 60 ],
+			[ 'name' => 'Zabava', 'designation' => '12MZ', 'parent_id' => '12', 'coefficient' => 60 ],
 			[
 				'name'        => 'LEKTIRA OBVEZATNA',
 				'designation' => '03LO',
-				'parent'      => '13', 'coefficient' => 60
+				'parent_id'      => '13', 'coefficient' => 60
 			],
 			[
 				'name'        => 'LEKTIRA NEOBVEZATNA',
 				'designation' => '03LP',
-				'parent'      => '13', 'coefficient' => 60
+				'parent_id'      => '13', 'coefficient' => 60
 			],
 
 			[
 				'name'        => 'Didaktika osnovna škola',
 				'designation' => '01ED1',
-				'parent'      => '14', 'coefficient' => 0
+				'parent_id'      => '14', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Didaktika srednja škola',
 				'designation' => '01ED2',
-				'parent'      => '14', 'coefficient' => 0
+				'parent_id'      => '14', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Didaktika testovi',
 				'designation' => '01ED3',
-				'parent'      => '14', 'coefficient' => 0
+				'parent_id'      => '14', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Mape za likovni',
 				'designation' => '01ED4',
-				'parent'      => '14', 'coefficient' => 0
+				'parent_id'      => '14', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Atlasi i karte',
 				'designation' => '01ED5',
-				'parent'      => '14', 'coefficient' => 0
+				'parent_id'      => '14', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Piručnici za nastavnike uz udžbenike',
 				'designation' => '01ED6',
-				'parent'      => '14', 'coefficient' => 0
+				'parent_id'      => '14', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Plakati, cd-i, flash kartice i ostali materijali za nastavu',
 				'designation' => '01ED7',
-				'parent'      => '14', 'coefficient' => 0
+				'parent_id'      => '14', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Stari udžbenici drugih izdavača',
 				'designation' => '01ED8',
-				'parent'      => '14', 'coefficient' => 0
+				'parent_id'      => '14', 'coefficient' => 0
 			],
 
 			[
 				'name'        => 'Osnovna škola A razredna nastava',
 				'designation' => '01EO1',
-				'parent'      => '15', 'coefficient' => 0
+				'parent_id'      => '15', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Osnovna škola B predmetna nastava',
 				'designation' => '01EO2',
-				'parent'      => '15', 'coefficient' => 0
+				'parent_id'      => '15', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Osnovna škola C sva',
 				'designation' => '01EO3',
-				'parent'      => '15', 'coefficient' => 0
+				'parent_id'      => '15', 'coefficient' => 0
 			],
 
 			[
 				'name'        => 'Srednja škola - gimnazije',
 				'designation' => '01ES1',
-				'parent'      => '16', 'coefficient' => 0
+				'parent_id'      => '16', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Srednja škola - strukovne škole',
 				'designation' => '01ES2',
-				'parent'      => '16', 'coefficient' => 0
+				'parent_id'      => '16', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Srednja škola sva',
 				'designation' => '01ES3',
-				'parent'      => '16', 'coefficient' => 0
+				'parent_id'      => '16', 'coefficient' => 0
 			],
 
 			[
 				'name'        => 'Udžbenici za tečajeve',
 				'designation' => '01ET1',
-				'parent'      => '17', 'coefficient' => 0
+				'parent_id'      => '17', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Radne bilježnice za tečajeve',
 				'designation' => '01ET2',
-				'parent'      => '17', 'coefficient' => 0
+				'parent_id'      => '17', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Dodaci uz tečaj za učenike',
 				'designation' => '01ET3',
-				'parent'      => '17', 'coefficient' => 0
+				'parent_id'      => '17', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Dodaci uz tečaj za profesore',
 				'designation' => '01ET4',
-				'parent'      => '17', 'coefficient' => 0
+				'parent_id'      => '17', 'coefficient' => 0
 			],
 
 			[
 				'name'        => 'Vježbenice mala škola',
 				'designation' => '02DE1',
-				'parent'      => '18', 'coefficient' => 0
+				'parent_id'      => '18', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Početno učenje jezika',
 				'designation' => '02DE2',
-				'parent'      => '18', 'coefficient' => 0
+				'parent_id'      => '18', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Dječji atlasi',
 				'designation' => '02DE3',
-				'parent'      => '18', 'coefficient' => 0
+				'parent_id'      => '18', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Dječje enciklopedije i rječnici',
 				'designation' => '02DE4',
-				'parent'      => '18', 'coefficient' => 0
+				'parent_id'      => '18', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Slikovnice za igru i učenje',
 				'designation' => '02DE5',
-				'parent'      => '18', 'coefficient' => 0
+				'parent_id'      => '18', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Priručnici za roditelje i dodatni materijali',
 				'designation' => '02DE6',
-				'parent'      => '18', 'coefficient' => 0
+				'parent_id'      => '18', 'coefficient' => 0
 			],
 
-			[ 'name' => 'Bojanke', 'designation' => '02DN1', 'parent' => '19', 'coefficient' => 60 ],
+			[ 'name' => 'Bojanke', 'designation' => '02DN1', 'parent_id' => '19', 'coefficient' => 60 ],
 			[
 				'name'        => 'Slikovnice sa naljepnicama',
 				'designation' => '02DN2',
-				'parent'      => '19', 'coefficient' => 0
+				'parent_id'      => '19', 'coefficient' => 0
 			],
 
 			[
 				'name'        => 'Audio slikovnice',
 				'designation' => '02DS1',
-				'parent'      => '20', 'coefficient' => 0
+				'parent_id'      => '20', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Slikovnice sa igračkama',
 				'designation' => '02DS2',
-				'parent'      => '20', 'coefficient' => 0
+				'parent_id'      => '20', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Slikovnice pjesmarice',
 				'designation' => '02DS3',
-				'parent'      => '20', 'coefficient' => 0
+				'parent_id'      => '20', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Religijske slikovnice',
 				'designation' => '02DS4',
-				'parent'      => '20', 'coefficient' => 0
+				'parent_id'      => '20', 'coefficient' => 0
 			],
 			[
 				'name'        => '3D slikovnice',
 				'designation' => '02DS5',
-				'parent'      => '20', 'coefficient' => 0
+				'parent_id'      => '20', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Sezonske slikovnice - Uskrs, Božić',
 				'designation' => '02DS6',
-				'parent'      => '20', 'coefficient' => 0
+				'parent_id'      => '20', 'coefficient' => 0
 			],
 
-			[ 'name' => 'Poezija', 'designation' => '03KL1', 'parent' => '21', 'coefficient' => 0 ],
+			[ 'name' => 'Poezija', 'designation' => '03KL1', 'parent_id' => '21', 'coefficient' => 0 ],
 
 			[
 				'name'        => 'Antologije i izbori',
 				'designation' => '03KP1',
-				'parent'      => '22', 'coefficient' => 0
+				'parent_id'      => '22', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Dječja književnost',
 				'designation' => '03KP2',
-				'parent'      => '22', 'coefficient' => 0
+				'parent_id'      => '22', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Teen, književnost za mlade',
 				'designation' => '03KP3',
-				'parent'      => '22', 'coefficient' => 0
+				'parent_id'      => '22', 'coefficient' => 0
 			],
-			[ 'name' => 'Klasici', 'designation' => '03KP4', 'parent' => '22', 'coefficient' => 0 ],
+			[ 'name' => 'Klasici', 'designation' => '03KP4', 'parent_id' => '22', 'coefficient' => 0 ],
 			[
 				'name'        => 'Suvremena književnost',
 				'designation' => '03KP5',
-				'parent'      => '22', 'coefficient' => 0
+				'parent_id'      => '22', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Akcija i avantura, pustolovni romani',
 				'designation' => '03KP6',
-				'parent'      => '22', 'coefficient' => 0
+				'parent_id'      => '22', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Znanstvena fantastika i fantazija',
 				'designation' => '03KP7',
-				'parent'      => '22', 'coefficient' => 0
+				'parent_id'      => '22', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Trileri i krimi romani',
 				'designation' => '03KP8',
-				'parent'      => '22', 'coefficient' => 0
+				'parent_id'      => '22', 'coefficient' => 0
 			],
-			[ 'name' => 'Horor', 'designation' => '03KP9', 'parent' => '22', 'coefficient' => 0 ],
+			[ 'name' => 'Horor', 'designation' => '03KP9', 'parent_id' => '22', 'coefficient' => 0 ],
 			[
 				'name'        => 'Ljubavni, erotski i chick lit romani',
 				'designation' => '03KP10',
-				'parent'      => '22', 'coefficient' => 0
+				'parent_id'      => '22', 'coefficient' => 0
 			],
 			[
 				'name'        => 'New age',
 				'designation' => '03KP11',
-				'parent'      => '22', 'coefficient' => 0
+				'parent_id'      => '22', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Povijesni romani',
 				'designation' => '03KP12',
-				'parent'      => '22', 'coefficient' => 0
+				'parent_id'      => '22', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Putopisi',
 				'designation' => '03KP13',
-				'parent'      => '22', 'coefficient' => 0
+				'parent_id'      => '22', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Humor, humoristički roman',
 				'designation' => '03KP14',
-				'parent'      => '22', 'coefficient' => 0
+				'parent_id'      => '22', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Knjižice na dar - aforizmi, poslovice, misli',
 				'designation' => '03KP15',
-				'parent'      => '22', 'coefficient' => 0
+				'parent_id'      => '22', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Pripovijetke, novele - kraća literarna djela',
 				'designation' => '03KP16',
-				'parent'      => '22', 'coefficient' => 0
+				'parent_id'      => '22', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Kršćanska literatura',
 				'designation' => '03KP17',
-				'parent'      => '22', 'coefficient' => 0
+				'parent_id'      => '22', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Biografije i memoari',
 				'designation' => '03KP18',
-				'parent'      => '22', 'coefficient' => 0
+				'parent_id'      => '22', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Eseji i kritike',
 				'designation' => '03KP19',
-				'parent'      => '22', 'coefficient' => 0
+				'parent_id'      => '22', 'coefficient' => 0
 			],
 
 
 			[
 				'name'        => 'Ekonomija',
 				'designation' => '04ZD1',
-				'parent'      => '23', 'coefficient' => 0
+				'parent_id'      => '23', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Pedagogija',
 				'designation' => '04ZD2',
-				'parent'      => '23', 'coefficient' => 0
+				'parent_id'      => '23', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Novinarstvo I komunikologija',
 				'designation' => '04ZD3',
-				'parent'      => '23', 'coefficient' => 0
+				'parent_id'      => '23', 'coefficient' => 0
 			],
-			[ 'name' => 'Pravo', 'designation' => '04ZD4', 'parent' => '23', 'coefficient' => 0 ],
+			[ 'name' => 'Pravo', 'designation' => '04ZD4', 'parent_id' => '23', 'coefficient' => 0 ],
 			[
 				'name'        => 'Kineziologija',
 				'designation' => '04ZD5',
-				'parent'      => '23', 'coefficient' => 0
+				'parent_id'      => '23', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Politologija',
 				'designation' => '04ZD6',
-				'parent'      => '23', 'coefficient' => 0
+				'parent_id'      => '23', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Psihologija',
 				'designation' => '04ZD7',
-				'parent'      => '23', 'coefficient' => 0
+				'parent_id'      => '23', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Edukacijsko rehabilitacijske znanosti',
 				'designation' => '04ZD8',
-				'parent'      => '23', 'coefficient' => 0
+				'parent_id'      => '23', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Sociologija',
 				'designation' => '04ZD9',
-				'parent'      => '23', 'coefficient' => 0
+				'parent_id'      => '23', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Turizam i ugostiteljstvo',
 				'designation' => '04ZD10',
-				'parent'      => '23', 'coefficient' => 0
+				'parent_id'      => '23', 'coefficient' => 0
 			],
 
 			[
 				'name'        => 'Antropologija i etnologija',
 				'designation' => '04ZH1',
-				'parent'      => '24', 'coefficient' => 0
+				'parent_id'      => '24', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Bibliotekarstvo',
 				'designation' => '04ZH2',
-				'parent'      => '24', 'coefficient' => 0
+				'parent_id'      => '24', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Filozofija, etika, logika',
 				'designation' => '04ZH3',
-				'parent'      => '24', 'coefficient' => 0
+				'parent_id'      => '24', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Filologija, lingvistika, teorija i povijest književnosti',
 				'designation' => '04ZH4',
-				'parent'      => '24', 'coefficient' => 0
+				'parent_id'      => '24', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Arheologija',
 				'designation' => '04ZH5',
-				'parent'      => '24', 'coefficient' => 0
+				'parent_id'      => '24', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Povijest',
 				'designation' => '04ZH6',
-				'parent'      => '24', 'coefficient' => 0
+				'parent_id'      => '24', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Religija, teologija, mitologija',
 				'designation' => '04ZH7',
-				'parent'      => '24', 'coefficient' => 0
+				'parent_id'      => '24', 'coefficient' => 0
 			],
 
 			[
 				'name'        => 'Medicina',
 				'designation' => '04ZM1',
-				'parent'      => '25', 'coefficient' => 0
+				'parent_id'      => '25', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Farmacija',
 				'designation' => '04ZM2',
-				'parent'      => '25', 'coefficient' => 0
+				'parent_id'      => '25', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Stomatologija',
 				'designation' => '04ZM3',
-				'parent'      => '25', 'coefficient' => 0
+				'parent_id'      => '25', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Veterina',
 				'designation' => '04ZM4',
-				'parent'      => '25', 'coefficient' => 0
+				'parent_id'      => '25', 'coefficient' => 0
 			],
 
 			[
 				'name'        => 'Matematika',
 				'designation' => '04ZP1',
-				'parent'      => '26', 'coefficient' => 0
+				'parent_id'      => '26', 'coefficient' => 0
 			],
-			[ 'name' => 'Fizika', 'designation' => '04ZP2', 'parent' => '26', 'coefficient' => 0 ],
+			[ 'name' => 'Fizika', 'designation' => '04ZP2', 'parent_id' => '26', 'coefficient' => 0 ],
 			[
 				'name'        => 'Astronomija',
 				'designation' => '04ZP3',
-				'parent'      => '26', 'coefficient' => 0
+				'parent_id'      => '26', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Meteorologija',
 				'designation' => '04ZP4',
-				'parent'      => '26', 'coefficient' => 0
+				'parent_id'      => '26', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Geografija',
 				'designation' => '04ZP5',
-				'parent'      => '26', 'coefficient' => 0
+				'parent_id'      => '26', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Geologija',
 				'designation' => '04ZP6',
-				'parent'      => '26', 'coefficient' => 0
+				'parent_id'      => '26', 'coefficient' => 0
 			],
-			[ 'name' => 'Kemija', 'designation' => '04ZP7', 'parent' => '26', 'coefficient' => 0 ],
+			[ 'name' => 'Kemija', 'designation' => '04ZP7', 'parent_id' => '26', 'coefficient' => 0 ],
 			[
 				'name'        => 'Biologija',
 				'designation' => '04ZP8',
-				'parent'      => '26', 'coefficient' => 0
+				'parent_id'      => '26', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Ekologija',
 				'designation' => '04ZP9',
-				'parent'      => '26', 'coefficient' => 0
+				'parent_id'      => '26', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Elektrotehnika',
 				'designation' => '04ZP10',
-				'parent'      => '26', 'coefficient' => 0
+				'parent_id'      => '26', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Informacijska tehnologija i elektronika',
 				'designation' => '04ZP11',
-				'parent'      => '26', 'coefficient' => 0
+				'parent_id'      => '26', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Građevinarstvo',
 				'designation' => '04ZP12',
-				'parent'      => '26', 'coefficient' => 0
+				'parent_id'      => '26', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Strojarstvo, metalurgija',
 				'designation' => '04ZP13',
-				'parent'      => '26', 'coefficient' => 0
+				'parent_id'      => '26', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Grafička djelatnost',
 				'designation' => '04ZP14',
-				'parent'      => '26', 'coefficient' => 0
+				'parent_id'      => '26', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Pomorstvo i promet',
 				'designation' => '04ZP15',
-				'parent'      => '26', 'coefficient' => 0
+				'parent_id'      => '26', 'coefficient' => 0
 			],
 
 
 			[
 				'name'        => 'Šumarstvo,poljoprivreda, ribarstvo',
 				'designation' => '04ZS1',
-				'parent'      => '27', 'coefficient' => 0
+				'parent_id'      => '27', 'coefficient' => 0
 			],
 
 			[
 				'name'        => 'Povijest umjentosti',
 				'designation' => '04ZU1',
-				'parent'      => '28', 'coefficient' => 0
+				'parent_id'      => '28', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Arhitektura',
 				'designation' => '04ZU2',
-				'parent'      => '28', 'coefficient' => 0
+				'parent_id'      => '28', 'coefficient' => 0
 			],
-			[ 'name' => 'Dizajn', 'designation' => '04ZU3', 'parent' => '28', 'coefficient' => 0 ],
+			[ 'name' => 'Dizajn', 'designation' => '04ZU3', 'parent_id' => '28', 'coefficient' => 0 ],
 			[
 				'name'        => 'Fotografija',
 				'designation' => '04ZU4',
-				'parent'      => '28', 'coefficient' => 0
+				'parent_id'      => '28', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Glazbena umjetnost, ples',
 				'designation' => '04ZU5',
-				'parent'      => '28', 'coefficient' => 0
+				'parent_id'      => '28', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Filmska umjetnost',
 				'designation' => '04ZU6',
-				'parent'      => '28', 'coefficient' => 0
+				'parent_id'      => '28', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Kazališna i scenska umjetnost',
 				'designation' => '04ZU7',
-				'parent'      => '28', 'coefficient' => 0
+				'parent_id'      => '28', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Likovna umjetnost',
 				'designation' => '04ZU8',
-				'parent'      => '28', 'coefficient' => 0
+				'parent_id'      => '28', 'coefficient' => 0
 			],
-			[ 'name' => 'Moda', 'designation' => '04ZU9', 'parent' => '28', 'coefficient' => 0 ],
-			[ 'name' => 'Strip', 'designation' => '04ZU10', 'parent' => '28', 'coefficient' => 0 ],
+			[ 'name' => 'Moda', 'designation' => '04ZU9', 'parent_id' => '28', 'coefficient' => 0 ],
+			[ 'name' => 'Strip', 'designation' => '04ZU10', 'parent_id' => '28', 'coefficient' => 0 ],
 
 			[
 				'name'        => 'Enciklopedije',
 				'designation' => '05JE1',
-				'parent'      => '29', 'coefficient' => 0
+				'parent_id'      => '29', 'coefficient' => 0
 			],
 
 			[
 				'name'        => 'Hrvatske gramatike i jezični priručnici',
 				'designation' => '05JG1',
-				'parent'      => '30', 'coefficient' => 0
+				'parent_id'      => '30', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Strane gramatike i jezični priručnici',
 				'designation' => '05JG2',
-				'parent'      => '30', 'coefficient' => 0
+				'parent_id'      => '30', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Pravopisi',
 				'designation' => '05JG3',
-				'parent'      => '30', 'coefficient' => 0
+				'parent_id'      => '30', 'coefficient' => 0
 			],
 
 			[
 				'name'        => 'Leksikoni',
 				'designation' => '05JL1',
-				'parent'      => '31', 'coefficient' => 0
+				'parent_id'      => '31', 'coefficient' => 0
 			],
 
 			[
 				'name'        => 'Rječnici opći - mali',
 				'designation' => '05JR1',
-				'parent'      => '32', 'coefficient' => 0
+				'parent_id'      => '32', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Rječnici opći - veliki',
 				'designation' => '05JR2',
-				'parent'      => '32', 'coefficient' => 0
+				'parent_id'      => '32', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Rječnici opći - srednji',
 				'designation' => '05JR3',
-				'parent'      => '32', 'coefficient' => 0
+				'parent_id'      => '32', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Stručni rječnici',
 				'designation' => '05JR4',
-				'parent'      => '32', 'coefficient' => 0
+				'parent_id'      => '32', 'coefficient' => 0
 			],
 
 			[
 				'name'        => 'Alternativa - alternativna medicina i  ezoterija',
 				'designation' => '06IA1',
-				'parent'      => '33', 'coefficient' => 0
+				'parent_id'      => '33', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Popularna psihologija, samopomoć',
 				'designation' => '06IA2',
-				'parent'      => '33', 'coefficient' => 0
+				'parent_id'      => '33', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Na rubu znanosti',
 				'designation' => '06IA3',
-				'parent'      => '33', 'coefficient' => 0
+				'parent_id'      => '33', 'coefficient' => 0
 			],
 
 			[
 				'name'        => 'Uređenje doma',
 				'designation' => '06ID1',
-				'parent'      => '34', 'coefficient' => 0
+				'parent_id'      => '34', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Vrtlarstvo i hortikultura',
 				'designation' => '06ID2',
-				'parent'      => '34', 'coefficient' => 0
+				'parent_id'      => '34', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Kućni ljubimci',
 				'designation' => '06ID3',
-				'parent'      => '34', 'coefficient' => 0
+				'parent_id'      => '34', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Priroda - životinje, drveće, planine, šume',
 				'designation' => '06ID4',
-				'parent'      => '34', 'coefficient' => 0
+				'parent_id'      => '34', 'coefficient' => 0
 			],
 
 			[
 				'name'        => 'Kuharice',
 				'designation' => '06IG1',
-				'parent'      => '35', 'coefficient' => 0
+				'parent_id'      => '35', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Pića - enologija',
 				'designation' => '06IG2',
-				'parent'      => '35', 'coefficient' => 0
+				'parent_id'      => '35', 'coefficient' => 0
 			],
 
 			[
 				'name'        => 'Rukotvorine, origami, sakupljanje, numizmatika',
 				'designation' => '06IH1',
-				'parent'      => '36', 'coefficient' => 0
+				'parent_id'      => '36', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Društvene igre',
 				'designation' => '06IH2',
-				'parent'      => '36', 'coefficient' => 0
+				'parent_id'      => '36', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Planinarenje i alpinizam',
 				'designation' => '06IH3',
-				'parent'      => '36', 'coefficient' => 0
+				'parent_id'      => '36', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Lov i ribolov',
 				'designation' => '06IH4',
-				'parent'      => '36', 'coefficient' => 0
+				'parent_id'      => '36', 'coefficient' => 0
 			],
-			[ 'name' => 'Oružje', 'designation' => '06IH5', 'parent' => '36', 'coefficient' => 0 ],
+			[ 'name' => 'Oružje', 'designation' => '06IH5', 'parent_id' => '36', 'coefficient' => 0 ],
 
 			[
 				'name'        => 'Umjetnost',
 				'designation' => '06IM1',
-				'parent'      => '37', 'coefficient' => 0
+				'parent_id'      => '37', 'coefficient' => 0
 			],
 
 			[
 				'name'        => 'Ljepota i zdravlje',
 				'designation' => '06IO1',
-				'parent'      => '38', 'coefficient' => 0
+				'parent_id'      => '38', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Fitness, vježbanje',
 				'designation' => '06IO2',
-				'parent'      => '38', 'coefficient' => 0
+				'parent_id'      => '38', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Zdrava prehrana',
 				'designation' => '06IO3',
-				'parent'      => '38', 'coefficient' => 0
+				'parent_id'      => '38', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Dijete - zdravo  mršavljenje',
 				'designation' => '06IO4',
-				'parent'      => '38', 'coefficient' => 0
+				'parent_id'      => '38', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Ljekovito bilje - uzgoj, lječenje, prepoznavanje',
 				'designation' => '06IO5',
-				'parent'      => '38', 'coefficient' => 0
+				'parent_id'      => '38', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Ljubav i odnosi',
 				'designation' => '06IO6',
-				'parent'      => '38', 'coefficient' => 0
+				'parent_id'      => '38', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Trudnoća',
 				'designation' => '06IO7',
-				'parent'      => '38', 'coefficient' => 0
+				'parent_id'      => '38', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Majčinstvo + radosnice',
 				'designation' => '06IO8',
-				'parent'      => '38', 'coefficient' => 0
+				'parent_id'      => '38', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Odgoj, razvoj i pravilna prehrana djeteta',
 				'designation' => '06IO9',
-				'parent'      => '38', 'coefficient' => 0
+				'parent_id'      => '38', 'coefficient' => 0
 			],
 
 			[
 				'name'        => 'Biografije',
 				'designation' => '06IP1',
-				'parent'      => '39', 'coefficient' => 0
+				'parent_id'      => '39', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Povijest i politika',
 				'designation' => '06IP2',
-				'parent'      => '39', 'coefficient' => 0
+				'parent_id'      => '39', 'coefficient' => 0
 			],
 
 			[
 				'name'        => 'Sportovi',
 				'designation' => '06IS1',
-				'parent'      => '40', 'coefficient' => 0
+				'parent_id'      => '40', 'coefficient' => 0
 			],
 
 			[
 				'name'        => 'Turističke monografije, vodiči',
 				'designation' => '06IT1',
-				'parent'      => '41', 'coefficient' => 0
+				'parent_id'      => '41', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Turističke karte, planinarske karte, auto karte',
 				'designation' => '06IT2',
-				'parent'      => '41', 'coefficient' => 0
+				'parent_id'      => '41', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Monografije gradova, država',
 				'designation' => '06IT3',
-				'parent'      => '41', 'coefficient' => 0
+				'parent_id'      => '41', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Putopisi',
 				'designation' => '06IT4',
-				'parent'      => '41', 'coefficient' => 0
+				'parent_id'      => '41', 'coefficient' => 0
 			],
 
 			[
 				'name'        => 'Povijest umjentosti',
 				'designation' => '06IU1',
-				'parent'      => '42', 'coefficient' => 0
+				'parent_id'      => '42', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Arhitektura',
 				'designation' => '06IU2',
-				'parent'      => '42', 'coefficient' => 0
+				'parent_id'      => '42', 'coefficient' => 0
 			],
-			[ 'name' => 'Dizajn', 'designation' => '06IU3', 'parent' => '42', 'coefficient' => 0 ],
+			[ 'name' => 'Dizajn', 'designation' => '06IU3', 'parent_id' => '42', 'coefficient' => 0 ],
 			[
 				'name'        => 'Fotografija',
 				'designation' => '06IU4',
-				'parent'      => '42', 'coefficient' => 0
+				'parent_id'      => '42', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Glazbena umjetnost, ples',
 				'designation' => '06IU5',
-				'parent'      => '42', 'coefficient' => 0
+				'parent_id'      => '42', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Filmska umjetnost',
 				'designation' => '06IU6',
-				'parent'      => '42', 'coefficient' => 0
+				'parent_id'      => '42', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Kazališna i scenska umjetnost',
 				'designation' => '06IU7',
-				'parent'      => '42', 'coefficient' => 0
+				'parent_id'      => '42', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Likovna umjetnost',
 				'designation' => '06IU8',
-				'parent'      => '42', 'coefficient' => 0
+				'parent_id'      => '42', 'coefficient' => 0
 			],
-			[ 'name' => 'Moda', 'designation' => '06IU9', 'parent' => '42', 'coefficient' => 0 ],
-			[ 'name' => 'Strip', 'designation' => '06IU10', 'parent' => '42', 'coefficient' => 0 ],
+			[ 'name' => 'Moda', 'designation' => '06IU9', 'parent_id' => '42', 'coefficient' => 0 ],
+			[ 'name' => 'Strip', 'designation' => '06IU10', 'parent_id' => '42', 'coefficient' => 0 ],
 
 			[
 				'name'        => 'Popularna ekonomija',
 				'designation' => '06IZ1',
-				'parent'      => '43', 'coefficient' => 0
+				'parent_id'      => '43', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Popularna znanost',
 				'designation' => '06IZ2',
-				'parent'      => '43', 'coefficient' => 0
+				'parent_id'      => '43', 'coefficient' => 0
 			],
 
 			[
 				'name'        => 'Edukativa i instrumenti',
 				'designation' => '07RRE',
-				'parent'      => '44', 'coefficient' => 0
+				'parent_id'      => '44', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Igre i igračke',
 				'designation' => '07RRI',
-				'parent'      => '44', 'coefficient' => 0
+				'parent_id'      => '44', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Kreativa',
 				'designation' => '07RRK',
-				'parent'      => '44', 'coefficient' => 0
+				'parent_id'      => '44', 'coefficient' => 0
 			],
-			[ 'name' => 'Sezona', 'designation' => '07RRS', 'parent' => '44', 'coefficient' => 0 ],
+			[ 'name' => 'Sezona', 'designation' => '07RRS', 'parent_id' => '44', 'coefficient' => 0 ],
 
 			[
 				'name'        => 'Aroma setovi, svijeće',
 				'designation' => '08PPA',
-				'parent'      => '45', 'coefficient' => 0
+				'parent_id'      => '45', 'coefficient' => 0
 			],
 			[
 				'name'        => 'ČESTITKE, RAZGLEDNICE,  POZIVNICE, BOOKMARKERI, RADOSNICE',
 				'designation' => '08PPC',
-				'parent'      => '45', 'coefficient' => 0
+				'parent_id'      => '45', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Notesi, planeri,dnevnici',
 				'designation' => '08PPD',
-				'parent'      => '45', 'coefficient' => 0
+				'parent_id'      => '45', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Figurice, Suveniri, Šalice, T shirts',
 				'designation' => '08PPF',
-				'parent'      => '45', 'coefficient' => 0
+				'parent_id'      => '45', 'coefficient' => 0
 			],
 			[
 				'name'        => 'KIŠOBRANI, SUNCOBRANI',
 				'designation' => '08PPI',
-				'parent'      => '45', 'coefficient' => 0
+				'parent_id'      => '45', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Kalendari i posteri',
 				'designation' => '08PPK',
-				'parent'      => '45', 'coefficient' => 0
+				'parent_id'      => '45', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Nakit, bedževi, privjesci magneti',
 				'designation' => '08PPN',
-				'parent'      => '45', 'coefficient' => 0
+				'parent_id'      => '45', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Party ( papirnati tanjuri i čaše, pribor za jelo, salvete, svjećice, baloni)',
 				'designation' => '08PPP',
-				'parent'      => '45', 'coefficient' => 0
+				'parent_id'      => '45', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Božić nakit za bor, dekoracije, adventski vjenci, lampice, ostalo',
 				'designation' => '08PPR',
-				'parent'      => '45', 'coefficient' => 0
+				'parent_id'      => '45', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Sezona karneval, maske, šminka, perike, odjeća Uskrs, boje za jaja',
 				'designation' => '08PPS',
-				'parent'      => '45', 'coefficient' => 0
+				'parent_id'      => '45', 'coefficient' => 0
 			],
-			[ 'name' => 'Satovi', 'designation' => '08PPT', 'parent' => '45', 'coefficient' => 0 ],
+			[ 'name' => 'Satovi', 'designation' => '08PPT', 'parent_id' => '45', 'coefficient' => 0 ],
 			[
 				'name'        => 'Ukrasni artikli i vrećice, ukrasni papir, fotoalbumi',
 				'designation' => '08PPU',
-				'parent'      => '45', 'coefficient' => 0
+				'parent_id'      => '45', 'coefficient' => 0
 			],
 
 			[
 				'name'        => 'Bilježnice',
 				'designation' => '09SSB',
-				'parent'      => '46', 'coefficient' => 0
+				'parent_id'      => '46', 'coefficient' => 0
 			],
 			[
 				'name'        => 'NALJEPNICE, ETIKETE',
 				'designation' => '09SSE',
-				'parent'      => '46', 'coefficient' => 0
+				'parent_id'      => '46', 'coefficient' => 0
 			],
 			[
 				'name'        => 'BLOKOVI, POST-IT, KOLAŽ  PAPIR',
 				'designation' => '09SSL',
-				'parent'      => '46', 'coefficient' => 0
+				'parent_id'      => '46', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Školski obrasci',
 				'designation' => '09SSM',
-				'parent'      => '46', 'coefficient' => 0
+				'parent_id'      => '46', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Nastavna pomagala  (mikroskopi, globusi, zemljopisne karte zidne, stolne, ploče)',
 				'designation' => '09SSN',
-				'parent'      => '46', 'coefficient' => 0
+				'parent_id'      => '46', 'coefficient' => 0
 			],
-			[ 'name' => 'Omoti', 'designation' => '09SSO', 'parent' => '46', 'coefficient' => 0 ],
+			[ 'name' => 'Omoti', 'designation' => '09SSO', 'parent_id' => '46', 'coefficient' => 0 ],
 			[
 				'name'        => 'Pribor za crtanje, modeliranje i geometriju i kaligrafiju',
 				'designation' => '09SSP',
-				'parent'      => '46', 'coefficient' => 0
+				'parent_id'      => '46', 'coefficient' => 0
 			],
 
 			[
 				'name'        => 'Fascikli',
 				'designation' => '10BAF',
-				'parent'      => '47', 'coefficient' => 0
+				'parent_id'      => '47', 'coefficient' => 0
 			],
-			[ 'name' => 'KUVERTE', 'designation' => '10BAK', 'parent' => '47', 'coefficient' => 0 ],
+			[ 'name' => 'KUVERTE', 'designation' => '10BAK', 'parent_id' => '47', 'coefficient' => 0 ],
 			[
 				'name'        => 'Registratori, mape',
 				'designation' => '10BAR',
-				'parent'      => '47', 'coefficient' => 0
+				'parent_id'      => '47', 'coefficient' => 0
 			],
 
 			[
 				'name'        => 'Koševi za smeće',
 				'designation' => '10BOK',
-				'parent'      => '48', 'coefficient' => 0
+				'parent_id'      => '48', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Zaštitni kodovi',
 				'designation' => '10BOZ',
-				'parent'      => '48', 'coefficient' => 0
+				'parent_id'      => '48', 'coefficient' => 0
 			],
 
 			[
 				'name'        => 'Gumice, šiljila',
 				'designation' => '10BPG',
-				'parent'      => '49', 'coefficient' => 0
+				'parent_id'      => '49', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Korektori',
 				'designation' => '10BPK',
-				'parent'      => '49', 'coefficient' => 0
+				'parent_id'      => '49', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Olovke po vrstama',
 				'designation' => '10BPO',
-				'parent'      => '49', 'coefficient' => 0
+				'parent_id'      => '49', 'coefficient' => 0
 			],
-			[ 'name' => 'Patrone', 'designation' => '10BPP', 'parent' => '49', 'coefficient' => 0 ],
+			[ 'name' => 'Patrone', 'designation' => '10BPP', 'parent_id' => '49', 'coefficient' => 0 ],
 			[
 				'name'        => 'Pisaći setovi',
 				'designation' => '10BPS',
-				'parent'      => '49', 'coefficient' => 0
+				'parent_id'      => '49', 'coefficient' => 0
 			],
 
 			[
 				'name'        => 'Kalkulatori',
 				'designation' => '10BSK',
-				'parent'      => '50', 'coefficient' => 0
+				'parent_id'      => '50', 'coefficient' => 0
 			],
-			[ 'name' => 'Škare', 'designation' => '10BSM', 'parent' => '50', 'coefficient' => 0 ],
+			[ 'name' => 'Škare', 'designation' => '10BSM', 'parent_id' => '50', 'coefficient' => 0 ],
 			[
 				'name'        => 'Stalci, bušilice, spajalice',
 				'designation' => '10BSS',
-				'parent'      => '50', 'coefficient' => 0
+				'parent_id'      => '50', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Tape-ovi,  ljepila',
 				'designation' => '10BST',
-				'parent'      => '50', 'coefficient' => 0
+				'parent_id'      => '50', 'coefficient' => 0
 			],
 
 			[
 				'name'        => 'TISKANICE',
 				'designation' => '10BUA',
-				'parent'      => '51', 'coefficient' => 0
+				'parent_id'      => '51', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Fotokopirni papir',
 				'designation' => '10BUF',
-				'parent'      => '51', 'coefficient' => 0
+				'parent_id'      => '51', 'coefficient' => 0
 			],
-			[ 'name' => 'Hameri', 'designation' => '10BUH', 'parent' => '51', 'coefficient' => 0 ],
+			[ 'name' => 'Hameri', 'designation' => '10BUH', 'parent_id' => '51', 'coefficient' => 0 ],
 			[
 				'name'        => 'Papirne role',
 				'designation' => '10BUP',
-				'parent'      => '51', 'coefficient' => 0
+				'parent_id'      => '51', 'coefficient' => 0
 			],
 			[
 				'name'        => 'PEČATI I PRIBOR',
 				'designation' => '10BUS',
-				'parent'      => '51', 'coefficient' => 0
+				'parent_id'      => '51', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Trgovački papir',
 				'designation' => '10BUT',
-				'parent'      => '51', 'coefficient' => 0
+				'parent_id'      => '51', 'coefficient' => 0
 			],
 
 			[
 				'name'        => 'Dodaci za torbe',
 				'designation' => '11GDD',
-				'parent'      => '52', 'coefficient' => 0
+				'parent_id'      => '52', 'coefficient' => 0
 			],
 
 			[
 				'name'        => 'Futrole i etui, mape',
 				'designation' => '11GFF',
-				'parent'      => '53', 'coefficient' => 0
+				'parent_id'      => '53', 'coefficient' => 0
 			],
 
 			[
 				'name'        => 'Novčanici',
 				'designation' => '11GNN',
-				'parent'      => '54', 'coefficient' => 0
+				'parent_id'      => '54', 'coefficient' => 0
 			],
 
-			[ 'name' => 'Pernice', 'designation' => '11GPP', 'parent' => '55', 'coefficient' => 0 ],
+			[ 'name' => 'Pernice', 'designation' => '11GPP', 'parent_id' => '55', 'coefficient' => 0 ],
 
-			[ 'name' => 'Sezona', 'designation' => '11GSS', 'parent' => '56', 'coefficient' => 0 ],
+			[ 'name' => 'Sezona', 'designation' => '11GSS', 'parent_id' => '56', 'coefficient' => 0 ],
 
-			[ 'name' => 'Casual', 'designation' => '11GTC', 'parent' => '57', 'coefficient' => 0 ],
+			[ 'name' => 'Casual', 'designation' => '11GTC', 'parent_id' => '57', 'coefficient' => 0 ],
 			[
 				'name'        => 'Kozmetičke',
 				'designation' => '11GTK',
-				'parent'      => '57', 'coefficient' => 0
+				'parent_id'      => '57', 'coefficient' => 0
 			],
-			[ 'name' => 'Modne', 'designation' => '11GTM', 'parent' => '57', 'coefficient' => 0 ],
+			[ 'name' => 'Modne', 'designation' => '11GTM', 'parent_id' => '57', 'coefficient' => 0 ],
 			[
 				'name'        => 'Za odjeću za obuću',
 				'designation' => '11GTO',
-				'parent'      => '57', 'coefficient' => 0
+				'parent_id'      => '57', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Poslovne',
 				'designation' => '11GTP',
-				'parent'      => '57', 'coefficient' => 0
+				'parent_id'      => '57', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Za računala i opremu',
 				'designation' => '11GTR',
-				'parent'      => '57', 'coefficient' => 0
+				'parent_id'      => '57', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Sportske',
 				'designation' => '11GTS',
-				'parent'      => '57', 'coefficient' => 0
+				'parent_id'      => '57', 'coefficient' => 0
 			],
-			[ 'name' => 'Školske', 'designation' => '11GTT', 'parent' => '57', 'coefficient' => 0 ],
-			[ 'name' => 'Putne', 'designation' => '11GTU', 'parent' => '57', 'coefficient' => 0 ],
-			[ 'name' => 'Vrtićke', 'designation' => '11GTV', 'parent' => '57', 'coefficient' => 0 ],
+			[ 'name' => 'Školske', 'designation' => '11GTT', 'parent_id' => '57', 'coefficient' => 0 ],
+			[ 'name' => 'Putne', 'designation' => '11GTU', 'parent_id' => '57', 'coefficient' => 0 ],
+			[ 'name' => 'Vrtićke', 'designation' => '11GTV', 'parent_id' => '57', 'coefficient' => 0 ],
 
 			[
 				'name'        => 'Kutije prazne, optički mediji prazni',
 				'designation' => '12MBP',
-				'parent'      => '58', 'coefficient' => 0
+				'parent_id'      => '58', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Optički mediji nasnimljen',
 				'designation' => '12MBS',
-				'parent'      => '58', 'coefficient' => 0
+				'parent_id'      => '58', 'coefficient' => 0
 			],
 			[
 				'name'        => 'USB prijenosna memorija',
 				'designation' => '12MBU',
-				'parent'      => '58', 'coefficient' => 0
+				'parent_id'      => '58', 'coefficient' => 0
 			],
 
 			[
 				'name'        => 'Adapteri',
 				'designation' => '12MDA',
-				'parent'      => '59', 'coefficient' => 0
+				'parent_id'      => '59', 'coefficient' => 0
 			],
-			[ 'name' => 'Kablovi', 'designation' => '12MDK', 'parent' => '59', 'coefficient' => 0 ],
-			[ 'name' => 'Punjači', 'designation' => '12MDP', 'parent' => '59', 'coefficient' => 0 ],
+			[ 'name' => 'Kablovi', 'designation' => '12MDK', 'parent_id' => '59', 'coefficient' => 0 ],
+			[ 'name' => 'Punjači', 'designation' => '12MDP', 'parent_id' => '59', 'coefficient' => 0 ],
 			[
 				'name'        => 'Daljinski upravljači',
 				'designation' => '12MDU',
-				'parent'      => '59', 'coefficient' => 0
+				'parent_id'      => '59', 'coefficient' => 0
 			],
 
 			[
 				'name'        => 'Edukativni dvd sadržaji',
 				'designation' => '12MEE',
-				'parent'      => '60', 'coefficient' => 0
+				'parent_id'      => '60', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Tečajevi stranih jezika',
 				'designation' => '12MET',
-				'parent'      => '60', 'coefficient' => 0
+				'parent_id'      => '60', 'coefficient' => 0
 			],
 
 			[
 				'name'        => 'Fotoaparati, kamere',
 				'designation' => '12MFF',
-				'parent'      => '61', 'coefficient' => 0
+				'parent_id'      => '61', 'coefficient' => 0
 			],
 
 			[
 				'name'        => 'Maintaince kitovi, sredstva za čišćenje',
 				'designation' => '12MIC',
-				'parent'      => '62', 'coefficient' => 0
+				'parent_id'      => '62', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Riboni, tinte',
 				'designation' => '12MIR',
-				'parent'      => '62', 'coefficient' => 0
+				'parent_id'      => '62', 'coefficient' => 0
 			],
-			[ 'name' => 'Toneri', 'designation' => '12MIT', 'parent' => '62', 'coefficient' => 0 ],
+			[ 'name' => 'Toneri', 'designation' => '12MIT', 'parent_id' => '62', 'coefficient' => 0 ],
 
-			[ 'name' => 'Mobiteli', 'designation' => '12MM', 'parent' => '63', 'coefficient' => 0 ],
+			[ 'name' => 'Mobiteli', 'designation' => '12MM', 'parent_id' => '63', 'coefficient' => 0 ],
 
 			[
 				'name'        => 'Monitori',
 				'designation' => '12MPE',
-				'parent'      => '64', 'coefficient' => 0
+				'parent_id'      => '64', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Fax uređaj',
 				'designation' => '12MPF',
-				'parent'      => '64', 'coefficient' => 0
+				'parent_id'      => '64', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Graifičke kartice',
 				'designation' => '12MPG',
-				'parent'      => '64', 'coefficient' => 0
+				'parent_id'      => '64', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Gaming periferija',
 				'designation' => '12MPI',
-				'parent'      => '64', 'coefficient' => 0
+				'parent_id'      => '64', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Miševi i podloge za miš',
 				'designation' => '12MPM',
-				'parent'      => '64', 'coefficient' => 0
+				'parent_id'      => '64', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Tipkovnice, printeri',
 				'designation' => '12MPT',
-				'parent'      => '64', 'coefficient' => 0
+				'parent_id'      => '64', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Web kamere, slušalice, scaneri',
 				'designation' => '12MPW',
-				'parent'      => '64', 'coefficient' => 0
+				'parent_id'      => '64', 'coefficient' => 0
 			],
 			[
 				'name'        => 'PC zvučnici',
 				'designation' => '12MPZ',
-				'parent'      => '64', 'coefficient' => 0
+				'parent_id'      => '64', 'coefficient' => 0
 			],
 
-			[ 'name' => 'Lap top', 'designation' => '12MRL', 'parent' => '65', 'coefficient' => 0 ],
+			[ 'name' => 'Lap top', 'designation' => '12MRL', 'parent_id' => '65', 'coefficient' => 0 ],
 			[
 				'name'        => 'Stolna računala',
 				'designation' => '12MRS',
-				'parent'      => '65', 'coefficient' => 0
+				'parent_id'      => '65', 'coefficient' => 0
 			],
 			[
 				'name'        => 'Tablet računala',
 				'designation' => '12MRT',
-				'parent'      => '65', 'coefficient' => 0
+				'parent_id'      => '65', 'coefficient' => 0
 			],
 
-			[ 'name' => 'Sezona', 'designation' => '12MSS', 'parent' => '66', 'coefficient' => 0 ],
+			[ 'name' => 'Sezona', 'designation' => '12MSS', 'parent_id' => '66', 'coefficient' => 0 ],
 
-			[ 'name' => 'Film', 'designation' => '12MZF', 'parent' => '67', 'coefficient' => 0 ],
-			[ 'name' => 'Glazba', 'designation' => '12MZG', 'parent' => '67', 'coefficient' => 0 ],
-			[ 'name' => 'Igre', 'designation' => '12MZI', 'parent' => '67', 'coefficient' => 0 ],
-			[ 'name' => 'Knjige', 'designation' => '12MZK', 'parent' => '67', 'coefficient' => 0 ],
+			[ 'name' => 'Film', 'designation' => '12MZF', 'parent_id' => '67', 'coefficient' => 0 ],
+			[ 'name' => 'Glazba', 'designation' => '12MZG', 'parent_id' => '67', 'coefficient' => 0 ],
+			[ 'name' => 'Igre', 'designation' => '12MZI', 'parent_id' => '67', 'coefficient' => 0 ],
+			[ 'name' => 'Knjige', 'designation' => '12MZK', 'parent_id' => '67', 'coefficient' => 0 ],
 			[
 				'name'        => 'LEKTIRA OBVEZATNA',
 				'designation' => '03LO1',
-				'parent'      => '68', 'coefficient' => 0
+				'parent_id'      => '68', 'coefficient' => 0
 			],
 			[
 				'name'        => 'LEKTIRA NEOBVEZATNA',
 				'designation' => '03LP1',
-				'parent'      => '69', 'coefficient' => 0
+				'parent_id'      => '69', 'coefficient' => 0
 			]
 		] );
 
@@ -1372,549 +1372,549 @@ class BookSeeder extends Seeder {
 			[
 				'name'        => 'Poezija',
 				'designation' => 'VP100',
-				'parent'    => '1'
+				'parent_id'    => '1'
 			],
-			[ 'name' => 'Drama', 'designation' => 'VP101', 'parent' => '1' ],
+			[ 'name' => 'Drama', 'designation' => 'VP101', 'parent_id' => '1' ],
 			[
 				'name'        => 'Klasici',
 				'designation' => 'VP102',
-				'parent'    => '1'
+				'parent_id'    => '1'
 			],
 			[
 				'name'        => 'Triler, špijunski',
 				'designation' => 'VP103',
-				'parent'    => '2'
+				'parent_id'    => '2'
 			],
-			[ 'name' => 'Krimić', 'designation' => 'VP104', 'parent' => '2' ],
+			[ 'name' => 'Krimić', 'designation' => 'VP104', 'parent_id' => '2' ],
 			[
 				'name'        => 'Akcija i avantura',
 				'designation' => 'VP105',
-				'parent'    => '2'
+				'parent_id'    => '2'
 			],
-			[ 'name' => 'Horor', 'designation' => 'VP106', 'parent' => '2' ],
+			[ 'name' => 'Horor', 'designation' => 'VP106', 'parent_id' => '2' ],
 			[
 				'name'        => 'Fantastika - Fantasy',
 				'designation' => 'VP107',
-				'parent'    => '2'
+				'parent_id'    => '2'
 			],
 			[
 				'name'        => 'New age',
 				'designation' => 'VP108',
-				'parent'    => '2'
+				'parent_id'    => '2'
 			],
 			[
 				'name'        => 'Znastvena fantastika - Science Fiction',
 				'designation' => 'VP109',
-				'parent'    => '2'
+				'parent_id'    => '2'
 			],
 			[
 				'name'        => 'Ljubavni roman',
 				'designation' => 'VP110',
-				'parent'    => '2'
+				'parent_id'    => '2'
 			],
 			[
 				'name'        => 'Žensko pismo - Chick lit',
 				'designation' => 'VP111',
-				'parent'    => '2'
+				'parent_id'    => '2'
 			],
 			[
 				'name'        => 'Humor, vicevi, humoristični roman',
 				'designation' => 'VP112',
-				'parent'    => '2'
+				'parent_id'    => '2'
 			],
 			[
 				'name'        => 'Putopisi',
 				'designation' => 'VP113',
-				'parent'    => '1'
+				'parent_id'    => '1'
 			],
 			[
 				'name'        => 'Socijalna i psihološka proza',
 				'designation' => 'VP114',
-				'parent'    => '1'
+				'parent_id'    => '1'
 			],
 			[
 				'name'        => 'Biografije i memoari',
 				'designation' => 'VP115',
-				'parent'    => '1'
+				'parent_id'    => '1'
 			],
 			[
 				'name'        => 'Povijesni roman',
 				'designation' => 'VP116',
-				'parent'    => '2'
+				'parent_id'    => '2'
 			],
 			[
 				'name'        => 'Duhovna literatura',
 				'designation' => 'VP117',
-				'parent'    => '1'
+				'parent_id'    => '1'
 			],
 			[
 				'name'        => 'Beletristika',
 				'designation' => 'VP118',
-				'parent'    => '1'
+				'parent_id'    => '1'
 			],
 			[
 				'name'        => 'Antolgije i izbori',
 				'designation' => 'VP119',
-				'parent'    => '1'
+				'parent_id'    => '1'
 			],
 			[
 				'name'        => 'Mitologija',
 				'designation' => 'VP120',
-				'parent'    => '1'
+				'parent_id'    => '1'
 			],
 			[
 				'name'        => 'Roman - nerazvrstano',
 				'designation' => 'VP121',
-				'parent'    => '2'
+				'parent_id'    => '2'
 			],
 			[
 				'name'        => 'Publicistika',
 				'designation' => 'VP122',
-				'parent'    => '1'
+				'parent_id'    => '1'
 			],
 			[
 				'name'        => 'Govori, aforizmi, poslovice, misli',
 				'designation' => 'VP123',
-				'parent'    => '1'
+				'parent_id'    => '1'
 			],
 			[
 				'name'        => 'Novele i kratke priče, pripovijetke',
 				'designation' => 'VP124',
-				'parent'    => '1'
+				'parent_id'    => '1'
 			],
 			[
 				'name'        => 'Eseji i kritike',
 				'designation' => 'VP125',
-				'parent'    => '1'
+				'parent_id'    => '1'
 			],
-			[ 'name' => 'Ep', 'designation' => 'VP126', 'parent' => '1' ],
+			[ 'name' => 'Ep', 'designation' => 'VP126', 'parent_id' => '1' ],
 			[
 				'name'        => 'Slikovnice - ostalo',
 				'designation' => 'VP200',
-				'parent'    => '3'
+				'parent_id'    => '3'
 			],
 			[
 				'name'        => 'Audio slikovnice',
 				'designation' => 'VP201',
-				'parent'    => '3'
+				'parent_id'    => '3'
 			],
 			[
 				'name'        => 'Bojanke',
 				'designation' => 'VP202',
-				'parent'    => '3'
+				'parent_id'    => '3'
 			],
 			[
 				'name'        => 'Slikovnice sa igračkama',
 				'designation' => 'VP203',
-				'parent'    => '3'
+				'parent_id'    => '3'
 			],
 			[
 				'name'        => 'Slikovnice sa naljepnicama',
 				'designation' => 'VP204',
-				'parent'    => '3'
+				'parent_id'    => '3'
 			],
 			[
 				'name'        => 'Slikovnice pjesmarice',
 				'designation' => 'VP205',
-				'parent'    => '3'
+				'parent_id'    => '3'
 			],
 			[
 				'name'        => 'Religijske slikovnice',
 				'designation' => 'VP206',
-				'parent'    => '3'
+				'parent_id'    => '3'
 			],
 			[
 				'name'        => 'Slikovnice za igru i učenje',
 				'designation' => 'VP207',
-				'parent'    => '3'
+				'parent_id'    => '3'
 			],
 			[
 				'name'        => '3D slikovnice',
 				'designation' => 'VP208',
-				'parent'    => '3'
+				'parent_id'    => '3'
 			],
 			[
 				'name'        => 'Sezonske slikovnice - Uskrs, Božić',
 				'designation' => 'VP209',
-				'parent'    => '3'
+				'parent_id'    => '3'
 			],
 			[
 				'name'        => 'Slikovnice o životinjama',
 				'designation' => 'VP210',
-				'parent'    => '3'
+				'parent_id'    => '3'
 			],
 			[
 				'name'        => 'Bajke i basne',
 				'designation' => 'VP211',
-				'parent'    => '4'
+				'parent_id'    => '4'
 			],
 			[
 				'name'        => 'Priče i pripovijetke za djecu',
 				'designation' => 'VP212',
-				'parent'    => '4'
+				'parent_id'    => '4'
 			],
 			[
 				'name'        => 'Dječji roman',
 				'designation' => 'VP213',
-				'parent'    => '4'
+				'parent_id'    => '4'
 			],
 			[
 				'name'        => 'Teen roman',
 				'designation' => 'VP214',
-				'parent'    => '4'
+				'parent_id'    => '4'
 			],
 			[
 				'name'        => 'Dječja publicistika i priručnici',
 				'designation' => 'VP215',
-				'parent'    => '4'
+				'parent_id'    => '4'
 			],
 			[
 				'name'        => 'Dječja popularna znanost',
 				'designation' => 'VP216',
-				'parent'    => '4'
+				'parent_id'    => '4'
 			],
 			[
 				'name'        => 'Enciklopedija za djecu',
 				'designation' => 'VP217',
-				'parent'    => '4'
+				'parent_id'    => '4'
 			],
 			[
 				'name'        => 'Enciklopedija za mlade',
 				'designation' => 'VP218',
-				'parent'    => '4'
+				'parent_id'    => '4'
 			],
 			[
 				'name'        => 'Čitanka',
 				'designation' => 'VP300',
-				'parent'    => '5'
+				'parent_id'    => '5'
 			],
 			[
 				'name'        => 'Udžbenik',
 				'designation' => 'VP301',
-				'parent'    => '5'
+				'parent_id'    => '5'
 			],
 			[
 				'name'        => 'Sveučilišni udžbenik',
 				'designation' => 'VP302',
-				'parent'    => '5'
+				'parent_id'    => '5'
 			],
 			[
 				'name'        => 'Vježbenica, radna bilježnica',
 				'designation' => 'VP303',
-				'parent'    => '5'
+				'parent_id'    => '5'
 			],
 			[
 				'name'        => 'Slovarica',
 				'designation' => 'VP304',
-				'parent'    => '5'
+				'parent_id'    => '5'
 			],
 			[
 				'name'        => 'Zbirka zadataka',
 				'designation' => 'VP305',
-				'parent'    => '5'
+				'parent_id'    => '5'
 			],
 			[
 				'name'        => 'Kontrolni zadatci',
 				'designation' => 'VP306',
-				'parent'    => '5'
+				'parent_id'    => '5'
 			],
 			[
 				'name'        => 'Nastavni listići',
 				'designation' => 'VP307',
-				'parent'    => '5'
+				'parent_id'    => '5'
 			],
 			[
 				'name'        => 'Testovi',
 				'designation' => 'VP308',
-				'parent'    => '5'
+				'parent_id'    => '5'
 			],
 			[
 				'name'        => 'Vježbe - laboratorijske vježbe, pokusi, praktikum',
 				'designation' => 'VP309',
-				'parent'    => '5'
+				'parent_id'    => '5'
 			],
 			[
 				'name'        => 'Radni listovi',
 				'designation' => 'VP310',
-				'parent'    => '5'
+				'parent_id'    => '5'
 			],
 			[
 				'name'        => 'Zadatci za dodatnu nastavu',
 				'designation' => 'VP311',
-				'parent'    => '5'
+				'parent_id'    => '5'
 			],
 			[
 				'name'        => 'Mapa za vježbe, tehničko pismo, tablice',
 				'designation' => 'VP312',
-				'parent'    => '5'
+				'parent_id'    => '5'
 			],
 			[
 				'name'        => 'Plakati',
 				'designation' => 'VP313',
-				'parent'    => '5'
+				'parent_id'    => '5'
 			],
 			[
 				'name'        => 'Prozirnice',
 				'designation' => 'VP314',
-				'parent'    => '5'
+				'parent_id'    => '5'
 			],
 			[
 				'name'        => 'Memento',
 				'designation' => 'VP315',
-				'parent'    => '5'
+				'parent_id'    => '5'
 			],
 			[
 				'name'        => 'Priručnik za maturu, repetitorij',
 				'designation' => 'VP316',
-				'parent'    => '5'
+				'parent_id'    => '5'
 			],
 			[
 				'name'        => 'Mapa za likovni',
 				'designation' => 'VP317',
-				'parent'    => '5'
+				'parent_id'    => '5'
 			],
-			[ 'name' => 'Kolaž', 'designation' => 'VP318', 'parent' => '5' ],
+			[ 'name' => 'Kolaž', 'designation' => 'VP318', 'parent_id' => '5' ],
 			[
 				'name'        => 'Crtaći blok',
 				'designation' => 'VP319',
-				'parent'    => '5'
+				'parent_id'    => '5'
 			],
 			[
 				'name'        => 'Cd, Dvd',
 				'designation' => 'VP320',
-				'parent'    => '5'
+				'parent_id'    => '5'
 			],
 			[
 				'name'        => 'Kompjutorski program',
 				'designation' => 'VP321',
-				'parent'    => '5'
+				'parent_id'    => '5'
 			],
 			[
 				'name'        => 'Bilježnice, kajdanke',
 				'designation' => 'VP322',
-				'parent'    => '5'
+				'parent_id'    => '5'
 			],
 			[
 				'name'        => 'Vodič kroz lektiru',
 				'designation' => 'VP323',
-				'parent'    => '5'
+				'parent_id'    => '5'
 			],
 			[
 				'name'        => 'Tečajevi',
 				'designation' => 'VP324',
-				'parent'    => '5'
+				'parent_id'    => '5'
 			],
 			[
 				'name'        => 'Herbarij',
 				'designation' => 'VP325',
-				'parent'    => '5'
+				'parent_id'    => '5'
 			],
 			[
 				'name'        => 'Flash kartice',
 				'designation' => 'VP326',
-				'parent'    => '5'
+				'parent_id'    => '5'
 			],
 			[
 				'name'        => 'Zavičajni priručnik',
 				'designation' => 'VP327',
-				'parent'    => '5'
+				'parent_id'    => '5'
 			],
 			[
 				'name'        => 'Radna bilježnica za lektiru',
 				'designation' => 'VP328',
-				'parent'    => '5'
+				'parent_id'    => '5'
 			],
 			[
 				'name'        => 'Strana lektira',
 				'designation' => 'VP329',
-				'parent'    => '5'
+				'parent_id'    => '5'
 			],
 			[
 				'name'        => 'Bilježnice - prazne',
 				'designation' => 'VP330',
-				'parent'    => '8'
+				'parent_id'    => '8'
 			],
 			[
 				'name'        => 'Karta - geografska',
 				'designation' => 'VP400',
-				'parent'    => '6'
+				'parent_id'    => '6'
 			],
 			[
 				'name'        => 'Auto karta',
 				'designation' => 'VP401',
-				'parent'    => '6'
+				'parent_id'    => '6'
 			],
 			[
 				'name'        => 'Karta - planinarska',
 				'designation' => 'VP402',
-				'parent'    => '6'
+				'parent_id'    => '6'
 			],
 			[
 				'name'        => 'Karta - povijesna',
 				'designation' => 'VP403',
-				'parent'    => '6'
+				'parent_id'    => '6'
 			],
-			[ 'name' => 'Atlas', 'designation' => 'VP404', 'parent' => '6' ],
+			[ 'name' => 'Atlas', 'designation' => 'VP404', 'parent_id' => '6' ],
 			[
 				'name'        => 'Auto atlas',
 				'designation' => 'VP405',
-				'parent'    => '6'
+				'parent_id'    => '6'
 			],
 			[
 				'name'        => 'Blok razglednica',
 				'designation' => 'VP406',
-				'parent'    => '6'
+				'parent_id'    => '6'
 			],
 			[
 				'name'        => 'Dječja karta',
 				'designation' => 'VP407',
-				'parent'    => '6'
+				'parent_id'    => '6'
 			],
 			[
 				'name'        => 'Dječji atlas',
 				'designation' => 'VP408',
-				'parent'    => '6'
+				'parent_id'    => '6'
 			],
 			[
 				'name'        => 'Plan grada',
 				'designation' => 'VP409',
-				'parent'    => '6'
+				'parent_id'    => '6'
 			],
 			[
 				'name'        => 'Nautička karta',
 				'designation' => 'VP410',
-				'parent'    => '6'
+				'parent_id'    => '6'
 			],
 			[
 				'name'        => 'Nautički atlas',
 				'designation' => 'VP411',
-				'parent'    => '6'
+				'parent_id'    => '6'
 			],
 			[
 				'name'        => 'Karta - turistička',
 				'designation' => 'VP412',
-				'parent'    => '6'
+				'parent_id'    => '6'
 			],
 			[
 				'name'        => 'Stručna knjiga',
 				'designation' => 'VP500',
-				'parent'    => '7'
+				'parent_id'    => '7'
 			],
 			[
 				'name'        => 'Praktični priručnik',
 				'designation' => 'VP501',
-				'parent'    => '7'
+				'parent_id'    => '7'
 			],
 			[
 				'name'        => 'Priručnik za samostalno učenje uz jezike',
 				'designation' => 'VP502',
-				'parent'    => '7'
+				'parent_id'    => '7'
 			],
 			[
 				'name'        => 'Priručnik za profesore, roditelje, odgajatelje',
 				'designation' => 'VP503',
-				'parent'    => '7'
+				'parent_id'    => '7'
 			],
 			[
 				'name'        => 'Popularna znanost',
 				'designation' => 'VP504',
-				'parent'    => '7'
+				'parent_id'    => '7'
 			],
-			[ 'name' => 'Strip', 'designation' => 'VP600', 'parent' => '8' ],
+			[ 'name' => 'Strip', 'designation' => 'VP600', 'parent_id' => '8' ],
 			[
 				'name'        => 'Likovna monografija',
 				'designation' => 'VP601',
-				'parent'    => '8'
+				'parent_id'    => '8'
 			],
 			[
 				'name'        => 'Monografija',
 				'designation' => 'VP602',
-				'parent'    => '8'
+				'parent_id'    => '8'
 			],
 			[
 				'name'        => 'Turistička monografija',
 				'designation' => 'VP603',
-				'parent'    => '8'
+				'parent_id'    => '8'
 			],
 			[
 				'name'        => 'Turistički vodič',
 				'designation' => 'VP604',
-				'parent'    => '8'
+				'parent_id'    => '8'
 			],
 			[
 				'name'        => 'Kuharica',
 				'designation' => 'VP605',
-				'parent'    => '8'
+				'parent_id'    => '8'
 			],
 			[
 				'name'        => 'Zakoni i Ustav',
 				'designation' => 'VP606',
-				'parent'    => '8'
+				'parent_id'    => '8'
 			],
 			[
 				'name'        => 'Biblija - Stari i Novi zavjet',
 				'designation' => 'VP607',
-				'parent'    => '8'
+				'parent_id'    => '8'
 			],
 			[
 				'name'        => 'Zbornik radova',
 				'designation' => 'VP608',
-				'parent'    => '8'
+				'parent_id'    => '8'
 			],
 			[
 				'name'        => 'Notni zapisi - note',
 				'designation' => 'VP609',
-				'parent'    => '8'
+				'parent_id'    => '8'
 			],
 			[
 				'name'        => 'Rječnik - stručni',
 				'designation' => 'VP700',
-				'parent'    => '9'
+				'parent_id'    => '9'
 			],
 			[
 				'name'        => 'Rječnik - džepni',
 				'designation' => 'VP701',
-				'parent'    => '9'
+				'parent_id'    => '9'
 			],
 			[
 				'name'        => 'Rječnik - praktični',
 				'designation' => 'VP702',
-				'parent'    => '9'
+				'parent_id'    => '9'
 			],
 			[
 				'name'        => 'Rječnik - veliki (opći)',
 				'designation' => 'VP703',
-				'parent'    => '9'
+				'parent_id'    => '9'
 			],
 			[
 				'name'        => 'Rječnik - slikovni',
 				'designation' => 'VP704',
-				'parent'    => '9'
+				'parent_id'    => '9'
 			],
 			[
 				'name'        => 'Rječnik - dječji',
 				'designation' => 'VP705',
-				'parent'    => '9'
+				'parent_id'    => '9'
 			],
 			[
 				'name'        => 'Gramatika',
 				'designation' => 'VP706',
-				'parent'    => '9'
+				'parent_id'    => '9'
 			],
 			[
 				'name'        => 'Pravopis',
 				'designation' => 'VP707',
-				'parent'    => '9'
+				'parent_id'    => '9'
 			],
 			[
 				'name'        => 'Leksikon',
 				'designation' => 'VP708',
-				'parent'    => '9'
+				'parent_id'    => '9'
 			],
 			[
 				'name'        => 'Enciklopedija',
 				'designation' => 'VP709',
-				'parent'    => '9'
+				'parent_id'    => '9'
 			],
 		] );
 
@@ -2399,830 +2399,830 @@ class BookSeeder extends Seeder {
 		DB::table( 'school_subjects' )->insert( [
 			[ 'name'        => 'Hrvatski  jezik',
 			  'designation' => 'PR0101',
-			  'parent'    => '1'
+			  'parent_id'    => '1'
 			],
 			[ 'name'        => 'Engleski  jezik',
 			  'designation' => 'PR0102',
-			  'parent'    => '1'
+			  'parent_id'    => '1'
 			],
 			[ 'name'        => 'Francuski  jezik',
 			  'designation' => 'PR0103',
-			  'parent'    => '1'
+			  'parent_id'    => '1'
 			],
 			[ 'name'        => 'Njemački  jezik',
 			  'designation' => 'PR0104',
-			  'parent'    => '1'
+			  'parent_id'    => '1'
 			],
 			[ 'name'        => 'Talijanski  jezik',
 			  'designation' => 'PR0105',
-			  'parent'    => '1'
+			  'parent_id'    => '1'
 			],
 			[ 'name'        => 'Španjolski  jezik',
 			  'designation' => 'PR0106',
-			  'parent'    => '1'
+			  'parent_id'    => '1'
 			],
 			[ 'name'        => 'Ruski  jezik',
 			  'designation' => 'PR0107',
-			  'parent'    => '1'
+			  'parent_id'    => '1'
 			],
 			[ 'name'        => 'Poljski  jezik',
 			  'designation' => 'PR0108',
-			  'parent'    => '1'
+			  'parent_id'    => '1'
 			],
 			[ 'name'        => 'Portugalski  jezik',
 			  'designation' => 'PR0109',
-			  'parent'    => '1'
+			  'parent_id'    => '1'
 			],
 			[ 'name'        => 'Slovački  jezik',
 			  'designation' => 'PR0110',
-			  'parent'    => '1'
+			  'parent_id'    => '1'
 			],
 			[ 'name'        => 'Slovenski  jezik',
 			  'designation' => 'PR0111',
-			  'parent'    => '1'
+			  'parent_id'    => '1'
 			],
 			[ 'name'        => 'Turski  jezik',
 			  'designation' => 'PR0112',
-			  'parent'    => '1'
+			  'parent_id'    => '1'
 			],
 			[ 'name'        => 'Češki  jezik',
 			  'designation' => 'PR0113',
-			  'parent'    => '1'
+			  'parent_id'    => '1'
 			],
 			[ 'name'        => 'Latinski jezik',
 			  'designation' => 'PR0114',
-			  'parent'    => '1'
+			  'parent_id'    => '1'
 			],
 			[ 'name'        => 'Grčki  jezik',
 			  'designation' => 'PR0115',
-			  'parent'    => '1'
+			  'parent_id'    => '1'
 			],
 			[ 'name'        => 'Mađarski  jezik',
 			  'designation' => 'PR0116',
-			  'parent'    => '1'
+			  'parent_id'    => '1'
 			],
 			[ 'name'        => 'Albanski jezik',
 			  'designation' => 'PR0117',
-			  'parent'    => '1'
+			  'parent_id'    => '1'
 			],
 			[ 'name'        => 'Norveški jezik',
 			  'designation' => 'PR0118',
-			  'parent'    => '1'
+			  'parent_id'    => '1'
 			],
 			[ 'name'        => 'Bugarski jezik',
 			  'designation' => 'PR0119',
-			  'parent'    => '1'
+			  'parent_id'    => '1'
 			],
 			[ 'name'        => 'Ukrajinski jezik',
 			  'designation' => 'PR0120',
-			  'parent'    => '1'
+			  'parent_id'    => '1'
 			],
 			[ 'name'        => 'Švedski jezik',
 			  'designation' => 'PR0121',
-			  'parent'    => '1'
+			  'parent_id'    => '1'
 			],
 			[ 'name'        => 'Strani jezici',
 			  'designation' => 'PR0122',
-			  'parent'    => '1'
+			  'parent_id'    => '1'
 			],
 			[ 'name'        => 'Rumunjski jezik',
 			  'designation' => 'PR0123',
-			  'parent'    => '1'
+			  'parent_id'    => '1'
 			],
 			[ 'name'        => 'Srpski jezik',
 			  'designation' => 'PR0124',
-			  'parent'    => '1'
+			  'parent_id'    => '1'
 			],
 
 			[ 'name'        => 'Ostale književnosti',
 			  'designation' => 'PR0300',
-			  'parent'    => '2'
+			  'parent_id'    => '2'
 			],
 			[ 'name'        => 'Hrvatska  književnost',
 			  'designation' => 'PR0301',
-			  'parent'    => '2'
+			  'parent_id'    => '2'
 			],
 			[ 'name'        => 'Američka  književnost',
 			  'designation' => 'PR0302',
-			  'parent'    => '2'
+			  'parent_id'    => '2'
 			],
 			[ 'name'        => 'Engleska  književnost',
 			  'designation' => 'PR0303',
-			  'parent'    => '2'
+			  'parent_id'    => '2'
 			],
 			[ 'name'        => 'Francuska  književnost',
 			  'designation' => 'PR0304',
-			  'parent'    => '2'
+			  'parent_id'    => '2'
 			],
 			[ 'name'        => 'Njemačka  književnost',
 			  'designation' => 'PR0305',
-			  'parent'    => '2'
+			  'parent_id'    => '2'
 			],
 			[ 'name'        => 'Talijanska  književnost',
 			  'designation' => 'PR0306',
-			  'parent'    => '2'
+			  'parent_id'    => '2'
 			],
 			[ 'name'        => 'Španjolska  književnost',
 			  'designation' => 'PR0307',
-			  'parent'    => '2'
+			  'parent_id'    => '2'
 			],
 			[ 'name'        => 'Ruska književnost',
 			  'designation' => 'PR0308',
-			  'parent'    => '2'
+			  'parent_id'    => '2'
 			],
 			[ 'name'        => 'Poljska književnost',
 			  'designation' => 'PR0309',
-			  'parent'    => '2'
+			  'parent_id'    => '2'
 			],
 			[ 'name'        => 'Portugalska  književnost',
 			  'designation' => 'PR0310',
-			  'parent'    => '2'
+			  'parent_id'    => '2'
 			],
 			[ 'name'        => 'Skandinavske književnosti',
 			  'designation' => 'PR0311',
-			  'parent'    => '2'
+			  'parent_id'    => '2'
 			],
 			[ 'name'        => 'Latinoameričke književnosti',
 			  'designation' => 'PR0312',
-			  'parent'    => '2'
+			  'parent_id'    => '2'
 			],
 			[ 'name'        => 'Antička književnost - grčka i rimska',
 			  'designation' => 'PR0313',
-			  'parent'    => '2'
+			  'parent_id'    => '2'
 			],
 
 			[ 'name'        => 'Stručni predmet (za srednje škole)',
 			  'designation' => 'PR0400',
-			  'parent'    => '3'
+			  'parent_id'    => '3'
 			],
 
 			[ 'name'        => 'Matematika',
 			  'designation' => 'PR0401',
-			  'parent'    => '4'
+			  'parent_id'    => '4'
 			],
 			[ 'name'        => 'Fizika',
 			  'designation' => 'PR0402',
-			  'parent'    => '4'
+			  'parent_id'    => '4'
 			],
 			[ 'name'        => 'Nuklearna fizika',
 			  'designation' => 'PR0403',
-			  'parent'    => '4'
+			  'parent_id'    => '4'
 			],
 			[ 'name'        => 'Geologija',
 			  'designation' => 'PR0404',
-			  'parent'    => '4'
+			  'parent_id'    => '4'
 			],
 			[ 'name'        => 'Kemija',
 			  'designation' => 'PR0405',
-			  'parent'    => '4'
+			  'parent_id'    => '4'
 			],
 			[ 'name'        => 'Priroda i društvo (za osnovnu školu)',
 			  'designation' => 'PR0406',
-			  'parent'    => '4'
+			  'parent_id'    => '4'
 			],
 			[ 'name'        => 'Priroda (za osnovnu školu)',
 			  'designation' => 'PR0407',
-			  'parent'    => '4'
+			  'parent_id'    => '4'
 			],
 			[ 'name'        => 'Biologija',
 			  'designation' => 'PR0408',
-			  'parent'    => '4'
+			  'parent_id'    => '4'
 			],
 			[ 'name'        => 'Geofizika',
 			  'designation' => 'PR0409',
-			  'parent'    => '4'
+			  'parent_id'    => '4'
 			],
 			[ 'name'        => 'Zemljopis (GEOGRAFIJA)',
 			  'designation' => 'PR0410',
-			  'parent'    => '4'
+			  'parent_id'    => '4'
 			],
 			[ 'name'        => 'Ekologija',
 			  'designation' => 'PR0411',
-			  'parent'    => '4'
+			  'parent_id'    => '4'
 			],
 			[ 'name'        => 'Astronomija (SVEMIR)',
 			  'designation' => 'PR0412',
-			  'parent'    => '4'
+			  'parent_id'    => '4'
 			],
 
 			[ 'name'        => 'Tehnički odgoj (za osnovnu školu)',
 			  'designation' => 'PR0500',
-			  'parent'    => '5'
+			  'parent_id'    => '5'
 			],
 			[ 'name'        => 'Elektrotehnika',
 			  'designation' => 'PR0501',
-			  'parent'    => '5'
+			  'parent_id'    => '5'
 			],
 			[ 'name'        => 'Graditeljstvo',
 			  'designation' => 'PR0502',
-			  'parent'    => '5'
+			  'parent_id'    => '5'
 			],
 			[ 'name'        => 'Geodezija',
 			  'designation' => 'PR0503',
-			  'parent'    => '5'
+			  'parent_id'    => '5'
 			],
 			[ 'name'        => 'Grafička tehnologija',
 			  'designation' => 'PR0504',
-			  'parent'    => '5'
+			  'parent_id'    => '5'
 			],
 			[ 'name'        => 'Kemijsko inženjerstvo',
 			  'designation' => 'PR0505',
-			  'parent'    => '5'
+			  'parent_id'    => '5'
 			],
 			[ 'name'        => 'Metalurgija',
 			  'designation' => 'PR0506',
-			  'parent'    => '5'
+			  'parent_id'    => '5'
 			],
 			[ 'name'        => 'Rudarstvo, nafta i geološko inženjerstvo',
 			  'designation' => 'PR0507',
-			  'parent'    => '5'
+			  'parent_id'    => '5'
 			],
 			[ 'name'        => 'Strojarstvo i brodogradnja',
 			  'designation' => 'PR0508',
-			  'parent'    => '5'
+			  'parent_id'    => '5'
 			],
 			[ 'name'        => 'Promet',
 			  'designation' => 'PR0509',
-			  'parent'    => '5'
+			  'parent_id'    => '5'
 			],
 			[ 'name'        => 'Zrakoplovstvo, raketna i svemirska tehnika',
 			  'designation' => 'PR0510',
-			  'parent'    => '5'
+			  'parent_id'    => '5'
 			],
 
 			[ 'name'        => 'Informatika (za osnovnu i srednju školu)',
 			  'designation' => 'PR0511',
-			  'parent'    => '6'
+			  'parent_id'    => '6'
 			],
 			[ 'name'        => 'Baze podataka, operativni sustavi i programiranje',
 			  'designation' => 'PR0512',
-			  'parent'    => '6'
+			  'parent_id'    => '6'
 			],
 			[ 'name'        => 'Software',
 			  'designation' => 'PR0513',
-			  'parent'    => '6'
+			  'parent_id'    => '6'
 			],
 			[ 'name'        => 'Microsoft',
 			  'designation' => 'PR0514',
-			  'parent'    => '6'
+			  'parent_id'    => '6'
 			],
 			[ 'name'        => 'Hardware',
 			  'designation' => 'PR0515',
-			  'parent'    => '6'
+			  'parent_id'    => '6'
 			],
-			[ 'name' => 'Mreže', 'designation' => 'PR0516', 'parent' => '6' ],
+			[ 'name' => 'Mreže', 'designation' => 'PR0516', 'parent_id' => '6' ],
 			[ 'name'        => 'Internet',
 			  'designation' => 'PR0517',
-			  'parent'    => '6'
+			  'parent_id'    => '6'
 			],
 			[ 'name'        => 'Web design',
 			  'designation' => 'PR0518',
-			  'parent'    => '6'
+			  'parent_id'    => '6'
 			],
 			[ 'name'        => 'Kompjuterska grafika',
 			  'designation' => 'PR0519',
-			  'parent'    => '6'
+			  'parent_id'    => '6'
 			],
 
 			[ 'name'        => 'Medicina',
 			  'designation' => 'PR0600',
-			  'parent'    => '7'
+			  'parent_id'    => '7'
 			],
 			[ 'name'        => 'Veterina',
 			  'designation' => 'PR0601',
-			  'parent'    => '7'
+			  'parent_id'    => '7'
 			],
 			[ 'name'        => 'Stomatologija',
 			  'designation' => 'PR0602',
-			  'parent'    => '7'
+			  'parent_id'    => '7'
 			],
 			[ 'name'        => 'Farmacija',
 			  'designation' => 'PR0603',
-			  'parent'    => '7'
+			  'parent_id'    => '7'
 			],
 
 			[ 'name'        => 'Poljoprivreda (agronomija)',
 			  'designation' => 'PR0700',
-			  'parent'    => '8'
+			  'parent_id'    => '8'
 			],
 			[ 'name'        => 'Šumarstvo',
 			  'designation' => 'PR0701',
-			  'parent'    => '8'
+			  'parent_id'    => '8'
 			],
 			[ 'name'        => 'Drvna tehnologija',
 			  'designation' => 'PR0702',
-			  'parent'    => '8'
+			  'parent_id'    => '8'
 			],
 			[ 'name'        => 'Biotehnologija',
 			  'designation' => 'PR0703',
-			  'parent'    => '8'
+			  'parent_id'    => '8'
 			],
 
-			[ 'name' => 'Pravo', 'designation' => 'PR0800', 'parent' => '9' ],
+			[ 'name' => 'Pravo', 'designation' => 'PR0800', 'parent_id' => '9' ],
 			[ 'name'        => 'Politika i gospodarstvo (za srednje škole)',
 			  'designation' => 'PR0801',
-			  'parent'    => '9'
+			  'parent_id'    => '9'
 			],
 			[ 'name'        => 'Politika i politologija',
 			  'designation' => 'PR0802',
-			  'parent'    => '9'
+			  'parent_id'    => '9'
 			],
 			[ 'name'        => 'Novinarstvo',
 			  'designation' => 'PR0803',
-			  'parent'    => '9'
+			  'parent_id'    => '9'
 			],
 
 			[ 'name'        => 'Ekonomija',
 			  'designation' => 'PR0804',
-			  'parent'    => '10'
+			  'parent_id'    => '10'
 			],
 			[ 'name'        => 'Menadžment i poduzetništvo',
 			  'designation' => 'PR0805',
-			  'parent'    => '10'
+			  'parent_id'    => '10'
 			],
 			[ 'name'        => 'Financije i računovodstvo',
 			  'designation' => 'PR0804',
-			  'parent'    => '10'
+			  'parent_id'    => '10'
 			],
 			[ 'name'        => 'Marketing',
 			  'designation' => 'PR0807',
-			  'parent'    => '10'
+			  'parent_id'    => '10'
 			],
 			[ 'name'        => 'Popularna ekonomija',
 			  'designation' => 'PR0808',
-			  'parent'    => '10'
+			  'parent_id'    => '10'
 			],
 
 			[ 'name'        => 'Turizam i ugostiteljstvo',
 			  'designation' => 'PR0809',
-			  'parent'    => '9'
+			  'parent_id'    => '9'
 			],
 			[ 'name'        => 'Sociologija',
 			  'designation' => 'PR0810',
-			  'parent'    => '9'
+			  'parent_id'    => '9'
 			],
 			[ 'name'        => 'Psihologija',
 			  'designation' => 'PR0811',
-			  'parent'    => '9'
+			  'parent_id'    => '9'
 			],
 			[ 'name'        => 'Pedagogija',
 			  'designation' => 'PR0812',
-			  'parent'    => '9'
+			  'parent_id'    => '9'
 			],
 			[ 'name'        => 'Edukacijsko-rehabilitacijske znanosti',
 			  'designation' => 'PR0813',
-			  'parent'    => '9'
+			  'parent_id'    => '9'
 			],
 			[ 'name'        => 'Logopedija',
 			  'designation' => 'PR0814',
-			  'parent'    => '9'
+			  'parent_id'    => '9'
 			],
 			[ 'name'        => 'Kineziologija',
 			  'designation' => 'PR0815',
-			  'parent'    => '9'
+			  'parent_id'    => '9'
 			],
 			[ 'name'        => 'Demografija',
 			  'designation' => 'PR0816',
-			  'parent'    => '9'
+			  'parent_id'    => '9'
 			],
 			[ 'name'        => 'Socijalne djelatnosti',
 			  'designation' => 'PR0817',
-			  'parent'    => '9'
+			  'parent_id'    => '9'
 			],
 			[ 'name'        => 'Sigurnosne i obrambene znanosti',
 			  'designation' => 'PR0818',
-			  'parent'    => '9'
+			  'parent_id'    => '9'
 			],
 
 			[ 'name'        => 'Povijest',
 			  'designation' => 'PR0900',
-			  'parent'    => '11'
+			  'parent_id'    => '11'
 			],
 			[ 'name'        => 'Arheologija',
 			  'designation' => 'PR0901',
-			  'parent'    => '11'
+			  'parent_id'    => '11'
 			],
 			[ 'name'        => 'Bibliotekarstvo, informacijske znanosti',
 			  'designation' => 'PR0902',
-			  'parent'    => '11'
+			  'parent_id'    => '11'
 			],
 			[ 'name'        => 'Etnologija i antropologija',
 			  'designation' => 'PR0903',
-			  'parent'    => '11'
+			  'parent_id'    => '11'
 			],
 			[ 'name'        => 'Filologija (lingvistika)',
 			  'designation' => 'PR0904',
-			  'parent'    => '11'
+			  'parent_id'    => '11'
 			],
 			[ 'name'        => 'Teorija i povijest književnosti',
 			  'designation' => 'PR0905',
-			  'parent'    => '11'
+			  'parent_id'    => '11'
 			],
 			[ 'name'        => 'Filozofija',
 			  'designation' => 'PR0906',
-			  'parent'    => '11'
+			  'parent_id'    => '11'
 			],
 			[ 'name'        => 'Logika',
 			  'designation' => 'PR0907',
-			  'parent'    => '11'
+			  'parent_id'    => '11'
 			],
 			[ 'name'        => 'Etika',
 			  'designation' => 'PR0908',
-			  'parent'    => '11'
+			  'parent_id'    => '11'
 			],
 
 			[ 'name'        => 'Vjeronauk OŠ I SŠ',
 			  'designation' => 'PR1000',
-			  'parent'    => '12'
+			  'parent_id'    => '12'
 			],
 			[ 'name'        => 'Teologija',
 			  'designation' => 'PR1001',
-			  'parent'    => '12'
+			  'parent_id'    => '12'
 			],
 			[ 'name'        => 'Kršćanska literatura',
 			  'designation' => 'PR1002',
-			  'parent'    => '12'
+			  'parent_id'    => '12'
 			],
 			[ 'name'        => 'Islam',
 			  'designation' => 'PR1003',
-			  'parent'    => '12'
+			  'parent_id'    => '12'
 			],
 			[ 'name'        => 'Budizam',
 			  'designation' => 'PR1004',
-			  'parent'    => '12'
+			  'parent_id'    => '12'
 			],
 			[ 'name'        => 'Hinduizam',
 			  'designation' => 'PR1005',
-			  'parent'    => '12'
+			  'parent_id'    => '12'
 			],
 			[ 'name'        => 'Judaizam',
 			  'designation' => 'PR1006',
-			  'parent'    => '12'
+			  'parent_id'    => '12'
 			],
 			[ 'name'        => 'Ostale religije',
 			  'designation' => 'PR1007',
-			  'parent'    => '12'
+			  'parent_id'    => '12'
 			],
 			[ 'name'        => 'Mitologija',
 			  'designation' => 'PR1008',
-			  'parent'    => '12'
+			  'parent_id'    => '12'
 			],
 
 			[ 'name'        => 'Likovna umjetnost OŠ i SŠ',
 			  'designation' => 'PR1100',
-			  'parent'    => '13'
+			  'parent_id'    => '13'
 			],
 			[ 'name'        => 'Slikarstvo',
 			  'designation' => 'PR1101',
-			  'parent'    => '13'
+			  'parent_id'    => '13'
 			],
 			[ 'name'        => 'Kiparstvo',
 			  'designation' => 'PR1102',
-			  'parent'    => '13'
+			  'parent_id'    => '13'
 			],
 			[ 'name'        => 'Crteži i grafika (priručnici za crtanje)',
 			  'designation' => 'PR1103',
-			  'parent'    => '13'
+			  'parent_id'    => '13'
 			],
 			[ 'name'        => 'Kazalište',
 			  'designation' => 'PR1104',
-			  'parent'    => '13'
+			  'parent_id'    => '13'
 			],
 			[ 'name'        => 'Film, TV',
 			  'designation' => 'PR1105',
-			  'parent'    => '13'
+			  'parent_id'    => '13'
 			],
 			[ 'name'        => 'Glazbena umjetnost',
 			  'designation' => 'PR1106',
-			  'parent'    => '13'
+			  'parent_id'    => '13'
 			],
 			[ 'name'        => 'Fotografija',
 			  'designation' => 'PR1107',
-			  'parent'    => '13'
+			  'parent_id'    => '13'
 			],
-			[ 'name' => 'Ples', 'designation' => 'PR1108', 'parent' => '13' ],
+			[ 'name' => 'Ples', 'designation' => 'PR1108', 'parent_id' => '13' ],
 			[ 'name'        => 'Dizajn i primijenjena umjetnost',
 			  'designation' => 'PR1109',
-			  'parent'    => '13'
+			  'parent_id'    => '13'
 			],
 			[ 'name'        => 'Povijest umjetnosti',
 			  'designation' => 'PR1110',
-			  'parent'    => '13'
+			  'parent_id'    => '13'
 			],
 			[ 'name'        => 'Prapovijesna i antička umjetnost',
 			  'designation' => 'PR1111',
-			  'parent'    => '13'
+			  'parent_id'    => '13'
 			],
 			[ 'name'        => 'Srednjovjekovna umjetnost',
 			  'designation' => 'PR1112',
-			  'parent'    => '13'
+			  'parent_id'    => '13'
 			],
 			[ 'name'        => 'Renesansna umjetnost',
 			  'designation' => 'PR1113',
-			  'parent'    => '13'
+			  'parent_id'    => '13'
 			],
 			[ 'name'        => 'Barokna umjetnost',
 			  'designation' => 'PR1114',
-			  'parent'    => '13'
+			  'parent_id'    => '13'
 			],
 			[ 'name'        => 'Klasicizam i prosvjetiteljstvo',
 			  'designation' => 'PR1115',
-			  'parent'    => '13'
+			  'parent_id'    => '13'
 			],
 			[ 'name'        => 'Romantizam',
 			  'designation' => 'PR1116',
-			  'parent'    => '13'
+			  'parent_id'    => '13'
 			],
 			[ 'name'        => 'Suvremena umjetnost',
 			  'designation' => 'PR1117',
-			  'parent'    => '13'
+			  'parent_id'    => '13'
 			],
 			[ 'name'        => 'Strip',
 			  'designation' => 'PR1118',
-			  'parent'    => '13'
+			  'parent_id'    => '13'
 			],
 			[ 'name'        => 'Arhitektura i urbanizam',
 			  'designation' => 'PR1119',
-			  'parent'    => '13'
+			  'parent_id'    => '13'
 			],
-			[ 'name' => 'Moda', 'designation' => 'PR1120', 'parent' => '13' ],
+			[ 'name' => 'Moda', 'designation' => 'PR1120', 'parent_id' => '13' ],
 
 			[ 'name'        => 'Trudnoća',
 			  'designation' => 'PR1400',
-			  'parent'    => '14'
+			  'parent_id'    => '14'
 			],
 			[ 'name'        => 'Odgoj djeteta',
 			  'designation' => 'PR1401',
-			  'parent'    => '14'
+			  'parent_id'    => '14'
 			],
 
 			[ 'name'        => 'Zdrava prehrana',
 			  'designation' => 'PR1402',
-			  'parent'    => '15'
+			  'parent_id'    => '15'
 			],
 			[ 'name'        => 'Razne dijete',
 			  'designation' => 'PR1403',
-			  'parent'    => '15'
+			  'parent_id'    => '15'
 			],
 			[ 'name'        => 'Lječenje biljem, ljekovito bilje',
 			  'designation' => 'PR1404',
-			  'parent'    => '15'
+			  'parent_id'    => '15'
 			],
 			[ 'name'        => 'Ljubav i odnosi',
 			  'designation' => 'PR1405',
-			  'parent'    => '15'
+			  'parent_id'    => '15'
 			],
 			[ 'name'        => 'Seksualnost',
 			  'designation' => 'PR1406',
-			  'parent'    => '15'
+			  'parent_id'    => '15'
 			],
 			[ 'name'        => 'Samopomoć',
 			  'designation' => 'PR1407',
-			  'parent'    => '15'
+			  'parent_id'    => '15'
 			],
 			[ 'name'        => 'Zrele godine',
 			  'designation' => 'PR1408',
-			  'parent'    => '15'
+			  'parent_id'    => '15'
 			],
 			[ 'name'        => 'Ljepota (kozmetika, make up)',
 			  'designation' => 'PR1409',
-			  'parent'    => '15'
+			  'parent_id'    => '15'
 			],
 			[ 'name'        => 'Fitness',
 			  'designation' => 'PR1410',
-			  'parent'    => '15'
+			  'parent_id'    => '15'
 			],
 			[ 'name'        => 'Masaža',
 			  'designation' => 'PR1411',
-			  'parent'    => '15'
+			  'parent_id'    => '15'
 			],
-			[ 'name' => 'Joga', 'designation' => 'PR1412', 'parent' => '15' ],
+			[ 'name' => 'Joga', 'designation' => 'PR1412', 'parent_id' => '15' ],
 
 			[ 'name'        => 'Alternativna medicina',
 			  'designation' => 'PR1500',
-			  'parent'    => '16'
+			  'parent_id'    => '16'
 			],
 			[ 'name'        => 'Akupunktura',
 			  'designation' => 'PR1501',
-			  'parent'    => '16'
+			  'parent_id'    => '16'
 			],
 			[ 'name'        => 'Feng shui',
 			  'designation' => 'PR1502',
-			  'parent'    => '16'
+			  'parent_id'    => '16'
 			],
 			[ 'name'        => 'Kristaloterapija',
 			  'designation' => 'PR1503',
-			  'parent'    => '16'
+			  'parent_id'    => '16'
 			],
 			[ 'name'        => 'Psihologija i psihoterapija',
 			  'designation' => 'PR1504',
-			  'parent'    => '16'
+			  'parent_id'    => '16'
 			],
 			[ 'name'        => 'Astrologija',
 			  'designation' => 'PR1505',
-			  'parent'    => '16'
+			  'parent_id'    => '16'
 			],
 			[ 'name'        => 'Duhovnost',
 			  'designation' => 'PR1506',
-			  'parent'    => '16'
+			  'parent_id'    => '16'
 			],
 			[ 'name'        => 'Tai chi',
 			  'designation' => 'PR1507',
-			  'parent'    => '16'
+			  'parent_id'    => '16'
 			],
 			[ 'name'        => 'Tantra',
 			  'designation' => 'PR1508',
-			  'parent'    => '16'
+			  'parent_id'    => '16'
 			],
 			[ 'name'        => 'Okultizam, magija, parapsihologija',
 			  'designation' => 'PR1509',
-			  'parent'    => '16'
+			  'parent_id'    => '16'
 			],
 			[ 'name'        => 'Proricanje, gatanje, vidovnjaštvo',
 			  'designation' => 'PR1510',
-			  'parent'    => '16'
+			  'parent_id'    => '16'
 			],
 			[ 'name'        => 'Numerologija',
 			  'designation' => 'PR1511',
-			  'parent'    => '16'
+			  'parent_id'    => '16'
 			],
 			[ 'name'        => 'Snovi',
 			  'designation' => 'PR1512',
-			  'parent'    => '16'
+			  'parent_id'    => '16'
 			],
 			[ 'name'        => 'Tarot',
 			  'designation' => 'PR1513',
-			  'parent'    => '16'
+			  'parent_id'    => '16'
 			],
 			[ 'name'        => 'Religija, religiologija i mistika',
 			  'designation' => 'PR1514',
-			  'parent'    => '16'
+			  'parent_id'    => '16'
 			],
 			[ 'name'        => 'Ostala alternativna područja',
 			  'designation' => 'PR1515',
-			  'parent'    => '16'
+			  'parent_id'    => '16'
 			],
 
 			[ 'name'        => 'TJELESNA I ZDRAVSTVENA KULTURA (OŠ I SŠ)',
 			  'designation' => 'PR1600',
-			  'parent'    => '17'
+			  'parent_id'    => '17'
 			],
 			[ 'name'        => 'Društvene igre',
 			  'designation' => 'PR1601',
-			  'parent'    => '17'
+			  'parent_id'    => '17'
 			],
 			[ 'name'        => 'Igre na sreću',
 			  'designation' => 'PR1602',
-			  'parent'    => '17'
+			  'parent_id'    => '17'
 			],
 			[ 'name'        => 'Sport, tjelesno vježbanje, sportske igre',
 			  'designation' => 'PR1603',
-			  'parent'    => '17'
+			  'parent_id'    => '17'
 			],
 			[ 'name'        => 'Sportovi na vodi, sportovi u zraku',
 			  'designation' => 'PR1604',
-			  'parent'    => '17'
+			  'parent_id'    => '17'
 			],
 			[ 'name'        => 'Jahanje i vožnja',
 			  'designation' => 'PR1605',
-			  'parent'    => '17'
+			  'parent_id'    => '17'
 			],
 			[ 'name'        => 'Streljaštvo',
 			  'designation' => 'PR1606',
-			  'parent'    => '17'
+			  'parent_id'    => '17'
 			],
 			[ 'name'        => 'Tenis',
 			  'designation' => 'PR1607',
-			  'parent'    => '17'
+			  'parent_id'    => '17'
 			],
 			[ 'name'        => 'Atletika',
 			  'designation' => 'PR1608',
-			  'parent'    => '17'
+			  'parent_id'    => '17'
 			],
-			[ 'name' => 'Šah', 'designation' => 'PR1609', 'parent' => '17' ],
+			[ 'name' => 'Šah', 'designation' => 'PR1609', 'parent_id' => '17' ],
 			[ 'name'        => 'Borilački sportovi',
 			  'designation' => 'PR1610',
-			  'parent'    => '17'
+			  'parent_id'    => '17'
 			],
 			[ 'name'        => 'Lov, ribolov',
 			  'designation' => 'PR1611',
-			  'parent'    => '17'
+			  'parent_id'    => '17'
 			],
 			[ 'name'        => 'Planinarenje',
 			  'designation' => 'PR1612',
-			  'parent'    => '17'
+			  'parent_id'    => '17'
 			],
 			[ 'name'        => 'Nogomet',
 			  'designation' => 'PR1613',
-			  'parent'    => '17'
+			  'parent_id'    => '17'
 			],
 
 			[ 'name'        => 'Kuharstvo',
 			  'designation' => 'PR1700',
-			  'parent'    => '18'
+			  'parent_id'    => '18'
 			],
 			[ 'name'        => 'PIĆA (Pivo, Vina, žestoka pića)',
 			  'designation' => 'PR1701',
-			  'parent'    => '18'
+			  'parent_id'    => '18'
 			],
 			[ 'name'        => 'Tradicionalna i domaća kuhinja',
 			  'designation' => 'PR1702',
-			  'parent'    => '18'
+			  'parent_id'    => '18'
 			],
 			[ 'name'        => 'Internacionalna kuhinja',
 			  'designation' => 'PR1703',
-			  'parent'    => '18'
+			  'parent_id'    => '18'
 			],
 			[ 'name'        => 'Vegetarijanska kuhinja',
 			  'designation' => 'PR1704',
-			  'parent'    => '18'
+			  'parent_id'    => '18'
 			],
 			[ 'name'        => 'Riblje kuharice',
 			  'designation' => 'PR1705',
-			  'parent'    => '18'
+			  'parent_id'    => '18'
 			],
 			[ 'name'        => 'Deserti',
 			  'designation' => 'PR1706',
-			  'parent'    => '18'
+			  'parent_id'    => '18'
 			],
 			[ 'name'        => 'Kokteli',
 			  'designation' => 'PR1707',
-			  'parent'    => '18'
+			  'parent_id'    => '18'
 			],
 			[ 'name'        => 'Salate',
 			  'designation' => 'PR1708',
-			  'parent'    => '18'
+			  'parent_id'    => '18'
 			],
-			[ 'name' => 'Sir', 'designation' => 'PR1709', 'parent' => '18' ],
+			[ 'name' => 'Sir', 'designation' => 'PR1709', 'parent_id' => '18' ],
 			[ 'name'        => 'Tjestenina',
 			  'designation' => 'PR1710',
-			  'parent'    => '18'
+			  'parent_id'    => '18'
 			],
-			[ 'name' => 'Meso', 'designation' => 'PR1711', 'parent' => '18' ],
+			[ 'name' => 'Meso', 'designation' => 'PR1711', 'parent_id' => '18' ],
 			[ 'name'        => 'Ostale kuharice',
 			  'designation' => 'PR1712',
-			  'parent'    => '18'
+			  'parent_id'    => '18'
 			],
 
 			[ 'name'        => 'Uređenje doma',
 			  'designation' => 'PR1800',
-			  'parent'    => '19'
+			  'parent_id'    => '19'
 			],
 			[ 'name'        => 'Vrtlarstvo i hortikultura',
 			  'designation' => 'PR1801',
-			  'parent'    => '19'
+			  'parent_id'    => '19'
 			],
 			[ 'name'        => 'Voćnjak',
 			  'designation' => 'PR1802',
-			  'parent'    => '19'
+			  'parent_id'    => '19'
 			],
 			[ 'name'        => 'Sobno bilje, cvijeće',
 			  'designation' => 'PR1803',
-			  'parent'    => '19'
+			  'parent_id'    => '19'
 			],
 			[ 'name'        => 'Kućni ljubimci',
 			  'designation' => 'PR1804',
-			  'parent'    => '19'
+			  'parent_id'    => '19'
 			],
 
 			[ 'name'        => 'Uradi sam',
 			  'designation' => 'PR1805',
-			  'parent'    => '20'
+			  'parent_id'    => '20'
 			],
 			[ 'name'        => 'Automobili',
 			  'designation' => 'PR1806',
-			  'parent'    => '20'
+			  'parent_id'    => '20'
 			],
 			[ 'name'        => 'Oružje',
 			  'designation' => 'PR1807',
-			  'parent'    => '20'
+			  'parent_id'    => '20'
 			],
 			[ 'name'        => 'Modelarstvo',
 			  'designation' => 'PR1808',
-			  'parent'    => '20'
+			  'parent_id'    => '20'
 			],
 			[ 'name'        => 'Filatelija i numizmatika',
 			  'designation' => 'PR1809',
-			  'parent'    => '20'
+			  'parent_id'    => '20'
 			],
 			[ 'name'        => 'Ostalo',
 			  'designation' => 'PR1810',
-			  'parent'    => '20'
+			  'parent_id'    => '20'
 			],
 
 			[ 'name'        => 'Turistika',
 			  'designation' => 'PR1811',
-			  'parent'    => '21'
+			  'parent_id'    => '21'
 			],
 
 			[ 'name'        => 'Svi predmeti',
 			  'designation' => 'PR1812',
-			  'parent'    => '22'
+			  'parent_id'    => '22'
 			],
 
 			[ 'name'        => 'Boravak',
 			  'designation' => 'PR1813',
-			  'parent'    => '23'
+			  'parent_id'    => '23'
 			],
 		] );
 	}
