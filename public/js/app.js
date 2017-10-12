@@ -44087,9 +44087,9 @@ return zhTw;
 
 "use strict";
 /* unused harmony export Store */
-/* unused harmony export mapState */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return mapState; });
 /* unused harmony export mapMutations */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return mapGetters; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return mapGetters; });
 /* unused harmony export mapActions */
 /* unused harmony export createNamespacedHelpers */
 /**
@@ -47203,6 +47203,9 @@ module.exports = function spread(callback) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__partials_FooterButtons_vue__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_clickaway__ = __webpack_require__(206);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_clickaway___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_clickaway__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(132);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 //
 //
 //
@@ -47633,6 +47636,8 @@ module.exports = function spread(callback) {
 //
 //
 //
+//
+
 
 
 
@@ -47641,86 +47646,20 @@ module.exports = function spread(callback) {
     data: function () {
         return {
             option_colors: ['One Colour', 'Two Colours', 'Three Colours', 'Full Colour', 'Fifth Colour'],
-            dotation: this.$store.state.proposition.basic_data.dotation_amount,
             activeEdit: ''
         };
     },
-    computed: {
-        authors_total() {
-            return _.sumBy(Object.keys(this.$store.state.proposition.authors_expense.expenses), key => {
-                let e = this.$store.state.proposition.authors_expense.expenses[key];
-                let additional = _.sumBy(e.additional_expenses, a => {
-                    return Number(a.amount);
-                });
-                return Number(e.amount) + Number(additional);
-            }) + _.sumBy(this.$store.state.proposition.authors_expense.other, o => {
-                return Number(o.amount);
-            });
-        },
-        authors_advance() {
-            return _.sumBy(Object.keys(this.$store.state.proposition.authors_expense.expenses), key => {
-                return this.$store.state.proposition.authors_expense.expenses[key].accontation;
-            });
-        },
-        authors_other() {
-            _.sumBy(Object.keys(this.$store.state.proposition.authors_expense.expenses), key => {
-                return _.sumBy(this.$store.state.proposition.authors_expense.expenses[key].additional_expenses, a => {
-                    return a.amount;
-                });
-            });
-        },
-        options() {
-            return this.$deepModel('proposition.print.offers');
-        },
-        marketing_expense() {
-            return Number(this.$store.state.proposition.marketing_expense.expense) + _.sumBy(this.$store.state.proposition.marketing_expense.additional_expense, function (o) {
-                return Number(o.amount);
-            });
-        },
-        production_expense() {
-            let expense = this.$store.state.proposition.production_expense;
-            let sum = Number(expense.text_price) * Number(expense.text_price_amount) + Number(expense.lecture) * Number(expense.lecture_amount) + Number(expense.correction) * Number(expense.correction_amount) + Number(expense.proofreading) * Number(expense.proofreading_amount) + Number(expense.translation) * Number(expense.translation_amount) + Number(expense.index) * Number(expense.index_amount) + Number(expense.photos) * Number(expense.photos_amount) + Number(expense.illustrations) * Number(expense.illustrations_amount) + Number(expense.technical_drawings) * Number(expense.technical_drawings_amount) + Number(expense.accontation) + Number(expense.reviews) + Number(expense.epilogue) + Number(expense.expert_report) + Number(expense.copyright) + Number(expense.copyright_mediator) + Number(expense.methodical_instrumentarium) + Number(expense.selection) + Number(expense.powerpoint_presentation);
-            let additional = _.sumBy(expense.additional_expense, o => {
-                return Number(o.amount);
-            });
-            return sum + additional;
-        },
-        design_layout_expense() {
-            let category = this.$store.state.proposition.categorization.upgroup_coef / 60,
-                pages = this.$store.state.proposition.technical_data.number_of_pages,
-                photos = this.$store.state.proposition.production_expense.photos_amount / 30,
-                illustrations = this.$store.state.proposition.production_expense.illustrations_amount / 30,
-                drawings = this.$store.state.proposition.production_expense.technical_drawings_amount / 30;
-            const lcomplexity = {
-                1: 0.65,
-                2: 0.8,
-                3: 1,
-                4: 1.2,
-                5: 1.35
-            };
-            let number_of_hours = (category * pages + photos + illustrations + drawings) * lcomplexity[this.$store.state.proposition.layout_expense.layout_complexity];
-            let layout_price = number_of_hours * 8000 / 175;
-            const rcomplexity = {
-                1: 0.4,
-                2: 0.7,
-                3: 1,
-                4: 1.3,
-                5: 1.6
-            };
-            let design_price = number_of_hours * 15000 / 175 * rcomplexity[this.$store.state.proposition.layout_expense.design_complexity] / 2;
-            return layout_price + design_price;
-        },
+    computed: _extends({
         totals() {
             let options = {};
-            _.forEach(this.options, option => {
-                let remainder = _.sumBy(Object.keys(this.$store.state.proposition.authors_expense.expenses), key => {
-                    let e = this.$store.state.proposition.authors_expense.expenses[key];
+            _.forEach(this.offers, option => {
+                let remainder = _.sumBy(Object.keys(this.author_expenses), key => {
+                    let e = this.author_expenses[key];
                     return e.percentage * option.title * option.price_proposal / 100;
                 }),
                     complete = Number(this.authors_total) + Number(option.print_offer) + Number(option.compensation) + Number(option.indirect_expenses) + Number(remainder) + Number(this.marketing_expense) + Number(this.production_expense) + Number(this.design_layout_expense),
                     mprice = (Number(complete) - Number(this.dotation)) * (100 + Number(option.calculated_profit_percent)) / 100,
                     price = mprice * (100 + Number(option.shop_percent)) / 100;
-
                 options[option.id] = {
                     direct_cost: Number(this.authors_total) + Number(option.print_offer) + Number(option.compensation) + Number(this.marketing_expense) + Number(this.production_expense) + Number(this.design_layout_expense),
                     remainder_after_sales: remainder,
@@ -47733,7 +47672,17 @@ module.exports = function spread(callback) {
             });
             return options;
         }
-    },
+    }, __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2_vuex__["b" /* mapState */])('proposition/calculation', {
+        authors_total: 'authors_total',
+        authors_advance: 'authors_advance',
+        authors_other: 'authors_other',
+        author_expenses: 'author_expenses',
+        marketing_expense: 'marketing_expense',
+        production_expense: 'production_expense',
+        design_layout_expense: 'design_layout_expense',
+        dotation: 'dotation',
+        offers: 'offers'
+    })),
     components: {
         'footer-buttons': __WEBPACK_IMPORTED_MODULE_0__partials_FooterButtons_vue__["a" /* default */]
     },
@@ -47749,6 +47698,8 @@ module.exports = function spread(callback) {
     methods: {
         switchTab: function (e) {
             $(e.target).tab('show');
+            $('.mdb-select').material_select('destroy');
+            $('.mdb-select').material_select();
         },
         editField: function (field) {
             this.activeEdit = field;
@@ -47762,10 +47713,10 @@ module.exports = function spread(callback) {
     },
     mounted: function () {
         if (this.$route.params.id != 0) {
-            this.$store.dispatch('proposition/calculation/getData', { id: this.$route.params.id }).then(() => {
+            this.$store.dispatch('proposition/calculation/getData', { id: this.$route.params.id, force: true }).then(() => {
                 $('.mdb-select').material_select('destroy');
                 $('.mdb-select').material_select();
-            });;
+            });
         }
     }
 });
@@ -48790,7 +48741,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         data() {
             return this.$deepModel('proposition.layout_expense');
         }
-    }, __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1_vuex__["b" /* mapGetters */])({
+    }, __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1_vuex__["c" /* mapGetters */])({
         layout_total: 'proposition/layout_expense/layout_total',
         design_total: 'proposition/layout_expense/design_total'
     })),
@@ -51583,8 +51534,6 @@ const routes = [{ path: '/proposition/start', component: __WEBPACK_IMPORTED_MODU
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__proposition_technical_data__ = __webpack_require__(199);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__proposition_owner__ = __webpack_require__(195);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__proposition_calculation__ = __webpack_require__(294);
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
 
 
 
@@ -51634,205 +51583,21 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         error: ''
     },
     mutations: {
-        setId(state, id) {
-            state.id = id;
-        },
         initData(state, payload) {
             state.id = payload.id;
             state.created_at = payload.created_at;
             state.updated_at = payload.updated_at;
             state.deleted_at = payload.deleted_at;
-        },
-
-        updateProposition(state, payload) {
-            if (payload.group) {
-                state.proposition[payload.group][payload.key] = payload.value;
-            } else {
-                state.proposition[payload.key] = payload.value;
-            }
-        },
-        pushToObject(state, payload) {
-            state.proposition[payload.group][payload.key] = _extends({}, state.proposition[payload.group][payload.key], { [payload.id]: payload.value });
-        },
-        pushToArray(state, payload) {
-            state.proposition[payload.group][payload.key].push(payload.value);
-        },
-        removeFromArray(state, payload) {
-            let arr = state.proposition[payload.group][payload.key];
-            let index = payload.index;
-            if (!payload.hasOwnProperty('index')) {
-                index = arr.indexOf(payload.value);
-            }
-            arr.splice(index, 1);
-        },
-        initProposition(state, payload) {
-            __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.forEach(payload, (value, key) => {
-                state.proposition[key] = value;
-            });
-            state.proposition.loaded = true;
-            state.id = payload.id;
-        },
-        error(state, error) {
-            state.error = error;
-        },
-        stepIncrement(state) {
-            state.proposition.step++;
-        },
-        addToObjectArray(state, payload) {
-            let object = payload.value;
-            if (typeof object.id === 'undefined') {
-                object.id = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-                    let r = Math.random() * 16 | 0,
-                        v = c === 'x' ? r : r & 0x3 | 0x8;
-                    return v.toString(16);
-                });
-            }
-            state.proposition[payload.group][payload.key].push(object);
-        },
-        removeFromObjectArray(state, payload) {
-            state.proposition[payload.group][payload.key] = __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.filter(state.proposition[payload.group][payload.key], o => {
-                return o.id !== payload.value;
-            });
-        },
-        updateOffer(state, payload) {
-            state.proposition.print.offers[payload.id][payload.field] = payload.value;
-        },
-        deletePrintOffer(state, payload) {
-            delete state.proposition.print.offers[payload.id];
-        },
-        addAuthorExpense(state, payload) {
-            state.proposition.authors_expense.expenses[payload.author].additional_expenses.push({ expense: '', amount: 0 });
-        },
-        deleteAuthorExpense(state, payload) {
-            state.proposition.authors_expense.expenses[payload.author].additional_expenses.splice(payload.index, 1);
-        },
-        addFile(state, payload) {
-            state.proposition[payload.group][payload.key].push(payload.file);
-        },
-        removeFile(state, payload) {
-            state.proposition[payload.group][payload.key].splice(__WEBPACK_IMPORTED_MODULE_1_lodash___default.a.findIndex(state.proposition[payload.group][payload.key], { 'id': payload.id }), 1);
-        },
-        fileNameSave(state, payload) {
-            __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.forEach(state.proposition[payload.group][payload.key], o => {
-                if (o.id === payload.id) {
-                    o.title = payload.title;
-                }
-            });
         }
     },
     actions: {
-        initData({ commit, state, dispatch }, payload) {
+        initData({ commit, state }, payload) {
             if (!state.id || state.id != payload.id || payload.force) {
                 __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/api/proposition/' + payload.id + '/init').then(res => {
                     commit('initData', res.data);
                     commit('proposition/owner/initData', res.data.owner, { root: true });
                 });
             }
-        },
-
-        initProposition({ commit, state }, payload) {
-            return new Promise((resolve, reject) => {
-                __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/api/proposition/' + payload.id).then(res => {
-                    commit('initProposition', res.data);
-                    resolve();
-                }).catch(err => {});
-            });
-        },
-        saveProposition({ commit, state }) {
-            let step = state.proposition.step;
-            if (step === 11) {
-                step = 4;
-            }
-            let data = {
-                step: state.steps[step],
-                data: state.proposition[state.steps[step]]
-            };
-            if (!state.proposition.id) {
-                __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/api/proposition', data).then(res => {
-                    commit('updateProposition', { key: 'id', value: res.data.id });
-                }).catch(err => {
-                    commit('error', 'There was an error saving proposition. Please try again.');
-                });
-            } else {
-                __WEBPACK_IMPORTED_MODULE_0_axios___default.a.patch('/api/proposition/' + parseInt(state.proposition.id), data).then(res => {
-                    commit('initProposition', res.data);
-                }).catch(err => {
-                    commit('error', 'There was an error saving proposition. Please try again.');
-                });
-            }
-        },
-        initOffers({ state, commit }) {
-            return new Promise((resolve, reject) => {
-                let offers = state.proposition.print.offers;
-                __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.forEach(state.proposition.technical_data.circulations, function (o) {
-                    if (typeof offers[o.id] === 'undefined') {
-                        let offer = {
-                            title: o.title,
-                            note: '',
-                            print_offer: '',
-                            book_binding: state.proposition.technical_data.book_binding,
-                            paper_type: state.proposition.technical_data.paper_type,
-                            cover_type: state.proposition.technical_data.cover_type,
-                            colors: state.proposition.technical_data.colors,
-                            colors_first_page: state.proposition.technical_data.colors_first_page,
-                            colors_last_page: state.proposition.technical_data.colors_last_page,
-                            additional_work: '',
-                            cover_paper_type: state.proposition.technical_data.cover_paper_type,
-                            cover_colors: state.proposition.technical_data.cover_colors,
-                            cover_plastification: state.proposition.technical_data.cover_plastification,
-                            film_print: state.proposition.technical_data.film_print,
-                            blind_print: state.proposition.technical_data.blind_print,
-                            uv_print: state.proposition.technical_data.uv_print,
-                            number_of_pages: state.proposition.technical_data.number_of_pages,
-                            hard_cover_circulation: 0,
-                            soft_cover_circulation: 0,
-                            total_cost: 0,
-                            direct_cost_cover: 0,
-                            complete_cost_cover: 0,
-                            compensation: 0,
-                            indirect_expenses: 0,
-                            complete_expense: 0,
-                            remainder_after_sales: 0,
-                            price_proposal: 0,
-                            calculated_profit_percent: 18,
-                            shop_percent: 20,
-                            vat_percent: 5
-                        };
-                        commit('pushToObject', {
-                            id: o.id,
-                            value: offer,
-                            group: 'print',
-                            key: 'offers'
-                        });
-                    }
-                });
-                resolve();
-            });
-        },
-        initAuthorExpenses({ state, commit }) {
-            let expenses = state.proposition.authors_expense.expenses;
-            __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.forEach(state.proposition.basic_data.authors, function (a) {
-                if (typeof expenses[a.id] === 'undefined') {
-                    commit('pushToObject', {
-                        group: 'authors_expense',
-                        key: 'expenses',
-                        id: a.id,
-                        value: {
-                            amount: '', percentage: '', accontation: '',
-                            additional_expenses: []
-                        }
-                    });
-                }
-            });
-        },
-        deleteFile({ commit }, payload) {
-            commit('removeFile', payload);
-            //make request to remove from system
-            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.delete('/api/file/' + payload.id);
-        },
-        fileNameSave({ commit }, payload) {
-            commit('fileNameSave', payload);
-            //make request to change in system
         }
     }
 });
@@ -63010,7 +62775,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         _vm.switchTab($event)
       }
     }
-  }, [_vm._v(_vm._s(_vm.lang('Precalculation')))])]), _vm._v(" "), _vm._l((_vm.options), function(option, key, index) {
+  }, [_vm._v(_vm._s(_vm.lang('Precalculation')))])]), _vm._v(" "), _vm._l((_vm.offers), function(option, key, index) {
     return _c('li', {
       staticClass: "nav-item"
     }, [_c('a', {
@@ -63037,7 +62802,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }
   }, [_c('div', {
     staticClass: "page-name-xl mb-1 mt-3"
-  }, [_vm._v(_vm._s(_vm.lang('Precalculation')))]), _vm._v(" "), _vm._l((_vm.options), function(option, key, index) {
+  }, [_vm._v(_vm._s(_vm.lang('Precalculation')))]), _vm._v(" "), _vm._l((_vm.offers), function(option, key, index) {
     return [_c('div', {
       staticClass: "page-name-l mb-1 mt-2"
     }, [_vm._v(_vm._s(_vm.lang('Option ' + (index + 1))))]), _vm._v(" "), _c('a', {
@@ -63078,7 +62843,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }, [_vm._v(_vm._s(_vm.lang('Complete Cost Cover')))]), _vm._v(" "), _c('div', [_c('h6', {
       staticClass: "no-border text-white"
     }, [_vm._v(_vm._s(_vm.lang('Number of Sold Copies')))]), _vm._v(" "), _c('h3', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.totals[option.id].cost_coverage / option.price_proposal, '', 0)))])])]), _vm._v(" "), _vm._m(0, true)])])]
-  })], 2), _vm._v(" "), _vm._l((_vm.options), function(option, key, index) {
+  })], 2), _vm._v(" "), _vm._l((_vm.offers), function(option, key, index) {
     return _c('div', {
       key: key,
       staticClass: "tab-pane fade",
@@ -63158,7 +62923,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       attrs: {
         "scope": "row"
       }
-    }, [_vm._v("1.2")]), _vm._v(" "), _c('td', [_vm._v("Ostali autorski ugovori")]), _vm._v(" "), _c('td'), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.authors_other, '', 2)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.authors_other, ' kn', 2)))])]), _vm._v(" "), _c('tr', {
+    }, [_vm._v("1.2")]), _vm._v(" "), _c('td', [_vm._v("Ostali autorski ugovori")]), _vm._v(" "), _c('td'), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.authors_other, '', 2)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.authors_other / option.title, ' kn', 2)))])]), _vm._v(" "), _c('tr', {
       staticClass: "table-display-1"
     }, [_c('th', {
       attrs: {
@@ -63196,8 +62961,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       directives: [{
         name: "model",
         rawName: "v-model",
-        value: (_vm.options[key].compensation),
-        expression: "options[key].compensation"
+        value: (option.compensation),
+        expression: "option.compensation"
       }],
       staticClass: "form-control",
       attrs: {
@@ -63205,7 +62970,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         "autofocus": ""
       },
       domProps: {
-        "value": (_vm.options[key].compensation)
+        "value": (option.compensation)
       },
       on: {
         "keyup": function($event) {
@@ -63214,7 +62979,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         },
         "input": function($event) {
           if ($event.target.composing) { return; }
-          _vm.options[key].compensation = $event.target.value
+          option.compensation = $event.target.value
         }
       }
     })])] : [_c('td', {
@@ -63240,8 +63005,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       directives: [{
         name: "model",
         rawName: "v-model",
-        value: (_vm.options[key].indirect_expenses),
-        expression: "options[key].indirect_expenses"
+        value: (option.indirect_expenses),
+        expression: "option.indirect_expenses"
       }],
       staticClass: "form-control",
       attrs: {
@@ -63250,7 +63015,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         "autofocus": ""
       },
       domProps: {
-        "value": (_vm.options[key].indirect_expenses)
+        "value": (option.indirect_expenses)
       },
       on: {
         "keyup": function($event) {
@@ -63259,7 +63024,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         },
         "input": function($event) {
           if ($event.target.composing) { return; }
-          _vm.options[key].indirect_expenses = $event.target.value
+          option.indirect_expenses = $event.target.value
         }
       }
     })])] : [_c('td', {
@@ -63303,8 +63068,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       directives: [{
         name: "model",
         rawName: "v-model",
-        value: (_vm.options[key].calculated_profit_percent),
-        expression: "options[key].calculated_profit_percent"
+        value: (option.calculated_profit_percent),
+        expression: "option.calculated_profit_percent"
       }],
       staticClass: "form-control",
       attrs: {
@@ -63313,7 +63078,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         "autofocus": ""
       },
       domProps: {
-        "value": (_vm.options[key].calculated_profit_percent)
+        "value": (option.calculated_profit_percent)
       },
       on: {
         "keyup": function($event) {
@@ -63322,7 +63087,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         },
         "input": function($event) {
           if ($event.target.composing) { return; }
-          _vm.options[key].calculated_profit_percent = $event.target.value
+          option.calculated_profit_percent = $event.target.value
         }
       }
     })])] : [_c('td', {
@@ -63344,8 +63109,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       directives: [{
         name: "model",
         rawName: "v-model",
-        value: (_vm.options[key + '[shop_percent]']),
-        expression: "options[key+'[shop_percent]']"
+        value: (option.shop_percent),
+        expression: "option.shop_percent"
       }],
       staticClass: "form-control",
       attrs: {
@@ -63354,7 +63119,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         "autofocus": ""
       },
       domProps: {
-        "value": (_vm.options[key + '[shop_percent]'])
+        "value": (option.shop_percent)
       },
       on: {
         "keyup": function($event) {
@@ -63363,7 +63128,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         },
         "input": function($event) {
           if ($event.target.composing) { return; }
-          _vm.$set(_vm.options, key + '[shop_percent]', $event.target.value)
+          option.shop_percent = $event.target.value
         }
       }
     })])] : [_c('td', {
@@ -71839,7 +71604,7 @@ module.exports = __webpack_require__(134);
     namespaced: true,
     state: {
         id: 0,
-        authors: [],
+        author_expenses: [],
         offers: [{
             title: 0,
             total_cost: '',
@@ -71888,7 +71653,7 @@ module.exports = __webpack_require__(134);
         saveData({ state, commit }, id) {
             return new Promise((resolve, reject) => {
                 if (id) {
-                    __WEBPACK_IMPORTED_MODULE_0_axios_index___default.a.post('/api/proposition/' + id + '/authors_expense', state).then(res => {
+                    __WEBPACK_IMPORTED_MODULE_0_axios_index___default.a.post('/api/proposition/' + id + '/calculation', state).then(res => {
                         resolve();
                     }).catch(() => {
                         reject();
