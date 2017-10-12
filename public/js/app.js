@@ -49109,9 +49109,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         },
         fileAdd: function (data) {
             if (data.isFinal) {
-                this.final.push(data.file);
+                this.psd.push(data.file);
             } else {
-                this.files.push(data.file);
+                this.jpg.push(data.file);
             }
         },
         fileNameSave: function (data) {
