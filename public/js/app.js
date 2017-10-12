@@ -48833,8 +48833,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__partials_FooterButtons__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__general_UploadModal_vue__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__general_UploadModal_vue__ = __webpack_require__(12);
 //
 //
 //
@@ -48874,7 +48873,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
@@ -48885,8 +48886,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         };
     },
     components: {
-        'footer-buttons': __WEBPACK_IMPORTED_MODULE_0__partials_FooterButtons__["a" /* default */],
-        'upload-modal': __WEBPACK_IMPORTED_MODULE_1__general_UploadModal_vue__["a" /* default */]
+        'upload-modal': __WEBPACK_IMPORTED_MODULE_0__general_UploadModal_vue__["a" /* default */]
     },
     computed: {},
     methods: {
@@ -49032,8 +49032,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__partials_FooterButtons__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__general_UploadModal_vue__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__general_UploadModal_vue__ = __webpack_require__(12);
 //
 //
 //
@@ -49080,7 +49079,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
@@ -49092,8 +49093,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         };
     },
     components: {
-        'footer-buttons': __WEBPACK_IMPORTED_MODULE_0__partials_FooterButtons__["a" /* default */],
-        'upload-modal': __WEBPACK_IMPORTED_MODULE_1__general_UploadModal_vue__["a" /* default */]
+        'upload-modal': __WEBPACK_IMPORTED_MODULE_0__general_UploadModal_vue__["a" /* default */]
     },
     computed: {},
     methods: {
@@ -67436,7 +67436,17 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         _vm.documentAdd('cover-psd')
       }
     }
-  }, [_vm._v(_vm._s(_vm.lang('Upload')))])]), _vm._v(" "), _c('footer-buttons'), _vm._v(" "), _c('upload-modal', {
+  }, [_vm._v(_vm._s(_vm.lang('Upload')))])]), _vm._v(" "), _c('div', {
+    staticClass: "modal-footer btn-footer"
+  }, [_c('button', {
+    staticClass: "btn btn-lg btn-save",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": _vm.saveFiles
+    }
+  }, [_vm._v(_vm._s(_vm.lang('Save')))])]), _vm._v(" "), _c('upload-modal', {
     attrs: {
       "id": "cover-jpg",
       "action": "/api/file",
@@ -68408,7 +68418,17 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         _vm.documentAdd('leaflet')
       }
     }
-  }, [_vm._v(_vm._s(_vm.lang('Upload')))])]), _vm._v(" "), _c('footer-buttons'), _vm._v(" "), _c('upload-modal', {
+  }, [_vm._v(_vm._s(_vm.lang('Upload')))])]), _vm._v(" "), _c('div', {
+    staticClass: "modal-footer btn-footer"
+  }, [_c('button', {
+    staticClass: "btn btn-lg btn-save",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": _vm.saveFiles
+    }
+  }, [_vm._v(_vm._s(_vm.lang('Save')))])]), _vm._v(" "), _c('upload-modal', {
     attrs: {
       "id": "cover-pdf",
       "action": "/api/file",
