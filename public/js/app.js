@@ -45077,7 +45077,10 @@ $(document).ready(function () {
 });
 
 // Data Picker Initialization
-$('.datepicker').pickadate();
+$('.datepicker').pickadate({
+    showMonthsShort: 'false',
+    firstDay: 1
+});
 
 // Tooltip Initialization
 $(function () {
@@ -47661,7 +47664,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     mprice = (Number(complete) - Number(this.dotation)) * (100 + Number(option.calculated_profit_percent)) / 100,
                     price = mprice * (100 + Number(option.shop_percent)) / 100;
                 options[option.id] = {
-                    direct_cost: Number(this.authors_total) + Number(option.print_offer) + Number(option.compensation) + Number(this.marketing_expense) + Number(this.production_expense) + Number(this.design_layout_expense),
+                    direct_cost: Number(this.authors_total) + Number(option.print_offer) + Number(option.compensation) + Number(this.marketing_expense) + Number(this.production_expense) + Number(this.design_layout_expense) - Number(this.dotation),
                     remainder_after_sales: remainder,
                     complete_expense: complete,
                     cost_coverage: Number(complete) - Number(this.dotation),
@@ -48043,6 +48046,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_lodash__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__partials_FooterButtons_vue__ = __webpack_require__(3);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 //
 //
 //
@@ -48396,25 +48401,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     components: {
         'footer-buttons': __WEBPACK_IMPORTED_MODULE_1__partials_FooterButtons_vue__["a" /* default */]
     },
-    computed: {
+    computed: _extends({
         authors() {
             return this.$deepModel('proposition.proposition.basic_data.authors');
-        },
-        author_expenses() {
-            __WEBPACK_IMPORTED_MODULE_0_lodash___default.a.mapValues(this.$store.state.proposition.proposition.authors_expense, a => {
-                return Number(a.amount) + Number(__WEBPACK_IMPORTED_MODULE_0_lodash___default.a.sumBy(a.additional_expenses, a => {
-                    return Number(a.amount);
-                }));
-            });
-        },
-        production_expense() {
-            return this.$deepModel('proposition.proposition.production_expense');
-        },
-        marketing_expense() {
-            let marketing_expenses = this.$store.state.proposition.proposition.marketing_expense;
-            return Number(marketing_expenses.expense) + __WEBPACK_IMPORTED_MODULE_0_lodash___default.a.sumBy(marketing_expenses.additional_expense, function (o) {
-                return Number(o.amount);
-            });
         },
         additional_expense() {
             return __WEBPACK_IMPORTED_MODULE_0_lodash___default.a.sumBy(this.production_expense.additional_expense, o => {
@@ -48422,11 +48411,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             });
         },
         total_budget() {
-            let total_authors = 0;
-            if (this.author_expenses) {
-                total_authors = Object.values(this.author_expenses).reduce((a, b) => a + b);
-            }
-            return total_authors + this.production_expense.text_price * this.production_expense.text_price_amount + this.production_expense.reviews + this.production_expense.lecture * this.production_expense.lecture_amount + this.production_expense.correction * this.production_expense.correction_amount + this.production_expense.proofreading * this.production_expense.proofreading_amount + this.production_expense.translation * this.production_expense.translation_amount + this.production_expense.index * this.production_expense.index_amount + this.production_expense.epilogue + this.production_expense.photos * this.production_expense.photos_amount + this.production_expense.illustrations * this.production_expense.illustrations_amount + this.production_expense.technical_drawings * this.production_expense.technical_drawings_amount + this.production_expense.expert_report + this.production_expense.copyright + this.production_expense.copyright_mediator + this.production_expense.methodical_instrumentarium + this.production_expense.selection + this.production_expense.powerpoint_presentation + this.additional_expense + this.marketing_expense;
+            return this.total_authors + this.production_expense;
         },
         total_expenses() {
             return Object.values(this.expenses).reduce((a, b) => a + b);
@@ -48437,7 +48422,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         total_percent_difference() {
             return Math.round(this.total_difference / this.total_budget * 100);
         }
-    },
+    }, mapState('proposition/compare', ['production_expense', 'marketing_expense'])),
     methods: {
         editField: function (field) {
             this.activeEdit = field;
@@ -50711,6 +50696,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         }
     },
     mounted: function () {}
+
 });
 
 /***/ }),
@@ -67041,7 +67027,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }, [_c('input', {
     staticClass: "form-control datepicker btn-white",
     attrs: {
-      "placeholder": "Selected date",
+      "placeholder": _vm.lang('Odaberi datum'),
       "type": "text",
       "id": "date-picker-example"
     },
