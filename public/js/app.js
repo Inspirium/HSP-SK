@@ -48046,6 +48046,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_lodash__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__partials_FooterButtons_vue__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(132);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 //
@@ -48392,6 +48393,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 
 
+
+
 /* harmony default export */ __webpack_exports__["a"] = ({
     data: function () {
         return {
@@ -48422,7 +48425,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         total_percent_difference() {
             return Math.round(this.total_difference / this.total_budget * 100);
         }
-    }, mapState('proposition/compare', ['production_expense', 'marketing_expense'])),
+    }, __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2_vuex__["b" /* mapState */])('proposition/compare', ['production_expense', 'marketing_expense'])),
     methods: {
         editField: function (field) {
             this.activeEdit = field;
