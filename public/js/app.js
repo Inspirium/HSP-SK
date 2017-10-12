@@ -44089,7 +44089,7 @@ return zhTw;
 /* unused harmony export Store */
 /* unused harmony export mapState */
 /* unused harmony export mapMutations */
-/* unused harmony export mapGetters */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return mapGetters; });
 /* unused harmony export mapActions */
 /* unused harmony export createNamespacedHelpers */
 /**
@@ -46926,8 +46926,6 @@ module.exports = function spread(callback) {
 //
 //
 //
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
@@ -46940,23 +46938,20 @@ module.exports = function spread(callback) {
     computed: {
         expenses() {
             return this.$deepModel('proposition.authors_expense');
-        },
-        authors() {
-            return this.$deepModel('proposition.basic_data.authors');
         }
     },
     methods: {
         addExpense: function (author) {
-            this.$store.commit('proposition/addAuthorExpense', { author: author });
+            this.$store.commit('proposition/authors_expense/addExpense', author);
         },
         deleteExpense: function (author, index) {
-            this.$store.commit('proposition/deleteAuthorExpense', { author: author, index: index });
+            this.$store.commit('proposition/authors_expense/deleteExpense', { author: author, index: index });
         },
         addOtherExpense: function () {
-            this.$store.commit('proposition/pushToArray', { group: 'authors_expense', key: 'other', value: { expense: '', amount: '' } });
+            this.$store.commit('proposition/authors_expense/addOtherExpense');
         },
         deleteOtherExpense: function (index) {
-            this.$store.commit('proposition/removeFromArray', { group: 'authors_expense', key: 'other', index: index });
+            this.$store.commit('proposition/authors_expense/deleteOtherExpense', index);
         }
     },
     mounted: function () {
@@ -47646,44 +47641,44 @@ module.exports = function spread(callback) {
     data: function () {
         return {
             option_colors: ['One Colour', 'Two Colours', 'Three Colours', 'Full Colour', 'Fifth Colour'],
-            dotation: this.$store.state.proposition.proposition.basic_data.dotation_amount,
+            dotation: this.$store.state.proposition.basic_data.dotation_amount,
             activeEdit: ''
         };
     },
     computed: {
         authors_total() {
-            return _.sumBy(Object.keys(this.$store.state.proposition.proposition.authors_expense.expenses), key => {
-                let e = this.$store.state.proposition.proposition.authors_expense.expenses[key];
+            return _.sumBy(Object.keys(this.$store.state.proposition.authors_expense.expenses), key => {
+                let e = this.$store.state.proposition.authors_expense.expenses[key];
                 let additional = _.sumBy(e.additional_expenses, a => {
                     return Number(a.amount);
                 });
                 return Number(e.amount) + Number(additional);
-            }) + _.sumBy(this.$store.state.proposition.proposition.authors_expense.other, o => {
+            }) + _.sumBy(this.$store.state.proposition.authors_expense.other, o => {
                 return Number(o.amount);
             });
         },
         authors_advance() {
-            return _.sumBy(Object.keys(this.$store.state.proposition.proposition.authors_expense.expenses), key => {
-                return this.$store.state.proposition.proposition.authors_expense.expenses[key].accontation;
+            return _.sumBy(Object.keys(this.$store.state.proposition.authors_expense.expenses), key => {
+                return this.$store.state.proposition.authors_expense.expenses[key].accontation;
             });
         },
         authors_other() {
-            _.sumBy(Object.keys(this.$store.state.proposition.proposition.authors_expense.expenses), key => {
-                return _.sumBy(this.$store.state.proposition.proposition.authors_expense.expenses[key].additional_expenses, a => {
+            _.sumBy(Object.keys(this.$store.state.proposition.authors_expense.expenses), key => {
+                return _.sumBy(this.$store.state.proposition.authors_expense.expenses[key].additional_expenses, a => {
                     return a.amount;
                 });
             });
         },
         options() {
-            return this.$deepModel('proposition.proposition.print.offers');
+            return this.$deepModel('proposition.print.offers');
         },
         marketing_expense() {
-            return Number(this.$store.state.proposition.proposition.marketing_expense.expense) + _.sumBy(this.$store.state.proposition.proposition.marketing_expense.additional_expense, function (o) {
+            return Number(this.$store.state.proposition.marketing_expense.expense) + _.sumBy(this.$store.state.proposition.marketing_expense.additional_expense, function (o) {
                 return Number(o.amount);
             });
         },
         production_expense() {
-            let expense = this.$store.state.proposition.proposition.production_expense;
+            let expense = this.$store.state.proposition.production_expense;
             let sum = Number(expense.text_price) * Number(expense.text_price_amount) + Number(expense.lecture) * Number(expense.lecture_amount) + Number(expense.correction) * Number(expense.correction_amount) + Number(expense.proofreading) * Number(expense.proofreading_amount) + Number(expense.translation) * Number(expense.translation_amount) + Number(expense.index) * Number(expense.index_amount) + Number(expense.photos) * Number(expense.photos_amount) + Number(expense.illustrations) * Number(expense.illustrations_amount) + Number(expense.technical_drawings) * Number(expense.technical_drawings_amount) + Number(expense.accontation) + Number(expense.reviews) + Number(expense.epilogue) + Number(expense.expert_report) + Number(expense.copyright) + Number(expense.copyright_mediator) + Number(expense.methodical_instrumentarium) + Number(expense.selection) + Number(expense.powerpoint_presentation);
             let additional = _.sumBy(expense.additional_expense, o => {
                 return Number(o.amount);
@@ -47691,11 +47686,11 @@ module.exports = function spread(callback) {
             return sum + additional;
         },
         design_layout_expense() {
-            let category = this.$store.state.proposition.proposition.categorization.upgroup_coef / 60,
-                pages = this.$store.state.proposition.proposition.technical_data.number_of_pages,
-                photos = this.$store.state.proposition.proposition.production_expense.photos_amount / 30,
-                illustrations = this.$store.state.proposition.proposition.production_expense.illustrations_amount / 30,
-                drawings = this.$store.state.proposition.proposition.production_expense.technical_drawings_amount / 30;
+            let category = this.$store.state.proposition.categorization.upgroup_coef / 60,
+                pages = this.$store.state.proposition.technical_data.number_of_pages,
+                photos = this.$store.state.proposition.production_expense.photos_amount / 30,
+                illustrations = this.$store.state.proposition.production_expense.illustrations_amount / 30,
+                drawings = this.$store.state.proposition.production_expense.technical_drawings_amount / 30;
             const lcomplexity = {
                 1: 0.65,
                 2: 0.8,
@@ -47703,7 +47698,7 @@ module.exports = function spread(callback) {
                 4: 1.2,
                 5: 1.35
             };
-            let number_of_hours = (category * pages + photos + illustrations + drawings) * lcomplexity[this.$store.state.proposition.proposition.layout_expense.layout_complexity];
+            let number_of_hours = (category * pages + photos + illustrations + drawings) * lcomplexity[this.$store.state.proposition.layout_expense.layout_complexity];
             let layout_price = number_of_hours * 8000 / 175;
             const rcomplexity = {
                 1: 0.4,
@@ -47712,14 +47707,14 @@ module.exports = function spread(callback) {
                 4: 1.3,
                 5: 1.6
             };
-            let design_price = number_of_hours * 15000 / 175 * rcomplexity[this.$store.state.proposition.proposition.layout_expense.design_complexity] / 2;
+            let design_price = number_of_hours * 15000 / 175 * rcomplexity[this.$store.state.proposition.layout_expense.design_complexity] / 2;
             return layout_price + design_price;
         },
         totals() {
             let options = {};
             _.forEach(this.options, option => {
-                let remainder = _.sumBy(Object.keys(this.$store.state.proposition.proposition.authors_expense.expenses), key => {
-                    let e = this.$store.state.proposition.proposition.authors_expense.expenses[key];
+                let remainder = _.sumBy(Object.keys(this.$store.state.proposition.authors_expense.expenses), key => {
+                    let e = this.$store.state.proposition.authors_expense.expenses[key];
                     return e.percentage * option.title * option.price_proposal / 100;
                 }),
                     complete = Number(this.authors_total) + Number(option.print_offer) + Number(option.compensation) + Number(option.indirect_expenses) + Number(remainder) + Number(this.marketing_expense) + Number(this.production_expense) + Number(this.design_layout_expense),
@@ -47766,15 +47761,12 @@ module.exports = function spread(callback) {
         }
     },
     mounted: function () {
-        if (this.$route.params.id && !this.$store.state.proposition.proposition.loaded) {
-            this.$store.dispatch('proposition/initProposition', { id: this.$route.params.id }).then(() => {
+        if (this.$route.params.id != 0) {
+            this.$store.dispatch('proposition/calculation/getData', { id: this.$route.params.id }).then(() => {
                 $('.mdb-select').material_select('destroy');
                 $('.mdb-select').material_select();
-            });
+            });;
         }
-        this.$store.commit('proposition/updateProposition', { key: 'step', value: 11 });
-        $('.mdb-select').material_select('destroy');
-        $('.mdb-select').material_select();
     }
 });
 
@@ -48696,6 +48688,9 @@ module.exports = function spread(callback) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__partials_FooterButtons_vue__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(132);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 //
 //
 //
@@ -48784,68 +48779,34 @@ module.exports = function spread(callback) {
 //
 //
 //
+
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
     data: function () {
         return {};
     },
-    computed: {
-        supergroup_text() {
-            return this.$store.state.proposition.categorization.supergroup_text;
-        },
-        group_text() {
-            return this.$store.state.proposition.categorization.group_text;
-        },
-        technical() {
-            return this.$deepModel('proposition.technical_data');
-        },
-        production() {
-            return this.$deepModel('proposition.production_expense');
-        },
-        layout() {
+    computed: _extends({
+        data() {
             return this.$deepModel('proposition.layout_expense');
-        },
-        number_of_hours() {
-            let category = this.$store.state.proposition.proposition.categorization.upgroup_coef / 60,
-                pages = this.technical.number_of_pages,
-                photos = this.production.photos_amount / 30,
-                illustrations = this.production.illustrations_amount / 30,
-                drawings = this.production.technical_drawings_amount / 30;
-            const complexity = {
-                1: 0.65,
-                2: 0.8,
-                3: 1,
-                4: 1.2,
-                5: 1.35
-            };
-            return (category * pages + photos + illustrations + drawings) * complexity[this.layout.layout_complexity];
-        },
-        layout_total() {
-            let price = 8000 / 175;
-            return this.number_of_hours * price;
-        },
-        design_total() {
-            let price = 15000 / 175;
-            const complexity = {
-                1: 0.4,
-                2: 0.7,
-                3: 1,
-                4: 1.3,
-                5: 1.6
-            };
-            return this.number_of_hours * price * complexity[this.layout.design_complexity] / 2;
         }
-    },
+    }, __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1_vuex__["b" /* mapGetters */])({
+        layout_total: 'proposition/layout_expense/layout_total',
+        design_total: 'proposition/layout_expense/design_total'
+    })),
     components: {
         'footer-buttons': __WEBPACK_IMPORTED_MODULE_0__partials_FooterButtons_vue__["a" /* default */]
     },
     methods: {},
     mounted: function () {
         if (this.$route.params.id != 0) {
-            this.$store.dispatch('proposition/layout_expense/getData', { id: this.$route.params.id });
+            this.$store.dispatch('proposition/layout_expense/getData', { id: this.$route.params.id }).then(() => {
+                $('.mdb-select').material_select('destroy');
+                $('.mdb-select').material_select();
+            });
         }
     }
+
 });
 
 /***/ }),
@@ -49057,10 +49018,10 @@ module.exports = function spread(callback) {
     },
     methods: {
         addExpense: function () {
-            this.$store.commit('proposition/pushToArray', { group: 'marketing_expense', key: 'additional_expense', value: { expense: '', amount: '' } });
+            this.$store.commit('proposition/marketing_expense/addExpense');
         },
         deleteExpense: function (index) {
-            this.$store.commit('proposition/removeFromArray', { group: 'marketing_expense', key: 'additional_expense', index: index });
+            this.$store.commit('proposition/marketing_expense/deleteExpense', index);
         }
     },
     mounted: function () {
@@ -49833,7 +49794,10 @@ module.exports = function spread(callback) {
     },
     methods: {
         addExpense: function () {
-            this.$store.commit('proposition/pushToArray', { group: 'production_expense', key: 'additional_expense', value: { expense: '', amount: '' } });
+            this.$store.commit('proposition/production_expense/addExpense');
+        },
+        deleteExpense: function (index) {
+            this.$store.commit('proposition/production_expense/deleteExpense', index);
         }
     },
     mounted: function () {
@@ -50672,6 +50636,84 @@ module.exports = function spread(callback) {
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["a"] = ({
     data: function () {
@@ -50943,6 +50985,19 @@ module.exports = function spread(callback) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -51527,7 +51582,9 @@ const routes = [{ path: '/proposition/start', component: __WEBPACK_IMPORTED_MODU
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__proposition_production_expense__ = __webpack_require__(197);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__proposition_technical_data__ = __webpack_require__(199);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__proposition_owner__ = __webpack_require__(195);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__proposition_calculation__ = __webpack_require__(294);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 
 
 
@@ -51561,6 +51618,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         production_expense: __WEBPACK_IMPORTED_MODULE_12__proposition_production_expense__["a" /* default */],
         technical_data: __WEBPACK_IMPORTED_MODULE_13__proposition_technical_data__["a" /* default */],
         authors_expense: __WEBPACK_IMPORTED_MODULE_5__proposition_authors_expense__["a" /* default */],
+        calculation: __WEBPACK_IMPORTED_MODULE_15__proposition_calculation__["a" /* default */],
         owner: __WEBPACK_IMPORTED_MODULE_14__proposition_owner__["a" /* default */]
     },
     state: {
@@ -51793,7 +51851,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     state: {
         id: 0,
         authors: [],
-        expenses: {},
         note: '',
         other: []
     },
@@ -51803,6 +51860,18 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 let key = Object.keys(state)[i];
                 state[key] = payload[key];
             }
+        },
+        addExpense(state, author) {
+            state.authors[author].expenses[0].additional_expenses.push({ expense: '', amount: 0 });
+        },
+        deleteExpense(state, payload) {
+            state.authors[payload.author].expenses[0].additional_expenses.splice(payload.index, 1);
+        },
+        addOtherExpense(state) {
+            state.other.push({ expense: '', amount: 0 });
+        },
+        deleteOtherExpense(state, index) {
+            state.other.splice(index, 1);
         }
     },
     actions: {
@@ -52028,7 +52097,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     mutations: {
         initData(state, payload) {
             for (let i in Object.keys(state)) {
-                state[Object.keys(state)[i]] = payload[i];
+                let key = Object.keys(state)[i];
+                state[key] = payload[key];
             }
         }
     },
@@ -52076,7 +52146,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     mutations: {
         initData(state, payload) {
             for (let i in Object.keys(state)) {
-                state[Object.keys(state)[i]] = payload[i];
+                let key = Object.keys(state)[i];
+                state[key] = payload[key];
             }
         }
     },
@@ -52123,23 +52194,36 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         layout_note: '',
         design_complexity: '',
         design_include: '',
-        design_note: ''
+        design_note: '',
+        number_of_pages: 0,
+        photos_amount: 0,
+        illustrations_amount: 0,
+        technical_drawings_amount: 0,
+        group: {}
     },
     mutations: {
         initData(state, payload) {
             for (let i in Object.keys(state)) {
-                state[Object.keys(state)[i]] = payload[i];
+                let key = Object.keys(state)[i];
+                state[key] = payload[key];
             }
         }
     },
     actions: {
         getData({ commit, state }, payload) {
-            if (!state.id || state.id != payload.id || payload.force) {
-                //retrieve data only we don't have it or we need to refresh it
-                __WEBPACK_IMPORTED_MODULE_0_axios_index___default.a.get('/api/proposition/' + payload.id + '/layout_expense').then(res => {
-                    commit('initData', res.data);
-                });
-            }
+            return new Promise((resolve, reject) => {
+                if (!state.id || state.id != payload.id || payload.force) {
+                    //retrieve data only we don't have it or we need to refresh it
+                    __WEBPACK_IMPORTED_MODULE_0_axios_index___default.a.get('/api/proposition/' + payload.id + '/layout_expense').then(res => {
+                        commit('initData', res.data);
+                        resolve();
+                    }).catch(() => {
+                        reject();
+                    });
+                } else {
+                    resolve();
+                }
+            });
         },
         saveData({ state }, id) {
             return new Promise((resolve, reject) => {
@@ -52153,6 +52237,41 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     reject();
                 }
             });
+        }
+    },
+    getters: {
+        number_of_hours: state => {
+            if (!state.group.parent) {
+                return 0;
+            }
+            let category = state.group.parent.coefficient / 60,
+                pages = state.number_of_pages,
+                photos = state.photos_amount / 30,
+                illustrations = state.illustrations_amount / 30,
+                drawings = state.technical_drawings_amount / 30;
+            const complexity = {
+                1: 0.65,
+                2: 0.8,
+                3: 1,
+                4: 1.2,
+                5: 1.35
+            };
+            return (category * pages + photos + illustrations + drawings) * complexity[state.layout_complexity];
+        },
+        layout_total: (state, getters) => {
+            let price = 8000 / 175;
+            return getters.number_of_hours * price;
+        },
+        design_total: (state, getters) => {
+            let price = 15000 / 175;
+            const complexity = {
+                1: 0.4,
+                2: 0.7,
+                3: 1,
+                4: 1.3,
+                5: 1.6
+            };
+            return getters.number_of_hours * price * complexity[state.design_complexity] / 2;
         }
     }
 });
@@ -52177,7 +52296,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     mutations: {
         initData(state, payload) {
             for (let i in Object.keys(state)) {
-                state[Object.keys(state)[i]] = payload[i];
+                let key = Object.keys(state)[i];state[key] = payload[key];
             }
         },
         addFile(state, file) {
@@ -52245,13 +52364,20 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         id: 0,
         expense: '',
         note: '',
-        additional_expenses: []
+        additional_expense: []
     },
     mutations: {
         initData(state, payload) {
             for (let i in Object.keys(state)) {
-                state[Object.keys(state)[i]] = payload[i];
+                let key = Object.keys(state)[i];
+                state[key] = payload[key];
             }
+        },
+        addExpense(state) {
+            state.additional_expense.push({ expense: '', amount: 0 });
+        },
+        deleteExpense(state, index) {
+            state.additional_expense.splice(index, 1);
         }
     },
     actions: {
@@ -52402,8 +52528,15 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     mutations: {
         initData(state, payload) {
             for (let i in Object.keys(state)) {
-                state[Object.keys(state)[i]] = payload[i];
+                let key = Object.keys(state)[i];
+                state[key] = payload[key];
             }
+        },
+        addExpense(state) {
+            state.additional_expense.push({ expense: '', amount: 0 });
+        },
+        deleteExpense(state, index) {
+            state.additional_expense.splice(index, 1);
         }
     },
     actions: {
@@ -59233,7 +59366,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }, [_c('div', {
     staticClass: "col-md-12"
   }, [_c('div', {
-    staticClass: "md-form"
+    staticClass: "md-form d-flex addon"
   }, [_c('input', {
     directives: [{
       name: "model",
@@ -59271,7 +59404,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }, [_vm._v(_vm._s(item.name))])
   })) : _vm._e()]), _vm._v(" "), _vm._l((_vm.departments), function(department) {
     return _c('div', {
-      staticClass: "chip mb-4"
+      staticClass: "chip mb-5"
     }, [_vm._v("\n                                    " + _vm._s(department.name)), _c('i', {
       staticClass: "close fa fa-times"
     })])
@@ -59286,7 +59419,98 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     attrs: {
       "for": "form76"
     }
-  }, [_vm._v(_vm._s(_vm.lang('Task Description')))])])], 2)])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.lang('Task Description')))])]), _vm._v(" "), _c('div', {
+    staticClass: "row mt-4"
+  }, [_c('div', {
+    staticClass: "col-md-5"
+  }, [_c('div', {
+    staticClass: "md-form"
+  }, [_c('input', {
+    staticClass: "form-control datepicker btn-white",
+    attrs: {
+      "placeholder": "Selected date",
+      "type": "text",
+      "id": "date-picker-example"
+    }
+  }), _vm._v(" "), _c('label', {
+    attrs: {
+      "for": "date-picker-example"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('Select Date')))])])])]), _vm._v(" "), _c('div', {
+    staticClass: "page-name-m"
+  }, [_vm._v(_vm._s(_vm.lang('Priority')))]), _vm._v(" "), _c('div', {
+    staticClass: "form-inline mb-3"
+  }, [_c('fieldset', {
+    staticClass: "form-group"
+  }, [_c('input', {
+    attrs: {
+      "name": "priority",
+      "type": "radio",
+      "id": "radio11",
+      "value": "high"
+    }
+  }), _vm._v(" "), _c('label', {
+    attrs: {
+      "for": "radio11"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('High')))])]), _vm._v(" "), _c('fieldset', {
+    staticClass: "form-group"
+  }, [_c('input', {
+    attrs: {
+      "name": "priority",
+      "type": "radio",
+      "id": "radio21",
+      "value": "medium"
+    }
+  }), _vm._v(" "), _c('label', {
+    attrs: {
+      "for": "radio21"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('Medium')))])]), _vm._v(" "), _c('fieldset', {
+    staticClass: "form-group"
+  }, [_c('input', {
+    attrs: {
+      "name": "priority",
+      "type": "radio",
+      "id": "radio31",
+      "value": "low"
+    }
+  }), _vm._v(" "), _c('label', {
+    attrs: {
+      "for": "radio31"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('Low')))])])]), _vm._v(" "), _c('div', {
+    staticClass: "page-name-m"
+  }, [_vm._v(_vm._s(_vm.lang('Access Level')))]), _vm._v(" "), _c('div', {
+    staticClass: "form-inline mb-3"
+  }, [_c('fieldset', {
+    staticClass: "form-group"
+  }, [_c('input', {
+    attrs: {
+      "checked": "",
+      "name": "access",
+      "type": "radio",
+      "id": "radio51",
+      "value": "allpage"
+    }
+  }), _vm._v(" "), _c('label', {
+    attrs: {
+      "for": "radio51"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('All Proposition Pages')))])]), _vm._v(" "), _c('fieldset', {
+    staticClass: "form-group"
+  }, [_c('input', {
+    attrs: {
+      "name": "access",
+      "type": "radio",
+      "id": "radio41",
+      "value": "onepage"
+    }
+  }), _vm._v(" "), _c('label', {
+    attrs: {
+      "for": "radio41"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('Only This Page')))])])])], 2)])]), _vm._v(" "), _c('div', {
     staticClass: "modal-body tab-pane fade",
     attrs: {
       "id": "panel52",
@@ -59335,7 +59559,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }, [_vm._v(_vm._s(item.name))])
   })) : _vm._e()]), _vm._v(" "), _vm._l((_vm.employees), function(employee) {
     return _c('div', {
-      staticClass: "chip mb-1"
+      staticClass: "chip mb-5"
     }, [_c('img', {
       attrs: {
         "src": "https://mdbootstrap.com/img/Photos/Avatars/avatar-6.jpg"
@@ -59354,7 +59578,98 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     attrs: {
       "for": "form76"
     }
-  }, [_vm._v(_vm._s(_vm.lang('Task Description')))])])], 2)])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.lang('Task Description')))])]), _vm._v(" "), _c('div', {
+    staticClass: "row mt-4"
+  }, [_c('div', {
+    staticClass: "col-md-5"
+  }, [_c('div', {
+    staticClass: "md-form"
+  }, [_c('input', {
+    staticClass: "form-control datepicker btn-white",
+    attrs: {
+      "placeholder": "Selected date",
+      "type": "text",
+      "id": "date-picker-example"
+    }
+  }), _vm._v(" "), _c('label', {
+    attrs: {
+      "for": "date-picker-example"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('Select Date')))])])])]), _vm._v(" "), _c('div', {
+    staticClass: "page-name-m"
+  }, [_vm._v(_vm._s(_vm.lang('Priority')))]), _vm._v(" "), _c('div', {
+    staticClass: "form-inline mb-3"
+  }, [_c('fieldset', {
+    staticClass: "form-group"
+  }, [_c('input', {
+    attrs: {
+      "name": "priority1",
+      "type": "radio",
+      "id": "radio61",
+      "value": "high"
+    }
+  }), _vm._v(" "), _c('label', {
+    attrs: {
+      "for": "radio61"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('High')))])]), _vm._v(" "), _c('fieldset', {
+    staticClass: "form-group"
+  }, [_c('input', {
+    attrs: {
+      "name": "priority1",
+      "type": "radio",
+      "id": "radio71",
+      "value": "medium"
+    }
+  }), _vm._v(" "), _c('label', {
+    attrs: {
+      "for": "radio71"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('Medium')))])]), _vm._v(" "), _c('fieldset', {
+    staticClass: "form-group"
+  }, [_c('input', {
+    attrs: {
+      "name": "priority1",
+      "type": "radio",
+      "id": "radio81",
+      "value": "low"
+    }
+  }), _vm._v(" "), _c('label', {
+    attrs: {
+      "for": "radio81"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('Low')))])])]), _vm._v(" "), _c('div', {
+    staticClass: "page-name-m"
+  }, [_vm._v(_vm._s(_vm.lang('Access Level')))]), _vm._v(" "), _c('div', {
+    staticClass: "form-inline mb-3"
+  }, [_c('fieldset', {
+    staticClass: "form-group"
+  }, [_c('input', {
+    attrs: {
+      "checked": "",
+      "name": "access1",
+      "type": "radio",
+      "id": "radio91",
+      "value": "allpage"
+    }
+  }), _vm._v(" "), _c('label', {
+    attrs: {
+      "for": "radio91"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('All Proposition Pages')))])]), _vm._v(" "), _c('fieldset', {
+    staticClass: "form-group"
+  }, [_c('input', {
+    attrs: {
+      "name": "access1",
+      "type": "radio",
+      "id": "radio101",
+      "value": "onepage"
+    }
+  }), _vm._v(" "), _c('label', {
+    attrs: {
+      "for": "radio101"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('Only This Page')))])])])], 2)])])]), _vm._v(" "), _c('div', {
     staticClass: "modal-footer btn-footer"
   }, [_c('button', {
     staticClass: "btn btn-lg btn-cancel",
@@ -60418,10 +60733,32 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     staticClass: "w-30"
   }), _vm._v(" "), _c('th', {
     staticClass: "w-30"
-  }, [_vm._v("#")]), _vm._v(" "), _c('th', [_vm._v(_vm._s(_vm.lang('Task')))]), _vm._v(" "), _c('th', [_vm._v(_vm._s(_vm.lang('Task Type')))]), _vm._v(" "), _c('th', [_vm._v(_vm._s(_vm.lang('Assigner')))]), _vm._v(" "), _c('th', [_vm._v(_vm._s(_vm.lang('Created')))]), _vm._v(" "), _c('th', [_vm._v(_vm._s(_vm.lang('Deadline')))]), _vm._v(" "), (_vm.authority) ? _c('th', {
-    staticClass: "text-right"
+  }, [_vm._v("#")]), _vm._v(" "), _c('th', {
+    attrs: {
+      "data-title": "Task"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('Task')))]), _vm._v(" "), _c('th', {
+    attrs: {
+      "data-title": "Task Type"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('Task Type')))]), _vm._v(" "), _c('th', {
+    attrs: {
+      "data-title": "Assigner"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('Assigner')))]), _vm._v(" "), _c('th', {
+    attrs: {
+      "data-title": "Created"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('Created')))]), _vm._v(" "), _c('th', {
+    attrs: {
+      "data-title": "Deadline"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('Deadline')))]), _vm._v(" "), (_vm.authority) ? _c('th', {
+    staticClass: "text-right",
+    attrs: {
+      "data-title": "Assign to"
+    }
   }, [_vm._v(_vm._s(_vm.lang('Assign to')))]) : _vm._e()])]), _vm._v(" "), _c('draggable', {
-    staticClass: "white",
     attrs: {
       "element": 'tbody'
     },
@@ -60440,14 +60777,25 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     })]), _vm._v(" "), _c('th', {
       staticClass: "display-e w-30"
     }, [_vm._v(_vm._s(index + 1))]), _vm._v(" "), _c('td', {
-      staticClass: "table-title"
+      staticClass: "table-title",
+      attrs: {
+        "data-title": "Task"
+      }
     }, [_c('a', {
       attrs: {
         "href": '/task/show/' + element.id
       }
-    }, [_vm._v(_vm._s(element.name))])]), _vm._v(" "), _c('td', [_c('div', {
+    }, [_vm._v(_vm._s(element.name))])]), _vm._v(" "), _c('td', {
+      attrs: {
+        "data-title": "Task Type"
+      }
+    }, [_c('div', {
       class: _vm.task_types[element.type].className
-    }, [_vm._v(_vm._s(_vm.task_types[element.type].title))])]), _vm._v(" "), _c('td', [_c('a', {
+    }, [_vm._v(_vm._s(_vm.task_types[element.type].title))])]), _vm._v(" "), _c('td', {
+      attrs: {
+        "data-title": "Assigner"
+      }
+    }, [_c('a', {
       staticClass: "text-uppercase file-box-sty",
       attrs: {
         "href": ""
@@ -60457,8 +60805,19 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       attrs: {
         "src": element.assigner.image
       }
-    }), _vm._v(_vm._s(element.assigner.name))])]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("moment")(element.created_at, 'DD.MM.')))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("moment")(element.deadline, 'DD.MM.')))]), _vm._v(" "), (_vm.authority) ? _c('td', {
-      staticClass: "text-right"
+    }), _vm._v(_vm._s(element.assigner.name))])]), _vm._v(" "), _c('td', {
+      attrs: {
+        "data-title": "Created"
+      }
+    }, [_vm._v(_vm._s(_vm._f("moment")(element.created_at, 'DD.MM.')))]), _vm._v(" "), _c('td', {
+      attrs: {
+        "data-title": "Deadline"
+      }
+    }, [_vm._v(_vm._s(_vm._f("moment")(element.deadline, 'DD.MM.')))]), _vm._v(" "), (_vm.authority) ? _c('td', {
+      staticClass: "text-right",
+      attrs: {
+        "data-title": "Assign to"
+      }
     }, [_c('div', {
       staticClass: "file-box-sty icon icon-assign"
     }, [_vm._v(_vm._s(_vm.lang('Assign')))])]) : _vm._e()])
@@ -60474,7 +60833,35 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     staticClass: "w-30"
   }), _vm._v(" "), _c('th', {
     staticClass: "w-30"
-  }, [_vm._v("#")]), _vm._v(" "), _c('th', [_vm._v(_vm._s(_vm.lang('Task')))]), _vm._v(" "), _c('th', [_vm._v(_vm._s(_vm.lang('Task Type')))]), _vm._v(" "), _c('th', [_vm._v(_vm._s(_vm.lang('Assigner')))]), _vm._v(" "), _c('th', [_vm._v(_vm._s(_vm.lang('Created')))]), _vm._v(" "), _c('th', [_vm._v(_vm._s(_vm.lang('Deadline')))]), _vm._v(" "), _c('th', [_vm._v(_vm._s(_vm.lang('TCT')))]), _vm._v(" "), (_vm.authority) ? _c('th', [_vm._v(_vm._s(_vm.lang('Assign to')))]) : _vm._e()])]), _vm._v(" "), _c('draggable', {
+  }, [_vm._v("#")]), _vm._v(" "), _c('th', {
+    attrs: {
+      "data-title": "Task"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('Task')))]), _vm._v(" "), _c('th', {
+    attrs: {
+      "data-title": "Task Type"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('Task Type')))]), _vm._v(" "), _c('th', {
+    attrs: {
+      "data-title": "Assigner"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('Assigner')))]), _vm._v(" "), _c('th', {
+    attrs: {
+      "data-title": "Created"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('Created')))]), _vm._v(" "), _c('th', {
+    attrs: {
+      "data-title": "Deadline"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('Deadline')))]), _vm._v(" "), _c('th', {
+    attrs: {
+      "data-title": "TCT"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('TCT')))]), _vm._v(" "), (_vm.authority) ? _c('th', {
+    attrs: {
+      "data-title": "Assign to"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('Assign to')))]) : _vm._e()])]), _vm._v(" "), _c('draggable', {
     staticClass: "white",
     attrs: {
       "element": 'tbody'
@@ -62494,20 +62881,20 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       directives: [{
         name: "model",
         rawName: "v-model",
-        value: (_vm.expense['additional_expense[' + index + '.expense]']),
-        expression: "expense['additional_expense['+index+'.expense]']"
+        value: (_vm.expense.additional_expense[index].expense),
+        expression: "expense.additional_expense[index].expense"
       }],
       staticClass: "form-control",
       attrs: {
         "type": "text"
       },
       domProps: {
-        "value": (_vm.expense['additional_expense[' + index + '.expense]'])
+        "value": (_vm.expense.additional_expense[index].expense)
       },
       on: {
         "input": function($event) {
           if ($event.target.composing) { return; }
-          _vm.$set(_vm.expense, 'additional_expense[' + index + '.expense]', $event.target.value)
+          _vm.expense.additional_expense[index].expense = $event.target.value
         }
       }
     }), _vm._v(" "), _c('label', [_vm._v(_vm._s(_vm.lang('Expense')))])])]), _vm._v(" "), _c('div', {
@@ -62518,20 +62905,20 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       directives: [{
         name: "model",
         rawName: "v-model",
-        value: (_vm.expense['additional_expense[' + index + '.amount]']),
-        expression: "expense['additional_expense['+index+'.amount]']"
+        value: (_vm.expense.additional_expense[index].amount),
+        expression: "expense.additional_expense[index].amount"
       }],
       staticClass: "form-control",
       attrs: {
         "type": "text"
       },
       domProps: {
-        "value": (_vm.expense['additional_expense[' + index + '.amount]'])
+        "value": (_vm.expense.additional_expense[index].amount)
       },
       on: {
         "input": function($event) {
           if ($event.target.composing) { return; }
-          _vm.$set(_vm.expense, 'additional_expense[' + index + '.amount]', $event.target.value)
+          _vm.expense.additional_expense[index].amount = $event.target.value
         }
       }
     }), _vm._v(" "), _c('label', [_vm._v(_vm._s(_vm.lang('Ammount')))]), _vm._v(" "), _c('span', {
@@ -63455,10 +63842,10 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     staticClass: "row"
   }, [_c('div', {
     staticClass: "col-md-12"
-  }, [_vm._l((_vm.authors), function(author) {
+  }, [_vm._l((_vm.expenses.authors), function(author) {
     return [_c('div', {
       staticClass: "page-name-l mt-1 mb-4"
-    }, [_vm._v(_vm._s(author.name))]), _vm._v(" "), (Object.keys(_vm.expenses['expenses']).length) ? _c('div', {
+    }, [_vm._v(_vm._s(author.name))]), _vm._v(" "), _c('div', {
       staticClass: "row"
     }, [_c('div', {
       staticClass: "col-md-12"
@@ -63468,8 +63855,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       directives: [{
         name: "model",
         rawName: "v-model",
-        value: (_vm.expenses['expenses'][author.id].amount),
-        expression: "expenses['expenses'][author.id].amount"
+        value: (author.expenses[0].amount),
+        expression: "author.expenses[0].amount"
       }],
       staticClass: "form-control",
       attrs: {
@@ -63478,12 +63865,12 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         "placeholder": _vm.lang('Amount')
       },
       domProps: {
-        "value": (_vm.expenses['expenses'][author.id].amount)
+        "value": (author.expenses[0].amount)
       },
       on: {
         "input": function($event) {
           if ($event.target.composing) { return; }
-          _vm.expenses['expenses'][author.id].amount = $event.target.value
+          author.expenses[0].amount = $event.target.value
         }
       }
     }), _vm._v(" "), _c('label', {
@@ -63498,8 +63885,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       directives: [{
         name: "model",
         rawName: "v-model",
-        value: (_vm.expenses['expenses'][author.id].percentage),
-        expression: "expenses['expenses'][author.id].percentage"
+        value: (author.expenses[0].percentage),
+        expression: "author.expenses[0].percentage"
       }],
       staticClass: "form-control",
       attrs: {
@@ -63508,12 +63895,12 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         "placeholder": _vm.lang('Precentage')
       },
       domProps: {
-        "value": (_vm.expenses['expenses'][author.id].percentage)
+        "value": (author.expenses[0].percentage)
       },
       on: {
         "input": function($event) {
           if ($event.target.composing) { return; }
-          _vm.expenses['expenses'][author.id].percentage = $event.target.value
+          author.expenses[0].percentage = $event.target.value
         }
       }
     }), _vm._v(" "), _c('label', {
@@ -63528,8 +63915,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       directives: [{
         name: "model",
         rawName: "v-model",
-        value: (_vm.expenses['expenses'][author.id].accontation),
-        expression: "expenses['expenses'][author.id].accontation"
+        value: (author.expenses[0].accontation),
+        expression: "author.expenses[0].accontation"
       }],
       staticClass: "form-control",
       attrs: {
@@ -63538,19 +63925,19 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         "placeholder": _vm.lang('Accontation')
       },
       domProps: {
-        "value": (_vm.expenses['expenses'][author.id].accontation)
+        "value": (author.expenses[0].accontation)
       },
       on: {
         "input": function($event) {
           if ($event.target.composing) { return; }
-          _vm.expenses['expenses'][author.id].accontation = $event.target.value
+          author.expenses[0].accontation = $event.target.value
         }
       }
     }), _vm._v(" "), _c('label', {
       attrs: {
         "for": "form3"
       }
-    }, [_vm._v(_vm._s(_vm.lang('Accontation')))])])])]) : _vm._e(), _vm._v(" "), (_vm.expenses.expenses[author.id]) ? _vm._l((_vm.expenses.expenses[author.id].additional_expenses), function(a, i) {
+    }, [_vm._v(_vm._s(_vm.lang('Accontation')))])])])]), _vm._v(" "), _vm._l((author.expenses[0].additional_expenses), function(a, i) {
       return _c('div', {
         key: i,
         staticClass: "row"
@@ -63562,8 +63949,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         directives: [{
           name: "model",
           rawName: "v-model",
-          value: (_vm.expenses['expenses'][author.id]['additional_expenses'][i]['expense']),
-          expression: "expenses['expenses'][author.id]['additional_expenses'][i]['expense']"
+          value: (author.expenses[0].additional_expenses[i].expense),
+          expression: "author.expenses[0].additional_expenses[i].expense"
         }],
         staticClass: "form-control",
         attrs: {
@@ -63571,12 +63958,12 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
           "placeholder": _vm.lang('Expense Name')
         },
         domProps: {
-          "value": (_vm.expenses['expenses'][author.id]['additional_expenses'][i]['expense'])
+          "value": (author.expenses[0].additional_expenses[i].expense)
         },
         on: {
           "input": function($event) {
             if ($event.target.composing) { return; }
-            _vm.$set(_vm.expenses['expenses'][author.id]['additional_expenses'][i], 'expense', $event.target.value)
+            author.expenses[0].additional_expenses[i].expense = $event.target.value
           }
         }
       }), _vm._v(" "), _c('label', [_vm._v(_vm._s(_vm.lang('Expense Name')))])])]), _vm._v(" "), _c('div', {
@@ -63587,8 +63974,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         directives: [{
           name: "model",
           rawName: "v-model",
-          value: (_vm.expenses['expenses'][author.id]['additional_expenses'][i]['amount']),
-          expression: "expenses['expenses'][author.id]['additional_expenses'][i]['amount']"
+          value: (author.expenses[0].additional_expenses[i].amount),
+          expression: "author.expenses[0].additional_expenses[i].amount"
         }],
         staticClass: "form-control",
         attrs: {
@@ -63596,12 +63983,12 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
           "placeholder": _vm.lang('Amount')
         },
         domProps: {
-          "value": (_vm.expenses['expenses'][author.id]['additional_expenses'][i]['amount'])
+          "value": (author.expenses[0].additional_expenses[i].amount)
         },
         on: {
           "input": function($event) {
             if ($event.target.composing) { return; }
-            _vm.$set(_vm.expenses['expenses'][author.id]['additional_expenses'][i], 'amount', $event.target.value)
+            author.expenses[0].additional_expenses[i].amount = $event.target.value
           }
         }
       }), _vm._v(" "), _c('label', [_vm._v(_vm._s(_vm.lang('Amount')))])])]), _vm._v(" "), _c('div', {
@@ -63614,7 +64001,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
           }
         }
       }, [_vm._v(_vm._s(_vm.lang('Delete Expense')))])])])
-    }) : _vm._e(), _vm._v(" "), _c('button', {
+    }), _vm._v(" "), _c('button', {
       staticClass: "btn btn-neutral btn-addon mb-5",
       attrs: {
         "type": "button"
@@ -63934,37 +64321,37 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     staticClass: "white-label"
   }, [_vm._v(_vm._s(_vm.lang('Number of Pages')))]), _vm._v(" "), _c('h3', {
     staticClass: "mb-1 text-white"
-  }, [_vm._v(_vm._s(_vm.technical['number_of_pages']))])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.data.number_of_pages))])]), _vm._v(" "), _c('div', {
     staticClass: "col-md-2"
   }, [_c('h6', {
     staticClass: "white-label"
   }, [_vm._v(_vm._s(_vm.lang('Photos')))]), _vm._v(" "), _c('h3', {
     staticClass: "mb-1 text-white"
-  }, [_vm._v(_vm._s(_vm.production['photos_amount']))])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.data.photos_amount))])]), _vm._v(" "), _c('div', {
     staticClass: "col-md-2"
   }, [_c('h6', {
     staticClass: "white-label"
   }, [_vm._v(_vm._s(_vm.lang('Illustrations')))]), _vm._v(" "), _c('h3', {
     staticClass: "mb-1 text-white"
-  }, [_vm._v(_vm._s(_vm.production['illustrations_amount']))])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.data.illustrations_amount))])]), _vm._v(" "), _c('div', {
     staticClass: "col-md-2"
   }, [_c('h6', {
     staticClass: "white-label"
   }, [_vm._v(_vm._s(_vm.lang('Tehnical Drawings')))]), _vm._v(" "), _c('h3', {
     staticClass: "mb-1 text-white"
-  }, [_vm._v(_vm._s(_vm.production['technical_drawings_amount']))])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.data.technical_drawings_amount))])]), _vm._v(" "), _c('div', {
     staticClass: "col-md-2"
   }, [_c('h6', {
     staticClass: "white-label"
-  }, [_vm._v(_vm._s(_vm.lang('Category')))]), _vm._v(" "), _c('h3', {
+  }, [_vm._v(_vm._s(_vm.lang('Category')))]), _vm._v(" "), (_vm.data.group.parent) ? _c('h3', {
     staticClass: "mb-1 text-white"
-  }, [_vm._v(_vm._s(_vm.supergroup_text))])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.data.group.parent.parent.name))]) : _vm._e()]), _vm._v(" "), _c('div', {
     staticClass: "col-md-2"
   }, [_c('h6', {
     staticClass: "white-label"
   }, [_vm._v(_vm._s(_vm.lang('Group')))]), _vm._v(" "), _c('h3', {
     staticClass: "mb-1 text-white"
-  }, [_vm._v(_vm._s(_vm.group_text))])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.data.group.name))])])]), _vm._v(" "), _c('div', {
     staticClass: "row"
   }, [_c('div', {
     staticClass: "col-md-6 mt-2"
@@ -63980,8 +64367,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.layout['layout_complexity']),
-      expression: "layout['layout_complexity']"
+      value: (_vm.data.layout_complexity),
+      expression: "data.layout_complexity"
     }],
     staticClass: "mdb-select",
     on: {
@@ -63992,7 +64379,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
           var val = "_value" in o ? o._value : o.value;
           return val
         });
-        _vm.$set(_vm.layout, 'layout_complexity', $event.target.multiple ? $$selectedVal : $$selectedVal[0])
+        _vm.data.layout_complexity = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
       }
     }
   }, [_c('option', {
@@ -64025,17 +64412,17 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.layout['layout_note']),
-      expression: "layout['layout_note']"
+      value: (_vm.data.layout_note),
+      expression: "data.layout_note"
     }],
     staticClass: "md-textarea",
     domProps: {
-      "value": (_vm.layout['layout_note'])
+      "value": (_vm.data.layout_note)
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.$set(_vm.layout, 'layout_note', $event.target.value)
+        _vm.data.layout_note = $event.target.value
       }
     }
   }), _vm._v(" "), _c('label', [_vm._v(_vm._s(_vm.lang('Note')))])])]), _vm._v(" "), _c('div', {
@@ -64052,8 +64439,8 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.layout['design_complexity']),
-      expression: "layout['design_complexity']"
+      value: (_vm.data.design_complexity),
+      expression: "data.design_complexity"
     }],
     staticClass: "mdb-select",
     attrs: {
@@ -64067,7 +64454,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
           var val = "_value" in o ? o._value : o.value;
           return val
         });
-        _vm.$set(_vm.layout, 'design_complexity', $event.target.multiple ? $$selectedVal : $$selectedVal[0])
+        _vm.data.design_complexity = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
       }
     }
   }, [_c('option', {
@@ -64100,17 +64487,17 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.layout['design_note']),
-      expression: "layout['design_note']"
+      value: (_vm.data.design_note),
+      expression: "data.design_note"
     }],
     staticClass: "md-textarea",
     domProps: {
-      "value": (_vm.layout['design_note'])
+      "value": (_vm.data.design_note)
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.$set(_vm.layout, 'design_note', $event.target.value)
+        _vm.data.design_note = $event.target.value
       }
     }
   }), _vm._v(" "), _c('label', [_vm._v(_vm._s(_vm.lang('Note')))])])])]), _vm._v(" "), _c('footer-buttons')], 1)])
@@ -66092,7 +66479,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }, [_vm._v(_vm._s(_vm.lang('Add')))])])])])]), _vm._v(" "), _vm._l((_vm.technical_data.circulations), function(item) {
     return _c('div', {
       key: item.id,
-      staticClass: "chip mb-3"
+      staticClass: "chip mb-5"
     }, [_vm._v("\n            " + _vm._s(item.title) + "\n            "), _c('i', {
       staticClass: "close fa fa-times",
       on: {
@@ -66150,7 +66537,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }, [_vm._v(_vm._s(_vm.lang('Add')))])])])])]), _vm._v(" "), _vm._l((_vm.technical_data.additions), function(item) {
     return _c('div', {
       key: item.id,
-      staticClass: "chip mb-3"
+      staticClass: "chip mb-5"
     }, [_vm._v("\n            " + _vm._s(item.title) + "\n            "), _c('i', {
       staticClass: "close fa fa-times",
       on: {
@@ -67101,6 +67488,18 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }, [_vm._v(_vm._s(_vm.lang(_vm.priorities[_vm.task.priority])))])]), _vm._v(" "), _c('h3', {
     staticClass: "mb-1 text-white"
   }, [_vm._v(_vm._s(_vm._f("moment")(_vm.task.deadline, "DD.MM.")))])])]), _vm._v(" "), _c('div', {
+    staticClass: "stopwatch"
+  }, [_c('div', {
+    staticClass: "stopwatch-counter"
+  }), _vm._v(" "), _c('div', {
+    staticClass: "stopwatch-controls"
+  }, [_c('div', {
+    staticClass: "modal-footer btn-footer"
+  }, [_c('button', {
+    staticClass: "btn btn-lg btn-blank btn-start-icon"
+  }, [_vm._v(_vm._s(_vm.lang('Play')))]), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-lg btn-blank btn-stop-icon"
+  }, [_vm._v(_vm._s(_vm.lang('Stop')))])])])]), _vm._v(" "), _c('div', {
     staticClass: "page-name-xl mt-4"
   }, [_vm._v(_vm._s(_vm.lang('Task Completion Time')))]), _vm._v(" "), _c('div', {
     staticClass: "grey-box mb-5 pt-5 pb-3 px-3 mx-auto"
@@ -71406,6 +71805,102 @@ function cloneRoute (to, from) {
 __webpack_require__(133);
 module.exports = __webpack_require__(134);
 
+
+/***/ }),
+/* 274 */,
+/* 275 */,
+/* 276 */,
+/* 277 */,
+/* 278 */,
+/* 279 */,
+/* 280 */,
+/* 281 */,
+/* 282 */,
+/* 283 */,
+/* 284 */,
+/* 285 */,
+/* 286 */,
+/* 287 */,
+/* 288 */,
+/* 289 */,
+/* 290 */,
+/* 291 */,
+/* 292 */,
+/* 293 */,
+/* 294 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios_index__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios_index___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios_index__);
+
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+    namespaced: true,
+    state: {
+        id: 0,
+        authors: [],
+        offers: [{
+            title: 0,
+            total_cost: '',
+            direct_cost_cover: '',
+            complete_cost_cover: '',
+            price_proposal: 0,
+            print_offer: 0,
+            compensation: 0,
+            direct_cost: 0,
+            indirect_expenses: 0,
+            remainder_after_sales: 0,
+            complete_expense: 0,
+            calculated_profit_percent: 0,
+            cost_coverage: 0,
+            manufacturer_price: 0,
+            shop_percent: 0,
+            price: 0,
+            vat_percent: 0
+        }],
+        authors_total: 0,
+        authors_advance: 0,
+        authors_other: 0,
+        marketing_expense: 0,
+        production_expense: 0,
+        design_layout_expense: 0,
+        dotation: 0
+
+    },
+    mutations: {
+        initData(state, payload) {
+            for (let i in Object.keys(state)) {
+                let key = Object.keys(state)[i];
+                state[key] = payload[key];
+            }
+        }
+    },
+    actions: {
+        getData({ commit, state, dispatch }, payload) {
+            if (!state.id || state.id != payload.id || payload.force) {
+                //retrieve data only we don't have it or we need to refresh it
+                __WEBPACK_IMPORTED_MODULE_0_axios_index___default.a.get('/api/proposition/' + payload.id + '/calculation').then(res => {
+                    commit('initData', res.data);
+                });
+            }
+        },
+        saveData({ state, commit }, id) {
+            return new Promise((resolve, reject) => {
+                if (id) {
+                    __WEBPACK_IMPORTED_MODULE_0_axios_index___default.a.post('/api/proposition/' + id + '/authors_expense', state).then(res => {
+                        resolve();
+                    }).catch(() => {
+                        reject();
+                    });
+                } else {
+                    reject();
+                }
+            });
+        }
+    },
+    getters: {}
+});
 
 /***/ })
 /******/ ]);
