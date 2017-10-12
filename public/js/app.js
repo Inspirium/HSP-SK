@@ -48390,27 +48390,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 /* harmony default export */ __webpack_exports__["a"] = ({
     data: function () {
         return {
-            expenses: {
-                text_price: 0,
-                reviews: 0,
-                lecture: 0,
-                correction: 0,
-                proofreading: 0,
-                translation: 0,
-                index: 0,
-                epilogue: 0,
-                photos: 0,
-                illustrations: 0,
-                technical_drawings: 0,
-                expert_report: 0,
-                copyright: 0,
-                copyright_mediator: 0,
-                methodical_instrumentarium: 0,
-                selection: 0,
-                powerpoint_presentation: 0,
-                additional_expense: 0,
-                marketing_expense: 0
-            },
             activeEdit: ''
         };
     },
@@ -48477,9 +48456,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         }
     },
     mounted() {
-        axios.get('/api/proposition/' + this.$route.params.id + '/compare').then(res => {
-            this.expenses = res.data;
-        });
+        if (this.$route.params.id != 0) {
+            axios.get('/api/proposition/' + this.$route.params.id + '/compare').then(res => {});
+        }
     }
 });
 
@@ -49920,7 +49899,11 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             });
         },
         saveProposition: function () {
-            this.$store.dispatch('proposition/start/saveData', this.$route.params.id);
+            this.$store.dispatch('proposition/start/saveData', this.$route.params.id).then(() => {
+                toastr.success('Uspješno obavljeno');
+            }).catch(() => {
+                toastr.error('Došlo je do problema. Pokušajte ponovno');
+            });;
         }
     },
     mounted: function () {
@@ -51534,6 +51517,8 @@ const routes = [{ path: '/proposition/start', component: __WEBPACK_IMPORTED_MODU
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__proposition_technical_data__ = __webpack_require__(199);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__proposition_owner__ = __webpack_require__(195);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__proposition_calculation__ = __webpack_require__(294);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__proposition_compare__ = __webpack_require__(295);
+
 
 
 
@@ -51568,6 +51553,7 @@ const routes = [{ path: '/proposition/start', component: __WEBPACK_IMPORTED_MODU
         technical_data: __WEBPACK_IMPORTED_MODULE_13__proposition_technical_data__["a" /* default */],
         authors_expense: __WEBPACK_IMPORTED_MODULE_5__proposition_authors_expense__["a" /* default */],
         calculation: __WEBPACK_IMPORTED_MODULE_15__proposition_calculation__["a" /* default */],
+        compare: __WEBPACK_IMPORTED_MODULE_16__proposition_compare__["a" /* default */],
         owner: __WEBPACK_IMPORTED_MODULE_14__proposition_owner__["a" /* default */]
     },
     state: {
@@ -71605,25 +71591,7 @@ module.exports = __webpack_require__(134);
     state: {
         id: 0,
         author_expenses: [],
-        offers: [{
-            title: 0,
-            total_cost: '',
-            direct_cost_cover: '',
-            complete_cost_cover: '',
-            price_proposal: 0,
-            print_offer: 0,
-            compensation: 0,
-            direct_cost: 0,
-            indirect_expenses: 0,
-            remainder_after_sales: 0,
-            complete_expense: 0,
-            calculated_profit_percent: 0,
-            cost_coverage: 0,
-            manufacturer_price: 0,
-            shop_percent: 0,
-            price: 0,
-            vat_percent: 0
-        }],
+        offers: [],
         authors_total: 0,
         authors_advance: 0,
         authors_other: 0,
@@ -71631,7 +71599,6 @@ module.exports = __webpack_require__(134);
         production_expense: 0,
         design_layout_expense: 0,
         dotation: 0
-
     },
     mutations: {
         initData(state, payload) {
@@ -71665,6 +71632,73 @@ module.exports = __webpack_require__(134);
         }
     },
     getters: {}
+});
+
+/***/ }),
+/* 295 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios_index__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios_index___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios_index__);
+
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+    namespaced: true,
+    state: {
+        expenses: {
+            text_price: 0,
+            reviews: 0,
+            lecture: 0,
+            correction: 0,
+            proofreading: 0,
+            translation: 0,
+            index: 0,
+            epilogue: 0,
+            photos: 0,
+            illustrations: 0,
+            technical_drawings: 0,
+            expert_report: 0,
+            copyright: 0,
+            copyright_mediator: 0,
+            methodical_instrumentarium: 0,
+            selection: 0,
+            powerpoint_presentation: 0,
+            additional_expense: 0,
+            marketing_expense: 0
+        }
+    },
+    mutations: {
+        initData(state, payload) {
+            for (let i in Object.keys(state)) {
+                let key = Object.keys(state)[i];
+                state[key] = payload[key];
+            }
+        }
+    },
+    actions: {
+        getData({ commit, state }, payload) {
+            if (!state.id || state.id != payload.id || payload.force) {
+                //retrieve data only we don't have it or we need to refresh it
+                __WEBPACK_IMPORTED_MODULE_0_axios_index___default.a.get('/api/proposition/' + payload.id + '/authors_expense').then(res => {
+                    commit('initData', res.data);
+                });
+            }
+        },
+        saveData({ state, commit }, id) {
+            return new Promise((resolve, reject) => {
+                if (id) {
+                    __WEBPACK_IMPORTED_MODULE_0_axios_index___default.a.post('/api/proposition/' + id + '/authors_expense', state).then(res => {
+                        resolve();
+                    }).catch(() => {
+                        reject();
+                    });
+                } else {
+                    reject();
+                }
+            });
+        }
+    }
 });
 
 /***/ })
