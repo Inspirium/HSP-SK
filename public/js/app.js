@@ -50798,6 +50798,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             department: '',
             d_suggestions: [],
             employees: [],
+            description: '',
+            date: '',
+            access: 0,
+            priority: 0,
             departments: [],
             cancel: false
         };
@@ -50848,7 +50852,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             }
         },
         assignValues: function () {
-            axios.post('/api/proposition/assign/' + this.$route.params.id, { employees: this.employees, departments: this.departments }).then(res => {}).catch(err => {});
+            axios.post('/api/proposition/assign/' + this.$route.params.id, { employees: this.employees, departments: this.departments, description: this.description, date: this.date, access: this.access, priority: this.priority, path: window.location.href }).then(res => {}).catch(err => {});
         }
     },
     mounted: function () {}
@@ -59453,13 +59457,28 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }), _vm._v(" "), _c('div', {
     staticClass: "md-form mt-2 mb-2"
   }, [_c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.description),
+      expression: "description"
+    }],
     staticClass: "md-textarea",
     attrs: {
-      "id": "form76"
+      "id": "description"
+    },
+    domProps: {
+      "value": (_vm.description)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.description = $event.target.value
+      }
     }
   }), _vm._v(" "), _c('label', {
     attrs: {
-      "for": "form76"
+      "for": "description"
     }
   }, [_vm._v(_vm._s(_vm.lang('Task Description')))])]), _vm._v(" "), _c('div', {
     staticClass: "row mt-4"
@@ -59468,15 +59487,30 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }, [_c('div', {
     staticClass: "md-form"
   }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.date),
+      expression: "date"
+    }],
     staticClass: "form-control datepicker btn-white",
     attrs: {
       "placeholder": "Selected date",
       "type": "text",
-      "id": "date-picker-example"
+      "id": "date-picker-example1"
+    },
+    domProps: {
+      "value": (_vm.date)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.date = $event.target.value
+      }
     }
   }), _vm._v(" "), _c('label', {
     attrs: {
-      "for": "date-picker-example"
+      "for": "date-picker-example1"
     }
   }, [_vm._v(_vm._s(_vm.lang('Select Date')))])])])]), _vm._v(" "), _c('div', {
     staticClass: "page-name-m"
@@ -59485,11 +59519,25 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }, [_c('fieldset', {
     staticClass: "form-group"
   }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.priority),
+      expression: "priority"
+    }],
     attrs: {
       "name": "priority",
       "type": "radio",
       "id": "radio11",
       "value": "high"
+    },
+    domProps: {
+      "checked": _vm._q(_vm.priority, "high")
+    },
+    on: {
+      "__c": function($event) {
+        _vm.priority = "high"
+      }
     }
   }), _vm._v(" "), _c('label', {
     attrs: {
@@ -59498,11 +59546,25 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }, [_vm._v(_vm._s(_vm.lang('High')))])]), _vm._v(" "), _c('fieldset', {
     staticClass: "form-group"
   }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.priority),
+      expression: "priority"
+    }],
     attrs: {
       "name": "priority",
       "type": "radio",
       "id": "radio21",
       "value": "medium"
+    },
+    domProps: {
+      "checked": _vm._q(_vm.priority, "medium")
+    },
+    on: {
+      "__c": function($event) {
+        _vm.priority = "medium"
+      }
     }
   }), _vm._v(" "), _c('label', {
     attrs: {
@@ -59511,11 +59573,25 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }, [_vm._v(_vm._s(_vm.lang('Medium')))])]), _vm._v(" "), _c('fieldset', {
     staticClass: "form-group"
   }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.priority),
+      expression: "priority"
+    }],
     attrs: {
       "name": "priority",
       "type": "radio",
       "id": "radio31",
       "value": "low"
+    },
+    domProps: {
+      "checked": _vm._q(_vm.priority, "low")
+    },
+    on: {
+      "__c": function($event) {
+        _vm.priority = "low"
+      }
     }
   }), _vm._v(" "), _c('label', {
     attrs: {
@@ -59528,12 +59604,26 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }, [_c('fieldset', {
     staticClass: "form-group"
   }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.access),
+      expression: "access"
+    }],
     attrs: {
       "checked": "",
       "name": "access",
       "type": "radio",
       "id": "radio51",
       "value": "allpage"
+    },
+    domProps: {
+      "checked": _vm._q(_vm.access, "allpage")
+    },
+    on: {
+      "__c": function($event) {
+        _vm.access = "allpage"
+      }
     }
   }), _vm._v(" "), _c('label', {
     attrs: {
@@ -59542,11 +59632,25 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }, [_vm._v(_vm._s(_vm.lang('All Proposition Pages')))])]), _vm._v(" "), _c('fieldset', {
     staticClass: "form-group"
   }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.access),
+      expression: "access"
+    }],
     attrs: {
       "name": "access",
       "type": "radio",
       "id": "radio41",
       "value": "onepage"
+    },
+    domProps: {
+      "checked": _vm._q(_vm.access, "onepage")
+    },
+    on: {
+      "__c": function($event) {
+        _vm.access = "onepage"
+      }
     }
   }), _vm._v(" "), _c('label', {
     attrs: {
@@ -59612,9 +59716,24 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }), _vm._v(" "), _c('div', {
     staticClass: "md-form mt-2 mb-2"
   }, [_c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.description),
+      expression: "description"
+    }],
     staticClass: "md-textarea",
     attrs: {
       "id": "form76"
+    },
+    domProps: {
+      "value": (_vm.description)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.description = $event.target.value
+      }
     }
   }), _vm._v(" "), _c('label', {
     attrs: {
@@ -59627,15 +59746,30 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }, [_c('div', {
     staticClass: "md-form"
   }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.date),
+      expression: "date"
+    }],
     staticClass: "form-control datepicker btn-white",
     attrs: {
       "placeholder": "Selected date",
       "type": "text",
-      "id": "date-picker-example"
+      "id": "date-picker2"
+    },
+    domProps: {
+      "value": (_vm.date)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.date = $event.target.value
+      }
     }
   }), _vm._v(" "), _c('label', {
     attrs: {
-      "for": "date-picker-example"
+      "for": "date-picker2"
     }
   }, [_vm._v(_vm._s(_vm.lang('Select Date')))])])])]), _vm._v(" "), _c('div', {
     staticClass: "page-name-m"
@@ -59644,11 +59778,25 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }, [_c('fieldset', {
     staticClass: "form-group"
   }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.priority),
+      expression: "priority"
+    }],
     attrs: {
       "name": "priority1",
       "type": "radio",
       "id": "radio61",
       "value": "high"
+    },
+    domProps: {
+      "checked": _vm._q(_vm.priority, "high")
+    },
+    on: {
+      "__c": function($event) {
+        _vm.priority = "high"
+      }
     }
   }), _vm._v(" "), _c('label', {
     attrs: {
@@ -59657,11 +59805,25 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }, [_vm._v(_vm._s(_vm.lang('High')))])]), _vm._v(" "), _c('fieldset', {
     staticClass: "form-group"
   }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.priority),
+      expression: "priority"
+    }],
     attrs: {
       "name": "priority1",
       "type": "radio",
       "id": "radio71",
       "value": "medium"
+    },
+    domProps: {
+      "checked": _vm._q(_vm.priority, "medium")
+    },
+    on: {
+      "__c": function($event) {
+        _vm.priority = "medium"
+      }
     }
   }), _vm._v(" "), _c('label', {
     attrs: {
@@ -59670,11 +59832,25 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }, [_vm._v(_vm._s(_vm.lang('Medium')))])]), _vm._v(" "), _c('fieldset', {
     staticClass: "form-group"
   }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.priority),
+      expression: "priority"
+    }],
     attrs: {
       "name": "priority1",
       "type": "radio",
       "id": "radio81",
       "value": "low"
+    },
+    domProps: {
+      "checked": _vm._q(_vm.priority, "low")
+    },
+    on: {
+      "__c": function($event) {
+        _vm.priority = "low"
+      }
     }
   }), _vm._v(" "), _c('label', {
     attrs: {
@@ -59687,12 +59863,26 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }, [_c('fieldset', {
     staticClass: "form-group"
   }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.access),
+      expression: "access"
+    }],
     attrs: {
       "checked": "",
       "name": "access1",
       "type": "radio",
       "id": "radio91",
       "value": "allpage"
+    },
+    domProps: {
+      "checked": _vm._q(_vm.access, "allpage")
+    },
+    on: {
+      "__c": function($event) {
+        _vm.access = "allpage"
+      }
     }
   }), _vm._v(" "), _c('label', {
     attrs: {
@@ -59701,11 +59891,25 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }, [_vm._v(_vm._s(_vm.lang('All Proposition Pages')))])]), _vm._v(" "), _c('fieldset', {
     staticClass: "form-group"
   }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.access),
+      expression: "access"
+    }],
     attrs: {
       "name": "access1",
       "type": "radio",
       "id": "radio101",
       "value": "onepage"
+    },
+    domProps: {
+      "checked": _vm._q(_vm.access, "onepage")
+    },
+    on: {
+      "__c": function($event) {
+        _vm.access = "onepage"
+      }
     }
   }), _vm._v(" "), _c('label', {
     attrs: {
