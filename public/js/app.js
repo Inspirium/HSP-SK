@@ -48885,7 +48885,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         };
     },
     components: {
-        'footer-buttons': __WEBPACK_IMPORTED_MODULE_0__partials_FooterButtons__["a" /* default */]
+        'footer-buttons': __WEBPACK_IMPORTED_MODULE_0__partials_FooterButtons__["a" /* default */],
+        'upload-modal': __WEBPACK_IMPORTED_MODULE_1__general_UploadModal_vue__["a" /* default */]
     },
     computed: {},
     methods: {
@@ -49091,7 +49092,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         };
     },
     components: {
-        'footer-buttons': __WEBPACK_IMPORTED_MODULE_0__partials_FooterButtons__["a" /* default */]
+        'footer-buttons': __WEBPACK_IMPORTED_MODULE_0__partials_FooterButtons__["a" /* default */],
+        'upload-modal': __WEBPACK_IMPORTED_MODULE_1__general_UploadModal_vue__["a" /* default */]
     },
     computed: {},
     methods: {
