@@ -47664,7 +47664,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     mprice = (Number(complete) - Number(this.dotation)) * (100 + Number(option.calculated_profit_percent)) / 100,
                     price = mprice * (100 + Number(option.shop_percent)) / 100;
                 options[option.id] = {
-                    direct_cost: Number(this.authors_total) + Number(option.print_offer) + Number(option.compensation) + Number(this.marketing_expense) + Number(this.production_expense) + Number(this.design_layout_expense) - Number(this.dotation),
+                    direct_cost: Number(this.authors_total) + Number(option.print_offer) + Number(option.compensation) + Number(this.marketing_expense) + Number(this.production_expense) + Number(this.design_layout_expense),
                     remainder_after_sales: remainder,
                     complete_expense: complete,
                     cost_coverage: Number(complete) - Number(this.dotation),
@@ -48833,6 +48833,32 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__partials_FooterButtons__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__general_UploadModal_vue__ = __webpack_require__(12);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -48849,12 +48875,58 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 
+
+
 /* harmony default export */ __webpack_exports__["a"] = ({
     data: function () {
-        return {};
+        return {
+            cover: [],
+            leaflet: []
+        };
+    },
+    components: {
+        'footer-buttons': __WEBPACK_IMPORTED_MODULE_0__partials_FooterButtons__["a" /* default */]
     },
     computed: {},
-    methods: {}
+    methods: {
+        documentAdd: function (modal) {
+            jQuery('#' + modal).modal('show');
+        },
+        documentDownload: function (link) {
+            window.open(link, "_blank");
+            return false;
+        },
+        fileDelete: function (index, type) {
+            this[type].splice(index, 1);
+        },
+        fileAdd: function (data) {
+            if (data.isFinal) {
+                this.leaflet.push(data.file);
+            } else {
+                this.cover.push(data.file);
+            }
+        },
+        fileNameSave: function (data) {
+            let files = this.files;
+            if (data.isFinal) {
+                files = this.final;
+            }
+            _.forEach(files, o => {
+                if (o.id === payload.id) {
+                    o.title = data.file.title;
+                }
+            });
+        },
+        saveFiles: function () {
+            axios.post('/api/proposition/' + this.$route.params.id + '/files/marketing', { cover: this.cover, leaflet: this.leaflet }).then(res => {});
+        }
+    },
+    mounted() {
+        axios.get('/api/proposition/' + this.$route.params.id + '/files/marketing').then(res => {
+            this.cover = res.data.cover;
+            this.leaflet = res.data.leaflet;
+        });
+    }
 });
 
 /***/ }),
@@ -48959,6 +49031,32 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__partials_FooterButtons__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__general_UploadModal_vue__ = __webpack_require__(12);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -48982,12 +49080,60 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 
+
+
 /* harmony default export */ __webpack_exports__["a"] = ({
     data: function () {
-        return {};
+        return {
+            webshop: '',
+            jpg: [],
+            psd: []
+        };
+    },
+    components: {
+        'footer-buttons': __WEBPACK_IMPORTED_MODULE_0__partials_FooterButtons__["a" /* default */]
     },
     computed: {},
-    methods: {}
+    methods: {
+        documentAdd: function (modal) {
+            jQuery('#' + modal).modal('show');
+        },
+        documentDownload: function (link) {
+            window.open(link, "_blank");
+            return false;
+        },
+        fileDelete: function (index, type) {
+            this[type].splice(index, 1);
+        },
+        fileAdd: function (data) {
+            if (data.isFinal) {
+                this.final.push(data.file);
+            } else {
+                this.files.push(data.file);
+            }
+        },
+        fileNameSave: function (data) {
+            let files = this.files;
+            if (data.isFinal) {
+                files = this.final;
+            }
+            _.forEach(files, o => {
+                if (o.id === payload.id) {
+                    o.title = data.file.title;
+                }
+            });
+        },
+        saveFiles: function () {
+            axios.post('/api/proposition/' + this.$route.params.id + '/files/multimedia', { jpg: this.jpg, psd: this.psd, webshop: this.webshop }).then(res => {});
+        }
+    },
+    mounted() {
+        axios.get('/api/proposition/' + this.$route.params.id + '/files/multimedia').then(res => {
+            this.jpg = res.data.jpg;
+            this.psd = res.data.psd;
+            this.webshop = res.data.webshop;
+        });
+    }
 });
 
 /***/ }),
@@ -50263,8 +50409,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             window.open(link, "_blank");
             return false;
         },
-        fileDelete: function (id) {
-            this.$store.dispatch('proposition/deleteFile', { group: 'basic_data', key: 'manuscript_documents', id: id });
+        fileDelete: function (index, type) {
+            this[type].splice(index, 1);
         },
         fileAdd: function (data) {
             if (data.isFinal) {
@@ -64054,7 +64200,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     staticClass: "page-name-xl mb-4 mt-3"
   }, [_vm._v(_vm._s(_vm.lang('Initial Document')))]), _vm._v(" "), _c('div', {
     staticClass: "files mt-2 mb-2"
-  }, _vm._l((_vm.files), function(file) {
+  }, _vm._l((_vm.files), function(file, index) {
     return _c('div', {
       staticClass: "file-box file-box-l d-flex align-items-center"
     }, [_c('a', {
@@ -64092,7 +64238,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       staticClass: "file-box-sty icon icon-cancel",
       on: {
         "click": function($event) {
-          _vm.fileDelete(file.id)
+          _vm.fileDelete(index, 'files')
         }
       }
     }, [_vm._v("Obriši")])])
@@ -64122,7 +64268,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     staticClass: "page-name-xl mb-4 mt-5"
   }, [_vm._v(_vm._s(_vm.lang('Final Document')))]), _vm._v(" "), _c('div', {
     staticClass: "files mt-2 mb-2"
-  }, _vm._l((_vm.final), function(file) {
+  }, _vm._l((_vm.final), function(file, index) {
     return _c('div', {
       staticClass: "file-box file-box-l d-flex align-items-center"
     }, [_c('a', {
@@ -64160,7 +64306,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       staticClass: "file-box-sty icon icon-cancel",
       on: {
         "click": function($event) {
-          _vm.fileDelete(file.id)
+          _vm.fileDelete(index, 'final')
         }
       }
     }, [_vm._v("Obriši")])])
@@ -67148,10 +67294,25 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }, [_vm._v(_vm._s(_vm.lang('Multimedia')))]), _vm._v(" "), _c('div', {
     staticClass: "md-form mt-5"
   }, [_c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.webshop),
+      expression: "webshop"
+    }],
     staticClass: "md-textarea",
     attrs: {
       "id": "note",
       "name": "note"
+    },
+    domProps: {
+      "value": (_vm.webshop)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.webshop = $event.target.value
+      }
     }
   }), _vm._v(" "), _c('label', {
     attrs: {
@@ -67160,24 +67321,147 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }, [_vm._v(_vm._s(_vm.lang('Webshop Description')))])]), _vm._v(" "), _c('div', {
     staticClass: "page-name-l mb-3 mt-1"
   }, [_vm._v(_vm._s(_vm.lang('Cover - JPG format')))]), _vm._v(" "), _c('div', {
+    staticClass: "files mt-2 mb-2"
+  }, _vm._l((_vm.jpg), function(file, index) {
+    return _c('div', {
+      staticClass: "file-box file-box-l d-flex align-items-center"
+    }, [_c('a', {
+      staticClass: "file-icon",
+      attrs: {
+        "href": file.link
+      },
+      on: {
+        "click": function($event) {
+          $event.preventDefault();
+          _vm.documentDownload(file.link)
+        }
+      }
+    }, [_vm._v(_vm._s(file.title))]), _vm._v(" "), _c('div', {
+      staticClass: "file-box-sty ml-auto d-flex"
+    }, [_c('a', {
+      attrs: {
+        "href": 'human_resources/employee/show/' + file.owner.id
+      }
+    }, [_c('img', {
+      staticClass: "profile-m-1 mr-1 align-self-center",
+      attrs: {
+        "src": file.owner.image
+      }
+    }), _vm._v(_vm._s(file.owner.name))])]), _vm._v(" "), _c('div', {
+      staticClass: "file-box-sty"
+    }, [_vm._v(_vm._s(_vm._f("moment")(file.created_at.date, 'DD.MM.YYYY.')))]), _vm._v(" "), _c('div', {
+      staticClass: "file-box-sty icon icon-download",
+      on: {
+        "click": function($event) {
+          _vm.documentDownload(file.link)
+        }
+      }
+    }, [_vm._v("Preuzmi")]), _vm._v(" "), _c('div', {
+      staticClass: "file-box-sty icon icon-cancel",
+      on: {
+        "click": function($event) {
+          _vm.fileDelete(index, 'jpg')
+        }
+      }
+    }, [_vm._v("Obriši")])])
+  })), _vm._v(" "), _c('div', {
     staticClass: "justify-content-center d-flex mb-4"
   }, [_c('button', {
     staticClass: "btn btn-neutral",
     attrs: {
-      "type": "button",
-      "data-dismiss": "modal"
+      "type": "button"
+    },
+    on: {
+      "click": function($event) {
+        _vm.documentAdd('cover-jpg')
+      }
     }
   }, [_vm._v(_vm._s(_vm.lang('Upload')))])]), _vm._v(" "), _c('div', {
     staticClass: "page-name-l mb-3 mt-1"
   }, [_vm._v(_vm._s(_vm.lang('Cover 3D - PSD format')))]), _vm._v(" "), _c('div', {
+    staticClass: "files mt-2 mb-2"
+  }, _vm._l((_vm.psd), function(file, index) {
+    return _c('div', {
+      staticClass: "file-box file-box-l d-flex align-items-center"
+    }, [_c('a', {
+      staticClass: "file-icon",
+      attrs: {
+        "href": file.link
+      },
+      on: {
+        "click": function($event) {
+          $event.preventDefault();
+          _vm.documentDownload(file.link)
+        }
+      }
+    }, [_vm._v(_vm._s(file.title))]), _vm._v(" "), _c('div', {
+      staticClass: "file-box-sty ml-auto d-flex"
+    }, [_c('a', {
+      attrs: {
+        "href": 'human_resources/employee/show/' + file.owner.id
+      }
+    }, [_c('img', {
+      staticClass: "profile-m-1 mr-1 align-self-center",
+      attrs: {
+        "src": file.owner.image
+      }
+    }), _vm._v(_vm._s(file.owner.name))])]), _vm._v(" "), _c('div', {
+      staticClass: "file-box-sty"
+    }, [_vm._v(_vm._s(_vm._f("moment")(file.created_at.date, 'DD.MM.YYYY.')))]), _vm._v(" "), _c('div', {
+      staticClass: "file-box-sty icon icon-download",
+      on: {
+        "click": function($event) {
+          _vm.documentDownload(file.link)
+        }
+      }
+    }, [_vm._v("Preuzmi")]), _vm._v(" "), _c('div', {
+      staticClass: "file-box-sty icon icon-cancel",
+      on: {
+        "click": function($event) {
+          _vm.fileDelete(index, 'psd')
+        }
+      }
+    }, [_vm._v("Obriši")])])
+  })), _vm._v(" "), _c('div', {
     staticClass: "justify-content-center d-flex mb-4"
   }, [_c('button', {
     staticClass: "btn btn-neutral",
     attrs: {
-      "type": "button",
-      "data-dismiss": "modal"
+      "type": "button"
+    },
+    on: {
+      "click": function($event) {
+        _vm.documentAdd('cover-psd')
+      }
     }
-  }, [_vm._v(_vm._s(_vm.lang('Upload')))])]), _vm._v(" "), _c('footer-buttons')], 1)
+  }, [_vm._v(_vm._s(_vm.lang('Upload')))])]), _vm._v(" "), _c('footer-buttons'), _vm._v(" "), _c('upload-modal', {
+    attrs: {
+      "id": "cover-jpg",
+      "action": "/api/file",
+      "accept": ".jpg, .jpeg",
+      "disk": "proposition",
+      "dir": "multimedia.jpg"
+    },
+    on: {
+      "fileDelete": _vm.fileDelete,
+      "fileAdd": _vm.fileAdd,
+      "fileNameSave": _vm.fileNameSave
+    }
+  }), _vm._v(" "), _c('upload-modal', {
+    attrs: {
+      "id": "cover-psd",
+      "action": "/api/file",
+      "accept": ".psd",
+      "disk": "proposition",
+      "dir": "multimedia.psd",
+      "isFinal": true
+    },
+    on: {
+      "fileDelete": _vm.fileDelete,
+      "fileAdd": _vm.fileAdd,
+      "fileNameSave": _vm.fileNameSave
+    }
+  })], 1)
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -68009,24 +68293,147 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }, [_vm._v(_vm._s(_vm.lang('Marketing materials')))]), _vm._v(" "), _c('div', {
     staticClass: "page-name-l mb-3 mt-1"
   }, [_vm._v(_vm._s(_vm.lang('Cover - PDF format')))]), _vm._v(" "), _c('div', {
+    staticClass: "files mt-2 mb-2"
+  }, _vm._l((_vm.cover), function(file, index) {
+    return _c('div', {
+      staticClass: "file-box file-box-l d-flex align-items-center"
+    }, [_c('a', {
+      staticClass: "file-icon",
+      attrs: {
+        "href": file.link
+      },
+      on: {
+        "click": function($event) {
+          $event.preventDefault();
+          _vm.documentDownload(file.link)
+        }
+      }
+    }, [_vm._v(_vm._s(file.title))]), _vm._v(" "), _c('div', {
+      staticClass: "file-box-sty ml-auto d-flex"
+    }, [_c('a', {
+      attrs: {
+        "href": 'human_resources/employee/show/' + file.owner.id
+      }
+    }, [_c('img', {
+      staticClass: "profile-m-1 mr-1 align-self-center",
+      attrs: {
+        "src": file.owner.image
+      }
+    }), _vm._v(_vm._s(file.owner.name))])]), _vm._v(" "), _c('div', {
+      staticClass: "file-box-sty"
+    }, [_vm._v(_vm._s(_vm._f("moment")(file.created_at.date, 'DD.MM.YYYY.')))]), _vm._v(" "), _c('div', {
+      staticClass: "file-box-sty icon icon-download",
+      on: {
+        "click": function($event) {
+          _vm.documentDownload(file.link)
+        }
+      }
+    }, [_vm._v("Preuzmi")]), _vm._v(" "), _c('div', {
+      staticClass: "file-box-sty icon icon-cancel",
+      on: {
+        "click": function($event) {
+          _vm.fileDelete(index, 'cover')
+        }
+      }
+    }, [_vm._v("Obriši")])])
+  })), _vm._v(" "), _c('div', {
     staticClass: "justify-content-center d-flex mb-4"
   }, [_c('button', {
     staticClass: "btn btn-neutral",
     attrs: {
-      "type": "button",
-      "data-dismiss": "modal"
+      "type": "button"
+    },
+    on: {
+      "click": function($event) {
+        _vm.documentAdd('cover-pdf')
+      }
     }
   }, [_vm._v(_vm._s(_vm.lang('Upload')))])]), _vm._v(" "), _c('div', {
     staticClass: "page-name-l mb-3 mt-1"
   }, [_vm._v(_vm._s(_vm.lang('Leaflet')))]), _vm._v(" "), _c('div', {
+    staticClass: "files mt-2 mb-2"
+  }, _vm._l((_vm.leaflet), function(file, index) {
+    return _c('div', {
+      staticClass: "file-box file-box-l d-flex align-items-center"
+    }, [_c('a', {
+      staticClass: "file-icon",
+      attrs: {
+        "href": file.link
+      },
+      on: {
+        "click": function($event) {
+          $event.preventDefault();
+          _vm.documentDownload(file.link)
+        }
+      }
+    }, [_vm._v(_vm._s(file.title))]), _vm._v(" "), _c('div', {
+      staticClass: "file-box-sty ml-auto d-flex"
+    }, [_c('a', {
+      attrs: {
+        "href": 'human_resources/employee/show/' + file.owner.id
+      }
+    }, [_c('img', {
+      staticClass: "profile-m-1 mr-1 align-self-center",
+      attrs: {
+        "src": file.owner.image
+      }
+    }), _vm._v(_vm._s(file.owner.name))])]), _vm._v(" "), _c('div', {
+      staticClass: "file-box-sty"
+    }, [_vm._v(_vm._s(_vm._f("moment")(file.created_at.date, 'DD.MM.YYYY.')))]), _vm._v(" "), _c('div', {
+      staticClass: "file-box-sty icon icon-download",
+      on: {
+        "click": function($event) {
+          _vm.documentDownload(file.link)
+        }
+      }
+    }, [_vm._v("Preuzmi")]), _vm._v(" "), _c('div', {
+      staticClass: "file-box-sty icon icon-cancel",
+      on: {
+        "click": function($event) {
+          _vm.fileDelete(index, 'leaflet')
+        }
+      }
+    }, [_vm._v("Obriši")])])
+  })), _vm._v(" "), _c('div', {
     staticClass: "justify-content-center d-flex mb-4"
   }, [_c('button', {
     staticClass: "btn btn-neutral",
     attrs: {
-      "type": "button",
-      "data-dismiss": "modal"
+      "type": "button"
+    },
+    on: {
+      "click": function($event) {
+        _vm.documentAdd('leaflet')
+      }
     }
-  }, [_vm._v(_vm._s(_vm.lang('Upload')))])]), _vm._v(" "), _c('footer-buttons')], 1)
+  }, [_vm._v(_vm._s(_vm.lang('Upload')))])]), _vm._v(" "), _c('footer-buttons'), _vm._v(" "), _c('upload-modal', {
+    attrs: {
+      "id": "cover-pdf",
+      "action": "/api/file",
+      "accept": ".pdf, .doc, .docx, .xls, .xlsx",
+      "disk": "proposition",
+      "dir": "marketing.cover"
+    },
+    on: {
+      "fileDelete": _vm.fileDelete,
+      "fileAdd": _vm.fileAdd,
+      "fileNameSave": _vm.fileNameSave
+    }
+  }), _vm._v(" "), _c('upload-modal', {
+    attrs: {
+      "id": "leaflet",
+      "action": "/api/file",
+      "accept": ".pdf, .doc, .docx, .xls, .xlsx",
+      "disk": "proposition",
+      "dir": "marketing.leaflet",
+      "isFinal": true
+    },
+    on: {
+      "fileDelete": _vm.fileDelete,
+      "fileAdd": _vm.fileAdd,
+      "fileNameSave": _vm.fileNameSave
+    }
+  })], 1)
 }
 var staticRenderFns = []
 render._withStripped = true
