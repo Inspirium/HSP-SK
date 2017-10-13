@@ -23,7 +23,7 @@ return array(
     |
     */
 
-    'include_fluent' => false,
+    'include_fluent' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -52,7 +52,13 @@ return array(
     */
 
     'model_locations' => array(
-        'app',
+        'packages/Inspirium/BookProposition/src/Models',
+        'packages/Inspirium/FileManagement/src/Models',
+        'packages/Inspirium/HumanResources/src/Models',
+        'packages/Inspirium/TaskManagement/src/Models',
+        'packages/Inspirium/UserManagement/src/Models',
+        'packages/Inspirium/Messaging/src/Models',
+	    'packages/Inspirium/BookManagement/src/Models',
     ),
 
 
