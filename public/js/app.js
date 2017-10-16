@@ -45963,7 +45963,7 @@ module.exports = function spread(callback) {
             return this.$route.path.split('/');
         },
         id: function () {
-            return this.$store.state.proposition.id;
+            return this.$store.state.proposition.proposition_id;
         },
         editing_proposition: function () {
             return this.active[1] === 'proposition';
@@ -49608,8 +49608,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         }
     },
     mounted: function () {
-        if (this.$route.params.id != 0) {
+        if (typeof this.$route.params.id !== 'undefined' && this.$route.params.id != 0) {
             this.$store.dispatch('proposition/start/getData', { id: this.$route.params.id });
+        } else {
+            this.$store.dispatch('proposition/initData', { force: true, id: 0 });
         }
     }
 });
@@ -52172,7 +52174,7 @@ const routes = [{ path: '/proposition/start', component: __WEBPACK_IMPORTED_MODU
         owner: __WEBPACK_IMPORTED_MODULE_14__proposition_owner__["a" /* default */]
     },
     state: {
-        id: 0,
+        proposition_id: 0,
         created_at: 0,
         updated_at: 0,
         deleted_at: 0,
@@ -52185,7 +52187,7 @@ const routes = [{ path: '/proposition/start', component: __WEBPACK_IMPORTED_MODU
     },
     mutations: {
         initData(state, payload) {
-            state.id = payload.id;
+            state.proposition_id = payload.proposition_id;
             state.created_at = payload.created_at;
             state.updated_at = payload.updated_at;
             state.deleted_at = payload.deleted_at;
@@ -52193,7 +52195,7 @@ const routes = [{ path: '/proposition/start', component: __WEBPACK_IMPORTED_MODU
     },
     actions: {
         initData({ commit, state }, payload) {
-            if (!state.id || state.id != payload.id || payload.force) {
+            if (!state.proposition_id || state.proposition_id != payload.id || payload.force) {
                 __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/api/proposition/' + payload.id + '/init').then(res => {
                     commit('initData', res.data);
                     commit('proposition/owner/initData', res.data.owner, { root: true });
@@ -52307,7 +52309,7 @@ const routes = [{ path: '/proposition/start', component: __WEBPACK_IMPORTED_MODU
             state.authors = payload.authors;
             state.concept = payload.concept;
             state.note = payload.note;
-            state.possible_products = payload.possible_products;
+            state.possible_products = payload.possible_products ? payload.possible_products : [];
             state.dotation = payload.dotation;
             state.dotation_amount = payload.dotation_amount;
             state.dotation_origin = payload.dotation_origin;
@@ -53097,7 +53099,7 @@ const routes = [{ path: '/proposition/start', component: __WEBPACK_IMPORTED_MODU
 /* harmony default export */ __webpack_exports__["a"] = ({
     namespaced: true,
     state: {
-        id: 0,
+        proposition_id: 0,
         project_number: '',
         project_name: '',
         additional_project_number: '',
@@ -53113,13 +53115,11 @@ const routes = [{ path: '/proposition/start', component: __WEBPACK_IMPORTED_MODU
     },
     actions: {
         getData({ commit, state }, payload) {
-            if (!state.id || state.id != payload.id || payload.force) {
-                //retrieve data only we don't have it or we need to refresh it
-                __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/api/proposition/' + payload.id + '/start').then(res => {
-                    commit('initData', res.data);
-                    commit('proposition/initData', res.data, { root: true });
-                });
-            }
+            //retrieve data only we don't have it or we need to refresh it
+            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/api/proposition/' + payload.id + '/start').then(res => {
+                commit('initData', res.data);
+                commit('proposition/initData', res.data, { root: true });
+            });
         },
         saveData({ state, commit }, id) {
             return new Promise((resolve, reject) => {
@@ -53129,7 +53129,7 @@ const routes = [{ path: '/proposition/start', component: __WEBPACK_IMPORTED_MODU
                     });
                 } else {
                     __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/api/proposition/start', state).then(res => {
-                        if (res.data.id) {
+                        if (res.data.proposition_id) {
                             commit('proposition/initData', res.data, { root: true });
                             resolve();
                         } else {
@@ -61292,15 +61292,15 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     staticClass: "col-md-4"
   }, [_c('h6', {
     staticClass: "white-label"
-  }, [_vm._v(_vm._s(_vm.lang('Starting Date')))]), _vm._v(" "), _c('h3', {
+  }, [_vm._v(_vm._s(_vm.lang('Starting Date')))]), _vm._v(" "), (_vm.proposition.created_at) ? _c('h3', {
     staticClass: "mb-1 text-white"
-  }, [_vm._v(_vm._s(_vm._f("moment")(_vm.proposition.created_at.date, 'DD.MM.YYYY.')))])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm._f("moment")(_vm.proposition.created_at.date, 'DD.MM.YYYY.')))]) : _vm._e()]), _vm._v(" "), _c('div', {
     staticClass: "col-md-4"
   }, [_c('h6', {
     staticClass: "white-label"
-  }, [_vm._v(_vm._s(_vm.lang('Total Time')))]), _vm._v(" "), _c('h3', {
+  }, [_vm._v(_vm._s(_vm.lang('Total Time')))]), _vm._v(" "), (_vm.proposition.created_at) ? _c('h3', {
     staticClass: "mb-1 text-white"
-  }, [_vm._v(_vm._s(_vm._f("moment")(_vm.proposition.created_at.date, "from", true)))])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm._f("moment")(_vm.proposition.created_at.date, "from", true)))]) : _vm._e()])]), _vm._v(" "), _c('div', {
     staticClass: "page-name-l my-4"
   }, [_vm._v(_vm._s(_vm.lang('Project data')))]), _vm._v(" "), _c('div', {
     staticClass: "row"
