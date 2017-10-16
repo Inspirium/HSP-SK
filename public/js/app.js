@@ -45036,6 +45036,14 @@ const router = new __WEBPACK_IMPORTED_MODULE_2_vue_router__["a" /* default */]({
     routes: __WEBPACK_IMPORTED_MODULE_5__routes__["a" /* routes */]
 });
 
+router.beforeEach((to, from, next) => {
+    if (typeof to.meta.validate !== 'undefined' && typeof to.meta.validate.id !== 'undefined' && to.params.id === 'undefined') {
+        next('/proposition/start');
+    } else {
+        next();
+    }
+});
+
 __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_6_vuex_router_sync__["sync"])(__WEBPACK_IMPORTED_MODULE_4__vuex_store__["a" /* default */], router);
 window.vueRouter = router;
 
@@ -45976,11 +45984,11 @@ module.exports = function spread(callback) {
                         enabled: true,
                         title: 'Proposition',
                         order: 0,
-                        key: 'proposition',
+                        key: 'edit',
                         children: {
                             start: {
                                 enabled: true,
-                                path: '/proposition/' + this.id + '/start',
+                                path: '/proposition/' + this.id + '/edit/start',
                                 title: 'Start',
                                 component: true
                             },
@@ -46112,7 +46120,7 @@ module.exports = function spread(callback) {
                         enabled: true,
                         title: 'Text Preparation',
                         order: 1,
-                        key: 'text_preparation',
+                        key: 'preparation',
                         children: {
                             translation: {
                                 enabled: true,
@@ -46443,7 +46451,7 @@ module.exports = function spread(callback) {
     },
     methods: {
         isGroupActive: function (val) {
-            return this.active[1] === val;
+            return this.active[3] === val;
         },
         isActive: function (group, key) {
             return this.$route.path === this.lroutes[group].children[key].path;
@@ -49055,6 +49063,11 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -50510,85 +50523,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -50599,15 +50533,33 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         return {
             employee: '',
             e_suggestions: [],
-            department: '',
-            d_suggestions: [],
             employees: [],
             description: '',
-            date: '',
-            access: 0,
-            priority: 0,
-            departments: [],
-            cancel: false
+            cancel: false,
+            line_title: '',
+            line_budget: '',
+            line_expense: '',
+            titles: {
+                text_price: 'Text',
+                reviews: 'Reviews',
+                lecture: 'Lecture',
+                correction: 'Correction',
+                proofreading: 'Proofreading',
+                translation: 'Translation',
+                index: 'Index',
+                epilogue: 'Epilogue',
+                photos: 'Photos',
+                illustrations: 'Illustrations',
+                technical_drawings: 'Tehnical drawings',
+                expert_report: 'Expert report',
+                copyright: 'Copyright',
+                copyright_mediator: 'Copyright mediator',
+                methodical_instrumentarium: 'Methodical Instrumentarium',
+                selection: 'Selection',
+                powerpoint_presentation: 'Powerpoint presentation',
+                additional_expenses: 'Additional expenses'
+            },
+            expense: ''
         };
     },
     components: {
@@ -50645,10 +50597,31 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         saveExpenses: function () {
             axios.post('/api/proposition/' + this.$route.params.id + '/compare', { expenses: this.expenses }).then(res => {});
         },
-        sendForApproval: function () {
+        sendForApproval: function (what) {
+            if (what === 'marketing_expense') {
+                this.line_title = 'Marketing budget';
+                this.line_budget = this.marketing_expense.budget.totals;
+                this.line_expense = this.marketing_expense.expense.totals;
+            }
+            if (what === 'layout_expense') {
+                this.line_title = 'Layout and Design budget';
+                this.line_budget = this.production_expense.budget.totals.layout;
+                this.line_expense = this.production_expense.expense.totals.layout;
+            }
+            if (what.includes('production_expense.')) {
+                let vars = what.split('.');
+                this.line_title = this.titles[vars[1]];
+                this.line_budget = this.production_expense.budget.totals[vars[1]];
+                this.line_expense = this.production_expense.expense.totals[vars[1]];
+            }
+            if (what.includes('author_expense.')) {
+                let vars = what.split('.');
+                this.line_title = this.authors[vars[1]].name;
+                this.line_budget = this.authors[vars[1]].expenses[0].totals;
+                this.line_expense = this.authors[vars[1]].expenses[1].totals;
+            }
+            this.expense = what;
             $('#ModalCostApprove').modal('show');
-            /*axios.post('/api/proposition/' + this.$route.params.id + '/approval')
-                .then((res) => {});*/
         },
         autocomplete: function (event, type) {
             if (this.cancel) {
@@ -50684,11 +50657,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             }
         },
         assignValues: function () {
-            /*axios.post('/api/proposition/assign/'+this.$route.params.id, {employees: this.employees, departments: this.departments, description: this.description, date: this.date, access:this.access, priority: this.priority, path: window.location.href})
-                .then((res) => {
-                })
-                .catch((err) => {
-                })*/
+            axios.post('/api/proposition/' + this.$route.params.id + '/requestApproval', { employees: this.employees, description: this.description, expense: { expense: this.line_expense, budget: this.line_budget, what: this.expense } }).then(res => {}).catch(err => {});
         }
     },
     mounted() {
@@ -52173,20 +52142,22 @@ window.axios.defaults.headers.common = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_proposition_MarketingExpense__ = __webpack_require__(223);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_proposition_expenses_MarketingExpense__ = __webpack_require__(236);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_proposition_DistributionExpense__ = __webpack_require__(219);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_proposition_LayoutExpense__ = __webpack_require__(220);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_proposition_Deadline__ = __webpack_require__(218);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_proposition_Calculation__ = __webpack_require__(216);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_proposition_PropositionStart__ = __webpack_require__(229);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__components_proposition_expenses_Compare__ = __webpack_require__(235);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__components_proposition_UploadDocument__ = __webpack_require__(232);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__components_proposition_Revisions__ = __webpack_require__(230);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__components_proposition_PriceDefinition__ = __webpack_require__(225);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__components_proposition_Warehouse__ = __webpack_require__(233);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__components_proposition_Marketing__ = __webpack_require__(222);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__components_proposition_Multimedia__ = __webpack_require__(224);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__components_tasks_Tasks__ = __webpack_require__(241);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__components_tasks_TaskEdit__ = __webpack_require__(239);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__components_tasks_TaskShow__ = __webpack_require__(240);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_proposition_expenses_DistributionExpense__ = __webpack_require__(304);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_proposition_LayoutExpense__ = __webpack_require__(220);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_proposition_expenses_LayoutExpense__ = __webpack_require__(305);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_proposition_Deadline__ = __webpack_require__(218);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__components_proposition_Calculation__ = __webpack_require__(216);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__components_proposition_PropositionStart__ = __webpack_require__(229);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__components_proposition_expenses_Compare__ = __webpack_require__(235);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__ = __webpack_require__(232);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__components_proposition_Revisions__ = __webpack_require__(230);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__components_proposition_PriceDefinition__ = __webpack_require__(225);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__components_proposition_Warehouse__ = __webpack_require__(233);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__components_proposition_Marketing__ = __webpack_require__(222);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__components_proposition_Multimedia__ = __webpack_require__(224);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__components_tasks_Tasks__ = __webpack_require__(241);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__components_tasks_TaskEdit__ = __webpack_require__(239);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__components_tasks_TaskShow__ = __webpack_require__(240);
 
 
 
@@ -52216,12 +52187,11 @@ window.axios.defaults.headers.common = {
 
 
 
-const routes = [{ path: '/proposition/start', component: __WEBPACK_IMPORTED_MODULE_16__components_proposition_PropositionStart__["a" /* default */] }, { path: '/proposition/:id(\\d+)', component: __WEBPACK_IMPORTED_MODULE_0__components_proposition_Proposition__["a" /* default */],
-    children: [{ path: 'start', component: __WEBPACK_IMPORTED_MODULE_16__components_proposition_PropositionStart__["a" /* default */], meta: { save: 'start' } }, { path: 'edit/basic_data', component: __WEBPACK_IMPORTED_MODULE_1__components_proposition_BasicData__["a" /* default */], meta: { save: 'basic_data' } }, { path: 'edit/categorization', component: __WEBPACK_IMPORTED_MODULE_2__components_proposition_Categorization__["a" /* default */], meta: { save: 'categorization' } }, { path: 'edit/market_potential', component: __WEBPACK_IMPORTED_MODULE_3__components_proposition_MarketPotential__["a" /* default */], meta: { save: 'market_potential' } }, { path: 'edit/technical_data', component: __WEBPACK_IMPORTED_MODULE_4__components_proposition_TechnicalData__["a" /* default */], meta: { save: 'technical_data' } }, { path: 'edit/print', component: __WEBPACK_IMPORTED_MODULE_7__components_proposition_Print__["a" /* default */], meta: { save: 'print' } }, { path: 'edit/authors_expense', component: __WEBPACK_IMPORTED_MODULE_5__components_proposition_AuthorsExpense__["a" /* default */], meta: { save: 'authors_expense' } }, { path: 'edit/production_expense', component: __WEBPACK_IMPORTED_MODULE_9__components_proposition_ProductionExpense__["a" /* default */], meta: { save: 'production_expense' } }, { path: 'edit/marketing_expense', component: __WEBPACK_IMPORTED_MODULE_10__components_proposition_MarketingExpense__["a" /* default */], meta: { save: 'marketing_expense' } }, { path: 'edit/distribution_expense', component: __WEBPACK_IMPORTED_MODULE_12__components_proposition_DistributionExpense__["a" /* default */], meta: { save: 'distribution_expense' } }, { path: 'edit/layout_expense', component: __WEBPACK_IMPORTED_MODULE_13__components_proposition_LayoutExpense__["a" /* default */], meta: { save: 'layout_expense' } }, { path: 'edit/deadline', component: __WEBPACK_IMPORTED_MODULE_14__components_proposition_Deadline__["a" /* default */], meta: { save: 'deadline' } }, { path: 'edit/calculation', component: __WEBPACK_IMPORTED_MODULE_15__components_proposition_Calculation__["a" /* default */], meta: { save: 'calculation' } }, { path: 'preparation/translation', component: __WEBPACK_IMPORTED_MODULE_18__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'translation' } }, { path: 'preparation/technical_preparation', component: __WEBPACK_IMPORTED_MODULE_18__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'technical_preparation' } }, { path: 'preparation/proofreading', component: __WEBPACK_IMPORTED_MODULE_18__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'proofreading' } }, { path: 'preparation/additional_materials', component: __WEBPACK_IMPORTED_MODULE_18__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'additional_materials' } }, { path: 'preparation/reviews', component: __WEBPACK_IMPORTED_MODULE_18__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'reviews' } }, { path: 'preparation/lecture', component: __WEBPACK_IMPORTED_MODULE_18__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'lecture' } }, { path: 'preparation/technical_correction', component: __WEBPACK_IMPORTED_MODULE_18__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'technical_correction' } }, { path: 'preparation/final_review', component: __WEBPACK_IMPORTED_MODULE_18__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'final_review' } }, { path: 'expenses/authors_expense', component: __WEBPACK_IMPORTED_MODULE_6__components_proposition_expenses_AuthorsExpense__["a" /* default */] }, { path: 'expenses/production_expense', component: __WEBPACK_IMPORTED_MODULE_8__components_proposition_expenses_ProductionExpense__["a" /* default */], meta: { save: 'production_expense' } }, { path: 'expenses/marketing_expense', component: __WEBPACK_IMPORTED_MODULE_11__components_proposition_expenses_MarketingExpense__["a" /* default */], meta: { save: 'marketing_expense' } }, { path: 'expenses/distribution_expense', component: __WEBPACK_IMPORTED_MODULE_12__components_proposition_DistributionExpense__["a" /* default */] }, { path: 'expenses/layout_expense', component: __WEBPACK_IMPORTED_MODULE_13__components_proposition_LayoutExpense__["a" /* default */] }, { path: 'expenses/compare', component: __WEBPACK_IMPORTED_MODULE_17__components_proposition_expenses_Compare__["a" /* default */], meta: {} }, { path: 'design/cover_design', component: __WEBPACK_IMPORTED_MODULE_18__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'cover_design' } }, { path: 'design/layout_design', component: __WEBPACK_IMPORTED_MODULE_18__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'layout_design' } }, { path: 'layout/first_block_layout', component: __WEBPACK_IMPORTED_MODULE_18__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'first_block_layout' } }, { path: 'layout/cover', component: __WEBPACK_IMPORTED_MODULE_18__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'cover' } }, { path: 'layout/layout', component: __WEBPACK_IMPORTED_MODULE_18__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'layout' } }, { path: 'layout/first_revision', component: __WEBPACK_IMPORTED_MODULE_18__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'first_revision' } }, { path: 'layout/correction', component: __WEBPACK_IMPORTED_MODULE_18__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'correction' } }, { path: 'layout/correction_input', component: __WEBPACK_IMPORTED_MODULE_18__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'correction_input' } }, { path: 'layout/revisions', component: __WEBPACK_IMPORTED_MODULE_19__components_proposition_Revisions__["a" /* default */] }, { path: 'final_price/price_definition', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_PriceDefinition__["a" /* default */] }, { path: 'prepress/print_proof', component: __WEBPACK_IMPORTED_MODULE_18__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'print_proof' } }, { path: 'prepress/print_proof_correction', component: __WEBPACK_IMPORTED_MODULE_18__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'print_proof_correction' } }, { path: 'prepress/print', component: __WEBPACK_IMPORTED_MODULE_18__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'print' } }, { path: 'prepress/warehouse', component: __WEBPACK_IMPORTED_MODULE_21__components_proposition_Warehouse__["a" /* default */] }, { path: 'additionals/multimedia', component: __WEBPACK_IMPORTED_MODULE_23__components_proposition_Multimedia__["a" /* default */] }, { path: 'additionals/marketing', component: __WEBPACK_IMPORTED_MODULE_22__components_proposition_Marketing__["a" /* default */] }]
-},
-/*{ path: '/propositions', component: PropositionList },*/
 
-{ path: '/tasks', component: __WEBPACK_IMPORTED_MODULE_24__components_tasks_Tasks__["a" /* default */] }, { path: '/task/edit/:id(\\d+)?', component: __WEBPACK_IMPORTED_MODULE_25__components_tasks_TaskEdit__["a" /* default */] }, { path: '/task/show/:id(\\d+)', component: __WEBPACK_IMPORTED_MODULE_26__components_tasks_TaskShow__["a" /* default */] }];
+
+const routes = [{ path: '/proposition/start', component: __WEBPACK_IMPORTED_MODULE_18__components_proposition_PropositionStart__["a" /* default */] }, { path: '/proposition/:id', component: __WEBPACK_IMPORTED_MODULE_0__components_proposition_Proposition__["a" /* default */],
+    children: [{ path: 'edit/start', component: __WEBPACK_IMPORTED_MODULE_18__components_proposition_PropositionStart__["a" /* default */], meta: { save: 'start', validate: { id: 'int' } } }, { path: 'edit/basic_data', component: __WEBPACK_IMPORTED_MODULE_1__components_proposition_BasicData__["a" /* default */], meta: { save: 'basic_data', validate: { id: 'int' } } }, { path: 'edit/categorization', component: __WEBPACK_IMPORTED_MODULE_2__components_proposition_Categorization__["a" /* default */], meta: { save: 'categorization', validate: { id: 'int' } } }, { path: 'edit/market_potential', component: __WEBPACK_IMPORTED_MODULE_3__components_proposition_MarketPotential__["a" /* default */], meta: { save: 'market_potential', validate: { id: 'int' } } }, { path: 'edit/technical_data', component: __WEBPACK_IMPORTED_MODULE_4__components_proposition_TechnicalData__["a" /* default */], meta: { save: 'technical_data', validate: { id: 'int' } } }, { path: 'edit/print', component: __WEBPACK_IMPORTED_MODULE_7__components_proposition_Print__["a" /* default */], meta: { save: 'print', validate: { id: 'int' } } }, { path: 'edit/authors_expense', component: __WEBPACK_IMPORTED_MODULE_5__components_proposition_AuthorsExpense__["a" /* default */], meta: { save: 'authors_expense', validate: { id: 'int' } } }, { path: 'edit/production_expense', component: __WEBPACK_IMPORTED_MODULE_9__components_proposition_ProductionExpense__["a" /* default */], meta: { save: 'production_expense', validate: { id: 'int' } } }, { path: 'edit/marketing_expense', component: __WEBPACK_IMPORTED_MODULE_10__components_proposition_MarketingExpense__["a" /* default */], meta: { save: 'marketing_expense', validate: { id: 'int' } } }, { path: 'edit/distribution_expense', component: __WEBPACK_IMPORTED_MODULE_12__components_proposition_DistributionExpense__["a" /* default */], meta: { save: 'distribution_expense', validate: { id: 'int' } } }, { path: 'edit/layout_expense', component: __WEBPACK_IMPORTED_MODULE_14__components_proposition_LayoutExpense__["a" /* default */], meta: { save: 'layout_expense', validate: { id: 'int' } } }, { path: 'edit/deadline', component: __WEBPACK_IMPORTED_MODULE_16__components_proposition_Deadline__["a" /* default */], meta: { save: 'deadline', validate: { id: 'int' } } }, { path: 'edit/calculation', component: __WEBPACK_IMPORTED_MODULE_17__components_proposition_Calculation__["a" /* default */], meta: { save: 'calculation', validate: { id: 'int' } } }, { path: 'preparation/translation', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'translation', validate: { id: 'int' } } }, { path: 'preparation/technical_preparation', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'technical_preparation', validate: { id: 'int' } } }, { path: 'preparation/proofreading', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'proofreading', validate: { id: 'int' } } }, { path: 'preparation/additional_materials', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'additional_materials', validate: { id: 'int' } } }, { path: 'preparation/reviews', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'reviews', validate: { id: 'int' } } }, { path: 'preparation/lecture', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'lecture', validate: { id: 'int' } } }, { path: 'preparation/technical_correction', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'technical_correction', validate: { id: 'int' } } }, { path: 'preparation/final_review', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'final_review', validate: { id: 'int' } } }, { path: 'expenses/authors_expense', component: __WEBPACK_IMPORTED_MODULE_6__components_proposition_expenses_AuthorsExpense__["a" /* default */], meta: { validate: { id: 'int' } } }, { path: 'expenses/production_expense', component: __WEBPACK_IMPORTED_MODULE_8__components_proposition_expenses_ProductionExpense__["a" /* default */], meta: { save: 'production_expense', validate: { id: 'int' } } }, { path: 'expenses/marketing_expense', component: __WEBPACK_IMPORTED_MODULE_11__components_proposition_expenses_MarketingExpense__["a" /* default */], meta: { save: 'marketing_expense', validate: { id: 'int' } } }, { path: 'expenses/distribution_expense', component: __WEBPACK_IMPORTED_MODULE_13__components_proposition_expenses_DistributionExpense__["a" /* default */], meta: { validate: { id: 'int' } } }, { path: 'expenses/layout_expense', component: __WEBPACK_IMPORTED_MODULE_15__components_proposition_expenses_LayoutExpense__["a" /* default */], meta: { validate: { id: 'int' } } }, { path: 'expenses/compare', component: __WEBPACK_IMPORTED_MODULE_19__components_proposition_expenses_Compare__["a" /* default */], meta: { validate: { id: 'int' } } }, { path: 'design/cover_design', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'cover_design', validate: { id: 'int' } } }, { path: 'design/layout_design', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'layout_design', validate: { id: 'int' } } }, { path: 'layout/first_block_layout', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'first_block_layout', validate: { id: 'int' } } }, { path: 'layout/cover', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'cover', validate: { id: 'int' } } }, { path: 'layout/layout', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'layout', validate: { id: 'int' } } }, { path: 'layout/first_revision', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'first_revision', validate: { id: 'int' } } }, { path: 'layout/correction', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'correction', validate: { id: 'int' } } }, { path: 'layout/correction_input', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'correction_input', validate: { id: 'int' } } }, { path: 'layout/revisions', component: __WEBPACK_IMPORTED_MODULE_21__components_proposition_Revisions__["a" /* default */], meta: { validate: { id: 'int' } } }, { path: 'final_price/price_definition', component: __WEBPACK_IMPORTED_MODULE_22__components_proposition_PriceDefinition__["a" /* default */], meta: { validate: { id: 'int' } } }, { path: 'prepress/print_proof', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'print_proof', validate: { id: 'int' } } }, { path: 'prepress/print_proof_correction', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'print_proof_correction', validate: { id: 'int' } } }, { path: 'prepress/print', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'print', validate: { id: 'int' } } }, { path: 'prepress/warehouse', component: __WEBPACK_IMPORTED_MODULE_23__components_proposition_Warehouse__["a" /* default */], meta: { validate: { id: 'int' } } }, { path: 'additionals/multimedia', component: __WEBPACK_IMPORTED_MODULE_25__components_proposition_Multimedia__["a" /* default */], meta: { validate: { id: 'int' } } }, { path: 'additionals/marketing', component: __WEBPACK_IMPORTED_MODULE_24__components_proposition_Marketing__["a" /* default */], meta: { validate: { id: 'int' } } }]
+}, { path: '/tasks', component: __WEBPACK_IMPORTED_MODULE_26__components_tasks_Tasks__["a" /* default */] }, { path: '/task/edit/:id(\\d+)?', component: __WEBPACK_IMPORTED_MODULE_27__components_tasks_TaskEdit__["a" /* default */] }, { path: '/task/show/:id(\\d+)', component: __WEBPACK_IMPORTED_MODULE_28__components_tasks_TaskShow__["a" /* default */] }];
 /* harmony export (immutable) */ __webpack_exports__["a"] = routes;
 
 
@@ -52876,26 +52846,24 @@ const routes = [{ path: '/proposition/start', component: __WEBPACK_IMPORTED_MODU
     },
     actions: {
         getData({ commit, state }, payload) {
-            if (!state.id || state.id != payload.id || payload.force) {
-                //retrieve data only we don't have it or we need to refresh it
-                let path = '/api/proposition/' + payload.id + '/distribution_expense/';
-                if (payload.type) {
-                    path += payload.type;
-                }
-                __WEBPACK_IMPORTED_MODULE_0_axios_index___default.a.get(path).then(res => {
-                    commit('initData', res.data);
-                });
+            //retrieve data only we don't have it or we need to refresh it
+            let path = '/api/proposition/' + payload.id + '/distribution_expense/';
+            if (payload.type) {
+                path += payload.type;
             }
+            __WEBPACK_IMPORTED_MODULE_0_axios_index___default.a.get(path).then(res => {
+                commit('initData', res.data);
+            });
         },
-        saveData({ state }, id) {
+        saveData({ state, commit }, id) {
             return new Promise((resolve, reject) => {
                 if (id) {
                     let path = '/api/proposition/' + id + '/distribution_expense/';
                     if (state.type === 'expense') {
                         path += 'expense';
                     }
-                    __WEBPACK_IMPORTED_MODULE_0_axios_index___default.a.post(path, state).then(() => {
-                        resolve();
+                    __WEBPACK_IMPORTED_MODULE_0_axios_index___default.a.post(path, state).then(res => {
+                        commit('initData', res.data);resolve();
                     }).catch(() => {
                         reject();
                     });
@@ -52943,24 +52911,27 @@ const routes = [{ path: '/proposition/start', component: __WEBPACK_IMPORTED_MODU
     actions: {
         getData({ commit, state }, payload) {
             return new Promise((resolve, reject) => {
-                if (!state.proposition_id || state.proposition_id != payload.id || payload.force) {
-                    //retrieve data only we don't have it or we need to refresh it
-                    __WEBPACK_IMPORTED_MODULE_0_axios_index___default.a.get('/api/proposition/' + payload.id + '/layout_expense').then(res => {
-                        commit('initData', res.data);
-                        resolve();
-                    }).catch(() => {
-                        reject();
-                    });
-                } else {
-                    resolve();
+                let path = '/api/proposition/' + payload.id + '/layout_expense/';
+                if (payload.type) {
+                    path += payload.type;
                 }
+                __WEBPACK_IMPORTED_MODULE_0_axios_index___default.a.get(path).then(res => {
+                    commit('initData', res.data);
+                    resolve();
+                }).catch(() => {
+                    reject();
+                });
             });
         },
-        saveData({ state }, id) {
+        saveData({ state, commit }, id) {
             return new Promise((resolve, reject) => {
                 if (id) {
-                    __WEBPACK_IMPORTED_MODULE_0_axios_index___default.a.post('/api/proposition/' + id + '/layout_expense', state).then(() => {
-                        resolve();
+                    let path = '/api/proposition/' + payload.id + '/layout_expense/';
+                    if (payload.type) {
+                        path += payload.type;
+                    }
+                    __WEBPACK_IMPORTED_MODULE_0_axios_index___default.a.post(path, state).then(res => {
+                        commit('initData', res.data);resolve();
                     }).catch(() => {
                         reject();
                     });
@@ -53102,6 +53073,9 @@ const routes = [{ path: '/proposition/start', component: __WEBPACK_IMPORTED_MODU
         initData(state, payload) {
             for (let i in Object.keys(state)) {
                 let key = Object.keys(state)[i];
+                if (key === 'parent' && !payload.parent) {
+                    continue;
+                }
                 state[key] = payload[key];
             }
         },
@@ -59625,7 +59599,7 @@ if (false) {
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "content"
-  }, [_c('div', {
+  }, [(_vm.offers.count()) ? [_c('div', {
     staticClass: "row tabs-wrapper"
   }, [_c('ul', {
     staticClass: "col nav classic-tabs tabs-cyan",
@@ -60322,7 +60296,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         }
       }
     }, [_vm._v(".docx")])])])
-  })), _vm._v(" "), _c('footer-buttons')], 1)
+  })), _vm._v(" "), _c('footer-buttons')] : [_c('h1', [_vm._v(_vm._s(_vm.lang('No print offers created')))])]], 2)
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -61069,35 +61043,37 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     staticClass: "thead-inverse"
   }, [_c('tr', [_c('th', [_vm._v("#")]), _vm._v(" "), _c('th', [_vm._v(_vm._s(_vm.lang('Item')))]), _vm._v(" "), _c('th', [_vm._v(_vm._s(_vm.lang('Budget')))]), _vm._v(" "), _c('th', [_vm._v(_vm._s(_vm.lang('Expense Total')))]), _vm._v(" "), _c('th', [_vm._v(_vm._s(_vm.lang('Difference')))]), _vm._v(" "), _c('th', [_vm._v(_vm._s(_vm.lang('Cost Approval')))])])]), _vm._v(" "), _c('tbody', {
     staticClass: "white"
-  }, _vm._l((_vm.authors), function(author) {
+  }, _vm._l((_vm.authors), function(author, i) {
     return _c('tr', [_c('th', {
       attrs: {
         "scope": "row"
       }
     }, [_vm._v("1")]), _vm._v(" "), _c('td', {
       attrs: {
-        "data-title": "@lang('Title')"
+        "data-title": _vm.lang('Title')
       }
     }, [_vm._v(_vm._s(author.name))]), _vm._v(" "), _c('td', {
       attrs: {
-        "data-title": "@lang('Budget')"
+        "data-title": _vm.lang('Budget')
       }
     }, [_vm._v(_vm._s(_vm._f("flexCurrency")(author.expenses[0].totals, ' kn', 2)))]), _vm._v(" "), _c('td', {
       attrs: {
-        "data-title": "@lang('Expense Total')"
+        "data-title": _vm.lang('Expense Total')
       }
     }, [_vm._v(_vm._s(_vm._f("flexCurrency")(author.expenses[1].totals, ' kn', 2)))]), _vm._v(" "), _c('td', {
       attrs: {
-        "data-title": "@lang('Difference')"
+        "data-title": _vm.lang('Difference')
       }
     }, [_vm._v(_vm._s(_vm._f("flexCurrency")(Math.abs(_vm.diff = author.expenses[0].totals - author.expenses[1].totals), ' kn', 2)))]), _vm._v(" "), _c('td', {
       attrs: {
-        "data-title": "@lang('Send for Approval')"
+        "data-title": _vm.lang('Send for Approval')
       }
     }, [(_vm.diff < 0) ? _c('div', {
       staticClass: "file-box-sty icon icon-cost-approval",
       on: {
-        "click": _vm.sendForApproval
+        "click": function($event) {
+          _vm.sendForApproval('author_expense.' + i)
+        }
       }
     }, [_vm._v(_vm._s(_vm.lang('Send for Approval')))]) : _vm._e()])])
   }))]), _vm._v(" "), _c('div', {
@@ -61114,24 +61090,26 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }
   }, [_vm._v("1")]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Title')"
+      "data-title": _vm.lang('Title')
     }
-  }, [_vm._v("Text")]), _vm._v(" "), _c('td', {
+  }, [_vm._v(_vm._s(_vm.lang('Text')))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Budget')"
+      "data-title": _vm.lang('Budget')
     }
   }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense.budget.totals.text_price, ' kn', 2)))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Expense Total')"
+      "data-title": _vm.lang('Expense Total')
     }
   }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense.expense.totals.text_price, ' kn', 2)))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Difference')"
+      "data-title": _vm.lang('Difference')
     }
   }, [_vm._v(_vm._s(_vm._f("flexCurrency")(Math.abs(_vm.diff = _vm.production_expense.budget.totals.text_price - _vm.production_expense.expense.totals.text_price), ' kn', 2)))]), _vm._v(" "), _c('td', [(_vm.diff < 0) ? _c('div', {
     staticClass: "file-box-sty icon icon-cost-approval",
     on: {
-      "click": _vm.sendForApproval
+      "click": function($event) {
+        _vm.sendForApproval('production_expense.text_price')
+      }
     }
   }, [_vm._v(_vm._s(_vm.lang('Send for Approval')))]) : _vm._e()])]), _vm._v(" "), _c('tr', [_c('th', {
     attrs: {
@@ -61139,28 +61117,30 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }
   }, [_vm._v("2")]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Title')"
+      "data-title": _vm.lang('Title')
     }
-  }, [_vm._v("Reviews")]), _vm._v(" "), _c('td', {
+  }, [_vm._v(_vm._s(_vm.lang('Reviews')))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Budget')"
+      "data-title": _vm.lang('Budget')
     }
   }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense.budget.totals.reviews, ' kn', 2)))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Expense Total')"
+      "data-title": _vm.lang('Expense Total')
     }
   }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense.expense.totals.reviews, ' kn', 2)))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Difference')"
+      "data-title": _vm.lang('Difference')
     }
   }, [_vm._v(_vm._s(_vm._f("flexCurrency")(Math.abs(_vm.diff = _vm.production_expense.budget.totals.reviews - _vm.production_expense.expense.totals.reviews), ' kn', 2)))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Send for Approval')"
+      "data-title": _vm.lang('Send for Approval')
     }
   }, [(_vm.diff < 0) ? _c('div', {
     staticClass: "file-box-sty icon icon-cost-approval",
     on: {
-      "click": _vm.sendForApproval
+      "click": function($event) {
+        _vm.sendForApproval('production_expense.reviews')
+      }
     }
   }, [_vm._v(_vm._s(_vm.lang('Send for Approval')))]) : _vm._e()])]), _vm._v(" "), _c('tr', [_c('th', {
     attrs: {
@@ -61168,28 +61148,30 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }
   }, [_vm._v("2")]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Title')"
+      "data-title": _vm.lang('Title')
     }
-  }, [_vm._v("Lecture")]), _vm._v(" "), _c('td', {
+  }, [_vm._v(_vm._s(_vm.lang('Lecture')))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Budget')"
+      "data-title": _vm.lang('Budget')
     }
   }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense.budget.totals.lecture, ' kn', 2)))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Expense Total')"
+      "data-title": _vm.lang('Expense Total')
     }
   }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense.expense.totals.lecture, ' kn', 2)))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Difference')"
+      "data-title": _vm.lang('Difference')
     }
   }, [_vm._v(_vm._s(_vm._f("flexCurrency")(Math.abs(_vm.diff = _vm.production_expense.budget.totals.lecture - _vm.production_expense.expense.totals.lecture), ' kn', 2)))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Send for Approval')"
+      "data-title": _vm.lang('Send for Approval')
     }
   }, [(_vm.diff < 0) ? _c('div', {
     staticClass: "file-box-sty icon icon-cost-approval",
     on: {
-      "click": _vm.sendForApproval
+      "click": function($event) {
+        _vm.sendForApproval('production_expense.lecture')
+      }
     }
   }, [_vm._v(_vm._s(_vm.lang('Send for Approval')))]) : _vm._e()])]), _vm._v(" "), _c('tr', [_c('th', {
     attrs: {
@@ -61197,28 +61179,30 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }
   }, [_vm._v("2")]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Title')"
+      "data-title": _vm.lang('Title')
     }
-  }, [_vm._v("Correction")]), _vm._v(" "), _c('td', {
+  }, [_vm._v(_vm._s(_vm.lang('Correction')))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Budget')"
+      "data-title": _vm.lang('Budget')
     }
   }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense.budget.totals.correction, ' kn', 2)))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Expense Total')"
+      "data-title": _vm.lang('Expense Total')
     }
   }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense.expense.totals.correction, ' kn', 2)))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Difference')"
+      "data-title": _vm.lang('Difference')
     }
   }, [_vm._v(_vm._s(_vm._f("flexCurrency")(Math.abs(_vm.diff = _vm.production_expense.budget.totals.correction - _vm.production_expense.expense.totals.correction), ' kn', 2)))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Send for Approval')"
+      "data-title": _vm.lang('Send for Approval')
     }
   }, [(_vm.diff < 0) ? _c('div', {
     staticClass: "file-box-sty icon icon-cost-approval",
     on: {
-      "click": _vm.sendForApproval
+      "click": function($event) {
+        _vm.sendForApproval('production_expense.correction')
+      }
     }
   }, [_vm._v(_vm._s(_vm.lang('Send for Approval')))]) : _vm._e()])]), _vm._v(" "), _c('tr', [_c('th', {
     attrs: {
@@ -61226,28 +61210,30 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }
   }, [_vm._v("2")]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Title')"
+      "data-title": _vm.lang('Title')
     }
-  }, [_vm._v("Proofreading")]), _vm._v(" "), _c('td', {
+  }, [_vm._v(_vm._s(_vm.lang('Proofreading')))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Budget')"
+      "data-title": _vm.lang('Budget')
     }
   }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense.budget.totals.proofreading, ' kn', 2)))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Expense Total')"
+      "data-title": _vm.lang('Expense Total')
     }
   }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense.expense.totals.proofreading, ' kn', 2)))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Difference')"
+      "data-title": _vm.lang('Difference')
     }
   }, [_vm._v(_vm._s(_vm._f("flexCurrency")(Math.abs(_vm.diff = _vm.production_expense.budget.totals.proofreading - _vm.production_expense.expense.totals.proofreading), ' kn', 2)))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Send for Approval')"
+      "data-title": _vm.lang('Send for Approval')
     }
   }, [(_vm.diff < 0) ? _c('div', {
     staticClass: "file-box-sty icon icon-cost-approval",
     on: {
-      "click": _vm.sendForApproval
+      "click": function($event) {
+        _vm.sendForApproval('production_expense.proofreading')
+      }
     }
   }, [_vm._v(_vm._s(_vm.lang('Send for Approval')))]) : _vm._e()])]), _vm._v(" "), _c('tr', [_c('th', {
     attrs: {
@@ -61255,28 +61241,30 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }
   }, [_vm._v("2")]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Title')"
+      "data-title": _vm.lang('Title')
     }
-  }, [_vm._v("Translation")]), _vm._v(" "), _c('td', {
+  }, [_vm._v(_vm._s(_vm.lang('Translation')))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Budget')"
+      "data-title": _vm.lang('Budget')
     }
   }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense.budget.totals.translation, ' kn', 2)))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Expense Total')"
+      "data-title": _vm.lang('Expense Total')
     }
   }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense.expense.totals.translation, ' kn', 2)))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Difference')"
+      "data-title": _vm.lang('Difference')
     }
   }, [_vm._v(_vm._s(_vm._f("flexCurrency")(Math.abs(_vm.diff = _vm.production_expense.budget.totals.translation - _vm.production_expense.expense.totals.translation), ' kn', 2)))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Send for Approval')"
+      "data-title": _vm.lang('Send for Approval')
     }
   }, [(_vm.diff < 0) ? _c('div', {
     staticClass: "file-box-sty icon icon-cost-approval",
     on: {
-      "click": _vm.sendForApproval
+      "click": function($event) {
+        _vm.sendForApproval('production_expense.translation')
+      }
     }
   }, [_vm._v(_vm._s(_vm.lang('Send for Approval')))]) : _vm._e()])]), _vm._v(" "), _c('tr', [_c('th', {
     attrs: {
@@ -61284,28 +61272,30 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }
   }, [_vm._v("2")]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Title')"
+      "data-title": _vm.lang('Title')
     }
-  }, [_vm._v("Index")]), _vm._v(" "), _c('td', {
+  }, [_vm._v(_vm._s(_vm.lang('Index')))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Budget')"
+      "data-title": _vm.lang('Budget')
     }
   }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense.budget.totals.index, ' kn', 2)))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Expense Total')"
+      "data-title": _vm.lang('Expense Total')
     }
   }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense.expense.totals.index, ' kn', 2)))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Difference')"
+      "data-title": _vm.lang('Difference')
     }
   }, [_vm._v(_vm._s(_vm._f("flexCurrency")(Math.abs(_vm.diff = _vm.production_expense.budget.totals.index - _vm.production_expense.expense.totals.index), ' kn', 2)))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Send for Approval')"
+      "data-title": _vm.lang('Send for Approval')
     }
   }, [(_vm.diff < 0) ? _c('div', {
     staticClass: "file-box-sty icon icon-cost-approval",
     on: {
-      "click": _vm.sendForApproval
+      "click": function($event) {
+        _vm.sendForApproval('production_expense.index')
+      }
     }
   }, [_vm._v(_vm._s(_vm.lang('Send for Approval')))]) : _vm._e()])]), _vm._v(" "), _c('tr', [_c('th', {
     attrs: {
@@ -61313,28 +61303,30 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }
   }, [_vm._v("2")]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Title')"
+      "data-title": _vm.lang('Title')
     }
-  }, [_vm._v("Epilogue")]), _vm._v(" "), _c('td', {
+  }, [_vm._v(_vm._s(_vm.lang('Epilogue')))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Budget')"
+      "data-title": _vm.lang('Budget')
     }
   }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense.budget.totals.epilogue, ' kn', 2)))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Expense Total')"
+      "data-title": _vm.lang('Expense Total')
     }
   }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense.expense.totals.epilogue, ' kn', 2)))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Difference')"
+      "data-title": _vm.lang('Difference')
     }
   }, [_vm._v(_vm._s(_vm._f("flexCurrency")(Math.abs(_vm.diff = _vm.production_expense.budget.totals.epilogue - _vm.production_expense.expense.totals.epilogue), ' kn', 2)))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Send for Approval')"
+      "data-title": _vm.lang('Send for Approval')
     }
   }, [(_vm.diff < 0) ? _c('div', {
     staticClass: "file-box-sty icon icon-cost-approval",
     on: {
-      "click": _vm.sendForApproval
+      "click": function($event) {
+        _vm.sendForApproval('production_expense.epilogue')
+      }
     }
   }, [_vm._v(_vm._s(_vm.lang('Send for Approval')))]) : _vm._e()])]), _vm._v(" "), _c('tr', [_c('th', {
     attrs: {
@@ -61342,28 +61334,30 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }
   }, [_vm._v("2")]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Title')"
+      "data-title": _vm.lang('Title')
     }
-  }, [_vm._v("Photos")]), _vm._v(" "), _c('td', {
+  }, [_vm._v(_vm._s(_vm.lang('Photos')))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Budget')"
+      "data-title": _vm.lang('Budget')
     }
   }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense.budget.totals.photos, ' kn', 2)))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Expense Total')"
+      "data-title": _vm.lang('Expense Total')
     }
   }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense.expense.totals.photos, ' kn', 2)))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Difference')"
+      "data-title": _vm.lang('Difference')
     }
   }, [_vm._v(_vm._s(_vm._f("flexCurrency")(Math.abs(_vm.diff = _vm.production_expense.budget.totals.photos - _vm.production_expense.expense.totals.photos), ' kn', 2)))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Send for Approval')"
+      "data-title": _vm.lang('Send for Approval')
     }
   }, [(_vm.diff < 0) ? _c('div', {
     staticClass: "file-box-sty icon icon-cost-approval",
     on: {
-      "click": _vm.sendForApproval
+      "click": function($event) {
+        _vm.sendForApproval('production_expense.photos')
+      }
     }
   }, [_vm._v(_vm._s(_vm.lang('Send for Approval')))]) : _vm._e()])]), _vm._v(" "), _c('tr', [_c('th', {
     attrs: {
@@ -61371,28 +61365,30 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }
   }, [_vm._v("2")]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Title')"
+      "data-title": _vm.lang('Title')
     }
-  }, [_vm._v("illustrations")]), _vm._v(" "), _c('td', {
+  }, [_vm._v(_vm._s(_vm.lang('Illustrations')))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Budget')"
+      "data-title": _vm.lang('Budget')
     }
   }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense.budget.totals.illustrations, ' kn', 2)))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Expense Total')"
+      "data-title": _vm.lang('Expense Total')
     }
   }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense.expense.totals.illustrations, ' kn', 2)))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Difference')"
+      "data-title": _vm.lang('Difference')
     }
   }, [_vm._v(_vm._s(_vm._f("flexCurrency")(Math.abs(_vm.diff = _vm.production_expense.budget.totals.illustrations - _vm.production_expense.expense.totals.illustrations), ' kn', 2)))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Send for Approval')"
+      "data-title": _vm.lang('Send for Approval')
     }
   }, [(_vm.diff < 0) ? _c('div', {
     staticClass: "file-box-sty icon icon-cost-approval",
     on: {
-      "click": _vm.sendForApproval
+      "click": function($event) {
+        _vm.sendForApproval('production_expense.illustrations')
+      }
     }
   }, [_vm._v(_vm._s(_vm.lang('Send for Approval')))]) : _vm._e()])]), _vm._v(" "), _c('tr', [_c('th', {
     attrs: {
@@ -61400,28 +61396,30 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }
   }, [_vm._v("2")]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Title')"
+      "data-title": _vm.lang('Title')
     }
-  }, [_vm._v("Tehnical drawings")]), _vm._v(" "), _c('td', {
+  }, [_vm._v(_vm._s(_vm.lang('Tehnical drawings')))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Budget')"
+      "data-title": _vm.lang('Budget')
     }
   }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense.budget.totals.technical_drawings, ' kn', 2)))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Expense Total')"
+      "data-title": _vm.lang('Expense Total')
     }
   }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense.expense.totals.technical_drawings, ' kn', 2)))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Difference')"
+      "data-title": _vm.lang('Difference')
     }
   }, [_vm._v(_vm._s(_vm._f("flexCurrency")(Math.abs(_vm.diff = _vm.production_expense.budget.totals.technical_drawings - _vm.production_expense.expense.totals.technical_drawings), ' kn', 2)))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Send for Approval')"
+      "data-title": _vm.lang('Send for Approval')
     }
   }, [(_vm.diff < 0) ? _c('div', {
     staticClass: "file-box-sty icon icon-cost-approval",
     on: {
-      "click": _vm.sendForApproval
+      "click": function($event) {
+        _vm.sendForApproval('production_expense.technical_drawings')
+      }
     }
   }, [_vm._v(_vm._s(_vm.lang('Send for Approval')))]) : _vm._e()])]), _vm._v(" "), _c('tr', [_c('th', {
     attrs: {
@@ -61429,28 +61427,30 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }
   }, [_vm._v("2")]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Title')"
+      "data-title": _vm.lang('Title')
     }
-  }, [_vm._v("Expert report")]), _vm._v(" "), _c('td', {
+  }, [_vm._v(_vm._s(_vm.lang('Expert report')))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Budget')"
+      "data-title": _vm.lang('Budget')
     }
   }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense.budget.totals.expert_report, ' kn', 2)))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Expense Total')"
+      "data-title": _vm.lang('Expense Total')
     }
   }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense.expense.totals.expert_report, ' kn', 2)))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Difference')"
+      "data-title": _vm.lang('Difference')
     }
   }, [_vm._v(_vm._s(_vm._f("flexCurrency")(Math.abs(_vm.diff = _vm.production_expense.budget.totals.expert_report - _vm.production_expense.expense.totals.expert_report), ' kn', 2)))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Send for Approval')"
+      "data-title": _vm.lang('Send for Approval')
     }
   }, [(_vm.diff < 0) ? _c('div', {
     staticClass: "file-box-sty icon icon-cost-approval",
     on: {
-      "click": _vm.sendForApproval
+      "click": function($event) {
+        _vm.sendForApproval('production_expense.expert_report')
+      }
     }
   }, [_vm._v(_vm._s(_vm.lang('Send for Approval')))]) : _vm._e()])]), _vm._v(" "), _c('tr', [_c('th', {
     attrs: {
@@ -61458,28 +61458,30 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }
   }, [_vm._v("2")]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Title')"
+      "data-title": _vm.lang('Title')
     }
-  }, [_vm._v("Copyright")]), _vm._v(" "), _c('td', {
+  }, [_vm._v(_vm._s(_vm.lang('Copyright')))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Budget')"
+      "data-title": _vm.lang('Budget')
     }
   }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense.budget.totals.copyright, ' kn', 2)))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Expense Total')"
+      "data-title": _vm.lang('Expense Total')
     }
   }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense.expense.totals.copyright, ' kn', 2)))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Difference')"
+      "data-title": _vm.lang('Difference')
     }
   }, [_vm._v(_vm._s(_vm._f("flexCurrency")(Math.abs(_vm.diff = _vm.production_expense.budget.totals.copyright - _vm.production_expense.expense.totals.copyright), ' kn', 2)))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Send for Approval')"
+      "data-title": _vm.lang('Send for Approval')
     }
   }, [(_vm.diff < 0) ? _c('div', {
     staticClass: "file-box-sty icon icon-cost-approval",
     on: {
-      "click": _vm.sendForApproval
+      "click": function($event) {
+        _vm.sendForApproval('production_expense.copyright')
+      }
     }
   }, [_vm._v(_vm._s(_vm.lang('Send for Approval')))]) : _vm._e()])]), _vm._v(" "), _c('tr', [_c('th', {
     attrs: {
@@ -61487,28 +61489,30 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }
   }, [_vm._v("2")]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Title')"
+      "data-title": _vm.lang('Title')
     }
-  }, [_vm._v("Copyright mediator")]), _vm._v(" "), _c('td', {
+  }, [_vm._v(_vm._s(_vm.lang('Copyright mediator')))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Budget')"
+      "data-title": _vm.lang('Budget')
     }
   }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense.budget.totals.copyright_mediator, ' kn', 2)))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Expense Total')"
+      "data-title": _vm.lang('Expense Total')
     }
   }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense.expense.totals.copyright_mediator, ' kn', 2)))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Difference')"
+      "data-title": _vm.lang('Difference')
     }
   }, [_vm._v(_vm._s(_vm._f("flexCurrency")(Math.abs(_vm.diff = _vm.production_expense.budget.totals.copyright_mediator - _vm.production_expense.expense.totals.copyright_mediator), ' kn', 2)))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Send for Approval')"
+      "data-title": _vm.lang('Send for Approval')
     }
   }, [(_vm.diff < 0) ? _c('div', {
     staticClass: "file-box-sty icon icon-cost-approval",
     on: {
-      "click": _vm.sendForApproval
+      "click": function($event) {
+        _vm.sendForApproval('production_expense.copyright_mediator')
+      }
     }
   }, [_vm._v(_vm._s(_vm.lang('Send for Approval')))]) : _vm._e()])]), _vm._v(" "), _c('tr', [_c('th', {
     attrs: {
@@ -61516,28 +61520,30 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }
   }, [_vm._v("2")]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Title')"
+      "data-title": _vm.lang('Title')
     }
-  }, [_vm._v("METHODICAL INSTRUMENTARIUM")]), _vm._v(" "), _c('td', {
+  }, [_vm._v(_vm._s(_vm.lang('Methodical Instrumentarium')))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Budget')"
+      "data-title": _vm.lang('Budget')
     }
   }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense.budget.totals.methodical_instrumentarium, ' kn', 2)))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Expense Total')"
+      "data-title": _vm.lang('Expense Total')
     }
   }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense.expense.totals.methodical_instrumentarium, ' kn', 2)))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Difference')"
+      "data-title": _vm.lang('Difference')
     }
   }, [_vm._v(_vm._s(_vm._f("flexCurrency")(Math.abs(_vm.diff = _vm.production_expense.budget.totals.methodical_instrumentarium - _vm.production_expense.expense.totals.methodical_instrumentarium), ' kn', 2)))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Send for Approval')"
+      "data-title": _vm.lang('Send for Approval')
     }
   }, [(_vm.diff < 0) ? _c('div', {
     staticClass: "file-box-sty icon icon-cost-approval",
     on: {
-      "click": _vm.sendForApproval
+      "click": function($event) {
+        _vm.sendForApproval('production_expense.methodical_instrumentarium')
+      }
     }
   }, [_vm._v(_vm._s(_vm.lang('Send for Approval')))]) : _vm._e()])]), _vm._v(" "), _c('tr', [_c('th', {
     attrs: {
@@ -61545,28 +61551,30 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }
   }, [_vm._v("2")]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Title')"
+      "data-title": _vm.lang('Title')
     }
-  }, [_vm._v("Selection")]), _vm._v(" "), _c('td', {
+  }, [_vm._v(_vm._s(_vm.lang('Selection')))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Budget')"
+      "data-title": _vm.lang('Budget')
     }
   }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense.budget.totals.selection, ' kn', 2)))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Expense Total')"
+      "data-title": _vm.lang('Expense Total')
     }
   }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense.expense.totals.selection, ' kn', 2)))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Difference')"
+      "data-title": _vm.lang('Difference')
     }
   }, [_vm._v(_vm._s(_vm._f("flexCurrency")(Math.abs(_vm.diff = _vm.production_expense.budget.totals.selection - _vm.production_expense.expense.totals.selection), ' kn', 2)))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Send for Approval')"
+      "data-title": _vm.lang('Send for Approval')
     }
   }, [(_vm.diff < 0) ? _c('div', {
     staticClass: "file-box-sty icon icon-cost-approval",
     on: {
-      "click": _vm.sendForApproval
+      "click": function($event) {
+        _vm.sendForApproval('production_expense.selection')
+      }
     }
   }, [_vm._v(_vm._s(_vm.lang('Send for Approval')))]) : _vm._e()])]), _vm._v(" "), _c('tr', [_c('th', {
     attrs: {
@@ -61574,28 +61582,30 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }
   }, [_vm._v("2")]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Title')"
+      "data-title": _vm.lang('Title')
     }
-  }, [_vm._v("Powerpoint presentation")]), _vm._v(" "), _c('td', {
+  }, [_vm._v(_vm._s(_vm.lang('Powerpoint presentation')))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Budget')"
+      "data-title": _vm.lang('Budget')
     }
   }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense.budget.totals.powerpoint_presentation, ' kn', 2)))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Expense Total')"
+      "data-title": _vm.lang('Expense Total')
     }
   }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense.expense.totals.powerpoint_presentation, ' kn', 2)))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Difference')"
+      "data-title": _vm.lang('Difference')
     }
   }, [_vm._v(_vm._s(_vm._f("flexCurrency")(Math.abs(_vm.diff = _vm.production_expense.budget.totals.powerpoint_presentation - _vm.production_expense.expense.totals.powerpoint_presentation), ' kn', 2)))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Send for Approval')"
+      "data-title": _vm.lang('Send for Approval')
     }
   }, [(_vm.diff < 0) ? _c('div', {
     staticClass: "file-box-sty icon icon-cost-approval",
     on: {
-      "click": _vm.sendForApproval
+      "click": function($event) {
+        _vm.sendForApproval('production_expense.powerpoint_presentation')
+      }
     }
   }, [_vm._v(_vm._s(_vm.lang('Send for Approval')))]) : _vm._e()])]), _vm._v(" "), _c('tr', [_c('th', {
     attrs: {
@@ -61603,28 +61613,30 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }
   }, [_vm._v("2")]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Title')"
+      "data-title": _vm.lang('Title')
     }
-  }, [_vm._v("Additional expenses")]), _vm._v(" "), _c('td', {
+  }, [_vm._v(_vm._s(_vm.lang('Additional expenses')))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Budget')"
+      "data-title": _vm.lang('Budget')
     }
   }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense.budget.totals.additional_expenses, ' kn', 2)))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Expense Total')"
+      "data-title": _vm.lang('Expense Total')
     }
   }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense.expense.totals.additional_expenses, ' kn', 2)))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Difference')"
+      "data-title": _vm.lang('Difference')
     }
   }, [_vm._v(_vm._s(_vm._f("flexCurrency")(Math.abs(_vm.diff = _vm.production_expense.budget.totals.additional_expenses - _vm.production_expense.expense.totals.additional_expense), ' kn', 2)))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Send for Approval')"
+      "data-title": _vm.lang('Send for Approval')
     }
   }, [(_vm.diff < 0) ? _c('div', {
     staticClass: "file-box-sty icon icon-cost-approval",
     on: {
-      "click": _vm.sendForApproval
+      "click": function($event) {
+        _vm.sendForApproval('production_expense.additional_expenses')
+      }
     }
   }, [_vm._v(_vm._s(_vm.lang('Send for Approval')))]) : _vm._e()])])])]), _vm._v(" "), _c('div', {
     staticClass: "page-name-xl mb-3 mt-3"
@@ -61640,28 +61652,30 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }
   }, [_vm._v("1")]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Title')"
+      "data-title": _vm.lang('Title')
     }
   }, [_vm._v(_vm._s(_vm.lang('Layout and Design budget')))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Budget')"
+      "data-title": _vm.lang('Budget')
     }
   }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense.budget.totals.layout, ' kn', 2)))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Expense Total')"
+      "data-title": _vm.lang('Expense Total')
     }
   }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.production_expense.expense.totals.layout, ' kn', 2)))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Difference')"
+      "data-title": _vm.lang('Difference')
     }
   }, [_vm._v(_vm._s(_vm._f("flexCurrency")(Math.abs(_vm.diff = _vm.production_expense.budget.totals.layout - _vm.production_expense.expense.totals.layout), ' kn', 2)))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Send for Approval')"
+      "data-title": _vm.lang('Send for Approval')
     }
   }, [(_vm.diff < 0) ? _c('div', {
     staticClass: "file-box-sty icon icon-cost-approval",
     on: {
-      "click": _vm.sendForApproval
+      "click": function($event) {
+        _vm.sendForApproval('layout_expense')
+      }
     }
   }, [_vm._v(_vm._s(_vm.lang('Send for Approval')))]) : _vm._e()])])])]), _vm._v(" "), _c('div', {
     staticClass: "page-name-xl mb-3 mt-3"
@@ -61677,28 +61691,30 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }
   }, [_vm._v("1")]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Title')"
+      "data-title": _vm.lang('Title')
     }
   }, [_vm._v("Marketing budget")]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Budget')"
+      "data-title": _vm.lang('Budget')
     }
   }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.marketing_expense.budget ? _vm.marketing_expense.budget.totals : 0, ' kn', 2)))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Expense Total')"
+      "data-title": _vm.lang('Expense Total')
     }
   }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.marketing_expense.expense ? _vm.marketing_expense.expense.totals : 0, ' kn', 2)))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Difference')"
+      "data-title": _vm.lang('Difference')
     }
   }, [_vm._v(_vm._s(_vm._f("flexCurrency")(Math.abs(_vm.diff = _vm.marketing_expense.budget.totals - _vm.marketing_expense.expense.totals), ' kn', 2)))]), _vm._v(" "), _c('td', {
     attrs: {
-      "data-title": "@lang('Send for Approval')"
+      "data-title": _vm.lang('Send for Approval')
     }
   }, [(_vm.diff < 0) ? _c('div', {
     staticClass: "file-box-sty icon icon-cost-approval",
     on: {
-      "click": _vm.sendForApproval
+      "click": function($event) {
+        _vm.sendForApproval('marketing_expense')
+      }
     }
   }, [_vm._v(_vm._s(_vm.lang('Send for Approval')))]) : _vm._e()])])])]), _vm._v(" "), _c('div', {
     staticClass: "btn-footer mt-4 mb-5 flex-column flex-md-row d-flex p-2"
@@ -61727,145 +61743,13 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }, [_vm._m(0), _vm._v(" "), _c('div', {
     staticClass: "d-flex"
   }, [_c('i', {
-    staticClass: "fa fa-user-circle-o fa-4x mb-1 animated rotateInDownLeft"
+    staticClass: "fa fa-user-money fa-4x mb-1 animated rotateInDownLeft"
   }), _vm._v(" "), _c('h1', {
     staticClass: "modal-title w-100 text-center"
-  }, [_vm._v(_vm._s(_vm.lang('Assign to...')))])]), _vm._v(" "), _c('h6', {
+  }, [_vm._v(_vm._s(_vm.lang('Cost Approve')))])]), _vm._v(" "), _c('h6', {
     staticClass: "w-100 text-center mb-2"
-  }, [_vm._v(_vm._s(_vm.lang('Assign department or directly employee')))])]), _vm._v(" "), _c('div', {
-    staticClass: "tabs-wrapper"
-  }, [_c('ul', {
-    staticClass: "nav classic-tabs tabs-cyan tab-full",
-    attrs: {
-      "role": "tablist"
-    }
-  }, [_c('li', {
-    staticClass: "nav-item"
-  }, [_c('a', {
-    staticClass: "nav-link waves-light active",
-    attrs: {
-      "data-toggle": "tab",
-      "href": "#panel51",
-      "role": "tab"
-    }
-  }, [_vm._v(_vm._s(_vm.lang('Department')))])]), _vm._v(" "), _c('li', {
-    staticClass: "nav-item"
-  }, [_c('a', {
-    staticClass: "nav-link waves-light",
-    attrs: {
-      "data-toggle": "tab",
-      "href": "#panel52",
-      "role": "tab"
-    }
-  }, [_vm._v(_vm._s(_vm.lang('Employee')))])])])]), _vm._v(" "), _c('div', {
-    staticClass: "tab-content"
-  }, [_c('div', {
-    staticClass: "modal-body tab-pane fade in show active",
-    attrs: {
-      "id": "panel51",
-      "role": "tabpanel"
-    }
-  }, [_c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    staticClass: "col-md-12"
-  }, [_c('div', {
-    staticClass: "md-form d-flex addon"
-  }, [_c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.department),
-      expression: "department"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "type": "text",
-      "name": "department",
-      "placeholder": "Pronađi odjel"
-    },
-    domProps: {
-      "value": (_vm.department)
-    },
-    on: {
-      "keyup": function($event) {
-        _vm.autocomplete($event, 'department')
-      },
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.department = $event.target.value
-      }
-    }
-  }), _vm._v(" "), (_vm.d_suggestions.length) ? _c('ul', {
-    staticClass: "mdb-autocomplete-wrap"
-  }, _vm._l((_vm.d_suggestions), function(item, index) {
-    return _c('li', {
-      on: {
-        "click": function($event) {
-          _vm.autocomplete_select(index, 'department')
-        }
-      }
-    }, [_vm._v(_vm._s(item.name))])
-  })) : _vm._e()]), _vm._v(" "), _vm._l((_vm.departments), function(department) {
-    return _c('div', {
-      staticClass: "chip mb-5"
-    }, [_vm._v("\n                                    " + _vm._s(department.name)), _c('i', {
-      staticClass: "close fa fa-times"
-    })])
-  }), _vm._v(" "), _c('div', {
-    staticClass: "md-form mt-2 mb-2"
-  }, [_c('textarea', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.description),
-      expression: "description"
-    }],
-    staticClass: "md-textarea",
-    attrs: {
-      "id": "description"
-    },
-    domProps: {
-      "value": (_vm.description)
-    },
-    on: {
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.description = $event.target.value
-      }
-    }
-  }), _vm._v(" "), _c('label', {
-    attrs: {
-      "for": "description"
-    }
-  }, [_vm._v(_vm._s(_vm.lang('Task Description')))])]), _vm._v(" "), _c('table', {
-    staticClass: "table"
-  }, [_c('thead', {
-    staticClass: "thead-inverse"
-  }, [_c('tr', [_c('th', [_vm._v(_vm._s(_vm.lang('Item')))]), _vm._v(" "), _c('th', [_vm._v(_vm._s(_vm.lang('Budget')))]), _vm._v(" "), _c('th', [_vm._v(_vm._s(_vm.lang('Expense Total')))]), _vm._v(" "), _c('th', [_vm._v(_vm._s(_vm.lang('Difference')))])])]), _vm._v(" "), _c('tbody', {
-    staticClass: "white"
-  }, [_c('tr', [_c('td', {
-    attrs: {
-      "data-title": "@lang('Title')"
-    }
-  }, [_vm._v("Marketing budget")]), _vm._v(" "), _c('td', {
-    attrs: {
-      "data-title": "@lang('Budget')"
-    }
-  }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.marketing_expense.budget ? _vm.marketing_expense.budget.totals : 0, ' kn', 2)))]), _vm._v(" "), _c('td', {
-    attrs: {
-      "data-title": "@lang('Expense Total')"
-    }
-  }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.marketing_expense.expense ? _vm.marketing_expense.expense.totals : 0, ' kn', 2)))]), _vm._v(" "), _c('td', {
-    attrs: {
-      "data-title": "@lang('Difference')"
-    }
-  }, [_vm._v(_vm._s(_vm._f("flexCurrency")(Math.abs(_vm.diff = _vm.marketing_expense.budget.totals - _vm.marketing_expense.expense.totals), ' kn', 2)))])])])])], 2)])]), _vm._v(" "), _c('div', {
-    staticClass: "modal-body tab-pane fade",
-    attrs: {
-      "id": "panel52",
-      "role": "tabpanel"
-    }
+  }, [_vm._v(_vm._s(_vm.lang('Assign employee')))])]), _vm._v(" "), _c('div', {
+    staticClass: "modal-body"
   }, [_c('div', {
     staticClass: "row"
   }, [_c('div', {
@@ -61883,7 +61767,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     attrs: {
       "type": "text",
       "name": "employee",
-      "placeholder": "Pronađi osobu"
+      "placeholder": _vm.lang('Find employee')
     },
     domProps: {
       "value": (_vm.employee)
@@ -61918,6 +61802,30 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       staticClass: "close fa fa-times"
     })])
   }), _vm._v(" "), _c('div', {
+    staticClass: "page-name-m"
+  }, [_vm._v(_vm._s(_vm.lang('Expense')))]), _vm._v(" "), _c('table', {
+    staticClass: "table"
+  }, [_c('thead', {
+    staticClass: "thead-inverse"
+  }, [_c('tr', [_c('th', [_vm._v(_vm._s(_vm.lang('Item')))]), _vm._v(" "), _c('th', [_vm._v(_vm._s(_vm.lang('Budget')))]), _vm._v(" "), _c('th', [_vm._v(_vm._s(_vm.lang('Expense Total')))]), _vm._v(" "), _c('th', [_vm._v(_vm._s(_vm.lang('Difference')))])])]), _vm._v(" "), _c('tbody', {
+    staticClass: "white"
+  }, [_c('tr', [_c('td', {
+    attrs: {
+      "data-title": _vm.lang('Title')
+    }
+  }, [_vm._v(_vm._s(_vm.lang(_vm.line_title)))]), _vm._v(" "), _c('td', {
+    attrs: {
+      "data-title": _vm.lang('Budget')
+    }
+  }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.line_budget, ' kn', 2)))]), _vm._v(" "), _c('td', {
+    attrs: {
+      "data-title": _vm.lang('Expense Total')
+    }
+  }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.line_expense, ' kn', 2)))]), _vm._v(" "), _c('td', {
+    attrs: {
+      "data-title": _vm.lang('Difference')
+    }
+  }, [_vm._v(_vm._s(_vm._f("flexCurrency")(Math.abs(_vm.line_budget - _vm.line_expense), ' kn', 2)))])])])]), _vm._v(" "), _c('div', {
     staticClass: "md-form mt-2 mb-2"
   }, [_c('textarea', {
     directives: [{
@@ -61943,183 +61851,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     attrs: {
       "for": "form76"
     }
-  }, [_vm._v(_vm._s(_vm.lang('Task Description')))])]), _vm._v(" "), _c('div', {
-    staticClass: "row mt-4"
-  }, [_c('div', {
-    staticClass: "col-md-5"
-  }, [_c('div', {
-    staticClass: "md-form"
-  }, [_c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.date),
-      expression: "date"
-    }],
-    staticClass: "form-control datepicker btn-white",
-    attrs: {
-      "placeholder": "Selected date",
-      "type": "text",
-      "id": "date-picker2"
-    },
-    domProps: {
-      "value": (_vm.date)
-    },
-    on: {
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.date = $event.target.value
-      }
-    }
-  }), _vm._v(" "), _c('label', {
-    attrs: {
-      "for": "date-picker2"
-    }
-  }, [_vm._v(_vm._s(_vm.lang('Select Date')))])])])]), _vm._v(" "), _c('div', {
-    staticClass: "page-name-m"
-  }, [_vm._v(_vm._s(_vm.lang('Priority')))]), _vm._v(" "), _c('div', {
-    staticClass: "form-inline mb-3"
-  }, [_c('fieldset', {
-    staticClass: "form-group"
-  }, [_c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.priority),
-      expression: "priority"
-    }],
-    attrs: {
-      "name": "priority1",
-      "type": "radio",
-      "id": "radio61",
-      "value": "high"
-    },
-    domProps: {
-      "checked": _vm._q(_vm.priority, "high")
-    },
-    on: {
-      "__c": function($event) {
-        _vm.priority = "high"
-      }
-    }
-  }), _vm._v(" "), _c('label', {
-    attrs: {
-      "for": "radio61"
-    }
-  }, [_vm._v(_vm._s(_vm.lang('High')))])]), _vm._v(" "), _c('fieldset', {
-    staticClass: "form-group"
-  }, [_c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.priority),
-      expression: "priority"
-    }],
-    attrs: {
-      "name": "priority1",
-      "type": "radio",
-      "id": "radio71",
-      "value": "medium"
-    },
-    domProps: {
-      "checked": _vm._q(_vm.priority, "medium")
-    },
-    on: {
-      "__c": function($event) {
-        _vm.priority = "medium"
-      }
-    }
-  }), _vm._v(" "), _c('label', {
-    attrs: {
-      "for": "radio71"
-    }
-  }, [_vm._v(_vm._s(_vm.lang('Medium')))])]), _vm._v(" "), _c('fieldset', {
-    staticClass: "form-group"
-  }, [_c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.priority),
-      expression: "priority"
-    }],
-    attrs: {
-      "name": "priority1",
-      "type": "radio",
-      "id": "radio81",
-      "value": "low"
-    },
-    domProps: {
-      "checked": _vm._q(_vm.priority, "low")
-    },
-    on: {
-      "__c": function($event) {
-        _vm.priority = "low"
-      }
-    }
-  }), _vm._v(" "), _c('label', {
-    attrs: {
-      "for": "radio81"
-    }
-  }, [_vm._v(_vm._s(_vm.lang('Low')))])])]), _vm._v(" "), _c('div', {
-    staticClass: "page-name-m"
-  }, [_vm._v(_vm._s(_vm.lang('Access Level')))]), _vm._v(" "), _c('div', {
-    staticClass: "form-inline mb-3"
-  }, [_c('fieldset', {
-    staticClass: "form-group"
-  }, [_c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.access),
-      expression: "access"
-    }],
-    attrs: {
-      "checked": "",
-      "name": "access1",
-      "type": "radio",
-      "id": "radio91",
-      "value": "allpage"
-    },
-    domProps: {
-      "checked": _vm._q(_vm.access, "allpage")
-    },
-    on: {
-      "__c": function($event) {
-        _vm.access = "allpage"
-      }
-    }
-  }), _vm._v(" "), _c('label', {
-    attrs: {
-      "for": "radio91"
-    }
-  }, [_vm._v(_vm._s(_vm.lang('All Proposition Pages')))])]), _vm._v(" "), _c('fieldset', {
-    staticClass: "form-group"
-  }, [_c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.access),
-      expression: "access"
-    }],
-    attrs: {
-      "name": "access1",
-      "type": "radio",
-      "id": "radio101",
-      "value": "onepage"
-    },
-    domProps: {
-      "checked": _vm._q(_vm.access, "onepage")
-    },
-    on: {
-      "__c": function($event) {
-        _vm.access = "onepage"
-      }
-    }
-  }), _vm._v(" "), _c('label', {
-    attrs: {
-      "for": "radio101"
-    }
-  }, [_vm._v(_vm._s(_vm.lang('Only This Page')))])])])], 2)])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.lang('Task Description')))])])], 2)])]), _vm._v(" "), _c('div', {
     staticClass: "modal-footer btn-footer"
   }, [_c('button', {
     staticClass: "btn btn-lg btn-cancel",
@@ -69874,7 +69606,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       attrs: {
         "type": "text",
         "id": "form1",
-        "placeholder": author.expenses[0].parent.amount
+        "placeholder": author.expenses[0].parent ? author.expenses[0].parent.amount : _vm.lang('Amount')
       },
       domProps: {
         "value": (author.expenses[0].amount)
@@ -69904,7 +69636,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       attrs: {
         "type": "text",
         "id": "form2",
-        "placeholder": author.expenses[0].parent.percentage
+        "placeholder": author.expenses[0].parent ? author.expenses[0].parent.percentage : _vm.lang('Percentage')
       },
       domProps: {
         "value": (author.expenses[0].percentage)
@@ -69934,7 +69666,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       attrs: {
         "type": "text",
         "id": "form3",
-        "placeholder": author.expenses[0].parent.accontation
+        "placeholder": author.expenses[0].parent ? author.expenses[0].parent.accontation : _vm.lang('Accontation')
       },
       domProps: {
         "value": (author.expenses[0].accontation)
@@ -69961,21 +69693,21 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         directives: [{
           name: "model",
           rawName: "v-model",
-          value: (a.expense ? a.expense : a.parent.expense),
-          expression: "a.expense?a.expense:a.parent.expense"
+          value: (a.expense),
+          expression: "a.expense"
         }],
         staticClass: "form-control",
         attrs: {
           "type": "text",
-          "placeholder": _vm.lang('Expense')
+          "placeholder": a.parent ? a.parent.expense : _vm.lang('Expense')
         },
         domProps: {
-          "value": (a.expense ? a.expense : a.parent.expense)
+          "value": (a.expense)
         },
         on: {
           "input": function($event) {
             if ($event.target.composing) { return; }
-            a.expense ? a.expense : a.parent.expense = $event.target.value
+            a.expense = $event.target.value
           }
         }
       }), _vm._v(" "), _c('label', [_vm._v(_vm._s(_vm.lang('Expense Name')))])])]), _vm._v(" "), _c('div', {
@@ -69992,7 +69724,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         staticClass: "form-control",
         attrs: {
           "type": "text",
-          "placeholder": a.parent.amount
+          "placeholder": a.parent ? a.parent.amount : _vm.lang('Amount')
         },
         domProps: {
           "value": (a.amount)
@@ -70062,7 +69794,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       staticClass: "form-control",
       attrs: {
         "type": "text",
-        "placeholder": _vm.lang('Expense')
+        "placeholder": a.parent ? a.parent.expense : _vm.lang('Expense')
       },
       domProps: {
         "value": (a.expense)
@@ -70087,7 +69819,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       staticClass: "form-control",
       attrs: {
         "type": "text",
-        "placeholder": a.amount
+        "placeholder": a.parent ? a.parent.amount : _vm.lang('Amount')
       },
       domProps: {
         "value": (a.amount)
@@ -74992,6 +74724,614 @@ function cloneRoute (to, from) {
 __webpack_require__(133);
 module.exports = __webpack_require__(134);
 
+
+/***/ }),
+/* 282 */,
+/* 283 */,
+/* 284 */,
+/* 285 */,
+/* 286 */,
+/* 287 */,
+/* 288 */,
+/* 289 */,
+/* 290 */,
+/* 291 */,
+/* 292 */,
+/* 293 */,
+/* 294 */,
+/* 295 */,
+/* 296 */,
+/* 297 */,
+/* 298 */,
+/* 299 */,
+/* 300 */,
+/* 301 */,
+/* 302 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__partials_FooterButtons_vue__ = __webpack_require__(3);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+    data: function () {
+        return {};
+    },
+    computed: {
+        distribution() {
+            return this.$deepModel('proposition.distribution_expense');
+        }
+    },
+    components: {
+        'footer-buttons': __WEBPACK_IMPORTED_MODULE_0__partials_FooterButtons_vue__["a" /* default */]
+    },
+    methods: {},
+    mounted: function () {
+        if (this.$route.params.id != 0) {
+            this.$store.dispatch('proposition/distribution_expense/getData', { id: this.$route.params.id, type: 'expense' });
+        }
+    }
+});
+
+/***/ }),
+/* 303 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__partials_FooterButtons_vue__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(5);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+    data: function () {
+        return {};
+    },
+    computed: _extends({
+        data() {
+            return this.$deepModel('proposition.layout_expense');
+        }
+    }, __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1_vuex__["c" /* mapGetters */])({
+        layout_total: 'proposition/layout_expense/layout_total',
+        design_total: 'proposition/layout_expense/design_total'
+    })),
+    components: {
+        'footer-buttons': __WEBPACK_IMPORTED_MODULE_0__partials_FooterButtons_vue__["a" /* default */]
+    },
+    methods: {},
+    mounted: function () {
+        if (this.$route.params.id != 0) {
+            this.$store.dispatch('proposition/layout_expense/getData', { id: this.$route.params.id, type: 'expense' }).then(() => {
+                $('.mdb-select').material_select('destroy');
+                $('.mdb-select').material_select();
+            });
+        }
+    }
+
+});
+
+/***/ }),
+/* 304 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_DistributionExpense_vue__ = __webpack_require__(302);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_20307623_hasScoped_false_node_modules_vue_loader_lib_selector_type_template_index_0_DistributionExpense_vue__ = __webpack_require__(306);
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+
+/* template */
+
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_DistributionExpense_vue__["a" /* default */],
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_20307623_hasScoped_false_node_modules_vue_loader_lib_selector_type_template_index_0_DistributionExpense_vue__["a" /* default */],
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "packages/Inspirium/SKTemplate/src/assets/js/components/proposition/expenses/DistributionExpense.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] DistributionExpense.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-20307623", Component.options)
+  } else {
+    hotAPI.reload("data-v-20307623", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+/* harmony default export */ __webpack_exports__["a"] = (Component.exports);
+
+
+/***/ }),
+/* 305 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_LayoutExpense_vue__ = __webpack_require__(303);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_58d252fd_hasScoped_false_node_modules_vue_loader_lib_selector_type_template_index_0_LayoutExpense_vue__ = __webpack_require__(307);
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+
+/* template */
+
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_LayoutExpense_vue__["a" /* default */],
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_58d252fd_hasScoped_false_node_modules_vue_loader_lib_selector_type_template_index_0_LayoutExpense_vue__["a" /* default */],
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "packages/Inspirium/SKTemplate/src/assets/js/components/proposition/expenses/LayoutExpense.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] LayoutExpense.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-58d252fd", Component.options)
+  } else {
+    hotAPI.reload("data-v-58d252fd", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+/* harmony default export */ __webpack_exports__["a"] = (Component.exports);
+
+
+/***/ }),
+/* 306 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "content"
+  }, [_c('div', {
+    staticClass: "page-name-xl mb-4 mt-3"
+  }, [_vm._v(_vm._s(_vm.lang('Distribution')))]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-md-12"
+  }, [_c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-md-5"
+  }, [_c('div', {
+    staticClass: "md-form input-group d-flex addon"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.distribution.margin),
+      expression: "distribution.margin"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "id": "form1",
+      "placeholder": _vm.distribution.parent.margin
+    },
+    domProps: {
+      "value": (_vm.distribution.margin)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.distribution.margin = $event.target.value
+      }
+    }
+  }), _vm._v(" "), _c('label', {
+    attrs: {
+      "for": "form1"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('Distribution Margin')))]), _vm._v(" "), _c('span', {
+    staticClass: "input-group-addon"
+  }, [_vm._v(_vm._s(_vm.lang('%')))])])])]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-md-12"
+  }, [_c('div', {
+    staticClass: "md-form mt-3"
+  }, [_c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.distribution.note),
+      expression: "distribution.note"
+    }],
+    staticClass: "md-textarea",
+    attrs: {
+      "id": "form76"
+    },
+    domProps: {
+      "value": (_vm.distribution.note)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.distribution.note = $event.target.value
+      }
+    }
+  }), _vm._v(" "), _c('label', {
+    attrs: {
+      "for": "form76"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('Note')))])])])])])]), _vm._v(" "), _c('footer-buttons')], 1)
+}
+var staticRenderFns = []
+render._withStripped = true
+var esExports = { render: render, staticRenderFns: staticRenderFns }
+/* harmony default export */ __webpack_exports__["a"] = (esExports);
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-20307623", esExports)
+  }
+}
+
+/***/ }),
+/* 307 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', [_c('div', {
+    staticClass: "profile-head row py-4 d-flex flex-column justify-content-center align-items-center"
+  }, [_c('h1', {
+    staticClass: "display-3 text-white text-center"
+  }, [_vm._v(_vm._s(_vm.lang('Layout and Design')))])]), _vm._v(" "), _c('div', {
+    staticClass: "content"
+  }, [_c('div', {
+    staticClass: "profile-head pb-2 row"
+  }, [_c('div', {
+    staticClass: "col-md-2"
+  }, [_c('h6', {
+    staticClass: "white-label"
+  }, [_vm._v(_vm._s(_vm.lang('Number of Pages')))]), _vm._v(" "), _c('h3', {
+    staticClass: "mb-1 text-white"
+  }, [_vm._v(_vm._s(_vm.data.number_of_pages))])]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-2"
+  }, [_c('h6', {
+    staticClass: "white-label"
+  }, [_vm._v(_vm._s(_vm.lang('Photos')))]), _vm._v(" "), _c('h3', {
+    staticClass: "mb-1 text-white"
+  }, [_vm._v(_vm._s(_vm.data.photos_amount))])]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-2"
+  }, [_c('h6', {
+    staticClass: "white-label"
+  }, [_vm._v(_vm._s(_vm.lang('Illustrations')))]), _vm._v(" "), _c('h3', {
+    staticClass: "mb-1 text-white"
+  }, [_vm._v(_vm._s(_vm.data.illustrations_amount))])]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-2"
+  }, [_c('h6', {
+    staticClass: "white-label"
+  }, [_vm._v(_vm._s(_vm.lang('Tehnical Drawings')))]), _vm._v(" "), _c('h3', {
+    staticClass: "mb-1 text-white"
+  }, [_vm._v(_vm._s(_vm.data.technical_drawings_amount))])]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-2"
+  }, [_c('h6', {
+    staticClass: "white-label"
+  }, [_vm._v(_vm._s(_vm.lang('Category')))]), _vm._v(" "), (_vm.data.group.parent) ? _c('h3', {
+    staticClass: "mb-1 text-white"
+  }, [_vm._v(_vm._s(_vm.data.group.parent.parent.name))]) : _vm._e()]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-2"
+  }, [_c('h6', {
+    staticClass: "white-label"
+  }, [_vm._v(_vm._s(_vm.lang('Group')))]), _vm._v(" "), _c('h3', {
+    staticClass: "mb-1 text-white"
+  }, [_vm._v(_vm._s(_vm.data.group.name))])])]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-md-6 mt-2"
+  }, [_c('h6', {
+    staticClass: "text-center no-border display-e"
+  }, [_vm._v(_vm._s(_vm.lang('Layout Expense')))]), _vm._v(" "), _c('h1', {
+    staticClass: "text-center display-2"
+  }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.layout_total, ' kn', 2)))]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-6 mx-auto mt-4"
+  }, [_c('div', {
+    staticClass: "pos-rel"
+  }, [_c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.data.layout_complexity),
+      expression: "data.layout_complexity"
+    }],
+    staticClass: "mdb-select",
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.data.layout_complexity = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }
+    }
+  }, [_c('option', {
+    attrs: {
+      "disabled": ""
+    }
+  }, [_vm._v(_vm._s(_vm.lang('Choose')))]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "1"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('1 - Very Easy')))]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "2"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('2 - Easy')))]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "3"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('3 - Medium')))]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "4"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('4 - Demanding')))]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "5"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('5 - Very Demanding')))])]), _vm._v(" "), _c('label', [_vm._v(_vm._s(_vm.lang('Layout Complexity')))])])]), _vm._v(" "), _c('div', {
+    staticClass: "md-form"
+  }, [_c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.data.layout_note),
+      expression: "data.layout_note"
+    }],
+    staticClass: "md-textarea",
+    domProps: {
+      "value": (_vm.data.layout_note)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.data.layout_note = $event.target.value
+      }
+    }
+  }), _vm._v(" "), _c('label', [_vm._v(_vm._s(_vm.lang('Note')))])])]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-6 mt-2"
+  }, [_c('h6', {
+    staticClass: "text-center no-border display-e"
+  }, [_vm._v(_vm._s(_vm.lang('Design Expense')))]), _vm._v(" "), _c('h1', {
+    staticClass: "text-center display-2"
+  }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.design_total, ' kn', 2)))]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-6 mx-auto mt-4"
+  }, [_c('div', {
+    staticClass: "pos-rel"
+  }, [_c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.data.design_complexity),
+      expression: "data.design_complexity"
+    }],
+    staticClass: "mdb-select",
+    attrs: {
+      "name": "department_id"
+    },
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.data.design_complexity = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }
+    }
+  }, [_c('option', {
+    attrs: {
+      "disabled": ""
+    }
+  }, [_vm._v(_vm._s(_vm.lang('Choose')))]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "1"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('1 - Very Easy')))]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "2"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('2 - Easy')))]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "3"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('3 - Medium')))]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "4"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('4 - Demanding')))]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "5"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('5 - Very Demanding')))])]), _vm._v(" "), _c('label', [_vm._v(_vm._s(_vm.lang('Design Complexity')))])])]), _vm._v(" "), _c('div', {
+    staticClass: "md-form"
+  }, [_c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.data.design_note),
+      expression: "data.design_note"
+    }],
+    staticClass: "md-textarea",
+    domProps: {
+      "value": (_vm.data.design_note)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.data.design_note = $event.target.value
+      }
+    }
+  }), _vm._v(" "), _c('label', [_vm._v(_vm._s(_vm.lang('Note')))])])])]), _vm._v(" "), _c('footer-buttons')], 1)])
+}
+var staticRenderFns = []
+render._withStripped = true
+var esExports = { render: render, staticRenderFns: staticRenderFns }
+/* harmony default export */ __webpack_exports__["a"] = (esExports);
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-58d252fd", esExports)
+  }
+}
 
 /***/ })
 /******/ ]);
