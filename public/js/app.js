@@ -65477,7 +65477,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       staticClass: "form-control",
       attrs: {
         "type": "text",
-        "placeholder": item.parent.expense
+        "placeholder": item.parent ? item.parent.expense : _vm.lang('Expense')
       },
       domProps: {
         "value": (item.expense)
@@ -65502,7 +65502,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       staticClass: "form-control",
       attrs: {
         "type": "text",
-        "placeholder": item.parent.amount
+        "placeholder": item.parent ? item.parent.amount : _vm.lang('Amount')
       },
       domProps: {
         "value": (item.amount)
