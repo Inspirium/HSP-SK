@@ -53264,12 +53264,46 @@ const routes = [{ path: '/proposition/start', component: __WEBPACK_IMPORTED_MODU
         powerpoint_presentation: '',
         methodical_instrumentarium: '',
         additional_expenses: [],
-        parent: {}
+        parent: {
+            text_price: '',
+            text_price_amount: '',
+            note: '',
+            accontation: '',
+            netto_price_percentage: '',
+            reviews: '',
+            lecture: '',
+            lecture_amount: '',
+            correction: '',
+            correction_amount: '',
+            proofreading: '',
+            proofreading_amount: '',
+            translation: '',
+            translation_amount: '',
+            index: '',
+            index_amount: '',
+            epilogue: '',
+            photos: '',
+            photos_amount: '',
+            illustrations: '',
+            illustrations_amount: '',
+            technical_drawings: '',
+            technical_drawings_amount: '',
+            expert_report: '',
+            copyright: '',
+            copyright_mediator: '',
+            selection: '',
+            powerpoint_presentation: '',
+            methodical_instrumentarium: '',
+            additional_expenses: []
+        }
     },
     mutations: {
         initData(state, payload) {
             for (let i in Object.keys(state)) {
                 let key = Object.keys(state)[i];
+                if (key === 'parent' && !payload.parent) {
+                    continue;
+                }
                 state[key] = payload[key];
             }
         },
