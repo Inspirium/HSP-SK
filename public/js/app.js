@@ -48584,6 +48584,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
@@ -62296,7 +62300,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     on: {
       "click": _vm.addFiles
     }
-  }, [_vm._v(_vm._s(_vm.lang('Add files')))]), _vm._v(" "), _c('input', {
+  }, [_vm._v(_vm._s(_vm.lang('Add Files')))]), _vm._v(" "), _c('input', {
     ref: "fileInput",
     staticStyle: {
       "display": "none"
@@ -62345,9 +62349,7 @@ var staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _
     staticClass: "d-flex"
   }, [_c('i', {
     staticClass: "fa fa-cloud-upload fa-4x animated rubberBand"
-  }), _vm._v(" "), _c('h1', {
-    staticClass: "modal-title w-100 text-center"
-  }, [_vm._v("Upload Files")])])
+  }), _vm._v(" "), _vm._v(" 'Upload Files' ) }}>")])
 }]
 render._withStripped = true
 var esExports = { render: render, staticRenderFns: staticRenderFns }
@@ -63473,7 +63475,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }
   }, [_vm._v(_vm._s(_vm.lang('Expense')))]), _vm._v(" "), _c('span', {
     staticClass: "input-group-addon"
-  }, [_vm._v(_vm._s(_vm.lang('Kn')))])])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.lang('Kn')))])])])]), _vm._v(" "), _vm._m(0), _vm._v(" "), _c('div', {
     staticClass: "row"
   }, [_c('div', {
     staticClass: "col-md-12"
@@ -63579,7 +63581,15 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }
   }, [_vm._v(_vm._s(_vm.lang('Add New Expense')))]), _vm._v(" "), _c('footer-buttons')], 2)
 }
-var staticRenderFns = []
+var staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "loading-motion"
+  }, [_c('div', {
+    staticClass: "spinner"
+  }), _vm._v(" "), _c('div', {
+    staticClass: "spinner-text"
+  }, [_vm._v("Učitavam...")])])
+}]
 render._withStripped = true
 var esExports = { render: render, staticRenderFns: staticRenderFns }
 /* harmony default export */ __webpack_exports__["a"] = (esExports);
@@ -63743,7 +63753,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     attrs: {
       "for": "text-price-amount"
     }
-  }, [_vm._v(_vm._s(_vm.lang('Amount')))])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.lang('Quantity')))])])]), _vm._v(" "), _c('div', {
     staticClass: "col-md-3"
   }, [_c('div', [_c('label', [_vm._v(_vm._s(_vm.lang('Total')))]), _vm._v(" "), _c('div', {
     staticClass: "total-sty color-nav-sub"
@@ -63896,7 +63906,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     attrs: {
       "for": "lecture-amount"
     }
-  }, [_vm._v(_vm._s(_vm.lang('Amount')))])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.lang('Quantity')))])])]), _vm._v(" "), _c('div', {
     staticClass: "col-md-3"
   }, [_c('div', {}, [_c('label', [_vm._v(_vm._s(_vm.lang('Total')))]), _vm._v(" "), _c('div', {
     staticClass: "total-sty color-nav-sub"
@@ -63962,7 +63972,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     attrs: {
       "for": "correction-amount"
     }
-  }, [_vm._v(_vm._s(_vm.lang('Amount')))])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.lang('Quantity')))])])]), _vm._v(" "), _c('div', {
     staticClass: "col-md-3"
   }, [_c('div', {}, [_c('label', [_vm._v(_vm._s(_vm.lang('Total')))]), _vm._v(" "), _c('div', {
     staticClass: "total-sty color-nav-sub"
@@ -64028,7 +64038,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     attrs: {
       "for": "proofreading-amount"
     }
-  }, [_vm._v(_vm._s(_vm.lang('Amount')))])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.lang('Quantity')))])])]), _vm._v(" "), _c('div', {
     staticClass: "col-md-3"
   }, [_c('div', {}, [_c('label', [_vm._v(_vm._s(_vm.lang('Total')))]), _vm._v(" "), _c('div', {
     staticClass: "total-sty color-nav-sub"
@@ -64094,7 +64104,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     attrs: {
       "for": "translation-amount"
     }
-  }, [_vm._v(_vm._s(_vm.lang('Amount')))])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.lang('Quantity')))])])]), _vm._v(" "), _c('div', {
     staticClass: "col-md-3"
   }, [_c('div', {}, [_c('label', [_vm._v(_vm._s(_vm.lang('Total')))]), _vm._v(" "), _c('div', {
     staticClass: "total-sty color-nav-sub"
@@ -64160,7 +64170,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     attrs: {
       "for": "index-amount"
     }
-  }, [_vm._v(_vm._s(_vm.lang('Amount')))])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.lang('Quantity')))])])]), _vm._v(" "), _c('div', {
     staticClass: "col-md-3"
   }, [_c('div', {}, [_c('label', [_vm._v(_vm._s(_vm.lang('Total')))]), _vm._v(" "), _c('div', {
     staticClass: "total-sty color-nav-sub"
@@ -64257,7 +64267,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     attrs: {
       "for": "photos-amount"
     }
-  }, [_vm._v(_vm._s(_vm.lang('Amount')))])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.lang('Quantity')))])])]), _vm._v(" "), _c('div', {
     staticClass: "col-md-3"
   }, [_c('div', {}, [_c('label', [_vm._v(_vm._s(_vm.lang('Total')))]), _vm._v(" "), _c('div', {
     staticClass: "total-sty color-nav-sub"
@@ -64323,7 +64333,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     attrs: {
       "for": "illustrations-amount"
     }
-  }, [_vm._v(_vm._s(_vm.lang('Amount')))])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.lang('Quantity')))])])]), _vm._v(" "), _c('div', {
     staticClass: "col-md-3"
   }, [_c('div', {}, [_c('label', [_vm._v(_vm._s(_vm.lang('Total')))]), _vm._v(" "), _c('div', {
     staticClass: "total-sty color-nav-sub"
@@ -64389,7 +64399,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     attrs: {
       "for": "technical-drawings-amount"
     }
-  }, [_vm._v(_vm._s(_vm.lang('Amount')))])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.lang('Quantity')))])])]), _vm._v(" "), _c('div', {
     staticClass: "col-md-3"
   }, [_c('div', {}, [_c('label', [_vm._v(_vm._s(_vm.lang('Total')))]), _vm._v(" "), _c('div', {
     staticClass: "total-sty color-nav-sub"
@@ -64620,7 +64630,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
           item.amount = $event.target.value
         }
       }
-    }), _vm._v(" "), _c('label', [_vm._v(_vm._s(_vm.lang('Ammount')))]), _vm._v(" "), _c('span', {
+    }), _vm._v(" "), _c('label', [_vm._v(_vm._s(_vm.lang('Amount')))]), _vm._v(" "), _c('span', {
       staticClass: "input-group-addon"
     }, [_vm._v(_vm._s(_vm.lang('Kn')))])])]), _vm._v(" "), _c('div', {
       staticClass: "col-md-4"
