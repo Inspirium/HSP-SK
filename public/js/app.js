@@ -59884,7 +59884,7 @@ if (false) {
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "content"
-  }, [(_vm.offers.length) ? [_c('div', {
+  }, [(Object.keys(_vm.offers).length) ? [_c('div', {
     staticClass: "row tabs-wrapper"
   }, [_c('ul', {
     staticClass: "col nav classic-tabs tabs-cyan",
