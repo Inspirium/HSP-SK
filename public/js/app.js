@@ -49068,6 +49068,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
 
 
 
@@ -53074,6 +53076,7 @@ const routes = [{ path: '/proposition/start', component: __WEBPACK_IMPORTED_MODU
 /* harmony default export */ __webpack_exports__["a"] = ({
     namespaced: true,
     state: {
+        type: '',
         proposition_id: 0,
         layout_complexity: '',
         layout_include: '',
@@ -53111,11 +53114,12 @@ const routes = [{ path: '/proposition/start', component: __WEBPACK_IMPORTED_MODU
             });
         },
         saveData({ state, commit }, id) {
+            console.log(id);
             return new Promise((resolve, reject) => {
                 if (id) {
                     let path = '/api/proposition/' + payload.id + '/layout_expense/';
-                    if (payload.type) {
-                        path += payload.type;
+                    if (state.type === 'expense') {
+                        path += 'expense';
                     }
                     __WEBPACK_IMPORTED_MODULE_0_axios_index___default.a.post(path, state).then(res => {
                         commit('initData', res.data);resolve();
@@ -59946,7 +59950,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       }],
       staticClass: "form-control",
       attrs: {
-        "type": "text",
+        "type": "number",
         "placeholder": _vm.lang('In Kn')
       },
       domProps: {
@@ -59958,17 +59962,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
           offer.print_offer = $event.target.value
         }
       }
-    }), _vm._v(" "), _c('label', [_vm._v(_vm._s(_vm.lang('Print offer')))]), _vm._v(" "), _c('span', {
-      staticClass: "d-flex"
-    }, [_c('button', {
-      staticClass: "btn btn-neutral btn-addon p-1 ml-1",
-      attrs: {
-        "type": "button"
-      },
-      on: {
-        "click": _vm.saveOffer
-      }
-    }, [_vm._v(_vm._s(_vm.lang('Save')))])])])])])]), _vm._v(" "), _c('div', {
+    }), _vm._v(" "), _c('label', [_vm._v(_vm._s(_vm.lang('Print offer')))])])])])]), _vm._v(" "), _c('div', {
       staticClass: "row"
     }, [_c('div', {
       staticClass: "col-md-6"
@@ -63461,7 +63455,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }],
     staticClass: "form-control",
     attrs: {
-      "type": "text",
+      "type": "number",
       "id": "form1"
     },
     domProps: {
@@ -63553,7 +63547,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       }],
       staticClass: "form-control",
       attrs: {
-        "type": "text",
+        "type": "number",
         "placeholder": _vm.lang('Amount')
       },
       domProps: {
@@ -63702,7 +63696,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }],
     staticClass: "form-control",
     attrs: {
-      "type": "text",
+      "type": "number",
       "id": "text-price"
     },
     domProps: {
@@ -63733,7 +63727,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }],
     staticClass: "form-control",
     attrs: {
-      "type": "text",
+      "type": "number",
       "id": "text-price-amount"
     },
     domProps: {
@@ -63764,7 +63758,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }],
     staticClass: "form-control",
     attrs: {
-      "type": "text",
+      "type": "number",
       "id": "accontation"
     },
     domProps: {
@@ -63793,7 +63787,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }],
     staticClass: "form-control",
     attrs: {
-      "type": "text",
+      "type": "number",
       "id": "netto-price-percentage"
     },
     domProps: {
@@ -63822,7 +63816,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }],
     staticClass: "form-control",
     attrs: {
-      "type": "text",
+      "type": "number",
       "id": "reviews"
     },
     domProps: {
@@ -63855,7 +63849,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }],
     staticClass: "form-control",
     attrs: {
-      "type": "text",
+      "type": "number",
       "id": "lecture"
     },
     domProps: {
@@ -63886,7 +63880,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }],
     staticClass: "form-control",
     attrs: {
-      "type": "text",
+      "type": "number",
       "id": "lecture-amount"
     },
     domProps: {
@@ -63921,7 +63915,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }],
     staticClass: "form-control",
     attrs: {
-      "type": "text",
+      "type": "number",
       "id": "correction"
     },
     domProps: {
@@ -63952,7 +63946,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }],
     staticClass: "form-control",
     attrs: {
-      "type": "text",
+      "type": "number",
       "id": "correction-amount"
     },
     domProps: {
@@ -63987,7 +63981,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }],
     staticClass: "form-control",
     attrs: {
-      "type": "text",
+      "type": "number",
       "id": "proofreading"
     },
     domProps: {
@@ -64018,7 +64012,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }],
     staticClass: "form-control",
     attrs: {
-      "type": "text",
+      "type": "number",
       "id": "proofreading-amount"
     },
     domProps: {
@@ -64053,7 +64047,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }],
     staticClass: "form-control",
     attrs: {
-      "type": "text",
+      "type": "number",
       "id": "translation"
     },
     domProps: {
@@ -64084,7 +64078,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }],
     staticClass: "form-control",
     attrs: {
-      "type": "text",
+      "type": "number",
       "id": "translation-amount"
     },
     domProps: {
@@ -64119,7 +64113,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }],
     staticClass: "form-control",
     attrs: {
-      "type": "text",
+      "type": "number",
       "id": "index"
     },
     domProps: {
@@ -64150,7 +64144,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }],
     staticClass: "form-control",
     attrs: {
-      "type": "text",
+      "type": "number",
       "id": "index-amount"
     },
     domProps: {
@@ -64181,7 +64175,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }],
     staticClass: "form-control",
     attrs: {
-      "type": "text",
+      "type": "number",
       "id": "epilogue"
     },
     domProps: {
@@ -64216,7 +64210,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }],
     staticClass: "form-control",
     attrs: {
-      "type": "text",
+      "type": "number",
       "id": "photos"
     },
     domProps: {
@@ -64247,7 +64241,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }],
     staticClass: "form-control",
     attrs: {
-      "type": "text",
+      "type": "number",
       "id": "photos-amount"
     },
     domProps: {
@@ -64282,7 +64276,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }],
     staticClass: "form-control",
     attrs: {
-      "type": "text",
+      "type": "number",
       "id": "illustrations"
     },
     domProps: {
@@ -64313,7 +64307,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }],
     staticClass: "form-control",
     attrs: {
-      "type": "text",
+      "type": "number",
       "id": "illustrations-amount"
     },
     domProps: {
@@ -64348,7 +64342,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }],
     staticClass: "form-control",
     attrs: {
-      "type": "text",
+      "type": "number",
       "id": "technical-drawings"
     },
     domProps: {
@@ -64379,7 +64373,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }],
     staticClass: "form-control",
     attrs: {
-      "type": "text",
+      "type": "number",
       "id": "technical-drawings-amount"
     },
     domProps: {
@@ -64410,7 +64404,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }],
     staticClass: "form-control",
     attrs: {
-      "type": "text",
+      "type": "number",
       "id": "expert-report"
     },
     domProps: {
@@ -64439,7 +64433,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }],
     staticClass: "form-control",
     attrs: {
-      "type": "text",
+      "type": "number",
       "id": "copyright"
     },
     domProps: {
@@ -64468,7 +64462,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }],
     staticClass: "form-control",
     attrs: {
-      "type": "text",
+      "type": "number",
       "id": "copyright-mediator"
     },
     domProps: {
@@ -64497,7 +64491,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }],
     staticClass: "form-control",
     attrs: {
-      "type": "text",
+      "type": "number",
       "id": "methodical-instrumentarium"
     },
     domProps: {
@@ -64526,7 +64520,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }],
     staticClass: "form-control",
     attrs: {
-      "type": "text",
+      "type": "number",
       "id": "selection"
     },
     domProps: {
@@ -64555,7 +64549,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }],
     staticClass: "form-control",
     attrs: {
-      "type": "text",
+      "type": "number",
       "id": "powerpoint-presentation"
     },
     domProps: {
@@ -64591,7 +64585,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       }],
       staticClass: "form-control",
       attrs: {
-        "type": "text"
+        "type": "number"
       },
       domProps: {
         "value": (item.expense)
@@ -64615,7 +64609,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       }],
       staticClass: "form-control",
       attrs: {
-        "type": "text"
+        "type": "number"
       },
       domProps: {
         "value": (item.amount)
@@ -65565,7 +65559,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       }],
       staticClass: "form-control",
       attrs: {
-        "type": "text",
+        "type": "number",
         "id": "form1",
         "placeholder": _vm.lang('Amount')
       },
@@ -65684,7 +65678,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         }],
         staticClass: "form-control",
         attrs: {
-          "type": "text",
+          "type": "number",
           "placeholder": _vm.lang('Amount')
         },
         domProps: {
@@ -65779,7 +65773,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       }],
       staticClass: "form-control",
       attrs: {
-        "type": "text",
+        "type": "number",
         "placeholder": _vm.lang('Amount')
       },
       domProps: {
