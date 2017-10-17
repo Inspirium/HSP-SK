@@ -48595,7 +48595,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             return this.$deepModel('proposition.marketing_expense');
         },
         total: function () {
-            return Number(this.expenses.expense) + _.sumBy(this.expenses.additional_expense, function (o) {
+            return Number(this.expenses.expense) + _.sumBy(this.expenses.additional_expenses, function (o) {
                 return Number(o.amount);
             });
         }
