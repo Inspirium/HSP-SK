@@ -50663,7 +50663,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             }
         },
         assignValues: function () {
-            axios.post('/api/proposition/' + this.$route.params.id + '/requestApproval', { employees: this.employees, description: this.description, expense: { expense: this.line_expense, budget: this.line_budget, what: this.expense } }).then(res => {}).catch(err => {});
+            axios.post('/api/proposition/' + this.$route.params.id + '/request_approval', { requestees: this.employees, description: this.description, expense: this.line_expense, budget: this.line_budget, name: this.line_title, designation: this.expense }).then(res => {}).catch(err => {});
         }
     },
     mounted() {
@@ -53118,10 +53118,9 @@ const routes = [{ path: '/proposition/start', component: __WEBPACK_IMPORTED_MODU
             });
         },
         saveData({ state, commit }, id) {
-            console.log(id);
             return new Promise((resolve, reject) => {
                 if (id) {
-                    let path = '/api/proposition/' + payload.id + '/layout_expense/';
+                    let path = '/api/proposition/' + id + '/layout_expense/';
                     if (state.type === 'expense') {
                         path += 'expense';
                     }
