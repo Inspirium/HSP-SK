@@ -34,5 +34,7 @@
     "vuex-router-sync": "^4.2.0",
     "vuex-validator": "^0.2.7"
   },
-  "dependencies": {}
+  "dependencies": {
+    "chartist": "^0.11.0"
+  }
 }

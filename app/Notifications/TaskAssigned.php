@@ -57,10 +57,29 @@ class TaskAssigned extends Notification
      */
     public function toArray($notifiable)
     {
-        return [
-	        'message' => 'Please add more data',
-	        'tasktype' => 'assignment',
-	        'link' => '/task/show/'.$this->task->id
-        ];
+    	switch($this->task->type) {
+		    case 1:
+			    return [
+				    'message' => 'Please add more data',
+				    'tasktype' => 'assignment',
+				    'link' => '/task/show/'.$this->task->id
+			    ];
+		    	break;
+		    case 2:
+			    return [
+				    'message' => 'Please add more data',
+				    'tasktype' => 'assignment',
+				    'link' => '/task/show/'.$this->task->id
+			    ];
+		    	break;
+		    case 3:
+			    return [
+				    'message' => 'Expense Approval Request',
+				    'tasktype' => 'approval_request',
+				    'link' => '/task/show/'.$this->task->id
+			    ];
+		    	break;
+	    }
+
     }
 }

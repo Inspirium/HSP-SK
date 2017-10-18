@@ -15,7 +15,7 @@ mix.js(['packages/Inspirium/SKTemplate/src/assets/js/app.js'], 'public/js/app.js
     .copy('node_modules/jquery/dist/jquery.js', 'public/js/jquery.js')
     .copy('node_modules/popper.js/dist/umd/popper.js', 'public/js/popper.js')
     .copy('node_modules/bootstrap/dist/js/bootstrap.js', 'public/js/bootstrap.js')
-    .copy('node_modules/mdb-pro/js/mdb.js', 'public/js/mdb.js')
+    .copy('node_modules/chartist/dist/chartist.js', 'public/js/chartist.js')
     .scripts([
         'node_modules/mdb-pro/js/modules (optional)/jquery.easing.js',
         'node_modules/mdb-pro/js/modules (optional)/velocity.min.js',
