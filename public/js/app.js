@@ -52122,6 +52122,24 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["a"] = ({
     data: function () {
@@ -70676,7 +70694,38 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     attrs: {
       "to": _vm.task.related_link
     }
-  }, [_vm._v(_vm._s(_vm.lang('Go To Project')))]) : _vm._e()], 1)]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.lang('Go To Project')))]) : _vm._e()], 1), _vm._v(" "), _c('table', {
+    staticClass: "table"
+  }, [_c('thead', {
+    staticClass: "thead-inverse"
+  }, [_c('tr', [_c('th', [_vm._v(_vm._s(_vm.lang('Item')))]), _vm._v(" "), _c('th', {
+    staticClass: "text-right"
+  }, [_vm._v(_vm._s(_vm.lang('Budget')))]), _vm._v(" "), _c('th', {
+    staticClass: "text-right"
+  }, [_vm._v(_vm._s(_vm.lang('Expense Total')))]), _vm._v(" "), _c('th', {
+    staticClass: "text-right"
+  }, [_vm._v(_vm._s(_vm.lang('Difference')))])])]), _vm._v(" "), _c('tbody', {
+    staticClass: "white"
+  }, [_c('tr', [_c('td', {
+    attrs: {
+      "data-title": _vm.lang('Title')
+    }
+  }, [_vm._v(_vm._s(_vm.lang(_vm.task.related.name)))]), _vm._v(" "), _c('td', {
+    staticClass: "text-right",
+    attrs: {
+      "data-title": _vm.lang('Budget')
+    }
+  }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.task.related.budget, ' kn', 2)))]), _vm._v(" "), _c('td', {
+    staticClass: "text-right",
+    attrs: {
+      "data-title": _vm.lang('Expense Total')
+    }
+  }, [_vm._v(_vm._s(_vm._f("flexCurrency")(_vm.task.related.expense, ' kn', 2)))]), _vm._v(" "), _c('td', {
+    staticClass: "text-right",
+    attrs: {
+      "data-title": _vm.lang('Difference')
+    }
+  }, [_vm._v(_vm._s(_vm._f("flexCurrency")(Math.abs(_vm.task.related.budget - _vm.task.related.expense), ' kn', 2)))])])])])]), _vm._v(" "), _c('div', {
     staticClass: "col-md-3"
   }, [_c('div', {
     staticClass: "page-name-l mt-2 mb-1"
@@ -70684,7 +70733,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     class: ['mb-1', _vm.task_types[_vm.task.type].className]
   }, [_vm._v(_vm._s(_vm.task_types[_vm.task.type].title))])])])]), _vm._v(" "), _c('div', {
     staticClass: "btn-footer mt-2 mb-2 flex-column flex-md-row d-flex p-2"
-  }, [(_vm.task.status === 'new') ? _c('button', {
+  }, [(_vm.task.related.status === 'pending') ? _c('button', {
     staticClass: "btn btn-lg btn-save",
     attrs: {
       "type": "submit"
@@ -70692,7 +70741,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     on: {
       "click": _vm.approveRequest
     }
-  }, [_vm._v(_vm._s(_vm.lang('Approve')))]) : _vm._e(), _vm._v(" "), _c('button', {
+  }, [_vm._v(_vm._s(_vm.lang('Approve')))]) : _vm._e(), _vm._v(" "), (_vm.task.related.status === 'pending') ? _c('button', {
     staticClass: "btn btn-lg btn-cancel",
     attrs: {
       "type": "submit"
@@ -70700,7 +70749,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     on: {
       "click": _vm.rejectRequest
     }
-  }, [_vm._v(_vm._s(_vm.lang('Reject')))])])])] : [_c('div', {
+  }, [_vm._v(_vm._s(_vm.lang('Reject')))]) : _vm._e()])])] : [_c('div', {
     staticClass: "profile-head py-4 d-flex flex-column justify-content-center align-items-center"
   }, [_c('h1', {
     staticClass: "display-3 text-white text-center"
