@@ -48293,6 +48293,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
 
 
 
@@ -50791,6 +50793,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
 
 
 
@@ -51783,6 +51787,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["a"] = ({
     data: function () {
@@ -52298,6 +52304,86 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
@@ -52321,24 +52407,29 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     className: 'tasktype-2'
                 }
             },
-            new_tasks: [],
-            old_tasks: [],
-            waiting_tasks: []
+            tasks: [],
+            sent_tasks: [],
+            completed_tasks: [],
+            rejected_tasks: []
         };
     },
     computed: {},
     methods: {
         endDrag: function (event) {
-            let data = _.map(this.old_tasks, o => {
+            /*let data = _.map(this.old_tasks, (o) => {
                 return o.id;
             });
-            axios.post('/api/tasks/updateOrder', { tasks: data }).then(res => {}).catch(err => {});
+            axios.post('/api/tasks/updateOrder', {tasks: data})
+                .then((res) => {})
+                .catch((err) => {});*/
         }
     },
     mounted: function () {
         axios.get('/api/tasks').then(res => {
-            this.new_tasks = res.data.new_tasks;
-            this.old_tasks = res.data.old_tasks;
+            this.tasks = res.data.tasks;
+            this.sent_tasks = res.data.sent_tasks;
+            this.completed_tasks = res.data.completed_tasks;
+            this.rejected_tasks = res.data.rejected_tasks;
         });
     }
 });
@@ -61432,14 +61523,14 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       }
     }, [_c('div', {
       staticClass: "file-box-sty icon icon-cost-denied"
-    }, [_vm._v(_vm._s(_vm.lang('Trošak odbijen')) + "\n                    ")])])] : (_vm.requests['author_expense.' + i] && _vm.requests['author_expense.' + i][0] && _vm.requests['author_expense.' + i][0].status === 'accepted') ? [_c('td', {
+    }, [_vm._v(_vm._s(_vm.lang('Cost Rejected')) + "\n                    ")])])] : (_vm.requests['author_expense.' + i] && _vm.requests['author_expense.' + i][0] && _vm.requests['author_expense.' + i][0].status === 'accepted') ? [_c('td', {
       staticClass: "text-right",
       attrs: {
         "data-title": _vm.lang('Cost Approved')
       }
     }, [_c('div', {
       staticClass: "file-box-sty icon icon-cost-approved"
-    }, [_vm._v(_vm._s(_vm.lang('Trošak odobren')) + "\n                    ")])])] : [_c('td', {
+    }, [_vm._v(_vm._s(_vm.lang('Cost Approved')) + "\n                    ")])])] : [_c('td', {
       staticClass: "text-right",
       attrs: {
         "data-title": _vm.lang('Send for Approval')
@@ -61506,14 +61597,14 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       }
     }, [_c('div', {
       staticClass: "file-box-sty icon icon-cost-denied"
-    }, [_vm._v(_vm._s(_vm.lang('Trošak odbijen')) + "\n                    ")])])] : (_vm.requests['production_expense.' + row['designation']] && _vm.requests['production_expense.' + row['designation']][0] && _vm.requests['production_expense.' + row['designation']][0].status === 'accepted') ? [_c('td', {
+    }, [_vm._v(_vm._s(_vm.lang('Cost Rejected')) + "\n                    ")])])] : (_vm.requests['production_expense.' + row['designation']] && _vm.requests['production_expense.' + row['designation']][0] && _vm.requests['production_expense.' + row['designation']][0].status === 'accepted') ? [_c('td', {
       staticClass: "text-right",
       attrs: {
         "data-title": _vm.lang('Cost Approved')
       }
     }, [_c('div', {
       staticClass: "file-box-sty icon icon-cost-approved"
-    }, [_vm._v(_vm._s(_vm.lang('Trošak odobren')) + "\n                    ")])])] : [_c('td', {
+    }, [_vm._v(_vm._s(_vm.lang('Cost Approved')) + "\n                    ")])])] : [_c('td', {
       staticClass: "text-right",
       attrs: {
         "data-title": _vm.lang('Send for Approval')
@@ -61579,14 +61670,14 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }
   }, [_c('div', {
     staticClass: "file-box-sty icon icon-cost-denied"
-  }, [_vm._v(_vm._s(_vm.lang('Trošak odbijen')) + "\n                    ")])])] : (_vm.requests['layout_expense'] && _vm.requests['layout_expense'][0] && _vm.requests['layout_expense'][0].status === 'accepted') ? [_c('td', {
+  }, [_vm._v(_vm._s(_vm.lang('Cost Rejected')) + "\n                    ")])])] : (_vm.requests['layout_expense'] && _vm.requests['layout_expense'][0] && _vm.requests['layout_expense'][0].status === 'accepted') ? [_c('td', {
     staticClass: "text-right",
     attrs: {
       "data-title": _vm.lang('Cost Approved')
     }
   }, [_c('div', {
     staticClass: "file-box-sty icon icon-cost-approved"
-  }, [_vm._v(_vm._s(_vm.lang('Trošak odobren')) + "\n                    ")])])] : [_c('td', {
+  }, [_vm._v(_vm._s(_vm.lang('Cost Approved')) + "\n                    ")])])] : [_c('td', {
     staticClass: "text-right",
     attrs: {
       "data-title": _vm.lang('Send for Approval')
@@ -61651,14 +61742,14 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }
   }, [_c('div', {
     staticClass: "file-box-sty icon icon-cost-denied"
-  }, [_vm._v(_vm._s(_vm.lang('Trošak odbijen')) + "\n                    ")])])] : (_vm.requests['marketing_expense'] && _vm.requests['marketing_expense'][0] && _vm.requests['marketing_expense'][0].status === 'accepted') ? [_c('td', {
+  }, [_vm._v(_vm._s(_vm.lang('Cost Rejected')) + "\n                    ")])])] : (_vm.requests['marketing_expense'] && _vm.requests['marketing_expense'][0] && _vm.requests['marketing_expense'][0].status === 'accepted') ? [_c('td', {
     staticClass: "text-right",
     attrs: {
       "data-title": _vm.lang('Cost Approved')
     }
   }, [_c('div', {
     staticClass: "file-box-sty icon icon-cost-approved"
-  }, [_vm._v(_vm._s(_vm.lang('Trošak odobren')) + "\n                    ")])])] : [_c('td', {
+  }, [_vm._v(_vm._s(_vm.lang('Cost Approved')) + "\n                    ")])])] : [_c('td', {
     staticClass: "text-right",
     attrs: {
       "data-title": _vm.lang('Send for Approval')
@@ -62445,10 +62536,12 @@ if (false) {
 "use strict";
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', [_c('div', {
-    staticClass: "profile-head pt-3 pb-2 d-flex flex-column justify-content-center align-items-center"
+    staticClass: "profile-head row pt-3 pb-2 d-flex flex-column justify-content-center align-items-center"
+  }, [_c('div', {
+    staticClass: "col-md-12"
   }, [_c('h1', {
     staticClass: "display-3 text-white text-center"
-  }, [_vm._v(_vm._s(_vm.lang('New Task')))])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.lang('New Task')))])])]), _vm._v(" "), _c('div', {
     staticClass: "content"
   }, [_c('div', {
     staticClass: "page-name-xl mb-4 mt-3"
@@ -62881,6 +62974,61 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   return _c('div', {
     staticClass: "content"
   }, [_c('div', {
+    staticClass: "row tabs-wrapper"
+  }, [_c('ul', {
+    staticClass: "col nav classic-tabs tabs-cyan tab-full",
+    attrs: {
+      "role": "tablist"
+    }
+  }, [_c('li', {
+    staticClass: "nav-item"
+  }, [_c('a', {
+    staticClass: "nav-link active",
+    attrs: {
+      "data-toggle": "tab",
+      "href": "#tasks",
+      "role": "tab"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('Tasks')))])]), _vm._v(" "), _c('li', {
+    staticClass: "nav-item"
+  }, [_c('a', {
+    staticClass: "nav-link",
+    attrs: {
+      "data-toggle": "tab",
+      "href": "#sent_tasks",
+      "role": "tab"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('Sent Tasks')))])]), _vm._v(" "), _c('li', {
+    staticClass: "nav-item"
+  }, [_c('a', {
+    staticClass: "nav-link",
+    attrs: {
+      "data-toggle": "tab",
+      "href": "#completed_tasks",
+      "role": "tab"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('Completed Tasks')))])]), _vm._v(" "), _c('li', {
+    staticClass: "nav-item"
+  }, [_c('a', {
+    staticClass: "nav-link",
+    attrs: {
+      "data-toggle": "tab",
+      "href": "#rejected_tasks",
+      "role": "tab"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('Rejected Tasks')))])])])]), _vm._v(" "), _c('div', {
+    staticClass: "tab-content"
+  }, [_c('div', {
+    staticClass: "tab-pane fade in show active",
+    attrs: {
+      "id": "tasks",
+      "role": "tabpanel"
+    }
+  }, [_c('div', {
+    staticClass: "page-name-xl mb-3 mt-2"
+  }, [_vm._v(_vm._s(_vm.lang('Tasks')) + "\n                "), _c('span', {
+    staticClass: "tag tag-neutral text-white"
+  }, [_vm._v(_vm._s(_vm.tasks.length))])]), _vm._v(" "), _c('div', {
     staticClass: "justify-content-center mt-1 mb-2 flex-column flex-md-row d-flex p-2"
   }, [_c('button', {
     staticClass: "btn btn-lg btn-blank btn-plus-icon",
@@ -62889,11 +63037,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         _vm.$router.push('/task/edit')
       }
     }
-  }, [_vm._v(_vm._s(_vm.lang('Create new')))])]), _vm._v(" "), (_vm.new_tasks.length) ? [_c('div', {
-    staticClass: "page-name-xl mb-3 mt-2"
-  }, [_vm._v(_vm._s(_vm.lang('New Task')) + "\n        "), _c('span', {
-    staticClass: "tag tag-neutral text-white"
-  }, [_vm._v(_vm._s(_vm.new_tasks.length))])]), _vm._v(" "), _c('table', {
+  }, [_vm._v(_vm._s(_vm.lang('Create new')))])]), _vm._v(" "), _c('table', {
     staticClass: "table"
   }, [_c('thead', {
     staticClass: "thead-inverse"
@@ -62931,13 +63075,13 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       "element": 'tbody'
     },
     model: {
-      value: (_vm.new_tasks),
+      value: (_vm.tasks),
       callback: function($$v) {
-        _vm.new_tasks = $$v
+        _vm.tasks = $$v
       },
-      expression: "new_tasks"
+      expression: "tasks"
     }
-  }, _vm._l((_vm.new_tasks), function(element, index) {
+  }, _vm._l((_vm.tasks), function(element, index) {
     return _c('tr', {
       key: element.id
     }, [_c('td', [_c('div', {
@@ -62989,11 +63133,26 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }, [_c('div', {
       staticClass: "file-box-sty icon icon-assign"
     }, [_vm._v(_vm._s(_vm.lang('Assign')))])]) : _vm._e()])
-  }))], 1)] : _vm._e(), _vm._v(" "), (_vm.old_tasks.length) ? [_c('div', {
-    staticClass: "page-name-xl mb-1 mt-2"
-  }, [_vm._v(_vm._s(_vm.lang('Task')) + "\n        "), _c('span', {
+  }))], 1)]), _vm._v(" "), _c('div', {
+    staticClass: "tab-pane fade in show",
+    attrs: {
+      "id": "sent_tasks",
+      "role": "tabpanel"
+    }
+  }, [_c('div', {
+    staticClass: "page-name-xl mb-3 mt-2"
+  }, [_vm._v(_vm._s(_vm.lang('Sent Tasks')) + "\n                "), _c('span', {
     staticClass: "tag tag-neutral text-white"
-  }, [_vm._v(_vm._s(_vm.old_tasks.length))])]), _vm._v(" "), _c('table', {
+  }, [_vm._v(_vm._s(_vm.sent_tasks.length))])]), _vm._v(" "), _c('div', {
+    staticClass: "justify-content-center mt-1 mb-2 flex-column flex-md-row d-flex p-2"
+  }, [_c('button', {
+    staticClass: "btn btn-lg btn-blank btn-plus-icon",
+    on: {
+      "click": function($event) {
+        _vm.$router.push('/task/edit')
+      }
+    }
+  }, [_vm._v(_vm._s(_vm.lang('Create new')))])]), _vm._v(" "), _c('table', {
     staticClass: "table"
   }, [_c('thead', {
     staticClass: "thead-inverse"
@@ -63021,30 +63180,23 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     attrs: {
       "data-title": "Deadline"
     }
-  }, [_vm._v(_vm._s(_vm.lang('Deadline')))]), _vm._v(" "), _c('th', {
-    attrs: {
-      "data-title": "TCT"
-    }
-  }, [_vm._v(_vm._s(_vm.lang('TCT')))]), _vm._v(" "), (_vm.authority) ? _c('th', {
+  }, [_vm._v(_vm._s(_vm.lang('Deadline')))]), _vm._v(" "), (_vm.authority) ? _c('th', {
+    staticClass: "text-right",
     attrs: {
       "data-title": "Assign to"
     }
   }, [_vm._v(_vm._s(_vm.lang('Assign to')))]) : _vm._e()])]), _vm._v(" "), _c('draggable', {
-    staticClass: "white",
     attrs: {
       "element": 'tbody'
     },
-    on: {
-      "end": _vm.endDrag
-    },
     model: {
-      value: (_vm.old_tasks),
+      value: (_vm.sent_tasks),
       callback: function($$v) {
-        _vm.old_tasks = $$v
+        _vm.sent_tasks = $$v
       },
-      expression: "old_tasks"
+      expression: "sent_tasks"
     }
-  }, _vm._l((_vm.old_tasks), function(element, index) {
+  }, _vm._l((_vm.sent_tasks), function(element, index) {
     return _c('tr', {
       key: element.id
     }, [_c('td', [_c('div', {
@@ -63052,14 +63204,25 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     })]), _vm._v(" "), _c('th', {
       staticClass: "display-e w-30"
     }, [_vm._v(_vm._s(index + 1))]), _vm._v(" "), _c('td', {
-      staticClass: "table-title"
+      staticClass: "table-title",
+      attrs: {
+        "data-title": "Task"
+      }
     }, [_c('a', {
       attrs: {
         "href": '/task/show/' + element.id
       }
-    }, [_vm._v(_vm._s(element.name))])]), _vm._v(" "), _c('td', [_c('div', {
+    }, [_vm._v(_vm._s(element.name))])]), _vm._v(" "), _c('td', {
+      attrs: {
+        "data-title": "Task Type"
+      }
+    }, [_c('div', {
       class: _vm.task_types[element.type].className
-    }, [_vm._v(_vm._s(_vm.task_types[element.type].title))])]), _vm._v(" "), _c('td', [_c('a', {
+    }, [_vm._v(_vm._s(_vm.task_types[element.type].title))])]), _vm._v(" "), _c('td', {
+      attrs: {
+        "data-title": "Assigner"
+      }
+    }, [_c('a', {
       staticClass: "text-uppercase file-box-sty",
       attrs: {
         "href": ""
@@ -63069,17 +63232,235 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       attrs: {
         "src": element.assigner.image
       }
-    }), _vm._v(_vm._s(element.assigner.name))])]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("moment")(element.created_at, 'DD.MM.')))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm._f("moment")(element.deadline, 'DD.MM.')))]), _vm._v(" "), _c('td', [_vm._v("4 h")]), _vm._v(" "), (_vm.authority) ? _c('td', {
-      staticClass: "text-right"
+    }), _vm._v(_vm._s(element.assigner.name))])]), _vm._v(" "), _c('td', {
+      attrs: {
+        "data-title": "Created"
+      }
+    }, [_vm._v(_vm._s(_vm._f("moment")(element.created_at, 'DD.MM.')))]), _vm._v(" "), _c('td', {
+      attrs: {
+        "data-title": "Deadline"
+      }
+    }, [_vm._v(_vm._s(_vm._f("moment")(element.deadline, 'DD.MM.')))]), _vm._v(" "), (_vm.authority) ? _c('td', {
+      staticClass: "text-right",
+      attrs: {
+        "data-title": "Assign to"
+      }
     }, [_c('div', {
       staticClass: "file-box-sty icon icon-assign"
     }, [_vm._v(_vm._s(_vm.lang('Assign')))])]) : _vm._e()])
-  }))], 1), _vm._v(" "), _c('button', {
-    staticClass: "btn btn-neutral d-block mx-auto btn-addon",
+  }))], 1)]), _vm._v(" "), _c('div', {
+    staticClass: "tab-pane fade in show",
     attrs: {
-      "type": "button"
+      "id": "completed_tasks",
+      "role": "tabpanel"
     }
-  }, [_vm._v(_vm._s(_vm.lang('Show all')))])] : _vm._e()], 2)
+  }, [_c('div', {
+    staticClass: "page-name-xl mb-3 mt-2"
+  }, [_vm._v(_vm._s(_vm.lang('Completed Tasks')) + "\n                "), _c('span', {
+    staticClass: "tag tag-neutral text-white"
+  }, [_vm._v(_vm._s(_vm.completed_tasks.length))])]), _vm._v(" "), _c('table', {
+    staticClass: "table"
+  }, [_c('thead', {
+    staticClass: "thead-inverse"
+  }, [_c('tr', [_c('th', {
+    staticClass: "w-30"
+  }), _vm._v(" "), _c('th', {
+    staticClass: "w-30"
+  }, [_vm._v("#")]), _vm._v(" "), _c('th', {
+    attrs: {
+      "data-title": "Task"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('Task')))]), _vm._v(" "), _c('th', {
+    attrs: {
+      "data-title": "Task Type"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('Task Type')))]), _vm._v(" "), _c('th', {
+    attrs: {
+      "data-title": "Assigner"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('Assigner')))]), _vm._v(" "), _c('th', {
+    attrs: {
+      "data-title": "Created"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('Created')))]), _vm._v(" "), _c('th', {
+    attrs: {
+      "data-title": "Deadline"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('Deadline')))]), _vm._v(" "), (_vm.authority) ? _c('th', {
+    staticClass: "text-right",
+    attrs: {
+      "data-title": "Assign to"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('Assign to')))]) : _vm._e()])]), _vm._v(" "), _c('draggable', {
+    attrs: {
+      "element": 'tbody'
+    },
+    model: {
+      value: (_vm.completed_tasks),
+      callback: function($$v) {
+        _vm.completed_tasks = $$v
+      },
+      expression: "completed_tasks"
+    }
+  }, _vm._l((_vm.completed_tasks), function(element, index) {
+    return _c('tr', {
+      key: element.id
+    }, [_c('td', [_c('div', {
+      staticClass: "icon icon-handler"
+    })]), _vm._v(" "), _c('th', {
+      staticClass: "display-e w-30"
+    }, [_vm._v(_vm._s(index + 1))]), _vm._v(" "), _c('td', {
+      staticClass: "table-title",
+      attrs: {
+        "data-title": "Task"
+      }
+    }, [_c('a', {
+      attrs: {
+        "href": '/task/show/' + element.id
+      }
+    }, [_vm._v(_vm._s(element.name))])]), _vm._v(" "), _c('td', {
+      attrs: {
+        "data-title": "Task Type"
+      }
+    }, [_c('div', {
+      class: _vm.task_types[element.type].className
+    }, [_vm._v(_vm._s(_vm.task_types[element.type].title))])]), _vm._v(" "), _c('td', {
+      attrs: {
+        "data-title": "Assigner"
+      }
+    }, [_c('a', {
+      staticClass: "text-uppercase file-box-sty",
+      attrs: {
+        "href": ""
+      }
+    }, [_c('img', {
+      staticClass: "profile-m mr-2",
+      attrs: {
+        "src": element.assigner.image
+      }
+    }), _vm._v(_vm._s(element.assigner.name))])]), _vm._v(" "), _c('td', {
+      attrs: {
+        "data-title": "Created"
+      }
+    }, [_vm._v(_vm._s(_vm._f("moment")(element.created_at, 'DD.MM.')))]), _vm._v(" "), _c('td', {
+      attrs: {
+        "data-title": "Deadline"
+      }
+    }, [_vm._v(_vm._s(_vm._f("moment")(element.deadline, 'DD.MM.')))]), _vm._v(" "), (_vm.authority) ? _c('td', {
+      staticClass: "text-right",
+      attrs: {
+        "data-title": "Assign to"
+      }
+    }, [_c('div', {
+      staticClass: "file-box-sty icon icon-assign"
+    }, [_vm._v(_vm._s(_vm.lang('Assign')))])]) : _vm._e()])
+  }))], 1)]), _vm._v(" "), _c('div', {
+    staticClass: "tab-pane fade in show",
+    attrs: {
+      "id": "rejected_tasks",
+      "role": "tabpanel"
+    }
+  }, [_c('div', {
+    staticClass: "page-name-xl mb-3 mt-2"
+  }, [_vm._v(_vm._s(_vm.lang('Rejected Tasks')) + "\n                "), _c('span', {
+    staticClass: "tag tag-neutral text-white"
+  }, [_vm._v(_vm._s(_vm.rejected_tasks.length))])]), _vm._v(" "), _c('table', {
+    staticClass: "table"
+  }, [_c('thead', {
+    staticClass: "thead-inverse"
+  }, [_c('tr', [_c('th', {
+    staticClass: "w-30"
+  }), _vm._v(" "), _c('th', {
+    staticClass: "w-30"
+  }, [_vm._v("#")]), _vm._v(" "), _c('th', {
+    attrs: {
+      "data-title": "Task"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('Task')))]), _vm._v(" "), _c('th', {
+    attrs: {
+      "data-title": "Task Type"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('Task Type')))]), _vm._v(" "), _c('th', {
+    attrs: {
+      "data-title": "Assigner"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('Assigner')))]), _vm._v(" "), _c('th', {
+    attrs: {
+      "data-title": "Created"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('Created')))]), _vm._v(" "), _c('th', {
+    attrs: {
+      "data-title": "Deadline"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('Deadline')))]), _vm._v(" "), (_vm.authority) ? _c('th', {
+    staticClass: "text-right",
+    attrs: {
+      "data-title": "Assign to"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('Assign to')))]) : _vm._e()])]), _vm._v(" "), _c('draggable', {
+    attrs: {
+      "element": 'tbody'
+    },
+    model: {
+      value: (_vm.rejected_tasks),
+      callback: function($$v) {
+        _vm.rejected_tasks = $$v
+      },
+      expression: "rejected_tasks"
+    }
+  }, _vm._l((_vm.rejected_tasks), function(element, index) {
+    return _c('tr', {
+      key: element.id
+    }, [_c('td', [_c('div', {
+      staticClass: "icon icon-handler"
+    })]), _vm._v(" "), _c('th', {
+      staticClass: "display-e w-30"
+    }, [_vm._v(_vm._s(index + 1))]), _vm._v(" "), _c('td', {
+      staticClass: "table-title",
+      attrs: {
+        "data-title": "Task"
+      }
+    }, [_c('a', {
+      attrs: {
+        "href": '/task/show/' + element.id
+      }
+    }, [_vm._v(_vm._s(element.name))])]), _vm._v(" "), _c('td', {
+      attrs: {
+        "data-title": "Task Type"
+      }
+    }, [_c('div', {
+      class: _vm.task_types[element.type].className
+    }, [_vm._v(_vm._s(_vm.task_types[element.type].title))])]), _vm._v(" "), _c('td', {
+      attrs: {
+        "data-title": "Assigner"
+      }
+    }, [_c('a', {
+      staticClass: "text-uppercase file-box-sty",
+      attrs: {
+        "href": ""
+      }
+    }, [_c('img', {
+      staticClass: "profile-m mr-2",
+      attrs: {
+        "src": element.assigner.image
+      }
+    }), _vm._v(_vm._s(element.assigner.name))])]), _vm._v(" "), _c('td', {
+      attrs: {
+        "data-title": "Created"
+      }
+    }, [_vm._v(_vm._s(_vm._f("moment")(element.created_at, 'DD.MM.')))]), _vm._v(" "), _c('td', {
+      attrs: {
+        "data-title": "Deadline"
+      }
+    }, [_vm._v(_vm._s(_vm._f("moment")(element.deadline, 'DD.MM.')))]), _vm._v(" "), (_vm.authority) ? _c('td', {
+      staticClass: "text-right",
+      attrs: {
+        "data-title": "Assign to"
+      }
+    }, [_c('div', {
+      staticClass: "file-box-sty icon icon-assign"
+    }, [_vm._v(_vm._s(_vm.lang('Assign')))])]) : _vm._e()])
+  }))], 1)])])])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -66860,9 +67241,11 @@ if (false) {
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', [_c('div', {
     staticClass: "profile-head row py-4 d-flex flex-column justify-content-center align-items-center"
+  }, [_c('div', {
+    staticClass: "col-md-12"
   }, [_c('h1', {
     staticClass: "display-3 text-white text-center"
-  }, [_vm._v(_vm._s(_vm.lang('Layout and Design')))])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.lang('Layout and Design')))])])]), _vm._v(" "), _c('div', {
     staticClass: "content"
   }, [_c('div', {
     staticClass: "profile-head pb-2 row"
@@ -67093,9 +67476,11 @@ if (false) {
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', [_c('div', {
     staticClass: "profile-head row py-4 d-flex flex-column justify-content-center align-items-center"
+  }, [_c('div', {
+    staticClass: "col-md-12"
   }, [_c('h1', {
     staticClass: "display-3 text-white text-center"
-  }, [_vm._v(_vm._s(_vm.lang('Layout and Design')))])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.lang('Layout and Design')))])])]), _vm._v(" "), _c('div', {
     staticClass: "content"
   }, [_c('div', {
     staticClass: "profile-head pb-2 row"
