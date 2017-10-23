@@ -51666,7 +51666,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             }
         },
         assignValues: function () {
-            axios.post('/api/proposition/assign/' + this.$route.params.id, { employees: this.employees, departments: this.departments, description: this.description, date: this.date, access: this.access, priority: this.priority, path: window.location.href }).then(res => {}).catch(err => {});
+            axios.post('/api/proposition/' + this.$route.params.id + '/assign', { employees: this.employees, departments: this.departments, description: this.description, date: this.date, access: this.access, priority: this.priority, path: window.location.href }).then(res => {}).catch(err => {});
         }
     },
     mounted: function () {}
@@ -61425,21 +61425,21 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       }
     }, [_c('div', {
       staticClass: "file-box-sty icon icon-cost-pending"
-    })])] : (_vm.requests['author_expense.' + i] && _vm.requests['author_expense.' + i][0] && _vm.requests['author_expense.' + i][0].status === 'denied') ? [_c('td', {
+    }, [_vm._v(_vm._s(_vm.lang('Cost Approval Pending')) + "\n\n                    ")])])] : (_vm.requests['author_expense.' + i] && _vm.requests['author_expense.' + i][0] && _vm.requests['author_expense.' + i][0].status === 'denied') ? [_c('td', {
       staticClass: "text-right",
       attrs: {
         "data-title": _vm.lang('Cost Rejected')
       }
     }, [_c('div', {
       staticClass: "file-box-sty icon icon-cost-denied"
-    })])] : (_vm.requests['author_expense.' + i] && _vm.requests['author_expense.' + i][0] && _vm.requests['author_expense.' + i][0].status === 'accepted') ? [_c('td', {
+    }, [_vm._v(_vm._s(_vm.lang('Trošak odbijen')) + "\n                    ")])])] : (_vm.requests['author_expense.' + i] && _vm.requests['author_expense.' + i][0] && _vm.requests['author_expense.' + i][0].status === 'accepted') ? [_c('td', {
       staticClass: "text-right",
       attrs: {
         "data-title": _vm.lang('Cost Approved')
       }
     }, [_c('div', {
       staticClass: "file-box-sty icon icon-cost-approved"
-    })])] : [_c('td', {
+    }, [_vm._v(_vm._s(_vm.lang('Trošak odobren')) + "\n                    ")])])] : [_c('td', {
       staticClass: "text-right",
       attrs: {
         "data-title": _vm.lang('Send for Approval')
@@ -61499,21 +61499,21 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       }
     }, [_c('div', {
       staticClass: "file-box-sty icon icon-cost-pending"
-    })])] : (_vm.requests['production_expense.' + row['designation']] && _vm.requests['production_expense.' + row['designation']][0] && _vm.requests['production_expense.' + row['designation']][0].status === 'denied') ? [_c('td', {
+    }, [_vm._v(_vm._s(_vm.lang('Cost Approval Pending')) + "\n\n                    ")])])] : (_vm.requests['production_expense.' + row['designation']] && _vm.requests['production_expense.' + row['designation']][0] && _vm.requests['production_expense.' + row['designation']][0].status === 'denied') ? [_c('td', {
       staticClass: "text-right",
       attrs: {
         "data-title": _vm.lang('Cost Rejected')
       }
     }, [_c('div', {
       staticClass: "file-box-sty icon icon-cost-denied"
-    })])] : (_vm.requests['production_expense.' + row['designation']] && _vm.requests['production_expense.' + row['designation']][0] && _vm.requests['production_expense.' + row['designation']][0].status === 'accepted') ? [_c('td', {
+    }, [_vm._v(_vm._s(_vm.lang('Trošak odbijen')) + "\n                    ")])])] : (_vm.requests['production_expense.' + row['designation']] && _vm.requests['production_expense.' + row['designation']][0] && _vm.requests['production_expense.' + row['designation']][0].status === 'accepted') ? [_c('td', {
       staticClass: "text-right",
       attrs: {
         "data-title": _vm.lang('Cost Approved')
       }
     }, [_c('div', {
       staticClass: "file-box-sty icon icon-cost-approved"
-    })])] : [_c('td', {
+    }, [_vm._v(_vm._s(_vm.lang('Trošak odobren')) + "\n                    ")])])] : [_c('td', {
       staticClass: "text-right",
       attrs: {
         "data-title": _vm.lang('Send for Approval')
@@ -61572,21 +61572,21 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }
   }, [_c('div', {
     staticClass: "file-box-sty icon icon-cost-pending"
-  })])] : (_vm.requests['layout_expense'] && _vm.requests['layout_expense'][0] && _vm.requests['layout_expense'][0].status === 'denied') ? [_c('td', {
+  }, [_vm._v(_vm._s(_vm.lang('Cost Approval Pending')) + "\n\n                    ")])])] : (_vm.requests['layout_expense'] && _vm.requests['layout_expense'][0] && _vm.requests['layout_expense'][0].status === 'denied') ? [_c('td', {
     staticClass: "text-right",
     attrs: {
       "data-title": _vm.lang('Cost Rejected')
     }
   }, [_c('div', {
     staticClass: "file-box-sty icon icon-cost-denied"
-  })])] : (_vm.requests['layout_expense'] && _vm.requests['layout_expense'][0] && _vm.requests['layout_expense'][0].status === 'accepted') ? [_c('td', {
+  }, [_vm._v(_vm._s(_vm.lang('Trošak odbijen')) + "\n                    ")])])] : (_vm.requests['layout_expense'] && _vm.requests['layout_expense'][0] && _vm.requests['layout_expense'][0].status === 'accepted') ? [_c('td', {
     staticClass: "text-right",
     attrs: {
       "data-title": _vm.lang('Cost Approved')
     }
   }, [_c('div', {
     staticClass: "file-box-sty icon icon-cost-approved"
-  })])] : [_c('td', {
+  }, [_vm._v(_vm._s(_vm.lang('Trošak odobren')) + "\n                    ")])])] : [_c('td', {
     staticClass: "text-right",
     attrs: {
       "data-title": _vm.lang('Send for Approval')
@@ -61644,21 +61644,21 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }
   }, [_c('div', {
     staticClass: "file-box-sty icon icon-cost-pending"
-  })])] : (_vm.requests['marketing_expense'] && _vm.requests['marketing_expense'][0] && _vm.requests['marketing_expense'][0].status === 'denied') ? [_c('td', {
+  }, [_vm._v(_vm._s(_vm.lang('Cost Approval Pending')) + "\n\n                    ")])])] : (_vm.requests['marketing_expense'] && _vm.requests['marketing_expense'][0] && _vm.requests['marketing_expense'][0].status === 'denied') ? [_c('td', {
     staticClass: "text-right",
     attrs: {
       "data-title": _vm.lang('Cost Denied')
     }
   }, [_c('div', {
     staticClass: "file-box-sty icon icon-cost-denied"
-  })])] : (_vm.requests['marketing_expense'] && _vm.requests['marketing_expense'][0] && _vm.requests['marketing_expense'][0].status === 'accepted') ? [_c('td', {
+  }, [_vm._v(_vm._s(_vm.lang('Trošak odbijen')) + "\n                    ")])])] : (_vm.requests['marketing_expense'] && _vm.requests['marketing_expense'][0] && _vm.requests['marketing_expense'][0].status === 'accepted') ? [_c('td', {
     staticClass: "text-right",
     attrs: {
       "data-title": _vm.lang('Cost Approved')
     }
   }, [_c('div', {
     staticClass: "file-box-sty icon icon-cost-approved"
-  })])] : [_c('td', {
+  }, [_vm._v(_vm._s(_vm.lang('Trošak odobren')) + "\n                    ")])])] : [_c('td', {
     staticClass: "text-right",
     attrs: {
       "data-title": _vm.lang('Send for Approval')
@@ -70733,7 +70733,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     class: ['mb-1', _vm.task_types[_vm.task.type].className]
   }, [_vm._v(_vm._s(_vm.task_types[_vm.task.type].title))])])])]), _vm._v(" "), _c('div', {
     staticClass: "btn-footer mt-2 mb-2 flex-column flex-md-row d-flex p-2"
-  }, [(_vm.task.related.status === 'pending') ? _c('button', {
+  }, [(_vm.task.related.status === 'requested') ? _c('button', {
     staticClass: "btn btn-lg btn-save",
     attrs: {
       "type": "submit"
@@ -70741,7 +70741,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     on: {
       "click": _vm.approveRequest
     }
-  }, [_vm._v(_vm._s(_vm.lang('Approve')))]) : _vm._e(), _vm._v(" "), (_vm.task.related.status === 'pending') ? _c('button', {
+  }, [_vm._v(_vm._s(_vm.lang('Approve')))]) : _vm._e(), _vm._v(" "), (_vm.task.related.status === 'requested') ? _c('button', {
     staticClass: "btn btn-lg btn-cancel",
     attrs: {
       "type": "submit"
