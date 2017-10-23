@@ -52146,6 +52146,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["a"] = ({
     data: function () {
@@ -61522,7 +61526,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         "data-title": _vm.lang('Cost Rejected')
       }
     }, [_c('div', {
-      staticClass: "file-box-sty icon icon-cost-denied"
+      staticClass: "file-box-sty icon icon-cost-rejected"
     }, [_vm._v(_vm._s(_vm.lang('Cost Rejected')) + "\n                    ")])])] : (_vm.requests['author_expense.' + i] && _vm.requests['author_expense.' + i][0] && _vm.requests['author_expense.' + i][0].status === 'accepted') ? [_c('td', {
       staticClass: "text-right",
       attrs: {
@@ -61596,7 +61600,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         "data-title": _vm.lang('Cost Rejected')
       }
     }, [_c('div', {
-      staticClass: "file-box-sty icon icon-cost-denied"
+      staticClass: "file-box-sty icon icon-cost-rejected"
     }, [_vm._v(_vm._s(_vm.lang('Cost Rejected')) + "\n                    ")])])] : (_vm.requests['production_expense.' + row['designation']] && _vm.requests['production_expense.' + row['designation']][0] && _vm.requests['production_expense.' + row['designation']][0].status === 'accepted') ? [_c('td', {
       staticClass: "text-right",
       attrs: {
@@ -61669,7 +61673,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       "data-title": _vm.lang('Cost Rejected')
     }
   }, [_c('div', {
-    staticClass: "file-box-sty icon icon-cost-denied"
+    staticClass: "file-box-sty icon icon-cost-rejected"
   }, [_vm._v(_vm._s(_vm.lang('Cost Rejected')) + "\n                    ")])])] : (_vm.requests['layout_expense'] && _vm.requests['layout_expense'][0] && _vm.requests['layout_expense'][0].status === 'accepted') ? [_c('td', {
     staticClass: "text-right",
     attrs: {
@@ -61741,7 +61745,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       "data-title": _vm.lang('Cost Denied')
     }
   }, [_c('div', {
-    staticClass: "file-box-sty icon icon-cost-denied"
+    staticClass: "file-box-sty icon icon-cost-rejected"
   }, [_vm._v(_vm._s(_vm.lang('Cost Rejected')) + "\n                    ")])])] : (_vm.requests['marketing_expense'] && _vm.requests['marketing_expense'][0] && _vm.requests['marketing_expense'][0].status === 'accepted') ? [_c('td', {
     staticClass: "text-right",
     attrs: {
@@ -71021,10 +71025,12 @@ if (false) {
 "use strict";
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', [(_vm.task.id) ? [(_vm.task.type == 3) ? [_c('div', {
-    staticClass: "profile-head py-4 d-flex flex-column justify-content-center align-items-center"
+    staticClass: "profile-head row py-4 d-flex flex-column justify-content-center align-items-center"
+  }, [_c('div', {
+    staticClass: "col-md-12"
   }, [_c('h1', {
     staticClass: "display-3 text-white text-center"
-  }, [_vm._v(_vm._s(_vm.task.name))])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.task.name))])])]), _vm._v(" "), _c('div', {
     staticClass: "content"
   }, [_c('div', {
     staticClass: "profile-head pb-2 row"
@@ -71135,10 +71141,12 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       "click": _vm.rejectRequest
     }
   }, [_vm._v(_vm._s(_vm.lang('Reject')))]) : _vm._e()])])] : [_c('div', {
-    staticClass: "profile-head py-4 d-flex flex-column justify-content-center align-items-center"
+    staticClass: "profile-head row py-4 d-flex flex-column justify-content-center align-items-center"
+  }, [_c('div', {
+    staticClass: "col-md-12"
   }, [_c('h1', {
     staticClass: "display-3 text-white text-center"
-  }, [_vm._v(_vm._s(_vm.task.name))])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.task.name))])])]), _vm._v(" "), _c('div', {
     staticClass: "content"
   }, [_c('div', {
     staticClass: "profile-head pb-2 row"
