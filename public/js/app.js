@@ -52921,6 +52921,11 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
@@ -63429,12 +63434,16 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       }
     }, [_c('div', {
       staticClass: "file-box-sty icon icon-assign"
-    }, [_vm._v(_vm._s(_vm.lang('Assign')))])]) : _vm._e(), _vm._v(" "), _c('td', {
+    }, [_vm._v(_vm._s(_vm.lang('Assign')))])]) : _vm._e(), _vm._v(" "), (element.status === 'completed') ? [_c('td', {
       staticClass: "icon icon-cost-approved",
       attrs: {
         "data-title": "Status"
       }
-    }, [_vm._v(_vm._s(_vm.lang('Finished')))])])
+    }, [_vm._v(_vm._s(_vm.lang('Finished')))])] : [_c('td', {
+      attrs: {
+        "data-title": "Status"
+      }
+    })]], 2)
   }))], 1)]), _vm._v(" "), _c('div', {
     staticClass: "tab-pane fade in show",
     attrs: {
