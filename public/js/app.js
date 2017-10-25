@@ -52661,6 +52661,12 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -52725,6 +52731,11 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 this.task.status = 'accepted';
             }).catch(err => {});
         },
+        completeTask() {
+            axios.post('/api/task/' + this.task.id + '/complete').then(res => {
+                this.$router.push('/tasks');
+            }).catch(err => {});
+        },
         rejectTask(reason) {
             axios.post('/api/task/' + this.task.id + '/reject', { reason: reason }).then(res => {
                 this.task.status = 'rejected';
@@ -52737,12 +52748,12 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         },
         approveRequest() {
             axios.post('/api/task/' + this.task.id + '/accept').then(() => {
-                window.location.href = '/tasks';
+                this.$router.push('/tasks');
             });
         },
         rejectRequest() {
             axios.post('/api/task/' + this.task.id + '/reject').then(() => {
-                window.location.href = '/tasks';
+                this.$router.push('/tasks');
             });
         },
         openModal(modal) {
@@ -72328,7 +72339,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     class: ['mb-1', _vm.task_types[_vm.task.type].className]
   }, [_vm._v(_vm._s(_vm.task_types[_vm.task.type].title))])])])]), _vm._v(" "), (_vm.documents) ? [_c('div', {
     staticClass: "page-name-l mb-1 mt-2"
-  }, [_vm._v(_vm._s(_vm.lang('Documents')))]), _vm._v(" "), _vm._m(0), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.lang('Documents')))]), _vm._v(" "), _vm._m(0), _vm._v(" "), (_vm.task.status === 'new') ? [_c('div', {
     staticClass: "btn-footer mt-2 mb-2 flex-column flex-md-row d-flex p-2"
   }, [_c('button', {
     staticClass: "btn btn-lg btn-save",
@@ -72345,7 +72356,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     attrs: {
       "type": "submit"
     }
-  }, [_vm._v(_vm._s(_vm.lang('Assign to...')))])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.lang('Assign to...')))])])] : void 0, _vm._v(" "), _c('div', {
     staticClass: "page-name-xl mb-1"
   }, [_vm._v(_vm._s(_vm.lang('Documents')))]), _vm._v(" "), _vm._m(1), _vm._v(" "), _c('button', {
     staticClass: "btn btn-neutral d-block mx-auto btn-addon",
@@ -72427,7 +72438,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     on: {
       "click": _vm.acceptTask
     }
-  }, [_vm._v(_vm._s(_vm.lang('Accept')))]) : _vm._e(), _vm._v(" "), _c('button', {
+  }, [_vm._v(_vm._s(_vm.lang('Accept')))]) : _vm._e(), _vm._v(" "), (_vm.task.status === 'new') ? _c('button', {
     staticClass: "btn btn-lg btn-cancel",
     attrs: {
       "type": "submit"
@@ -72437,7 +72448,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         _vm.openModal('modal-reject')
       }
     }
-  }, [_vm._v(_vm._s(_vm.lang('Reject')))]), _vm._v(" "), _c('button', {
+  }, [_vm._v(_vm._s(_vm.lang('Reject')))]) : _vm._e(), _vm._v(" "), (_vm.task.status === 'new') ? _c('button', {
     staticClass: "btn btn-lg btn-assign btn-assign-icon",
     attrs: {
       "type": "submit"
@@ -72447,7 +72458,15 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
         _vm.openModal('modal-reassign')
       }
     }
-  }, [_vm._v(_vm._s(_vm.lang('Assign to...')))])])], 2), _vm._v(" "), _c('modal-rejected', {
+  }, [_vm._v(_vm._s(_vm.lang('Assign to...')))]) : _vm._e(), _vm._v(" "), (_vm.task.status === 'accepted') ? _c('button', {
+    staticClass: "btn btn-lg btn-assign btn-assign-icon",
+    attrs: {
+      "type": "submit"
+    },
+    on: {
+      "click": _vm.completeTask
+    }
+  }, [_vm._v(_vm._s(_vm.lang('Complete')))]) : _vm._e()])], 2), _vm._v(" "), _c('modal-rejected', {
     on: {
       "rejected": _vm.rejectTask
     }
