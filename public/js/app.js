@@ -52926,6 +52926,36 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
@@ -52949,7 +52979,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     className: 'tasktype-2'
                 }
             },
-            tasks: [],
+            new_tasks: [],
+            accepted_tasks: [],
             sent_tasks: [],
             completed_tasks: [],
             rejected_tasks: []
@@ -52968,7 +52999,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     },
     mounted: function () {
         axios.get('/api/tasks').then(res => {
-            this.tasks = res.data.tasks;
+            this.new_tasks = res.data.new_tasks;
+            this.accepted_tasks = res.data.accepted_tasks;
             this.sent_tasks = res.data.sent_tasks;
             this.completed_tasks = res.data.completed_tasks;
             this.rejected_tasks = res.data.rejected_tasks;
@@ -63209,9 +63241,9 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }
   }, [_c('div', {
     staticClass: "page-name-xl mb-3 mt-2"
-  }, [_vm._v(_vm._s(_vm.lang('Tasks')) + "\n                "), _c('span', {
+  }, [_vm._v(_vm._s(_vm.lang('New Tasks')) + "\n                "), _c('span', {
     staticClass: "tag tag-neutral text-white"
-  }, [_vm._v(_vm._s(_vm.tasks.length))])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.new_tasks.length))])]), _vm._v(" "), _c('div', {
     staticClass: "justify-content-center mt-1 mb-2 flex-column flex-md-row d-flex p-2"
   }, [_c('button', {
     staticClass: "btn btn-lg btn-blank btn-plus-icon",
@@ -63258,13 +63290,113 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       "element": 'tbody'
     },
     model: {
-      value: (_vm.tasks),
+      value: (_vm.new_tasks),
       callback: function($$v) {
-        _vm.tasks = $$v
+        _vm.new_tasks = $$v
       },
-      expression: "tasks"
+      expression: "new_tasks"
     }
-  }, _vm._l((_vm.tasks), function(element, index) {
+  }, _vm._l((_vm.new_tasks), function(element, index) {
+    return _c('tr', {
+      key: element.id
+    }, [_c('td', [_c('div', {
+      staticClass: "icon icon-handler"
+    })]), _vm._v(" "), _c('th', {
+      staticClass: "display-e w-30"
+    }, [_vm._v(_vm._s(index + 1))]), _vm._v(" "), _c('td', {
+      staticClass: "table-title",
+      attrs: {
+        "data-title": "Task"
+      }
+    }, [_c('a', {
+      attrs: {
+        "href": '/task/show/' + element.id
+      }
+    }, [_vm._v(_vm._s(element.name))])]), _vm._v(" "), _c('td', {
+      attrs: {
+        "data-title": "Task Type"
+      }
+    }, [_c('div', {
+      class: _vm.task_types[element.type].className
+    }, [_vm._v(_vm._s(_vm.task_types[element.type].title))])]), _vm._v(" "), _c('td', {
+      attrs: {
+        "data-title": "Assigner"
+      }
+    }, [_c('a', {
+      staticClass: "text-uppercase file-box-sty",
+      attrs: {
+        "href": ""
+      }
+    }, [_c('img', {
+      staticClass: "profile-m mr-2",
+      attrs: {
+        "src": element.assigner.image
+      }
+    }), _vm._v(_vm._s(element.assigner.name))])]), _vm._v(" "), _c('td', {
+      attrs: {
+        "data-title": "Created"
+      }
+    }, [_vm._v(_vm._s(_vm._f("moment")(element.created_at, 'DD.MM.')))]), _vm._v(" "), _c('td', {
+      attrs: {
+        "data-title": "Deadline"
+      }
+    }, [_vm._v(_vm._s(_vm._f("moment")(element.deadline, 'DD.MM.')))]), _vm._v(" "), (_vm.authority) ? _c('td', {
+      staticClass: "text-right",
+      attrs: {
+        "data-title": "Assign to"
+      }
+    }, [_c('div', {
+      staticClass: "file-box-sty icon icon-assign"
+    }, [_vm._v(_vm._s(_vm.lang('Assign')))])]) : _vm._e()])
+  }))], 1), _vm._v(" "), _c('div', {
+    staticClass: "page-name-xl mb-3 mt-2"
+  }, [_vm._v(_vm._s(_vm.lang('Tasks')) + "\n                "), _c('span', {
+    staticClass: "tag tag-neutral text-white"
+  }, [_vm._v(_vm._s(_vm.accepted_tasks.length))])]), _vm._v(" "), _c('table', {
+    staticClass: "table"
+  }, [_c('thead', {
+    staticClass: "thead-inverse"
+  }, [_c('tr', [_c('th', {
+    staticClass: "w-30"
+  }), _vm._v(" "), _c('th', {
+    staticClass: "w-30"
+  }, [_vm._v("#")]), _vm._v(" "), _c('th', {
+    attrs: {
+      "data-title": "Task"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('Task')))]), _vm._v(" "), _c('th', {
+    attrs: {
+      "data-title": "Task Type"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('Task Type')))]), _vm._v(" "), _c('th', {
+    attrs: {
+      "data-title": "Assigner"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('Assigner')))]), _vm._v(" "), _c('th', {
+    attrs: {
+      "data-title": "Created"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('Created')))]), _vm._v(" "), _c('th', {
+    attrs: {
+      "data-title": "Deadline"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('Deadline')))]), _vm._v(" "), (_vm.authority) ? _c('th', {
+    staticClass: "text-right",
+    attrs: {
+      "data-title": "Assign to"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('Assign to')))]) : _vm._e()])]), _vm._v(" "), _c('draggable', {
+    attrs: {
+      "element": 'tbody'
+    },
+    model: {
+      value: (_vm.accepted_tasks),
+      callback: function($$v) {
+        _vm.accepted_tasks = $$v
+      },
+      expression: "accepted_tasks"
+    }
+  }, _vm._l((_vm.accepted_tasks), function(element, index) {
     return _c('tr', {
       key: element.id
     }, [_c('td', [_c('div', {
