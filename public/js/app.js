@@ -52741,9 +52741,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 this.$router.push('/tasks');
             }).catch(err => {});
         },
-        commentTask(reason) {
-            axios.post('/api/thread/' + this.task.thread.id + '/message', { message: message }).then(res => {
-                this.task.status = 'rejected';
+        commentTask(message) {
+            axios.post('/api/thread/' + this.task.thread[0].id + '/message', { message: message }).then(res => {
+                Vue.set(this.task.thread, 0, res.data);
             }).catch(err => {});
         },
         reassignTask(employees) {
@@ -72527,7 +72527,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     staticClass: "file-box-sty"
   }, [_vm._v("24.07.2017.")]), _vm._v(" "), _c('div', {
     staticClass: "file-box-sty icon icon-approval-yes"
-  }, [_vm._v(_vm._s(_vm.lang('Approved')))])])], 2)] : _vm._e(), _vm._v(" "), (_vm.task.thread) ? _vm._l((_vm.task.thread.messages), function(message) {
+  }, [_vm._v(_vm._s(_vm.lang('Approved')))])])], 2)] : _vm._e(), _vm._v(" "), (_vm.task.thread) ? _vm._l((_vm.task.thread[0].messages), function(message) {
     return _c('div', [_c('h3', [_vm._v(_vm._s(message.sender.name))]), _vm._v(" "), _c('p', [_vm._v(_vm._s(message.message))])])
   }) : _vm._e(), _vm._v(" "), _c('div', {
     staticClass: "btn-footer mt-2 mb-2 flex-column flex-md-row d-flex p-2"
