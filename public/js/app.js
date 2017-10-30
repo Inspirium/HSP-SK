@@ -64142,7 +64142,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       attrs: {
         "href": item.data.link
       }
-    }, [_vm._v(_vm._s(_vm.lang(item.data.message)))])]), _vm._v(" "), _c('h5', [_vm._v(_vm._s(_vm.lang(item.message)))])])])
+    }, [_vm._v(_vm._s(_vm.lang(item.data.title)))])]), _vm._v(" "), _c('h5', [_vm._v(_vm._s(_vm.lang(item.data.message)))])])])
   })], 2)])])
 }
 var staticRenderFns = []
