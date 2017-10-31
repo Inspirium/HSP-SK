@@ -11,11 +11,14 @@ const { mix } = require('laravel-mix');
  |
  */
 mix.js(['packages/Inspirium/SKTemplate/src/assets/js/app.js'], 'public/js/app.js')
-    .sass('packages/Inspirium/SKTemplate/src/assets/sass/app.scss', 'public/css/app.css')
+    .sass('packages/Inspirium/SKTemplate/src/assets/sass/app.scss', 'public/css/app.css', {
+        includePaths: ["node_modules"]
+    })
     .copy('node_modules/jquery/dist/jquery.js', 'public/js/jquery.js')
     .copy('node_modules/popper.js/dist/umd/popper.js', 'public/js/popper.js')
     .copy('node_modules/bootstrap/dist/js/bootstrap.js', 'public/js/bootstrap.js')
     .copy('node_modules/chartist/dist/chartist.js', 'public/js/chartist.js')
+    .copy('node_modules/flipclock/compiled/flipclock.js', 'public/js/flipclock.js')
     .scripts([
         'node_modules/mdb-pro/js/modules (optional)/jquery.easing.js',
         'node_modules/mdb-pro/js/modules (optional)/velocity.min.js',

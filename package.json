@@ -35,6 +35,8 @@
     "vuex-validator": "^0.2.7"
   },
   "dependencies": {
-    "chartist": "^0.11.0"
+    "bourbon": "^4.3.4",
+    "chartist": "^0.11.0",
+    "flipclock": "^0.7.8"
   }
 }

@@ -52674,6 +52674,56 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -52769,6 +52819,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         let id = this.$route.params.id;
         axios.get('/api/task/' + id).then(res => {
             this.task = res.data.task;
+            setTimeout(() => {
+                //TODO: fix
+                let clock = $('.clock').FlipClock({});
+            }, 1000);
         }).catch(err => {});
     }
 });
@@ -64057,6 +64111,12 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   })])])])]), _vm._v(" "), _c('div', {
     staticClass: "modal-footer btn-footer"
   }, [_c('button', {
+    staticClass: "btn btn-lg btn-cancel",
+    attrs: {
+      "type": "button",
+      "data-dismiss": "modal"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('Cancel')))]), _vm._v(" "), _c('button', {
     staticClass: "btn btn-lg btn-save",
     attrs: {
       "type": "button",
@@ -64065,13 +64125,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     on: {
       "click": _vm.confirm
     }
-  }, [_vm._v(_vm._s(_vm.lang('Comment')))]), _vm._v(" "), _c('button', {
-    staticClass: "btn btn-lg btn-cancel",
-    attrs: {
-      "type": "button",
-      "data-dismiss": "modal"
-    }
-  }, [_vm._v(_vm._s(_vm.lang('Cancel')))])])])])])
+  }, [_vm._v(_vm._s(_vm.lang('Comment')))])])])])])
 }
 var staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('button', {
@@ -69458,6 +69512,12 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   })], 2)])])]), _vm._v(" "), _c('div', {
     staticClass: "modal-footer btn-footer"
   }, [_c('button', {
+    staticClass: "btn btn-lg btn-cancel",
+    attrs: {
+      "type": "button",
+      "data-dismiss": "modal"
+    }
+  }, [_vm._v(_vm._s(_vm.lang('Cancel')))]), _vm._v(" "), _c('button', {
     staticClass: "btn btn-lg btn-save",
     attrs: {
       "type": "button",
@@ -69466,13 +69526,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     on: {
       "click": _vm.confirm
     }
-  }, [_vm._v(_vm._s(_vm.lang('Reassign')))]), _vm._v(" "), _c('button', {
-    staticClass: "btn btn-lg btn-cancel",
-    attrs: {
-      "type": "button",
-      "data-dismiss": "modal"
-    }
-  }, [_vm._v(_vm._s(_vm.lang('Cancel')))])])])])])
+  }, [_vm._v(_vm._s(_vm.lang('Reassign')))])])])])])
 }
 var staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('button', {
@@ -72197,12 +72251,14 @@ if (false) {
 "use strict";
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', [(_vm.task.id) ? [(_vm.task.type == 3) ? [_c('div', {
+    staticClass: "content"
+  }, [_c('div', {
     staticClass: "profile-head row py-4 d-flex flex-column justify-content-center align-items-center"
   }, [_c('div', {
     staticClass: "col-md-12"
   }, [_c('h1', {
     staticClass: "display-3 text-white text-center"
-  }, [_vm._v(_vm._s(_vm.task.name))])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.task.name))])])])]), _vm._v(" "), _c('div', {
     staticClass: "content"
   }, [_c('div', {
     staticClass: "profile-head pb-2 row"
@@ -72252,7 +72308,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     staticClass: "page-name-l mt-2 mb-1"
   }, [_vm._v(_vm._s(_vm.lang('Task Description')))]), _vm._v(" "), _c('div', [_c('h4', {
     staticClass: "mb-1"
-  }, [_vm._v("\n                                " + _vm._s(_vm.task.assigner.name) + " has requested an expense approval for " + _vm._s(_vm.task.related.name) + " expense."), _c('br'), _vm._v("\n                                " + _vm._s(_vm.task.description)), _c('br')]), _vm._v(" "), (_vm.task.related_link) ? _c('router-link', {
+  }, [_vm._v("\n                                    " + _vm._s(_vm.task.assigner.name) + " has requested an expense approval for " + _vm._s(_vm.task.related.name) + " expense."), _c('br'), _vm._v("\n                                    " + _vm._s(_vm.task.description)), _c('br')]), _vm._v(" "), (_vm.task.related_link) ? _c('router-link', {
     staticClass: "btn btn-neutral btn-addon mb-4 mr-5",
     attrs: {
       "to": _vm.task.related_link
@@ -72313,12 +72369,14 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
       "click": _vm.rejectRequest
     }
   }, [_vm._v(_vm._s(_vm.lang('Reject')))]) : _vm._e()])])] : [_c('div', {
+    staticClass: "content"
+  }, [_c('div', {
     staticClass: "profile-head row py-4 d-flex flex-column justify-content-center align-items-center"
   }, [_c('div', {
     staticClass: "col-md-12"
   }, [_c('h1', {
     staticClass: "display-3 text-white text-center"
-  }, [_vm._v(_vm._s(_vm.task.name))])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.task.name))])])])]), _vm._v(" "), _c('div', {
     staticClass: "content"
   }, [_c('div', {
     staticClass: "profile-head pb-2 row"
@@ -72367,10 +72425,12 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }, [_vm._v(_vm._s(_vm.lang(_vm.priorities[_vm.task.priority])))])]), _vm._v(" "), _c('h3', {
     staticClass: "mb-1 text-white"
   }, [_vm._v(_vm._s(_vm._f("moment")(_vm.task.deadline, "DD.MM.")))])])]), _vm._v(" "), _c('div', {
+    staticClass: "task-c-time row"
+  }, [_c('h3', {
+    staticClass: "col-md-5 text-white align-self-center text-md-right my-3;"
+  }, [_vm._v(_vm._s(_vm.lang('Task Completion Time')) + "\n                        ")]), _vm._v(" "), _vm._m(0), _vm._v(" "), _vm._m(1), _vm._v(" "), _vm._m(2)]), _vm._v(" "), _c('div', {
     staticClass: "stopwatch"
-  }, [_c('div', {
-    staticClass: "stopwatch-counter"
-  }), _vm._v(" "), _c('div', {
+  }, [_vm._m(3), _vm._v(" "), _c('div', {
     staticClass: "stopwatch-controls"
   }, [_c('div', {
     staticClass: "modal-footer btn-footer"
@@ -72379,44 +72439,6 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
   }, [_vm._v(_vm._s(_vm.lang('Play')))]), _vm._v(" "), _c('button', {
     staticClass: "btn btn-lg btn-blank btn-stop-icon"
   }, [_vm._v(_vm._s(_vm.lang('Stop')))])])])]), _vm._v(" "), _c('div', {
-    staticClass: "page-name-xl mt-4"
-  }, [_vm._v(_vm._s(_vm.lang('Task Completion Time')))]), _vm._v(" "), _c('div', {
-    staticClass: "grey-box mb-5 pt-5 pb-3 px-3 mx-auto"
-  }, [_c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    staticClass: "col-md-6 mx-auto"
-  }, [_c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    staticClass: "col-md-6"
-  }, [_c('div', {
-    staticClass: "md-form"
-  }, [_c('input', {
-    staticClass: "form-control",
-    attrs: {
-      "type": "text",
-      "id": "hours"
-    }
-  }), _vm._v(" "), _c('label', {
-    attrs: {
-      "for": "hours"
-    }
-  }, [_vm._v(_vm._s(_vm.lang('Hours')))])])]), _vm._v(" "), _c('div', {
-    staticClass: "col-md-6"
-  }, [_c('div', {
-    staticClass: "md-form"
-  }, [_c('input', {
-    staticClass: "form-control",
-    attrs: {
-      "type": "text",
-      "id": "minutes"
-    }
-  }), _vm._v(" "), _c('label', {
-    attrs: {
-      "for": "minutes"
-    }
-  }, [_vm._v(_vm._s(_vm.lang('Minutes')))])])])])])])]), _vm._v(" "), _c('div', {
     staticClass: "showdata-box row"
   }, [_c('div', {
     staticClass: "col-md-9"
@@ -72436,9 +72458,37 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     staticClass: "page-name-l mt-2 mb-1"
   }, [_vm._v(_vm._s(_vm.lang('Task Type')))]), _vm._v(" "), _c('div', [_c('h4', {
     class: ['mb-1', _vm.task_types[_vm.task.type].className]
-  }, [_vm._v(_vm._s(_vm.task_types[_vm.task.type].title))])])])]), _vm._v(" "), (_vm.documents) ? [_c('div', {
+  }, [_vm._v(_vm._s(_vm.task_types[_vm.task.type].title))])])])]), _vm._v(" "), _c('div', {
+    staticClass: "page-name-xl mt-4"
+  }, [_vm._v(_vm._s(_vm.lang('Initial Documents')))]), _vm._v(" "), _vm._m(4), _vm._v(" "), _c('div', {
+    staticClass: "justify-content-center d-flex mt-2 mb-4"
+  }, [_c('button', {
+    staticClass: "btn btn-neutral",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": function($event) {
+        _vm.documentAdd('cover-jpg')
+      }
+    }
+  }, [_vm._v(_vm._s(_vm.lang('Upload')))])]), _vm._v(" "), _c('div', {
+    staticClass: "page-name-xl mt-4"
+  }, [_vm._v(_vm._s(_vm.lang('Final Documents')))]), _vm._v(" "), _vm._m(5), _vm._v(" "), _c('div', {
+    staticClass: "justify-content-center d-flex mt-2 mb-4"
+  }, [_c('button', {
+    staticClass: "btn btn-neutral",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": function($event) {
+        _vm.documentAdd('cover-jpg')
+      }
+    }
+  }, [_vm._v(_vm._s(_vm.lang('Upload')))])]), _vm._v(" "), (_vm.documents) ? [_c('div', {
     staticClass: "page-name-l mb-1 mt-2"
-  }, [_vm._v(_vm._s(_vm.lang('Documents')))]), _vm._v(" "), _vm._m(0), _vm._v(" "), (_vm.task.status === 'new') ? [_c('div', {
+  }, [_vm._v(_vm._s(_vm.lang('Documents')))]), _vm._v(" "), _vm._m(6), _vm._v(" "), (_vm.task.status === 'new') ? [_c('div', {
     staticClass: "btn-footer mt-2 mb-2 flex-column flex-md-row d-flex p-2"
   }, [_c('button', {
     staticClass: "btn btn-lg btn-save",
@@ -72457,7 +72507,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     }
   }, [_vm._v(_vm._s(_vm.lang('Assign to...')))])])] : void 0, _vm._v(" "), _c('div', {
     staticClass: "page-name-xl mb-1"
-  }, [_vm._v(_vm._s(_vm.lang('Documents')))]), _vm._v(" "), _vm._m(1), _vm._v(" "), _c('button', {
+  }, [_vm._v(_vm._s(_vm.lang('Documents')))]), _vm._v(" "), _vm._m(7), _vm._v(" "), _c('button', {
     staticClass: "btn btn-neutral d-block mx-auto btn-addon",
     attrs: {
       "type": "button"
@@ -72510,7 +72560,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     attrs: {
       "href": "http://homestead.app/images/profile.pdf"
     }
-  }, [_vm._v("Fizika i društvo.doc")]), _vm._v(" "), _vm._m(2), _vm._v(" "), _c('div', {
+  }, [_vm._v("Fizika i društvo.doc")]), _vm._v(" "), _vm._m(8), _vm._v(" "), _c('div', {
     staticClass: "file-box-sty"
   }, [_vm._v("24.07.2017.")]), _vm._v(" "), _c('div', {
     staticClass: "file-box-sty icon icon-approval-comments"
@@ -72523,13 +72573,33 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     attrs: {
       "href": "http://homestead.app/images/profile.pdf"
     }
-  }, [_vm._v("Fizika i društvo.doc")]), _vm._v(" "), _vm._m(3), _vm._v(" "), _c('div', {
+  }, [_vm._v("Fizika i društvo.doc")]), _vm._v(" "), _vm._m(9), _vm._v(" "), _c('div', {
     staticClass: "file-box-sty"
   }, [_vm._v("24.07.2017.")]), _vm._v(" "), _c('div', {
     staticClass: "file-box-sty icon icon-approval-yes"
-  }, [_vm._v(_vm._s(_vm.lang('Approved')))])])], 2)] : _vm._e(), _vm._v(" "), (_vm.task.thread) ? _vm._l((_vm.task.thread.messages), function(message) {
-    return _c('div', [_c('h3', [_vm._v(_vm._s(message.sender.name))]), _vm._v(" "), _c('p', [_vm._v(_vm._s(message.message))])])
-  }) : _vm._e(), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.lang('Approved')))])])], 2)] : _vm._e(), _vm._v(" "), _c('div', {
+    staticClass: "comments"
+  }, [_c('div', {
+    staticClass: "page-name-xl mb-3"
+  }, [_vm._v(_vm._s(_vm.lang('Comments')))]), _vm._v(" "), _vm._m(10), _vm._v(" "), _c('div', {
+    staticClass: "justify-content-end d-flex mb-2"
+  }, [_c('button', {
+    staticClass: "btn btn-neutral",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": function($event) {
+        _vm.documentAdd('cover-jpg')
+      }
+    }
+  }, [_vm._v(_vm._s(_vm.lang('Send')))])]), _vm._v(" "), (_vm.task.thread) ? _vm._l((_vm.task.thread.messages), function(message) {
+    return _c('div', [_c('h3', {
+      staticClass: "page-name-l mb-1"
+    }, [_c('span', [_vm._v(_vm._s(message.sender.name) + ",")]), _vm._v(" 13.05.2017., 13:35")]), _vm._v(" "), _c('p', {
+      staticClass: "mb-4"
+    }, [_vm._v(_vm._s(message.message))])])
+  }) : _vm._e()], 2), _vm._v(" "), _c('div', {
     staticClass: "btn-footer mt-2 mb-2 flex-column flex-md-row d-flex p-2"
   }, [(_vm.task.status === 'new') ? _c('button', {
     staticClass: "btn btn-lg btn-save",
@@ -72575,9 +72645,47 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
     on: {
       "reassign": _vm.reassignTask
     }
-  })]] : [_vm._m(4)]], 2)
+  })]] : [_vm._m(11)]], 2)
 }
 var staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "col-md-3"
+  }, [_c('div', {
+    staticClass: "md-form align-self-center"
+  }, [_c('input', {
+    staticClass: "form-control",
+    attrs: {
+      "type": "number",
+      "id": "hours",
+      "placeholder": "Hours"
+    }
+  })])])
+},function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "col-md-3"
+  }, [_c('div', {
+    staticClass: "md-form"
+  }, [_c('input', {
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "id": "minutes",
+      "placeholder": "Minutes"
+    }
+  })])])
+},function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "col-md-1"
+  }, [_c('div', {
+    staticClass: "btn-save-small"
+  }, [_vm._v("Save\n                            ")])])
+},function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "stopwatch-counter"
+  }, [_c('div', {
+    staticClass: "clock"
+  })])
+},function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "files mt-2 mb-2"
   }, [_c('div', {
@@ -72598,7 +72706,63 @@ var staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _
     attrs: {
       "src": "/images/profile.jpg"
     }
-  }), _vm._v("Jelena Lončarić\n                            ")])]), _vm._v(" "), _c('div', {
+  }), _vm._v("Stjepan Drmić\n                                ")])]), _vm._v(" "), _c('div', {
+    staticClass: "file-box-sty"
+  }, [_vm._v("19.07.2017.")]), _vm._v(" "), _c('div', {
+    staticClass: "file-box-sty icon icon-download"
+  }, [_vm._v("Preuzmi")]), _vm._v(" "), _c('div', {
+    staticClass: "file-box-sty icon icon-cancel"
+  }, [_vm._v("Obriši")])])])
+},function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "files mt-2 mb-2"
+  }, [_c('div', {
+    staticClass: "file-box file-box-l d-flex align-items-center"
+  }, [_c('a', {
+    staticClass: "file-icon",
+    attrs: {
+      "href": "http://homestead.app/images/profile.pdf"
+    }
+  }, [_vm._v("Fizika i društvo.doc")]), _vm._v(" "), _c('div', {
+    staticClass: "file-box-sty ml-auto d-flex"
+  }, [_c('a', {
+    attrs: {
+      "href": ""
+    }
+  }, [_c('img', {
+    staticClass: "profile-m-1 mr-1 align-self-center",
+    attrs: {
+      "src": "/images/profile.jpg"
+    }
+  }), _vm._v("Stjepan Drmić\n                                ")])]), _vm._v(" "), _c('div', {
+    staticClass: "file-box-sty"
+  }, [_vm._v("19.07.2017.")]), _vm._v(" "), _c('div', {
+    staticClass: "file-box-sty icon icon-download"
+  }, [_vm._v("Preuzmi")]), _vm._v(" "), _c('div', {
+    staticClass: "file-box-sty icon icon-cancel"
+  }, [_vm._v("Obriši")])])])
+},function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "files mt-2 mb-2"
+  }, [_c('div', {
+    staticClass: "file-box file-box-l d-flex align-items-center"
+  }, [_c('a', {
+    staticClass: "file-icon",
+    attrs: {
+      "href": "http://homestead.app/images/profile.pdf"
+    }
+  }, [_vm._v("Fizika i društvo.doc")]), _vm._v(" "), _c('div', {
+    staticClass: "file-box-sty ml-auto d-flex"
+  }, [_c('a', {
+    attrs: {
+      "href": ""
+    }
+  }, [_c('img', {
+    staticClass: "profile-m-1 mr-1 align-self-center",
+    attrs: {
+      "src": "/images/profile.jpg"
+    }
+  }), _vm._v("Jelena Lončarić\n                                ")])]), _vm._v(" "), _c('div', {
     staticClass: "file-box-sty"
   }, [_vm._v("19.07.2017.")]), _vm._v(" "), _c('div', {
     staticClass: "file-box-sty icon icon-download"
@@ -72622,7 +72786,7 @@ var staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _
     attrs: {
       "src": "/images/profile.jpg"
     }
-  }), _vm._v("Jelena Lončarić\n                            ")])]), _vm._v(" "), _c('div', {
+  }), _vm._v("Jelena Lončarić\n                                ")])]), _vm._v(" "), _c('div', {
     staticClass: "file-box-sty"
   }, [_vm._v("19.07.2017.")]), _vm._v(" "), _c('div', {
     staticClass: "file-box-sty icon icon-download"
@@ -72650,7 +72814,7 @@ var staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _
     attrs: {
       "src": "/images/profile.jpg"
     }
-  }), _vm._v("Stjepan Drmić\n                            ")])]), _vm._v(" "), _c('div', {
+  }), _vm._v("Stjepan Drmić\n                                ")])]), _vm._v(" "), _c('div', {
     staticClass: "file-box-sty"
   }, [_vm._v("19.07.2017.")]), _vm._v(" "), _c('div', {
     staticClass: "file-box-sty icon icon-download"
@@ -72683,6 +72847,14 @@ var staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _
       "src": "/images/profile.jpg"
     }
   }), _vm._v("Stjepan Drmić")])])
+},function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "content"
+  }, [_c('div', {
+    staticClass: "md-form mb-1"
+  }, [_c('textarea', {
+    staticClass: "md-textarea"
+  })])])
 },function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "loading-motion"
