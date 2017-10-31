@@ -28,7 +28,7 @@ mix.js(['packages/Inspirium/SKTemplate/src/assets/js/app.js'], 'public/js/app.js
         'node_modules/mdb-pro/js/modules (optional)/waves.js',
         'node_modules/mdb-pro/js/modules (optional)/forms-free.js',
         'node_modules/mdb-pro/js/modules (optional)/preloading.js',
-        'node_modules/mdb-pro/js/modules (optional)/card-reveal.js',
+        'node_modules/mdb-pro/js/modules (optional)/cards.js',
         'node_modules/mdb-pro/js/modules (optional)/character-counter.js',
         'node_modules/mdb-pro/js/modules (optional)/toastr.js',
         'node_modules/mdb-pro/js/modules (optional)/smooth-scroll.js',
@@ -51,6 +51,7 @@ mix.js(['packages/Inspirium/SKTemplate/src/assets/js/app.js'], 'public/js/app.js
         'node_modules/mdb-pro/js/modules (optional)/chips.js',
         'node_modules/mdb-pro/js/modules (optional)/jarallax.js',
         'node_modules/mdb-pro/js/modules (optional)/jarallax-video.js',
-        'node_modules/mdb-pro/js/modules (optional)/mdb-autocomplete.js'
+        'node_modules/mdb-pro/js/modules (optional)/mdb-autocomplete.js',
+        'node_modules/mdb-pro/js/modules (optional)/enhanced-modals.js'
     ], 'public/js/mdb.js');
 
