@@ -14,7 +14,8 @@
     "laravel/passport": "^2.0",
     "laravel/tinker": "~1.0",
     "phpoffice/phpspreadsheet": "dev-develop",
-    "phpoffice/phpword": "v0.13.*"
+    "phpoffice/phpword": "v0.13.*",
+    "php-unoconv/php-unoconv": "~0.2"
   },
   "require-dev": {
     "fzaninotto/faker": "~1.4",
