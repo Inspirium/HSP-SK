@@ -50832,14 +50832,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         switchTab: function (e) {
             $(e.target).tab('show');
         },
-        saveOffer: function () {
-            this.$store.dispatch('proposition/saveProposition');
-        },
-        downloadOffer: function (index, type) {
-            //TODO: make request to download offer, probably save first :)
-        },
-        changeInput: function (e, field, id) {
-            this.$store.commit('proposition/updateOffer', { id: id, field: field, value: e.target.value });
+        downloadOffer: function (id, type) {
+            window.open('/proposition/' + this.$route.params.id + '/edit/print/' + id + '/' + type, '_blank');
         }
     },
     mounted: function () {
@@ -63152,7 +63146,8 @@ var render = function() {
                             attrs: { href: "#.pdf" },
                             on: {
                               click: function($event) {
-                                _vm.downloadOffer(index, "pdf")
+                                $event.preventDefault()
+                                _vm.downloadOffer(offer.id, "pdf")
                               }
                             }
                           },
@@ -63166,7 +63161,8 @@ var render = function() {
                             attrs: { href: "#.docx" },
                             on: {
                               click: function($event) {
-                                _vm.downloadOffer(index, "docx")
+                                $event.preventDefault()
+                                _vm.downloadOffer(offer.id, "docx")
                               }
                             }
                           },

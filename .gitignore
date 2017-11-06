@@ -14,3 +14,5 @@ dev_database.sqlite
 public/uploads
 package-lock.json
 Imenik_20170403.xlsx.xlsx
+storage
+~$int_offer_template.docx
