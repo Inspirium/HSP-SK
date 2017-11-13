@@ -47833,6 +47833,8 @@ module.exports = function spread(callback) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_path_to_regexp__ = __webpack_require__(335);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_path_to_regexp___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_path_to_regexp__);
 //
 //
 //
@@ -47879,6 +47881,7 @@ module.exports = function spread(callback) {
 //
 //
 //
+
 
 /* harmony default export */ __webpack_exports__["a"] = ({
     props: {
@@ -47937,7 +47940,12 @@ module.exports = function spread(callback) {
             return str.charAt(0).toUpperCase() + str.slice(1);
         },
         add_id: function (str, entry) {
-            return str + '/' + entry['id'];
+            let toPath = __WEBPACK_IMPORTED_MODULE_0_path_to_regexp___default.a.compile(str);
+            return toPath({ id: entry.id });
+        },
+        processRegex: function (str, entry) {
+            console.log(entry);
+            return '<img>';
         }
     },
     methods: {
@@ -51845,6 +51853,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__general_UploadModal_vue__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__modals_AssignDocuments__ = __webpack_require__(338);
 //
 //
 //
@@ -51890,6 +51899,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
@@ -51900,10 +51912,14 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         };
     },
     components: {
-        'upload-modal': __WEBPACK_IMPORTED_MODULE_0__general_UploadModal_vue__["a" /* default */]
+        uploadModal: __WEBPACK_IMPORTED_MODULE_0__general_UploadModal_vue__["a" /* default */],
+        assignDocuments: __WEBPACK_IMPORTED_MODULE_1__modals_AssignDocuments__["a" /* default */]
     },
     computed: {},
     methods: {
+        assignModalOpen: function () {
+            jQuery('#assign-documents').modal('show');
+        },
         documentAdd: function (modal) {
             jQuery('#' + modal).modal('show');
         },
@@ -53942,6 +53958,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 3: {
                     title: 'Approval Request',
                     className: 'tasktype-2'
+                },
+                4: {
+                    title: 'Assignment',
+                    className: 'tasktype-2'
                 }
             },
             documents: false,
@@ -54309,6 +54329,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 },
                 3: {
                     title: 'Approval Request',
+                    className: 'tasktype-2'
+                },
+                4: {
+                    title: 'Assignment',
                     className: 'tasktype-2'
                 }
             },
@@ -65326,10 +65350,11 @@ var render = function() {
                             [_vm._v(_vm._s(entry[key]))]
                           )
                         ]
-                      : item["raw"]
+                      : item["image"]
                         ? [
-                            _c("div", {
-                              domProps: { innerHTML: _vm._s(entry[key]) }
+                            _c("img", {
+                              staticClass: "profile-m-1 mr-1 align-self-center",
+                              attrs: { src: entry[key] }
                             })
                           ]
                         : [
@@ -73113,6 +73138,15 @@ var render = function() {
             on: { click: _vm.saveFiles }
           },
           [_vm._v(_vm._s(_vm.lang("Save")))]
+        ),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-lg btn-assign btn-assign-icon",
+            on: { click: _vm.assignModalOpen }
+          },
+          [_vm._v(_vm._s(_vm.lang("Assign to...")))]
         )
       ]),
       _vm._v(" "),
@@ -73145,7 +73179,9 @@ var render = function() {
           fileAdd: _vm.fileAdd,
           fileNameSave: _vm.fileNameSave
         }
-      })
+      }),
+      _vm._v(" "),
+      _c("assign-documents")
     ],
     1
   )
@@ -85742,6 +85778,1048 @@ function cloneRoute (to, from) {
 __webpack_require__(139);
 module.exports = __webpack_require__(140);
 
+
+/***/ }),
+/* 315 */,
+/* 316 */,
+/* 317 */,
+/* 318 */,
+/* 319 */,
+/* 320 */,
+/* 321 */,
+/* 322 */,
+/* 323 */,
+/* 324 */,
+/* 325 */,
+/* 326 */,
+/* 327 */,
+/* 328 */,
+/* 329 */,
+/* 330 */,
+/* 331 */,
+/* 332 */,
+/* 333 */,
+/* 334 */,
+/* 335 */
+/***/ (function(module, exports) {
+
+/**
+ * Expose `pathToRegexp`.
+ */
+module.exports = pathToRegexp
+module.exports.parse = parse
+module.exports.compile = compile
+module.exports.tokensToFunction = tokensToFunction
+module.exports.tokensToRegExp = tokensToRegExp
+
+/**
+ * Default configs.
+ */
+var DEFAULT_DELIMITER = '/'
+var DEFAULT_DELIMITERS = './'
+
+/**
+ * The main path matching regexp utility.
+ *
+ * @type {RegExp}
+ */
+var PATH_REGEXP = new RegExp([
+  // Match escaped characters that would otherwise appear in future matches.
+  // This allows the user to escape special characters that won't transform.
+  '(\\\\.)',
+  // Match Express-style parameters and un-named parameters with a prefix
+  // and optional suffixes. Matches appear as:
+  //
+  // "/:test(\\d+)?" => ["/", "test", "\d+", undefined, "?"]
+  // "/route(\\d+)"  => [undefined, undefined, undefined, "\d+", undefined]
+  '(?:\\:(\\w+)(?:\\(((?:\\\\.|[^\\\\()])+)\\))?|\\(((?:\\\\.|[^\\\\()])+)\\))([+*?])?'
+].join('|'), 'g')
+
+/**
+ * Parse a string for the raw tokens.
+ *
+ * @param  {string}  str
+ * @param  {Object=} options
+ * @return {!Array}
+ */
+function parse (str, options) {
+  var tokens = []
+  var key = 0
+  var index = 0
+  var path = ''
+  var defaultDelimiter = (options && options.delimiter) || DEFAULT_DELIMITER
+  var delimiters = (options && options.delimiters) || DEFAULT_DELIMITERS
+  var pathEscaped = false
+  var res
+
+  while ((res = PATH_REGEXP.exec(str)) !== null) {
+    var m = res[0]
+    var escaped = res[1]
+    var offset = res.index
+    path += str.slice(index, offset)
+    index = offset + m.length
+
+    // Ignore already escaped sequences.
+    if (escaped) {
+      path += escaped[1]
+      pathEscaped = true
+      continue
+    }
+
+    var prev = ''
+    var next = str[index]
+    var name = res[2]
+    var capture = res[3]
+    var group = res[4]
+    var modifier = res[5]
+
+    if (!pathEscaped && path.length) {
+      var k = path.length - 1
+
+      if (delimiters.indexOf(path[k]) > -1) {
+        prev = path[k]
+        path = path.slice(0, k)
+      }
+    }
+
+    // Push the current path onto the tokens.
+    if (path) {
+      tokens.push(path)
+      path = ''
+      pathEscaped = false
+    }
+
+    var partial = prev !== '' && next !== undefined && next !== prev
+    var repeat = modifier === '+' || modifier === '*'
+    var optional = modifier === '?' || modifier === '*'
+    var delimiter = prev || defaultDelimiter
+    var pattern = capture || group
+
+    tokens.push({
+      name: name || key++,
+      prefix: prev,
+      delimiter: delimiter,
+      optional: optional,
+      repeat: repeat,
+      partial: partial,
+      pattern: pattern ? escapeGroup(pattern) : '[^' + escapeString(delimiter) + ']+?'
+    })
+  }
+
+  // Push any remaining characters.
+  if (path || index < str.length) {
+    tokens.push(path + str.substr(index))
+  }
+
+  return tokens
+}
+
+/**
+ * Compile a string to a template function for the path.
+ *
+ * @param  {string}             str
+ * @param  {Object=}            options
+ * @return {!function(Object=, Object=)}
+ */
+function compile (str, options) {
+  return tokensToFunction(parse(str, options))
+}
+
+/**
+ * Expose a method for transforming tokens into the path function.
+ */
+function tokensToFunction (tokens) {
+  // Compile all the tokens into regexps.
+  var matches = new Array(tokens.length)
+
+  // Compile all the patterns before compilation.
+  for (var i = 0; i < tokens.length; i++) {
+    if (typeof tokens[i] === 'object') {
+      matches[i] = new RegExp('^(?:' + tokens[i].pattern + ')$')
+    }
+  }
+
+  return function (data, options) {
+    var path = ''
+    var encode = (options && options.encode) || encodeURIComponent
+
+    for (var i = 0; i < tokens.length; i++) {
+      var token = tokens[i]
+
+      if (typeof token === 'string') {
+        path += token
+        continue
+      }
+
+      var value = data ? data[token.name] : undefined
+      var segment
+
+      if (Array.isArray(value)) {
+        if (!token.repeat) {
+          throw new TypeError('Expected "' + token.name + '" to not repeat, but got array')
+        }
+
+        if (value.length === 0) {
+          if (token.optional) continue
+
+          throw new TypeError('Expected "' + token.name + '" to not be empty')
+        }
+
+        for (var j = 0; j < value.length; j++) {
+          segment = encode(value[j])
+
+          if (!matches[i].test(segment)) {
+            throw new TypeError('Expected all "' + token.name + '" to match "' + token.pattern + '"')
+          }
+
+          path += (j === 0 ? token.prefix : token.delimiter) + segment
+        }
+
+        continue
+      }
+
+      if (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean') {
+        segment = encode(String(value))
+
+        if (!matches[i].test(segment)) {
+          throw new TypeError('Expected "' + token.name + '" to match "' + token.pattern + '", but got "' + segment + '"')
+        }
+
+        path += token.prefix + segment
+        continue
+      }
+
+      if (token.optional) {
+        // Prepend partial segment prefixes.
+        if (token.partial) path += token.prefix
+
+        continue
+      }
+
+      throw new TypeError('Expected "' + token.name + '" to be ' + (token.repeat ? 'an array' : 'a string'))
+    }
+
+    return path
+  }
+}
+
+/**
+ * Escape a regular expression string.
+ *
+ * @param  {string} str
+ * @return {string}
+ */
+function escapeString (str) {
+  return str.replace(/([.+*?=^!:${}()[\]|/\\])/g, '\\$1')
+}
+
+/**
+ * Escape the capturing group by escaping special characters and meaning.
+ *
+ * @param  {string} group
+ * @return {string}
+ */
+function escapeGroup (group) {
+  return group.replace(/([=!:$/()])/g, '\\$1')
+}
+
+/**
+ * Get the flags for a regexp from the options.
+ *
+ * @param  {Object} options
+ * @return {string}
+ */
+function flags (options) {
+  return options && options.sensitive ? '' : 'i'
+}
+
+/**
+ * Pull out keys from a regexp.
+ *
+ * @param  {!RegExp} path
+ * @param  {Array=}  keys
+ * @return {!RegExp}
+ */
+function regexpToRegexp (path, keys) {
+  if (!keys) return path
+
+  // Use a negative lookahead to match only capturing groups.
+  var groups = path.source.match(/\((?!\?)/g)
+
+  if (groups) {
+    for (var i = 0; i < groups.length; i++) {
+      keys.push({
+        name: i,
+        prefix: null,
+        delimiter: null,
+        optional: false,
+        repeat: false,
+        partial: false,
+        pattern: null
+      })
+    }
+  }
+
+  return path
+}
+
+/**
+ * Transform an array into a regexp.
+ *
+ * @param  {!Array}  path
+ * @param  {Array=}  keys
+ * @param  {Object=} options
+ * @return {!RegExp}
+ */
+function arrayToRegexp (path, keys, options) {
+  var parts = []
+
+  for (var i = 0; i < path.length; i++) {
+    parts.push(pathToRegexp(path[i], keys, options).source)
+  }
+
+  return new RegExp('(?:' + parts.join('|') + ')', flags(options))
+}
+
+/**
+ * Create a path regexp from string input.
+ *
+ * @param  {string}  path
+ * @param  {Array=}  keys
+ * @param  {Object=} options
+ * @return {!RegExp}
+ */
+function stringToRegexp (path, keys, options) {
+  return tokensToRegExp(parse(path, options), keys, options)
+}
+
+/**
+ * Expose a function for taking tokens and returning a RegExp.
+ *
+ * @param  {!Array}  tokens
+ * @param  {Array=}  keys
+ * @param  {Object=} options
+ * @return {!RegExp}
+ */
+function tokensToRegExp (tokens, keys, options) {
+  options = options || {}
+
+  var strict = options.strict
+  var end = options.end !== false
+  var delimiter = escapeString(options.delimiter || DEFAULT_DELIMITER)
+  var delimiters = options.delimiters || DEFAULT_DELIMITERS
+  var endsWith = [].concat(options.endsWith || []).map(escapeString).concat('$').join('|')
+  var route = ''
+  var isEndDelimited = false
+
+  // Iterate over the tokens and create our regexp string.
+  for (var i = 0; i < tokens.length; i++) {
+    var token = tokens[i]
+
+    if (typeof token === 'string') {
+      route += escapeString(token)
+      isEndDelimited = i === tokens.length - 1 && delimiters.indexOf(token[token.length - 1]) > -1
+    } else {
+      var prefix = escapeString(token.prefix)
+      var capture = token.repeat
+        ? '(?:' + token.pattern + ')(?:' + prefix + '(?:' + token.pattern + '))*'
+        : token.pattern
+
+      if (keys) keys.push(token)
+
+      if (token.optional) {
+        if (token.partial) {
+          route += prefix + '(' + capture + ')?'
+        } else {
+          route += '(?:' + prefix + '(' + capture + '))?'
+        }
+      } else {
+        route += prefix + '(' + capture + ')'
+      }
+    }
+  }
+
+  if (end) {
+    if (!strict) route += '(?:' + delimiter + ')?'
+
+    route += endsWith === '$' ? '$' : '(?=' + endsWith + ')'
+  } else {
+    if (!strict) route += '(?:' + delimiter + '(?=' + endsWith + '))?'
+    if (!isEndDelimited) route += '(?=' + delimiter + '|' + endsWith + ')'
+  }
+
+  return new RegExp('^' + route, flags(options))
+}
+
+/**
+ * Normalize the given path string, returning a regular expression.
+ *
+ * An empty array can be passed in for the keys, which will hold the
+ * placeholder key descriptions. For example, using `/user/:id`, `keys` will
+ * contain `[{ name: 'id', delimiter: '/', optional: false, repeat: false }]`.
+ *
+ * @param  {(string|RegExp|Array)} path
+ * @param  {Array=}                keys
+ * @param  {Object=}               options
+ * @return {!RegExp}
+ */
+function pathToRegexp (path, keys, options) {
+  if (path instanceof RegExp) {
+    return regexpToRegexp(path, keys)
+  }
+
+  if (Array.isArray(path)) {
+    return arrayToRegexp(/** @type {!Array} */ (path), keys, options)
+  }
+
+  return stringToRegexp(/** @type {string} */ (path), keys, options)
+}
+
+
+/***/ }),
+/* 336 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+    name: "assign-documents",
+    data() {
+        return {
+            employee: '',
+            e_suggestions: [],
+            department: '',
+            d_suggestions: [],
+            employees: [],
+            description: '',
+            date: '',
+            access: 0,
+            priority: 0,
+            departments: [],
+            cancel: false
+        };
+    },
+    methods: {
+        autocomplete: function (event, type) {
+            if (this.cancel) {
+                this.cancel();
+                this.cancel = false;
+            }
+            let CancelToken = axios.CancelToken;
+            if (this[type].length > 2) {
+                axios.get('/api/human_resources/' + type + '/search/' + this[type], {
+                    cancelToken: new CancelToken(c => {
+                        this.cancel = c;
+                    })
+                }).then(response => {
+                    if (type === 'department') {
+                        this.d_suggestions = response.data;
+                    } else {
+                        this.e_suggestions = response.data;
+                    }
+                }).catch(error => {});
+            }
+        },
+        autocomplete_select: function (index, type) {
+            if (type === 'department') {
+                //this.$store.commit('proposition/pushToArray', {key: 'departments', group: 'assigned', value: this.d_suggestions[index]});
+                this.departments.push(this.d_suggestions[index]);
+                this.d_suggestions = [];
+                this.department = '';
+            } else {
+                //this.$store.commit('proposition/pushToArray', {key: 'employees', group: 'assigned', value: this.e_suggestions[index]});
+                this.employees.push(this.e_suggestions[index]);
+                this.e_suggestions = [];
+                this.employee = '';
+            }
+        },
+        assignValues: function () {
+            axios.post('/api/proposition/' + this.$route.params.id + '/assign/document', { employees: this.employees, departments: this.departments, description: this.description, date: this.date, access: this.access, priority: this.priority, path: this.$route.meta.dir }).then(() => {
+                toastr.success('Uspješno obavljeno');
+                $('#centralModalAssign').modal('hide');
+            }).catch(() => {
+                toastr.error('Došlo je do problema. Pokušajte ponovno');
+            });
+        }
+    },
+    mounted() {
+        $('.datepicker').pickadate({
+            format: 'dd. mm. yyyy.',
+            onSet: context => {
+                let date = new Date(context.select);
+                this.date = this.$options.filters.moment(date, 'DD. MM. YYYY.');
+            }
+        });
+    }
+});
+
+/***/ }),
+/* 337 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(18)();
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+
+/***/ }),
+/* 338 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_AssignDocuments_vue__ = __webpack_require__(336);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_5f59e02a_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_AssignDocuments_vue__ = __webpack_require__(339);
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(340)
+}
+var normalizeComponent = __webpack_require__(1)
+/* script */
+
+/* template */
+
+/* template functional */
+  var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-5f59e02a"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_AssignDocuments_vue__["a" /* default */],
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_5f59e02a_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_AssignDocuments_vue__["a" /* default */],
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "packages/Inspirium/SKTemplate/src/assets/js/components/modals/AssignDocuments.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-loader/node_modules/vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-5f59e02a", Component.options)
+  } else {
+    hotAPI.reload("data-v-5f59e02a", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+/* harmony default export */ __webpack_exports__["a"] = (Component.exports);
+
+
+/***/ }),
+/* 339 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "modal fade",
+      attrs: {
+        id: "assign-documents",
+        tabindex: "-1",
+        role: "dialog",
+        "aria-hidden": "true"
+      }
+    },
+    [
+      _c(
+        "div",
+        {
+          staticClass: "modal-dialog modal-notify modal-warning",
+          attrs: { role: "document" }
+        },
+        [
+          _c("div", { staticClass: "modal-content" }, [
+            _c("div", { staticClass: "modal-header flex-column px-3 pt-3" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c("div", { staticClass: "d-flex" }, [
+                _c("i", {
+                  staticClass:
+                    "fa fa-user-circle-o fa-4x mb-1 animated rotateInDownLeft"
+                }),
+                _vm._v(" "),
+                _c("h1", { staticClass: "modal-title w-100 text-center" }, [
+                  _vm._v(_vm._s(_vm.lang("Assign to...")))
+                ])
+              ]),
+              _vm._v(" "),
+              _c("h6", { staticClass: "w-100 text-center mb-2" }, [
+                _vm._v(
+                  _vm._s(_vm.lang("Assign department or directly employee"))
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "tabs-wrapper" }, [
+              _c(
+                "ul",
+                {
+                  staticClass: "nav classic-tabs tabs-cyan tab-full",
+                  attrs: { role: "tablist" }
+                },
+                [
+                  _c("li", { staticClass: "nav-item" }, [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "nav-link waves-light active",
+                        attrs: {
+                          "data-toggle": "tab",
+                          href: "#panel52",
+                          role: "tab"
+                        }
+                      },
+                      [_vm._v(_vm._s(_vm.lang("Employee")))]
+                    )
+                  ])
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "tab-content" }, [
+              _c(
+                "div",
+                {
+                  staticClass: "modal-body tab-pane fade in show active",
+                  attrs: { id: "panel52", role: "tabpanel" }
+                },
+                [
+                  _c("div", { staticClass: "row" }, [
+                    _c(
+                      "div",
+                      { staticClass: "col-md-12" },
+                      [
+                        _c("div", { staticClass: "md-form d-flex addon" }, [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.employee,
+                                expression: "employee"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: {
+                              type: "text",
+                              name: "employee",
+                              placeholder: "Pronađi osobu"
+                            },
+                            domProps: { value: _vm.employee },
+                            on: {
+                              keyup: function($event) {
+                                _vm.autocomplete($event, "employee")
+                              },
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.employee = $event.target.value
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _vm.e_suggestions.length
+                            ? _c(
+                                "ul",
+                                { staticClass: "mdb-autocomplete-wrap" },
+                                _vm._l(_vm.e_suggestions, function(
+                                  item,
+                                  index
+                                ) {
+                                  return _c(
+                                    "li",
+                                    {
+                                      on: {
+                                        click: function($event) {
+                                          _vm.autocomplete_select(
+                                            index,
+                                            "employee"
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [_vm._v(_vm._s(item.name))]
+                                  )
+                                })
+                              )
+                            : _vm._e()
+                        ]),
+                        _vm._v(" "),
+                        _vm._l(_vm.employees, function(employee) {
+                          return _c("div", { staticClass: "chip mb-5" }, [
+                            _c("img", {
+                              attrs: {
+                                src:
+                                  "https://mdbootstrap.com/img/Photos/Avatars/avatar-6.jpg"
+                              }
+                            }),
+                            _vm._v(_vm._s(employee.name)),
+                            _c("i", { staticClass: "close fa fa-times" })
+                          ])
+                        }),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "md-form mt-2 mb-2" }, [
+                          _c("textarea", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.description,
+                                expression: "description"
+                              }
+                            ],
+                            staticClass: "md-textarea",
+                            attrs: { id: "form76" },
+                            domProps: { value: _vm.description },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.description = $event.target.value
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("label", { attrs: { for: "form76" } }, [
+                            _vm._v(_vm._s(_vm.lang("Task Description")))
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "row mt-4" }, [
+                          _c("div", { staticClass: "col-md-5" }, [
+                            _c("div", { staticClass: "md-form" }, [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.date,
+                                    expression: "date"
+                                  }
+                                ],
+                                staticClass:
+                                  "form-control datepicker btn-white",
+                                attrs: {
+                                  placeholder: "Selected date",
+                                  type: "text",
+                                  id: "date-picker2"
+                                },
+                                domProps: { value: _vm.date },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.date = $event.target.value
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("label", { attrs: { for: "date-picker2" } }, [
+                                _vm._v(_vm._s(_vm.lang("Select Date")))
+                              ])
+                            ])
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "page-name-m" }, [
+                          _vm._v(_vm._s(_vm.lang("Priority")))
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-inline mb-3" }, [
+                          _c("fieldset", { staticClass: "form-group" }, [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.priority,
+                                  expression: "priority"
+                                }
+                              ],
+                              attrs: {
+                                name: "priority1",
+                                type: "radio",
+                                id: "radio61",
+                                value: "high"
+                              },
+                              domProps: {
+                                checked: _vm._q(_vm.priority, "high")
+                              },
+                              on: {
+                                change: function($event) {
+                                  _vm.priority = "high"
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("label", { attrs: { for: "radio61" } }, [
+                              _vm._v(_vm._s(_vm.lang("High")))
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("fieldset", { staticClass: "form-group" }, [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.priority,
+                                  expression: "priority"
+                                }
+                              ],
+                              attrs: {
+                                name: "priority1",
+                                type: "radio",
+                                id: "radio71",
+                                value: "medium"
+                              },
+                              domProps: {
+                                checked: _vm._q(_vm.priority, "medium")
+                              },
+                              on: {
+                                change: function($event) {
+                                  _vm.priority = "medium"
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("label", { attrs: { for: "radio71" } }, [
+                              _vm._v(_vm._s(_vm.lang("Medium")))
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("fieldset", { staticClass: "form-group" }, [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.priority,
+                                  expression: "priority"
+                                }
+                              ],
+                              attrs: {
+                                name: "priority1",
+                                type: "radio",
+                                id: "radio81",
+                                value: "low"
+                              },
+                              domProps: {
+                                checked: _vm._q(_vm.priority, "low")
+                              },
+                              on: {
+                                change: function($event) {
+                                  _vm.priority = "low"
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("label", { attrs: { for: "radio81" } }, [
+                              _vm._v(_vm._s(_vm.lang("Low")))
+                            ])
+                          ])
+                        ])
+                      ],
+                      2
+                    )
+                  ])
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-footer btn-footer" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-lg btn-cancel",
+                  attrs: { type: "button", "data-dismiss": "modal" }
+                },
+                [_vm._v(_vm._s(_vm.lang("Cancel")))]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-lg btn-save",
+                  attrs: { type: "button", "data-dismiss": "modal" },
+                  on: { click: _vm.assignValues }
+                },
+                [_vm._v(_vm._s(_vm.lang("Assign")))]
+              )
+            ])
+          ])
+        ]
+      )
+    ]
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "close",
+        attrs: {
+          type: "button",
+          "data-dismiss": "modal",
+          "aria-label": "Close"
+        }
+      },
+      [
+        _c(
+          "span",
+          { staticClass: "white-text", attrs: { "aria-hidden": "true" } },
+          [_vm._v("×")]
+        )
+      ]
+    )
+  }
+]
+render._withStripped = true
+var esExports = { render: render, staticRenderFns: staticRenderFns }
+/* harmony default export */ __webpack_exports__["a"] = (esExports);
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-loader/node_modules/vue-hot-reload-api")      .rerender("data-v-5f59e02a", esExports)
+  }
+}
+
+/***/ }),
+/* 340 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(337);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(138)("abc6721a", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../../../../node_modules/css-loader/index.js!../../../../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-5f59e02a\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./AssignDocuments.vue", function() {
+     var newContent = require("!!../../../../../../../../node_modules/css-loader/index.js!../../../../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-5f59e02a\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./AssignDocuments.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
 
 /***/ })
 /******/ ]);
