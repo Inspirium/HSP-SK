@@ -13,9 +13,10 @@
     "laravel/framework": "5.5.*",
     "laravel/passport": "^2.0",
     "laravel/tinker": "~1.0",
+    "php-unoconv/php-unoconv": "~0.2",
     "phpoffice/phpspreadsheet": "dev-develop",
     "phpoffice/phpword": "v0.13.*",
-    "php-unoconv/php-unoconv": "~0.2"
+    "pusher/pusher-php-server": "~3.0"
   },
   "require-dev": {
     "fzaninotto/faker": "~1.4",
