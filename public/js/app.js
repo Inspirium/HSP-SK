@@ -34221,7 +34221,7 @@ if (typeof DEBUG !== 'undefined' && DEBUG) {
   ) }
 }
 
-var listToStyles = __webpack_require__(316)
+var listToStyles = __webpack_require__(314)
 
 /*
 type StyleObject = {
@@ -46325,7 +46325,7 @@ process.umask = function() { return 0; };
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(315)
+  __webpack_require__(313)
 }
 var normalizeComponent = __webpack_require__(1)
 /* script */
@@ -46378,9 +46378,9 @@ if (false) {(function () {
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_moment__ = __webpack_require__(311);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_moment__ = __webpack_require__(315);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_moment__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_router__ = __webpack_require__(312);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_router__ = __webpack_require__(316);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vue_deepset__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vue_deepset___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_vue_deepset__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__vuex_store__ = __webpack_require__(219);
@@ -54751,7 +54751,7 @@ window.Echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default.a({
 
 
 const routes = [{ path: '/proposition/start', component: __WEBPACK_IMPORTED_MODULE_18__components_proposition_PropositionStart__["a" /* default */] }, { path: '/proposition/:id', component: __WEBPACK_IMPORTED_MODULE_0__components_proposition_Proposition__["a" /* default */],
-    children: [{ path: 'edit/start', component: __WEBPACK_IMPORTED_MODULE_18__components_proposition_PropositionStart__["a" /* default */], meta: { save: 'start', validate: { id: 'int' } } }, { path: 'edit/basic_data', component: __WEBPACK_IMPORTED_MODULE_1__components_proposition_BasicData__["a" /* default */], meta: { save: 'basic_data', validate: { id: 'int' } } }, { path: 'edit/categorization', component: __WEBPACK_IMPORTED_MODULE_2__components_proposition_Categorization__["a" /* default */], meta: { save: 'categorization', validate: { id: 'int' } } }, { path: 'edit/market_potential', component: __WEBPACK_IMPORTED_MODULE_3__components_proposition_MarketPotential__["a" /* default */], meta: { save: 'market_potential', validate: { id: 'int' } } }, { path: 'edit/technical_data', component: __WEBPACK_IMPORTED_MODULE_4__components_proposition_TechnicalData__["a" /* default */], meta: { save: 'technical_data', validate: { id: 'int' } } }, { path: 'edit/print', component: __WEBPACK_IMPORTED_MODULE_7__components_proposition_Print__["a" /* default */], meta: { save: 'print', validate: { id: 'int' } } }, { path: 'edit/authors_expense', component: __WEBPACK_IMPORTED_MODULE_5__components_proposition_AuthorsExpense__["a" /* default */], meta: { save: 'authors_expense', validate: { id: 'int' } } }, { path: 'edit/production_expense', component: __WEBPACK_IMPORTED_MODULE_9__components_proposition_ProductionExpense__["a" /* default */], meta: { save: 'production_expense', validate: { id: 'int' } } }, { path: 'edit/marketing_expense', component: __WEBPACK_IMPORTED_MODULE_10__components_proposition_MarketingExpense__["a" /* default */], meta: { save: 'marketing_expense', validate: { id: 'int' } } }, { path: 'edit/distribution_expense', component: __WEBPACK_IMPORTED_MODULE_12__components_proposition_DistributionExpense__["a" /* default */], meta: { save: 'distribution_expense', validate: { id: 'int' } } }, { path: 'edit/layout_expense', component: __WEBPACK_IMPORTED_MODULE_14__components_proposition_LayoutExpense__["a" /* default */], meta: { save: 'layout_expense', validate: { id: 'int' } } }, { path: 'edit/deadline', component: __WEBPACK_IMPORTED_MODULE_16__components_proposition_Deadline__["a" /* default */], meta: { save: 'deadline', validate: { id: 'int' } } }, { path: 'edit/calculation', component: __WEBPACK_IMPORTED_MODULE_17__components_proposition_Calculation__["a" /* default */], meta: { save: 'calculation', validate: { id: 'int' } } }, { path: 'preparation/translation', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'translation', validate: { id: 'int' } } }, { path: 'preparation/technical_preparation', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'technical_preparation', validate: { id: 'int' } } }, { path: 'preparation/proofreading', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'proofreading', validate: { id: 'int' } } }, { path: 'preparation/additional_materials', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'additional_materials', validate: { id: 'int' } } }, { path: 'preparation/reviews', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'reviews', validate: { id: 'int' } } }, { path: 'preparation/lecture', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'lecture', validate: { id: 'int' } } }, { path: 'preparation/technical_correction', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'technical_correction', validate: { id: 'int' } } }, { path: 'preparation/final_review', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'final_review', validate: { id: 'int' } } }, { path: 'expenses/authors_expense', component: __WEBPACK_IMPORTED_MODULE_6__components_proposition_expenses_AuthorsExpense__["a" /* default */], meta: { save: 'authors_expense', validate: { id: 'int' } } }, { path: 'expenses/production_expense', component: __WEBPACK_IMPORTED_MODULE_8__components_proposition_expenses_ProductionExpense__["a" /* default */], meta: { save: 'production_expense', validate: { id: 'int' } } }, { path: 'expenses/marketing_expense', component: __WEBPACK_IMPORTED_MODULE_11__components_proposition_expenses_MarketingExpense__["a" /* default */], meta: { save: 'marketing_expense', validate: { id: 'int' } } }, { path: 'expenses/distribution_expense', component: __WEBPACK_IMPORTED_MODULE_13__components_proposition_expenses_DistributionExpense__["a" /* default */], meta: { save: 'distribution_expense', validate: { id: 'int' } } }, { path: 'expenses/layout_expense', component: __WEBPACK_IMPORTED_MODULE_15__components_proposition_expenses_LayoutExpense__["a" /* default */], meta: { save: 'layout_expense', validate: { id: 'int' } } }, { path: 'expenses/compare', component: __WEBPACK_IMPORTED_MODULE_19__components_proposition_expenses_Compare__["a" /* default */], meta: { validate: { id: 'int' } } }, { path: 'design/cover_design', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'cover_design', validate: { id: 'int' } } }, { path: 'design/layout_design', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'layout_design', validate: { id: 'int' } } }, { path: 'layout/first_block_layout', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'first_block_layout', validate: { id: 'int' } } }, { path: 'layout/cover', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'cover', validate: { id: 'int' } } }, { path: 'layout/layout', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'layout', validate: { id: 'int' } } }, { path: 'layout/first_revision', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'first_revision', validate: { id: 'int' } } }, { path: 'layout/correction', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'correction', validate: { id: 'int' } } }, { path: 'layout/correction_input', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'correction_input', validate: { id: 'int' } } }, { path: 'layout/revisions', component: __WEBPACK_IMPORTED_MODULE_21__components_proposition_Revisions__["a" /* default */], meta: { validate: { id: 'int' } } }, { path: 'final_price/price_definition', component: __WEBPACK_IMPORTED_MODULE_22__components_proposition_PriceDefinition__["a" /* default */], meta: { validate: { id: 'int' } } }, { path: 'prepress/print_proof', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'print_proof', validate: { id: 'int' } } }, { path: 'prepress/print_proof_correction', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'print_proof_correction', validate: { id: 'int' } } }, { path: 'prepress/print', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'print', validate: { id: 'int' } } }, { path: 'prepress/warehouse', component: __WEBPACK_IMPORTED_MODULE_23__components_proposition_Warehouse__["a" /* default */], meta: { validate: { id: 'int' } } }, { path: 'additionals/multimedia', component: __WEBPACK_IMPORTED_MODULE_25__components_proposition_Multimedia__["a" /* default */], meta: { validate: { id: 'int' } } }, { path: 'additionals/marketing', component: __WEBPACK_IMPORTED_MODULE_24__components_proposition_Marketing__["a" /* default */], meta: { validate: { id: 'int' } } }]
+            children: [{ path: 'edit/start', component: __WEBPACK_IMPORTED_MODULE_18__components_proposition_PropositionStart__["a" /* default */], meta: { save: 'start', validate: { id: 'int' } } }, { path: 'edit/basic_data', component: __WEBPACK_IMPORTED_MODULE_1__components_proposition_BasicData__["a" /* default */], meta: { save: 'basic_data', validate: { id: 'int' } } }, { path: 'edit/categorization', component: __WEBPACK_IMPORTED_MODULE_2__components_proposition_Categorization__["a" /* default */], meta: { save: 'categorization', validate: { id: 'int' } } }, { path: 'edit/market_potential', component: __WEBPACK_IMPORTED_MODULE_3__components_proposition_MarketPotential__["a" /* default */], meta: { save: 'market_potential', validate: { id: 'int' } } }, { path: 'edit/technical_data', component: __WEBPACK_IMPORTED_MODULE_4__components_proposition_TechnicalData__["a" /* default */], meta: { save: 'technical_data', validate: { id: 'int' } } }, { path: 'edit/print', component: __WEBPACK_IMPORTED_MODULE_7__components_proposition_Print__["a" /* default */], meta: { save: 'print', validate: { id: 'int' } } }, { path: 'edit/authors_expense', component: __WEBPACK_IMPORTED_MODULE_5__components_proposition_AuthorsExpense__["a" /* default */], meta: { save: 'authors_expense', validate: { id: 'int' } } }, { path: 'edit/production_expense', component: __WEBPACK_IMPORTED_MODULE_9__components_proposition_ProductionExpense__["a" /* default */], meta: { save: 'production_expense', validate: { id: 'int' } } }, { path: 'edit/marketing_expense', component: __WEBPACK_IMPORTED_MODULE_10__components_proposition_MarketingExpense__["a" /* default */], meta: { save: 'marketing_expense', validate: { id: 'int' } } }, { path: 'edit/distribution_expense', component: __WEBPACK_IMPORTED_MODULE_12__components_proposition_DistributionExpense__["a" /* default */], meta: { save: 'distribution_expense', validate: { id: 'int' } } }, { path: 'edit/layout_expense', component: __WEBPACK_IMPORTED_MODULE_14__components_proposition_LayoutExpense__["a" /* default */], meta: { save: 'layout_expense', validate: { id: 'int' } } }, { path: 'edit/deadline', component: __WEBPACK_IMPORTED_MODULE_16__components_proposition_Deadline__["a" /* default */], meta: { save: 'deadline', validate: { id: 'int' } } }, { path: 'edit/calculation', component: __WEBPACK_IMPORTED_MODULE_17__components_proposition_Calculation__["a" /* default */], meta: { save: 'calculation', validate: { id: 'int' } } }, { path: 'preparation/translation', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'translation', validate: { id: 'int' } } }, { path: 'preparation/technical_preparation', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'technical_preparation', validate: { id: 'int' } } }, { path: 'preparation/proofreading', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'proofreading', validate: { id: 'int' } } }, { path: 'preparation/additional_materials', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'additional_materials', validate: { id: 'int' } } }, { path: 'preparation/reviews', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'reviews', validate: { id: 'int' } } }, { path: 'preparation/lecture', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'lecture', validate: { id: 'int' } } }, { path: 'preparation/technical_correction', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'technical_correction', validate: { id: 'int' } } }, { path: 'preparation/final_review', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'final_review', validate: { id: 'int' } } }, { path: 'expenses/authors_expense', component: __WEBPACK_IMPORTED_MODULE_6__components_proposition_expenses_AuthorsExpense__["a" /* default */], meta: { save: 'authors_expense', validate: { id: 'int' } } }, { path: 'expenses/production_expense', component: __WEBPACK_IMPORTED_MODULE_8__components_proposition_expenses_ProductionExpense__["a" /* default */], meta: { save: 'production_expense', validate: { id: 'int' } } }, { path: 'expenses/marketing_expense', component: __WEBPACK_IMPORTED_MODULE_11__components_proposition_expenses_MarketingExpense__["a" /* default */], meta: { save: 'marketing_expense', validate: { id: 'int' } } }, { path: 'expenses/distribution_expense', component: __WEBPACK_IMPORTED_MODULE_13__components_proposition_expenses_DistributionExpense__["a" /* default */], meta: { save: 'distribution_expense', validate: { id: 'int' } } }, { path: 'expenses/layout_expense', component: __WEBPACK_IMPORTED_MODULE_15__components_proposition_expenses_LayoutExpense__["a" /* default */], meta: { save: 'layout_expense', validate: { id: 'int' } } }, { path: 'expenses/compare', component: __WEBPACK_IMPORTED_MODULE_19__components_proposition_expenses_Compare__["a" /* default */], meta: { validate: { id: 'int' } } }, { path: 'design/cover_design', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'cover_design', validate: { id: 'int' } } }, { path: 'design/layout_design', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'layout_design', validate: { id: 'int' } } }, { path: 'layout/first_block_layout', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'first_block_layout', validate: { id: 'int' } } }, { path: 'layout/cover', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'cover', validate: { id: 'int' } } }, { path: 'layout/layout', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'layout', validate: { id: 'int' } } }, { path: 'layout/first_revision', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'first_revision', validate: { id: 'int' } } }, { path: 'layout/correction', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'correction', validate: { id: 'int' } } }, { path: 'layout/correction_input', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'correction_input', validate: { id: 'int' } } }, { path: 'layout/revisions', component: __WEBPACK_IMPORTED_MODULE_21__components_proposition_Revisions__["a" /* default */], meta: { validate: { id: 'int' } } }, { path: 'final_price/price_definition', component: __WEBPACK_IMPORTED_MODULE_22__components_proposition_PriceDefinition__["a" /* default */], meta: { validate: { id: 'int' } } }, { path: 'prepress/print_proof', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'print_proof', validate: { id: 'int' } } }, { path: 'prepress/print_proof_correction', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'print_proof_correction', validate: { id: 'int' } } }, { path: 'prepress/print', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'print', validate: { id: 'int' } } }, { path: 'prepress/warehouse', component: __WEBPACK_IMPORTED_MODULE_23__components_proposition_Warehouse__["a" /* default */], meta: { validate: { id: 'int' } } }, { path: 'additionals/multimedia', component: __WEBPACK_IMPORTED_MODULE_25__components_proposition_Multimedia__["a" /* default */], meta: { validate: { id: 'int' } } }, { path: 'additionals/marketing', component: __WEBPACK_IMPORTED_MODULE_24__components_proposition_Marketing__["a" /* default */], meta: { validate: { id: 'int' } } }]
 }, { path: '/tasks', component: __WEBPACK_IMPORTED_MODULE_27__components_tasks_Tasks__["a" /* default */] }, { path: '/task/edit/:id(\\d+)?', component: __WEBPACK_IMPORTED_MODULE_28__components_tasks_TaskEdit__["a" /* default */] }, { path: '/task/show/:id(\\d+)', component: __WEBPACK_IMPORTED_MODULE_29__components_tasks_TaskShow__["a" /* default */] }, { path: '/human_resources/employee/new', component: __WEBPACK_IMPORTED_MODULE_26__components_hr_EditProfile__["a" /* default */] }, { path: '/human_resources/employee/:id(\\d+)/edit', component: __WEBPACK_IMPORTED_MODULE_26__components_hr_EditProfile__["a" /* default */] }, { path: '/human_resources/employee/:id(\\d+)', component: __WEBPACK_IMPORTED_MODULE_26__components_hr_EditProfile__["a" /* default */] }];
 /* harmony export (immutable) */ __webpack_exports__["a"] = routes;
 
@@ -63947,7 +63947,7 @@ if (false) {(function () {
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(313)
+  __webpack_require__(311)
 }
 var normalizeComponent = __webpack_require__(1)
 /* script */
@@ -64002,7 +64002,7 @@ if (false) {(function () {
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(314)
+  __webpack_require__(312)
 }
 var normalizeComponent = __webpack_require__(1)
 /* script */
@@ -67286,7 +67286,7 @@ var render = function() {
                     }
                   ],
                   staticClass: "form-control",
-                  attrs: { type: "number" },
+                  attrs: { type: "text" },
                   domProps: { value: item.expense },
                   on: {
                     input: function($event) {
@@ -77400,7 +77400,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "content" }, [
     _c("div", { staticClass: "page-name-xl mb-4 mt-3" }, [
-      _vm._v(_vm._s(_vm.lang("Name And Surname")))
+      _vm._v(_vm._s(_vm.lang("Basic Info")))
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "row" }, [
@@ -77477,7 +77477,7 @@ var render = function() {
         _vm._v(" "),
         _c("div", { staticClass: "page-name-m" }, [_vm._v("Spol")]),
         _vm._v(" "),
-        _c("div", { staticClass: "form-inline mb-3" }, [
+        _c("div", { staticClass: "form-inline mb-5" }, [
           _c("fieldset", { staticClass: "form-group" }, [
             _c("input", {
               directives: [
@@ -77933,21 +77933,22 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "d-flex flex-column align-items-center" }, [
+          _c("div", [_vm._v(_vm._s(_vm.lang("Upload New Image")))]),
+          _vm._v(" "),
           _c("img", {
             staticClass: "profile-xl",
             attrs: { src: _vm.employee.image }
           }),
           _vm._v(" "),
           _c("input", {
-            staticClass: "btn btn-neutral mt-1",
+            staticClass: "btn btn-neutral mt-3",
             attrs: { type: "file" },
             on: {
               change: function($event) {
                 _vm.previewImage($event.target)
               }
             }
-          }),
-          _vm._v(_vm._s(_vm.lang("Upload New Image")) + "\n            ")
+          })
         ])
       ])
     ]),
@@ -85446,7 +85447,7 @@ var render = function() {
           _c("div", { staticClass: "modal-header flex-column px-3 pt-3" }, [
             _vm._m(0),
             _vm._v(" "),
-            _c("div", { staticClass: "d-flex" }, [
+            _c("div", { staticClass: "d-flex mx-auto" }, [
               _c("i", {
                 staticClass: "fa fa-exclamation-triangle fa-4x animated flash"
               }),
@@ -85848,6 +85849,117 @@ if (false) {
 /* 311 */
 /***/ (function(module, exports, __webpack_require__) {
 
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(220);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(13)("488d8332", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../../../../node_modules/css-loader/index.js!../../../../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-4eccb3f4\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./AssignDocuments.vue", function() {
+     var newContent = require("!!../../../../../../../../node_modules/css-loader/index.js!../../../../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-4eccb3f4\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./AssignDocuments.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 312 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(221);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(13)("57a52d16", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../../../../node_modules/css-loader/index.js!../../../../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-a05d4fdc\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./AssignProposition.vue", function() {
+     var newContent = require("!!../../../../../../../../node_modules/css-loader/index.js!../../../../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-a05d4fdc\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./AssignProposition.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 313 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(222);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(13)("38d39e14", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../../../../node_modules/css-loader/index.js!../../../../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-c9df2fd4\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./WarningModal.vue", function() {
+     var newContent = require("!!../../../../../../../../node_modules/css-loader/index.js!../../../../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-c9df2fd4\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./WarningModal.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 314 */
+/***/ (function(module, exports) {
+
+/**
+ * Translates the list format produced by css-loader into something
+ * easier to manipulate.
+ */
+module.exports = function listToStyles (parentId, list) {
+  var styles = []
+  var newStyles = {}
+  for (var i = 0; i < list.length; i++) {
+    var item = list[i]
+    var id = item[0]
+    var css = item[1]
+    var media = item[2]
+    var sourceMap = item[3]
+    var part = {
+      id: parentId + ':' + i,
+      css: css,
+      media: media,
+      sourceMap: sourceMap
+    }
+    if (!newStyles[id]) {
+      styles.push(newStyles[id] = { id: id, parts: [part] })
+    } else {
+      newStyles[id].parts.push(part)
+    }
+  }
+  return styles
+}
+
+
+/***/ }),
+/* 315 */
+/***/ (function(module, exports, __webpack_require__) {
+
 var moment = __webpack_require__(0);
 
 module.exports = {
@@ -86020,7 +86132,7 @@ module.exports = {
 
 
 /***/ }),
-/* 312 */
+/* 316 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -88647,117 +88759,6 @@ if (inBrowser && window.Vue) {
 }
 
 /* harmony default export */ __webpack_exports__["a"] = (VueRouter);
-
-
-/***/ }),
-/* 313 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(220);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(13)("488d8332", content, false);
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../../../../../node_modules/css-loader/index.js!../../../../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-4eccb3f4\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./AssignDocuments.vue", function() {
-     var newContent = require("!!../../../../../../../../node_modules/css-loader/index.js!../../../../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-4eccb3f4\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./AssignDocuments.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 314 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(221);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(13)("57a52d16", content, false);
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../../../../../node_modules/css-loader/index.js!../../../../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-a05d4fdc\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./AssignProposition.vue", function() {
-     var newContent = require("!!../../../../../../../../node_modules/css-loader/index.js!../../../../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-a05d4fdc\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./AssignProposition.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 315 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(222);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(13)("38d39e14", content, false);
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../../../../../node_modules/css-loader/index.js!../../../../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-c9df2fd4\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./WarningModal.vue", function() {
-     var newContent = require("!!../../../../../../../../node_modules/css-loader/index.js!../../../../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-c9df2fd4\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./WarningModal.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 316 */
-/***/ (function(module, exports) {
-
-/**
- * Translates the list format produced by css-loader into something
- * easier to manipulate.
- */
-module.exports = function listToStyles (parentId, list) {
-  var styles = []
-  var newStyles = {}
-  for (var i = 0; i < list.length; i++) {
-    var item = list[i]
-    var id = item[0]
-    var css = item[1]
-    var media = item[2]
-    var sourceMap = item[3]
-    var part = {
-      id: parentId + ':' + i,
-      css: css,
-      media: media,
-      sourceMap: sourceMap
-    }
-    if (!newStyles[id]) {
-      styles.push(newStyles[id] = { id: id, parts: [part] })
-    } else {
-      newStyles[id].parts.push(part)
-    }
-  }
-  return styles
-}
 
 
 /***/ }),
