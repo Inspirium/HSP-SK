@@ -47799,12 +47799,6 @@ module.exports = function spread(callback) {
                                 path: '/tasks',
                                 title: 'Tasks',
                                 component: false
-                            },
-                            design: {
-                                enabled: true,
-                                path: '/tasks/department/71',
-                                title: 'Design',
-                                component: false
                             }
                         }
                     },
@@ -67469,7 +67463,7 @@ var render = function() {
           _c("div", { staticClass: "modal-header flex-column px-3 pt-3" }, [
             _vm._m(0),
             _vm._v(" "),
-            _c("div", { staticClass: "d-flex" }, [
+            _c("div", { staticClass: "d-flex mx-auto" }, [
               _c("i", {
                 staticClass: "fa fa-exclamation-triangle fa-4x animated flash"
               }),
@@ -72730,7 +72724,7 @@ var render = function() {
                                 staticClass:
                                   "form-control datepicker btn-white",
                                 attrs: {
-                                  placeholder: "Selected date",
+                                  placeholder: "Odaberi datum",
                                   type: "text",
                                   id: "date-picker2"
                                 },
@@ -77933,12 +77927,12 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "d-flex flex-column align-items-center" }, [
-          _c("div", [_vm._v(_vm._s(_vm.lang("Upload New Image")))]),
-          _vm._v(" "),
           _c("img", {
             staticClass: "profile-xl",
             attrs: { src: _vm.employee.image }
           }),
+          _vm._v(" "),
+          _c("div", [_vm._v(_vm._s(_vm.lang("Upload New Image")))]),
           _vm._v(" "),
           _c("input", {
             staticClass: "btn btn-neutral mt-3",
@@ -78977,7 +78971,7 @@ var render = function() {
         _vm._v(" "),
         _c("div", { staticClass: "col-md-6" }, [
           _c("div", { staticClass: "page-name-l mb-4" }, [
-            _vm._v(_vm._s(_vm.lang("12-24 Months")) + ")")
+            _vm._v(_vm._s(_vm.lang("12-24 Months")))
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "md-form" }, [
@@ -79027,7 +79021,7 @@ var render = function() {
             }),
             _vm._v(" "),
             _c("label", { attrs: { for: "field_24" } }, [
-              _vm._v(_vm._s(_vm.lang("Field sales")))
+              _vm._v(_vm._s(_vm.lang("Field Sales")))
             ])
           ]),
           _vm._v(" "),
@@ -79044,7 +79038,7 @@ var render = function() {
             }),
             _vm._v(" "),
             _c("label", { attrs: { for: "direct_24" } }, [
-              _vm._v(_vm._s(_vm.lang("Direct sales")))
+              _vm._v(_vm._s(_vm.lang("Direct Sales")))
             ])
           ]),
           _vm._v(" "),
@@ -79143,7 +79137,7 @@ var render = function() {
         }),
         _vm._v(" "),
         _c("label", { attrs: { for: "form1" } }, [
-          _vm._v(_vm._s(_vm.lang("Retail price")))
+          _vm._v(_vm._s(_vm.lang("Retail Price")))
         ])
       ]),
       _vm._v(" "),
@@ -82451,7 +82445,7 @@ var render = function() {
             _c("div", { staticClass: "modal-header flex-column px-3 pt-3" }, [
               _vm._m(0),
               _vm._v(" "),
-              _c("div", { staticClass: "d-flex" }, [
+              _c("div", { staticClass: "d-flex mx-auto" }, [
                 _c("i", {
                   staticClass: "fa fa-cloud-upload fa-4x animated rubberBand"
                 }),
@@ -85575,14 +85569,14 @@ var render = function() {
             _c("div", { staticClass: "modal-header flex-column px-3 pt-3" }, [
               _vm._m(0),
               _vm._v(" "),
-              _c("div", { staticClass: "d-flex" }, [
+              _c("div", { staticClass: "d-flex mx-auto" }, [
                 _c("i", {
                   staticClass:
                     "fa fa-user-circle-o fa-4x mb-1 animated rotateInDownLeft"
                 }),
                 _vm._v(" "),
                 _c("h1", { staticClass: "modal-title w-100 text-center" }, [
-                  _vm._v(_vm._s(_vm.lang("Add new Author")))
+                  _vm._v(_vm._s(_vm.lang("Add New Author")))
                 ])
               ]),
               _vm._v(" "),
@@ -85698,7 +85692,7 @@ var render = function() {
                         }),
                         _vm._v(" "),
                         _c("label", { attrs: { for: "form_author_title" } }, [
-                          _vm._v(_vm._s(_vm.lang("Title")))
+                          _vm._v(_vm._s(_vm.lang("Formal title")))
                         ])
                       ])
                     ]),
