@@ -51047,25 +51047,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 /* harmony default export */ __webpack_exports__["a"] = ({
     data: function () {
-        return {
-            first: {
-                retail: 0,
-                wholesale: 0,
-                direct: 0,
-                field: 0,
-                promotors: 0,
-                export: 0
-            },
-            second: {
-                retail: 0,
-                wholesale: 0,
-                direct: 0,
-                field: 0,
-                promotors: 0,
-                export: 0
-            },
-            selected_circulation: 0
-        };
+        return {};
     },
     components: {
         'footer-buttons': __WEBPACK_IMPORTED_MODULE_0__partials_FooterButtons_vue__["a" /* default */]
@@ -51073,9 +51055,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     computed: {
         price_definition() {
             return this.$deepModel('proposition.price_definition');
-        },
-        offers() {
-            return this.$deepModel('proposition.print.offers');
         },
         total() {
             return Number(this.price_definition.price_first_year.retail) + Number(this.price_definition.price_first_year.wholesale) + Number(this.price_definition.price_first_year.direct) + Number(this.price_definition.price_first_year.field) + Number(this.price_definition.price_first_year.promotors) + Number(this.price_definition.price_first_year.export);
@@ -51087,13 +51066,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     methods: {},
     mounted() {
         if (this.$route.params.id != 0) {
-            this.$store.dispatch('proposition/print/getData', { id: this.$route.params.id }).then(() => {
-                _.forEach(this.offers, o => {
-                    if (o.is_final) {
-                        this.selected_circulation = o.id;
-                    }
-                });
-            });
             this.$store.dispatch('proposition/price_definition/getData', { id: this.$route.params.id });
         }
     }
@@ -79109,7 +79081,7 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "form-inline mb-3 display-4" }, [
-            _vm._v(_vm._s(_vm._f("flexCurrency")(_vm.total, " kn", 2)))
+            _vm._v(_vm._s(_vm.total))
           ])
         ]),
         _vm._v(" "),
@@ -79325,7 +79297,7 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "form-inline mb-3 display-4" }, [
-            _vm._v(_vm._s(_vm._f("flexCurrency")(_vm.total2, " kn", 2)))
+            _vm._v(_vm._s(_vm.total2))
           ])
         ])
       ]),
@@ -79339,35 +79311,38 @@ var render = function() {
           _c(
             "div",
             { staticClass: "mb-3" },
-            _vm._l(_vm.offers, function(offer, index) {
+            _vm._l(_vm.price_definition.offers, function(title, id) {
               return _c("fieldset", { staticClass: "form-group" }, [
                 _c("input", {
                   directives: [
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.selected_circulation,
-                      expression: "selected_circulation"
+                      value: _vm.price_definition.selected_circulation,
+                      expression: "price_definition.selected_circulation"
                     }
                   ],
                   attrs: {
                     type: "radio",
-                    id: "cir-" + index,
+                    id: "cir-" + id,
                     name: "circulations"
                   },
                   domProps: {
-                    value: offer.id,
-                    checked: _vm._q(_vm.selected_circulation, offer.id)
+                    value: id,
+                    checked: _vm._q(
+                      _vm.price_definition.selected_circulation,
+                      id
+                    )
                   },
                   on: {
                     change: function($event) {
-                      _vm.selected_circulation = offer.id
+                      _vm.$set(_vm.price_definition, "selected_circulation", id)
                     }
                   }
                 }),
                 _vm._v(" "),
-                _c("label", { attrs: { for: "cir-" + index } }, [
-                  _vm._v(_vm._s(offer.title))
+                _c("label", { attrs: { for: "cir-" + id } }, [
+                  _vm._v(_vm._s(title))
                 ])
               ])
             })
@@ -89556,7 +89531,9 @@ module.exports = __webpack_require__(141);
             promotors: 0,
             export: 0
         },
-        retail_price: 0
+        retail_price: 0,
+        selected_circulation: 0,
+        offers: {}
     },
     mutations: {
         initData(state, payload) {
