@@ -51043,18 +51043,60 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
     data: function () {
-        return {};
+        return {
+            first: {
+                retail: 0,
+                wholesale: 0,
+                direct: 0,
+                field: 0,
+                promotors: 0,
+                export: 0
+            },
+            second: {
+                retail: 0,
+                wholesale: 0,
+                direct: 0,
+                field: 0,
+                promotors: 0,
+                export: 0
+            },
+            selected_circulation: 0
+        };
     },
-    computed: {},
-    methods: {}
+    components: {
+        'footer-buttons': __WEBPACK_IMPORTED_MODULE_0__partials_FooterButtons_vue__["a" /* default */]
+    },
+    computed: {
+        price_definition() {
+            return this.$deepModel('proposition.price_definition');
+        },
+        offers() {
+            return this.$deepModel('proposition.print.offers');
+        },
+        total() {
+            return Number(this.price_definition.price_first_year.retail) + Number(this.price_definition.price_first_year.wholesale) + Number(this.price_definition.price_first_year.direct) + Number(this.price_definition.price_first_year.field) + Number(this.price_definition.price_first_year.promotors) + Number(this.price_definition.price_first_year.export);
+        },
+        total2() {
+            return Number(this.price_definition.price_second_year.retail) + Number(this.price_definition.price_second_year.wholesale) + Number(this.price_definition.price_second_year.direct) + Number(this.price_definition.price_second_year.field) + Number(this.price_definition.price_second_year.promotors) + Number(this.price_definition.price_second_year.export);
+        }
+    },
+    methods: {},
+    mounted() {
+        if (this.$route.params.id != 0) {
+            this.$store.dispatch('proposition/print/getData', { id: this.$route.params.id }).then(() => {
+                _.forEach(this.offers, o => {
+                    if (o.is_final) {
+                        this.selected_circulation = o.id;
+                    }
+                });
+            });
+            this.$store.dispatch('proposition/price_definition/getData', { id: this.$route.params.id });
+        }
+    }
 });
 
 /***/ }),
@@ -54749,7 +54791,7 @@ window.Echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default.a({
 
 
 const routes = [{ path: '/proposition/start', component: __WEBPACK_IMPORTED_MODULE_18__components_proposition_PropositionStart__["a" /* default */] }, { path: '/proposition/:id', component: __WEBPACK_IMPORTED_MODULE_0__components_proposition_Proposition__["a" /* default */],
-    children: [{ path: 'edit/start', component: __WEBPACK_IMPORTED_MODULE_18__components_proposition_PropositionStart__["a" /* default */], meta: { save: 'start', validate: { id: 'int' } } }, { path: 'edit/basic_data', component: __WEBPACK_IMPORTED_MODULE_1__components_proposition_BasicData__["a" /* default */], meta: { save: 'basic_data', validate: { id: 'int' } } }, { path: 'edit/categorization', component: __WEBPACK_IMPORTED_MODULE_2__components_proposition_Categorization__["a" /* default */], meta: { save: 'categorization', validate: { id: 'int' } } }, { path: 'edit/market_potential', component: __WEBPACK_IMPORTED_MODULE_3__components_proposition_MarketPotential__["a" /* default */], meta: { save: 'market_potential', validate: { id: 'int' } } }, { path: 'edit/technical_data', component: __WEBPACK_IMPORTED_MODULE_4__components_proposition_TechnicalData__["a" /* default */], meta: { save: 'technical_data', validate: { id: 'int' } } }, { path: 'edit/print', component: __WEBPACK_IMPORTED_MODULE_7__components_proposition_Print__["a" /* default */], meta: { save: 'print', validate: { id: 'int' } } }, { path: 'edit/authors_expense', component: __WEBPACK_IMPORTED_MODULE_5__components_proposition_AuthorsExpense__["a" /* default */], meta: { save: 'authors_expense', validate: { id: 'int' } } }, { path: 'edit/production_expense', component: __WEBPACK_IMPORTED_MODULE_9__components_proposition_ProductionExpense__["a" /* default */], meta: { save: 'production_expense', validate: { id: 'int' } } }, { path: 'edit/marketing_expense', component: __WEBPACK_IMPORTED_MODULE_10__components_proposition_MarketingExpense__["a" /* default */], meta: { save: 'marketing_expense', validate: { id: 'int' } } }, { path: 'edit/distribution_expense', component: __WEBPACK_IMPORTED_MODULE_12__components_proposition_DistributionExpense__["a" /* default */], meta: { save: 'distribution_expense', validate: { id: 'int' } } }, { path: 'edit/layout_expense', component: __WEBPACK_IMPORTED_MODULE_14__components_proposition_LayoutExpense__["a" /* default */], meta: { save: 'layout_expense', validate: { id: 'int' } } }, { path: 'edit/deadline', component: __WEBPACK_IMPORTED_MODULE_16__components_proposition_Deadline__["a" /* default */], meta: { save: 'deadline', validate: { id: 'int' } } }, { path: 'edit/calculation', component: __WEBPACK_IMPORTED_MODULE_17__components_proposition_Calculation__["a" /* default */], meta: { save: 'calculation', validate: { id: 'int' } } }, { path: 'preparation/translation', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'translation', validate: { id: 'int' } } }, { path: 'preparation/technical_preparation', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'technical_preparation', validate: { id: 'int' } } }, { path: 'preparation/proofreading', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'proofreading', validate: { id: 'int' } } }, { path: 'preparation/additional_materials', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'additional_materials', validate: { id: 'int' } } }, { path: 'preparation/reviews', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'reviews', validate: { id: 'int' } } }, { path: 'preparation/lecture', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'lecture', validate: { id: 'int' } } }, { path: 'preparation/technical_correction', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'technical_correction', validate: { id: 'int' } } }, { path: 'preparation/final_review', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'final_review', validate: { id: 'int' } } }, { path: 'expenses/authors_expense', component: __WEBPACK_IMPORTED_MODULE_6__components_proposition_expenses_AuthorsExpense__["a" /* default */], meta: { save: 'authors_expense', validate: { id: 'int' } } }, { path: 'expenses/production_expense', component: __WEBPACK_IMPORTED_MODULE_8__components_proposition_expenses_ProductionExpense__["a" /* default */], meta: { save: 'production_expense', validate: { id: 'int' } } }, { path: 'expenses/marketing_expense', component: __WEBPACK_IMPORTED_MODULE_11__components_proposition_expenses_MarketingExpense__["a" /* default */], meta: { save: 'marketing_expense', validate: { id: 'int' } } }, { path: 'expenses/distribution_expense', component: __WEBPACK_IMPORTED_MODULE_13__components_proposition_expenses_DistributionExpense__["a" /* default */], meta: { save: 'distribution_expense', validate: { id: 'int' } } }, { path: 'expenses/layout_expense', component: __WEBPACK_IMPORTED_MODULE_15__components_proposition_expenses_LayoutExpense__["a" /* default */], meta: { save: 'layout_expense', validate: { id: 'int' } } }, { path: 'expenses/compare', component: __WEBPACK_IMPORTED_MODULE_19__components_proposition_expenses_Compare__["a" /* default */], meta: { validate: { id: 'int' } } }, { path: 'design/cover_design', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'cover_design', validate: { id: 'int' } } }, { path: 'design/layout_design', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'layout_design', validate: { id: 'int' } } }, { path: 'layout/first_block_layout', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'first_block_layout', validate: { id: 'int' } } }, { path: 'layout/cover', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'cover', validate: { id: 'int' } } }, { path: 'layout/layout', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'layout', validate: { id: 'int' } } }, { path: 'layout/first_revision', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'first_revision', validate: { id: 'int' } } }, { path: 'layout/correction', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'correction', validate: { id: 'int' } } }, { path: 'layout/correction_input', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'correction_input', validate: { id: 'int' } } }, { path: 'layout/revisions', component: __WEBPACK_IMPORTED_MODULE_21__components_proposition_Revisions__["a" /* default */], meta: { validate: { id: 'int' } } }, { path: 'final_price/price_definition', component: __WEBPACK_IMPORTED_MODULE_22__components_proposition_PriceDefinition__["a" /* default */], meta: { validate: { id: 'int' } } }, { path: 'prepress/print_proof', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'print_proof', validate: { id: 'int' } } }, { path: 'prepress/print_proof_correction', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'print_proof_correction', validate: { id: 'int' } } }, { path: 'prepress/print', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'print', validate: { id: 'int' } } }, { path: 'prepress/warehouse', component: __WEBPACK_IMPORTED_MODULE_23__components_proposition_Warehouse__["a" /* default */], meta: { validate: { id: 'int' } } }, { path: 'additionals/multimedia', component: __WEBPACK_IMPORTED_MODULE_25__components_proposition_Multimedia__["a" /* default */], meta: { validate: { id: 'int' } } }, { path: 'additionals/marketing', component: __WEBPACK_IMPORTED_MODULE_24__components_proposition_Marketing__["a" /* default */], meta: { validate: { id: 'int' } } }]
+    children: [{ path: 'edit/start', component: __WEBPACK_IMPORTED_MODULE_18__components_proposition_PropositionStart__["a" /* default */], meta: { save: 'start', validate: { id: 'int' } } }, { path: 'edit/basic_data', component: __WEBPACK_IMPORTED_MODULE_1__components_proposition_BasicData__["a" /* default */], meta: { save: 'basic_data', validate: { id: 'int' } } }, { path: 'edit/categorization', component: __WEBPACK_IMPORTED_MODULE_2__components_proposition_Categorization__["a" /* default */], meta: { save: 'categorization', validate: { id: 'int' } } }, { path: 'edit/market_potential', component: __WEBPACK_IMPORTED_MODULE_3__components_proposition_MarketPotential__["a" /* default */], meta: { save: 'market_potential', validate: { id: 'int' } } }, { path: 'edit/technical_data', component: __WEBPACK_IMPORTED_MODULE_4__components_proposition_TechnicalData__["a" /* default */], meta: { save: 'technical_data', validate: { id: 'int' } } }, { path: 'edit/print', component: __WEBPACK_IMPORTED_MODULE_7__components_proposition_Print__["a" /* default */], meta: { save: 'print', validate: { id: 'int' } } }, { path: 'edit/authors_expense', component: __WEBPACK_IMPORTED_MODULE_5__components_proposition_AuthorsExpense__["a" /* default */], meta: { save: 'authors_expense', validate: { id: 'int' } } }, { path: 'edit/production_expense', component: __WEBPACK_IMPORTED_MODULE_9__components_proposition_ProductionExpense__["a" /* default */], meta: { save: 'production_expense', validate: { id: 'int' } } }, { path: 'edit/marketing_expense', component: __WEBPACK_IMPORTED_MODULE_10__components_proposition_MarketingExpense__["a" /* default */], meta: { save: 'marketing_expense', validate: { id: 'int' } } }, { path: 'edit/distribution_expense', component: __WEBPACK_IMPORTED_MODULE_12__components_proposition_DistributionExpense__["a" /* default */], meta: { save: 'distribution_expense', validate: { id: 'int' } } }, { path: 'edit/layout_expense', component: __WEBPACK_IMPORTED_MODULE_14__components_proposition_LayoutExpense__["a" /* default */], meta: { save: 'layout_expense', validate: { id: 'int' } } }, { path: 'edit/deadline', component: __WEBPACK_IMPORTED_MODULE_16__components_proposition_Deadline__["a" /* default */], meta: { save: 'deadline', validate: { id: 'int' } } }, { path: 'edit/calculation', component: __WEBPACK_IMPORTED_MODULE_17__components_proposition_Calculation__["a" /* default */], meta: { save: 'calculation', validate: { id: 'int' } } }, { path: 'preparation/translation', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'translation', validate: { id: 'int' } } }, { path: 'preparation/technical_preparation', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'technical_preparation', validate: { id: 'int' } } }, { path: 'preparation/proofreading', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'proofreading', validate: { id: 'int' } } }, { path: 'preparation/additional_materials', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'additional_materials', validate: { id: 'int' } } }, { path: 'preparation/reviews', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'reviews', validate: { id: 'int' } } }, { path: 'preparation/lecture', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'lecture', validate: { id: 'int' } } }, { path: 'preparation/technical_correction', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'technical_correction', validate: { id: 'int' } } }, { path: 'preparation/final_review', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'final_review', validate: { id: 'int' } } }, { path: 'expenses/authors_expense', component: __WEBPACK_IMPORTED_MODULE_6__components_proposition_expenses_AuthorsExpense__["a" /* default */], meta: { save: 'authors_expense', validate: { id: 'int' } } }, { path: 'expenses/production_expense', component: __WEBPACK_IMPORTED_MODULE_8__components_proposition_expenses_ProductionExpense__["a" /* default */], meta: { save: 'production_expense', validate: { id: 'int' } } }, { path: 'expenses/marketing_expense', component: __WEBPACK_IMPORTED_MODULE_11__components_proposition_expenses_MarketingExpense__["a" /* default */], meta: { save: 'marketing_expense', validate: { id: 'int' } } }, { path: 'expenses/distribution_expense', component: __WEBPACK_IMPORTED_MODULE_13__components_proposition_expenses_DistributionExpense__["a" /* default */], meta: { save: 'distribution_expense', validate: { id: 'int' } } }, { path: 'expenses/layout_expense', component: __WEBPACK_IMPORTED_MODULE_15__components_proposition_expenses_LayoutExpense__["a" /* default */], meta: { save: 'layout_expense', validate: { id: 'int' } } }, { path: 'expenses/compare', component: __WEBPACK_IMPORTED_MODULE_19__components_proposition_expenses_Compare__["a" /* default */], meta: { validate: { id: 'int' } } }, { path: 'design/cover_design', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'cover_design', validate: { id: 'int' } } }, { path: 'design/layout_design', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'layout_design', validate: { id: 'int' } } }, { path: 'layout/first_block_layout', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'first_block_layout', validate: { id: 'int' } } }, { path: 'layout/cover', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'cover', validate: { id: 'int' } } }, { path: 'layout/layout', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'layout', validate: { id: 'int' } } }, { path: 'layout/first_revision', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'first_revision', validate: { id: 'int' } } }, { path: 'layout/correction', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'correction', validate: { id: 'int' } } }, { path: 'layout/correction_input', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'correction_input', validate: { id: 'int' } } }, { path: 'layout/revisions', component: __WEBPACK_IMPORTED_MODULE_21__components_proposition_Revisions__["a" /* default */], meta: { validate: { id: 'int' } } }, { path: 'final_price/price_definition', component: __WEBPACK_IMPORTED_MODULE_22__components_proposition_PriceDefinition__["a" /* default */], meta: { save: 'price_definition', validate: { id: 'int' } } }, { path: 'prepress/print_proof', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'print_proof', validate: { id: 'int' } } }, { path: 'prepress/print_proof_correction', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'print_proof_correction', validate: { id: 'int' } } }, { path: 'prepress/print', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'print', validate: { id: 'int' } } }, { path: 'prepress/warehouse', component: __WEBPACK_IMPORTED_MODULE_23__components_proposition_Warehouse__["a" /* default */], meta: { validate: { id: 'int' } } }, { path: 'additionals/multimedia', component: __WEBPACK_IMPORTED_MODULE_25__components_proposition_Multimedia__["a" /* default */], meta: { validate: { id: 'int' } } }, { path: 'additionals/marketing', component: __WEBPACK_IMPORTED_MODULE_24__components_proposition_Marketing__["a" /* default */], meta: { validate: { id: 'int' } } }]
 }, { path: '/tasks', component: __WEBPACK_IMPORTED_MODULE_27__components_tasks_Tasks__["a" /* default */] }, { path: '/task/edit/:id(\\d+)?', component: __WEBPACK_IMPORTED_MODULE_28__components_tasks_TaskEdit__["a" /* default */] }, { path: '/task/show/:id(\\d+)', component: __WEBPACK_IMPORTED_MODULE_29__components_tasks_TaskShow__["a" /* default */] }, { path: '/human_resources/employee/new', component: __WEBPACK_IMPORTED_MODULE_26__components_hr_EditProfile__["a" /* default */] }, { path: '/human_resources/employee/:id(\\d+)/edit', component: __WEBPACK_IMPORTED_MODULE_26__components_hr_EditProfile__["a" /* default */] }, { path: '/human_resources/employee/:id(\\d+)', component: __WEBPACK_IMPORTED_MODULE_26__components_hr_EditProfile__["a" /* default */] }];
 /* harmony export (immutable) */ __webpack_exports__["a"] = routes;
 
@@ -54888,6 +54930,8 @@ const routes = [{ path: '/proposition/start', component: __WEBPACK_IMPORTED_MODU
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__proposition_owner__ = __webpack_require__(214);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__proposition_calculation__ = __webpack_require__(206);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__proposition_compare__ = __webpack_require__(208);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__proposition_price_definition__ = __webpack_require__(341);
+
 
 
 
@@ -54924,6 +54968,7 @@ const routes = [{ path: '/proposition/start', component: __WEBPACK_IMPORTED_MODU
         authors_expense: __WEBPACK_IMPORTED_MODULE_5__proposition_authors_expense__["a" /* default */],
         calculation: __WEBPACK_IMPORTED_MODULE_15__proposition_calculation__["a" /* default */],
         compare: __WEBPACK_IMPORTED_MODULE_16__proposition_compare__["a" /* default */],
+        price_definition: __WEBPACK_IMPORTED_MODULE_17__proposition_price_definition__["a" /* default */],
         owner: __WEBPACK_IMPORTED_MODULE_14__proposition_owner__["a" /* default */]
     },
     state: {
@@ -54936,6 +54981,7 @@ const routes = [{ path: '/proposition/start', component: __WEBPACK_IMPORTED_MODU
             departments: [],
             employees: []
         },
+        retail_price: 0,
         error: ''
     },
     mutations: {
@@ -78864,13 +78910,28 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "md-form" }, [
             _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.price_definition.price_first_year.retail,
+                  expression: "price_definition.price_first_year.retail"
+                }
+              ],
               staticClass: "form-control",
-              attrs: {
-                type: "text",
-                id: "form1",
-                name: "retail",
-                placeholder: "",
-                required: ""
+              attrs: { type: "text", id: "retail", name: "retail" },
+              domProps: { value: _vm.price_definition.price_first_year.retail },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(
+                    _vm.price_definition.price_first_year,
+                    "retail",
+                    $event.target.value
+                  )
+                }
               }
             }),
             _vm._v(" "),
@@ -78881,13 +78942,30 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "md-form" }, [
             _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.price_definition.price_first_year.wholesale,
+                  expression: "price_definition.price_first_year.wholesale"
+                }
+              ],
               staticClass: "form-control",
-              attrs: {
-                type: "text",
-                id: "form2",
-                name: "wholesale",
-                placeholder: "",
-                required: ""
+              attrs: { type: "text", id: "wholesale", name: "wholesale" },
+              domProps: {
+                value: _vm.price_definition.price_first_year.wholesale
+              },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(
+                    _vm.price_definition.price_first_year,
+                    "wholesale",
+                    $event.target.value
+                  )
+                }
               }
             }),
             _vm._v(" "),
@@ -78898,13 +78976,28 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "md-form" }, [
             _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.price_definition.price_first_year.field,
+                  expression: "price_definition.price_first_year.field"
+                }
+              ],
               staticClass: "form-control",
-              attrs: {
-                type: "text",
-                id: "form3",
-                name: "field",
-                placeholder: "",
-                required: ""
+              attrs: { type: "text", id: "field", name: "field" },
+              domProps: { value: _vm.price_definition.price_first_year.field },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(
+                    _vm.price_definition.price_first_year,
+                    "field",
+                    $event.target.value
+                  )
+                }
               }
             }),
             _vm._v(" "),
@@ -78915,13 +79008,28 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "md-form" }, [
             _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.price_definition.price_first_year.direct,
+                  expression: "price_definition.price_first_year.direct"
+                }
+              ],
               staticClass: "form-control",
-              attrs: {
-                type: "text",
-                id: "form4",
-                name: "direct",
-                placeholder: "",
-                required: ""
+              attrs: { type: "text", id: "direct", name: "direct" },
+              domProps: { value: _vm.price_definition.price_first_year.direct },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(
+                    _vm.price_definition.price_first_year,
+                    "direct",
+                    $event.target.value
+                  )
+                }
               }
             }),
             _vm._v(" "),
@@ -78932,13 +79040,30 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "md-form" }, [
             _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.price_definition.price_first_year.promotors,
+                  expression: "price_definition.price_first_year.promotors"
+                }
+              ],
               staticClass: "form-control",
-              attrs: {
-                type: "text",
-                id: "form5",
-                name: "promotors",
-                placeholder: "",
-                required: ""
+              attrs: { type: "text", id: "promotors", name: "promotors" },
+              domProps: {
+                value: _vm.price_definition.price_first_year.promotors
+              },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(
+                    _vm.price_definition.price_first_year,
+                    "promotors",
+                    $event.target.value
+                  )
+                }
               }
             }),
             _vm._v(" "),
@@ -78949,13 +79074,28 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "md-form" }, [
             _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.price_definition.price_first_year.export,
+                  expression: "price_definition.price_first_year.export"
+                }
+              ],
               staticClass: "form-control",
-              attrs: {
-                type: "text",
-                id: "form6",
-                name: "export",
-                placeholder: "",
-                required: ""
+              attrs: { type: "text", id: "export", name: "export" },
+              domProps: { value: _vm.price_definition.price_first_year.export },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(
+                    _vm.price_definition.price_first_year,
+                    "export",
+                    $event.target.value
+                  )
+                }
               }
             }),
             _vm._v(" "),
@@ -78980,102 +79120,202 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "md-form" }, [
             _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.price_definition.price_second_year.retail,
+                  expression: "price_definition.price_second_year.retail"
+                }
+              ],
               staticClass: "form-control",
-              attrs: {
-                type: "text",
-                id: "form7",
-                name: "retail_24",
-                placeholder: "",
-                required: ""
+              attrs: { type: "text", id: "retail2", name: "retail_24" },
+              domProps: {
+                value: _vm.price_definition.price_second_year.retail
+              },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(
+                    _vm.price_definition.price_second_year,
+                    "retail",
+                    $event.target.value
+                  )
+                }
               }
             }),
             _vm._v(" "),
-            _c("label", { attrs: { for: "retail_24" } }, [
+            _c("label", { attrs: { for: "retail2" } }, [
               _vm._v(_vm._s(_vm.lang("Retail")))
             ])
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "md-form" }, [
             _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.price_definition.price_second_year.wholesale,
+                  expression: "price_definition.price_second_year.wholesale"
+                }
+              ],
               staticClass: "form-control",
-              attrs: {
-                type: "text",
-                id: "form8",
-                name: "wholesale_24",
-                placeholder: "",
-                required: ""
+              attrs: { type: "text", id: "wholesale2", name: "wholesale_24" },
+              domProps: {
+                value: _vm.price_definition.price_second_year.wholesale
+              },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(
+                    _vm.price_definition.price_second_year,
+                    "wholesale",
+                    $event.target.value
+                  )
+                }
               }
             }),
             _vm._v(" "),
-            _c("label", { attrs: { for: "wholesale_24" } }, [
+            _c("label", { attrs: { for: "wholesale2" } }, [
               _vm._v(_vm._s(_vm.lang("Wholesale")))
             ])
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "md-form" }, [
             _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.price_definition.price_second_year.field,
+                  expression: "price_definition.price_second_year.field"
+                }
+              ],
               staticClass: "form-control",
-              attrs: {
-                type: "text",
-                id: "form9",
-                name: "field_24",
-                placeholder: "",
-                required: ""
+              attrs: { type: "text", id: "field2", name: "field_24" },
+              domProps: { value: _vm.price_definition.price_second_year.field },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(
+                    _vm.price_definition.price_second_year,
+                    "field",
+                    $event.target.value
+                  )
+                }
               }
             }),
             _vm._v(" "),
-            _c("label", { attrs: { for: "field_24" } }, [
+            _c("label", { attrs: { for: "field2" } }, [
               _vm._v(_vm._s(_vm.lang("Field Sales")))
             ])
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "md-form" }, [
             _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.price_definition.price_second_year.direct,
+                  expression: "price_definition.price_second_year.direct"
+                }
+              ],
               staticClass: "form-control",
-              attrs: {
-                type: "text",
-                id: "form10",
-                name: "direct_24",
-                placeholder: "",
-                required: ""
+              attrs: { type: "text", id: "direct2", name: "direct_24" },
+              domProps: {
+                value: _vm.price_definition.price_second_year.direct
+              },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(
+                    _vm.price_definition.price_second_year,
+                    "direct",
+                    $event.target.value
+                  )
+                }
               }
             }),
             _vm._v(" "),
-            _c("label", { attrs: { for: "direct_24" } }, [
+            _c("label", { attrs: { for: "direct2" } }, [
               _vm._v(_vm._s(_vm.lang("Direct Sales")))
             ])
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "md-form" }, [
             _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.price_definition.price_second_year.promotors,
+                  expression: "price_definition.price_second_year.promotors"
+                }
+              ],
               staticClass: "form-control",
-              attrs: {
-                type: "text",
-                id: "form11",
-                name: "promotors_24",
-                placeholder: "",
-                required: ""
+              attrs: { type: "text", id: "promotors2", name: "promotors_24" },
+              domProps: {
+                value: _vm.price_definition.price_second_year.promotors
+              },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(
+                    _vm.price_definition.price_second_year,
+                    "promotors",
+                    $event.target.value
+                  )
+                }
               }
             }),
             _vm._v(" "),
-            _c("label", { attrs: { for: "promotors_24" } }, [
+            _c("label", { attrs: { for: "promotors2" } }, [
               _vm._v(_vm._s(_vm.lang("Promotors")))
             ])
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "md-form" }, [
             _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.price_definition.price_second_year.export,
+                  expression: "price_definition.price_second_year.export"
+                }
+              ],
               staticClass: "form-control",
-              attrs: {
-                type: "text",
-                id: "form12",
-                name: "export_24",
-                placeholder: "",
-                required: ""
+              attrs: { type: "text", id: "export2", name: "export_24" },
+              domProps: {
+                value: _vm.price_definition.price_second_year.export
+              },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(
+                    _vm.price_definition.price_second_year,
+                    "export",
+                    $event.target.value
+                  )
+                }
               }
             }),
             _vm._v(" "),
-            _c("label", { attrs: { for: "export_24" } }, [
+            _c("label", { attrs: { for: "export2" } }, [
               _vm._v(_vm._s(_vm.lang("Export")))
             ])
           ]),
@@ -79085,7 +79325,7 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "form-inline mb-3 display-4" }, [
-            _vm._v(_vm._s(_vm._f("flexCurrency")(_vm.total, " kn", 2)))
+            _vm._v(_vm._s(_vm._f("flexCurrency")(_vm.total2, " kn", 2)))
           ])
         ])
       ]),
@@ -79096,31 +79336,42 @@ var render = function() {
             _vm._v(_vm._s(_vm.lang("Circulation")))
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "mb-3" }, [
-            _c("fieldset", { staticClass: "form-group" }, [
-              _c("input", {
-                attrs: { type: "radio", id: "form13", name: "cir-1", value: "" }
-              }),
-              _vm._v(" "),
-              _c("label", { attrs: { for: "cir-1" } }, [
-                _vm._v(
-                  _vm._s(
-                    _vm.lang("10.000 (povučena od naklada koje imamo u printu)")
-                  )
-                )
+          _c(
+            "div",
+            { staticClass: "mb-3" },
+            _vm._l(_vm.offers, function(offer, index) {
+              return _c("fieldset", { staticClass: "form-group" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.selected_circulation,
+                      expression: "selected_circulation"
+                    }
+                  ],
+                  attrs: {
+                    type: "radio",
+                    id: "cir-" + index,
+                    name: "circulations"
+                  },
+                  domProps: {
+                    value: offer.id,
+                    checked: _vm._q(_vm.selected_circulation, offer.id)
+                  },
+                  on: {
+                    change: function($event) {
+                      _vm.selected_circulation = offer.id
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("label", { attrs: { for: "cir-" + index } }, [
+                  _vm._v(_vm._s(offer.title))
+                ])
               ])
-            ]),
-            _vm._v(" "),
-            _c("fieldset", { staticClass: "form-group" }, [
-              _c("input", {
-                attrs: { type: "radio", id: "form13", name: "cir-2", value: "" }
-              }),
-              _vm._v(" "),
-              _c("label", { attrs: { for: "cir-2" } }, [
-                _vm._v(_vm._s(_vm.lang("20.000")))
-              ])
-            ])
-          ])
+            })
+          )
         ])
       ]),
       _vm._v(" "),
@@ -79130,17 +79381,32 @@ var render = function() {
       _vm._v(" "),
       _c("div", { staticClass: "md-form" }, [
         _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.price_definition.retail_price,
+              expression: "price_definition.retail_price"
+            }
+          ],
           staticClass: "form-control",
-          attrs: {
-            type: "text",
-            id: "form15",
-            name: "final_price",
-            placeholder: "",
-            required: ""
+          attrs: { type: "text", id: "form15", name: "final_price" },
+          domProps: { value: _vm.price_definition.retail_price },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(
+                _vm.price_definition,
+                "retail_price",
+                $event.target.value
+              )
+            }
           }
         }),
         _vm._v(" "),
-        _c("label", { attrs: { for: "form1" } }, [
+        _c("label", { attrs: { for: "form15" } }, [
           _vm._v(_vm._s(_vm.lang("Retail Price")))
         ])
       ]),
@@ -89241,6 +89507,86 @@ function cloneRoute (to, from) {
 __webpack_require__(140);
 module.exports = __webpack_require__(141);
 
+
+/***/ }),
+/* 321 */,
+/* 322 */,
+/* 323 */,
+/* 324 */,
+/* 325 */,
+/* 326 */,
+/* 327 */,
+/* 328 */,
+/* 329 */,
+/* 330 */,
+/* 331 */,
+/* 332 */,
+/* 333 */,
+/* 334 */,
+/* 335 */,
+/* 336 */,
+/* 337 */,
+/* 338 */,
+/* 339 */,
+/* 340 */,
+/* 341 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+    namespaced: true,
+    state: {
+        price_first_year: {
+            retail: 0,
+            wholesale: 0,
+            direct: 0,
+            field: 0,
+            promotors: 0,
+            export: 0
+        },
+        price_second_year: {
+            retail: 0,
+            wholesale: 0,
+            direct: 0,
+            field: 0,
+            promotors: 0,
+            export: 0
+        },
+        retail_price: 0
+    },
+    mutations: {
+        initData(state, payload) {
+            for (let i in Object.keys(state)) {
+                let key = Object.keys(state)[i];state[key] = payload[key];
+            }
+        }
+    },
+    actions: {
+        getData({ commit, state }, payload) {
+            if (!state.id || state.id != payload.id || payload.force) {
+                //retrieve data only we don't have it or we need to refresh it
+                __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/api/proposition/' + payload.id + '/price_definition').then(res => {
+                    commit('initData', res.data);
+                });
+            }
+        },
+        saveData({ state, commit }, id) {
+            return new Promise((resolve, reject) => {
+                if (id) {
+                    __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/api/proposition/' + id + '/price_definition', state).then(res => {
+                        resolve();
+                    });
+                } else {
+                    reject();
+                }
+            });
+        }
+    }
+});
 
 /***/ })
 /******/ ]);
