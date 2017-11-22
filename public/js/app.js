@@ -47907,7 +47907,7 @@ module.exports = function spread(callback) {
         }, response => {
             // error callback
         });
-        Echo.private('users.1').notification(notification => {
+        Echo.private('users.' + window.Laravel.userId).notification(notification => {
             this.notifications.push(notification);
         });
     },
