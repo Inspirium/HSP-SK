@@ -182,21 +182,20 @@ return [
         /*
          * Application Service Providers...
          */
-        App\Providers\AppServiceProvider::class,
-        App\Providers\AuthServiceProvider::class,
-	    App\Providers\BroadcastServiceProvider::class,
-        App\Providers\EventServiceProvider::class,
-        App\Providers\RouteServiceProvider::class,
+        Inspirium\Providers\AppServiceProvider::class,
+        Inspirium\Providers\AuthServiceProvider::class,
+	    Inspirium\Providers\BroadcastServiceProvider::class,
+        Inspirium\Providers\EventServiceProvider::class,
+        Inspirium\Providers\RouteServiceProvider::class,
 
         Inspirium\Messaging\MessagingServiceProvider::class,
 
         Inspirium\FileManagement\FileManagementServiceProvider::class,
-        App\Providers\ComposerServiceProvider::class,
+        Inspirium\Providers\ComposerServiceProvider::class,
 
         Inspirium\BookManagement\BookManagementServiceProvider::class,
         Inspirium\TaskManagement\TaskManagementServiceProvider::class,
         Inspirium\BookProposition\BookPropositionServiceProvider::class,
-	    Inspirium\UserManagement\UserManagementServiceProvider::class,
 	    Inspirium\HumanResources\HumanResourcesServiceProvider::class,
         Inspirium\SKTemplate\SKTemplateServiceProvider::class,
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console;
+namespace Inspirium\Console;
 
 use Illuminate\Console\Command;
 use Inspirium\HumanResources\Models\Department;

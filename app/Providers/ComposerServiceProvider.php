@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers;
+namespace Inspirium\Providers;
 
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -15,7 +15,7 @@ class ComposerServiceProvider extends ServiceProvider {
 	{
 		// Using class based composers...
 		View::composer(
-			'sktemplate::components.header', 'App\Http\ViewComposers\HeaderComposer'
+			'sktemplate::components.header', 'Inspirium\Http\ViewComposers\HeaderComposer'
 		);
 
 	}

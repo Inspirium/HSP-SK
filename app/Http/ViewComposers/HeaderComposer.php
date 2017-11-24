@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\ViewComposers;
+namespace Inspirium\Http\ViewComposers;
 
 use Illuminate\Http\Request;
 use Illuminate\View\View;

@@ -11,33 +11,27 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-	    DB::table('users')->insert([
+	    DB::table('employees')->insert([
 		    [
-		    	'name' => 'Marko',
+		    	'first_name' => 'Marko',
 		        'email' => 'marko@inspirium.hr',
 		        'password' => bcrypt('secret'),
 		    ],
 		    [
-			    'name' => 'Stjepan',
+			    'first_name' => 'Stjepan',
 			    'email' => 'stjepan@inspirium.hr',
 			    'password' => bcrypt('secret'),
 		    ],
 		    [
-			    'name' => 'Matilda',
+			    'first_name' => 'Matilda',
 			    'email' => 'matilda.bulic@skolskaknjiga.hr',
 			    'password' => bcrypt('secret'),
 		    ],
 		    [
-			    'name' => 'Mihovil',
+			    'first_name' => 'Mihovil',
 			    'email' => 'mihovil.zuzul@skolskaknjiga.hr',
 			    'password' => bcrypt('secret'),
 		    ],
-	    ]);
-	    DB::table('employees')->insert([
-	    	['first_name' => 'Marko', 'last_name' => 'B', 'user_id' => 1, 'department_id' => 1],
-	    	['first_name' => 'Stjepan', 'last_name' => 'Drmić', 'user_id' => 2, 'department_id' => 1],
-	    	['first_name' => 'Matilda', 'last_name' => 'Bulić', 'user_id' => 3, 'department_id' => 1],
-	    	['first_name' => 'Mihovil', 'last_name' => 'Žužul', 'user_id' => 4, 'department_id' => 1]
 	    ]);
     }
 }

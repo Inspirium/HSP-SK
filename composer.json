@@ -37,9 +37,8 @@
             "Inspirium\\TaskManagement\\": "packages/Inspirium/TaskManagement/src",
             "Inspirium\\BookProposition\\": "packages/Inspirium/BookProposition/src",
             "Inspirium\\SKTemplate\\": "packages/Inspirium/SKTemplate/src",
-      "Inspirium\\UserManagement\\": "packages/Inspirium/UserManagement/src",
       "Inspirium\\HumanResources\\": "packages/Inspirium/HumanResources/src",
-      "App\\": "app/"
+      "Inspirium\\": "app/"
     }
   },
   "autoload-dev": {
@@ -50,7 +49,6 @@
             "Inspirium\\TaskManagement\\": "packages/Inspirium/TaskManagement/src",
             "Inspirium\\BookProposition\\": "packages/Inspirium/BookProposition/src",
             "Inspirium\\SKTemplate\\": "packages/Inspirium/SKTemplate/src",
-      "Inspirium\\UserManagement\\": "packages/Inspirium/UserManagement/src",
       "Inspirium\\HumanResources\\": "packages/Inspirium/HumanResources/src",
       "Tests\\": "tests/"
     }

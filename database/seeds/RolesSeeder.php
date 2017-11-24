@@ -25,10 +25,10 @@ class RolesSeeder extends Seeder
 	    $rels = [];
 	    foreach ($users as $user) {
 	    	for($i=1; $i<=count($roles); $i++) {
-	    		$rels[] = ['user_id' => $user, 'role_id' => $i];
+	    		$rels[] = ['employee_id' => $user, 'role_id' => $i];
 		    }
 	    }
 
-	    DB::table('users_roles')->insert($rels);
+	    DB::table('employees_roles')->insert($rels);
     }
 }
