@@ -52,3 +52,24 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'human_resources'], function
 		Route::post('edit', 'HumanResources\RoleController@createRole');
 	});
 });
+
+Route::group(['prefix' => 'books', 'namespace' => 'BookManagement'], function() {
+
+	Route::get('/', 'BookController@showBooks');
+	Route::group(['prefix' => 'book'], function() {
+		Route::get('{id}/show', 'BookController@showBook');
+		Route::get('{id}/edit', 'BookController@editBook');
+	});
+
+	Route::get('authors', 'AuthorController@showAuthors');
+	Route::group(['prefix' => 'author'], function() {
+		Route::get('{id}/show', 'AuthorController@showAuthor');
+		Route::get('{id}/edit', 'AuthorController@editAuthor');
+	});
+
+	Route::get('categories', 'CategoryController@showCategories');
+	Route::group(['prefix' => 'category'], function() {
+		Route::get('{id}/show', 'CategoryController@showCategory');
+		Route::get('{id?}/edit', 'CategoryController@editCategory');
+	});
+});

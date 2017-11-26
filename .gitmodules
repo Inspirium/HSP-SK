@@ -7,9 +7,6 @@
 [submodule "packages/Inspirium/TaskManagement"]
 	path = packages/Inspirium/TaskManagement
 	url = https://mbanusic@github.com/Inspirium/TaskManagement.git
-[submodule "packages/Inspirium/BookManagement"]
-	path = packages/Inspirium/BookManagement
-	url = https://mbanusic@github.com/Inspirium/BookManagement.git
 [submodule "packages/Inspirium/FileManagement"]
 	path = packages/Inspirium/FileManagement
 	url = https://github.com/Inspirium/FileManagement.git
