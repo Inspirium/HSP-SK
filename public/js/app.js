@@ -47711,28 +47711,7 @@ module.exports = function spread(callback) {
                         title: 'Administration',
                         order: 0,
                         key: 'administration',
-                        children: {
-                            users: {
-                                enabled: true,
-                                path: '/administration/users',
-                                title: 'Users'
-                            },
-                            add_user: {
-                                enabled: true,
-                                path: '/administration/users/edit',
-                                title: 'Add User'
-                            },
-                            roles: {
-                                enabled: true,
-                                path: '/administration/roles',
-                                title: 'Roles'
-                            },
-                            add_role: {
-                                enabled: true,
-                                path: '/administration/roles/edit',
-                                title: 'Add Role'
-                            }
-                        }
+                        children: {}
                     },
                     human_resources: {
                         enabled: true,
@@ -47749,6 +47728,11 @@ module.exports = function spread(callback) {
                                 enabled: true,
                                 path: '/human_resources/departments',
                                 title: 'Departments'
+                            },
+                            roles: {
+                                enabled: true,
+                                path: '/human_resources/roles',
+                                title: 'Roles'
                             }
                         }
                     },
@@ -47840,7 +47824,10 @@ module.exports = function spread(callback) {
     },
     methods: {
         isGroupActive: function (val) {
-            return this.active[3] === val;
+            if (this.editing_proposition) {
+                return this.active[3] === val;
+            }
+            return this.active[1] === val;
         },
         isActive: function (group, key) {
             return this.$route.path === this.lroutes[group].children[key].path;
@@ -51959,13 +51946,13 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     },
     methods: {
         propDelete: function () {
-            axios.delete('/api/proposition/' + this.proposition.id).then(res => {
+            axios.delete('/api/proposition/' + this.proposition.proposition_id).then(res => {
                 window.location.href = '/propositions';
             });
         },
         propRestore: function () {
-            axios.post('/api/proposition/restore/' + this.proposition.id).then(res => {
-                window.location.href = '/proposition/' + this.proposition.id + '/start';
+            axios.post('/api/proposition/' + this.proposition.proposition_id + '/restore').then(res => {
+                window.location.href = '/proposition/' + this.proposition.proposition_id + '/start';
             });
         },
         saveProposition: function () {
@@ -56184,7 +56171,8 @@ const routes = [{ path: '/proposition/start', component: __WEBPACK_IMPORTED_MODU
         project_number: '',
         project_name: '',
         additional_project_number: '',
-        note: ''
+        note: '',
+        status: ''
     },
     mutations: {
         initData(state, payload) {
@@ -56192,6 +56180,7 @@ const routes = [{ path: '/proposition/start', component: __WEBPACK_IMPORTED_MODU
             state.additional_project_number = payload.additional_project_number;
             state.project_name = payload.project_name;
             state.note = payload.note;
+            state.status = payload.status;
         }
     },
     actions: {
@@ -76054,7 +76043,7 @@ var render = function() {
                         _c("a", { attrs: { href: "#" } }, [
                           _c("img", {
                             staticClass: "profile-m-2 mr-1 float-left",
-                            attrs: { src: "/images/profile.jpg" }
+                            attrs: { src: _vm.task.assignee.image }
                           }),
                           _vm._v(" "),
                           _c("h6", { staticClass: "white-label" }, [
@@ -76327,7 +76316,7 @@ var render = function() {
                           _c("a", { attrs: { href: "#" } }, [
                             _c("img", {
                               staticClass: "profile-m-2 mr-1 float-left",
-                              attrs: { src: "/images/profile.jpg" }
+                              attrs: { src: _vm.task.assignee.image }
                             }),
                             _vm._v(" "),
                             _c("h6", { staticClass: "white-label" }, [
@@ -81082,14 +81071,16 @@ var render = function() {
             [_vm._v(_vm._s(_vm.lang("Save")))]
           ),
           _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-lg btn-save",
-              on: { click: _vm.sendForApproval }
-            },
-            [_vm._v(_vm._s(_vm.lang("Send on Approval")))]
-          ),
+          _vm.proposition.start.status !== "requested"
+            ? _c(
+                "button",
+                {
+                  staticClass: "btn btn-lg btn-save",
+                  on: { click: _vm.sendForApproval }
+                },
+                [_vm._v(_vm._s(_vm.lang("Send on Approval")))]
+              )
+            : _vm._e(),
           _vm._v(" "),
           _vm.proposition.deleted_at
             ? [
