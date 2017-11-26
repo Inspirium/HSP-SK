@@ -90,7 +90,10 @@ class Employee extends Authenticatable {
 	}
 
     public function getDepartmentNameAttribute() {
-        return $this->department->name;
+    	if ($this->department) {
+		    return $this->department->name;
+	    }
+	    return '';
     }
 
     public function getNameAttribute() {
@@ -103,9 +106,6 @@ class Employee extends Authenticatable {
 	    }
 	    if ($this->email) {
 		    return 'https://www.gravatar.com/avatar/' . md5( $this->email ) . '?s=50&d=mm';
-	    }
-	    if ($this->user->email) {
-		    return 'https://www.gravatar.com/avatar/' . md5( $this->user->email ) . '?s=50&d=mm';
 	    }
 	    return 'https://mdbootstrap.com/img/Photos/Avatars/avatar-6.jpg';
     }

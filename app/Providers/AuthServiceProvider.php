@@ -14,7 +14,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        'Inspirium\Model' => 'Inspirium\Policies\ModelPolicy',
+        'Inspirium\Models\HumanResources\Employee' => 'Inspirium\Policies\EmployeePolicy',
     ];
 
     /**

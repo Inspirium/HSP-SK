@@ -37,7 +37,6 @@
             "Inspirium\\TaskManagement\\": "packages/Inspirium/TaskManagement/src",
             "Inspirium\\BookProposition\\": "packages/Inspirium/BookProposition/src",
             "Inspirium\\SKTemplate\\": "packages/Inspirium/SKTemplate/src",
-      "Inspirium\\HumanResources\\": "packages/Inspirium/HumanResources/src",
       "Inspirium\\": "app/"
     }
   },
@@ -49,7 +48,6 @@
             "Inspirium\\TaskManagement\\": "packages/Inspirium/TaskManagement/src",
             "Inspirium\\BookProposition\\": "packages/Inspirium/BookProposition/src",
             "Inspirium\\SKTemplate\\": "packages/Inspirium/SKTemplate/src",
-      "Inspirium\\HumanResources\\": "packages/Inspirium/HumanResources/src",
       "Tests\\": "tests/"
     }
   },

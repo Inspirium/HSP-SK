@@ -196,7 +196,6 @@ return [
         Inspirium\BookManagement\BookManagementServiceProvider::class,
         Inspirium\TaskManagement\TaskManagementServiceProvider::class,
         Inspirium\BookProposition\BookPropositionServiceProvider::class,
-	    Inspirium\HumanResources\HumanResourcesServiceProvider::class,
         Inspirium\SKTemplate\SKTemplateServiceProvider::class,
 
 	    Laravel\Passport\PassportServiceProvider::class,

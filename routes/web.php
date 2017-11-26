@@ -38,3 +38,19 @@ Route::any('logout', 'Auth\LoginController@logout')->name('logout');
 		});
 
 	});
+
+Route::group(['middleware' => ['auth'], 'prefix' => 'human_resources'], function() {
+	Route::get('employees', 'HumanResources\EmployeeController@showEmployees');
+	Route::group(['prefix' => 'employee'], function () {
+		Route::get('{id}/show', 'HumanResources\EmployeeController@showEmployee');//TODO: remove show
+		Route::any('{id}/{all}', function() {
+			return view(config('app.template') . '::router-view');
+		});
+	});
+	Route::get('departments', 'HumanResources\DepartmentController@showDepartments');
+	Route::group(['prefix' => 'departments'], function() {
+		Route::get('edit/{id?}', 'HumanResources\DepartmentController@showDepartment');
+		Route::post('edit/{id?}', 'HumanResources\DepartmentController@submitDepartment');
+		Route::get('delete/{id}', 'HumanResources\DepartmentController@deleteDepartment');
+	});
+});

@@ -48373,6 +48373,10 @@ module.exports = function spread(callback) {
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["a"] = ({
     data() {
@@ -48396,9 +48400,10 @@ module.exports = function spread(callback) {
                 postal_code: '',
                 image: '',
                 sex: '',
-                department: ''
+                department_id: ''
             },
-            new_image: false
+            new_image: false,
+            password: ''
         };
     },
     methods: {
@@ -48419,7 +48424,12 @@ module.exports = function spread(callback) {
             for (let key in this.employee) {
                 data.append(key, this.employee[key]);
             }
-            data.append('new_image', this.new_image.files[0], this.new_image.files[0].name);
+            if (this.new_image) {
+                data.append('new_image', this.new_image.files[0], this.new_image.files[0].name);
+            }
+            if (this.password) {
+                data.append('password', this.password);
+            }
             axios.post('/api/human_resources/employee/' + this.$route.params.id, data).then(() => {
                 toastr.success('Succesfully saved an employee');
             });
@@ -48427,8 +48437,15 @@ module.exports = function spread(callback) {
     },
     mounted() {
         if (this.$route.params.id) {
-            axios.get('/api/human_resources/employee/' + this.$route.params.id).then(res => {
-                this.employee = res.data;
+            axios.get('/api/human_resources/departments').then(res => {
+                this.departments = res.data;
+                axios.get('/api/human_resources/employee/' + this.$route.params.id).then(res => {
+                    this.employee = res.data;
+                    setTimeout(() => {
+                        $('.mdb-select').material_select('destroy');
+                        $('.mdb-select').material_select();
+                    }, 300);
+                }).catch(() => {});
             }).catch(() => {});
         }
     }
@@ -78072,7 +78089,34 @@ var render = function() {
         _c("div", { staticClass: "pos-rel" }, [
           _c(
             "select",
-            { staticClass: "mdb-select" },
+            {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.employee.department_id,
+                  expression: "employee.department_id"
+                }
+              ],
+              staticClass: "mdb-select",
+              on: {
+                change: function($event) {
+                  var $$selectedVal = Array.prototype.filter
+                    .call($event.target.options, function(o) {
+                      return o.selected
+                    })
+                    .map(function(o) {
+                      var val = "_value" in o ? o._value : o.value
+                      return val
+                    })
+                  _vm.$set(
+                    _vm.employee,
+                    "department_id",
+                    $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                  )
+                }
+              }
+            },
             [
               _c("option", { attrs: { disabled: "" } }, [
                 _vm._v(_vm._s(_vm.lang("Choose Department")))
@@ -78454,6 +78498,32 @@ var render = function() {
               ])
             ])
           ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "md-form" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.employee.password,
+                expression: "employee.password"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: { type: "password", name: "password" },
+            domProps: { value: _vm.employee.password },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.employee, "password", $event.target.value)
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("label", [_vm._v(_vm._s(_vm.lang("Password")))])
         ])
       ]),
       _vm._v(" "),
@@ -78496,7 +78566,15 @@ var render = function() {
       _vm._v(" "),
       _c(
         "button",
-        { staticClass: "btn btn-lg btn-cancel", attrs: { type: "button" } },
+        {
+          staticClass: "btn btn-lg btn-cancel",
+          attrs: { type: "button" },
+          on: {
+            click: function($event) {
+              _vm.$router.go(-1)
+            }
+          }
+        },
         [_vm._v(_vm._s(_vm.lang("Cancel")))]
       )
     ])

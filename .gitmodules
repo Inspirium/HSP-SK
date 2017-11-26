@@ -1,9 +1,3 @@
-[submodule "packages/Inspirium/UserManagement"]
-	path = packages/Inspirium/UserManagement
-	url = https://mbanusic@github.com/Inspirium/UserManagement.git
-[submodule "packages/Inspirium/HumanResources"]
-	path = packages/Inspirium/HumanResources
-	url = https://mbanusic@github.com/Inspirium/HumanResources.git
 [submodule "packages/Inspirium/SKTemplate"]
 	path = packages/Inspirium/SKTemplate
 	url = https://mbanusic@github.com/Inspirium/SKTemplate.git
