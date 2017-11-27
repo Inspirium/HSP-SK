@@ -34,7 +34,7 @@ Route::group(['prefix' => 'human_resources', 'middleware' => [ 'auth:api'], 'nam
 	Route::get('department/search/{term}', 'DepartmentController@searchDepartment');
 });
 
-Route::group(['namespace' => 'Api\BookManagement'], function() {
+Route::group(['namespace' => 'Api\BookManagement', 'middleware' => [ 'auth:api']], function() {
 
 	Route::group(['prefix' => 'author'], function() {
 		Route::get('/{id}', 'AuthorController@getAuthor');
@@ -56,4 +56,16 @@ Route::group(['namespace' => 'Api\BookManagement'], function() {
 		Route::get('categorization', 'CategoryController@getAll');
 	});
 
+});
+
+Route::group(['prefix' => 'file', 'namespace' => 'Api\FileManagement', 'middleware' => ['auth:api']], function() {
+	Route::get('{id?}', 'FileController@getFileInfo');
+	Route::post('/', 'FileController@postFile');
+	Route::patch('{id}', 'FileController@updateFile');
+	Route::delete('{id}', 'FileController@deleteFile');
+});
+
+Route::group(['middleware' => ['auth:api'], 'namespace' => 'Api\Messaging', 'prefix' => 'thread'], function() {
+	Route::get('{id}', 'ThreadController@getThread');
+	Route::post('{id}/message', 'ThreadController@postMessage');
 });

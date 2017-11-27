@@ -188,12 +188,7 @@ return [
         Inspirium\Providers\EventServiceProvider::class,
         Inspirium\Providers\RouteServiceProvider::class,
 
-        Inspirium\Messaging\MessagingServiceProvider::class,
-
-        Inspirium\FileManagement\FileManagementServiceProvider::class,
         Inspirium\Providers\ComposerServiceProvider::class,
-
-        Inspirium\BookManagement\BookManagementServiceProvider::class,
         Inspirium\TaskManagement\TaskManagementServiceProvider::class,
         Inspirium\BookProposition\BookPropositionServiceProvider::class,
         Inspirium\SKTemplate\SKTemplateServiceProvider::class,

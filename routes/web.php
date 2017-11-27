@@ -73,3 +73,7 @@ Route::group(['prefix' => 'books', 'namespace' => 'BookManagement'], function() 
 		Route::get('{id?}/edit', 'CategoryController@editCategory');
 	});
 });
+
+Route::group(['prefix' => 'message', 'namespace' => 'Messaging', 'middleware' => ['auth']], function() {
+	Route::get('thread/{id}', 'MessageController@showThread');
+});
