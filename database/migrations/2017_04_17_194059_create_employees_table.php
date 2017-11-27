@@ -18,7 +18,7 @@ class CreateEmployeesTable extends Migration
             $table->string('first_name')->default('');
             $table->string('last_name')->default('');
             $table->string('email')->default('');
-            $table->integer('department_id')->default('');
+            $table->integer('department_id')->default(0);
             $table->string('image')->default('');
             $table->string('mobile_pre')->default('');
             $table->string('mobile')->default('');
