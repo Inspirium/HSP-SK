@@ -48417,22 +48417,33 @@ module.exports = function spread(callback) {
             if (this.password) {
                 data.append('password', this.password);
             }
-            axios.post('/api/human_resources/employee/' + this.$route.params.id, data).then(() => {
-                toastr.success('Succesfully saved an employee');
-            });
+            if (this.$route.params.id) {
+                axios.post('/api/human_resources/employee/' + this.$route.params.id, data).then(() => {
+                    toastr.success('Succesfully saved an employee');
+                });
+            } else {
+                axios.post('/api/human_resources/employee', data).then(() => {
+                    toastr.success('Succesfully saved an employee');
+                });
+            }
         }
     },
     mounted() {
+        axios.get('/api/human_resources/departments').then(res => {
+            this.departments = res.data;
+            setTimeout(() => {
+                $('.mdb-select').material_select('destroy');
+                $('.mdb-select').material_select();
+            }, 300);
+        }).catch(() => {});
+
         if (this.$route.params.id) {
-            axios.get('/api/human_resources/departments').then(res => {
-                this.departments = res.data;
-                axios.get('/api/human_resources/employee/' + this.$route.params.id).then(res => {
-                    this.employee = res.data;
-                    setTimeout(() => {
-                        $('.mdb-select').material_select('destroy');
-                        $('.mdb-select').material_select();
-                    }, 300);
-                }).catch(() => {});
+            axios.get('/api/human_resources/employee/' + this.$route.params.id).then(res => {
+                this.employee = res.data;
+                setTimeout(() => {
+                    $('.mdb-select').material_select('destroy');
+                    $('.mdb-select').material_select();
+                }, 300);
             }).catch(() => {});
         }
     }

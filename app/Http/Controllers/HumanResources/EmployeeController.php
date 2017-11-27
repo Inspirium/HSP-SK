@@ -24,7 +24,7 @@ class EmployeeController extends Controller {
             'add_new' => 'Add New Employee',
         ];
         $links = [
-            'add_new' => url('human_resources/employee/edit'),
+            'add_new' => url('human_resources/employee/new'),
             'edit' => url('human_resources/employee/:id/edit/'),
             'delete' => url('human_resources/employee/:id/delete/'),
             'show' => url('human_resources/employee/:id/show/')

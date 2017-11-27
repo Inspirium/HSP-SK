@@ -24,9 +24,10 @@ Route::group(['middleware' => ['auth:api'], 'prefix' => 'user'], function () {
 
 });
 
-Route::group(['prefix' => 'human_resources', 'middleware' => [ 'auth:api'], 'namespace' => 'Api\HumanResources'], function() {
+Route::group(['prefix' => 'human_resources', 'middleware' => ['auth:api'], 'namespace' => 'Api\HumanResources'], function() {
 	Route::get('employee/{employee}', 'EmployeeController@getEmployee');
 	Route::post('employee/{employee}', 'EmployeeController@saveEmployee')->middleware('can:update,employee');
+	Route::post('employee', 'EmployeeController@createEmployee');//TODO: auth
 	Route::get('employee/search/{term}', 'EmployeeController@searchEmployee');
 
 	Route::get('department/{department}', 'DepartmentController@getDepartment');

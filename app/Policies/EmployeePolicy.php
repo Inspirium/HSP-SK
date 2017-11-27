@@ -29,6 +29,7 @@ class EmployeePolicy
      */
     public function create(Employee $user)
     {
+    	return true;
 	    if ($user->hasRole('create_employee')) {
 		    return true;
 	    }

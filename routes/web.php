@@ -31,6 +31,9 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'human_resources'], function
 	Route::get('employees', 'HumanResources\EmployeeController@showEmployees');
 	Route::group(['prefix' => 'employee'], function () {
 		Route::get('{employee}/show', 'HumanResources\EmployeeController@showEmployee');
+		Route::any('{all}', function() {
+			return view(config('app.template') . '::router-view');
+		});
 		Route::any('{id}/{all}', function() {
 			return view(config('app.template') . '::router-view');
 		});
