@@ -48424,11 +48424,11 @@ module.exports = function spread(callback) {
             }
             if (this.$route.params.id) {
                 axios.post('/api/human_resources/employee/' + this.$route.params.id, data).then(() => {
-                    toastr.success(Vue.lang('Succesfully saved an employee'));
+                    toastr.success(this.lang('Succesfully saved an employee'));
                 });
             } else {
                 axios.post('/api/human_resources/employee', data).then(() => {
-                    toastr.success(Vue.lang('Succesfully saved an employee'));
+                    toastr.success(this.lang('Succesfully saved an employee'));
                 });
             }
         }
@@ -48602,10 +48602,10 @@ module.exports = function spread(callback) {
         },
         assignValues: function () {
             axios.post('/api/proposition/' + this.$route.params.id + '/assign/document', { employees: this.employees, departments: this.departments, description: this.description, date: this.date, access: this.access, priority: this.priority, path: this.$route.meta.dir }).then(() => {
-                toastr.success(Vue.lang('Uspješno obavljeno'));
+                toastr.success(this.lang('Uspješno obavljeno'));
                 $('#centralModalAssign').modal('hide');
             }).catch(() => {
-                toastr.error(Vue.lang('Došlo je do problema. Pokušajte ponovno'));
+                toastr.error(this.lang('Došlo je do problema. Pokušajte ponovno'));
             });
         }
     },
@@ -48847,10 +48847,10 @@ module.exports = function spread(callback) {
         },
         assignValues: function () {
             axios.post('/api/proposition/' + this.$route.params.id + '/assign', { employees: this.employees, departments: this.departments, description: this.description, date: this.date, access: this.access, priority: this.priority, path: window.location.href }).then(() => {
-                toastr.success(Vue.lang('Uspješno obavljeno'));
+                toastr.success(this.lang('Uspješno obavljeno'));
                 $('#centralModalAssign').modal('hide');
             }).catch(() => {
-                toastr.error(Vue.lang('Došlo je do problema. Pokušajte ponovno'));
+                toastr.error(this.lang('Došlo je do problema. Pokušajte ponovno'));
             });
         }
     },
@@ -49029,10 +49029,10 @@ module.exports = function spread(callback) {
         },
         assignValues: function () {
             axios.post('/api/proposition/' + this.$route.params.id + '/approval', { employees: this.employees, departments: this.departments, description: this.description }).then(() => {
-                toastr.success(Vue.lang('Uspješno obavljeno'));
+                toastr.success(this.lang('Uspješno obavljeno'));
                 $('#propositionApprovalModal').modal('hide');
             }).catch(() => {
-                toastr.error(Vue.lang('Došlo je do problema. Pokušajte ponovno'));
+                toastr.error(this.lang('Došlo je do problema. Pokušajte ponovno'));
             });
         }
     }
@@ -51973,9 +51973,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         },
         saveProposition: function () {
             this.$store.dispatch('proposition/start/saveData', this.$route.params.id).then(() => {
-                toastr.success(Vue.lang('Uspješno obavljeno'));
+                toastr.success(this.lang('Uspješno obavljeno'));
             }).catch(() => {
-                toastr.error(Vue.lang('Došlo je do problema. Pokušajte ponovno'));
+                toastr.error(this.lang('Došlo je do problema. Pokušajte ponovno'));
             });;
         },
         sendForApproval() {
@@ -53801,9 +53801,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     methods: {
         saveProposition: function () {
             this.$store.dispatch('proposition/' + this.$route.meta.save + '/saveData', this.$route.params.id).then(() => {
-                toastr.success(Vue.lang('Uspješno obavljeno'));
+                toastr.success(this.lang('Uspješno obavljeno'));
             }).catch(() => {
-                toastr.error(Vue.lang('Došlo je do problema. Pokušajte ponovno'));
+                toastr.error(this.lang('Došlo je do problema. Pokušajte ponovno'));
             });
         },
         assignModalOpen: function () {
@@ -76098,39 +76098,35 @@ var render = function() {
                           _vm._v(_vm._s(_vm.lang("Task Description")))
                         ]),
                         _vm._v(" "),
-                        _c(
-                          "div",
-                          [
-                            _c("h4", { staticClass: "mb-1" }, [
-                              _vm._v(
-                                "\n                                    " +
-                                  _vm._s(_vm.task.assigner.name) +
-                                  " has requested an expense approval for " +
-                                  _vm._s(_vm.task.related.name) +
-                                  " expense."
-                              ),
-                              _c("br"),
-                              _vm._v(
-                                "\n                                    " +
-                                  _vm._s(_vm.task.description)
-                              ),
-                              _c("br")
-                            ]),
-                            _vm._v(" "),
-                            _vm.task.related_link
-                              ? _c(
-                                  "router-link",
-                                  {
-                                    staticClass:
-                                      "btn btn-neutral btn-addon mb-4 mr-5",
-                                    attrs: { to: _vm.task.related_link }
-                                  },
-                                  [_vm._v(_vm._s(_vm.lang("Go To Project")))]
-                                )
-                              : _vm._e()
-                          ],
-                          1
-                        ),
+                        _c("div", [
+                          _c("h4", { staticClass: "mb-1" }, [
+                            _vm._v(
+                              "\n                                    " +
+                                _vm._s(_vm.task.assigner.name) +
+                                " has requested an expense approval for " +
+                                _vm._s(_vm.task.related.name) +
+                                " expense."
+                            ),
+                            _c("br"),
+                            _vm._v(
+                              "\n                                    " +
+                                _vm._s(_vm.task.description)
+                            ),
+                            _c("br")
+                          ]),
+                          _vm._v(" "),
+                          _vm.task.related_link
+                            ? _c(
+                                "a",
+                                {
+                                  staticClass:
+                                    "btn btn-neutral btn-addon mb-4 mr-5",
+                                  attrs: { href: _vm.task.related_link }
+                                },
+                                [_vm._v(_vm._s(_vm.lang("Go To Project")))]
+                              )
+                            : _vm._e()
+                        ]),
                         _vm._v(" "),
                         _c("table", { staticClass: "table" }, [
                           _c("thead", { staticClass: "thead-inverse" }, [
@@ -76371,37 +76367,33 @@ var render = function() {
                             _vm._v(_vm._s(_vm.lang("Task Description")))
                           ]),
                           _vm._v(" "),
-                          _c(
-                            "div",
-                            [
-                              _c("h4", { staticClass: "mb-1" }, [
-                                _vm._v(
-                                  "\n                                    " +
-                                    _vm._s(_vm.task.assigner.name) +
-                                    " has requested an proposition approval"
-                                ),
-                                _c("br"),
-                                _vm._v(
-                                  "\n                                    " +
-                                    _vm._s(_vm.task.description)
-                                ),
-                                _c("br")
-                              ]),
-                              _vm._v(" "),
-                              _vm.task.related_link
-                                ? _c(
-                                    "router-link",
-                                    {
-                                      staticClass:
-                                        "btn btn-neutral btn-addon mb-4 mr-5",
-                                      attrs: { to: _vm.task.related_link }
-                                    },
-                                    [_vm._v(_vm._s(_vm.lang("Go To Project")))]
-                                  )
-                                : _vm._e()
-                            ],
-                            1
-                          )
+                          _c("div", [
+                            _c("h4", { staticClass: "mb-1" }, [
+                              _vm._v(
+                                "\n                                    " +
+                                  _vm._s(_vm.task.assigner.name) +
+                                  " has requested an proposition approval"
+                              ),
+                              _c("br"),
+                              _vm._v(
+                                "\n                                    " +
+                                  _vm._s(_vm.task.description)
+                              ),
+                              _c("br")
+                            ]),
+                            _vm._v(" "),
+                            _vm.task.related_link
+                              ? _c(
+                                  "a",
+                                  {
+                                    staticClass:
+                                      "btn btn-neutral btn-addon mb-4 mr-5",
+                                    attrs: { href: _vm.task.related_link }
+                                  },
+                                  [_vm._v(_vm._s(_vm.lang("Go To Project")))]
+                                )
+                              : _vm._e()
+                          ])
                         ]),
                         _vm._v(" "),
                         _c("div", { staticClass: "col-md-3" }, [
@@ -76620,31 +76612,23 @@ var render = function() {
                               [_vm._v(_vm._s(_vm.lang("Task Description")))]
                             ),
                             _vm._v(" "),
-                            _c(
-                              "div",
-                              [
-                                _c("h4", { staticClass: "mb-1" }, [
-                                  _vm._v(_vm._s(_vm.task.description))
-                                ]),
-                                _vm._v(" "),
-                                _vm.task.related_link
-                                  ? _c(
-                                      "router-link",
-                                      {
-                                        staticClass:
-                                          "btn btn-neutral btn-addon mb-4 mr-5",
-                                        attrs: { to: _vm.task.related_link }
-                                      },
-                                      [
-                                        _vm._v(
-                                          _vm._s(_vm.lang("Go To Project"))
-                                        )
-                                      ]
-                                    )
-                                  : _vm._e()
-                              ],
-                              1
-                            )
+                            _c("div", [
+                              _c("h4", { staticClass: "mb-1" }, [
+                                _vm._v(_vm._s(_vm.task.description))
+                              ]),
+                              _vm._v(" "),
+                              _vm.task.related_link
+                                ? _c(
+                                    "a",
+                                    {
+                                      staticClass:
+                                        "btn btn-neutral btn-addon mb-4 mr-5",
+                                      attrs: { href: _vm.task.related_link }
+                                    },
+                                    [_vm._v(_vm._s(_vm.lang("Go To Project")))]
+                                  )
+                                : _vm._e()
+                            ])
                           ]),
                           _vm._v(" "),
                           _c("div", { staticClass: "col-md-3" }, [
