@@ -21,21 +21,21 @@ class EmployeeController extends Controller {
 		$input = $request->all();
 
 		$user_array = [
-			'first_name' => $input['first_name'],
-			'last_name' => $input['last_name'],
-			'email' => $input['email'],
-			'mobile_pre' => $input['mobile_pre'],
-			'mobile' => $input['mobile'],
-			'mobile_vpn' => $input['mobile_vpn'],
-			'phone_pre' => $input['phone_pre'],
-			'phone' => $input['phone'],
-			'phone_vpn' => $input['phone_vpn'],
-			'address' => $input['address'],
-			'city' => $input['city'],
-			'postal_code' => $input['postal_code'],
-			'room' => $input['room'],
-			'sex' => $input['sex'],
-			'department_id' => $input['department_id']
+			'first_name' => $input['first_name']?$input['first_name']:'',
+			'last_name' => $input['last_name']?$input['last_name']:'',
+			'email' => $input['email']?$input['email']:'',
+			'mobile_pre' => $input['mobile_pre']?$input['mobile_pre']:'',
+			'mobile' => $input['mobile']?$input['mobile']:'',
+			'mobile_vpn' => $input['mobile_vpn']?$input['mobile_vpn']:'',
+			'phone_pre' => $input['phone_pre']?$input['phone_pre']:'',
+			'phone' => $input['phone']?$input['phone']:'',
+			'phone_vpn' => $input['phone_vpn']?$input['phone_vpn']:'',
+			'address' => $input['address']?$input['address']:'',
+			'city' => $input['city']?$input['city']:'',
+			'postal_code' => $input['postal_code']?$input['postal_code']:'',
+			'room' => $input['room']?$input['room']:'',
+			'sex' => $input['sex']?$input['sex']:'',
+			'department_id' => $input['department_id']?$input['department_id']:0
 		];
 		if (isset($input['password']) && $input['password']) {
 			$user_array['password'] = bcrypt($input['password']);
@@ -57,21 +57,21 @@ class EmployeeController extends Controller {
 		$input = $request->all();
 
 		$user_array = [
-			'first_name' => $input['first_name'],
-			'last_name' => $input['last_name'],
-			'email' => $input['email'],
-			'mobile_pre' => $input['mobile_pre'],
-			'mobile' => $input['mobile'],
-			'mobile_vpn' => $input['mobile_vpn'],
-			'phone_pre' => $input['phone_pre'],
-			'phone' => $input['phone'],
-			'phone_vpn' => $input['phone_vpn'],
-			'address' => $input['address'],
-			'city' => $input['city'],
-			'postal_code' => $input['postal_code'],
-			'room' => $input['room'],
-			'sex' => $input['sex'],
-			'department_id' => $input['department_id']
+			'first_name' => $input['first_name']?$input['first_name']:'',
+			'last_name' => $input['last_name']?$input['last_name']:'',
+			'email' => $input['email']?$input['email']:'',
+			'mobile_pre' => $input['mobile_pre']?$input['mobile_pre']:'',
+			'mobile' => $input['mobile']?$input['mobile']:'',
+			'mobile_vpn' => $input['mobile_vpn']?$input['mobile_vpn']:'',
+			'phone_pre' => $input['phone_pre']?$input['phone_pre']:'',
+			'phone' => $input['phone']?$input['phone']:'',
+			'phone_vpn' => $input['phone_vpn']?$input['phone_vpn']:'',
+			'address' => $input['address']?$input['address']:'',
+			'city' => $input['city']?$input['city']:'',
+			'postal_code' => $input['postal_code']?$input['postal_code']:'',
+			'room' => $input['room']?$input['room']:'',
+			'sex' => $input['sex']?$input['sex']:'',
+			'department_id' => $input['department_id']?$input['department_id']:0
 		];
 		if (isset($input['password']) && $input['password']) {
 			$user_array['password'] = bcrypt($input['password']);

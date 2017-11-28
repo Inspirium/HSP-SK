@@ -78,7 +78,7 @@ class Employee extends Authenticatable {
     }
 
 	public function roles() {
-		return $this->belongsToMany('Inspirium\Models\HumanResources\Role', 'users_roles');
+		return $this->belongsToMany('Inspirium\Models\HumanResources\Role', 'employees_roles');
 	}
 
 	public function threads() {

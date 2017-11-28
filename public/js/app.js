@@ -48364,6 +48364,11 @@ module.exports = function spread(callback) {
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["a"] = ({
     data() {
@@ -78538,17 +78543,22 @@ var render = function() {
             attrs: { src: _vm.employee.image }
           }),
           _vm._v(" "),
-          _c("div", [_vm._v(_vm._s(_vm.lang("Upload New Image")))]),
+          _c("div"),
           _vm._v(" "),
-          _c("input", {
-            staticClass: "btn btn-neutral mt-3",
-            attrs: { type: "file" },
-            on: {
-              change: function($event) {
-                _vm.previewImage($event.target)
-              }
-            }
-          })
+          _c("div", { staticClass: "file-field" }, [
+            _c("div", { staticClass: "btn btn-neutral mt-3" }, [
+              _c("span", [_vm._v(_vm._s(_vm.lang("Upload New Image")))]),
+              _vm._v(" "),
+              _c("input", {
+                attrs: { type: "file" },
+                on: {
+                  change: function($event) {
+                    _vm.previewImage($event.target)
+                  }
+                }
+              })
+            ])
+          ])
         ])
       ])
     ]),
