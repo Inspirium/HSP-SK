@@ -81084,7 +81084,8 @@ var render = function() {
             [_vm._v(_vm._s(_vm.lang("Save")))]
           ),
           _vm._v(" "),
-          _vm.proposition.start.status !== "requested"
+          _vm.proposition.start.status !== "requested" &&
+          _vm.proposition.start.status !== "approved"
             ? _c(
                 "button",
                 {
