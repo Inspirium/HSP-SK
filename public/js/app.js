@@ -46439,6 +46439,12 @@ router.beforeEach((to, from, next) => {
     }
 });
 
+__WEBPACK_IMPORTED_MODULE_4__vuex_store__["a" /* default */].subscribe((mutation, state) => {
+    if (mutation.type == 'VUEX_DEEP_SET') {
+        state.edited = true;
+    }
+});
+
 __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_6_vuex_router_sync__["sync"])(__WEBPACK_IMPORTED_MODULE_4__vuex_store__["a" /* default */], router);
 window.vueRouter = router;
 
@@ -49539,6 +49545,13 @@ module.exports = function spread(callback) {
         if (this.$route.params.id != 0) {
             this.$store.dispatch('proposition/basic_data/getData', { id: this.$route.params.id });
         }
+    },
+    beforeRouteLeave(to, from, next) {
+        if (this.$store.state.edited) {
+            alert('data not saved');
+        } else {
+            next();
+        }
     }
 });
 
@@ -51861,6 +51874,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__modals_PropositionApprovalModal__ = __webpack_require__(241);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__modals_WarningNotSavedModal__ = __webpack_require__(346);
 //
 //
 //
@@ -51948,38 +51962,50 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
-    components: { PropositionApprovalModal: __WEBPACK_IMPORTED_MODULE_0__modals_PropositionApprovalModal__["a" /* default */] },
+    components: { PropositionApprovalModal: __WEBPACK_IMPORTED_MODULE_0__modals_PropositionApprovalModal__["a" /* default */], NotSavedModal: __WEBPACK_IMPORTED_MODULE_1__modals_WarningNotSavedModal__["a" /* default */] },
     data: function () {
-        return {};
+        return {
+            next: false
+        };
     },
     computed: {
         proposition() {
             return this.$deepModel('proposition');
+        },
+        start() {
+            return this.$deepModel('proposition.start');
         }
     },
     methods: {
         propDelete: function () {
-            axios.delete('/api/proposition/' + this.proposition.proposition_id).then(res => {
+            axios.delete('/api/proposition/' + this.$route.params.id).then(res => {
                 window.location.href = '/propositions';
             });
         },
         propRestore: function () {
-            axios.post('/api/proposition/' + this.proposition.proposition_id + '/restore').then(res => {
+            axios.post('/api/proposition/' + this.$route.params.id + '/restore').then(res => {
                 window.location.href = '/proposition/' + this.proposition.proposition_id + '/start';
             });
         },
         saveProposition: function () {
             this.$store.dispatch('proposition/start/saveData', this.$route.params.id).then(() => {
                 toastr.success(this.lang('Uspješno obavljeno'));
+                this.$store.commit('editedFalse');
             }).catch(() => {
                 toastr.error(this.lang('Došlo je do problema. Pokušajte ponovno'));
-            });;
+            });
         },
         sendForApproval() {
             jQuery('#propositionApprovalModal').modal('show');
+        },
+        continueNavigation() {
+            this.$store.commit('editedFalse');
+            this.next();
         }
     },
     mounted: function () {
@@ -51987,6 +52013,14 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             this.$store.dispatch('proposition/start/getData', { id: this.$route.params.id });
         } else {
             this.$store.dispatch('proposition/initData', { force: true, id: 0 });
+        }
+    },
+    beforeRouteLeave(to, from, next) {
+        if (this.$store.state.edited) {
+            this.next = next;
+            $('#modal-warning-not-saved').modal('show');
+        } else {
+            next();
         }
     }
 });
@@ -53802,6 +53836,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         saveProposition: function () {
             this.$store.dispatch('proposition/' + this.$route.meta.save + '/saveData', this.$route.params.id).then(() => {
                 toastr.success(this.lang('Uspješno obavljeno'));
+                this.$store.commit('editedFalse');
             }).catch(() => {
                 toastr.error(this.lang('Došlo je do problema. Pokušajte ponovno'));
             });
@@ -56366,7 +56401,17 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
         'proposition': __WEBPACK_IMPORTED_MODULE_3__modules_proposition__["a" /* default */],
         'categorization': __WEBPACK_IMPORTED_MODULE_4__modules_categorization__["a" /* default */]
     },
-    mutations: __WEBPACK_IMPORTED_MODULE_2_vue_deepset__["extendMutation"]({}),
+    state: {
+        edited: false
+    },
+    mutations: __WEBPACK_IMPORTED_MODULE_2_vue_deepset__["extendMutation"]({
+        editedFalse(state) {
+            state.edited = false;
+        },
+        editedTrue(state) {
+            state.edited = true;
+        }
+    }),
     strict: false
 }));
 
@@ -80935,23 +80980,19 @@ var render = function() {
                 {
                   name: "model",
                   rawName: "v-model",
-                  value: _vm.proposition.start.project_name,
-                  expression: "proposition.start.project_name"
+                  value: _vm.start.project_name,
+                  expression: "start.project_name"
                 }
               ],
               staticClass: "form-control",
               attrs: { type: "text", id: "project-name", name: "project-name" },
-              domProps: { value: _vm.proposition.start.project_name },
+              domProps: { value: _vm.start.project_name },
               on: {
                 input: function($event) {
                   if ($event.target.composing) {
                     return
                   }
-                  _vm.$set(
-                    _vm.proposition.start,
-                    "project_name",
-                    $event.target.value
-                  )
+                  _vm.$set(_vm.start, "project_name", $event.target.value)
                 }
               }
             }),
@@ -80969,8 +81010,8 @@ var render = function() {
                 {
                   name: "model",
                   rawName: "v-model",
-                  value: _vm.proposition.start.project_number,
-                  expression: "proposition.start.project_number"
+                  value: _vm.start.project_number,
+                  expression: "start.project_number"
                 }
               ],
               staticClass: "form-control",
@@ -80979,17 +81020,13 @@ var render = function() {
                 id: "project-number",
                 name: "project-number"
               },
-              domProps: { value: _vm.proposition.start.project_number },
+              domProps: { value: _vm.start.project_number },
               on: {
                 input: function($event) {
                   if ($event.target.composing) {
                     return
                   }
-                  _vm.$set(
-                    _vm.proposition.start,
-                    "project_number",
-                    $event.target.value
-                  )
+                  _vm.$set(_vm.start, "project_number", $event.target.value)
                 }
               }
             }),
@@ -81007,22 +81044,20 @@ var render = function() {
                 {
                   name: "model",
                   rawName: "v-model",
-                  value: _vm.proposition.start.additional_project_number,
-                  expression: "proposition.start.additional_project_number"
+                  value: _vm.start.additional_project_number,
+                  expression: "start.additional_project_number"
                 }
               ],
               staticClass: "form-control",
               attrs: { type: "text", id: "additional", name: "additional" },
-              domProps: {
-                value: _vm.proposition.start.additional_project_number
-              },
+              domProps: { value: _vm.start.additional_project_number },
               on: {
                 input: function($event) {
                   if ($event.target.composing) {
                     return
                   }
                   _vm.$set(
-                    _vm.proposition.start,
+                    _vm.start,
                     "additional_project_number",
                     $event.target.value
                   )
@@ -81045,19 +81080,19 @@ var render = function() {
                 {
                   name: "model",
                   rawName: "v-model",
-                  value: _vm.proposition.start.note,
-                  expression: "proposition.start.note"
+                  value: _vm.start.note,
+                  expression: "start.note"
                 }
               ],
               staticClass: "md-textarea",
               attrs: { id: "form76" },
-              domProps: { value: _vm.proposition.start.note },
+              domProps: { value: _vm.start.note },
               on: {
                 input: function($event) {
                   if ($event.target.composing) {
                     return
                   }
-                  _vm.$set(_vm.proposition.start, "note", $event.target.value)
+                  _vm.$set(_vm.start, "note", $event.target.value)
                 }
               }
             }),
@@ -81084,8 +81119,7 @@ var render = function() {
             [_vm._v(_vm._s(_vm.lang("Save")))]
           ),
           _vm._v(" "),
-          _vm.proposition.start.status !== "requested" &&
-          _vm.proposition.start.status !== "approved"
+          _vm.start.status !== "requested" && _vm.start.status !== "approved"
             ? _c(
                 "button",
                 {
@@ -81123,7 +81157,9 @@ var render = function() {
         2
       ),
       _vm._v(" "),
-      _c("proposition-approval-modal")
+      _c("proposition-approval-modal"),
+      _vm._v(" "),
+      _c("not-saved-modal", { on: { warning: _vm.continueNavigation } })
     ],
     1
   )
@@ -90293,6 +90329,226 @@ function cloneRoute (to, from) {
 __webpack_require__(140);
 module.exports = __webpack_require__(141);
 
+
+/***/ }),
+/* 325 */,
+/* 326 */,
+/* 327 */,
+/* 328 */,
+/* 329 */,
+/* 330 */,
+/* 331 */,
+/* 332 */,
+/* 333 */,
+/* 334 */,
+/* 335 */,
+/* 336 */,
+/* 337 */,
+/* 338 */,
+/* 339 */,
+/* 340 */,
+/* 341 */,
+/* 342 */,
+/* 343 */,
+/* 344 */,
+/* 345 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+    name: "warning-not-saved-modal"
+});
+
+/***/ }),
+/* 346 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_WarningNotSavedModal_vue__ = __webpack_require__(345);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_1b77abfc_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_WarningNotSavedModal_vue__ = __webpack_require__(347);
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+
+/* template */
+
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_WarningNotSavedModal_vue__["a" /* default */],
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_1b77abfc_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_WarningNotSavedModal_vue__["a" /* default */],
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "packages/Inspirium/SKTemplate/src/assets/js/components/modals/WarningNotSavedModal.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-loader/node_modules/vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-1b77abfc", Component.options)
+  } else {
+    hotAPI.reload("data-v-1b77abfc", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+/* harmony default export */ __webpack_exports__["a"] = (Component.exports);
+
+
+/***/ }),
+/* 347 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "modal fade",
+      attrs: {
+        id: "modal-warning-not-saved",
+        tabindex: "-1",
+        role: "dialog",
+        "aria-hidden": "true"
+      }
+    },
+    [
+      _c("div", { staticClass: "modal-dialog", attrs: { role: "document" } }, [
+        _c("div", { staticClass: "modal-content" }, [
+          _c("div", { staticClass: "modal-header flex-column px-3 pt-3" }, [
+            _vm._m(0),
+            _vm._v(" "),
+            _c("div", { staticClass: "d-flex" }, [
+              _c("i", {
+                staticClass: "fa fa-exclamation-triangle fa-4x animated flash"
+              }),
+              _vm._v(" "),
+              _c("h1", { staticClass: "modal-title w-100 text-center" }, [
+                _vm._v(_vm._s(_vm.lang("Warning")))
+              ])
+            ]),
+            _vm._v(" "),
+            _c("h4", { staticClass: "w-100 text-center mt-5" }, [
+              _vm._v(
+                _vm._s(_vm.lang("Data not saved, do you want to continue?"))
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _vm._m(1),
+          _vm._v(" "),
+          _c("div", { staticClass: "modal-footer btn-footer" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-lg btn-save",
+                attrs: { type: "button", "data-dismiss": "modal" },
+                on: {
+                  click: function($event) {
+                    _vm.$emit("warning")
+                  }
+                }
+              },
+              [_vm._v(_vm._s(_vm.lang("Yes")))]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-lg btn-cancel",
+                attrs: { type: "button", "data-dismiss": "modal" }
+              },
+              [_vm._v(_vm._s(_vm.lang("No")))]
+            )
+          ])
+        ])
+      ])
+    ]
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "close",
+        attrs: { type: "button", "data-dismiss": "modal" }
+      },
+      [_c("span", [_vm._v("×")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-body" }, [
+      _c("div", { staticClass: "text-center mb-1" })
+    ])
+  }
+]
+render._withStripped = true
+var esExports = { render: render, staticRenderFns: staticRenderFns }
+/* harmony default export */ __webpack_exports__["a"] = (esExports);
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-loader/node_modules/vue-hot-reload-api")      .rerender("data-v-1b77abfc", esExports)
+  }
+}
 
 /***/ })
 /******/ ]);
