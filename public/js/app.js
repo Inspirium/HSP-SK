@@ -50461,12 +50461,12 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         if (this.$route.params.id != 0) {
             this.$store.dispatch('proposition/deadline/getData', { id: this.$route.params.id });
         }
-        $('.datepicker').pickadate({
+        $('.datepicker1').pickadate({
             format: 'dd. mm. yyyy.',
             onSet: context => {
                 let date = new Date(context.select);
                 date = this.$options.filters.moment(date, 'DD. MM. YYYY.');
-                this.vuexSet('proposition.deadline.date', date); //TODO
+                this.$store.commit('proposition/deadline/saveDate', date);
             }
         });
     }
@@ -55580,6 +55580,9 @@ const routes = [{ path: '/proposition/start', component: __WEBPACK_IMPORTED_MODU
                 let key = Object.keys(state)[i];
                 state[key] = payload[key];
             }
+        },
+        saveDate(state, payload) {
+            state.date = payload;
         }
     },
     actions: {
@@ -81973,7 +81976,7 @@ var render = function() {
             _c("div", { staticClass: "col-md-5" }, [
               _c("div", { staticClass: "md-form" }, [
                 _c("input", {
-                  staticClass: "form-control datepicker btn-white",
+                  staticClass: "form-control datepicker1 btn-white",
                   attrs: {
                     placeholder: _vm.lang("Odaberi datum"),
                     type: "text",
