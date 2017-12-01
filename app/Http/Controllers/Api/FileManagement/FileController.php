@@ -1,12 +1,11 @@
 <?php
 
-namespace Inspirium\Http\Controllers\FileManagement;
+namespace Inspirium\Http\Controllers\Api\FileManagement;
 
 use Inspirium\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Inspirium\FileManagement\Models\File;
-use Inspirium\Models\HumanResources\Employee;
+use Inspirium\Models\FileManagement\File;
 
 class FileController extends Controller {
 
