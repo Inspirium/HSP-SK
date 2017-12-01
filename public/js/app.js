@@ -52042,7 +52042,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         },
         propRestore: function () {
             axios.post('/api/proposition/' + this.$route.params.id + '/restore').then(res => {
-                window.location.href = '/proposition/' + this.proposition.proposition_id + '/start';
+                window.location.href = '/propositions';
             });
         },
         saveProposition: function () {
