@@ -88,4 +88,10 @@ class EmployeeController extends Controller {
 		$employee = Employee::create($user_array);
 		return response()->json([]);
 	}
+
+	public function deleteEmployee(Employee $employee) {
+		$employee->delete();
+
+		return response()->json([]);
+	}
 }
