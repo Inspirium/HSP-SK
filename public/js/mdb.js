@@ -19152,6 +19152,20 @@ $.fn.easyPieChart = function(options) {
           e.stopPropagation();
         }
       });
+      //FIX - not the  most elegant but works
+      dropdownIcon.on('click', function (){
+          console.log('test');
+          if ($('ul.select-dropdown').not(options[0]).is(':visible')) {
+              $('input.select-dropdown').trigger('close');
+          }
+          if (!options.is(':visible')) {
+              $newSelect.trigger('open', ['focus']);
+              var label = $newSelect.val();
+              var selectedOption = options.find('li').filter(function() {
+                  return $newSelect.text().toLowerCase() === label.toLowerCase();
+              })[0];
+              activateOption(options, selectedOption);
+          }});
 
       //Changed to search to treat search
       $newSelect.on('blur', function() {
@@ -19279,6 +19293,7 @@ $.fn.easyPieChart = function(options) {
           };
 
       $newSelect.on('keydown', onKeyDown);
+
     });
 
     function toggleEntryFromArray(entriesArray, entryIndex, select) {
