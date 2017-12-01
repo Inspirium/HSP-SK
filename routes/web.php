@@ -31,6 +31,8 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'human_resources'], function
 	Route::get('employees', 'HumanResources\EmployeeController@showEmployees');
 	Route::group(['prefix' => 'employee'], function () {
 		Route::get('{employee}/show', 'HumanResources\EmployeeController@showEmployee');
+		Route::get('{employee}/roles', 'HumanResources\EmployeeController@employeeRoles');
+		Route::post('{employee}/roles', 'HumanResources\EmployeeController@updateEmployeeRoles');
 		Route::any('{all}', function() {
 			return view(config('app.template') . '::router-view');
 		});
@@ -38,6 +40,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'human_resources'], function
 			return view(config('app.template') . '::router-view');
 		});
 	});
+
 	Route::get('departments', 'HumanResources\DepartmentController@showDepartments');
 	Route::group(['prefix' => 'department'], function() {
 		Route::get('{department?}/edit', 'HumanResources\DepartmentController@showDepartment');
