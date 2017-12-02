@@ -47926,6 +47926,9 @@ module.exports = function spread(callback) {
             }
 
             return '<span>' + timediff + '</span> ' + unit;
+        },
+        markAsRead(item) {
+            axios.post('/api/user/notifications/' + item.id);
         }
     }
 
@@ -69258,9 +69261,18 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("h4", { staticClass: "activitiy-user" }, [
-                      _c("a", { attrs: { href: item.data.link } }, [
-                        _vm._v(_vm._s(_vm.lang(item.data.title)))
-                      ])
+                      _c(
+                        "a",
+                        {
+                          attrs: { href: item.data.link },
+                          on: {
+                            click: function($event) {
+                              _vm.markAsRead(item)
+                            }
+                          }
+                        },
+                        [_vm._v(_vm._s(_vm.lang(item.data.title)))]
+                      )
                     ]),
                     _vm._v(" "),
                     _c("h5", [_vm._v(_vm._s(_vm.lang(item.data.message)))])

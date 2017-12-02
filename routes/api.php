@@ -21,6 +21,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::group(['middleware' => ['auth:api'], 'prefix' => 'user'], function () {
 
 	Route::get('notifications', 'Api\HumanResources\NotificationController@getNotifications');
+	Route::post('notifications/{notification}', 'Api\HumanResources\NotificationController@markAsRead');
 
 });
 
