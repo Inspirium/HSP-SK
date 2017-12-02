@@ -49997,6 +49997,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
 
 
 
@@ -50020,9 +50022,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     complete = Number(this.authors_total) + Number(option.print_offer) + Number(option.compensation) + Number(option.indirect_expenses) + Number(remainder) + Number(this.marketing_expense) + Number(this.production_expense) + Number(this.design_layout_expense),
                     mprice = (Number(complete) - Number(this.dotation)) * (100 + Number(option.calculated_profit_percent)) / 100,
                     price = mprice * (100 + Number(option.shop_percent)) / 100;
+
                 options[option.id] = {
                     direct_cost: Number(this.authors_total) + Number(option.print_offer) + Number(option.compensation) * this.total_expenses / 100 + Number(this.marketing_expense) + Number(this.production_expense) + Number(this.design_layout_expense),
-                    remainder_after_sales: remainder,
+                    remainder_after_sales: remainder - this.authors_advance,
                     complete_expense: complete,
                     cost_coverage: Number(complete) - Number(this.dotation),
                     manufacturer_price: mprice,
@@ -50058,7 +50061,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     },
     methods: {
         switchTab: function (e) {
-            $(e.target).tab('show');
+            $(e).tab('show');
             $('.mdb-select').material_select('destroy');
             $('.mdb-select').material_select();
         },
@@ -70079,10 +70082,11 @@ var render = function() {
                 "a",
                 {
                   staticClass: "nav-link active",
-                  attrs: { "data-toggle": "tab", href: "#panel0", role: "tab" },
+                  attrs: { href: "#panel0", id: "tab0", role: "tab" },
                   on: {
                     click: function($event) {
-                      _vm.switchTab($event)
+                      $event.preventDefault()
+                      _vm.switchTab("#tab0")
                     }
                   }
                 },
@@ -70098,13 +70102,14 @@ var render = function() {
                     key: key,
                     staticClass: "nav-link",
                     attrs: {
-                      "data-toggle": "tab",
+                      id: "tab" + (index + 1),
                       href: "#panel" + (index + 1),
                       role: "tab"
                     },
                     on: {
                       click: function($event) {
-                        _vm.switchTab($event)
+                        $event.preventDefault()
+                        _vm.switchTab("#tab" + (index + 1))
                       }
                     }
                   },
@@ -70133,26 +70138,22 @@ var render = function() {
               ]),
               _vm._v(" "),
               _vm._l(_vm.offers, function(option, key, index) {
-                return [
-                  _c("div", { staticClass: "page-name-l mb-1 mt-2" }, [
-                    _vm._v(_vm._s(_vm.lang("Option " + (index + 1))))
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "a",
-                    {
-                      staticClass: "hoverable d-block",
-                      attrs: {
-                        href: "#panel" + (index + 1),
-                        "data-toggle": "tab"
-                      },
-                      on: {
-                        click: function($event) {
-                          _vm.switchTab($event)
-                        }
+                return _c(
+                  "div",
+                  {
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        _vm.switchTab("#tab" + (index + 1))
                       }
-                    },
-                    [
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "page-name-l mb-1 mt-2" }, [
+                      _vm._v(_vm._s(_vm.lang("Option " + (index + 1))))
+                    ]),
+                    _vm._v(" "),
+                    _c("a", { staticClass: "hoverable d-block" }, [
                       _c(
                         "div",
                         { staticClass: "row text-white btn-sub2 d-flex py-2" },
@@ -70260,9 +70261,9 @@ var render = function() {
                           _vm._m(0, true)
                         ]
                       )
-                    ]
-                  )
-                ]
+                    ])
+                  ]
+                )
               })
             ],
             2
@@ -70392,7 +70393,7 @@ var render = function() {
                   )
                 ]),
                 _vm._v(" "),
-                _c("div", {}, [
+                _c("div", [
                   _c("div", { staticClass: "page-name-xl mb-3 mt-4" }, [
                     _vm._v(_vm._s(_vm.lang("Calculation")))
                   ]),
@@ -70809,8 +70810,6 @@ var render = function() {
                           _vm._v(" "),
                           _c("td", [_vm._v("Indirektni troškovi")]),
                           _vm._v(" "),
-                          _c("td", { staticClass: "text-right" }),
-                          _vm._v(" "),
                           _vm.currentEdit("indirect_expenses")
                             ? [
                                 _c("td", { staticClass: "text-right" }, [
@@ -70875,10 +70874,8 @@ var render = function() {
                                   [
                                     _vm._v(
                                       _vm._s(
-                                        _vm._f("flexCurrency")(
-                                          option.indirect_expenses,
-                                          "",
-                                          2
+                                        _vm._f("percent")(
+                                          option.indirect_expenses
                                         )
                                       )
                                     )
@@ -70890,7 +70887,24 @@ var render = function() {
                             _vm._v(
                               _vm._s(
                                 _vm._f("flexCurrency")(
-                                  option.indirect_expenses / option.title,
+                                  _vm.totals[option.id].direct_cost *
+                                    option.indirect_expenses /
+                                    100,
+                                  "",
+                                  2
+                                )
+                              )
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("td", { staticClass: "text-right" }, [
+                            _vm._v(
+                              _vm._s(
+                                _vm._f("flexCurrency")(
+                                  _vm.totals[option.id].direct_cost *
+                                    option.indirect_expenses /
+                                    100 /
+                                    option.title,
                                   " kn",
                                   2
                                 )
@@ -85746,7 +85760,12 @@ var render = function() {
                             "div",
                             {
                               staticClass:
-                                "file-box-sty icon icon-cost-rejected"
+                                "file-box-sty icon icon-cost-rejected",
+                              on: {
+                                click: function($event) {
+                                  _vm.sendForApproval("author_expense." + i)
+                                }
+                              }
                             },
                             [
                               _vm._v(
@@ -85980,7 +85999,14 @@ var render = function() {
                             "div",
                             {
                               staticClass:
-                                "file-box-sty icon icon-cost-rejected"
+                                "file-box-sty icon icon-cost-rejected",
+                              on: {
+                                click: function($event) {
+                                  _vm.sendForApproval(
+                                    "production_expense." + row["designation"]
+                                  )
+                                }
+                              }
                             },
                             [
                               _vm._v(
@@ -86202,7 +86228,12 @@ var render = function() {
                         _c(
                           "div",
                           {
-                            staticClass: "file-box-sty icon icon-cost-rejected"
+                            staticClass: "file-box-sty icon icon-cost-rejected",
+                            on: {
+                              click: function($event) {
+                                _vm.sendForApproval("layout_expense")
+                              }
+                            }
                           },
                           [
                             _vm._v(
@@ -86415,7 +86446,12 @@ var render = function() {
                         _c(
                           "div",
                           {
-                            staticClass: "file-box-sty icon icon-cost-rejected"
+                            staticClass: "file-box-sty icon icon-cost-rejected",
+                            on: {
+                              click: function($event) {
+                                _vm.sendForApproval("marketing_expense")
+                              }
+                            }
                           },
                           [
                             _vm._v(
