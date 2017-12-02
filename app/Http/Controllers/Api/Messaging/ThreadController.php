@@ -1,10 +1,10 @@
 <?php
-namespace Inspirium\Http\Controllers\Messaging\Api;
+namespace Inspirium\Http\Controllers\Api\Messaging;
 
 use Inspirium\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Inspirium\Messaging\Models\Message;
-use Inspirium\Messaging\Models\Thread;
+use Inspirium\Models\Messaging\Message;
+use Inspirium\Models\Messaging\Thread;
 
 class ThreadController extends Controller {
 
