@@ -49998,7 +49998,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-//
 
 
 
@@ -50011,32 +50010,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             activeEdit: ''
         };
     },
-    computed: _extends({
-        totals() {
-            let options = {};
-            _.forEach(this.offers, option => {
-                let remainder = _.sumBy(Object.keys(this.author_expenses), key => {
-                    let e = this.author_expenses[key];
-                    return e.percentage * option.title * option.price_proposal / 100;
-                }),
-                    complete = Number(this.authors_total) + Number(option.print_offer) + Number(option.compensation) + Number(option.indirect_expenses) + Number(remainder) + Number(this.marketing_expense) + Number(this.production_expense) + Number(this.design_layout_expense),
-                    mprice = (Number(complete) - Number(this.dotation)) * (100 + Number(option.calculated_profit_percent)) / 100,
-                    price = mprice * (100 + Number(option.shop_percent)) / 100;
-
-                options[option.id] = {
-                    direct_cost: Number(this.authors_total) + Number(option.print_offer) + Number(option.compensation) * this.total_expenses / 100 + Number(this.marketing_expense) + Number(this.production_expense) + Number(this.design_layout_expense),
-                    remainder_after_sales: remainder - this.authors_advance,
-                    complete_expense: complete,
-                    cost_coverage: Number(complete) - Number(this.dotation),
-                    manufacturer_price: mprice,
-                    price: price,
-                    total_cost: price * (100 + Number(option.vat_percent)) / 100,
-                    total_expenses: Number(this.authors_total) + Number(option.print_offer) + Number(this.marketing_expense) + Number(this.production_expense) + Number(this.design_layout_expense)
-                };
-            });
-            return options;
-        }
-    }, __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2_vuex__["b" /* mapState */])('proposition/calculation', {
+    computed: _extends({}, __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2_vuex__["c" /* mapGetters */])('proposition/calculation', {
+        totals: 'totals'
+    }), __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2_vuex__["b" /* mapState */])('proposition/calculation', {
         authors_total: 'authors_total',
         authors_advance: 'authors_advance',
         authors_other: 'authors_other',
@@ -55486,7 +55462,36 @@ const routes = [{ path: '/proposition/start', component: __WEBPACK_IMPORTED_MODU
             });
         }
     },
-    getters: {}
+    getters: {
+        totals(state) {
+            let options = {};
+            _.forEach(state.offers, option => {
+                let remainder = _.sumBy(Object.keys(state.author_expenses), key => {
+                    let e = this.author_expenses[key];
+                    return e.percentage * option.title * option.price_proposal / 100;
+                }),
+                    complete = Number(state.authors_total) + Number(option.print_offer) + Number(option.compensation) + Number(option.indirect_expenses) + Number(remainder) + Number(state.marketing_expense) + Number(state.production_expense) + Number(state.design_layout_expense),
+                    mprice = (Number(complete) - Number(state.dotation)) * (100 + Number(option.calculated_profit_percent)) / 100,
+                    price = mprice * (100 + Number(option.shop_percent)) / 100,
+                    total_expenses = Number(state.authors_total) + Number(option.print_offer) + Number(state.marketing_expense) + Number(state.production_expense) + Number(state.design_layout_expense),
+                    direct_cost = Number(state.authors_total) + Number(option.print_offer) + Number(option.compensation) * total_expenses / 100 + Number(state.marketing_expense) + Number(state.production_expense) + Number(state.design_layout_expense),
+                    indirect_expense = direct_cost * option.indirect_expenses / 100;
+
+                options[option.id] = {
+                    direct_cost: direct_cost,
+                    indirect_expense: indirect_expense,
+                    remainder_after_sales: remainder - state.authors_advance,
+                    complete_expense: complete,
+                    cost_coverage: Number(complete) - Number(state.dotation),
+                    manufacturer_price: mprice,
+                    price: price,
+                    total_cost: price * (100 + Number(option.vat_percent)) / 100,
+                    total_expenses: total_expenses
+                };
+            });
+            return options;
+        }
+    }
 });
 
 /***/ }),
@@ -69155,7 +69160,7 @@ var render = function() {
                 staticClass:
                   "activity-item file-box-sty p-1 text-center d-block"
               },
-              [_vm._v("Show All")]
+              [_vm._v("Prikaži sve")]
             ),
             _vm._v(" "),
             _vm._l(_vm.notifications, function(item) {
@@ -69947,7 +69952,7 @@ var render = function() {
                 )
               }),
               _vm._v(" "),
-              _c("th", [_vm._v("Actions")])
+              _c("th", [_vm._v("Akcije")])
             ],
             2
           )
@@ -70887,9 +70892,7 @@ var render = function() {
                             _vm._v(
                               _vm._s(
                                 _vm._f("flexCurrency")(
-                                  _vm.totals[option.id].direct_cost *
-                                    option.indirect_expenses /
-                                    100,
+                                  _vm.totals[option.id].indirect_expense,
                                   "",
                                   2
                                 )
@@ -70901,9 +70904,7 @@ var render = function() {
                             _vm._v(
                               _vm._s(
                                 _vm._f("flexCurrency")(
-                                  _vm.totals[option.id].direct_cost *
-                                    option.indirect_expenses /
-                                    100 /
+                                  _vm.totals[option.id].indirect_expense /
                                     option.title,
                                   " kn",
                                   2
@@ -70927,7 +70928,9 @@ var render = function() {
                             _vm._s(
                               _vm._f("flexCurrency")(
                                 Number(_vm.totals[option.id].direct_cost) +
-                                  Number(option.indirect_expenses),
+                                  Number(
+                                    _vm.totals[option.id].indirect_expense
+                                  ),
                                 "",
                                 2
                               )
@@ -70940,7 +70943,9 @@ var render = function() {
                             _vm._s(
                               _vm._f("flexCurrency")(
                                 (Number(_vm.totals[option.id].direct_cost) +
-                                  Number(option.indirect_expenses)) /
+                                  Number(
+                                    _vm.totals[option.id].indirect_expense
+                                  )) /
                                   option.title,
                                 " kn",
                                 2
@@ -84200,7 +84205,7 @@ var render = function() {
           _c("div", { staticClass: "modal-header flex-column px-3 pt-3" }, [
             _vm._m(0),
             _vm._v(" "),
-            _c("div", { staticClass: "d-flex" }, [
+            _c("div", { staticClass: "d-flex mx-auto" }, [
               _c("i", {
                 staticClass: "fa fa-exclamation-triangle fa-4x animated flash"
               }),
