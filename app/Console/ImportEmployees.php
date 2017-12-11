@@ -3,8 +3,8 @@
 namespace Inspirium\Console;
 
 use Illuminate\Console\Command;
-use Inspirium\HumanResources\Models\Department;
-use Inspirium\HumanResources\Models\Employee;
+use Inspirium\Models\HumanResources\Department;
+use Inspirium\Models\HumanResources\Employee;
 
 class ImportEmployees extends Command
 {
@@ -72,6 +72,7 @@ class ImportEmployees extends Command
                 'first_name' => $employee['first_name'],
                 'last_name' => $employee['last_name'],
                 'department_id' => $department->id,
+	            'email' => $employee['email'],
 	            'mobile_pre' => $employee['mobile_pre'],
 	            'mobile' => $employee['mobile'],
 	            'mobile_vpn' => $employee['mobile_vpn'],
