@@ -15,22 +15,22 @@ class CreateEmployeesTable extends Migration
     {
         Schema::create('employees', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('first_name')->default('');
-            $table->string('last_name')->default('');
-            $table->string('email')->default('');
+            $table->string('first_name')->default('')->nullable();
+            $table->string('last_name')->default('')->nullable();
+            $table->string('email')->default('')->nullable();
             $table->integer('department_id')->default(0);
-            $table->string('image')->default('');
-            $table->string('mobile_pre')->default('');
-            $table->string('mobile')->default('');
-            $table->string('mobile_vpn')->default('');
-            $table->string('phone_pre')->default('');
-            $table->string('phone')->default('');
-            $table->string('phone_vpn')->default('');
-            $table->string('address')->default('');
-            $table->string('city')->default('');
-            $table->string('postal_code')->default('');
-            $table->string('room')->default('');
-            $table->string('sex')->default('');
+            $table->string('image')->default('')->nullable();
+            $table->string('mobile_pre')->default('')->nullable();
+            $table->string('mobile')->default('')->nullable();
+            $table->string('mobile_vpn')->default('')->nullable();
+            $table->string('phone_pre')->default('')->nullable();
+            $table->string('phone')->default('')->nullable();
+            $table->string('phone_vpn')->default('')->nullable();
+            $table->string('address')->default('')->nullable();
+            $table->string('city')->default('')->nullable();
+            $table->string('postal_code')->default('')->nullable();
+            $table->string('room')->default('')->nullable();
+            $table->string('sex')->default('')->nullable();
 	        $table->string('password')->nullable();
 	        $table->rememberToken();
             $table->timestamps();
