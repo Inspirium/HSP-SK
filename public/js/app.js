@@ -47842,6 +47842,24 @@ module.exports = function spread(callback) {
                                 path: '/tasks',
                                 title: 'Tasks',
                                 component: false
+                            },
+                            graphics: {
+                                enabled: true,
+                                path: '/tasks/department/1',
+                                title: 'Graphics',
+                                component: true
+                            },
+                            editorial: {
+                                enabled: true,
+                                path: '/tasks/department/77',
+                                title: 'Editorial',
+                                component: true
+                            },
+                            management: {
+                                enabled: true,
+                                path: '/tasks/department/92',
+                                title: 'Management',
+                                component: true
                             }
                         }
                     },
@@ -49135,17 +49153,9 @@ module.exports = function spread(callback) {
             }
         },
         autocomplete_select: function (index, type) {
-            if (type === 'department') {
-                //this.$store.commit('proposition/pushToArray', {key: 'departments', group: 'assigned', value: this.d_suggestions[index]});
-                this.departments.push(this.d_suggestions[index]);
-                this.d_suggestions = [];
-                this.department = '';
-            } else {
-                //this.$store.commit('proposition/pushToArray', {key: 'employees', group: 'assigned', value: this.e_suggestions[index]});
-                this.employees.push(this.e_suggestions[index]);
-                this.e_suggestions = [];
-                this.employee = '';
-            }
+            this.employees.splice(0, 1, this.e_suggestions[index]);
+            this.e_suggestions = [];
+            this.employee = '';
         }
     }
 });
@@ -54105,7 +54115,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             }
         },
         employeeCompleteSelect: function (index) {
-            this.task.users.push(this.e_suggestions[index]);
+            this.task.users.splice(0, 1, this.e_suggestions[index]);
             this.e_suggestions = [];
             this.user = '';
         },
@@ -54166,114 +54176,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__modals_TaskReassign__ = __webpack_require__(241);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__general_UploadModal__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modals_WarningModal__ = __webpack_require__(12);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -54683,7 +54585,24 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     components: {
         ModalReassign: __WEBPACK_IMPORTED_MODULE_0__modals_TaskReassign__["a" /* default */], uploadModal: __WEBPACK_IMPORTED_MODULE_1__general_UploadModal__["a" /* default */], WarningModal: __WEBPACK_IMPORTED_MODULE_2__modals_WarningModal__["default"]
     },
+    computed: {
+        filteredMessages() {
+            return this.task.thread.messages.reverse();
+        }
+    },
     methods: {
+        canAccept() {
+            return this.task.status === 'new' && this.task.assignee.id === window.Laravel.userId;
+        },
+        canAssign() {
+            return this.task.status === 'new' && this.task.assignee.id === window.Laravel.userId;
+        },
+        canComplete: function () {
+            return this.task.status === 'accepted' && this.task.assignee.id === window.Laravel.userId;
+        },
+        canDelete() {
+            return this.task.assigner.id === window.Laravel.userId;
+        },
         acceptTask() {
             axios.post('/api/task/' + this.task.id + '/accept').then(res => {
                 this.task.status = 'accepted';
@@ -54766,6 +54685,11 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         fileWarning(id) {
             this.index_to_delete = id;
             jQuery('#modal-warning').modal('show');
+        },
+        taskDelete() {
+            axios.delete('/api/task/' + this.task.id).then(() => {
+                this.$router.push('/tasks');
+            });
         }
     },
     mounted: function () {
@@ -55117,6 +55041,8 @@ window.Echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default.a({
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__components_tasks_Tasks__ = __webpack_require__(271);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__components_tasks_TaskEdit__ = __webpack_require__(269);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__components_tasks_TaskShow__ = __webpack_require__(270);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__components_tasks_DepartmentTasks__ = __webpack_require__(344);
+
 
 
 
@@ -55152,7 +55078,7 @@ window.Echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default.a({
 
 const routes = [{ path: '/proposition/start', component: __WEBPACK_IMPORTED_MODULE_18__components_proposition_PropositionStart__["a" /* default */] }, { path: '/proposition/:id', component: __WEBPACK_IMPORTED_MODULE_0__components_proposition_Proposition__["a" /* default */],
     children: [{ path: 'edit/start', component: __WEBPACK_IMPORTED_MODULE_18__components_proposition_PropositionStart__["a" /* default */], meta: { save: 'start', validate: { id: 'int' } } }, { path: 'edit/basic_data', component: __WEBPACK_IMPORTED_MODULE_1__components_proposition_BasicData__["a" /* default */], meta: { save: 'basic_data', validate: { id: 'int' } } }, { path: 'edit/categorization', component: __WEBPACK_IMPORTED_MODULE_2__components_proposition_Categorization__["a" /* default */], meta: { save: 'categorization', validate: { id: 'int' } } }, { path: 'edit/market_potential', component: __WEBPACK_IMPORTED_MODULE_3__components_proposition_MarketPotential__["a" /* default */], meta: { save: 'market_potential', validate: { id: 'int' } } }, { path: 'edit/technical_data', component: __WEBPACK_IMPORTED_MODULE_4__components_proposition_TechnicalData__["a" /* default */], meta: { save: 'technical_data', validate: { id: 'int' } } }, { path: 'edit/print', component: __WEBPACK_IMPORTED_MODULE_7__components_proposition_Print__["a" /* default */], meta: { save: 'print', validate: { id: 'int' } } }, { path: 'edit/authors_expense', component: __WEBPACK_IMPORTED_MODULE_5__components_proposition_AuthorsExpense__["a" /* default */], meta: { save: 'authors_expense', validate: { id: 'int' } } }, { path: 'edit/production_expense', component: __WEBPACK_IMPORTED_MODULE_9__components_proposition_ProductionExpense__["a" /* default */], meta: { save: 'production_expense', validate: { id: 'int' } } }, { path: 'edit/marketing_expense', component: __WEBPACK_IMPORTED_MODULE_10__components_proposition_MarketingExpense__["a" /* default */], meta: { save: 'marketing_expense', validate: { id: 'int' } } }, { path: 'edit/distribution_expense', component: __WEBPACK_IMPORTED_MODULE_12__components_proposition_DistributionExpense__["a" /* default */], meta: { save: 'distribution_expense', validate: { id: 'int' } } }, { path: 'edit/layout_expense', component: __WEBPACK_IMPORTED_MODULE_14__components_proposition_LayoutExpense__["a" /* default */], meta: { save: 'layout_expense', validate: { id: 'int' } } }, { path: 'edit/deadline', component: __WEBPACK_IMPORTED_MODULE_16__components_proposition_Deadline__["a" /* default */], meta: { save: 'deadline', validate: { id: 'int' } } }, { path: 'edit/calculation', component: __WEBPACK_IMPORTED_MODULE_17__components_proposition_Calculation__["a" /* default */], meta: { save: 'calculation', validate: { id: 'int' } } }, { path: 'preparation/translation', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'translation', validate: { id: 'int' } } }, { path: 'preparation/technical_preparation', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'technical_preparation', validate: { id: 'int' } } }, { path: 'preparation/proofreading', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'proofreading', validate: { id: 'int' } } }, { path: 'preparation/additional_materials', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'additional_materials', validate: { id: 'int' } } }, { path: 'preparation/reviews', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'reviews', validate: { id: 'int' } } }, { path: 'preparation/lecture', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'lecture', validate: { id: 'int' } } }, { path: 'preparation/technical_correction', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'technical_correction', validate: { id: 'int' } } }, { path: 'preparation/final_review', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'final_review', validate: { id: 'int' } } }, { path: 'expenses/authors_expense', component: __WEBPACK_IMPORTED_MODULE_6__components_proposition_expenses_AuthorsExpense__["a" /* default */], meta: { save: 'authors_expense', validate: { id: 'int' } } }, { path: 'expenses/production_expense', component: __WEBPACK_IMPORTED_MODULE_8__components_proposition_expenses_ProductionExpense__["a" /* default */], meta: { save: 'production_expense', validate: { id: 'int' } } }, { path: 'expenses/marketing_expense', component: __WEBPACK_IMPORTED_MODULE_11__components_proposition_expenses_MarketingExpense__["a" /* default */], meta: { save: 'marketing_expense', validate: { id: 'int' } } }, { path: 'expenses/distribution_expense', component: __WEBPACK_IMPORTED_MODULE_13__components_proposition_expenses_DistributionExpense__["a" /* default */], meta: { save: 'distribution_expense', validate: { id: 'int' } } }, { path: 'expenses/layout_expense', component: __WEBPACK_IMPORTED_MODULE_15__components_proposition_expenses_LayoutExpense__["a" /* default */], meta: { save: 'layout_expense', validate: { id: 'int' } } }, { path: 'expenses/compare', component: __WEBPACK_IMPORTED_MODULE_19__components_proposition_expenses_Compare__["a" /* default */], meta: { validate: { id: 'int' } } }, { path: 'design/cover_design', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'cover_design', validate: { id: 'int' } } }, { path: 'design/layout_design', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'layout_design', validate: { id: 'int' } } }, { path: 'layout/first_block_layout', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'first_block_layout', validate: { id: 'int' } } }, { path: 'layout/cover', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'cover', validate: { id: 'int' } } }, { path: 'layout/layout', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'layout', validate: { id: 'int' } } }, { path: 'layout/first_revision', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'first_revision', validate: { id: 'int' } } }, { path: 'layout/correction', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'correction', validate: { id: 'int' } } }, { path: 'layout/correction_input', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'correction_input', validate: { id: 'int' } } }, { path: 'layout/revisions', component: __WEBPACK_IMPORTED_MODULE_21__components_proposition_Revisions__["a" /* default */], meta: { validate: { id: 'int' } } }, { path: 'final_price/price_definition', component: __WEBPACK_IMPORTED_MODULE_22__components_proposition_PriceDefinition__["a" /* default */], meta: { save: 'price_definition', validate: { id: 'int' } } }, { path: 'prepress/print_proof', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'print_proof', validate: { id: 'int' } } }, { path: 'prepress/print_proof_correction', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'print_proof_correction', validate: { id: 'int' } } }, { path: 'prepress/print', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'print', validate: { id: 'int' } } }, { path: 'prepress/warehouse', component: __WEBPACK_IMPORTED_MODULE_23__components_proposition_Warehouse__["a" /* default */], meta: { validate: { id: 'int' } } }, { path: 'additionals/multimedia', component: __WEBPACK_IMPORTED_MODULE_25__components_proposition_Multimedia__["a" /* default */], meta: { validate: { id: 'int' } } }, { path: 'additionals/marketing', component: __WEBPACK_IMPORTED_MODULE_24__components_proposition_Marketing__["a" /* default */], meta: { validate: { id: 'int' } } }]
-}, { path: '/tasks', component: __WEBPACK_IMPORTED_MODULE_27__components_tasks_Tasks__["a" /* default */] }, { path: '/task/edit/:id(\\d+)?', component: __WEBPACK_IMPORTED_MODULE_28__components_tasks_TaskEdit__["a" /* default */] }, { path: '/task/show/:id(\\d+)', component: __WEBPACK_IMPORTED_MODULE_29__components_tasks_TaskShow__["a" /* default */] }, { path: '/human_resources/employee/new', component: __WEBPACK_IMPORTED_MODULE_26__components_hr_EditProfile__["a" /* default */] }, { path: '/human_resources/employee/:id(\\d+)/edit', component: __WEBPACK_IMPORTED_MODULE_26__components_hr_EditProfile__["a" /* default */] }, { path: '/human_resources/employee/:id(\\d+)', component: __WEBPACK_IMPORTED_MODULE_26__components_hr_EditProfile__["a" /* default */] }];
+}, { path: '/tasks', component: __WEBPACK_IMPORTED_MODULE_27__components_tasks_Tasks__["a" /* default */] }, { path: '/task/edit/:id(\\d+)?', component: __WEBPACK_IMPORTED_MODULE_28__components_tasks_TaskEdit__["a" /* default */] }, { path: '/task/show/:id(\\d+)', component: __WEBPACK_IMPORTED_MODULE_29__components_tasks_TaskShow__["a" /* default */] }, { path: '/tasks/department/:id(\\d+)', component: __WEBPACK_IMPORTED_MODULE_30__components_tasks_DepartmentTasks__["a" /* default */] }, { path: '/human_resources/employee/new', component: __WEBPACK_IMPORTED_MODULE_26__components_hr_EditProfile__["a" /* default */] }, { path: '/human_resources/employee/:id(\\d+)/edit', component: __WEBPACK_IMPORTED_MODULE_26__components_hr_EditProfile__["a" /* default */] }, { path: '/human_resources/employee/:id(\\d+)', component: __WEBPACK_IMPORTED_MODULE_26__components_hr_EditProfile__["a" /* default */] }];
 /* harmony export (immutable) */ __webpack_exports__["a"] = routes;
 
 
@@ -76447,7 +76373,7 @@ var render = function() {
                         _c("div", [
                           _c("h4", { staticClass: "mb-1" }, [
                             _vm._v(
-                              "\n                                    " +
+                              "\n                                " +
                                 _vm._s(_vm.task.assigner.name) +
                                 " has requested an expense approval for " +
                                 _vm._s(_vm.task.related.name) +
@@ -76455,7 +76381,7 @@ var render = function() {
                             ),
                             _c("br"),
                             _vm._v(
-                              "\n                                    " +
+                              "\n                                " +
                                 _vm._s(_vm.task.description)
                             ),
                             _c("br")
@@ -76651,7 +76577,7 @@ var render = function() {
                         ),
                         _vm._v(" "),
                         _vm.task.thread
-                          ? _vm._l(_vm.task.thread.messages, function(message) {
+                          ? _vm._l(_vm.filteredMessages, function(message) {
                               return _c("div", [
                                 _c("h3", { staticClass: "page-name-l mb-1" }, [
                                   _c("span", [
@@ -76797,13 +76723,13 @@ var render = function() {
                           _c("div", [
                             _c("h4", { staticClass: "mb-1" }, [
                               _vm._v(
-                                "\n                                    " +
+                                "\n                                " +
                                   _vm._s(_vm.task.assigner.name) +
                                   " has requested an proposition approval"
                               ),
                               _c("br"),
                               _vm._v(
-                                "\n                                    " +
+                                "\n                                " +
                                   _vm._s(_vm.task.description)
                               ),
                               _c("br")
@@ -76901,9 +76827,7 @@ var render = function() {
                           ),
                           _vm._v(" "),
                           _vm.task.thread
-                            ? _vm._l(_vm.task.thread.messages, function(
-                                message
-                              ) {
+                            ? _vm._l(_vm.filteredMessages, function(message) {
                                 return _c("div", [
                                   _c(
                                     "h3",
@@ -76992,855 +76916,554 @@ var render = function() {
                       )
                     ]),
                     _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "content" },
-                      [
-                        _c("div", { staticClass: "profile-head pb-2 row" }, [
-                          _c("div", { staticClass: "col-md-3" }, [
-                            _c("a", { attrs: { href: "#" } }, [
-                              _c("img", {
-                                staticClass: "profile-m-2 mr-1 float-left",
-                                attrs: { src: _vm.task.assigner.image }
-                              }),
-                              _vm._v(" "),
-                              _c("h6", { staticClass: "white-label" }, [
-                                _vm._v(_vm._s(_vm.lang("Assigner")))
-                              ]),
-                              _vm._v(" "),
-                              _c("h3", { staticClass: "mb-1 text-white" }, [
-                                _vm._v(_vm._s(_vm.task.assigner.name))
-                              ])
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "col-md-3" }, [
-                            _c("a", { attrs: { href: "#" } }, [
-                              _c("img", {
-                                staticClass: "profile-m-2 mr-1 float-left",
-                                attrs: { src: _vm.task.assignee.image }
-                              }),
-                              _vm._v(" "),
-                              _c("h6", { staticClass: "white-label" }, [
-                                _vm._v(_vm._s(_vm.lang("Assign to")))
-                              ]),
-                              _vm._v(" "),
-                              _c("h3", { staticClass: "mb-1 text-white" }, [
-                                _vm._v(_vm._s(_vm.task.assignee.name))
-                              ])
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "col-md-3" }, [
+                    _c("div", { staticClass: "content" }, [
+                      _c("div", { staticClass: "profile-head pb-2 row" }, [
+                        _c("div", { staticClass: "col-md-3" }, [
+                          _c("a", { attrs: { href: "#" } }, [
+                            _c("img", {
+                              staticClass: "profile-m-2 mr-1 float-left",
+                              attrs: { src: _vm.task.assigner.image }
+                            }),
+                            _vm._v(" "),
                             _c("h6", { staticClass: "white-label" }, [
-                              _vm._v(_vm._s(_vm.lang("Task Sent")))
+                              _vm._v(_vm._s(_vm.lang("Assigner")))
                             ]),
                             _vm._v(" "),
                             _c("h3", { staticClass: "mb-1 text-white" }, [
-                              _vm._v(
-                                _vm._s(
-                                  _vm._f("moment")(
-                                    _vm.task.created_at,
-                                    "DD.MM."
-                                  )
-                                )
-                              )
+                              _vm._v(_vm._s(_vm.task.assigner.name))
                             ])
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-md-3" }, [
+                          _c("a", { attrs: { href: "#" } }, [
+                            _c("img", {
+                              staticClass: "profile-m-2 mr-1 float-left",
+                              attrs: { src: _vm.task.assignee.image }
+                            }),
+                            _vm._v(" "),
+                            _c("h6", { staticClass: "white-label" }, [
+                              _vm._v(_vm._s(_vm.lang("Assign to")))
+                            ]),
+                            _vm._v(" "),
+                            _c("h3", { staticClass: "mb-1 text-white" }, [
+                              _vm._v(_vm._s(_vm.task.assignee.name))
+                            ])
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-md-3" }, [
+                          _c("h6", { staticClass: "white-label" }, [
+                            _vm._v(_vm._s(_vm.lang("Task Sent")))
                           ]),
                           _vm._v(" "),
-                          _c("div", { staticClass: "col-md-3" }, [
-                            _c("h6", { staticClass: "white-label" }, [
-                              _vm._v(_vm._s(_vm.lang("Deadline / Priority"))),
+                          _c("h3", { staticClass: "mb-1 text-white" }, [
+                            _vm._v(
+                              _vm._s(
+                                _vm._f("moment")(_vm.task.created_at, "DD.MM.")
+                              )
+                            )
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-md-3" }, [
+                          _c("h6", { staticClass: "white-label" }, [
+                            _vm._v(_vm._s(_vm.lang("Deadline / Priority"))),
+                            _c(
+                              "span",
+                              {
+                                staticClass:
+                                  "badge badge-danger display-d mt-1 float-right"
+                              },
+                              [
+                                _vm._v(
+                                  _vm._s(
+                                    _vm.lang(_vm.priorities[_vm.task.priority])
+                                  )
+                                )
+                              ]
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("h3", { staticClass: "mb-1 text-white" }, [
+                            _vm._v(
+                              _vm._s(
+                                _vm._f("moment")(_vm.task.deadline, "DD.MM.")
+                              )
+                            )
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "page-name-xl mt-2 mb-4" }, [
+                        _vm._v(_vm._s(_vm.lang("Working Time")))
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "stopwatch mt-3" }, [
+                        _vm._m(0),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "stopwatch-controls" }, [
+                          _c(
+                            "div",
+                            {
+                              staticClass: "d-flex justify-content-center mt-2"
+                            },
+                            [
                               _c(
-                                "span",
+                                "button",
                                 {
                                   staticClass:
-                                    "badge badge-danger display-d mt-1 float-right"
+                                    "btn btn-lg btn-success btn-start-icon",
+                                  attrs: { id: "play" },
+                                  on: { click: _vm.startClock }
                                 },
-                                [
-                                  _vm._v(
-                                    _vm._s(
-                                      _vm.lang(
-                                        _vm.priorities[_vm.task.priority]
-                                      )
-                                    )
-                                  )
-                                ]
-                              )
-                            ]),
-                            _vm._v(" "),
-                            _c("h3", { staticClass: "mb-1 text-white" }, [
-                              _vm._v(
-                                _vm._s(
-                                  _vm._f("moment")(_vm.task.deadline, "DD.MM.")
-                                )
-                              )
-                            ])
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "page-name-xl mt-2 mb-4" }, [
-                          _vm._v(_vm._s(_vm.lang("Working Time")))
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "stopwatch mt-3" }, [
-                          _vm._m(0),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "stopwatch-controls" }, [
-                            _c(
-                              "div",
-                              {
-                                staticClass:
-                                  "d-flex justify-content-center mt-2"
-                              },
-                              [
-                                _c(
-                                  "button",
-                                  {
-                                    staticClass:
-                                      "btn btn-lg btn-success btn-start-icon",
-                                    attrs: { id: "play" },
-                                    on: { click: _vm.startClock }
-                                  },
-                                  [_vm._v(_vm._s(_vm.lang("Play")))]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "button",
-                                  {
-                                    staticClass:
-                                      "btn btn-lg btn-danger btn-stop-icon",
-                                    attrs: { id: "stop" },
-                                    on: { click: _vm.stopClock }
-                                  },
-                                  [_vm._v(_vm._s(_vm.lang("Stop")))]
-                                )
-                              ]
-                            )
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "showdata-box row" }, [
-                          _c("div", { staticClass: "col-md-9" }, [
-                            _c(
-                              "div",
-                              { staticClass: "page-name-l mt-2 mb-1" },
-                              [_vm._v(_vm._s(_vm.lang("Task Description")))]
-                            ),
-                            _vm._v(" "),
-                            _c("div", [
-                              _c("h4", { staticClass: "mb-1" }, [
-                                _vm._v(_vm._s(_vm.task.description))
-                              ]),
-                              _vm._v(" "),
-                              _vm.task.related_link
-                                ? _c(
-                                    "a",
-                                    {
-                                      staticClass:
-                                        "btn btn-neutral btn-addon mb-4 mr-5",
-                                      attrs: { href: _vm.task.related_link }
-                                    },
-                                    [_vm._v(_vm._s(_vm.lang("Go To Project")))]
-                                  )
-                                : _vm._e()
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "col-md-3" }, [
-                            _c(
-                              "div",
-                              { staticClass: "page-name-l mt-2 mb-1" },
-                              [_vm._v(_vm._s(_vm.lang("Task Type")))]
-                            ),
-                            _vm._v(" "),
-                            _c("div", [
-                              _c(
-                                "h4",
-                                {
-                                  class: [
-                                    "mb-1",
-                                    _vm.task_types[_vm.task.type].className
-                                  ]
-                                },
-                                [
-                                  _vm._v(
-                                    _vm._s(_vm.task_types[_vm.task.type].title)
-                                  )
-                                ]
-                              )
-                            ])
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "page-name-xl mt-4" }, [
-                          _vm._v(_vm._s(_vm.lang("Initial Documents")))
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          { staticClass: "files mt-2 mb-2" },
-                          _vm._l(_vm.task.files.initial, function(document) {
-                            return _c(
-                              "div",
-                              {
-                                staticClass:
-                                  "file-box file-box-l d-flex align-items-center"
-                              },
-                              [
-                                _c(
-                                  "a",
-                                  {
-                                    staticClass: "file-icon",
-                                    attrs: { href: document.link },
-                                    on: {
-                                      click: function($event) {
-                                        $event.preventDefault()
-                                        _vm.documentDownload(document.link)
-                                      }
-                                    }
-                                  },
-                                  [_vm._v(_vm._s(document.title))]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass: "file-box-sty ml-auto d-flex"
-                                  },
-                                  [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: {
-                                          href:
-                                            "/human_resources/employee/" +
-                                            document.owner.id +
-                                            "/show"
-                                        }
-                                      },
-                                      [
-                                        _c("img", {
-                                          staticClass:
-                                            "profile-m-1 mr-1 align-self-center",
-                                          attrs: { src: document.owner.image }
-                                        }),
-                                        _vm._v(
-                                          "\n                                    " +
-                                            _vm._s(document.owner.name) +
-                                            "\n                                "
-                                        )
-                                      ]
-                                    )
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "file-box-sty" }, [
-                                  _vm._v(_vm._s(document.date))
-                                ]),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass:
-                                      "file-box-sty icon icon-download",
-                                    on: {
-                                      click: function($event) {
-                                        _vm.documentDownload(document.link)
-                                      }
-                                    }
-                                  },
-                                  [_vm._v(_vm._s(_vm.lang("Download")))]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass:
-                                      "file-box-sty icon icon-cancel",
-                                    on: {
-                                      click: function($event) {
-                                        _vm.fileWarning(document.id)
-                                      }
-                                    }
-                                  },
-                                  [_vm._v(_vm._s(_vm.lang("Delete")))]
-                                )
-                              ]
-                            )
-                          })
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "justify-content-center d-flex mt-2 mb-4"
-                          },
-                          [
-                            _c(
-                              "button",
-                              {
-                                staticClass: "btn btn-neutral",
-                                attrs: { type: "button" },
-                                on: {
-                                  click: function($event) {
-                                    _vm.documentAdd("initial-documents")
-                                  }
-                                }
-                              },
-                              [_vm._v(_vm._s(_vm.lang("Upload")))]
-                            )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "page-name-xl mt-4" }, [
-                          _vm._v(_vm._s(_vm.lang("Final Documents")))
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          { staticClass: "files mt-2 mb-2" },
-                          _vm._l(_vm.task.files.final, function(document) {
-                            return _c(
-                              "div",
-                              {
-                                staticClass:
-                                  "file-box file-box-l d-flex align-items-center"
-                              },
-                              [
-                                _c(
-                                  "a",
-                                  {
-                                    staticClass: "file-icon",
-                                    attrs: { href: document.link },
-                                    on: {
-                                      click: function($event) {
-                                        $event.preventDefault()
-                                        _vm.documentDownload(document.link)
-                                      }
-                                    }
-                                  },
-                                  [_vm._v(_vm._s(document.title))]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass: "file-box-sty ml-auto d-flex"
-                                  },
-                                  [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: {
-                                          href:
-                                            "/human_resources/employee/" +
-                                            document.owner.id +
-                                            "/show"
-                                        }
-                                      },
-                                      [
-                                        _c("img", {
-                                          staticClass:
-                                            "profile-m-1 mr-1 align-self-center",
-                                          attrs: { src: document.owner.image }
-                                        }),
-                                        _vm._v(
-                                          "\n                                    " +
-                                            _vm._s(document.owner.name) +
-                                            "\n                                "
-                                        )
-                                      ]
-                                    )
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "file-box-sty" }, [
-                                  _vm._v(_vm._s(document.date))
-                                ]),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass:
-                                      "file-box-sty icon icon-download",
-                                    on: {
-                                      click: function($event) {
-                                        _vm.documentDownload(document.link)
-                                      }
-                                    }
-                                  },
-                                  [_vm._v(_vm._s(_vm.lang("Download")))]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass:
-                                      "file-box-sty icon icon-cancel",
-                                    on: {
-                                      click: function($event) {
-                                        _vm.fileWarning(document.id)
-                                      }
-                                    }
-                                  },
-                                  [_vm._v(_vm._s(_vm.lang("Delete")))]
-                                )
-                              ]
-                            )
-                          })
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "justify-content-center d-flex mt-2 mb-4"
-                          },
-                          [
-                            _c(
-                              "button",
-                              {
-                                staticClass: "btn btn-neutral",
-                                attrs: { type: "button" },
-                                on: {
-                                  click: function($event) {
-                                    _vm.documentAdd("final-documents")
-                                  }
-                                }
-                              },
-                              [_vm._v(_vm._s(_vm.lang("Upload")))]
-                            )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _vm.documents
-                          ? [
-                              _c(
-                                "div",
-                                { staticClass: "page-name-l mb-1 mt-2" },
-                                [_vm._v(_vm._s(_vm.lang("Documents")))]
+                                [_vm._v(_vm._s(_vm.lang("Play")))]
                               ),
-                              _vm._v(" "),
-                              _vm._m(1),
-                              _vm._v(" "),
-                              _vm.task.status === "new"
-                                ? [
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "btn-footer mt-2 mb-2 flex-column flex-md-row d-flex p-2"
-                                      },
-                                      [
-                                        _c(
-                                          "button",
-                                          {
-                                            staticClass: "btn btn-lg btn-save",
-                                            attrs: { type: "submit" }
-                                          },
-                                          [_vm._v(_vm._s(_vm.lang("Accept")))]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "button",
-                                          {
-                                            staticClass:
-                                              "btn btn-lg btn-cancel",
-                                            attrs: { type: "submit" }
-                                          },
-                                          [_vm._v(_vm._s(_vm.lang("Reject")))]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "button",
-                                          {
-                                            staticClass:
-                                              "btn btn-lg btn-assign btn-assign-icon",
-                                            attrs: { type: "submit" }
-                                          },
-                                          [
-                                            _vm._v(
-                                              _vm._s(_vm.lang("Assign to..."))
-                                            )
-                                          ]
-                                        )
-                                      ]
-                                    )
-                                  ]
-                                : void 0,
-                              _vm._v(" "),
-                              _c("div", { staticClass: "page-name-xl mb-1" }, [
-                                _vm._v(_vm._s(_vm.lang("Documents")))
-                              ]),
-                              _vm._v(" "),
-                              _vm._m(2),
                               _vm._v(" "),
                               _c(
                                 "button",
                                 {
                                   staticClass:
-                                    "btn btn-neutral d-block mx-auto btn-addon",
-                                  attrs: { type: "button" }
+                                    "btn btn-lg btn-danger btn-stop-icon",
+                                  attrs: { id: "stop" },
+                                  on: { click: _vm.stopClock }
                                 },
-                                [_vm._v(_vm._s(_vm.lang("Upload")))]
+                                [_vm._v(_vm._s(_vm.lang("Stop")))]
+                              )
+                            ]
+                          )
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "showdata-box row" }, [
+                        _c("div", { staticClass: "col-md-9" }, [
+                          _c("div", { staticClass: "page-name-l mt-2 mb-1" }, [
+                            _vm._v(_vm._s(_vm.lang("Task Description")))
+                          ]),
+                          _vm._v(" "),
+                          _c("div", [
+                            _c("h4", { staticClass: "mb-1" }, [
+                              _vm._v(_vm._s(_vm.task.description))
+                            ]),
+                            _vm._v(" "),
+                            _vm.task.related_link
+                              ? _c(
+                                  "a",
+                                  {
+                                    staticClass:
+                                      "btn btn-neutral btn-addon mb-4 mr-5",
+                                    attrs: { href: _vm.task.related_link }
+                                  },
+                                  [_vm._v(_vm._s(_vm.lang("Go To Project")))]
+                                )
+                              : _vm._e()
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-md-3" }, [
+                          _c("div", { staticClass: "page-name-l mt-2 mb-1" }, [
+                            _vm._v(_vm._s(_vm.lang("Task Type")))
+                          ]),
+                          _vm._v(" "),
+                          _c("div", [
+                            _c(
+                              "h4",
+                              {
+                                class: [
+                                  "mb-1",
+                                  _vm.task_types[_vm.task.type].className
+                                ]
+                              },
+                              [
+                                _vm._v(
+                                  _vm._s(_vm.task_types[_vm.task.type].title)
+                                )
+                              ]
+                            )
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "page-name-xl mt-4" }, [
+                        _vm._v(_vm._s(_vm.lang("Initial Documents")))
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "files mt-2 mb-2" },
+                        _vm._l(_vm.task.files.initial, function(document) {
+                          return _c(
+                            "div",
+                            {
+                              staticClass:
+                                "file-box file-box-l d-flex align-items-center"
+                            },
+                            [
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "file-icon",
+                                  attrs: { href: document.link },
+                                  on: {
+                                    click: function($event) {
+                                      $event.preventDefault()
+                                      _vm.documentDownload(document.link)
+                                    }
+                                  }
+                                },
+                                [_vm._v(_vm._s(document.title))]
                               ),
                               _vm._v(" "),
                               _c(
                                 "div",
-                                {
-                                  staticClass:
-                                    "btn-footer mt-2 mb-2 flex-column flex-md-row d-flex p-2"
-                                },
+                                { staticClass: "file-box-sty ml-auto d-flex" },
                                 [
                                   _c(
-                                    "button",
+                                    "a",
                                     {
-                                      staticClass: "btn btn-lg btn-attention",
-                                      attrs: { type: "submit" }
+                                      attrs: {
+                                        href:
+                                          "/human_resources/employee/" +
+                                          document.owner.id +
+                                          "/show"
+                                      }
                                     },
                                     [
+                                      _c("img", {
+                                        staticClass:
+                                          "profile-m-1 mr-1 align-self-center",
+                                        attrs: { src: document.owner.image }
+                                      }),
                                       _vm._v(
-                                        _vm._s(_vm.lang("Send on Approval"))
+                                        "\n                                " +
+                                          _vm._s(document.owner.name) +
+                                          "\n                            "
                                       )
                                     ]
                                   )
                                 ]
                               ),
                               _vm._v(" "),
-                              _c("div", { staticClass: "page-name-xl mb-1" }, [
-                                _vm._v(_vm._s(_vm.lang("Documents")))
+                              _c("div", { staticClass: "file-box-sty" }, [
+                                _vm._v(_vm._s(document.date))
                               ]),
                               _vm._v(" "),
                               _c(
                                 "div",
-                                { staticClass: "files mt-2" },
+                                {
+                                  staticClass:
+                                    "file-box-sty icon icon-download",
+                                  on: {
+                                    click: function($event) {
+                                      _vm.documentDownload(document.link)
+                                    }
+                                  }
+                                },
+                                [_vm._v(_vm._s(_vm.lang("Download")))]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                {
+                                  staticClass: "file-box-sty icon icon-cancel",
+                                  on: {
+                                    click: function($event) {
+                                      _vm.fileWarning(document.id)
+                                    }
+                                  }
+                                },
+                                [_vm._v(_vm._s(_vm.lang("Delete")))]
+                              )
+                            ]
+                          )
+                        })
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "justify-content-center d-flex mt-2 mb-4"
+                        },
+                        [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-neutral",
+                              attrs: { type: "button" },
+                              on: {
+                                click: function($event) {
+                                  _vm.documentAdd("initial-documents")
+                                }
+                              }
+                            },
+                            [_vm._v(_vm._s(_vm.lang("Upload")))]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "page-name-xl mt-4" }, [
+                        _vm._v(_vm._s(_vm.lang("Final Documents")))
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "files mt-2 mb-2" },
+                        _vm._l(_vm.task.files.final, function(document) {
+                          return _c(
+                            "div",
+                            {
+                              staticClass:
+                                "file-box file-box-l d-flex align-items-center"
+                            },
+                            [
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "file-icon",
+                                  attrs: { href: document.link },
+                                  on: {
+                                    click: function($event) {
+                                      $event.preventDefault()
+                                      _vm.documentDownload(document.link)
+                                    }
+                                  }
+                                },
+                                [_vm._v(_vm._s(document.title))]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                { staticClass: "file-box-sty ml-auto d-flex" },
                                 [
-                                  _vm._l(_vm.task.files, function(document) {
-                                    return _c(
-                                      "div",
-                                      {
-                                        directives: [
-                                          {
-                                            name: "key",
-                                            rawName: "v-key",
-                                            value: document.id,
-                                            expression: "document.id"
-                                          }
-                                        ],
-                                        staticClass:
-                                          "file-box file-box-l d-flex align-items-center"
-                                      },
-                                      [
-                                        _c(
-                                          "a",
-                                          {
-                                            staticClass: "file-icon",
-                                            attrs: { href: document.link }
-                                          },
-                                          [_vm._v(_vm._s(document.title))]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "div",
-                                          {
-                                            staticClass:
-                                              "file-box-sty ml-auto d-flex"
-                                          },
-                                          [
-                                            _c("a", { attrs: { href: "" } }, [
-                                              _c("img", {
-                                                staticClass:
-                                                  "profile-m-1 mr-1 align-self-center",
-                                                attrs: {
-                                                  src: document.owner.image
-                                                }
-                                              }),
-                                              _vm._v(
-                                                _vm._s(document.owner.name)
-                                              )
-                                            ])
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "div",
-                                          { staticClass: "file-box-sty" },
-                                          [
-                                            _vm._v(
-                                              _vm._s(
-                                                _vm._f("moment")(
-                                                  document.created_at,
-                                                  "dd.MM.YYYY."
-                                                )
-                                              )
-                                            )
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "div",
-                                          {
-                                            class: [
-                                              "file-box-sty icon",
-                                              this.statuses[document.status]
-                                                .className
-                                            ]
-                                          },
-                                          [
-                                            _vm._v(
-                                              _vm._s(
-                                                _vm.lang(
-                                                  this.statuses[document.status]
-                                                    .title
-                                                )
-                                              )
-                                            )
-                                          ]
-                                        )
-                                      ]
-                                    )
-                                  }),
-                                  _vm._v(" "),
                                   _c(
-                                    "div",
+                                    "a",
                                     {
-                                      staticClass:
-                                        "file-box file-box-l d-flex align-items-center"
+                                      attrs: {
+                                        href:
+                                          "/human_resources/employee/" +
+                                          document.owner.id +
+                                          "/show"
+                                      }
                                     },
                                     [
-                                      _c(
-                                        "a",
-                                        {
-                                          staticClass: "file-icon",
-                                          attrs: {
-                                            href:
-                                              "http://homestead.app/images/profile.pdf"
-                                          }
-                                        },
-                                        [_vm._v("Fizika i društvo.doc")]
-                                      ),
-                                      _vm._v(" "),
-                                      _vm._m(3),
-                                      _vm._v(" "),
-                                      _c(
-                                        "div",
-                                        { staticClass: "file-box-sty" },
-                                        [_vm._v("24.07.2017.")]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "div",
-                                        {
-                                          staticClass:
-                                            "file-box-sty icon icon-approval-comments"
-                                        },
-                                        [_vm._v(_vm._s(_vm.lang("Comments")))]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "div",
-                                        {
-                                          staticClass:
-                                            "file-box-sty icon icon-approval-no"
-                                        },
-                                        [
-                                          _vm._v(
-                                            _vm._s(_vm.lang("Approval Denied"))
+                                      _c("img", {
+                                        staticClass:
+                                          "profile-m-1 mr-1 align-self-center",
+                                        attrs: { src: document.owner.image }
+                                      }),
+                                      _vm._v(
+                                        "\n                                " +
+                                          _vm._s(document.owner.name) +
+                                          "\n                            "
+                                      )
+                                    ]
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "file-box-sty" }, [
+                                _vm._v(_vm._s(document.date))
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                {
+                                  staticClass:
+                                    "file-box-sty icon icon-download",
+                                  on: {
+                                    click: function($event) {
+                                      _vm.documentDownload(document.link)
+                                    }
+                                  }
+                                },
+                                [_vm._v(_vm._s(_vm.lang("Download")))]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                {
+                                  staticClass: "file-box-sty icon icon-cancel",
+                                  on: {
+                                    click: function($event) {
+                                      _vm.fileWarning(document.id)
+                                    }
+                                  }
+                                },
+                                [_vm._v(_vm._s(_vm.lang("Delete")))]
+                              )
+                            ]
+                          )
+                        })
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "justify-content-center d-flex mt-2 mb-4"
+                        },
+                        [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-neutral",
+                              attrs: { type: "button" },
+                              on: {
+                                click: function($event) {
+                                  _vm.documentAdd("final-documents")
+                                }
+                              }
+                            },
+                            [_vm._v(_vm._s(_vm.lang("Upload")))]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "comments" },
+                        [
+                          _c("div", { staticClass: "page-name-xl mb-3" }, [
+                            _vm._v(_vm._s(_vm.lang("Comments")))
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "content" }, [
+                            _c("div", { staticClass: "md-form mb-1" }, [
+                              _c("textarea", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.comment,
+                                    expression: "comment"
+                                  }
+                                ],
+                                staticClass: "md-textarea",
+                                domProps: { value: _vm.comment },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.comment = $event.target.value
+                                  }
+                                }
+                              })
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "justify-content-end d-flex mb-2" },
+                            [
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-neutral",
+                                  attrs: { type: "button" },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.commentTask()
+                                    }
+                                  }
+                                },
+                                [_vm._v(_vm._s(_vm.lang("Send")))]
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _vm.task.thread
+                            ? _vm._l(_vm.filteredMessages, function(message) {
+                                return _c("div", [
+                                  _c(
+                                    "h3",
+                                    { staticClass: "page-name-l mb-1" },
+                                    [
+                                      _c("span", [
+                                        _vm._v(
+                                          _vm._s(message.sender.name) + ","
+                                        )
+                                      ]),
+                                      _vm._v(
+                                        " " +
+                                          _vm._s(
+                                            _vm._f("moment")(
+                                              message.created_at,
+                                              "DD.MM.YYYY., H:mm:ss"
+                                            )
                                           )
-                                        ]
                                       )
                                     ]
                                   ),
                                   _vm._v(" "),
-                                  _c(
-                                    "div",
-                                    {
-                                      staticClass:
-                                        "file-box file-box-l d-flex align-items-center"
-                                    },
-                                    [
-                                      _c(
-                                        "a",
-                                        {
-                                          staticClass: "file-icon",
-                                          attrs: {
-                                            href:
-                                              "http://homestead.app/images/profile.pdf"
-                                          }
-                                        },
-                                        [_vm._v("Fizika i društvo.doc")]
-                                      ),
-                                      _vm._v(" "),
-                                      _vm._m(4),
-                                      _vm._v(" "),
-                                      _c(
-                                        "div",
-                                        { staticClass: "file-box-sty" },
-                                        [_vm._v("24.07.2017.")]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "div",
-                                        {
-                                          staticClass:
-                                            "file-box-sty icon icon-approval-yes"
-                                        },
-                                        [_vm._v(_vm._s(_vm.lang("Approved")))]
-                                      )
-                                    ]
-                                  )
-                                ],
-                                2
+                                  _c("p", { staticClass: "mb-4" }, [
+                                    _vm._v(_vm._s(message.message))
+                                  ])
+                                ])
+                              })
+                            : _vm._e()
+                        ],
+                        2
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "btn-footer mt-2 mb-2 flex-column flex-md-row d-flex p-2"
+                        },
+                        [
+                          _vm.canAccept()
+                            ? _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-lg btn-save",
+                                  on: { click: _vm.acceptTask }
+                                },
+                                [_vm._v(_vm._s(_vm.lang("Accept")))]
                               )
-                            ]
-                          : _vm._e(),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          { staticClass: "comments" },
-                          [
-                            _c("div", { staticClass: "page-name-xl mb-3" }, [
-                              _vm._v(_vm._s(_vm.lang("Comments")))
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "content" }, [
-                              _c("div", { staticClass: "md-form mb-1" }, [
-                                _c("textarea", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.comment,
-                                      expression: "comment"
-                                    }
-                                  ],
-                                  staticClass: "md-textarea",
-                                  domProps: { value: _vm.comment },
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _vm.canAssign()
+                            ? _c(
+                                "button",
+                                {
+                                  staticClass:
+                                    "btn btn-lg btn-assign btn-assign-icon",
                                   on: {
-                                    input: function($event) {
-                                      if ($event.target.composing) {
-                                        return
-                                      }
-                                      _vm.comment = $event.target.value
+                                    click: function($event) {
+                                      _vm.openModal("modal-reassign")
                                     }
                                   }
-                                })
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                staticClass: "justify-content-end d-flex mb-2"
-                              },
-                              [
-                                _c(
-                                  "button",
-                                  {
-                                    staticClass: "btn btn-neutral",
-                                    attrs: { type: "button" },
-                                    on: {
-                                      click: function($event) {
-                                        _vm.commentTask()
-                                      }
-                                    }
-                                  },
-                                  [_vm._v(_vm._s(_vm.lang("Send")))]
-                                )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _vm.task.thread
-                              ? _vm._l(_vm.task.thread.messages, function(
-                                  message
-                                ) {
-                                  return _c("div", [
-                                    _c(
-                                      "h3",
-                                      { staticClass: "page-name-l mb-1" },
-                                      [
-                                        _c("span", [
-                                          _vm._v(
-                                            _vm._s(message.sender.name) + ","
-                                          )
-                                        ]),
-                                        _vm._v(
-                                          " " +
-                                            _vm._s(
-                                              _vm._f("moment")(
-                                                message.created_at,
-                                                "DD.MM.YYYY., H:mm:ss"
-                                              )
-                                            )
-                                        )
-                                      ]
-                                    ),
-                                    _vm._v(" "),
-                                    _c("p", { staticClass: "mb-4" }, [
-                                      _vm._v(_vm._s(message.message))
-                                    ])
-                                  ])
-                                })
-                              : _vm._e()
-                          ],
-                          2
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "btn-footer mt-2 mb-2 flex-column flex-md-row d-flex p-2"
-                          },
-                          [
-                            _vm.task.status === "new"
-                              ? _c(
-                                  "button",
-                                  {
-                                    staticClass: "btn btn-lg btn-save",
-                                    attrs: { type: "submit" },
-                                    on: { click: _vm.acceptTask }
-                                  },
-                                  [_vm._v(_vm._s(_vm.lang("Accept")))]
-                                )
-                              : _vm._e(),
-                            _vm._v(" "),
-                            _vm.task.status === "new"
-                              ? _c(
-                                  "button",
-                                  {
-                                    staticClass:
-                                      "btn btn-lg btn-assign btn-assign-icon",
-                                    attrs: { type: "submit" },
-                                    on: {
-                                      click: function($event) {
-                                        _vm.openModal("modal-reassign")
-                                      }
-                                    }
-                                  },
-                                  [_vm._v(_vm._s(_vm.lang("Assign to...")))]
-                                )
-                              : _vm._e(),
-                            _vm._v(" "),
-                            _vm.task.status === "accepted"
-                              ? _c(
-                                  "button",
-                                  {
-                                    staticClass:
-                                      "btn btn-lg btn-assign btn-assign-icon",
-                                    attrs: { type: "submit" },
-                                    on: { click: _vm.completeTask }
-                                  },
-                                  [_vm._v(_vm._s(_vm.lang("Complete")))]
-                                )
-                              : _vm._e()
-                          ]
-                        )
-                      ],
-                      2
-                    ),
+                                },
+                                [_vm._v(_vm._s(_vm.lang("Assign to...")))]
+                              )
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _vm.canComplete()
+                            ? _c(
+                                "button",
+                                {
+                                  staticClass:
+                                    "btn btn-lg btn-assign btn-assign-icon",
+                                  on: { click: _vm.completeTask }
+                                },
+                                [_vm._v(_vm._s(_vm.lang("Complete")))]
+                              )
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _vm.canDelete()
+                            ? _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-lg btn-cancel",
+                                  on: { click: _vm.taskDelete }
+                                },
+                                [_vm._v(_vm._s(_vm.lang("Delete")))]
+                              )
+                            : _vm._e()
+                        ]
+                      )
+                    ]),
                     _vm._v(" "),
                     _c("upload-modal", {
                       attrs: {
@@ -77880,7 +77503,7 @@ var render = function() {
                     _c("warning-modal", { on: { warning: _vm.fileDelete } })
                   ]
           ]
-        : [_vm._m(5)]
+        : [_vm._m(1)]
     ],
     2
   )
@@ -77892,151 +77515,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "stopwatch-counter" }, [
       _c("div", { staticClass: "clock" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "files mt-2 mb-2" }, [
-      _c(
-        "div",
-        { staticClass: "file-box file-box-l d-flex align-items-center" },
-        [
-          _c(
-            "a",
-            {
-              staticClass: "file-icon",
-              attrs: { href: "http://homestead.app/images/profile.pdf" }
-            },
-            [_vm._v("Fizika i društvo.doc")]
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "file-box-sty ml-auto d-flex" }, [
-            _c("a", { attrs: { href: "" } }, [
-              _c("img", {
-                staticClass: "profile-m-1 mr-1 align-self-center",
-                attrs: { src: "/images/profile.jpg" }
-              }),
-              _vm._v("Jelena Lončarić\n                                ")
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "file-box-sty" }, [_vm._v("19.07.2017.")]),
-          _vm._v(" "),
-          _c("div", { staticClass: "file-box-sty icon icon-download" }, [
-            _vm._v("Preuzmi")
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "file-box-sty icon icon-cancel" }, [
-            _vm._v("Obriši")
-          ])
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "file-box file-box-l d-flex align-items-center" },
-        [
-          _c(
-            "a",
-            {
-              staticClass: "file-icon",
-              attrs: { href: "http://homestead.app/images/profile.pdf" }
-            },
-            [_vm._v("Fizika i društvo.doc")]
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "file-box-sty ml-auto d-flex" }, [
-            _c("a", { attrs: { href: "" } }, [
-              _c("img", {
-                staticClass: "profile-m-1 mr-1 align-self-center",
-                attrs: { src: "/images/profile.jpg" }
-              }),
-              _vm._v("Jelena Lončarić\n                                ")
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "file-box-sty" }, [_vm._v("19.07.2017.")]),
-          _vm._v(" "),
-          _c("div", { staticClass: "file-box-sty icon icon-download" }, [
-            _vm._v("Preuzmi")
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "file-box-sty icon icon-cancel" }, [
-            _vm._v("Obriši")
-          ])
-        ]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "files mt-2 mb-2" }, [
-      _c(
-        "div",
-        { staticClass: "file-box file-box-l d-flex align-items-center" },
-        [
-          _c(
-            "a",
-            {
-              staticClass: "file-icon",
-              attrs: { href: "http://homestead.app/images/profile.pdf" }
-            },
-            [_vm._v("Fizika i društvo.doc")]
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "file-box-sty ml-auto d-flex" }, [
-            _c("a", { attrs: { href: "" } }, [
-              _c("img", {
-                staticClass: "profile-m-1 mr-1 align-self-center",
-                attrs: { src: "/images/profile.jpg" }
-              }),
-              _vm._v("Stjepan Drmić\n                                ")
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "file-box-sty" }, [_vm._v("19.07.2017.")]),
-          _vm._v(" "),
-          _c("div", { staticClass: "file-box-sty icon icon-download" }, [
-            _vm._v("Preuzmi")
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "file-box-sty icon icon-cancel" }, [
-            _vm._v("Obriši")
-          ])
-        ]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "file-box-sty ml-auto d-flex" }, [
-      _c("a", { attrs: { href: "" } }, [
-        _c("img", {
-          staticClass: "profile-m-1 mr-1 align-self-center",
-          attrs: { src: "/images/profile.jpg" }
-        }),
-        _vm._v("Stjepan Drmić")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "file-box-sty ml-auto d-flex" }, [
-      _c("a", { attrs: { href: "" } }, [
-        _c("img", {
-          staticClass: "profile-m-1 mr-1 align-self-center",
-          attrs: { src: "/images/profile.jpg" }
-        }),
-        _vm._v("Stjepan Drmić")
-      ])
     ])
   },
   function() {
@@ -90702,6 +90180,354 @@ function cloneRoute (to, from) {
 __webpack_require__(141);
 module.exports = __webpack_require__(142);
 
+
+/***/ }),
+/* 323 */,
+/* 324 */,
+/* 325 */,
+/* 326 */,
+/* 327 */,
+/* 328 */,
+/* 329 */,
+/* 330 */,
+/* 331 */,
+/* 332 */,
+/* 333 */,
+/* 334 */,
+/* 335 */,
+/* 336 */,
+/* 337 */,
+/* 338 */,
+/* 339 */,
+/* 340 */,
+/* 341 */,
+/* 342 */,
+/* 343 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuedraggable__ = __webpack_require__(319);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuedraggable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vuedraggable__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+    components: {
+        draggable: __WEBPACK_IMPORTED_MODULE_0_vuedraggable___default.a
+    },
+    data: function () {
+        return {
+            department: false,
+            employees: false,
+            authority: true,
+            task_types: {
+                1: {
+                    title: 'Project',
+                    className: 'tasktype-1'
+                },
+                2: {
+                    title: 'Assignment',
+                    className: 'tasktype-2'
+                }
+            }
+        };
+    },
+    computed: {},
+    methods: {
+        is_assigned: function (task) {
+            return this.authority && task.employees.length;
+        },
+        endDrag: function (event) {
+            let data = _.map(this.employee.tasks, o => {
+                return o.id;
+            });
+            axios.post('/api/tasks/updateOrder', { tasks: data }).then(res => {}).catch(err => {});
+        }
+    },
+    mounted: function () {
+        axios.get('/api/tasks/department/' + this.$route.params.id).then(res => {
+            this.department = res.data.department;
+            this.employees = res.data.employees;
+        });
+    }
+});
+
+/***/ }),
+/* 344 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_DepartmentTasks_vue__ = __webpack_require__(343);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_622a08b7_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_DepartmentTasks_vue__ = __webpack_require__(345);
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+
+/* template */
+
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_DepartmentTasks_vue__["a" /* default */],
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_622a08b7_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_DepartmentTasks_vue__["a" /* default */],
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "packages/Inspirium/SKTemplate/src/assets/js/components/tasks/DepartmentTasks.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-loader/node_modules/vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-622a08b7", Component.options)
+  } else {
+    hotAPI.reload("data-v-622a08b7", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+/* harmony default export */ __webpack_exports__["a"] = (Component.exports);
+
+
+/***/ }),
+/* 345 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm.department
+    ? _c(
+        "div",
+        { staticClass: "content" },
+        [
+          _c(
+            "div",
+            {
+              staticClass:
+                "row profile-head py-4 d-flex flex-column justify-content-center align-items-center"
+            },
+            [
+              _c("div", { staticClass: "col-md-12" }, [
+                _c("h1", { staticClass: "display-3 text-white text-center" }, [
+                  _vm._v(_vm._s(_vm.department.name))
+                ])
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _vm._l(_vm.employees, function(employee) {
+            return [
+              _c("div", { staticClass: "page-name-xl mb-3 mt-2" }, [
+                _c(
+                  "a",
+                  {
+                    attrs: {
+                      href: "/human_resources/employee/" + employee.id + "/show"
+                    }
+                  },
+                  [
+                    _c("img", {
+                      staticClass: "profile-m mr-1 my-2",
+                      attrs: { src: employee.image }
+                    }),
+                    _vm._v(
+                      "\n            " +
+                        _vm._s(employee.first_name + " " + employee.last_name) +
+                        "\n            "
+                    ),
+                    _c("span", { staticClass: "tag tag-neutral text-white" }, [
+                      _vm._v(_vm._s(employee.tasks.length))
+                    ])
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c(
+                "table",
+                { staticClass: "table" },
+                [
+                  _vm._m(0, true),
+                  _vm._v(" "),
+                  _c(
+                    "draggable",
+                    {
+                      attrs: { element: "tbody" },
+                      model: {
+                        value: employee.tasks,
+                        callback: function($$v) {
+                          _vm.$set(employee, "tasks", $$v)
+                        },
+                        expression: "employee.tasks"
+                      }
+                    },
+                    _vm._l(employee.tasks, function(task, index) {
+                      return _c("tr", [
+                        _c("td", [
+                          _c("div", { staticClass: "icon icon-handler" })
+                        ]),
+                        _vm._v(" "),
+                        _c("th", { staticClass: "display-e w-30" }, [
+                          _vm._v(_vm._s(index + 1))
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "td",
+                          {
+                            staticClass: "table-title",
+                            attrs: { "data-title": "Task" }
+                          },
+                          [_c("a", [_vm._v(_vm._s(task.name))])]
+                        ),
+                        _vm._v(" "),
+                        _c("td", { attrs: { "data-title": "Task Type" } }, [
+                          _c("div", [
+                            _vm._v(_vm._s(_vm.task_types[task.type].title))
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { attrs: { "data-title": "Assigner" } }, [
+                          _c(
+                            "a",
+                            { staticClass: "text-uppercase file-box-sty" },
+                            [
+                              _c("img", {
+                                staticClass: "profile-m mr-2",
+                                attrs: { src: task.assigner.image }
+                              }),
+                              _vm._v(_vm._s(task.assigner.name))
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { attrs: { "data-title": "Created" } }, [
+                          _vm._v(
+                            _vm._s(_vm._f("moment")(task.created_at, "DD.MM."))
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { attrs: { "data-title": "Deadline" } }, [
+                          _vm._v(_vm._s(_vm._f("moment")(task, "DD.MM.")))
+                        ])
+                      ])
+                    })
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass:
+                    "btn btn-neutral btn-addon d-block ml-auto waves-effect waves-light",
+                  attrs: { type: "button" }
+                },
+                [_vm._v(_vm._s(_vm.lang("Save tasks priority")))]
+              )
+            ]
+          })
+        ],
+        2
+      )
+    : _vm._e()
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "thead-inverse" }, [
+      _c("tr", [
+        _c("th", { staticClass: "w-30" }),
+        _vm._v(" "),
+        _c("th", { staticClass: "w-30" }, [_vm._v("#")]),
+        _vm._v(" "),
+        _c("th", { attrs: { "data-title": "Task" } }, [_vm._v("Task")]),
+        _vm._v(" "),
+        _c("th", { attrs: { "data-title": "Task Type" } }, [
+          _vm._v("Task Type")
+        ]),
+        _vm._v(" "),
+        _c("th", { attrs: { "data-title": "Assigner" } }, [_vm._v("Assigner")]),
+        _vm._v(" "),
+        _c("th", { attrs: { "data-title": "Created" } }, [_vm._v("Created")]),
+        _vm._v(" "),
+        _c("th", { attrs: { "data-title": "Deadline" } }, [_vm._v("Deadline")])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+var esExports = { render: render, staticRenderFns: staticRenderFns }
+/* harmony default export */ __webpack_exports__["a"] = (esExports);
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-loader/node_modules/vue-hot-reload-api")      .rerender("data-v-622a08b7", esExports)
+  }
+}
 
 /***/ })
 /******/ ]);

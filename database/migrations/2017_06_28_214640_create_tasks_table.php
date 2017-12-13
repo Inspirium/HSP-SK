@@ -21,6 +21,7 @@ class CreateTasksTable extends Migration
             $table->string('priority')->nullable();
             $table->string('status')->nullable();
             $table->text('status_info')->nullable();
+            $table->integer('department_id')->nullable();
             $table->integer('assigner_id')->nullable();
             $table->integer('assignee_id')->nullable();
             $table->integer('related_id')->nullable();
