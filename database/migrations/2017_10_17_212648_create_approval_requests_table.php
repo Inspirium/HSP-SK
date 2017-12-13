@@ -22,6 +22,7 @@ class CreateApprovalRequestsTable extends Migration
             $table->string('expense');
             $table->integer('proposition_id');
             $table->integer('requester_id');
+            $table->integer('requestee_id');
             $table->string('status');
             $table->softDeletes();
             $table->timestamps();
