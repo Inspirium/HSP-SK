@@ -3,6 +3,7 @@
 namespace Inspirium\Notifications;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -32,7 +33,7 @@ class NewMessage extends Notification
      */
     public function via($notifiable)
     {
-        return ['database'];
+        return ['database', 'broadcast'];
     }
 
     /**
@@ -58,8 +59,8 @@ class NewMessage extends Notification
     public function toArray($notifiable)
     {
         return [
-	        'title' => 'New Message',
-	        'message' => 'New Message has been posted in ' . $this->message->thread->title,
+	        'title' => __('New Message'),
+	        'message' => __(':sender has sent a message to :thread', ['sender' => $this->message->sender->name, 'thread' => $this->message->thread->title]),
 	        'link' => '/messages/',
 	        'sender' => [
 		        'name' => $this->message->sender->name,
@@ -67,5 +68,19 @@ class NewMessage extends Notification
 		        'link' => $this->message->sender->link
 	        ]
         ];
+    }
+
+    public function toBroadcast() {
+	    return new BroadcastMessage([ 'data' => [
+		    'message' => __(':sender has sent a message to :thread', ['sender' => $this->message->sender->name, 'thread' => $this->message->thread->title]),
+		    'title' => __('New Message'),
+		    'link' => '',
+		    'sender' => [
+			    'name' => $this->message->sender->name,
+			    'image' => $this->message->sender->image,
+			    'link' => $this->message->sender->link
+		    ]
+	    ]
+	    ]);
     }
 }

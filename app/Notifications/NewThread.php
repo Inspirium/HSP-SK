@@ -58,8 +58,8 @@ class NewThread extends Notification
     public function toArray($notifiable)
     {
         return [
-	        'title' => 'New Thread',
-	        'message' => 'New Thread has been created',
+	        'title' => __('New Thread'),
+	        'message' => __('New Thread has been created: :name', ['name' => $this->thread->title]),
 	        'link' => '/messages/',
 	        'sender' => [
 		        'name' => '',
