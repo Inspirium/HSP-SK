@@ -26,7 +26,7 @@ class EmployeeController extends Controller {
         $links = [
             'add_new' => url('human_resources/employee/new'),
             'edit' => url('human_resources/employee/:id/edit/'),
-            'delete' => url('human_resources/employee/:id/delete/'),
+            'delete' => url('api/human_resources/employee/:id'),
             'show' => url('human_resources/employee/:id/show/')
         ];
         return view(config('app.template') . '::vue.table-search', compact( 'elements', 'columns', 'strings', 'links' ));

@@ -48078,11 +48078,14 @@ module.exports = function spread(callback) {
         };
     },
     computed: {
+        computedData() {
+            return this.data;
+        },
         filteredData: function () {
             let sortKey = this.sortKey;
             let filterKey = this.filterKey && this.filterKey.toLowerCase();
             let order = this.sortOrders[sortKey] || 1;
-            let data = this.data;
+            let data = this.computedData;
             if (filterKey) {
                 data = data.filter(function (row) {
                     return Object.keys(row).some(function (key) {
@@ -48128,9 +48131,12 @@ module.exports = function spread(callback) {
         },
         deleteUser() {
             axios.delete(this.$options.filters.add_id(this.links['delete'], this.to_delete)).then(() => {
-                this.data = _.filter(this.data, o => {
+                this.computedData = _.filter(this.computedData, o => {
                     return o.id !== this.to_delete.id;
                 });
+                toastr.success(this.lang('Success'));
+            }).catch(() => {
+                toastr.error(this.lang('Action failed'));
             });
         }
     }
@@ -70018,10 +70024,7 @@ var render = function() {
                     "a",
                     {
                       staticClass: "color-grey",
-                      attrs: {
-                        href: _vm._f("add_id")(_vm.links["delete"], entry),
-                        title: _vm.lang("Delete")
-                      },
+                      attrs: { href: "#", title: _vm.lang("Delete") },
                       on: {
                         click: function($event) {
                           $event.preventDefault()
