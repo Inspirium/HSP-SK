@@ -54941,6 +54941,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 5: {
                     title: 'Approval Request',
                     className: 'tasktype-2'
+                },
+                6: {
+                    title: 'Task Order Request',
+                    className: 'tasktype-2'
                 }
             },
             new_tasks: [],
@@ -54951,16 +54955,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         };
     },
     computed: {},
-    methods: {
-        endDrag: function (event) {
-            /*let data = _.map(this.old_tasks, (o) => {
-                return o.id;
-            });
-            axios.post('/api/tasks/updateOrder', {tasks: data})
-                .then((res) => {})
-                .catch((err) => {});*/
-        }
-    },
+    methods: {},
     mounted: function () {
         axios.get('/api/tasks').then(res => {
             this.new_tasks = res.data.new_tasks;
