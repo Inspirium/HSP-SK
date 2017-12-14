@@ -69146,10 +69146,11 @@ var render = function() {
           { staticClass: "activity-box" },
           [
             _c(
-              "div",
+              "a",
               {
                 staticClass:
-                  "activity-item file-box-sty p-1 text-center d-block"
+                  "activity-item file-box-sty p-1 text-center d-block",
+                attrs: { href: "/notifications" }
               },
               [_vm._v("Prikaži sve")]
             ),

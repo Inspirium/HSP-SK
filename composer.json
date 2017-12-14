@@ -16,15 +16,17 @@
     "php-unoconv/php-unoconv": "~0.2",
     "phpoffice/phpspreadsheet": "dev-develop",
     "phpoffice/phpword": "v0.13.*",
-    "pusher/pusher-php-server": "~3.0"
+    "pusher/pusher-php-server": "~3.0",
+    "roave/security-advisories": "dev-master"
   },
   "require-dev": {
+    "barryvdh/laravel-ide-helper": "^2.3",
     "fzaninotto/faker": "~1.4",
     "jeroen-g/laravel-packager": "^1.5",
     "laravel/homestead": "^5.1",
     "mockery/mockery": "0.9.*",
     "phpunit/phpunit": "~6.0",
-    "barryvdh/laravel-ide-helper": "^2.3"
+    "vimeo/psalm": "^0"
   },
   "autoload": {
     "classmap": [

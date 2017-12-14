@@ -62,6 +62,7 @@ class NewMessage extends Notification
 	        'title' => __('New Message'),
 	        'message' => __(':sender has sent a message to :thread', ['sender' => $this->message->sender->name, 'thread' => $this->message->thread->title]),
 	        'link' => '/messages/',
+	        'tasktype' => 'message',
 	        'sender' => [
 		        'name' => $this->message->sender->name,
 		        'image' => $this->message->sender->image,
@@ -74,6 +75,7 @@ class NewMessage extends Notification
 	    return new BroadcastMessage([ 'data' => [
 		    'message' => __(':sender has sent a message to :thread', ['sender' => $this->message->sender->name, 'thread' => $this->message->thread->title]),
 		    'title' => __('New Message'),
+		    'tasktype' => 'message',
 		    'link' => '',
 		    'sender' => [
 			    'name' => $this->message->sender->name,

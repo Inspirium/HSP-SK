@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => 'auth'], function() {
 	Route::get('/', 'HomeController@getIndex');
+	Route::get('notifications', 'HomeController@getNotifications');
 });
 
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
@@ -83,3 +84,4 @@ Route::group(['prefix' => 'books', 'namespace' => 'BookManagement'], function() 
 Route::group(['prefix' => 'message', 'namespace' => 'Messaging', 'middleware' => ['auth']], function() {
 	Route::get('thread/{id}', 'MessageController@showThread');
 });
+
