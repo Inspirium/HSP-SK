@@ -69193,7 +69193,9 @@ var render = function() {
                       _c(
                         "a",
                         {
-                          attrs: { href: item.data.link },
+                          attrs: {
+                            href: item.data.link ? item.data.link : "#"
+                          },
                           on: {
                             click: function($event) {
                               _vm.markAsRead(item)
