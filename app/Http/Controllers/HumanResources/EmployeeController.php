@@ -24,10 +24,10 @@ class EmployeeController extends Controller {
             'add_new' => 'Add New Employee',
         ];
         $links = [
-            'add_new' => url('human_resources/employee/new'),
-            'edit' => url('human_resources/employee/:id/edit/'),
-            'delete' => url('api/human_resources/employee/:id'),
-            'show' => url('human_resources/employee/:id/show/')
+            'add_new' => '/human_resources/employee/new',
+            'edit' => '/human_resources/employee/:id/edit/',
+            'delete' => '/api/human_resources/employee/:id',
+            'show' => '/human_resources/employee/:id/show/'
         ];
         return view(config('app.template') . '::vue.table-search', compact( 'elements', 'columns', 'strings', 'links' ));
     }
