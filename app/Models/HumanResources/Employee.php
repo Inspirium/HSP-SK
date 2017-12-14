@@ -89,6 +89,25 @@ class Employee extends Authenticatable {
     	return $this->hasMany('Inspirium\TaskManagement\Models\Task', 'assignee_id');
 	}
 
+	public function taskCount()
+	{
+		return $this->hasOne('Inspirium\TaskManagement\Models\Task', 'assignee_id')
+		            ->selectRaw('assignee_id, count(*) as aggregate')
+		            ->groupBy('assignee_id');
+	}
+
+	public function getTaskCountAttribute()
+	{
+		// if relation is not loaded already, let's do it first
+		if ( ! array_key_exists('taskCount', $this->relations))
+			$this->load('taskCount');
+
+		$related = $this->getRelation('taskCount');
+
+		// then return the count directly
+		return ($related) ? (int) $related->aggregate : 0;
+	}
+
 	public function hasRole($check) {
 		return in_array($check, array_pluck($this->roles->toArray(), 'name'));
 	}

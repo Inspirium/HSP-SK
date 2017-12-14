@@ -13,19 +13,21 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['middleware' => ['auth:api'],], function() {
+
+Route::get('/me', function (Request $request) {
+    return Auth::user();
 });
 
 
-Route::group(['middleware' => ['auth:api'], 'prefix' => 'user'], function () {
+Route::group(['prefix' => 'user'], function () {
 
 	Route::get('notifications', 'Api\HumanResources\NotificationController@getNotifications');
 	Route::post('notifications/{notification}', 'Api\HumanResources\NotificationController@markAsRead');
 
 });
 
-Route::group(['prefix' => 'human_resources', 'middleware' => ['auth:api'], 'namespace' => 'Api\HumanResources'], function() {
+Route::group(['prefix' => 'human_resources', 'namespace' => 'Api\HumanResources'], function() {
 	Route::get('employee/{employee}', 'EmployeeController@getEmployee');
 	Route::post('employee/{employee}', 'EmployeeController@saveEmployee')->middleware('can:update,employee');
 	Route::delete('employee/{employee}', 'EmployeeController@deleteEmployee')->middleware('can:delete,employee');
@@ -37,7 +39,7 @@ Route::group(['prefix' => 'human_resources', 'middleware' => ['auth:api'], 'name
 	Route::get('department/search/{term}', 'DepartmentController@searchDepartment');
 });
 
-Route::group(['namespace' => 'Api\BookManagement', 'middleware' => [ 'auth:api']], function() {
+Route::group(['namespace' => 'Api\BookManagement'], function() {
 
 	Route::group(['prefix' => 'author'], function() {
 		Route::get('/{id}', 'AuthorController@getAuthor');
@@ -61,14 +63,16 @@ Route::group(['namespace' => 'Api\BookManagement', 'middleware' => [ 'auth:api']
 
 });
 
-Route::group(['prefix' => 'file', 'namespace' => 'Api\FileManagement', 'middleware' => ['auth:api']], function() {
+Route::group(['prefix' => 'file', 'namespace' => 'Api\FileManagement'], function() {
 	Route::get('{id?}', 'FileController@getFileInfo');
 	Route::post('/', 'FileController@postFile');
 	Route::patch('{id}', 'FileController@updateFile');
 	Route::delete('{id}', 'FileController@deleteFile');
 });
 
-Route::group(['middleware' => ['auth:api'], 'namespace' => 'Api\Messaging', 'prefix' => 'thread'], function() {
+Route::group(['namespace' => 'Api\Messaging', 'prefix' => 'thread'], function() {
 	Route::get('{id}', 'ThreadController@getThread');
 	Route::post('{id}/message', 'ThreadController@postMessage');
+});
+
 });

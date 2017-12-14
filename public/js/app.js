@@ -56490,6 +56490,8 @@ const routes = [{ path: '/proposition/start', component: __WEBPACK_IMPORTED_MODU
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_deepset___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_vue_deepset__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modules_proposition__ = __webpack_require__(205);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__modules_categorization__ = __webpack_require__(204);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__modules_employee__ = __webpack_require__(346);
+
 
 
 
@@ -56502,7 +56504,8 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
 /* harmony default export */ __webpack_exports__["a"] = (new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
     modules: {
         'proposition': __WEBPACK_IMPORTED_MODULE_3__modules_proposition__["a" /* default */],
-        'categorization': __WEBPACK_IMPORTED_MODULE_4__modules_categorization__["a" /* default */]
+        'categorization': __WEBPACK_IMPORTED_MODULE_4__modules_categorization__["a" /* default */],
+        'employee': __WEBPACK_IMPORTED_MODULE_5__modules_employee__["a" /* default */]
     },
     state: {
         edited: false
@@ -90214,6 +90217,7 @@ module.exports = __webpack_require__(142);
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuedraggable__ = __webpack_require__(319);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuedraggable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vuedraggable__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__modals_TaskOrderApprovalModal__ = __webpack_require__(348);
 //
 //
 //
@@ -90260,14 +90264,20 @@ module.exports = __webpack_require__(142);
 //
 //
 //
+//
+//
+//
+
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
     components: {
-        draggable: __WEBPACK_IMPORTED_MODULE_0_vuedraggable___default.a
+        draggable: __WEBPACK_IMPORTED_MODULE_0_vuedraggable___default.a,
+        taskOrderApproval: __WEBPACK_IMPORTED_MODULE_1__modals_TaskOrderApprovalModal__["a" /* default */]
     },
     data: function () {
         return {
+            employee_index: 0,
             department: false,
             employees: false,
             authority: true,
@@ -90279,20 +90289,62 @@ module.exports = __webpack_require__(142);
                 2: {
                     title: 'Assignment',
                     className: 'tasktype-2'
+                },
+                3: {
+                    title: 'Project',
+                    className: 'tasktype-1'
+                },
+                4: {
+                    title: 'Assignment',
+                    className: 'tasktype-2'
+                },
+                5: {
+                    title: 'Project',
+                    className: 'tasktype-1'
+                },
+                6: {
+                    title: 'Assignment',
+                    className: 'tasktype-2'
                 }
             }
         };
     },
-    computed: {},
     methods: {
-        is_assigned: function (task) {
-            return this.authority && task.employees.length;
+        newOrderValue(task) {
+            if (task.new_order) {
+                return Number(task.new_order) - Number(task.order);
+            }
+            return '';
         },
-        endDrag: function (event) {
-            let data = _.map(this.employee.tasks, o => {
+        newOrderClass(task) {
+            if (task.new_order) {
+                let number = Number(task.new_order) - Number(task.order);
+                if (number === 0) {
+                    return 'new-order';
+                }
+                return number > 0 ? 'new-order new-order--up' : 'new-order new-order--down';
+            }
+            return '';
+        },
+        openModalForApproval(ei) {
+            this.employee_index = ei;
+            $('#taskOrderApprovalModal').modal('show');
+        },
+        sendForApproval(task) {
+            let data = _.map(this.employees[this.employee_index].tasks, o => {
                 return o.id;
             });
-            axios.post('/api/tasks/updateOrder', { tasks: data }).then(res => {}).catch(err => {});
+            axios.post('/api/tasks/requestOrder', { tasks: data, task: task }).then(res => {
+                this.employee_index = 0;
+            }).catch(err => {});
+        },
+        approveOrder(ei) {
+            let data = _.map(this.employees[ei].tasks, o => {
+                return o.id;
+            });
+            axios.post('/api/tasks/updateOrder', { employee: this.employees[ei].id, tasks: data }).then(res => {
+                this.employee_index = 0;
+            }).catch(err => {});
         }
     },
     mounted: function () {
@@ -90383,7 +90435,7 @@ var render = function() {
             ]
           ),
           _vm._v(" "),
-          _vm._l(_vm.employees, function(employee) {
+          _vm._l(_vm.employees, function(employee, ei) {
             return [
               _c("div", { staticClass: "page-name-xl mb-3 mt-2" }, [
                 _c(
@@ -90435,7 +90487,11 @@ var render = function() {
                         ]),
                         _vm._v(" "),
                         _c("th", { staticClass: "display-e w-30" }, [
-                          _vm._v(_vm._s(index + 1))
+                          _vm._v(_vm._s(task.order))
+                        ]),
+                        _vm._v(" "),
+                        _c("th", { class: _vm.newOrderClass(task) }, [
+                          _vm._v(_vm._s(_vm.newOrderValue(task)))
                         ]),
                         _vm._v(" "),
                         _c(
@@ -90488,11 +90544,35 @@ var render = function() {
                 {
                   staticClass:
                     "btn btn-neutral btn-addon d-block ml-auto waves-effect waves-light",
-                  attrs: { type: "button" }
+                  attrs: { type: "button" },
+                  on: {
+                    click: function($event) {
+                      _vm.openModalForApproval(ei)
+                    }
+                  }
                 },
                 [_vm._v(_vm._s(_vm.lang("Save tasks priority")))]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass:
+                    "btn btn-neutral btn-addon d-block ml-auto waves-effect waves-light",
+                  attrs: { type: "button" },
+                  on: {
+                    click: function($event) {
+                      _vm.approveOrder(ei)
+                    }
+                  }
+                },
+                [_vm._v(_vm._s(_vm.lang("Approve task priority")))]
               )
             ]
+          }),
+          _vm._v(" "),
+          _c("task-order-approval", {
+            on: { sendForApproval: _vm.sendForApproval }
           })
         ],
         2
@@ -90507,6 +90587,8 @@ var staticRenderFns = [
     return _c("thead", { staticClass: "thead-inverse" }, [
       _c("tr", [
         _c("th", { staticClass: "w-30" }),
+        _vm._v(" "),
+        _c("th", { staticClass: "w-30" }, [_vm._v("#")]),
         _vm._v(" "),
         _c("th", { staticClass: "w-30" }, [_vm._v("#")]),
         _vm._v(" "),
@@ -90532,6 +90614,410 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-loader/node_modules/vue-hot-reload-api")      .rerender("data-v-622a08b7", esExports)
+  }
+}
+
+/***/ }),
+/* 346 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex_persistedstate__ = __webpack_require__(320);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex_persistedstate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vuex_persistedstate__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios_index__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios_index___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_axios_index__);
+
+
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+    namespaced: true,
+    plugins: [__WEBPACK_IMPORTED_MODULE_0_vuex_persistedstate___default()()],
+    state: {
+        id: 0,
+        name: '',
+        roles: []
+    },
+    mutations: {
+        setUser(state, payload) {}
+    },
+    getters: {},
+    actions: {
+        initUser({ state, commit }) {
+            if (!state.id || state.id !== window.Laravel.userId) {
+                __WEBPACK_IMPORTED_MODULE_1_axios_index___default.a.get('api/me').then(res => {
+                    commit('setUser', res.data);
+                });
+            }
+        }
+    }
+});
+
+/***/ }),
+/* 347 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+    name: "proposition-approval-modal",
+    data() {
+        return {
+            employee: '',
+            e_suggestions: [],
+            department: '',
+            d_suggestions: [],
+            employees: [],
+            description: '',
+
+            departments: [],
+            cancel: false
+        };
+    },
+    methods: {
+        autocomplete: function (event, type) {
+            if (this.cancel) {
+                this.cancel();
+                this.cancel = false;
+            }
+            let CancelToken = axios.CancelToken;
+            if (this[type].length > 2) {
+                axios.get('/api/human_resources/' + type + '/search/' + this[type], {
+                    cancelToken: new CancelToken(c => {
+                        this.cancel = c;
+                    })
+                }).then(response => {
+                    if (type === 'department') {
+                        this.d_suggestions = response.data;
+                    } else {
+                        this.e_suggestions = response.data;
+                    }
+                }).catch(error => {});
+            }
+        },
+        autocomplete_select: function (index, type) {
+            if (type === 'department') {
+                //this.$store.commit('proposition/pushToArray', {key: 'departments', group: 'assigned', value: this.d_suggestions[index]});
+                this.departments.push(this.d_suggestions[index]);
+                this.d_suggestions = [];
+                this.department = '';
+            } else {
+                //this.$store.commit('proposition/pushToArray', {key: 'employees', group: 'assigned', value: this.e_suggestions[index]});
+                this.employees.push(this.e_suggestions[index]);
+                this.e_suggestions = [];
+                this.employee = '';
+            }
+        },
+        assignValues: function () {
+            this.$emit('sendForApproval', { employees: this.employees, description: this.description });
+            $('#taskOrderApprovalModal').modal('hide');
+        }
+    }
+});
+
+/***/ }),
+/* 348 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_TaskOrderApprovalModal_vue__ = __webpack_require__(347);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_07b3af46_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_TaskOrderApprovalModal_vue__ = __webpack_require__(349);
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+
+/* template */
+
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_TaskOrderApprovalModal_vue__["a" /* default */],
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_07b3af46_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_TaskOrderApprovalModal_vue__["a" /* default */],
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "packages/Inspirium/SKTemplate/src/assets/js/components/modals/TaskOrderApprovalModal.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-loader/node_modules/vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-07b3af46", Component.options)
+  } else {
+    hotAPI.reload("data-v-07b3af46", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+/* harmony default export */ __webpack_exports__["a"] = (Component.exports);
+
+
+/***/ }),
+/* 349 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "modal fade",
+      attrs: {
+        id: "taskOrderApprovalModal",
+        tabindex: "-1",
+        role: "dialog",
+        "aria-hidden": "true"
+      }
+    },
+    [
+      _c(
+        "div",
+        {
+          staticClass: "modal-dialog modal-notify modal-warning",
+          attrs: { role: "document" }
+        },
+        [
+          _c("div", { staticClass: "modal-content" }, [
+            _c("div", { staticClass: "modal-header flex-column px-3 pt-3" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c("div", { staticClass: "d-flex mx-auto" }, [
+                _c("i", {
+                  staticClass:
+                    "fa fa-magic fa-4x mb-1 animated rotateInDownLeft"
+                }),
+                _vm._v(" "),
+                _c("h1", { staticClass: "modal-title w-100 text-center" }, [
+                  _vm._v(_vm._s(_vm.lang("Task Order Approve")))
+                ])
+              ]),
+              _vm._v(" "),
+              _c("h6", { staticClass: "w-100 text-center mb-2" }, [
+                _vm._v(_vm._s(_vm.lang("Assign employee")))
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-body" }, [
+              _c("div", { staticClass: "row" }, [
+                _c(
+                  "div",
+                  { staticClass: "col-md-12" },
+                  [
+                    _c("div", { staticClass: "md-form d-flex addon" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.employee,
+                            expression: "employee"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "text",
+                          name: "employee",
+                          placeholder: _vm.lang("Find employee")
+                        },
+                        domProps: { value: _vm.employee },
+                        on: {
+                          keyup: function($event) {
+                            _vm.autocomplete($event, "employee")
+                          },
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.employee = $event.target.value
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm.e_suggestions.length
+                        ? _c(
+                            "ul",
+                            { staticClass: "mdb-autocomplete-wrap" },
+                            _vm._l(_vm.e_suggestions, function(item, index) {
+                              return _c(
+                                "li",
+                                {
+                                  on: {
+                                    click: function($event) {
+                                      _vm.autocomplete_select(index, "employee")
+                                    }
+                                  }
+                                },
+                                [_vm._v(_vm._s(item.name))]
+                              )
+                            })
+                          )
+                        : _vm._e()
+                    ]),
+                    _vm._v(" "),
+                    _vm._l(_vm.employees, function(employee) {
+                      return _c("div", { staticClass: "chip mb-5" }, [
+                        _c("img", { attrs: { src: employee.image } }),
+                        _vm._v(_vm._s(employee.name)),
+                        _c("i", { staticClass: "close fa fa-times" })
+                      ])
+                    }),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "md-form mt-5 mb-2" }, [
+                      _c("textarea", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.description,
+                            expression: "description"
+                          }
+                        ],
+                        staticClass: "md-textarea",
+                        attrs: { id: "form76" },
+                        domProps: { value: _vm.description },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.description = $event.target.value
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("label", { attrs: { for: "form76" } }, [
+                        _vm._v(_vm._s(_vm.lang("Task Description")))
+                      ])
+                    ])
+                  ],
+                  2
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-footer btn-footer" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-lg btn-save",
+                  attrs: { type: "button" },
+                  on: { click: _vm.assignValues }
+                },
+                [_vm._v(_vm._s(_vm.lang("Assign")))]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-lg btn-cancel",
+                  attrs: { type: "button", "data-dismiss": "modal" }
+                },
+                [_vm._v(_vm._s(_vm.lang("Cancel")))]
+              )
+            ])
+          ])
+        ]
+      )
+    ]
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "close",
+        attrs: {
+          type: "button",
+          "data-dismiss": "modal",
+          "aria-label": "Close"
+        }
+      },
+      [
+        _c(
+          "span",
+          { staticClass: "white-text", attrs: { "aria-hidden": "true" } },
+          [_vm._v("×")]
+        )
+      ]
+    )
+  }
+]
+render._withStripped = true
+var esExports = { render: render, staticRenderFns: staticRenderFns }
+/* harmony default export */ __webpack_exports__["a"] = (esExports);
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-loader/node_modules/vue-hot-reload-api")      .rerender("data-v-07b3af46", esExports)
   }
 }
 
