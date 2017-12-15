@@ -18,7 +18,15 @@ mix.js(['packages/Inspirium/SKTemplate/src/assets/js/app.js'], 'public/js/app.js
     .copy('node_modules/popper.js/dist/umd/popper.js', 'public/js/popper.js')
     .copy('node_modules/bootstrap/dist/js/bootstrap.js', 'public/js/bootstrap.js')
     .copy('node_modules/chartist/dist/chartist.js', 'public/js/chartist.js')
-    .copy('node_modules/flipclock/compiled/flipclock.js', 'public/js/flipclock.js')
+    .scripts([
+        'node_modules/flipclock/src/flipclock/js/vendor/*.js',
+        'node_modules/flipclock/src/flipclock/js/libs/core.js',
+        'node_modules/flipclock/src/flipclock/js/libs/*.js',
+        'node_modules/flipclock/src/flipclock/js/faces/twentyfourhourclock.js',
+        'node_modules/flipclock/src/flipclock/js/faces/*.js',
+        'node_modules/flipclock/src/flipclock/js/lang/en-us.js',
+        'packages/Inspirium/SKTemplate/src/assets/js/fixes/hr-hr.js'
+    ], 'public/js/flipclock.js')
     .scripts([
         'node_modules/mdb-pro/js/modules (optional)/jquery.easing.js',
         'node_modules/mdb-pro/js/modules (optional)/velocity.min.js',

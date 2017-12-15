@@ -55650,8 +55650,8 @@ window._ = __webpack_require__(7);
 window.axios = __webpack_require__(2);
 
 window.axios.defaults.headers.common = {
-    'X-CSRF-TOKEN': window.Laravel.csrfToken,
-    'X-Requested-With': 'XMLHttpRequest'
+  'X-CSRF-TOKEN': window.Laravel.csrfToken,
+  'X-Requested-With': 'XMLHttpRequest'
 };
 
 /**
@@ -55665,37 +55665,10 @@ window.axios.defaults.headers.common = {
 window.Pusher = __webpack_require__(234);
 
 window.Echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default.a({
-    broadcaster: 'pusher',
-    key: '2fe97cc7ad11d260f148',
-    cluster: 'eu'
+  broadcaster: 'pusher',
+  key: '2fe97cc7ad11d260f148',
+  cluster: 'eu'
 });
-
-(function ($) {
-
-    /**
-     * FlipClock English Language Pack
-     *
-     * This class will used to translate tokens into the English language.
-     *
-     */
-
-    FlipClock.Lang.Croatian = {
-
-        'years': 'Godine',
-        'months': 'Mjeseci',
-        'days': 'Dani',
-        'hours': 'Sati',
-        'minutes': 'Minute',
-        'seconds': 'Sekunde'
-
-    };
-
-    /* Create various aliases for convenience */
-
-    FlipClock.Lang['hr'] = FlipClock.Lang.Croatian;
-    FlipClock.Lang['hr-hr'] = FlipClock.Lang.Croatian;
-    FlipClock.Lang['croatian'] = FlipClock.Lang.Croatian;
-})(jQuery);
 
 /***/ }),
 /* 207 */
