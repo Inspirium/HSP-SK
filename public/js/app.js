@@ -51218,6 +51218,16 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
@@ -52932,6 +52942,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__general_UploadModal_vue__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__modals_AssignDocuments__ = __webpack_require__(243);
+//
+//
 //
 //
 //
@@ -55356,7 +55368,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 //TODO: fix
                 this.clock = new FlipClock($('.clock'), this.task.running_elapsed, {
                     autoPlay: this.task.is_running,
-                    autoStart: this.task.is_running
+                    autoStart: this.task.is_running,
+                    language: 'Croatian'
                 });
             }, 1000);
         }).catch(err => {});
@@ -55637,8 +55650,8 @@ window._ = __webpack_require__(7);
 window.axios = __webpack_require__(2);
 
 window.axios.defaults.headers.common = {
-  'X-CSRF-TOKEN': window.Laravel.csrfToken,
-  'X-Requested-With': 'XMLHttpRequest'
+    'X-CSRF-TOKEN': window.Laravel.csrfToken,
+    'X-Requested-With': 'XMLHttpRequest'
 };
 
 /**
@@ -55652,10 +55665,37 @@ window.axios.defaults.headers.common = {
 window.Pusher = __webpack_require__(234);
 
 window.Echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default.a({
-  broadcaster: 'pusher',
-  key: '2fe97cc7ad11d260f148',
-  cluster: 'eu'
+    broadcaster: 'pusher',
+    key: '2fe97cc7ad11d260f148',
+    cluster: 'eu'
 });
+
+(function ($) {
+
+    /**
+     * FlipClock English Language Pack
+     *
+     * This class will used to translate tokens into the English language.
+     *
+     */
+
+    FlipClock.Lang.Croatian = {
+
+        'years': 'Godine',
+        'months': 'Mjeseci',
+        'days': 'Dani',
+        'hours': 'Sati',
+        'minutes': 'Minute',
+        'seconds': 'Sekunde'
+
+    };
+
+    /* Create various aliases for convenience */
+
+    FlipClock.Lang['hr'] = FlipClock.Lang.Croatian;
+    FlipClock.Lang['hr-hr'] = FlipClock.Lang.Croatian;
+    FlipClock.Lang['croatian'] = FlipClock.Lang.Croatian;
+})(jQuery);
 
 /***/ }),
 /* 207 */
@@ -69065,7 +69105,7 @@ var render = function() {
           _c("div", { staticClass: "modal-header flex-column px-3 pt-3" }, [
             _vm._m(0),
             _vm._v(" "),
-            _c("div", { staticClass: "d-flex" }, [
+            _c("div", { staticClass: "d-flex mx-auto" }, [
               _c("i", {
                 staticClass: "fa fa-exclamation-triangle fa-4x animated flash"
               }),
@@ -70558,23 +70598,23 @@ var render = function() {
   return _c("div", [
     _c(
       "div",
-      {
-        staticClass:
-          "profile-head row py-4 d-flex flex-column justify-content-center align-items-center"
-      },
-      [
-        _c("div", { staticClass: "col-md-12" }, [
-          _c("h1", { staticClass: "display-3 text-white text-center" }, [
-            _vm._v(_vm._s(_vm.lang("Layout and Design")))
-          ])
-        ])
-      ]
-    ),
-    _vm._v(" "),
-    _c(
-      "div",
       { staticClass: "content" },
       [
+        _c(
+          "div",
+          {
+            staticClass:
+              "profile-head row py-4 d-flex flex-column justify-content-center align-items-center"
+          },
+          [
+            _c("div", { staticClass: "col-md-12" }, [
+              _c("h1", { staticClass: "display-3 text-white text-center" }, [
+                _vm._v(_vm._s(_vm.lang("Layout and Design")))
+              ])
+            ])
+          ]
+        ),
+        _vm._v(" "),
         _c("div", { staticClass: "profile-head pb-2 row" }, [
           _c("div", { staticClass: "col-md-2" }, [
             _c("h6", { staticClass: "white-label" }, [
@@ -70715,6 +70755,21 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "md-form" }, [
+              _c("input", {
+                staticClass: "form-control",
+                attrs: {
+                  type: "number",
+                  id: "layout-fix-price",
+                  name: "layout-fix-price"
+                }
+              }),
+              _vm._v(" "),
+              _c("label", { attrs: { for: "layout-fix-price" } }, [
+                _vm._v(_vm._s(_vm.lang("Exact Price")))
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "md-form" }, [
               _c("textarea", {
                 directives: [
                   {
@@ -70812,6 +70867,21 @@ var render = function() {
                 ),
                 _vm._v(" "),
                 _c("label", [_vm._v(_vm._s(_vm.lang("Design Complexity")))])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "md-form" }, [
+              _c("input", {
+                staticClass: "form-control",
+                attrs: {
+                  type: "number",
+                  id: "design-fix-price",
+                  name: "design-fix-price"
+                }
+              }),
+              _vm._v(" "),
+              _c("label", { attrs: { for: "design-fix-price" } }, [
+                _vm._v(_vm._s(_vm.lang("Exact Price")))
               ])
             ]),
             _vm._v(" "),
@@ -73966,18 +74036,6 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "modal-footer btn-footer" }, [
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-lg btn-save",
-            attrs: { type: "button" },
-            on: { click: _vm.saveFiles }
-          },
-          [_vm._v(_vm._s(_vm.lang("Save")))]
-        )
-      ]),
-      _vm._v(" "),
       _c("div", { staticClass: "page-name-xl mb-4 mt-5" }, [
         _vm._v(_vm._s(_vm.lang("Final Document")))
       ]),
@@ -75953,7 +76011,7 @@ var render = function() {
                       }
                     }),
                     _vm._v(" "),
-                    _c("label", [_vm._v(_vm._s(_vm.lang("Ammount")))]),
+                    _c("label", [_vm._v(_vm._s(_vm.lang("Amount")))]),
                     _vm._v(" "),
                     _c("span", { staticClass: "input-group-addon" }, [
                       _vm._v(_vm._s(_vm.lang("Kn")))
@@ -80989,7 +81047,7 @@ var render = function() {
             }),
             _vm._v(" "),
             _c("label", { attrs: { for: "field" } }, [
-              _vm._v(_vm._s(_vm.lang("Field sales")))
+              _vm._v(_vm._s(_vm.lang("Field Sales")))
             ])
           ]),
           _vm._v(" "),
@@ -81021,7 +81079,7 @@ var render = function() {
             }),
             _vm._v(" "),
             _c("label", { attrs: { for: "direct" } }, [
-              _vm._v(_vm._s(_vm.lang("Direct sales")))
+              _vm._v(_vm._s(_vm.lang("Direct Sales")))
             ])
           ]),
           _vm._v(" "),
@@ -87331,7 +87389,7 @@ var render = function() {
               _c("div", { staticClass: "modal-header flex-column px-3 pt-3" }, [
                 _vm._m(0),
                 _vm._v(" "),
-                _c("div", { staticClass: "d-flex" }, [
+                _c("div", { staticClass: "d-flex mx-auto" }, [
                   _c("i", {
                     staticClass:
                       "fa fa-magic fa-4x mb-1 animated rotateInDownLeft"
