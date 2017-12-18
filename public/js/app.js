@@ -54446,6 +54446,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -54473,11 +54477,19 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     },
     methods: {
         saveProposition: function () {
+            let saveButton = document.getElementById('save-btn');
+            saveButton.setAttribute('style', 'color: #92C100 !important; position: relative');
+            $("i.spinner-loader").toggleClass("hide");
+
             this.$store.dispatch('proposition/' + this.$route.meta.save + '/saveData', this.$route.params.id).then(() => {
+                saveButton.setAttribute('style', 'color: #FFFFFF !important');
+                $("i.spinner-loader").addClass("hide");
+
                 toastr.success(this.lang('Uspješno obavljeno'));
                 this.$store.commit('editedFalse');
             }).catch(() => {
                 toastr.error(this.lang('Došlo je do problema. Pokušajte ponovno'));
+                $("i.spinner-loader").addClass("hide");
             });
         },
         assignModalOpen: function () {
@@ -54496,6 +54508,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuedraggable__ = __webpack_require__(141);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuedraggable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vuedraggable__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__modals_TaskOrderApprovalModal__ = __webpack_require__(246);
+//
+//
+//
 //
 //
 //
@@ -79908,7 +79923,35 @@ var render = function() {
                 "table",
                 { staticClass: "table" },
                 [
-                  _vm._m(0, true),
+                  _c("thead", { staticClass: "thead-inverse" }, [
+                    _c("tr", [
+                      _c("th", { staticClass: "w-30" }),
+                      _vm._v(" "),
+                      _c("th", { staticClass: "w-30" }, [_vm._v("#")]),
+                      _vm._v(" "),
+                      _c("th", { staticClass: "w-30" }, [_vm._v("#")]),
+                      _vm._v(" "),
+                      _c("th", { attrs: { "data-title": "Task" } }, [
+                        _vm._v(_vm._s(_vm.lang("Task")))
+                      ]),
+                      _vm._v(" "),
+                      _c("th", { attrs: { "data-title": "Task Type" } }, [
+                        _vm._v(_vm._s(_vm.lang("Task Type")))
+                      ]),
+                      _vm._v(" "),
+                      _c("th", { attrs: { "data-title": "Assigner" } }, [
+                        _vm._v(_vm._s(_vm.lang("Assigner")) + "}")
+                      ]),
+                      _vm._v(" "),
+                      _c("th", { attrs: { "data-title": "Created" } }, [
+                        _vm._v(_vm._s(_vm.lang("Created")))
+                      ]),
+                      _vm._v(" "),
+                      _c("th", { attrs: { "data-title": "Deadline" } }, [
+                        _vm._v(_vm._s(_vm.lang("Deadline")))
+                      ])
+                    ])
+                  ]),
                   _vm._v(" "),
                   _c(
                     "draggable",
@@ -79981,35 +80024,52 @@ var render = function() {
                 1
               ),
               _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass:
-                    "btn btn-neutral btn-addon d-block ml-auto waves-effect waves-light",
-                  attrs: { type: "button" },
-                  on: {
-                    click: function($event) {
-                      _vm.openModalForApproval(ei)
+              _c("div", { staticClass: "d-flex justify-content-end" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass:
+                      "btn btn-neutral btn-addon d-block ml-auto waves-effect waves-light",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        _vm.openModalForApproval(ei)
+                      }
                     }
-                  }
-                },
-                [_vm._v(_vm._s(_vm.lang("Save tasks priority")))]
-              ),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass:
-                    "btn btn-neutral btn-addon d-block ml-auto waves-effect waves-light",
-                  attrs: { type: "button" },
-                  on: {
-                    click: function($event) {
-                      _vm.approveOrder(ei)
+                  },
+                  [_vm._v(_vm._s(_vm.lang("Save tasks priority")))]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass:
+                      "btn btn-success btn-addon d-block ml-auto waves-effect waves-light",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        _vm.approveOrder(ei)
+                      }
                     }
-                  }
-                },
-                [_vm._v(_vm._s(_vm.lang("Approve task priority")))]
-              )
+                  },
+                  [_vm._v(_vm._s(_vm.lang("Approve task priority")))]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass:
+                      "btn btn-danger btn-addon d-block ml-auto waves-effect waves-light",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        _vm.approveOrder(ei)
+                      }
+                    }
+                  },
+                  [_vm._v(_vm._s(_vm.lang("Reject task priority")))]
+                )
+              ])
             ]
           }),
           _vm._v(" "),
@@ -80021,34 +80081,7 @@ var render = function() {
       )
     : _vm._e()
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", { staticClass: "thead-inverse" }, [
-      _c("tr", [
-        _c("th", { staticClass: "w-30" }),
-        _vm._v(" "),
-        _c("th", { staticClass: "w-30" }, [_vm._v("#")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "w-30" }, [_vm._v("#")]),
-        _vm._v(" "),
-        _c("th", { attrs: { "data-title": "Task" } }, [_vm._v("Task")]),
-        _vm._v(" "),
-        _c("th", { attrs: { "data-title": "Task Type" } }, [
-          _vm._v("Task Type")
-        ]),
-        _vm._v(" "),
-        _c("th", { attrs: { "data-title": "Assigner" } }, [_vm._v("Assigner")]),
-        _vm._v(" "),
-        _c("th", { attrs: { "data-title": "Created" } }, [_vm._v("Created")]),
-        _vm._v(" "),
-        _c("th", { attrs: { "data-title": "Deadline" } }, [_vm._v("Deadline")])
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 var esExports = { render: render, staticRenderFns: staticRenderFns }
 /* harmony default export */ __webpack_exports__["a"] = (esExports);
@@ -86209,15 +86242,32 @@ var render = function() {
             "button",
             {
               staticClass: "btn btn-lg btn-save",
+              attrs: { id: "save-btn" },
               on: { click: _vm.saveProposition }
             },
-            [_vm._v(_vm._s(_vm.lang("Save")))]
+            [
+              _vm._v(_vm._s(_vm.lang("Save")) + "\n        "),
+              _c("i", {
+                staticClass:
+                  "fa fa-refresh fa-5x fa-fw spinner-delay-rotate spinner-loader text-white hide"
+              }),
+              _vm._v(" "),
+              _c("i", {
+                staticClass:
+                  "fa fa-check fa-5x fa-fw text-white spinner-success hide"
+              }),
+              _vm._v(" "),
+              _c("i", {
+                staticClass:
+                  "fa fa-times fa-5x fa-fw text-white spinner-fail hide"
+              })
+            ]
           ),
           _vm._v(" "),
           _c(
             "button",
             {
-              staticClass: "btn btn-lg btn-assign btn-assign-icon",
+              staticClass: "btn btn-lg btn-assign btn-assign-icon ",
               on: { click: _vm.assignModalOpen }
             },
             [_vm._v(_vm._s(_vm.lang("Assign to...")))]
