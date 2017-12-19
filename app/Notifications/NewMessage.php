@@ -58,10 +58,14 @@ class NewMessage extends Notification
      */
     public function toArray($notifiable)
     {
+    	$link = '/messages/';
+    	if ($this->message->thread->connection) {
+		    $link = $this->message->thread->connection->link;
+	    }
         return [
 	        'title' => __('New Message'),
 	        'message' => __(':sender has sent a message to :thread', ['sender' => $this->message->sender->name, 'thread' => $this->message->thread->title]),
-	        'link' => '/messages/',
+	        'link' => $link,
 	        'tasktype' => 'message',
 	        'sender' => [
 		        'name' => $this->message->sender->name,
@@ -71,18 +75,7 @@ class NewMessage extends Notification
         ];
     }
 
-    public function toBroadcast() {
-	    return new BroadcastMessage([ 'data' => [
-		    'message' => __(':sender has sent a message to :thread', ['sender' => $this->message->sender->name, 'thread' => $this->message->thread->title]),
-		    'title' => __('New Message'),
-		    'tasktype' => 'message',
-		    'link' => '',
-		    'sender' => [
-			    'name' => $this->message->sender->name,
-			    'image' => $this->message->sender->image,
-			    'link' => $this->message->sender->link
-		    ]
-	    ]
-	    ]);
+    public function toBroadcast($notifiable) {
+	    return new BroadcastMessage([ 'data' => $this->toArray($notifiable)]);
     }
 }

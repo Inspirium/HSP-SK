@@ -63,6 +63,16 @@ use Laravel\Passport\HasApiTokens;
  * @mixin \Eloquent
  * @property-read mixed $link
  * @property-read \Illuminate\Database\Eloquent\Collection|\Inspirium\Messaging\Models\Thread[] $threads
+ * @property string|null $password
+ * @property string|null $remember_token
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Laravel\Passport\Client[] $clients
+ * @property-read mixed $task_count
+ * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Inspirium\Models\HumanResources\Role[] $roles
+ * @property-read \Inspirium\TaskManagement\Models\Task $taskCount
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Laravel\Passport\Token[] $tokens
+ * @method static \Illuminate\Database\Eloquent\Builder|\Inspirium\Models\HumanResources\Employee wherePassword($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Inspirium\Models\HumanResources\Employee whereRememberToken($value)
  */
 class Employee extends Authenticatable {
 
@@ -82,7 +92,7 @@ class Employee extends Authenticatable {
 	}
 
 	public function threads() {
-		return $this->belongsToMany('Inspirium\Messaging\Models\Thread', 'threads_employees', 'employee_id', 'thread_id');
+		return $this->belongsToMany('Inspirium\Models\Messaging\Thread', 'threads_employees', 'employee_id', 'thread_id');
 	}
 
 	public function tasks() {

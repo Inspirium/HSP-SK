@@ -49540,6 +49540,8 @@ module.exports = function spread(callback) {
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["a"] = ({
     name: "proposition-approval-modal",
@@ -49591,6 +49593,10 @@ module.exports = function spread(callback) {
             }
         },
         assignValues: function () {
+            let saveButton = document.getElementById('save-btn');
+            saveButton.setAttribute('style', 'color: #92C100 !important; position: relative');
+            $("i.spinner-loader").toggleClass("hide");
+
             this.$emit('sendForApproval', { employees: this.employees, description: this.description });
             $('#taskOrderApprovalModal').modal('hide');
         }
@@ -53032,6 +53038,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
 
 
 
@@ -53088,7 +53096,18 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             });
         },
         saveFiles: function () {
-            axios.post('/api/proposition/' + this.$route.params.id + '/files/' + this.$route.meta.dir, { initial: this.files, final: this.final }).then(res => {});
+            let saveButton = document.getElementById('save-btn');
+            saveButton.setAttribute('style', 'color: #92C100 !important; position: relative');
+            $("i.spinner-loader").toggleClass("hide");
+
+            axios.post('/api/proposition/' + this.$route.params.id + '/files/' + this.$route.meta.dir, { initial: this.files, final: this.final }).then(res => {
+                saveButton.setAttribute('style', 'color: #FFFFFF !important');
+                $("i.spinner-loader").addClass("hide");
+                toastr.success(this.lang('Uspješno obavljeno'));
+            }).catch(() => {
+                toastr.error(this.lang('Došlo je do problema. Pokušajte ponovno'));
+                $("i.spinner-loader").addClass("hide");
+            });
         }
     },
     mounted() {
@@ -54809,6 +54828,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["a"] = ({
     data: function () {
@@ -54873,14 +54894,31 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             this.department = '';
         },
         submitTask() {
+            let saveButton = document.getElementById('save-btn');
+            saveButton.setAttribute('style', 'color: #92C100 !important; position: relative');
+            $("i.spinner-loader").toggleClass("hide");
+
             if (typeof this.$route.params.id !== 'undefined') {
                 axios.put('/api/task/' + this.$route.params.id, this.task).then(res => {
+                    saveButton.setAttribute('style', 'color: #FFFFFF !important');
+                    $("i.spinner-loader").addClass("hide");
+                    toastr.success(this.lang('Uspješno obavljeno'));
+
                     this.$router.push('/tasks');
-                }).catch(err => {});
+                }).catch(err => {
+                    toastr.error(this.lang('Došlo je do problema. Pokušajte ponovno'));
+                    $("i.spinner-loader").addClass("hide");
+                });
             } else {
                 axios.post('/api/task', this.task).then(res => {
+                    saveButton.setAttribute('style', 'color: #FFFFFF !important');
+                    $("i.spinner-loader").addClass("hide");
+                    toastr.success(this.lang('Zadatak poslan'));
+
                     this.$router.push('/tasks');
-                }).catch(err => {});
+                }).catch(err => {
+                    toastr.error(this.lang('Došlo je do problema. Pokušajte ponovno'));
+                });
             }
         }
     },
@@ -67508,10 +67546,16 @@ var render = function() {
                 "button",
                 {
                   staticClass: "btn btn-lg btn-save",
-                  attrs: { type: "button" },
+                  attrs: { id: "save-btn", type: "button" },
                   on: { click: _vm.assignValues }
                 },
-                [_vm._v(_vm._s(_vm.lang("Assign")))]
+                [
+                  _vm._v(_vm._s(_vm.lang("Assign")) + "\n                    "),
+                  _c("i", {
+                    staticClass:
+                      "fa fa-refresh fa-5x fa-fw spinner-delay-rotate spinner-loader text-white hide"
+                  })
+                ]
               ),
               _vm._v(" "),
               _c(
@@ -74102,10 +74146,16 @@ var render = function() {
           "button",
           {
             staticClass: "btn btn-lg btn-save",
-            attrs: { type: "button" },
+            attrs: { id: "save-btn", type: "button" },
             on: { click: _vm.saveFiles }
           },
-          [_vm._v(_vm._s(_vm.lang("Save")))]
+          [
+            _vm._v(_vm._s(_vm.lang("Save")) + "\n                    "),
+            _c("i", {
+              staticClass:
+                "fa fa-refresh fa-5x fa-fw spinner-delay-rotate spinner-loader text-white hide"
+            })
+          ]
         ),
         _vm._v(" "),
         _c(
@@ -79968,9 +80018,11 @@ var render = function() {
                         ),
                         _vm._v(" "),
                         _c("td", { attrs: { "data-title": "Task Type" } }, [
-                          _c("div", [
-                            _vm._v(_vm._s(_vm.task_types[task.type].title))
-                          ])
+                          _c(
+                            "div",
+                            { class: _vm.task_types[task.type].className },
+                            [_vm._v(_vm._s(_vm.task_types[task.type].title))]
+                          )
                         ]),
                         _vm._v(" "),
                         _c("td", { attrs: { "data-title": "Assigner" } }, [
@@ -79994,7 +80046,9 @@ var render = function() {
                         ]),
                         _vm._v(" "),
                         _c("td", { attrs: { "data-title": "Deadline" } }, [
-                          _vm._v(_vm._s(_vm._f("moment")(task, "DD.MM.")))
+                          _vm._v(
+                            _vm._s(_vm._f("moment")(task.deadline, "DD.MM."))
+                          )
                         ])
                       ])
                     })
@@ -81674,7 +81728,7 @@ var render = function() {
                   ],
                   staticClass: "form-control datepicker btn-white",
                   attrs: {
-                    placeholder: "Selected date",
+                    placeholder: "Odaberi datum",
                     type: "text",
                     id: "date-picker-example"
                   },
@@ -81690,7 +81744,7 @@ var render = function() {
                 }),
                 _vm._v(" "),
                 _c("label", { attrs: { for: "date-picker-example" } }, [
-                  _vm._v(_vm._s(_vm.lang("Select Date")))
+                  _vm._v(_vm._s(_vm.lang("Deadline")))
                 ])
               ])
             ])
@@ -81829,10 +81883,16 @@ var render = function() {
             "button",
             {
               staticClass: "btn btn-lg btn-save",
-              attrs: { type: "submit" },
+              attrs: { id: "save-btn", type: "submit" },
               on: { click: _vm.submitTask }
             },
-            [_vm._v(_vm._s(_vm.lang("Submit")))]
+            [
+              _vm._v(_vm._s(_vm.lang("Submit")) + "\n            "),
+              _c("i", {
+                staticClass:
+                  "fa fa-refresh fa-5x fa-fw spinner-delay-rotate spinner-loader text-white hide"
+              })
+            ]
           )
         ]
       )

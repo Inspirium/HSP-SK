@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\Inspirium\UserManagement\Models\Role whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Inspirium\UserManagement\Models\Role whereName($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Inspirium\Models\HumanResources\Employee[] $employees
  */
 class Role extends Model {
 
