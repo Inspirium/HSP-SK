@@ -17,7 +17,7 @@ class RoleController extends Controller {
         ];
         $strings = [
             'title' => __('Roles'),
-            'add_new' => __('Add New Roles'),
+            'add_new' => __('Add New Role'),
         ];
         $links = [
             'add_new' => $user->hasRole('role_create')?'human_resources/role/edit':'',

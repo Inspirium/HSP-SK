@@ -36,6 +36,8 @@ class Book extends Model {
 
     protected $dates = ['deleted_at'];
 
+    protected $appends = ['link'];
+
     public function authors() {
         $this->belongsToMany('Inspirium\Models\BookManagement\Author', 'author_book', 'book_id','author_id');
     }
@@ -58,5 +60,9 @@ class Book extends Model {
 
     public function biblioteca() {
         $this->belongsTo('Inspirium\Models\BookManagement\BookBiblioteca');
+    }
+
+    public function getLinkAttribute() {
+    	return url('/books/book/'.$this->id.'/show');
     }
 }

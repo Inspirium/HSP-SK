@@ -49234,71 +49234,6 @@ module.exports = function spread(callback) {
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["a"] = ({
     name: "assign-proposition",
@@ -49314,7 +49249,9 @@ module.exports = function spread(callback) {
             access: 0,
             priority: 0,
             departments: [],
-            cancel: false
+            cancel: false,
+            spinnerType: 'fa-refresh spinner-delay-rotate spinner-loader',
+            isSpinnerHidden: 'hide'
         };
     },
     methods: {
@@ -49351,11 +49288,28 @@ module.exports = function spread(callback) {
                 this.employee = '';
             }
         },
-        assignValues: function () {
+        assignValues: function (event) {
+            let saveButton = jQuery(event.target);
+            saveButton.toggleClass('spinner-loading');
+            this.isSpinnerHidden = '';
+
             axios.post('/api/proposition/' + this.$route.params.id + '/assign', { employees: this.employees, departments: this.departments, description: this.description, date: this.date, access: this.access, priority: this.priority, path: window.location.href }).then(() => {
+                this.spinnerType = 'fa-check spinner-success';
+                setTimeout(() => {
+                    this.spinnerType = 'fa-refresh spinner-delay-rotate spinner-loader';
+                    this.isSpinnerHidden = 'hide';
+                    saveButton.toggleClass("spinner-loading");
+
+                    $('#centralModalAssign').modal('hide');
+                }, 1000);
                 toastr.success(this.lang('Uspješno obavljeno'));
-                $('#centralModalAssign').modal('hide');
             }).catch(() => {
+                this.spinnerType = 'fa-times spinner-fail';
+                setTimeout(() => {
+                    this.spinnerType = 'fa-refresh spinner-delay-rotate spinner-loader';
+                    this.isSpinnerHidden = 'hide';
+                    saveButton.toggleClass("spinner-loading");
+                }, 1000);
                 toastr.error(this.lang('Došlo je do problema. Pokušajte ponovno'));
             });
         }
@@ -53132,13 +53086,40 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["a"] = ({
     data: function () {
-        return {};
+        return {
+            spinnerType: 'fa-refresh spinner-delay-rotate spinner-loader',
+            isSpinnerHidden: 'hide'
+        };
     },
     computed: {},
-    methods: {}
+    methods: {
+        sendToWarehouse() {
+            let saveButton = jQuery(event.target);
+            saveButton.toggleClass('spinner-loading');
+            this.isSpinnerHidden = '';
+            axios.post('/api/proposition/' + this.$router.params.id + '/warehouse').then(res => {
+                this.spinnerType = 'fa-check spinner-success';
+                setTimeout(() => {
+                    this.spinnerType = 'fa-refresh spinner-delay-rotate spinner-loader';
+                    this.isSpinnerHidden = 'hide';
+                    saveButton.toggleClass("spinner-loading");
+                    window.location.href = res.data.link;
+                }, 1000);
+            }).catch(() => {
+                this.spinnerType = 'fa-times spinner-fail';
+                setTimeout(() => {
+                    this.spinnerType = 'fa-refresh spinner-delay-rotate spinner-loader';
+                    this.isSpinnerHidden = 'hide';
+                    saveButton.toggleClass("spinner-loading");
+                }, 1000);
+            });
+        }
+    }
 });
 
 /***/ }),
@@ -54449,6 +54430,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["a"] = ({
     data: function () {
@@ -54457,12 +54440,17 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             last_name: '',
             occupation: '',
             title: '',
-            work: ''
+            work: '',
+            spinnerType: 'fa-refresh spinner-delay-rotate spinner-loader',
+            isSpinnerHidden: 'hide'
         };
     },
     computed: {},
     methods: {
         saveAuthor() {
+            let saveButton = jQuery(event.target);
+            saveButton.toggleClass('spinner-loading');
+            this.isSpinnerHidden = '';
             axios.post('/api/author', {
                 first_name: this.first_name,
                 last_name: this.last_name,
@@ -54470,6 +54458,14 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 occupation: this.occupation,
                 work: this.work
             }).then(res => {
+                this.spinnerType = 'fa-check spinner-success';
+                setTimeout(() => {
+                    this.spinnerType = 'fa-refresh spinner-delay-rotate spinner-loader';
+                    this.isSpinnerHidden = 'hide';
+                    saveButton.toggleClass("spinner-loading");
+                    //close modal
+                    jQuery('#centralModalAuthors').modal('hide');
+                }, 1000);
                 //emit event upstream
                 this.$emit('authorAdded', res.data);
                 //clear data
@@ -54478,10 +54474,13 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 this.occupation = '';
                 this.title = '';
                 this.work = '';
-                //close modal
-                jQuery('#centralModalAuthors').modal('hide');
             }).catch(err => {
-                //TODO
+                this.spinnerType = 'fa-times spinner-fail';
+                setTimeout(() => {
+                    this.spinnerType = 'fa-refresh spinner-delay-rotate spinner-loader';
+                    this.isSpinnerHidden = 'hide';
+                    saveButton.toggleClass("spinner-loading");
+                }, 1000);
             });
         }
     }
@@ -54495,8 +54494,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__modals_AssignProposition__ = __webpack_require__(244);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__modals_WarningModal__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modals_WarningNotSavedModal__ = __webpack_require__(139);
-//
-//
 //
 //
 //
@@ -54528,7 +54525,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             access: 0,
             priority: 0,
             departments: [],
-            cancel: false
+            cancel: false,
+            spinnerType: 'fa-refresh spinner-delay-rotate spinner-loader',
+            isSpinnerHidden: 'hide'
         };
     },
     components: {
@@ -54536,20 +54535,28 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         AssignProposition: __WEBPACK_IMPORTED_MODULE_0__modals_AssignProposition__["a" /* default */], WarningModal: __WEBPACK_IMPORTED_MODULE_1__modals_WarningModal__["default"]
     },
     methods: {
-        saveProposition: function () {
-            let saveButton = document.getElementById('save-btn');
-            saveButton.setAttribute('style', 'color: #92C100 !important; position: relative');
-            $("i.spinner-loader").toggleClass("hide");
+        saveProposition: function (event) {
+            let saveButton = jQuery(event.target);
+            saveButton.toggleClass('spinner-loading');
+            this.isSpinnerHidden = '';
 
             this.$store.dispatch('proposition/' + this.$route.meta.save + '/saveData', this.$route.params.id).then(() => {
-                saveButton.setAttribute('style', 'color: #FFFFFF !important');
-                $("i.spinner-loader").addClass("hide");
-
+                this.spinnerType = 'fa-check spinner-success';
+                setTimeout(() => {
+                    this.spinnerType = 'fa-refresh spinner-delay-rotate spinner-loader';
+                    this.isSpinnerHidden = 'hide';
+                    saveButton.toggleClass("spinner-loading");
+                }, 1000);
                 toastr.success(this.lang('Uspješno obavljeno'));
                 this.$store.commit('editedFalse');
             }).catch(() => {
                 toastr.error(this.lang('Došlo je do problema. Pokušajte ponovno'));
-                $("i.spinner-loader").addClass("hide");
+                this.spinnerType = 'fa-times spinner-fail';
+                setTimeout(() => {
+                    this.spinnerType = 'fa-refresh spinner-delay-rotate spinner-loader';
+                    this.isSpinnerHidden = 'hide';
+                    saveButton.toggleClass("spinner-loading");
+                }, 1000);
             });
         },
         assignModalOpen: function () {
@@ -54691,7 +54698,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             this.employee_index = ei;
             $('#taskOrderApprovalModal').modal('show');
         },
-        sendForApproval() {
+        sendForApproval(task) {
             let data = _.map(this.employees[this.employee_index].tasks, o => {
                 return o.id;
             });
@@ -57327,7 +57334,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(19)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
 /* 230 */
@@ -68972,9 +68979,22 @@ var render = function() {
         "button",
         {
           staticClass: "btn btn-l btn-neutral",
-          attrs: { type: "button", "data-dismiss": "modal" }
+          attrs: { type: "button" },
+          on: { click: _vm.sendToWarehouse }
         },
-        [_vm._v(_vm._s(_vm.lang("Recieved in Warehouse")))]
+        [
+          _vm._v(_vm._s(_vm.lang("Recieved in Warehouse")) + "\n            "),
+          _c("i", {
+            class: [
+              "fa",
+              "fa-5x",
+              "fa-fw",
+              "text-white",
+              _vm.spinnerType,
+              _vm.isSpinnerHidden
+            ]
+          })
+        ]
       )
     ])
   ])
@@ -82513,9 +82533,7 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("h6", { staticClass: "w-100 text-center mb-2" }, [
-                _vm._v(
-                  _vm._s(_vm.lang("Assign department or directly employee"))
-                )
+                _vm._v(_vm._s(_vm.lang("Assign employee directly")))
               ])
             ]),
             _vm._v(" "),
@@ -82534,21 +82552,6 @@ var render = function() {
                         staticClass: "nav-link waves-light active",
                         attrs: {
                           "data-toggle": "tab",
-                          href: "#panel51",
-                          role: "tab"
-                        }
-                      },
-                      [_vm._v(_vm._s(_vm.lang("Department")))]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("li", { staticClass: "nav-item" }, [
-                    _c(
-                      "a",
-                      {
-                        staticClass: "nav-link waves-light",
-                        attrs: {
-                          "data-toggle": "tab",
                           href: "#panel52",
                           role: "tab"
                         }
@@ -82565,326 +82568,6 @@ var render = function() {
                 "div",
                 {
                   staticClass: "modal-body tab-pane fade in show active",
-                  attrs: { id: "panel51", role: "tabpanel" }
-                },
-                [
-                  _c("div", { staticClass: "row" }, [
-                    _c(
-                      "div",
-                      { staticClass: "col-md-12" },
-                      [
-                        _c("div", { staticClass: "md-form d-flex addon" }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.department,
-                                expression: "department"
-                              }
-                            ],
-                            staticClass: "form-control",
-                            attrs: {
-                              type: "text",
-                              name: "department",
-                              placeholder: "Pronađi odjel"
-                            },
-                            domProps: { value: _vm.department },
-                            on: {
-                              keyup: function($event) {
-                                _vm.autocomplete($event, "department")
-                              },
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.department = $event.target.value
-                              }
-                            }
-                          }),
-                          _vm._v(" "),
-                          _vm.d_suggestions.length
-                            ? _c(
-                                "ul",
-                                { staticClass: "mdb-autocomplete-wrap" },
-                                _vm._l(_vm.d_suggestions, function(
-                                  item,
-                                  index
-                                ) {
-                                  return _c(
-                                    "li",
-                                    {
-                                      on: {
-                                        click: function($event) {
-                                          _vm.autocomplete_select(
-                                            index,
-                                            "department"
-                                          )
-                                        }
-                                      }
-                                    },
-                                    [_vm._v(_vm._s(item.name))]
-                                  )
-                                })
-                              )
-                            : _vm._e()
-                        ]),
-                        _vm._v(" "),
-                        _vm._l(_vm.departments, function(department) {
-                          return _c("div", { staticClass: "chip mb-5" }, [
-                            _vm._v(
-                              "\n                                " +
-                                _vm._s(department.name)
-                            ),
-                            _c("i", { staticClass: "close fa fa-times" })
-                          ])
-                        }),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "md-form mt-2 mb-2" }, [
-                          _c("textarea", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.description,
-                                expression: "description"
-                              }
-                            ],
-                            staticClass: "md-textarea",
-                            attrs: { id: "description" },
-                            domProps: { value: _vm.description },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.description = $event.target.value
-                              }
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c("label", { attrs: { for: "description" } }, [
-                            _vm._v(_vm._s(_vm.lang("Task Description")))
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "row mt-4" }, [
-                          _c("div", { staticClass: "col-md-5" }, [
-                            _c("div", { staticClass: "md-form" }, [
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.date,
-                                    expression: "date"
-                                  }
-                                ],
-                                staticClass:
-                                  "form-control datepicker btn-white",
-                                attrs: {
-                                  placeholder: "Selected date",
-                                  type: "text",
-                                  id: "date-picker-example1"
-                                },
-                                domProps: { value: _vm.date },
-                                on: {
-                                  input: function($event) {
-                                    if ($event.target.composing) {
-                                      return
-                                    }
-                                    _vm.date = $event.target.value
-                                  }
-                                }
-                              }),
-                              _vm._v(" "),
-                              _c(
-                                "label",
-                                { attrs: { for: "date-picker-example1" } },
-                                [_vm._v(_vm._s(_vm.lang("Select Date")))]
-                              )
-                            ])
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "page-name-m" }, [
-                          _vm._v(_vm._s(_vm.lang("Priority")))
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "form-inline mb-3" }, [
-                          _c("fieldset", { staticClass: "form-group" }, [
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.priority,
-                                  expression: "priority"
-                                }
-                              ],
-                              attrs: {
-                                name: "priority",
-                                type: "radio",
-                                id: "radio11",
-                                value: "high"
-                              },
-                              domProps: {
-                                checked: _vm._q(_vm.priority, "high")
-                              },
-                              on: {
-                                change: function($event) {
-                                  _vm.priority = "high"
-                                }
-                              }
-                            }),
-                            _vm._v(" "),
-                            _c("label", { attrs: { for: "radio11" } }, [
-                              _vm._v(_vm._s(_vm.lang("High")))
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("fieldset", { staticClass: "form-group" }, [
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.priority,
-                                  expression: "priority"
-                                }
-                              ],
-                              attrs: {
-                                name: "priority",
-                                type: "radio",
-                                id: "radio21",
-                                value: "medium"
-                              },
-                              domProps: {
-                                checked: _vm._q(_vm.priority, "medium")
-                              },
-                              on: {
-                                change: function($event) {
-                                  _vm.priority = "medium"
-                                }
-                              }
-                            }),
-                            _vm._v(" "),
-                            _c("label", { attrs: { for: "radio21" } }, [
-                              _vm._v(_vm._s(_vm.lang("Medium")))
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("fieldset", { staticClass: "form-group" }, [
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.priority,
-                                  expression: "priority"
-                                }
-                              ],
-                              attrs: {
-                                name: "priority",
-                                type: "radio",
-                                id: "radio31",
-                                value: "low"
-                              },
-                              domProps: {
-                                checked: _vm._q(_vm.priority, "low")
-                              },
-                              on: {
-                                change: function($event) {
-                                  _vm.priority = "low"
-                                }
-                              }
-                            }),
-                            _vm._v(" "),
-                            _c("label", { attrs: { for: "radio31" } }, [
-                              _vm._v(_vm._s(_vm.lang("Low")))
-                            ])
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "page-name-m" }, [
-                          _vm._v(_vm._s(_vm.lang("Access Level")))
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "form-inline mb-3" }, [
-                          _c("fieldset", { staticClass: "form-group" }, [
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.access,
-                                  expression: "access"
-                                }
-                              ],
-                              attrs: {
-                                checked: "",
-                                name: "access",
-                                type: "radio",
-                                id: "radio51",
-                                value: "allpage"
-                              },
-                              domProps: {
-                                checked: _vm._q(_vm.access, "allpage")
-                              },
-                              on: {
-                                change: function($event) {
-                                  _vm.access = "allpage"
-                                }
-                              }
-                            }),
-                            _vm._v(" "),
-                            _c("label", { attrs: { for: "radio51" } }, [
-                              _vm._v(_vm._s(_vm.lang("All Proposition Pages")))
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("fieldset", { staticClass: "form-group" }, [
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.access,
-                                  expression: "access"
-                                }
-                              ],
-                              attrs: {
-                                name: "access",
-                                type: "radio",
-                                id: "radio41",
-                                value: "onepage"
-                              },
-                              domProps: {
-                                checked: _vm._q(_vm.access, "onepage")
-                              },
-                              on: {
-                                change: function($event) {
-                                  _vm.access = "onepage"
-                                }
-                              }
-                            }),
-                            _vm._v(" "),
-                            _c("label", { attrs: { for: "radio41" } }, [
-                              _vm._v(_vm._s(_vm.lang("Only This Page")))
-                            ])
-                          ])
-                        ])
-                      ],
-                      2
-                    )
-                  ])
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass: "modal-body tab-pane fade",
                   attrs: { id: "panel52", role: "tabpanel" }
                 },
                 [
@@ -83211,7 +82894,19 @@ var render = function() {
                   attrs: { type: "button", "data-dismiss": "modal" },
                   on: { click: _vm.assignValues }
                 },
-                [_vm._v(_vm._s(_vm.lang("Assign")))]
+                [
+                  _vm._v(_vm._s(_vm.lang("Assign")) + "\n                    "),
+                  _c("i", {
+                    class: [
+                      "fa",
+                      "fa-5x",
+                      "fa-fw",
+                      "text-white",
+                      _vm.spinnerType,
+                      _vm.isSpinnerHidden
+                    ]
+                  })
+                ]
               ),
               _vm._v(" "),
               _c(
@@ -86438,24 +86133,19 @@ var render = function() {
             "button",
             {
               staticClass: "btn btn-lg btn-save",
-              attrs: { id: "save-btn" },
               on: { click: _vm.saveProposition }
             },
             [
               _vm._v(_vm._s(_vm.lang("Save")) + "\n        "),
               _c("i", {
-                staticClass:
-                  "fa fa-refresh fa-5x fa-fw spinner-delay-rotate spinner-loader text-white hide"
-              }),
-              _vm._v(" "),
-              _c("i", {
-                staticClass:
-                  "fa fa-check fa-5x fa-fw text-white spinner-success hide"
-              }),
-              _vm._v(" "),
-              _c("i", {
-                staticClass:
-                  "fa fa-times fa-5x fa-fw text-white spinner-fail hide"
+                class: [
+                  "fa",
+                  "fa-5x",
+                  "fa-fw",
+                  "text-white",
+                  _vm.spinnerType,
+                  _vm.isSpinnerHidden
+                ]
               })
             ]
           ),
@@ -88238,20 +87928,32 @@ var render = function() {
               _c(
                 "button",
                 {
-                  staticClass: "btn btn-lg btn-cancel",
-                  attrs: { type: "button", "data-dismiss": "modal" }
+                  staticClass: "btn btn-lg btn-save",
+                  attrs: { type: "button" },
+                  on: { click: _vm.saveAuthor }
                 },
-                [_vm._v(_vm._s(_vm.lang("Cancel")))]
+                [
+                  _vm._v(_vm._s(_vm.lang("Save")) + "\n                    "),
+                  _c("i", {
+                    class: [
+                      "fa",
+                      "fa-5x",
+                      "fa-fw",
+                      "text-white",
+                      _vm.spinnerType,
+                      _vm.isSpinnerHidden
+                    ]
+                  })
+                ]
               ),
               _vm._v(" "),
               _c(
                 "button",
                 {
-                  staticClass: "btn btn-lg btn-save",
-                  attrs: { type: "button" },
-                  on: { click: _vm.saveAuthor }
+                  staticClass: "btn btn-lg btn-cancel",
+                  attrs: { type: "button", "data-dismiss": "modal" }
                 },
-                [_vm._v(_vm._s(_vm.lang("Save")))]
+                [_vm._v(_vm._s(_vm.lang("Cancel")))]
               )
             ])
           ])
