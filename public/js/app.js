@@ -48186,7 +48186,7 @@ module.exports = function spread(callback) {
                         }
                     },
                     propositions: {
-                        enabled: this.can('access_proposition_admin'),
+                        enabled: true,
                         title: 'Propositions',
                         order: 1,
                         key: 'propositions',
