@@ -9,18 +9,19 @@ use Inspirium\Models\HumanResources\Department;
 class DepartmentController extends Controller {
 
     public function showDepartments() {
+    	$user = \Auth::user();
         $elements = Department::all();
         $columns = [
-            'name' => [ 'title' => 'Name' ],
+            'name' => [ 'title' => __('Name') ],
         ];
         $strings = [
-            'title' => 'Departments',
-            'add_new' => 'Add New Department',
+            'title' => __('Departments'),
+            'add_new' => __('Add New Department'),
         ];
         $links = [
-            'add_new' => '/human_resources/department/edit',
-            'edit' => '/human_resources/department/:id/edit/',
-            'delete' => '/human_resources/department/:id/delete/'
+            'add_new' => $user->hasRole('department_create')?'/human_resources/department/edit':'',
+            'edit' => $user->hasRole('department_update')?'/human_resources/department/:id/edit/':'',
+            'delete' => $user->hasRole('department_delete')?'/human_resources/department/:id/delete/':''
         ];
         return view(config('app.template') . '::vue.table-search', compact( 'elements', 'columns', 'strings', 'links' ));
     }

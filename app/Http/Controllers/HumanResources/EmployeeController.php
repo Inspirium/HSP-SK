@@ -11,23 +11,24 @@ use Inspirium\Models\HumanResources\Role;
 class EmployeeController extends Controller {
 
     public function showEmployees() {
+	    $user = \Auth::user();
         $elements = Employee::all();
         $columns = [
-            'image' => [ 'title' => 'Image', 'breakpoint' => '', 'image' => true ],
-            'name' => [ 'title' => 'Name', 'breakpoint' => ''],
-            'department_name' => [ 'title' => 'Department', 'breakpoint' => 'md'],
-            'phone' => [ 'title' => 'Phone', 'breakpoint' => 'md' ],
-            'mobile' => [ 'title' => 'Mobile', 'breakpoint' => 'md' ],
-            'room' => [ 'title' => 'Room', 'breakpoint' => 'md' ]
+            'image' => [ 'title' => __('Image'), 'breakpoint' => '', 'image' => true ],
+            'name' => [ 'title' => __('Name'), 'breakpoint' => ''],
+            'department_name' => [ 'title' => __('Department'), 'breakpoint' => 'md'],
+            'phone' => [ 'title' => __('Phone'), 'breakpoint' => 'md' ],
+            'mobile' => [ 'title' => __('Mobile'), 'breakpoint' => 'md' ],
+            'room' => [ 'title' => __('Room'), 'breakpoint' => 'md' ]
         ];
         $strings = [
-            'title' => 'Employees',
-            'add_new' => 'Add New Employee',
+            'title' => __('Employees'),
+            'add_new' => __('Add New Employee'),
         ];
         $links = [
-            'add_new' => '/human_resources/employee/new',
-            'edit' => '/human_resources/employee/:id/edit/',
-            'delete' => '/api/human_resources/employee/:id',
+            'add_new' => $user->hasRole('employee_create')?'/human_resources/employee/new':'',
+            'edit' => $user->hasRole('employee_update')?'/human_resources/employee/:id/edit/':'',
+            'delete' => $user->hasRole('employee_delete')?'/api/human_resources/employee/:id':'',
             'show' => '/human_resources/employee/:id/show/'
         ];
         return view(config('app.template') . '::vue.table-search', compact( 'elements', 'columns', 'strings', 'links' ));

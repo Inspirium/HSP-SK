@@ -48239,10 +48239,28 @@ module.exports = function spread(callback) {
                                 title: 'Graphics',
                                 component: false
                             },
-                            editorial: {
+                            design: {
                                 enabled: this.can('access_department_tasks'),
-                                path: '/tasks/department/77',
-                                title: 'Editorial',
+                                path: '/tasks/department/71',
+                                title: 'Design Department',
+                                component: false
+                            },
+                            'editorial-1': {
+                                enabled: this.can('access_department_tasks'),
+                                path: '/tasks/department/72',
+                                title: 'Editorial-1',
+                                component: false
+                            },
+                            'editorial-2': {
+                                enabled: this.can('access_department_tasks'),
+                                path: '/tasks/department/73',
+                                title: 'Editorial-2',
+                                component: false
+                            },
+                            'editorial-3': {
+                                enabled: this.can('access_department_tasks'),
+                                path: '/tasks/department/74',
+                                title: 'Editorial-3',
                                 component: false
                             },
                             management: {
@@ -70992,19 +71010,21 @@ var render = function() {
         })
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "btn-header d-flex p-2" }, [
-        _c(
-          "a",
-          {
-            staticClass: "btn btn-lg btn-blank",
-            attrs: { href: _vm.links["add_new"] }
-          },
-          [
-            _c("i", { staticClass: "fa fa-plus left" }),
-            _vm._v(_vm._s(_vm.lang(_vm.strings["add_new"])))
-          ]
-        )
-      ]),
+      _vm.links["add_new"]
+        ? _c("div", { staticClass: "btn-header d-flex p-2" }, [
+            _c(
+              "a",
+              {
+                staticClass: "btn btn-lg btn-blank",
+                attrs: { href: _vm.links["add_new"] }
+              },
+              [
+                _c("i", { staticClass: "fa fa-plus left" }),
+                _vm._v(_vm._s(_vm.lang(_vm.strings["add_new"])))
+              ]
+            )
+          ])
+        : _vm._e(),
       _vm._v(" "),
       _c("table", { staticClass: "table table-hover" }, [
         _c("thead", { staticClass: "thead-inverse" }, [
@@ -71094,32 +71114,36 @@ var render = function() {
                 }),
                 _vm._v(" "),
                 _c("td", [
-                  _c(
-                    "a",
-                    {
-                      staticClass: "color-grey",
-                      attrs: {
-                        href: _vm._f("add_id")(_vm.links["edit"], entry),
-                        title: _vm.lang("Edit")
-                      }
-                    },
-                    [_c("i", { staticClass: "fa fa-pencil" })]
-                  ),
+                  _vm.links["edit"]
+                    ? _c(
+                        "a",
+                        {
+                          staticClass: "color-grey",
+                          attrs: {
+                            href: _vm._f("add_id")(_vm.links["edit"], entry),
+                            title: _vm.lang("Edit")
+                          }
+                        },
+                        [_c("i", { staticClass: "fa fa-pencil" })]
+                      )
+                    : _vm._e(),
                   _vm._v(" "),
-                  _c(
-                    "a",
-                    {
-                      staticClass: "color-grey",
-                      attrs: { href: "#", title: _vm.lang("Delete") },
-                      on: {
-                        click: function($event) {
-                          $event.preventDefault()
-                          _vm.deleteWarning(entry)
-                        }
-                      }
-                    },
-                    [_c("i", { staticClass: "fa fa-times" })]
-                  )
+                  _vm.links["delete"]
+                    ? _c(
+                        "a",
+                        {
+                          staticClass: "color-grey",
+                          attrs: { title: _vm.lang("Delete") },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              _vm.deleteWarning(entry)
+                            }
+                          }
+                        },
+                        [_c("i", { staticClass: "fa fa-times" })]
+                      )
+                    : _vm._e()
                 ])
               ],
               2

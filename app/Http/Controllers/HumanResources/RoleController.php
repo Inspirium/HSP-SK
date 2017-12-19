@@ -9,19 +9,20 @@ use Inspirium\Models\HumanResources\Role;
 class RoleController extends Controller {
 
     public function showRoles() {
+	    $user = \Auth::user();
         $elements = Role::all();
         $columns = [
-            'name' => [ 'title' => 'Name' ],
-            'description' => [ 'title' => 'Description' ]
+            'name' => [ 'title' => __('Name') ],
+            'description' => [ 'title' => __('Description') ]
         ];
         $strings = [
-            'title' => 'Roles',
-            'add_new' => 'Add New Roles',
+            'title' => __('Roles'),
+            'add_new' => __('Add New Roles'),
         ];
         $links = [
-            'add_new' => url('human_resources/role/edit'),
-            'edit' => url('human_resources/role/:id/edit/'),
-            'delete' => url('human_resources/role/:id/delete/')
+            'add_new' => $user->hasRole('role_create')?'human_resources/role/edit':'',
+            'edit' => $user->hasRole('role_update')?'human_resources/role/:id/edit/':'',
+            'delete' => $user->hasRole('role_delete')?'human_resources/role/:id/delete/':''
         ];
         return view(config('app.template') . '::vue.table-search', compact( 'elements', 'columns', 'strings', 'links' ));
     }
