@@ -48386,7 +48386,7 @@ module.exports = function spread(callback) {
             // error callback
         });
         Echo.private('users.' + window.Laravel.userId).notification(notification => {
-            this.notifications.push(notification);
+            this.notifications.unshift(notification);
         });
     },
     methods: {
@@ -79954,7 +79954,7 @@ var render = function() {
                       _vm._v(" "),
                       _c("th", { staticClass: "w-30" }, [_vm._v("#")]),
                       _vm._v(" "),
-                      _vm.can("employee_tasks_order_edit")
+                      _vm.can("department_tasks_order_edit")
                         ? _c("th", { staticClass: "w-30" }, [_vm._v("#")])
                         : _vm._e(),
                       _vm._v(" "),
@@ -79983,7 +79983,10 @@ var render = function() {
                   _c(
                     "draggable",
                     {
-                      attrs: { element: "tbody" },
+                      attrs: {
+                        element: "tbody",
+                        options: { handle: ".icon-handler" }
+                      },
                       model: {
                         value: employee.tasks,
                         callback: function($$v) {
@@ -80002,7 +80005,7 @@ var render = function() {
                           _vm._v(_vm._s(task.order))
                         ]),
                         _vm._v(" "),
-                        _vm.can("employee_tasks_order_edit")
+                        _vm.can("department_tasks_order_edit")
                           ? _c("th", { class: _vm.newOrderClass(task) }, [
                               _vm._v(_vm._s(_vm.newOrderValue(task)))
                             ])
@@ -80014,7 +80017,13 @@ var render = function() {
                             staticClass: "table-title",
                             attrs: { "data-title": "Task" }
                           },
-                          [_c("a", [_vm._v(_vm._s(task.name))])]
+                          [
+                            _c(
+                              "a",
+                              { attrs: { href: "/task/show/" + task.id } },
+                              [_vm._v(_vm._s(task.name))]
+                            )
+                          ]
                         ),
                         _vm._v(" "),
                         _c("td", { attrs: { "data-title": "Task Type" } }, [
@@ -80028,7 +80037,15 @@ var render = function() {
                         _c("td", { attrs: { "data-title": "Assigner" } }, [
                           _c(
                             "a",
-                            { staticClass: "text-uppercase file-box-sty" },
+                            {
+                              staticClass: "text-uppercase file-box-sty",
+                              attrs: {
+                                href:
+                                  "/human_resources/employee/" +
+                                  task.assigner.id +
+                                  "/show"
+                              }
+                            },
                             [
                               _c("img", {
                                 staticClass: "profile-m mr-2",
@@ -80057,50 +80074,56 @@ var render = function() {
                 1
               ),
               _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass:
-                    "btn btn-neutral btn-addon d-block ml-auto waves-effect waves-light",
-                  attrs: { type: "button" },
-                  on: {
-                    click: function($event) {
-                      _vm.openModalForApproval(ei)
-                    }
-                  }
-                },
-                [_vm._v(_vm._s(_vm.lang("Save tasks priority")))]
-              ),
+              _vm.can("department_tasks_order_edit")
+                ? _c(
+                    "button",
+                    {
+                      staticClass:
+                        "btn btn-neutral btn-addon d-block ml-auto waves-effect waves-light",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          _vm.openModalForApproval(ei)
+                        }
+                      }
+                    },
+                    [_vm._v(_vm._s(_vm.lang("Save tasks priority")))]
+                  )
+                : _vm._e(),
               _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass:
-                    "btn btn-success btn-addon d-block ml-auto waves-effect waves-light",
-                  attrs: { type: "button" },
-                  on: {
-                    click: function($event) {
-                      _vm.approveOrder(ei)
-                    }
-                  }
-                },
-                [_vm._v(_vm._s(_vm.lang("Reject task priority")))]
-              ),
+              _vm.can("department_tasks_order_approve")
+                ? _c(
+                    "button",
+                    {
+                      staticClass:
+                        "btn btn-success btn-addon d-block ml-auto waves-effect waves-light",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          _vm.approveOrder(ei)
+                        }
+                      }
+                    },
+                    [_vm._v(_vm._s(_vm.lang("Reject task priority")))]
+                  )
+                : _vm._e(),
               _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass:
-                    "btn btn-danger btn-addon d-block ml-auto waves-effect waves-light",
-                  attrs: { type: "button" },
-                  on: {
-                    click: function($event) {
-                      _vm.approveOrder(ei)
-                    }
-                  }
-                },
-                [_vm._v(_vm._s(_vm.lang("Approve task priority")))]
-              )
+              _vm.can("department_tasks_order_approve")
+                ? _c(
+                    "button",
+                    {
+                      staticClass:
+                        "btn btn-danger btn-addon d-block ml-auto waves-effect waves-light",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          _vm.approveOrder(ei)
+                        }
+                      }
+                    },
+                    [_vm._v(_vm._s(_vm.lang("Approve task priority")))]
+                  )
+                : _vm._e()
             ]
           }),
           _vm._v(" "),
