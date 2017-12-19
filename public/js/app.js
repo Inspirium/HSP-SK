@@ -55633,12 +55633,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
@@ -55951,7 +55945,7 @@ const routes = [{ path: '/proposition/start', component: __WEBPACK_IMPORTED_MODU
     actions: {
         initUser({ state, commit }) {
             if (!state.id || state.id !== window.Laravel.userId) {
-                __WEBPACK_IMPORTED_MODULE_1_axios_index___default.a.get('api/me').then(res => {
+                __WEBPACK_IMPORTED_MODULE_1_axios_index___default.a.get('/api/me').then(res => {
                     commit('setUser', res.data);
                 });
             }
@@ -69678,177 +69672,151 @@ var render = function() {
             ]
           ),
           _vm._v(" "),
-          _c(
-            "table",
-            { staticClass: "table" },
-            [
-              _c("thead", { staticClass: "thead-inverse" }, [
-                _c("tr", [
-                  _c("th", { staticClass: "w-30" }),
-                  _vm._v(" "),
-                  _c("th", { staticClass: "w-30" }, [_vm._v("#")]),
-                  _vm._v(" "),
-                  _c("th", { attrs: { "data-title": "Task" } }, [
-                    _vm._v(_vm._s(_vm.lang("Task")))
-                  ]),
-                  _vm._v(" "),
-                  _c("th", { attrs: { "data-title": "Task Type" } }, [
-                    _vm._v(_vm._s(_vm.lang("Task Type")))
-                  ]),
-                  _vm._v(" "),
-                  _c("th", { attrs: { "data-title": "Assigner" } }, [
-                    _vm._v(_vm._s(_vm.lang("Assigner")))
-                  ]),
-                  _vm._v(" "),
-                  _c("th", { attrs: { "data-title": "Created" } }, [
-                    _vm._v(_vm._s(_vm.lang("Created")))
-                  ]),
-                  _vm._v(" "),
-                  _c("th", { attrs: { "data-title": "Deadline" } }, [
-                    _vm._v(_vm._s(_vm.lang("Deadline")))
-                  ]),
-                  _vm._v(" "),
-                  _vm.authority
-                    ? _c(
-                        "th",
-                        {
-                          staticClass: "text-right",
-                          attrs: { "data-title": "Assign to" }
-                        },
-                        [_vm._v(_vm._s(_vm.lang("Assign to")))]
-                      )
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _c("th", { attrs: { "data-title": "Status" } }, [
-                    _vm._v(_vm._s(_vm.lang("Status")))
-                  ])
+          _c("table", { staticClass: "table" }, [
+            _c("thead", { staticClass: "thead-inverse" }, [
+              _c("tr", [
+                _c("th", { staticClass: "w-30" }, [_vm._v("#")]),
+                _vm._v(" "),
+                _c("th", { attrs: { "data-title": "Task" } }, [
+                  _vm._v(_vm._s(_vm.lang("Task")))
+                ]),
+                _vm._v(" "),
+                _c("th", { attrs: { "data-title": "Task Type" } }, [
+                  _vm._v(_vm._s(_vm.lang("Task Type")))
+                ]),
+                _vm._v(" "),
+                _c("th", { attrs: { "data-title": "Assigner" } }, [
+                  _vm._v(_vm._s(_vm.lang("Assign to")))
+                ]),
+                _vm._v(" "),
+                _c("th", { attrs: { "data-title": "Created" } }, [
+                  _vm._v(_vm._s(_vm.lang("Created")))
+                ]),
+                _vm._v(" "),
+                _c("th", { attrs: { "data-title": "Deadline" } }, [
+                  _vm._v(_vm._s(_vm.lang("Deadline")))
+                ]),
+                _vm._v(" "),
+                _vm.authority
+                  ? _c(
+                      "th",
+                      {
+                        staticClass: "text-right",
+                        attrs: { "data-title": "Assign to" }
+                      },
+                      [_vm._v(_vm._s(_vm.lang("Assign to")))]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("th", { attrs: { "data-title": "Status" } }, [
+                  _vm._v(_vm._s(_vm.lang("Status")))
                 ])
-              ]),
-              _vm._v(" "),
-              _c(
-                "draggable",
-                {
-                  attrs: {
-                    element: "tbody",
-                    options: { handle: ".icon-handler" }
-                  },
-                  model: {
-                    value: _vm.sent_tasks,
-                    callback: function($$v) {
-                      _vm.sent_tasks = $$v
-                    },
-                    expression: "sent_tasks"
-                  }
-                },
-                _vm._l(_vm.sent_tasks, function(element, index) {
-                  return _c(
-                    "tr",
-                    { key: element.id },
-                    [
-                      _c("td", [
-                        _c("div", { staticClass: "icon icon-handler" })
-                      ]),
-                      _vm._v(" "),
-                      _c("th", { staticClass: "display-e w-30" }, [
-                        _vm._v(_vm._s(index + 1))
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "td",
-                        {
-                          staticClass: "table-title",
-                          attrs: { "data-title": "Task" }
-                        },
-                        [
-                          _c(
-                            "a",
-                            { attrs: { href: "/task/show/" + element.id } },
-                            [_vm._v(_vm._s(element.name))]
-                          )
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c("td", { attrs: { "data-title": "Task Type" } }, [
-                        _c(
-                          "div",
-                          { class: _vm.task_types[element.type].className },
-                          [_vm._v(_vm._s(_vm.task_types[element.type].title))]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("td", { attrs: { "data-title": "Assigner" } }, [
+              ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "tbody",
+              _vm._l(_vm.sent_tasks, function(element, index) {
+                return _c(
+                  "tr",
+                  { key: element.id },
+                  [
+                    _c("th", { staticClass: "display-e w-30" }, [
+                      _vm._v(_vm._s(index + 1))
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "td",
+                      {
+                        staticClass: "table-title",
+                        attrs: { "data-title": "Task" }
+                      },
+                      [
                         _c(
                           "a",
+                          { attrs: { href: "/task/show/" + element.id } },
+                          [_vm._v(_vm._s(element.name))]
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c("td", { attrs: { "data-title": "Task Type" } }, [
+                      _c(
+                        "div",
+                        { class: _vm.task_types[element.type].className },
+                        [_vm._v(_vm._s(_vm.task_types[element.type].title))]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { attrs: { "data-title": "Assign to" } }, [
+                      _c(
+                        "a",
+                        {
+                          staticClass: "text-uppercase file-box-sty",
+                          attrs: {
+                            href:
+                              "/human_resources/employee/" +
+                              element.assigner.id +
+                              "/show"
+                          }
+                        },
+                        [
+                          _c("img", {
+                            staticClass: "profile-m mr-2",
+                            attrs: { src: element.assigner.image }
+                          }),
+                          _vm._v(_vm._s(element.assigner.name))
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { attrs: { "data-title": "Created" } }, [
+                      _vm._v(
+                        _vm._s(_vm._f("moment")(element.created_at, "DD.MM."))
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { attrs: { "data-title": "Deadline" } }, [
+                      _vm._v(
+                        _vm._s(_vm._f("moment")(element.deadline, "DD.MM."))
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _vm.authority
+                      ? _c(
+                          "td",
                           {
-                            staticClass: "text-uppercase file-box-sty",
-                            attrs: {
-                              href:
-                                "/human_resources/employee/" +
-                                element.assigner.id +
-                                "/show"
-                            }
+                            staticClass: "text-right",
+                            attrs: { "data-title": "Assign to" }
                           },
                           [
-                            _c("img", {
-                              staticClass: "profile-m mr-2",
-                              attrs: { src: element.assigner.image }
-                            }),
-                            _vm._v(_vm._s(element.assigner.name))
-                          ]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("td", { attrs: { "data-title": "Created" } }, [
-                        _vm._v(
-                          _vm._s(_vm._f("moment")(element.created_at, "DD.MM."))
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("td", { attrs: { "data-title": "Deadline" } }, [
-                        _vm._v(
-                          _vm._s(_vm._f("moment")(element.deadline, "DD.MM."))
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _vm.authority
-                        ? _c(
-                            "td",
-                            {
-                              staticClass: "text-right",
-                              attrs: { "data-title": "Assign to" }
-                            },
-                            [
-                              _c(
-                                "div",
-                                {
-                                  staticClass: "file-box-sty icon icon-assign"
-                                },
-                                [_vm._v(_vm._s(_vm.lang("Assign")))]
-                              )
-                            ]
-                          )
-                        : _vm._e(),
-                      _vm._v(" "),
-                      element.status === "completed"
-                        ? [
                             _c(
-                              "td",
-                              {
-                                staticClass: "icon icon-cost-approved",
-                                attrs: { "data-title": "Status" }
-                              },
-                              [_vm._v(_vm._s(_vm.lang("Finished")))]
+                              "div",
+                              { staticClass: "file-box-sty icon icon-assign" },
+                              [_vm._v(_vm._s(_vm.lang("Assign")))]
                             )
                           ]
-                        : [_c("td", { attrs: { "data-title": "Status" } })]
-                    ],
-                    2
-                  )
-                })
-              )
-            ],
-            1
-          )
+                        )
+                      : _vm._e(),
+                    _vm._v(" "),
+                    element.status === "completed"
+                      ? [
+                          _c(
+                            "td",
+                            {
+                              staticClass: "icon icon-cost-approved",
+                              attrs: { "data-title": "Status" }
+                            },
+                            [_vm._v(_vm._s(_vm.lang("Finished")))]
+                          )
+                        ]
+                      : [_c("td", { attrs: { "data-title": "Status" } })]
+                  ],
+                  2
+                )
+              })
+            )
+          ])
         ]
       ),
       _vm._v(" "),
@@ -69866,151 +69834,125 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _c(
-            "table",
-            { staticClass: "table" },
-            [
-              _c("thead", { staticClass: "thead-inverse" }, [
-                _c("tr", [
-                  _c("th", { staticClass: "w-30" }),
-                  _vm._v(" "),
-                  _c("th", { staticClass: "w-30" }, [_vm._v("#")]),
-                  _vm._v(" "),
-                  _c("th", { attrs: { "data-title": "Task" } }, [
-                    _vm._v(_vm._s(_vm.lang("Task")))
+          _c("table", { staticClass: "table" }, [
+            _c("thead", { staticClass: "thead-inverse" }, [
+              _c("tr", [
+                _c("th", { staticClass: "w-30" }, [_vm._v("#")]),
+                _vm._v(" "),
+                _c("th", { attrs: { "data-title": "Task" } }, [
+                  _vm._v(_vm._s(_vm.lang("Task")))
+                ]),
+                _vm._v(" "),
+                _c("th", { attrs: { "data-title": "Task Type" } }, [
+                  _vm._v(_vm._s(_vm.lang("Task Type")))
+                ]),
+                _vm._v(" "),
+                _c("th", { attrs: { "data-title": "Assigner" } }, [
+                  _vm._v(_vm._s(_vm.lang("Assigner")))
+                ]),
+                _vm._v(" "),
+                _c("th", { attrs: { "data-title": "Created" } }, [
+                  _vm._v(_vm._s(_vm.lang("Created")))
+                ]),
+                _vm._v(" "),
+                _c("th", { attrs: { "data-title": "Deadline" } }, [
+                  _vm._v(_vm._s(_vm.lang("Deadline")))
+                ]),
+                _vm._v(" "),
+                _vm.authority
+                  ? _c(
+                      "th",
+                      {
+                        staticClass: "text-right",
+                        attrs: { "data-title": "Assign to" }
+                      },
+                      [_vm._v(_vm._s(_vm.lang("Assign to")))]
+                    )
+                  : _vm._e()
+              ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "tbody",
+              _vm._l(_vm.completed_tasks, function(element, index) {
+                return _c("tr", { key: element.id }, [
+                  _c("th", { staticClass: "display-e w-30" }, [
+                    _vm._v(_vm._s(index + 1))
                   ]),
                   _vm._v(" "),
-                  _c("th", { attrs: { "data-title": "Task Type" } }, [
-                    _vm._v(_vm._s(_vm.lang("Task Type")))
+                  _c(
+                    "td",
+                    {
+                      staticClass: "table-title",
+                      attrs: { "data-title": "Task" }
+                    },
+                    [
+                      _c("a", { attrs: { href: "/task/show/" + element.id } }, [
+                        _vm._v(_vm._s(element.name))
+                      ])
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("td", { attrs: { "data-title": "Task Type" } }, [
+                    _c(
+                      "div",
+                      { class: _vm.task_types[element.type].className },
+                      [_vm._v(_vm._s(_vm.task_types[element.type].title))]
+                    )
                   ]),
                   _vm._v(" "),
-                  _c("th", { attrs: { "data-title": "Assigner" } }, [
-                    _vm._v(_vm._s(_vm.lang("Assigner")))
+                  _c("td", { attrs: { "data-title": "Assigner" } }, [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "text-uppercase file-box-sty",
+                        attrs: {
+                          href:
+                            "/human_resources/employee/" +
+                            element.assigner.id +
+                            "/show"
+                        }
+                      },
+                      [
+                        _c("img", {
+                          staticClass: "profile-m mr-2",
+                          attrs: { src: element.assigner.image }
+                        }),
+                        _vm._v(_vm._s(element.assigner.name))
+                      ]
+                    )
                   ]),
                   _vm._v(" "),
-                  _c("th", { attrs: { "data-title": "Created" } }, [
-                    _vm._v(_vm._s(_vm.lang("Created")))
+                  _c("td", { attrs: { "data-title": "Created" } }, [
+                    _vm._v(
+                      _vm._s(_vm._f("moment")(element.created_at, "DD.MM."))
+                    )
                   ]),
                   _vm._v(" "),
-                  _c("th", { attrs: { "data-title": "Deadline" } }, [
-                    _vm._v(_vm._s(_vm.lang("Deadline")))
+                  _c("td", { attrs: { "data-title": "Deadline" } }, [
+                    _vm._v(_vm._s(_vm._f("moment")(element.deadline, "DD.MM.")))
                   ]),
                   _vm._v(" "),
                   _vm.authority
                     ? _c(
-                        "th",
+                        "td",
                         {
                           staticClass: "text-right",
                           attrs: { "data-title": "Assign to" }
                         },
-                        [_vm._v(_vm._s(_vm.lang("Assign to")))]
+                        [
+                          _c(
+                            "div",
+                            { staticClass: "file-box-sty icon icon-assign" },
+                            [_vm._v(_vm._s(_vm.lang("Assign")))]
+                          )
+                        ]
                       )
                     : _vm._e()
                 ])
-              ]),
-              _vm._v(" "),
-              _c(
-                "draggable",
-                {
-                  attrs: {
-                    element: "tbody",
-                    options: { handle: ".icon-handler" }
-                  },
-                  model: {
-                    value: _vm.completed_tasks,
-                    callback: function($$v) {
-                      _vm.completed_tasks = $$v
-                    },
-                    expression: "completed_tasks"
-                  }
-                },
-                _vm._l(_vm.completed_tasks, function(element, index) {
-                  return _c("tr", { key: element.id }, [
-                    _c("td", [_c("div", { staticClass: "icon icon-handler" })]),
-                    _vm._v(" "),
-                    _c("th", { staticClass: "display-e w-30" }, [
-                      _vm._v(_vm._s(index + 1))
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "td",
-                      {
-                        staticClass: "table-title",
-                        attrs: { "data-title": "Task" }
-                      },
-                      [
-                        _c(
-                          "a",
-                          { attrs: { href: "/task/show/" + element.id } },
-                          [_vm._v(_vm._s(element.name))]
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c("td", { attrs: { "data-title": "Task Type" } }, [
-                      _c(
-                        "div",
-                        { class: _vm.task_types[element.type].className },
-                        [_vm._v(_vm._s(_vm.task_types[element.type].title))]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("td", { attrs: { "data-title": "Assigner" } }, [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "text-uppercase file-box-sty",
-                          attrs: {
-                            href:
-                              "/human_resources/employee/" +
-                              element.assigner.id +
-                              "/show"
-                          }
-                        },
-                        [
-                          _c("img", {
-                            staticClass: "profile-m mr-2",
-                            attrs: { src: element.assigner.image }
-                          }),
-                          _vm._v(_vm._s(element.assigner.name))
-                        ]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("td", { attrs: { "data-title": "Created" } }, [
-                      _vm._v(
-                        _vm._s(_vm._f("moment")(element.created_at, "DD.MM."))
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("td", { attrs: { "data-title": "Deadline" } }, [
-                      _vm._v(
-                        _vm._s(_vm._f("moment")(element.deadline, "DD.MM."))
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _vm.authority
-                      ? _c(
-                          "td",
-                          {
-                            staticClass: "text-right",
-                            attrs: { "data-title": "Assign to" }
-                          },
-                          [
-                            _c(
-                              "div",
-                              { staticClass: "file-box-sty icon icon-assign" },
-                              [_vm._v(_vm._s(_vm.lang("Assign")))]
-                            )
-                          ]
-                        )
-                      : _vm._e()
-                  ])
-                })
-              )
-            ],
-            1
-          )
+              })
+            )
+          ])
         ]
       ),
       _vm._v(" "),
@@ -70028,151 +69970,125 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _c(
-            "table",
-            { staticClass: "table" },
-            [
-              _c("thead", { staticClass: "thead-inverse" }, [
-                _c("tr", [
-                  _c("th", { staticClass: "w-30" }),
-                  _vm._v(" "),
-                  _c("th", { staticClass: "w-30" }, [_vm._v("#")]),
-                  _vm._v(" "),
-                  _c("th", { attrs: { "data-title": "Task" } }, [
-                    _vm._v(_vm._s(_vm.lang("Task")))
+          _c("table", { staticClass: "table" }, [
+            _c("thead", { staticClass: "thead-inverse" }, [
+              _c("tr", [
+                _c("th", { staticClass: "w-30" }, [_vm._v("#")]),
+                _vm._v(" "),
+                _c("th", { attrs: { "data-title": "Task" } }, [
+                  _vm._v(_vm._s(_vm.lang("Task")))
+                ]),
+                _vm._v(" "),
+                _c("th", { attrs: { "data-title": "Task Type" } }, [
+                  _vm._v(_vm._s(_vm.lang("Task Type")))
+                ]),
+                _vm._v(" "),
+                _c("th", { attrs: { "data-title": "Assigner" } }, [
+                  _vm._v(_vm._s(_vm.lang("Assigner")))
+                ]),
+                _vm._v(" "),
+                _c("th", { attrs: { "data-title": "Created" } }, [
+                  _vm._v(_vm._s(_vm.lang("Created")))
+                ]),
+                _vm._v(" "),
+                _c("th", { attrs: { "data-title": "Deadline" } }, [
+                  _vm._v(_vm._s(_vm.lang("Deadline")))
+                ]),
+                _vm._v(" "),
+                _vm.authority
+                  ? _c(
+                      "th",
+                      {
+                        staticClass: "text-right",
+                        attrs: { "data-title": "Assign to" }
+                      },
+                      [_vm._v(_vm._s(_vm.lang("Assign to")))]
+                    )
+                  : _vm._e()
+              ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "tbody",
+              _vm._l(_vm.rejected_tasks, function(element, index) {
+                return _c("tr", { key: element.id }, [
+                  _c("th", { staticClass: "display-e w-30" }, [
+                    _vm._v(_vm._s(index + 1))
                   ]),
                   _vm._v(" "),
-                  _c("th", { attrs: { "data-title": "Task Type" } }, [
-                    _vm._v(_vm._s(_vm.lang("Task Type")))
+                  _c(
+                    "td",
+                    {
+                      staticClass: "table-title",
+                      attrs: { "data-title": "Task" }
+                    },
+                    [
+                      _c("a", { attrs: { href: "/task/show/" + element.id } }, [
+                        _vm._v(_vm._s(element.name))
+                      ])
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("td", { attrs: { "data-title": "Task Type" } }, [
+                    _c(
+                      "div",
+                      { class: _vm.task_types[element.type].className },
+                      [_vm._v(_vm._s(_vm.task_types[element.type].title))]
+                    )
                   ]),
                   _vm._v(" "),
-                  _c("th", { attrs: { "data-title": "Assigner" } }, [
-                    _vm._v(_vm._s(_vm.lang("Assigner")))
+                  _c("td", { attrs: { "data-title": "Assigner" } }, [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "text-uppercase file-box-sty",
+                        attrs: {
+                          href:
+                            "/human_resources/employee/" +
+                            element.assigner.id +
+                            "/show"
+                        }
+                      },
+                      [
+                        _c("img", {
+                          staticClass: "profile-m mr-2",
+                          attrs: { src: element.assigner.image }
+                        }),
+                        _vm._v(_vm._s(element.assigner.name))
+                      ]
+                    )
                   ]),
                   _vm._v(" "),
-                  _c("th", { attrs: { "data-title": "Created" } }, [
-                    _vm._v(_vm._s(_vm.lang("Created")))
+                  _c("td", { attrs: { "data-title": "Created" } }, [
+                    _vm._v(
+                      _vm._s(_vm._f("moment")(element.created_at, "DD.MM."))
+                    )
                   ]),
                   _vm._v(" "),
-                  _c("th", { attrs: { "data-title": "Deadline" } }, [
-                    _vm._v(_vm._s(_vm.lang("Deadline")))
+                  _c("td", { attrs: { "data-title": "Deadline" } }, [
+                    _vm._v(_vm._s(_vm._f("moment")(element.deadline, "DD.MM.")))
                   ]),
                   _vm._v(" "),
                   _vm.authority
                     ? _c(
-                        "th",
+                        "td",
                         {
                           staticClass: "text-right",
                           attrs: { "data-title": "Assign to" }
                         },
-                        [_vm._v(_vm._s(_vm.lang("Assign to")))]
+                        [
+                          _c(
+                            "div",
+                            { staticClass: "file-box-sty icon icon-assign" },
+                            [_vm._v(_vm._s(_vm.lang("Assign")))]
+                          )
+                        ]
                       )
                     : _vm._e()
                 ])
-              ]),
-              _vm._v(" "),
-              _c(
-                "draggable",
-                {
-                  attrs: {
-                    element: "tbody",
-                    options: { handle: ".icon-handler" }
-                  },
-                  model: {
-                    value: _vm.rejected_tasks,
-                    callback: function($$v) {
-                      _vm.rejected_tasks = $$v
-                    },
-                    expression: "rejected_tasks"
-                  }
-                },
-                _vm._l(_vm.rejected_tasks, function(element, index) {
-                  return _c("tr", { key: element.id }, [
-                    _c("td", [_c("div", { staticClass: "icon icon-handler" })]),
-                    _vm._v(" "),
-                    _c("th", { staticClass: "display-e w-30" }, [
-                      _vm._v(_vm._s(index + 1))
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "td",
-                      {
-                        staticClass: "table-title",
-                        attrs: { "data-title": "Task" }
-                      },
-                      [
-                        _c(
-                          "a",
-                          { attrs: { href: "/task/show/" + element.id } },
-                          [_vm._v(_vm._s(element.name))]
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c("td", { attrs: { "data-title": "Task Type" } }, [
-                      _c(
-                        "div",
-                        { class: _vm.task_types[element.type].className },
-                        [_vm._v(_vm._s(_vm.task_types[element.type].title))]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("td", { attrs: { "data-title": "Assigner" } }, [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "text-uppercase file-box-sty",
-                          attrs: {
-                            href:
-                              "/human_resources/employee/" +
-                              element.assigner.id +
-                              "/show"
-                          }
-                        },
-                        [
-                          _c("img", {
-                            staticClass: "profile-m mr-2",
-                            attrs: { src: element.assigner.image }
-                          }),
-                          _vm._v(_vm._s(element.assigner.name))
-                        ]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("td", { attrs: { "data-title": "Created" } }, [
-                      _vm._v(
-                        _vm._s(_vm._f("moment")(element.created_at, "DD.MM."))
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("td", { attrs: { "data-title": "Deadline" } }, [
-                      _vm._v(
-                        _vm._s(_vm._f("moment")(element.deadline, "DD.MM."))
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _vm.authority
-                      ? _c(
-                          "td",
-                          {
-                            staticClass: "text-right",
-                            attrs: { "data-title": "Assign to" }
-                          },
-                          [
-                            _c(
-                              "div",
-                              { staticClass: "file-box-sty icon icon-assign" },
-                              [_vm._v(_vm._s(_vm.lang("Assign")))]
-                            )
-                          ]
-                        )
-                      : _vm._e()
-                  ])
-                })
-              )
-            ],
-            1
-          )
+              })
+            )
+          ])
         ]
       )
     ])
