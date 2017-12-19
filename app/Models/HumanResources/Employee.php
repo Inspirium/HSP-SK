@@ -71,7 +71,7 @@ class Employee extends Authenticatable {
     protected $guarded = [ 'created_at', 'update_at', 'deleted_at' ];
     protected $appends = [ 'name', 'department_name' ];
 
-	protected $hidden = [ 'password', 'remember_token', ];
+	protected $hidden = [ 'password', 'remember_token' ];
 
     public function department() {
         return $this->belongsTo('Inspirium\Models\HumanResources\Department');

@@ -16,7 +16,9 @@ use Illuminate\Http\Request;
 Route::group(['middleware' => ['auth:api'],], function() {
 
 Route::get('/me', function (Request $request) {
-    return Auth::user();
+    $user = Auth::user();
+    $user->load(['roles']);
+    return $user;
 });
 
 
@@ -31,7 +33,7 @@ Route::group(['prefix' => 'human_resources', 'namespace' => 'Api\HumanResources'
 	Route::get('employee/{employee}', 'EmployeeController@getEmployee');
 	Route::post('employee/{employee}', 'EmployeeController@saveEmployee')->middleware('can:update,employee');
 	Route::delete('employee/{employee}', 'EmployeeController@deleteEmployee')->middleware('can:delete,employee');
-	Route::post('employee', 'EmployeeController@createEmployee');//TODO: auth
+	Route::post('employee', 'EmployeeController@createEmployee')->middleware('can:create,employee');
 	Route::get('employee/search/{term}', 'EmployeeController@searchEmployee');
 
 	Route::get('department/{department}', 'DepartmentController@getDepartment');

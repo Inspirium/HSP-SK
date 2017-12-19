@@ -32,8 +32,8 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'human_resources'], function
 	Route::get('employees', 'HumanResources\EmployeeController@showEmployees');
 	Route::group(['prefix' => 'employee'], function () {
 		Route::get('{employee}/show', 'HumanResources\EmployeeController@showEmployee');
-		Route::get('{employee}/roles', 'HumanResources\EmployeeController@employeeRoles');
-		Route::post('{employee}/roles', 'HumanResources\EmployeeController@updateEmployeeRoles');
+		Route::get('{employee}/roles', 'HumanResources\EmployeeController@employeeRoles')->middleware('can:viewRoles,employee');
+		Route::post('{employee}/roles', 'HumanResources\EmployeeController@updateEmployeeRoles')->middleware('can:updateRoles,emmployee');
 		Route::any('{all}', function() {
 			return view(config('app.template') . '::router-view');
 		});

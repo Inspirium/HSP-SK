@@ -47815,6 +47815,9 @@ module.exports = function spread(callback) {
         return {};
     },
     computed: {
+        user() {
+            return this.$store.state.employee;
+        },
         active: function () {
             return this.$route.path.split('/');
         },
@@ -48159,17 +48162,10 @@ module.exports = function spread(callback) {
                 };
             } else {
                 routes = {
-                    administration: {
-                        enabled: true,
-                        title: 'Administration',
-                        order: 0,
-                        key: 'administration',
-                        children: {}
-                    },
                     human_resources: {
                         enabled: true,
                         title: 'Human Resources',
-                        order: 1,
+                        order: 0,
                         key: 'human_resources',
                         children: {
                             employees: {
@@ -48183,16 +48179,16 @@ module.exports = function spread(callback) {
                                 title: 'Departments'
                             },
                             roles: {
-                                enabled: true,
+                                enabled: this.can('employee_update_roles'),
                                 path: '/human_resources/roles',
                                 title: 'Roles'
                             }
                         }
                     },
                     propositions: {
-                        enabled: true,
+                        enabled: this.can('access_proposition_admin'),
                         title: 'Propositions',
-                        order: 2,
+                        order: 1,
                         key: 'propositions',
                         children: {
                             propositions: {
@@ -48210,7 +48206,7 @@ module.exports = function spread(callback) {
                     books: {
                         enabled: true,
                         title: 'Books',
-                        order: 3,
+                        order: 2,
                         key: 'books',
                         children: {
                             books: {
@@ -48228,7 +48224,7 @@ module.exports = function spread(callback) {
                     tasks: {
                         enabled: true,
                         title: 'Task Management',
-                        order: 4,
+                        order: 3,
                         key: 'tasks',
                         children: {
                             view: {
@@ -48238,19 +48234,19 @@ module.exports = function spread(callback) {
                                 component: false
                             },
                             graphics: {
-                                enabled: true,
+                                enabled: this.can('access_department_tasks'),
                                 path: '/tasks/department/1',
                                 title: 'Graphics',
                                 component: false
                             },
                             editorial: {
-                                enabled: true,
+                                enabled: this.can('access_department_tasks'),
                                 path: '/tasks/department/77',
                                 title: 'Editorial',
                                 component: false
                             },
                             management: {
-                                enabled: true,
+                                enabled: this.can('access_department_tasks'),
                                 path: '/tasks/department/92',
                                 title: 'Management',
                                 component: false
@@ -48260,7 +48256,7 @@ module.exports = function spread(callback) {
                     notifications: {
                         enabled: true,
                         title: 'Notifications',
-                        order: 5,
+                        order: 4,
                         key: 'notifications',
                         children: {
                             view: {
@@ -48273,7 +48269,7 @@ module.exports = function spread(callback) {
                     messages: {
                         enabled: true,
                         title: 'Messages',
-                        order: 6,
+                        order: 5,
                         key: 'messages',
                         children: {
                             view: {
@@ -48304,7 +48300,6 @@ module.exports = function spread(callback) {
             return this.$route.path === this.lroutes[group].children[key].path;
         },
         isComplete: function (group_key, key) {
-
             if (this.$route.path === this.lroutes[group_key].children[key].path) {
                 if (this.lroutes[group_key].children[key].status === 'incomplete') {
                     return 'menu-incomplete';
@@ -48314,9 +48309,16 @@ module.exports = function spread(callback) {
                 }
             }
             return '';
+        },
+        can(role) {
+            return _.find(this.user.roles, o => {
+                return o.name === role;
+            });
         }
     },
-    mounted: function () {}
+    mounted: function () {
+        this.$store.dispatch('employee/initUser');
+    }
 });
 
 /***/ }),
@@ -52052,6 +52054,27 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
@@ -54558,8 +54581,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-//
-//
 
 
 
@@ -54602,7 +54623,17 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             }
         };
     },
+    computed: {
+        user() {
+            return this.$store.state.employee;
+        }
+    },
     methods: {
+        can(role) {
+            return _.find(this.user.roles, o => {
+                return o.name === role;
+            });
+        },
         newOrderValue(task) {
             if (task.new_order) {
                 return Number(task.new_order) - Number(task.order);
@@ -54623,11 +54654,11 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             this.employee_index = ei;
             $('#taskOrderApprovalModal').modal('show');
         },
-        sendForApproval(task) {
+        sendForApproval() {
             let data = _.map(this.employees[this.employee_index].tasks, o => {
                 return o.id;
             });
-            axios.post('/api/tasks/requestOrder', { tasks: data, task: task }).then(res => {
+            axios.post('/api/tasks/requestOrder', { tasks: data, task: task, employee: this.employees[this.employee_index].id }).then(res => {
                 this.employee_index = 0;
             }).catch(err => {});
         },
@@ -55892,7 +55923,11 @@ const routes = [{ path: '/proposition/start', component: __WEBPACK_IMPORTED_MODU
         roles: []
     },
     mutations: {
-        setUser(state, payload) {}
+        setUser(state, payload) {
+            state.id = payload.id;
+            state.name = payload.name;
+            state.roles = payload.roles;
+        }
     },
     getters: {},
     actions: {
@@ -79929,7 +79964,9 @@ var render = function() {
                       _vm._v(" "),
                       _c("th", { staticClass: "w-30" }, [_vm._v("#")]),
                       _vm._v(" "),
-                      _c("th", { staticClass: "w-30" }, [_vm._v("#")]),
+                      _vm.can("employee_tasks_order_edit")
+                        ? _c("th", { staticClass: "w-30" }, [_vm._v("#")])
+                        : _vm._e(),
                       _vm._v(" "),
                       _c("th", { attrs: { "data-title": "Task" } }, [
                         _vm._v(_vm._s(_vm.lang("Task")))
@@ -79940,7 +79977,7 @@ var render = function() {
                       ]),
                       _vm._v(" "),
                       _c("th", { attrs: { "data-title": "Assigner" } }, [
-                        _vm._v(_vm._s(_vm.lang("Assigner")) + "}")
+                        _vm._v(_vm._s(_vm.lang("Assigner")))
                       ]),
                       _vm._v(" "),
                       _c("th", { attrs: { "data-title": "Created" } }, [
@@ -79975,9 +80012,11 @@ var render = function() {
                           _vm._v(_vm._s(task.order))
                         ]),
                         _vm._v(" "),
-                        _c("th", { class: _vm.newOrderClass(task) }, [
-                          _vm._v(_vm._s(_vm.newOrderValue(task)))
-                        ]),
+                        _vm.can("employee_tasks_order_edit")
+                          ? _c("th", { class: _vm.newOrderClass(task) }, [
+                              _vm._v(_vm._s(_vm.newOrderValue(task)))
+                            ])
+                          : _vm._e(),
                         _vm._v(" "),
                         _c(
                           "td",
@@ -80024,52 +80063,50 @@ var render = function() {
                 1
               ),
               _vm._v(" "),
-              _c("div", { staticClass: "d-flex justify-content-end" }, [
-                _c(
-                  "button",
-                  {
-                    staticClass:
-                      "btn btn-neutral btn-addon d-block ml-auto waves-effect waves-light",
-                    attrs: { type: "button" },
-                    on: {
-                      click: function($event) {
-                        _vm.openModalForApproval(ei)
-                      }
+              _c(
+                "button",
+                {
+                  staticClass:
+                    "btn btn-neutral btn-addon d-block ml-auto waves-effect waves-light",
+                  attrs: { type: "button" },
+                  on: {
+                    click: function($event) {
+                      _vm.openModalForApproval(ei)
                     }
-                  },
-                  [_vm._v(_vm._s(_vm.lang("Save tasks priority")))]
-                ),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass:
-                      "btn btn-success btn-addon d-block ml-auto waves-effect waves-light",
-                    attrs: { type: "button" },
-                    on: {
-                      click: function($event) {
-                        _vm.approveOrder(ei)
-                      }
+                  }
+                },
+                [_vm._v(_vm._s(_vm.lang("Save tasks priority")))]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass:
+                    "btn btn-success btn-addon d-block ml-auto waves-effect waves-light",
+                  attrs: { type: "button" },
+                  on: {
+                    click: function($event) {
+                      _vm.approveOrder(ei)
                     }
-                  },
-                  [_vm._v(_vm._s(_vm.lang("Approve task priority")))]
-                ),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass:
-                      "btn btn-danger btn-addon d-block ml-auto waves-effect waves-light",
-                    attrs: { type: "button" },
-                    on: {
-                      click: function($event) {
-                        _vm.approveOrder(ei)
-                      }
+                  }
+                },
+                [_vm._v(_vm._s(_vm.lang("Reject task priority")))]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass:
+                    "btn btn-danger btn-addon d-block ml-auto waves-effect waves-light",
+                  attrs: { type: "button" },
+                  on: {
+                    click: function($event) {
+                      _vm.approveOrder(ei)
                     }
-                  },
-                  [_vm._v(_vm._s(_vm.lang("Reject task priority")))]
-                )
-              ])
+                  }
+                },
+                [_vm._v(_vm._s(_vm.lang("Approve task priority")))]
+              )
             ]
           }),
           _vm._v(" "),
@@ -86127,6 +86164,123 @@ var render = function() {
                       ])
                     ]),
                     _vm._v(" "),
+                    _c("div", { staticClass: "page-name-xl mb-4 mt-3" }, [
+                      _vm._v(_vm._s(_vm.lang("Upload Document")))
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "files mt-2 mb-2" },
+                      _vm._l(_vm.files, function(file, index) {
+                        return _c(
+                          "div",
+                          {
+                            staticClass:
+                              "file-box file-box-l d-flex align-items-center"
+                          },
+                          [
+                            _c(
+                              "a",
+                              {
+                                staticClass: "file-icon",
+                                attrs: { href: file.link },
+                                on: {
+                                  click: function($event) {
+                                    $event.preventDefault()
+                                    _vm.documentDownload(file.link)
+                                  }
+                                }
+                              },
+                              [_vm._v(_vm._s(file.title))]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "file-box-sty ml-auto d-flex" },
+                              [
+                                _c(
+                                  "a",
+                                  {
+                                    attrs: {
+                                      href:
+                                        "human_resources/employee/" +
+                                        file.owner.id +
+                                        "/show"
+                                    }
+                                  },
+                                  [
+                                    _c("img", {
+                                      staticClass:
+                                        "profile-m-1 mr-1 align-self-center",
+                                      attrs: { src: file.owner.image }
+                                    }),
+                                    _vm._v(_vm._s(file.owner.name))
+                                  ]
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "file-box-sty" }, [
+                              _vm._v(
+                                _vm._s(
+                                  _vm._f("moment")(
+                                    file.created_at.date,
+                                    "DD.MM.YYYY."
+                                  )
+                                )
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass: "file-box-sty icon icon-download",
+                                on: {
+                                  click: function($event) {
+                                    _vm.documentDownload(file.link)
+                                  }
+                                }
+                              },
+                              [_vm._v("Preuzmi")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass: "file-box-sty icon icon-cancel",
+                                on: {
+                                  click: function($event) {
+                                    _vm.fileDelete(index, "files")
+                                  }
+                                }
+                              },
+                              [_vm._v("Obriši")]
+                            )
+                          ]
+                        )
+                      })
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "justify-content-center d-flex mb-4" },
+                      [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-neutral",
+                            attrs: { type: "button" },
+                            on: {
+                              click: function($event) {
+                                _vm.documentAdd("initial-documents")
+                              }
+                            }
+                          },
+                          [_vm._v(_vm._s(_vm.lang("Upload")))]
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
                     _c("div", { staticClass: "md-form mt-3" }, [
                       _c("textarea", {
                         directives: [
@@ -86204,7 +86358,26 @@ var render = function() {
             _vm._v(" "),
             _c("proposition-footer-buttons", { on: { warningSaved: _vm.next } })
           ]
-        : [_c("h1", [_vm._v(_vm._s(_vm.lang("No print offers created")))])]
+        : [
+            _c(
+              "div",
+              {
+                staticClass:
+                  "d-flex justify-content-center align-items-center flex-column mt-5"
+              },
+              [
+                _c("i", {
+                  staticClass:
+                    "fa fa-exclamation-triangle fa-5x mb-3 color-nav-sub",
+                  attrs: { "aria-hidden": "true" }
+                }),
+                _vm._v(" "),
+                _c("h1", { attrs: { clas: "text-center mt-5" } }, [
+                  _vm._v(_vm._s(_vm.lang("No print offers created")))
+                ])
+              ]
+            )
+          ]
     ],
     2
   )

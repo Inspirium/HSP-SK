@@ -6,6 +6,7 @@ use Inspirium\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inspirium\Models\HumanResources\Department;
 use Inspirium\Models\HumanResources\Employee;
+use Inspirium\Models\HumanResources\Role;
 
 class EmployeeController extends Controller {
 
@@ -35,4 +36,15 @@ class EmployeeController extends Controller {
     public function showEmployee(Employee $employee) {
         return view(config('app.template').'::hr.show', ['employee'=>$employee]);
     }
+
+	public function employeeRoles(Employee $employee) {
+		$roles = Role::all();
+		return view(config('app.template') . '::user.role.user_roles', ['user' => $employee, 'roles' => $roles]);
+	}
+
+	public function updateEmployeeRoles(Request $request, Employee $employee) {
+		$employee->roles()->sync($request->input('roles'));
+		$employee->save();
+		return redirect('human_resources/employee/'.$employee->id.'/show/');
+	}
 }

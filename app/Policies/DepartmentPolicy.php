@@ -2,10 +2,11 @@
 
 namespace Inspirium\Policies;
 
+use Inspirium\Models\HumanResources\Department;
 use Inspirium\Models\HumanResources\Employee;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class EmployeePolicy
+class DepartmentPolicy
 {
     use HandlesAuthorization;
 
@@ -16,9 +17,9 @@ class EmployeePolicy
      * @param  \Inspirium\Models\HumanResources\Employee  $employee
      * @return mixed
      */
-    public function view(Employee $user, Employee $employee)
+    public function view(Employee $user, Department $department)
     {
-        return true;
+	    return true;
     }
 
     /**
@@ -29,7 +30,7 @@ class EmployeePolicy
      */
     public function create(Employee $user)
     {
-	    if ($user->hasRole('employee_create')) {
+	    if ($user->hasRole('department_create')) {
 		    return true;
 	    }
 
@@ -43,12 +44,9 @@ class EmployeePolicy
      * @param  \Inspirium\Models\HumanResources\Employee  $employee
      * @return mixed
      */
-    public function update(Employee $user, Employee $employee)
+    public function update(Employee $user, Department $department)
     {
-        if ($user->id === $employee->id) {
-        	return true;
-        }
-        if ($user->hasRole('employee_update')) {
+        if ($user->hasRole('department_update')) {
         	return true;
         }
 
@@ -62,42 +60,12 @@ class EmployeePolicy
      * @param  \Inspirium\Models\HumanResources\Employee  $employee
      * @return mixed
      */
-    public function delete(Employee $user, Employee $employee)
+    public function delete(Employee $user, Department $department)
     {
-	    if ($user->hasRole('employee_delete')) {
+	    if ($user->hasRole('department_delete')) {
 		    return true;
 	    }
 
 	    return false;
     }
-
-    public function updateRoles(Employee $user, Employee $employee) {
-    	if ($user->hasRole('employee_update_roles')) {
-    		return true;
-	    }
-	    return false;
-    }
-
-	public function viewRoles(Employee $user, Employee $employee) {
-		if ($user->hasRole('employee_update_roles')) {
-			return true;
-		}
-		return false;
-	}
-
-	public function requestTaskOrder(Employee $user, Employee $employee) {
-		if ($user->hasRole('department_tasks_order_edit')) {
-			return true;
-		}
-
-		return false;
-	}
-
-	public function approveTaskOrder(Employee $user, Employee $employee ) {
-		if ($user->hasRole('department_tasks_order_approve')) {
-			return true;
-		}
-
-		return false;
-	}
 }

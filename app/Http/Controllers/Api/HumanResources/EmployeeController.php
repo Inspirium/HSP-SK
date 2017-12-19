@@ -95,15 +95,4 @@ class EmployeeController extends Controller {
 
 		return response()->json([]);
 	}
-
-	public function employeeRoles(Employee $employee) {
-		$roles = Role::all();
-		return view(config('app.template') . '::user.role.user_roles', ['user' => $employee, 'roles' => $roles]);
-	}
-
-	public function updateEmployeeRoles(Request $request, Employee $employee) {
-		$employee->roles()->sync($request->input('roles'));
-		$employee->save();
-		return redirect('human_resources/employee/'.$employee->id.'/show/');
-	}
 }
