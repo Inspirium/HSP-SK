@@ -15,6 +15,8 @@ use Illuminate\Http\Request;
 
 Route::group(['middleware' => ['auth:api'],], function() {
 
+	Route::get('home', 'Api\HomeController@home');
+
 Route::get('/me', function (Request $request) {
     $user = Auth::user();
     $user->load(['roles']);
