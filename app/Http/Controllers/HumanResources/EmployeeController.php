@@ -17,8 +17,8 @@ class EmployeeController extends Controller {
             'image' => [ 'title' => __('Image'), 'breakpoint' => '', 'image' => true ],
             'name' => [ 'title' => __('Name'), 'breakpoint' => ''],
             'department_name' => [ 'title' => __('Department'), 'breakpoint' => 'md'],
-            'phone' => [ 'title' => __('Phone'), 'breakpoint' => 'md' ],
-            'mobile' => [ 'title' => __('Mobile'), 'breakpoint' => 'md' ],
+            'phone_merged' => [ 'title' => __('Phone'), 'breakpoint' => 'md' ],
+            'mobile_merged' => [ 'title' => __('Mobile'), 'breakpoint' => 'md' ],
             'room' => [ 'title' => __('Room'), 'breakpoint' => 'md' ]
         ];
         $strings = [

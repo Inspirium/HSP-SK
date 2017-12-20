@@ -79,7 +79,7 @@ class Employee extends Authenticatable {
 	use Notifiable, HasApiTokens;
 
     protected $guarded = [ 'created_at', 'update_at', 'deleted_at' ];
-    protected $appends = [ 'name', 'department_name' ];
+    protected $appends = [ 'name', 'department_name', 'phone_merged', 'mobile_merged' ];
 
 	protected $hidden = [ 'password', 'remember_token' ];
 
@@ -150,5 +150,13 @@ class Employee extends Authenticatable {
 	public function receivesBroadcastNotificationsOn()
 	{
 		return 'users.'.$this->id;
+	}
+
+	public function getPhoneMergedAttribute() {
+    	return $this->phone_pre . ' ' . $this->phone;
+	}
+
+	public function getMobileMergedAttribute() {
+		return $this->mobile_pre . ' ' . $this->mobile;
 	}
 }
