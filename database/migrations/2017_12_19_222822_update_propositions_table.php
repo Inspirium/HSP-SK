@@ -14,7 +14,7 @@ class UpdatePropositionsTable extends Migration
     public function up()
     {
         Schema::table('propositions', function (Blueprint $table) {
-            $table->timestamp('completed_at');
+            $table->timestamp('completed_at')->nullable();
         });
     }
 
