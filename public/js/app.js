@@ -52729,7 +52729,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             approval: {
                 supportNested: true,
                 tblClass: 'table table-hover',
-                columns: [{ title: '#', field: 'id', sortable: true }, { title: this.lang('Title'), field: 'project_name', sortable: true, tdComp: __WEBPACK_IMPORTED_MODULE_0__table_components_TitleCell__["a" /* default */], tdClass: 'table-title' }, { title: this.lang('Author'), field: 'owner', sortable: true, tdComp: __WEBPACK_IMPORTED_MODULE_1__table_components_AuthorCell__["a" /* default */] }, { title: this.lang('Creation Date'), field: 'created_at' }, { title: this.lang('Waiting Approval'), field: 'approved_on' }],
+                columns: [{ title: '#', field: 'id', sortable: true }, { title: this.lang('Title'), field: 'project_name', sortable: true, tdComp: __WEBPACK_IMPORTED_MODULE_0__table_components_TitleCell__["a" /* default */], tdClass: 'table-title' }, { title: this.lang('Author'), field: 'owner', tdComp: __WEBPACK_IMPORTED_MODULE_1__table_components_AuthorCell__["a" /* default */] }, { title: this.lang('Creation Date'), field: 'created_at', sortable: true }, { title: this.lang('Waiting Approval'), field: 'approved_on', sortable: true }],
                 data: [],
                 total: 0,
                 query: {},
@@ -52738,7 +52738,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             unfinished: {
                 supportNested: true,
                 tblClass: 'table table-hover',
-                columns: [{ title: '#', field: 'id', sortable: true }, { title: this.lang('Title'), field: 'project_name', sortable: true, tdComp: __WEBPACK_IMPORTED_MODULE_0__table_components_TitleCell__["a" /* default */], tdClass: 'table-title' }, { title: this.lang('Author'), field: 'owner', sortable: true, tdComp: __WEBPACK_IMPORTED_MODULE_1__table_components_AuthorCell__["a" /* default */] }, { title: this.lang('Creation Date'), field: 'created_at' }],
+                columns: [{ title: '#', field: 'id', sortable: true }, { title: this.lang('Title'), field: 'project_name', sortable: true, tdComp: __WEBPACK_IMPORTED_MODULE_0__table_components_TitleCell__["a" /* default */], tdClass: 'table-title' }, { title: this.lang('Author'), field: 'owner', tdComp: __WEBPACK_IMPORTED_MODULE_1__table_components_AuthorCell__["a" /* default */] }, { title: this.lang('Creation Date'), field: 'created_at', sortable: true }],
                 data: [],
                 total: 0,
                 query: {},
@@ -52747,7 +52747,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             deleted: {
                 supportNested: true,
                 tblClass: 'table table-hover',
-                columns: [{ title: '#', field: 'id', sortable: true }, { title: this.lang('Title'), field: 'project_name', sortable: true, tdComp: __WEBPACK_IMPORTED_MODULE_0__table_components_TitleCell__["a" /* default */], tdClass: 'table-title' }, { title: this.lang('Author'), field: 'owner', sortable: true, tdComp: __WEBPACK_IMPORTED_MODULE_1__table_components_AuthorCell__["a" /* default */] }, { title: this.lang('Creation Date'), field: 'created_at' }, { title: this.lang('Deleted Date'), field: 'deleted_at' }],
+                columns: [{ title: '#', field: 'id', sortable: true }, { title: this.lang('Title'), field: 'project_name', sortable: true, tdComp: __WEBPACK_IMPORTED_MODULE_0__table_components_TitleCell__["a" /* default */], tdClass: 'table-title' }, { title: this.lang('Author'), field: 'owner', tdComp: __WEBPACK_IMPORTED_MODULE_1__table_components_AuthorCell__["a" /* default */] }, { title: this.lang('Creation Date'), field: 'created_at', sortable: true }, { title: this.lang('Deleted Date'), field: 'deleted_at', sortable: true }],
                 data: [],
                 total: 0,
                 query: {},
@@ -52756,7 +52756,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             active: {
                 supportNested: true,
                 tblClass: 'table table-hover',
-                columns: [{ title: '#', field: 'id', sortable: true }, { title: this.lang('Title'), field: 'project_name', sortable: true, tdComp: __WEBPACK_IMPORTED_MODULE_0__table_components_TitleCell__["a" /* default */], tdClass: 'table-title' }, { title: this.lang('Author'), field: 'owner', sortable: true, tdComp: __WEBPACK_IMPORTED_MODULE_1__table_components_AuthorCell__["a" /* default */] }, { title: this.lang('Creation Date'), field: 'created_at' }, { title: this.lang('Current Status'), field: 'approved_on' }],
+                columns: [{ title: '#', field: 'id', sortable: true }, { title: this.lang('Title'), field: 'project_name', sortable: true, tdComp: __WEBPACK_IMPORTED_MODULE_0__table_components_TitleCell__["a" /* default */], tdClass: 'table-title' }, { title: this.lang('Author'), field: 'owner', tdComp: __WEBPACK_IMPORTED_MODULE_1__table_components_AuthorCell__["a" /* default */] }, { title: this.lang('Creation Date'), field: 'created_at', sortable: true }, { title: this.lang('Current Status'), field: 'approved_on', sortable: true }],
                 data: [],
                 total: 0,
                 query: {},
@@ -52765,7 +52765,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             rejected: {
                 supportNested: true,
                 tblClass: 'table table-hover',
-                columns: [{ title: '#', field: 'id', sortable: true }, { title: this.lang('Title'), field: 'project_name', sortable: true, tdComp: __WEBPACK_IMPORTED_MODULE_0__table_components_TitleCell__["a" /* default */], tdClass: 'table-title' }, { title: this.lang('Author'), field: 'owner', sortable: true, tdComp: __WEBPACK_IMPORTED_MODULE_1__table_components_AuthorCell__["a" /* default */] }, { title: this.lang('Creation Date'), field: 'created_at' }, { title: this.lang('Rejected'), field: 'approved_on' }],
+                columns: [{ title: '#', field: 'id', sortable: true }, { title: this.lang('Title'), field: 'project_name', sortable: true, tdComp: __WEBPACK_IMPORTED_MODULE_0__table_components_TitleCell__["a" /* default */], tdClass: 'table-title' }, { title: this.lang('Author'), field: 'owner', tdComp: __WEBPACK_IMPORTED_MODULE_1__table_components_AuthorCell__["a" /* default */] }, { title: this.lang('Creation Date'), field: 'created_at', sortable: true }, { title: this.lang('Rejected'), field: 'approved_on', sortable: true }],
                 data: [],
                 total: 0,
                 query: {},
@@ -52774,7 +52774,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             archive: {
                 supportNested: true,
                 tblClass: 'table table-hover',
-                columns: [{ title: '#', field: 'id', sortable: true }, { title: this.lang('Title'), field: 'project_name', sortable: true, tdComp: __WEBPACK_IMPORTED_MODULE_0__table_components_TitleCell__["a" /* default */], tdClass: 'table-title' }, { title: this.lang('Author'), field: 'owner', sortable: true, tdComp: __WEBPACK_IMPORTED_MODULE_1__table_components_AuthorCell__["a" /* default */] }, { title: this.lang('Creation Date'), field: 'created_at' }, { title: this.lang('Completion Date'), field: 'completed_at' }],
+                columns: [{ title: '#', field: 'id', sortable: true }, { title: this.lang('Title'), field: 'project_name', sortable: true, tdComp: __WEBPACK_IMPORTED_MODULE_0__table_components_TitleCell__["a" /* default */], tdClass: 'table-title' }, { title: this.lang('Author'), field: 'owner', tdComp: __WEBPACK_IMPORTED_MODULE_1__table_components_AuthorCell__["a" /* default */] }, { title: this.lang('Creation Date'), field: 'created_at', sortable: true }, { title: this.lang('Completion Date'), field: 'completed_at', sortable: true }],
                 data: [],
                 total: 0,
                 query: {},
@@ -52822,37 +52822,37 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     },
     methods: {
         handleApprovalQueryChange() {
-            axios.post('/api/propositions/approval', this.query).then(res => {
+            axios.post('/api/propositions/approval', this.approval.query).then(res => {
                 this.approval.data = res.data.rows;
                 this.approval.total = res.data.total;
             });
         },
         handleUnfinishedQueryChange() {
-            axios.post('/api/propositions/unfinished', this.query).then(res => {
+            axios.post('/api/propositions/unfinished', this.unfinished.query).then(res => {
                 this.unfinished.data = res.data.rows;
                 this.unfinished.total = res.data.total;
             });
         },
         handleActiveQueryChange() {
-            axios.post('/api/propositions/active', this.query).then(res => {
+            axios.post('/api/propositions/active', this.active.query).then(res => {
                 this.active.data = res.data.rows;
                 this.active.total = res.data.total;
             });
         },
         handleRejectedQueryChange() {
-            axios.post('/api/propositions/rejected', this.query).then(res => {
+            axios.post('/api/propositions/rejected', this.rejected.query).then(res => {
                 this.rejected.data = res.data.rows;
                 this.rejected.total = res.data.total;
             });
         },
         handleDeletedQueryChange() {
-            axios.post('/api/propositions/deleted', this.query).then(res => {
+            axios.post('/api/propositions/deleted', this.deleted.query).then(res => {
                 this.deleted.data = res.data.rows;
                 this.deleted.total = res.data.total;
             });
         },
         handleArchiveQueryChange() {
-            axios.post('/api/propositions/archive', this.query).then(res => {
+            axios.post('/api/propositions/archive', this.archive.query).then(res => {
                 this.archive.data = res.data.rows;
                 this.archive.total = res.data.total;
             });
@@ -78620,7 +78620,12 @@ var render = function() {
                               _vm._v(
                                 "\n                                " +
                                   _vm._s(_vm.task.assigner.name) +
-                                  " has requested an proposition approval"
+                                  " " +
+                                  _vm._s(
+                                    _vm.lang(
+                                      "has requested an proposition approval"
+                                    )
+                                  )
                               ),
                               _c("br"),
                               _vm._v(
