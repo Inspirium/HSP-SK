@@ -3,7 +3,9 @@ if (document.getElementById('chart1')) {
         .then((res) => {
             new Chartist.Bar('#chart1', {
                 labels: ['Propozicija', 'Pro. na odobrenju', 'Priprema teksta', 'Dizajn', 'Prijelom', 'Priprema', 'Tisak'],
-                series: res.data
+                series: res.data,
+            }, {
+                scaleMinSpace: 100
             });
         });
 }
