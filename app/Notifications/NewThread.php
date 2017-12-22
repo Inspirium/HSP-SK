@@ -61,7 +61,7 @@ class NewThread extends Notification
 	        'title' => __('New Thread'),
 	        'message' => __('New Thread has been created: :name', ['name' => $this->thread->title]),
 	        'link' => '/messages/',
-	        'tasktype' => 'thread',
+	        'tasktype' => __('thread'),
 	        'sender' => [
 		        'name' => '',
 		        'image' => '',
