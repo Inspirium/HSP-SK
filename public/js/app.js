@@ -55054,7 +55054,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             active: {
                 supportNested: true,
                 tblClass: 'table table-hover',
-                columns: [{ title: '#', field: 'id', sortable: true }, { title: this.lang('Title'), field: 'project_name', sortable: true, tdComp: __WEBPACK_IMPORTED_MODULE_0__table_components_TitleCell__["a" /* default */], tdClass: 'table-title' }, { title: this.lang('Author'), field: 'owner', tdComp: __WEBPACK_IMPORTED_MODULE_1__table_components_AuthorCell__["a" /* default */] }, { title: this.lang('Creation Date'), field: 'created_at', sortable: true }, { title: this.lang('Current Status'), field: 'approved_on', sortable: true }],
+                columns: [{ title: '#', field: 'id', sortable: true }, { title: this.lang('Title'), field: 'project_name', sortable: true, tdComp: __WEBPACK_IMPORTED_MODULE_0__table_components_TitleCell__["a" /* default */], tdClass: 'table-title' }, { title: this.lang('Author'), field: 'owner', tdComp: __WEBPACK_IMPORTED_MODULE_1__table_components_AuthorCell__["a" /* default */] }, { title: this.lang('Creation Date'), field: 'created_at', sortable: true }, { title: this.lang('Current Status'), field: 'status', sortable: true }],
                 data: [],
                 total: 0,
                 query: {},
