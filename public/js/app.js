@@ -77759,28 +77759,38 @@ var render = function() {
             _vm._v(" "),
             _c("div", { staticClass: "md-form" }, [
               _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.data.layout_exact_price,
+                    expression: "data.layout_exact_price"
+                  }
+                ],
                 staticClass: "form-control",
                 attrs: {
                   type: "number",
                   id: "layout-fix-price",
                   name: "layout-fix-price"
+                },
+                domProps: { value: _vm.data.layout_exact_price },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.data,
+                      "layout_exact_price",
+                      $event.target.value
+                    )
+                  }
                 }
               }),
               _vm._v(" "),
-              _c(
-                "label",
-                {
-                  attrs: { for: "layout-fix-price" },
-                  model: {
-                    value: _vm.data.layout_exact_price,
-                    callback: function($$v) {
-                      _vm.$set(_vm.data, "layout_exact_price", $$v)
-                    },
-                    expression: "data.layout_exact_price"
-                  }
-                },
-                [_vm._v(_vm._s(_vm.lang("Exact Price")))]
-              )
+              _c("label", { attrs: { for: "layout-fix-price" } }, [
+                _vm._v(_vm._s(_vm.lang("Exact Price")))
+              ])
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "md-form" }, [
@@ -77886,28 +77896,38 @@ var render = function() {
             _vm._v(" "),
             _c("div", { staticClass: "md-form" }, [
               _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.data.design_exact_price,
+                    expression: "data.design_exact_price"
+                  }
+                ],
                 staticClass: "form-control",
                 attrs: {
                   type: "number",
                   id: "design-fix-price",
                   name: "design-fix-price"
+                },
+                domProps: { value: _vm.data.design_exact_price },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.data,
+                      "design_exact_price",
+                      $event.target.value
+                    )
+                  }
                 }
               }),
               _vm._v(" "),
-              _c(
-                "label",
-                {
-                  attrs: { for: "design-fix-price" },
-                  model: {
-                    value: _vm.data.design_exact_price,
-                    callback: function($$v) {
-                      _vm.$set(_vm.data, "design_exact_price", $$v)
-                    },
-                    expression: "data.design_exact_price"
-                  }
-                },
-                [_vm._v(_vm._s(_vm.lang("Exact Price")))]
-              )
+              _c("label", { attrs: { for: "design-fix-price" } }, [
+                _vm._v(_vm._s(_vm.lang("Exact Price")))
+              ])
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "md-form" }, [
@@ -80987,28 +81007,38 @@ var render = function() {
             _vm._v(" "),
             _c("div", { staticClass: "md-form" }, [
               _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.data.layout_exact_price,
+                    expression: "data.layout_exact_price"
+                  }
+                ],
                 staticClass: "form-control",
                 attrs: {
                   type: "number",
                   id: "layout-fix-price",
                   name: "layout-fix-price"
+                },
+                domProps: { value: _vm.data.layout_exact_price },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.data,
+                      "layout_exact_price",
+                      $event.target.value
+                    )
+                  }
                 }
               }),
               _vm._v(" "),
-              _c(
-                "label",
-                {
-                  attrs: { for: "layout-fix-price" },
-                  model: {
-                    value: _vm.data.layout_exact_price,
-                    callback: function($$v) {
-                      _vm.$set(_vm.data, "layout_exact_price", $$v)
-                    },
-                    expression: "data.layout_exact_price"
-                  }
-                },
-                [_vm._v(_vm._s(_vm.lang("Exact Price")))]
-              )
+              _c("label", { attrs: { for: "layout-fix-price" } }, [
+                _vm._v(_vm._s(_vm.lang("Exact Price")))
+              ])
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "md-form" }, [
@@ -81114,28 +81144,38 @@ var render = function() {
             _vm._v(" "),
             _c("div", { staticClass: "md-form" }, [
               _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.data.design_exact_price,
+                    expression: "data.design_exact_price"
+                  }
+                ],
                 staticClass: "form-control",
                 attrs: {
                   type: "number",
                   id: "design-fix-price",
                   name: "design-fix-price"
+                },
+                domProps: { value: _vm.data.design_exact_price },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.data,
+                      "design_exact_price",
+                      $event.target.value
+                    )
+                  }
                 }
               }),
               _vm._v(" "),
-              _c(
-                "label",
-                {
-                  attrs: { for: "design-fix-price" },
-                  model: {
-                    value: _vm.data.design_exact_price,
-                    callback: function($$v) {
-                      _vm.$set(_vm.data, "design_exact_price", $$v)
-                    },
-                    expression: "data.design_exact_price"
-                  }
-                },
-                [_vm._v(_vm._s(_vm.lang("Exact Price")))]
-              )
+              _c("label", { attrs: { for: "design-fix-price" } }, [
+                _vm._v(_vm._s(_vm.lang("Exact Price")))
+              ])
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "md-form" }, [
