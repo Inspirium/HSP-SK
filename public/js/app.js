@@ -55270,11 +55270,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         }
     },
     mounted: function () {
-        if (typeof this.$route.params.id !== 'undefined' && this.$route.params.id != 0) {
-            this.$store.dispatch('proposition/start/getData', { id: this.$route.params.id });
-        } else {
-            this.$store.dispatch('proposition/initData', { force: true, id: 0 });
-        }
+        this.$store.dispatch('proposition/start/getData', { id: this.$route.params.id });
     },
     beforeRouteLeave(to, from, next) {
         if (this.$store.state.edited) {
@@ -58823,6 +58819,7 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
                 });
             }
         }
+
     }
 });
 
@@ -59876,18 +59873,22 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue__);
 
 
+
+let initialState = {
+    proposition_id: 0,
+    project_number: '',
+    project_name: '',
+    additional_project_number: '',
+    note: '',
+    status: ''
+};
 /* harmony default export */ __webpack_exports__["a"] = ({
     namespaced: true,
-    state: {
-        proposition_id: 0,
-        project_number: '',
-        project_name: '',
-        additional_project_number: '',
-        note: '',
-        status: ''
-    },
+    state: __WEBPACK_IMPORTED_MODULE_1_vue___default.a.util.extend({}, initialState),
     mutations: {
         initData(state, payload) {
             state.project_number = payload.project_number;
@@ -59899,11 +59900,15 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
     },
     actions: {
         getData({ commit, state }, payload) {
-            //retrieve data only we don't have it or we need to refresh it
-            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/api/proposition/' + payload.id + '/start').then(res => {
-                commit('initData', res.data);
-                commit('proposition/initData', res.data, { root: true });
-            });
+            if (payload.id !== state.proposition_id) {
+                //retrieve data only we don't have it or we need to refresh it
+                __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/api/proposition/' + payload.id + '/start').then(res => {
+                    commit('initData', res.data);
+                    commit('proposition/initData', res.data, { root: true });
+                });
+            } else {
+                state = __WEBPACK_IMPORTED_MODULE_1_vue___default.a.util.extend({}, initialState);
+            }
         },
         saveData({ state, commit }, id) {
             return new Promise((resolve, reject) => {
