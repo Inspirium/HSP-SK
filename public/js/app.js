@@ -51510,7 +51510,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             }
         },
         assignValues: function () {
-            axios.post('/api/proposition/' + this.$route.params.id + '/assign/document', { employees: this.employees, departments: this.departments, description: this.description, date: this.date, access: this.access, priority: this.priority, path: this.$route.meta.dir }).then(() => {
+            axios.post('/api/proposition/' + this.$route.params.id + '/assign/document', { employees: this.employees, departments: this.departments, description: this.description, date: this.date, access: this.access, priority: this.priority, dir: this.$route.meta.dir, path: this.$route.path }).then(() => {
                 toastr.success(this.lang('Uspješno obavljeno'));
                 $('#centralModalAssign').modal('hide');
             }).catch(() => {
