@@ -19,18 +19,18 @@
     "laravel-mix": "0.*",
     "lodash": "^4.17.4",
     "mdb-pro": "git+ssh://git@bitbucket.org/mbanusic/mdb-pro.git",
-    "popper.js": "^1.12.7",
-    "vue": "^2.5.3",
+    "popper.js": "^1.13.0",
+    "vue": "^2.5.13",
     "vue-clickaway": "^2.1.0",
     "vue-deepset": "^0.2.1",
-    "vue-loader": "^13.5.0",
+    "vue-loader": "^13.6.1",
     "vue-moment": "^2.2.0",
     "vue-router": "^2.8.1",
-    "vue-template-compiler": "^2.5.3",
+    "vue-template-compiler": "^2.5.13",
+    "vue2-datatable-component": "github:mbanusic/vue2-datatable#vuedraggable",
     "vuedraggable": "^2.15.0",
-    "vuetiful": "github:mbanusic/vuetiful",
     "vuex": "^2.5.0",
-    "vuex-persistedstate": "^2.3.2",
+    "vuex-persistedstate": "^2.4.2",
     "vuex-router-sync": "^4.3.2",
     "vuex-validator": "^0.2.7"
   },
@@ -40,7 +40,6 @@
     "flipclock": "^0.7.8",
     "laravel-echo": "^1.3.2",
     "path-to-regexp": "^2.1.0",
-    "pusher-js": "^4.2.1",
-    "vue2-datatable-component": "^2.1.23"
+    "pusher-js": "^4.2.1"
   }
 }
