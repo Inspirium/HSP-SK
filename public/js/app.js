@@ -59756,12 +59756,12 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
                     let e = state.author_expenses[key];
                     return e.percentage * option.title * option.price_proposal / 100;
                 }),
-                    complete = Number(state.authors_total) + Number(option.print_offer) + Number(option.compensation) + Number(option.indirect_expenses) + Number(remainder) + Number(state.marketing_expense) + Number(state.production_expense) + Number(state.design_layout_expense),
+                    direct_cost = Number(state.authors_total) + Number(option.print_offer) + Number(option.compensation) * total_expenses / 100 + Number(state.marketing_expense) + Number(state.production_expense) + Number(state.design_layout_expense),
+                    indirect_expense = direct_cost * option.indirect_expenses / 100,
+                    complete = direct_cost + indirect_expense + remainder - state.authors_advance,
                     mprice = (Number(complete) - Number(state.dotation)) * (100 + Number(option.calculated_profit_percent)) / 100,
                     price = mprice * (100 + Number(option.shop_percent)) / 100,
-                    total_expenses = Number(state.authors_total) + Number(option.print_offer) + Number(state.marketing_expense) + Number(state.production_expense) + Number(state.design_layout_expense),
-                    direct_cost = Number(state.authors_total) + Number(option.print_offer) + Number(option.compensation) * total_expenses / 100 + Number(state.marketing_expense) + Number(state.production_expense) + Number(state.design_layout_expense),
-                    indirect_expense = direct_cost * option.indirect_expenses / 100;
+                    total_expenses = Number(state.authors_total) + Number(option.print_offer) + Number(state.marketing_expense) + Number(state.production_expense) + Number(state.design_layout_expense);
 
                 options[option.id] = {
                     direct_cost: direct_cost,
