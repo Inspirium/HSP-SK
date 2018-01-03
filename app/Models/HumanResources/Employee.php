@@ -79,7 +79,7 @@ class Employee extends Authenticatable {
 	use Notifiable, HasApiTokens;
 
     protected $guarded = [ 'created_at', 'update_at', 'deleted_at' ];
-    protected $appends = [ 'name', 'department_name', 'phone_merged', 'mobile_merged' ];
+    protected $appends = [ 'name', 'department_name', 'phone_merged', 'mobile_merged', 'link' ];
 
 	protected $hidden = [ 'password', 'remember_token' ];
 
