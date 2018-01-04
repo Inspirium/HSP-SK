@@ -44320,10 +44320,18 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             $('#taskOrderApprovalModal').modal('show');
         },
         approveOrder(data) {
-            axios.post('/api/tasks/updateOrder', data).then(res => {}).catch(err => {});
+            axios.post('/api/tasks/updateOrder', data).then(res => {
+                toastr.success(this.lang('Uspješno obavljeno'));
+            }).catch(err => {
+                toastr.error(this.lang('Greška'));
+            });
         },
         rejectOrder(data) {
-            axios.post('/api/tasks/rejectOrder', data).then(res => {}).catch(err => {});
+            axios.post('/api/tasks/rejectOrder', data).then(res => {
+                toastr.success(this.lang('Uspješno obavljeno'));
+            }).catch(err => {
+                toastr.error(this.lang('Greška'));
+            });
         }
 
     },
