@@ -39,28 +39,28 @@ class Book extends Model {
     protected $appends = ['link', 'formattedAuthors'];
 
     public function authors() {
-        return $this->belongsToMany('Inspirium\Models\BookManagement\Author', 'author_book', 'book_id','author_id');
+	    return $this->morphToMany('Inspirium\Models\BookManagement\Author', 'connection', 'author_pivot', 'connection_id', 'author_id');
     }
 
-    public function categories() {
-        return $this->belongsToMany('Inspirium\Models\BookManagement\BookCategory', 'book_category_pivot', 'book_id', 'category_id');
-    }
+	public function bookCategories() {
+		return $this->morphToMany('Inspirium\Models\BookManagement\BookCategory', 'connection', 'book_category_pivot', 'connection_id', 'book_category_id');
+	}
 
-    public function types() {
-        return $this->belongsToMany('Inspirium\Models\BookManagement\BookType', 'book_type_pivot', 'book_id', 'type_id');
-    }
+	public function bibliotecas() {
+		return $this->morphToMany('Inspirium\Models\BookManagement\BookBiblioteca', 'connection', 'biblioteca_pivot', 'connection_id', 'biblioteca_id');
+	}
 
-    public function schools() {
-        return $this->belongsToMany('Inspirium\Models\BookManagement\SchoolType', 'book_school_type_pivot', 'book_id', 'school_id');
-    }
+	public function bookTypes() {
+		return $this->morphToMany('Inspirium\Models\BookManagement\BookType', 'connection', 'book_type_pivot', 'connection_id', 'book_type_id');
+	}
 
-    public function subjects() {
-        return $this->belongsToMany('Inspirium\Models\BookManagement\SchoolSubject', 'book_school_subject_pivot', 'book_id', 'subject_id');
-    }
+	public function schoolSubjects() {
+		return $this->morphToMany('Inspirium\Models\BookManagement\SchoolSubject', 'connection', 'school_subjects_pivot', 'connection_id', 'school_subject_id');
+	}
 
-    public function biblioteca() {
-        return $this->belongsTo('Inspirium\Models\BookManagement\BookBiblioteca');
-    }
+	public function schoolTypes() {
+		return $this->morphToMany('Inspirium\Models\BookManagement\SchoolType', 'connection', 'school_type_pivot', 'connection_id', 'school_type_id');
+	}
 
     public function getLinkAttribute() {
     	return url('/books/book/'.$this->id.'/show');
