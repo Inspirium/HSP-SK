@@ -59786,8 +59786,9 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
                     x17: x17,
                     x18: x18,
                     x19: x19,
-                    x20: x20
-
+                    x20: x20,
+                    direct_cost_cover: x8 / option.price_proposal,
+                    complete_cost_cover: x14 / option.price_proposal
                 };
             });
             return options;
@@ -79284,7 +79285,7 @@ var render = function() {
                               _vm._v(
                                 _vm._s(
                                   _vm._f("flexCurrency")(
-                                    _vm.totals[option.id].total_cost,
+                                    _vm.totals[option.id].x20,
                                     " kn",
                                     2
                                   )
@@ -79317,8 +79318,7 @@ var render = function() {
                                 _vm._v(
                                   _vm._s(
                                     _vm._f("flexCurrency")(
-                                      _vm.totals[option.id].direct_cost /
-                                        option.price_proposal,
+                                      _vm.totals[option.id].direct_cost_cover,
                                       "",
                                       0
                                     )
@@ -79348,8 +79348,7 @@ var render = function() {
                                 _vm._v(
                                   _vm._s(
                                     _vm._f("flexCurrency")(
-                                      _vm.totals[option.id].cost_coverage /
-                                        option.price_proposal,
+                                      _vm.totals[option.id].complete_cost_cover,
                                       "",
                                       0
                                     )
@@ -79453,9 +79452,7 @@ var render = function() {
                             _vm._v(
                               _vm._s(
                                 _vm._f("flexCurrency")(
-                                  _vm.totals[option.id].x8 *
-                                    option.title /
-                                    _vm.totals[option.id].x16,
+                                  _vm.totals[option.id].direct_cost_cover,
                                   "",
                                   0
                                 )
@@ -79481,9 +79478,7 @@ var render = function() {
                             _vm._v(
                               _vm._s(
                                 _vm._f("flexCurrency")(
-                                  _vm.totals[option.id].x14 *
-                                    option.title /
-                                    _vm.totals[option.id].x16,
+                                  _vm.totals[option.id].complete_cost_cover,
                                   "",
                                   0
                                 )
