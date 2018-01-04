@@ -79455,7 +79455,7 @@ var render = function() {
                                 _vm._f("flexCurrency")(
                                   _vm.totals[option.id].x8 *
                                     option.title /
-                                    _vm.totals[option.id].x18,
+                                    _vm.totals[option.id].x16,
                                   "",
                                   0
                                 )
@@ -79483,7 +79483,7 @@ var render = function() {
                                 _vm._f("flexCurrency")(
                                   _vm.totals[option.id].x14 *
                                     option.title /
-                                    _vm.totals[option.id].x18,
+                                    _vm.totals[option.id].x16,
                                   "",
                                   0
                                 )
