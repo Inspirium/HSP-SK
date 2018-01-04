@@ -59766,7 +59766,7 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
                     x14 = x12 - Number(state.dotation),
                     x15 = x14 * option.calculated_profit_percent / 100,
                     x16 = x14 + x15,
-                    p17 = option.shop_percent / 100,
+                    p17 = Number(option.shop_percent) / 100,
                     x17 = x16 * p17 / (1 - p17),
                     x18 = x17 + x16,
                     x19 = x17 * option.vat_percent / 100,
@@ -80383,7 +80383,7 @@ var render = function() {
                             _vm._v(
                               _vm._s(
                                 _vm._f("flexCurrency")(
-                                  _vm.totals[option.id].x17 / 100,
+                                  _vm.totals[option.id].x17,
                                   "",
                                   2
                                 )
@@ -80395,9 +80395,7 @@ var render = function() {
                             _vm._v(
                               _vm._s(
                                 _vm._f("flexCurrency")(
-                                  _vm.totals[option.id].x17 /
-                                    100 /
-                                    option.title,
+                                  _vm.totals[option.id].x17 / option.title,
                                   " kn",
                                   2
                                 )
