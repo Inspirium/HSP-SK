@@ -59752,27 +59752,42 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
         totals(state) {
             let options = {};
             _.forEach(state.offers, option => {
-                let remainder = _.sumBy(Object.keys(state.author_expenses), key => {
+                let x6 = Number(state.authors_total) + Number(option.print_offer) + Number(state.marketing_expense) + Number(state.production_expense) + Number(state.design_layout_expense),
+                    x7 = x6 * option.compensation / 100,
+                    x8 = x6 + x7,
+                    x9 = x8 * option.indirect_expenses / 100,
+                    x10 = x8 + x9,
+                    remainder = _.sumBy(Object.keys(state.author_expenses), key => {
                     let e = state.author_expenses[key];
                     return e.percentage * option.title * option.price_proposal / 100;
                 }),
-                    direct_cost = Number(state.authors_total) + Number(option.print_offer) + Number(option.compensation) * total_expenses / 100 + Number(state.marketing_expense) + Number(state.production_expense) + Number(state.design_layout_expense),
-                    indirect_expense = direct_cost * option.indirect_expenses / 100,
-                    complete = direct_cost + indirect_expense + remainder - state.authors_advance,
-                    mprice = (Number(complete) - Number(state.dotation)) * (100 + Number(option.calculated_profit_percent)) / 100,
-                    price = mprice * (100 + Number(option.shop_percent)) / 100,
-                    total_expenses = Number(state.authors_total) + Number(option.print_offer) + Number(state.marketing_expense) + Number(state.production_expense) + Number(state.design_layout_expense);
+                    x11 = remainder - Number(state.authors_advance),
+                    x12 = x10 + x11,
+                    x14 = x12 - Number(state.dotation),
+                    x15 = x14 * option.calculated_profit_percent / 100,
+                    x16 = x14 + x15,
+                    p17 = option.shop_percent / 100,
+                    x17 = x16 * p17 / (1 - p17),
+                    x18 = x17 + x16,
+                    x19 = x17 * option.vat_percent / 100,
+                    x20 = x18 + x19;
 
                 options[option.id] = {
-                    direct_cost: direct_cost,
-                    indirect_expense: indirect_expense,
-                    remainder_after_sales: remainder - state.authors_advance,
-                    complete_expense: complete,
-                    cost_coverage: Number(complete) - Number(state.dotation),
-                    manufacturer_price: mprice,
-                    price: price,
-                    total_cost: price * (100 + Number(option.vat_percent)) / 100,
-                    total_expenses: total_expenses
+                    x6: x6,
+                    x7: x7,
+                    x8: x8,
+                    x9: x9,
+                    x10: x10,
+                    x11: x11,
+                    x12: x12,
+                    x14: x14,
+                    x15: x15,
+                    x16: x16,
+                    x17: x17,
+                    x18: x18,
+                    x19: x19,
+                    x20: x20
+
                 };
             });
             return options;
@@ -79725,7 +79740,7 @@ var render = function() {
                           _vm._v(
                             _vm._s(
                               _vm._f("flexCurrency")(
-                                _vm.totals[option.id].total_expenses,
+                                _vm.totals[option.id].x6,
                                 "",
                                 2
                               )
@@ -79737,8 +79752,7 @@ var render = function() {
                           _vm._v(
                             _vm._s(
                               _vm._f("flexCurrency")(
-                                _vm.totals[option.id].total_expenses /
-                                  option.title,
+                                _vm.totals[option.id].x6 / option.title,
                                 " kn",
                                 2
                               )
@@ -79827,9 +79841,7 @@ var render = function() {
                             _vm._v(
                               _vm._s(
                                 _vm._f("flexCurrency")(
-                                  _vm.totals[option.id].total_expenses *
-                                    option.compensation /
-                                    100,
+                                  _vm.totals[option.id].x7,
                                   "",
                                   2
                                 )
@@ -79841,10 +79853,7 @@ var render = function() {
                             _vm._v(
                               _vm._s(
                                 _vm._f("flexCurrency")(
-                                  _vm.totals[option.id].total_expenses *
-                                    option.compensation /
-                                    100 /
-                                    option.title,
+                                  _vm.totals[option.id].x7 / option.title,
                                   " kn",
                                   2
                                 )
@@ -79866,7 +79875,7 @@ var render = function() {
                           _vm._v(
                             _vm._s(
                               _vm._f("flexCurrency")(
-                                _vm.totals[option.id].direct_cost,
+                                _vm.totals[option.id].x8,
                                 "",
                                 2
                               )
@@ -79878,8 +79887,7 @@ var render = function() {
                           _vm._v(
                             _vm._s(
                               _vm._f("flexCurrency")(
-                                _vm.totals[option.id].direct_cost /
-                                  option.title,
+                                _vm.totals[option.id].x8 / option.title,
                                 " kn",
                                 2
                               )
@@ -79973,7 +79981,7 @@ var render = function() {
                             _vm._v(
                               _vm._s(
                                 _vm._f("flexCurrency")(
-                                  _vm.totals[option.id].indirect_expense,
+                                  _vm.totals[option.id].x9,
                                   "",
                                   2
                                 )
@@ -79985,8 +79993,7 @@ var render = function() {
                             _vm._v(
                               _vm._s(
                                 _vm._f("flexCurrency")(
-                                  _vm.totals[option.id].indirect_expense /
-                                    option.title,
+                                  _vm.totals[option.id].x9 / option.title,
                                   " kn",
                                   2
                                 )
@@ -80008,10 +80015,7 @@ var render = function() {
                           _vm._v(
                             _vm._s(
                               _vm._f("flexCurrency")(
-                                Number(_vm.totals[option.id].direct_cost) +
-                                  Number(
-                                    _vm.totals[option.id].indirect_expense
-                                  ),
+                                Number(_vm.totals[option.id].x10),
                                 "",
                                 2
                               )
@@ -80023,10 +80027,7 @@ var render = function() {
                           _vm._v(
                             _vm._s(
                               _vm._f("flexCurrency")(
-                                (Number(_vm.totals[option.id].direct_cost) +
-                                  Number(
-                                    _vm.totals[option.id].indirect_expense
-                                  )) /
+                                Number(_vm.totals[option.id].x10) /
                                   option.title,
                                 " kn",
                                 2
@@ -80047,7 +80048,7 @@ var render = function() {
                           _vm._v(
                             _vm._s(
                               _vm._f("flexCurrency")(
-                                _vm.totals[option.id].remainder_after_sales,
+                                _vm.totals[option.id].x11,
                                 "",
                                 2
                               )
@@ -80059,8 +80060,7 @@ var render = function() {
                           _vm._v(
                             _vm._s(
                               _vm._f("flexCurrency")(
-                                _vm.totals[option.id].remainder_after_sales /
-                                  option.title,
+                                _vm.totals[option.id].x11 / option.title,
                                 " kn",
                                 2
                               )
@@ -80080,7 +80080,7 @@ var render = function() {
                           _vm._v(
                             _vm._s(
                               _vm._f("flexCurrency")(
-                                _vm.totals[option.id].complete_expense,
+                                _vm.totals[option.id].x12,
                                 "",
                                 2
                               )
@@ -80092,8 +80092,7 @@ var render = function() {
                           _vm._v(
                             _vm._s(
                               _vm._f("flexCurrency")(
-                                _vm.totals[option.id].complete_expense /
-                                  option.title,
+                                _vm.totals[option.id].x12 / option.title,
                                 " kn",
                                 2
                               )
@@ -80141,7 +80140,7 @@ var render = function() {
                           _vm._v(
                             _vm._s(
                               _vm._f("flexCurrency")(
-                                _vm.totals[option.id].cost_coverage,
+                                _vm.totals[option.id].x14,
                                 "",
                                 2
                               )
@@ -80153,8 +80152,7 @@ var render = function() {
                           _vm._v(
                             _vm._s(
                               _vm._f("flexCurrency")(
-                                _vm.totals[option.id].cost_coverage /
-                                  option.title,
+                                _vm.totals[option.id].x14 / option.title,
                                 " kn",
                                 2
                               )
@@ -80250,9 +80248,7 @@ var render = function() {
                             _vm._v(
                               _vm._s(
                                 _vm._f("flexCurrency")(
-                                  _vm.totals[option.id].cost_coverage *
-                                    option.calculated_profit_percent /
-                                    100,
+                                  _vm.totals[option.id].x15,
                                   "",
                                   2
                                 )
@@ -80264,10 +80260,7 @@ var render = function() {
                             _vm._v(
                               _vm._s(
                                 _vm._f("flexCurrency")(
-                                  _vm.totals[option.id].cost_coverage *
-                                    option.calculated_profit_percent /
-                                    100 /
-                                    option.title,
+                                  _vm.totals[option.id].x15 / option.title,
                                   " kn",
                                   2
                                 )
@@ -80289,7 +80282,7 @@ var render = function() {
                           _vm._v(
                             _vm._s(
                               _vm._f("flexCurrency")(
-                                _vm.totals[option.id].manufacturer_price,
+                                _vm.totals[option.id].x16,
                                 "",
                                 2
                               )
@@ -80301,8 +80294,7 @@ var render = function() {
                           _vm._v(
                             _vm._s(
                               _vm._f("flexCurrency")(
-                                _vm.totals[option.id].manufacturer_price /
-                                  option.title,
+                                _vm.totals[option.id].x16 / option.title,
                                 " kn",
                                 2
                               )
@@ -80391,9 +80383,7 @@ var render = function() {
                             _vm._v(
                               _vm._s(
                                 _vm._f("flexCurrency")(
-                                  _vm.totals[option.id].manufacturer_price *
-                                    option.shop_percent /
-                                    100,
+                                  _vm.totals[option.id].x17 / 100,
                                   "",
                                   2
                                 )
@@ -80405,8 +80395,7 @@ var render = function() {
                             _vm._v(
                               _vm._s(
                                 _vm._f("flexCurrency")(
-                                  _vm.totals[option.id].manufacturer_price *
-                                    option.shop_percent /
+                                  _vm.totals[option.id].x17 /
                                     100 /
                                     option.title,
                                   " kn",
@@ -80430,7 +80419,7 @@ var render = function() {
                           _vm._v(
                             _vm._s(
                               _vm._f("flexCurrency")(
-                                _vm.totals[option.id].price,
+                                _vm.totals[option.id].x18,
                                 "",
                                 2
                               )
@@ -80442,7 +80431,7 @@ var render = function() {
                           _vm._v(
                             _vm._s(
                               _vm._f("flexCurrency")(
-                                _vm.totals[option.id].price / option.title,
+                                _vm.totals[option.id].x18 / option.title,
                                 " kn",
                                 2
                               )
@@ -80531,9 +80520,7 @@ var render = function() {
                             _vm._v(
                               _vm._s(
                                 _vm._f("flexCurrency")(
-                                  _vm.totals[option.id].price *
-                                    option.vat_percent /
-                                    100,
+                                  _vm.totals[option.id].x19,
                                   "",
                                   2
                                 )
@@ -80545,10 +80532,7 @@ var render = function() {
                             _vm._v(
                               _vm._s(
                                 _vm._f("flexCurrency")(
-                                  _vm.totals[option.id].price *
-                                    option.vat_percent /
-                                    100 /
-                                    option.title,
+                                  _vm.totals[option.id].x19 / option.title,
                                   " kn",
                                   2
                                 )
@@ -80571,9 +80555,7 @@ var render = function() {
                           _vm._v(
                             _vm._s(
                               _vm._f("flexCurrency")(
-                                _vm.totals[option.id].price *
-                                  (100 + Number(option.vat_percent)) /
-                                  100,
+                                _vm.totals[option.id].x20,
                                 "",
                                 2
                               )
@@ -80585,10 +80567,7 @@ var render = function() {
                           _vm._v(
                             _vm._s(
                               _vm._f("flexCurrency")(
-                                _vm.totals[option.id].price *
-                                  (100 + Number(option.vat_percent)) /
-                                  100 /
-                                  option.title,
+                                _vm.totals[option.id].x20 / option.title,
                                 " kn",
                                 2
                               )
