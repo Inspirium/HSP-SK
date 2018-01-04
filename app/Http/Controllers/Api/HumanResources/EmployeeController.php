@@ -2,6 +2,8 @@
 
 namespace Inspirium\Http\Controllers\Api\HumanResources;
 
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Validation\UnauthorizedException;
 use Inspirium\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inspirium\Models\HumanResources\Employee;
@@ -19,6 +21,12 @@ class EmployeeController extends Controller {
 	}
 
 	public function saveEmployee(Request $request, Employee $employee) {
+		try {
+			$this->authorize( 'update', $employee );
+		}
+		catch (AuthorizationException $e) {
+			return response()->json(['error' => 'unauthorized'], 403);
+		}
 		$input = $request->all();
 
 		$user_array = [
@@ -55,6 +63,12 @@ class EmployeeController extends Controller {
 	}
 
 	public function createEmployee(Request $request) {
+		try {
+			$this->authorize( 'create', Employee::class );
+		}
+		catch (AuthorizationException $e) {
+			return response()->json(['error' => 'unauthorized'], 403);
+		}
 		$input = $request->all();
 
 		$user_array = [
@@ -91,6 +105,13 @@ class EmployeeController extends Controller {
 	}
 
 	public function deleteEmployee(Employee $employee) {
+		try {
+			$this->authorize( 'delete', $employee );
+		}
+		catch (AuthorizationException $e) {
+			return response()->json(['error' => 'unauthorized'], 403);
+		}
+
 		$employee->delete();
 
 		return response()->json([]);

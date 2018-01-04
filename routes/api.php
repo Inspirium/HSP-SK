@@ -33,9 +33,9 @@ Route::group(['prefix' => 'user'], function () {
 
 Route::group(['prefix' => 'human_resources', 'namespace' => 'Api\HumanResources'], function() {
 	Route::get('employee/{employee}', 'EmployeeController@getEmployee');
-	Route::post('employee/{employee}', 'EmployeeController@saveEmployee')->middleware('can:update,employee');
-	Route::delete('employee/{employee}', 'EmployeeController@deleteEmployee')->middleware('can:delete,employee');
-	Route::post('employee', 'EmployeeController@createEmployee')->middleware('can:create,employee');
+	Route::post('employee/{employee}', 'EmployeeController@saveEmployee');
+	Route::delete('employee/{employee}', 'EmployeeController@deleteEmployee');
+	Route::post('employee', 'EmployeeController@createEmployee');
 	Route::get('employee/search/{term}', 'EmployeeController@searchEmployee');
 
 	Route::get('department/{department}', 'DepartmentController@getDepartment');
