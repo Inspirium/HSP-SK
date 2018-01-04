@@ -46,6 +46,10 @@ class Book extends Model {
 		return $this->morphToMany('Inspirium\Models\BookManagement\BookCategory', 'connection', 'book_category_pivot', 'connection_id', 'book_category_id');
 	}
 
+	public function proposition() {
+    	return $this->hasOne('Inspirium\BookProposition\Models\BookProposition', 'proposition_id');
+	}
+
 	public function bibliotecas() {
 		return $this->morphToMany('Inspirium\Models\BookManagement\BookBiblioteca', 'connection', 'biblioteca_pivot', 'connection_id', 'biblioteca_id');
 	}
@@ -63,6 +67,9 @@ class Book extends Model {
 	}
 
     public function getLinkAttribute() {
+    	if ($this->proposition_id) {
+    		return url('proposition/'.$this->proposition_id.'/edit/start');
+	    }
     	return url('/books/book/'.$this->id.'/show');
     }
 
