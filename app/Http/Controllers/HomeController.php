@@ -9,7 +9,7 @@ class HomeController extends Controller
 {
     public function getIndex() {
     	$editions = Book::limit(10)->orderBy('id','desc')->get();
-    	return view(env('TEMPLATE') . '::home', ['edititions' => $editions]);
+    	return view(env('TEMPLATE') . '::home', ['editions' => $editions]);
     }
 
     public function getNotifications() {
