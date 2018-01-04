@@ -45076,7 +45076,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     title: 'Approval Request',
                     className: 'tasktype-2'
                 },
-                5: {
+                6: {
                     title: 'Task Order',
                     className: 'tasktype-2'
                 }
