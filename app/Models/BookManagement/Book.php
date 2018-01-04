@@ -36,7 +36,7 @@ class Book extends Model {
 
     protected $dates = ['deleted_at'];
 
-    protected $appends = ['link'];
+    protected $appends = ['link', 'formattedAuthors'];
 
     public function authors() {
         $this->belongsToMany('Inspirium\Models\BookManagement\Author', 'author_book', 'book_id','author_id');
@@ -64,5 +64,13 @@ class Book extends Model {
 
     public function getLinkAttribute() {
     	return url('/books/book/'.$this->id.'/show');
+    }
+
+    public function getFormattedAuthorsAttribute() {
+    	$out = '';
+    	foreach ($this->authors as $author) {
+    		$out .= $author->name . ' ';
+	    }
+	    return $out;
     }
 }

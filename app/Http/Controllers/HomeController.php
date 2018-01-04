@@ -3,11 +3,13 @@
 namespace Inspirium\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Inspirium\Models\BookManagement\Book;
 
 class HomeController extends Controller
 {
     public function getIndex() {
-    	return view(env('TEMPLATE') . '::home');
+    	$editions = Book::limit(10)->orderBy('id','desc')->get();
+    	return view(env('TEMPLATE') . '::home', ['edititions' => $editions]);
     }
 
     public function getNotifications() {
