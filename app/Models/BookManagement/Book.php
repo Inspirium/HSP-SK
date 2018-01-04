@@ -39,27 +39,27 @@ class Book extends Model {
     protected $appends = ['link', 'formattedAuthors'];
 
     public function authors() {
-        $this->belongsToMany('Inspirium\Models\BookManagement\Author', 'author_book', 'book_id','author_id');
+        return $this->belongsToMany('Inspirium\Models\BookManagement\Author', 'author_book', 'book_id','author_id');
     }
 
     public function categories() {
-        $this->belongsToMany('Inspirium\Models\BookManagement\BookCategory', 'book_category_pivot', 'book_id', 'category_id');
+        return $this->belongsToMany('Inspirium\Models\BookManagement\BookCategory', 'book_category_pivot', 'book_id', 'category_id');
     }
 
     public function types() {
-        $this->belongsToMany('Inspirium\Models\BookManagement\BookType', 'book_type_pivot', 'book_id', 'type_id');
+        return $this->belongsToMany('Inspirium\Models\BookManagement\BookType', 'book_type_pivot', 'book_id', 'type_id');
     }
 
     public function schools() {
-        $this->belongsToMany('Inspirium\Models\BookManagement\SchoolType', 'book_school_type_pivot', 'book_id', 'school_id');
+        return this->belongsToMany('Inspirium\Models\BookManagement\SchoolType', 'book_school_type_pivot', 'book_id', 'school_id');
     }
 
     public function subjects() {
-        $this->belongsToMany('Inspirium\Models\BookManagement\SchoolSubject', 'book_school_subject_pivot', 'book_id', 'subject_id');
+        return $this->belongsToMany('Inspirium\Models\BookManagement\SchoolSubject', 'book_school_subject_pivot', 'book_id', 'subject_id');
     }
 
     public function biblioteca() {
-        $this->belongsTo('Inspirium\Models\BookManagement\BookBiblioteca');
+        return $this->belongsTo('Inspirium\Models\BookManagement\BookBiblioteca');
     }
 
     public function getLinkAttribute() {
