@@ -51,7 +51,7 @@ class Book extends Model {
     }
 
     public function schools() {
-        return this->belongsToMany('Inspirium\Models\BookManagement\SchoolType', 'book_school_type_pivot', 'book_id', 'school_id');
+        return $this->belongsToMany('Inspirium\Models\BookManagement\SchoolType', 'book_school_type_pivot', 'book_id', 'school_id');
     }
 
     public function subjects() {
