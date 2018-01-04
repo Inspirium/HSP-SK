@@ -79453,8 +79453,9 @@ var render = function() {
                             _vm._v(
                               _vm._s(
                                 _vm._f("flexCurrency")(
-                                  _vm.totals[option.id].direct_cost /
-                                    option.price_proposal,
+                                  _vm.totals[option.id].x8 *
+                                    option.title /
+                                    _vm.totals[option.id].x18,
                                   "",
                                   0
                                 )
@@ -79480,8 +79481,9 @@ var render = function() {
                             _vm._v(
                               _vm._s(
                                 _vm._f("flexCurrency")(
-                                  _vm.totals[option.id].cost_coverage /
-                                    option.price_proposal,
+                                  _vm.totals[option.id].x14 *
+                                    option.title /
+                                    _vm.totals[option.id].x18,
                                   "",
                                   0
                                 )
