@@ -20,9 +20,9 @@ class RoleController extends Controller {
             'add_new' => __('Add New Role'),
         ];
         $links = [
-            'add_new' => $user->hasRole('role_create')?'human_resources/role/edit':'',
-            'edit' => $user->hasRole('role_update')?'human_resources/role/:id/edit/':'',
-            'delete' => $user->hasRole('role_delete')?'human_resources/role/:id/delete/':''
+            'add_new' => $user->hasRole('role_create')?'/human_resources/role/edit':'',
+            'edit' => $user->hasRole('role_update')?'/human_resources/role/:id/edit/':'',
+            'delete' => $user->hasRole('role_delete')?'/human_resources/role/:id/delete/':''
         ];
         return view(config('app.template') . '::vue.table-search', compact( 'elements', 'columns', 'strings', 'links' ));
     }

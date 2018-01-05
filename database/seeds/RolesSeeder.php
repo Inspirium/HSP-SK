@@ -15,6 +15,7 @@ class RolesSeeder extends Seeder
 		    ['name' => 'access_hr_admin', 'description' => 'Access to HR admin'],
 		    ['name' => 'access_proposition_admin', 'description' => 'Access to Propositions admin'],
 		    ['name' => 'access_department_tasks', 'description' => 'Access to Department Tasks'],
+		    ['name' => 'access_all_department_tasks', 'description' => 'Access to All Department Tasks'],
 		    ['name' => 'role_create', 'description' => 'Create User Roles'],
 		    ['name' => 'role_delete', 'description' => 'Delete User Roles'],
 		    ['name' => 'role_update', 'description' => 'Update User Roles'],

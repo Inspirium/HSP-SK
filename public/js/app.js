@@ -44417,10 +44417,14 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
     },
     mounted: function () {
-        axios.get('/api/tasks/department/' + this.$route.params.id).then(res => {
-            this.department = res.data.department;
-            this.employees = res.data.employees;
-        });
+        if (this.can('access_all_department_tasks') || this.can('access_department_tasks') && this.user.department_id == this.$route.params.id) {
+            axios.get('/api/tasks/department/' + this.$route.params.id).then(res => {
+                this.department = res.data.department;
+                this.employees = res.data.employees;
+            });
+        } else {
+            window.location.href = "/tasks"; //TODO: fix
+        }
     }
 });
 
@@ -59543,6 +59547,7 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
     state: {
         id: 0,
         name: '',
+        department_id: 0,
         roles: []
     },
     mutations: {
@@ -59550,6 +59555,7 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
             state.id = payload.id;
             state.name = payload.name;
             state.roles = payload.roles;
+            state.department_id = payload.department_id;
         }
     },
     getters: {},
