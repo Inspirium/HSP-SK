@@ -37,6 +37,7 @@ class FileController extends Controller {
             'location' => $path,
             'link' => Storage::disk($disk)->url($path),
             'type' => $file->getClientMimeType(),
+	        'disk' => $disk
         ]);
         $f->owner()->associate($owner);
         $f->save();
@@ -49,7 +50,7 @@ class FileController extends Controller {
     }
 
     public function deleteFile(File $file) {
-    	Storage::delete($file->location);
+    	Storage::disk($file->disk)->delete($file->location);
     	$file->delete();
     	return response()->json(['message' => 'success']);
     }

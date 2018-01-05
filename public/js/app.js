@@ -45307,7 +45307,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             return false;
         },
         fileDelete: function (index, type) {
-            this.task.files[this.type_to_delete].splice(this.index_to_delete, 1);
+            axios.delete('/api/file/' + this.task.files[this.type_to_delete][this.index_to_delete].id).then(() => {
+                this.task.files[this.type_to_delete].splice(this.index_to_delete, 1);
+            });
         },
         fileAdd: function (data) {
             if (data.isFinal) {
@@ -86933,7 +86935,10 @@ var render = function() {
                       _c(
                         "div",
                         { staticClass: "files mt-2 mb-2" },
-                        _vm._l(_vm.task.files.initial, function(document) {
+                        _vm._l(_vm.task.files.initial, function(
+                          document,
+                          index
+                        ) {
                           return _c(
                             "div",
                             {
@@ -87010,7 +87015,7 @@ var render = function() {
                                   staticClass: "file-box-sty icon icon-cancel",
                                   on: {
                                     click: function($event) {
-                                      _vm.fileWarning(document.id, "initial")
+                                      _vm.fileWarning(index, "initial")
                                     }
                                   }
                                 },
@@ -87050,7 +87055,7 @@ var render = function() {
                       _c(
                         "div",
                         { staticClass: "files mt-2 mb-2" },
-                        _vm._l(_vm.task.files.final, function(document) {
+                        _vm._l(_vm.task.files.final, function(document, index) {
                           return _c(
                             "div",
                             {
@@ -87127,7 +87132,7 @@ var render = function() {
                                   staticClass: "file-box-sty icon icon-cancel",
                                   on: {
                                     click: function($event) {
-                                      _vm.fileWarning(document.id, "final")
+                                      _vm.fileWarning(index, "final")
                                     }
                                   }
                                 },
