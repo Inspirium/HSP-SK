@@ -194,7 +194,6 @@ return [
         Inspirium\SKTemplate\SKTemplateServiceProvider::class,
 
 	    Laravel\Passport\PassportServiceProvider::class,
-	    JeroenG\Packager\PackagerServiceProvider::class,
 	    Intervention\Image\ImageServiceProvider::class
     ],
 
