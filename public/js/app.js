@@ -38392,7 +38392,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             }
         },
         assignValues: function () {
-            axios.post('/api/proposition/' + this.$route.params.id + '/assign/document', { employees: this.employees, departments: this.departments, description: this.description, date: this.date, access: this.access, priority: this.priority, dir: this.$route.meta.dir, path: this.$route.path }).then(() => {
+            axios.post('/api/proposition/' + this.$route.params.id + '/assign/document', { employees: this.employees, departments: this.departments, description: this.description, date: this.date, access: this.access, priority: this.priority, dir: this.$route.meta.dir, path: this.$route.path, step: this.$route.meta.dir }).then(() => {
                 toastr.success(this.lang('Uspješno obavljeno'));
                 $('#centralModalAssign').modal('hide');
             }).catch(() => {
@@ -59716,6 +59716,10 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
                 }
                 __WEBPACK_IMPORTED_MODULE_0_axios_index___default.a.get(path).then(res => {
                     commit('initData', res.data);
+                }).catch(err => {
+                    if (err.response.status === 403) {
+                        window.location.href = '/propositions';
+                    }
                 });
             }
         },
@@ -60813,7 +60817,6 @@ let initialState = {
             if (payload.id !== state.proposition_id) {
                 //retrieve data only we don't have it or we need to refresh it
                 __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/api/proposition/' + payload.id + '/start').then(res => {
-                    console.log('then');
                     commit('initData', res.data);
                     commit('proposition/initData', res.data, { root: true });
                 }).catch(err => {
