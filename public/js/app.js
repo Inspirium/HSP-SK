@@ -38578,7 +38578,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             saveButton.toggleClass('spinner-loading');
             this.isSpinnerHidden = '';
 
-            axios.post('/api/proposition/' + this.$route.params.id + '/assign', { employees: this.employees, departments: this.departments, description: this.description, date: this.date, access: this.access, priority: this.priority, path: window.location.href }).then(() => {
+            axios.post('/api/proposition/' + this.$route.params.id + '/assign', { employees: this.employees, departments: this.departments, description: this.description, date: this.date, access: this.access, priority: this.priority, path: window.location.href, step: this.$route.meta.save }).then(() => {
                 this.spinnerType = 'fa-check spinner-success';
                 setTimeout(() => {
                     this.spinnerType = 'fa-refresh spinner-delay-rotate spinner-loader';
@@ -59804,6 +59804,10 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
                 //retrieve data only we don't have it or we need to refresh it
                 __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/api/proposition/' + payload.id + '/basic_data').then(res => {
                     commit('initData', res.data);
+                }).catch(err => {
+                    if (err.response.status === 403) {
+                        window.location.href = '/propositions';
+                    }
                 });
             }
         },
@@ -59870,7 +59874,11 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
                 //retrieve data only we don't have it or we need to refresh it
                 __WEBPACK_IMPORTED_MODULE_0_axios_index___default.a.get('/api/proposition/' + payload.id + '/calculation').then(res => {
                     commit('initData', res.data);
-                });
+                }).catch(err => {
+                    if (err.response.status === 403) {
+                        window.location.href = '/propositions';
+                    }
+                });;
             }
         },
         saveData({ state, commit }, id) {
@@ -59995,7 +60003,11 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
                     __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/api/proposition/' + payload.id + '/categorization').then(res => {
                         commit('initData', res.data);
                         resolve();
-                    });
+                    }).catch(err => {
+                        if (err.response.status === 403) {
+                            window.location.href = '/propositions';
+                        }
+                    });;
                 }
             });
         },
@@ -60060,7 +60072,11 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
                 //retrieve data only we don't have it or we need to refresh it
                 __WEBPACK_IMPORTED_MODULE_0_axios_index___default.a.get('/api/proposition/' + payload.id + '/compare').then(res => {
                     commit('initData', res.data);
-                });
+                }).catch(err => {
+                    if (err.response.status === 403) {
+                        window.location.href = '/propositions';
+                    }
+                });;
             }
         },
         saveData({ state, commit }, id) {
@@ -60113,7 +60129,11 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
                 //retrieve data only we don't have it or we need to refresh it
                 __WEBPACK_IMPORTED_MODULE_0_axios_index___default.a.get('/api/proposition/' + payload.id + '/deadline').then(res => {
                     commit('initData', res.data);
-                });
+                }).catch(err => {
+                    if (err.response.status === 403) {
+                        window.location.href = '/propositions';
+                    }
+                });;
             }
         },
         saveData({ state, commit }, id) {
@@ -60166,6 +60186,10 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
             }
             __WEBPACK_IMPORTED_MODULE_0_axios_index___default.a.get(path).then(res => {
                 commit('initData', res.data);
+            }).catch(err => {
+                if (err.response.status === 403) {
+                    window.location.href = '/propositions';
+                }
             });
         },
         saveData({ state, commit }, id) {
@@ -60234,7 +60258,10 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
                 __WEBPACK_IMPORTED_MODULE_0_axios_index___default.a.get(path).then(res => {
                     commit('initData', res.data);
                     resolve();
-                }).catch(() => {
+                }).catch(err => {
+                    if (err.response.status === 403) {
+                        window.location.href = '/propositions';
+                    }
                     reject();
                 });
             });
@@ -60339,6 +60366,10 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
                 //retrieve data only we don't have it or we need to refresh it
                 __WEBPACK_IMPORTED_MODULE_0_axios_index___default.a.get('/api/proposition/' + payload.id + '/market_potential').then(res => {
                     commit('initData', res.data);
+                }).catch(err => {
+                    if (err.response.status === 403) {
+                        window.location.href = '/propositions';
+                    }
                 });
             }
         },
@@ -60412,6 +60443,10 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
             }
             __WEBPACK_IMPORTED_MODULE_0_axios_index___default.a.get(path).then(res => {
                 commit('initData', res.data);
+            }).catch(err => {
+                if (err.response.status === 403) {
+                    window.location.href = '/propositions';
+                }
             });
         },
         saveData({ state, commit }, id) {
@@ -60503,6 +60538,10 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
                 //retrieve data only we don't have it or we need to refresh it
                 __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/api/proposition/' + payload.id + '/price_definition').then(res => {
                     commit('initData', res.data);
+                }).catch(err => {
+                    if (err.response.status === 403) {
+                        window.location.href = '/propositions';
+                    }
                 });
             }
         },
@@ -60566,6 +60605,11 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
                     __WEBPACK_IMPORTED_MODULE_0_axios_index___default.a.get('/api/proposition/' + payload.id + '/print').then(res => {
                         commit('initData', res.data);
                         resolve();
+                    }).catch(err => {
+                        if (err.response.status === 403) {
+                            window.location.href = '/propositions';
+                        }
+                        reject();
                     });
                 } else {
                     resolve();
@@ -60699,6 +60743,10 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
             }
             __WEBPACK_IMPORTED_MODULE_0_axios_index___default.a.get(path).then(res => {
                 commit('initData', res.data);
+            }).catch(err => {
+                if (err.response.status === 403) {
+                    window.location.href = '/propositions';
+                }
             });
         },
         saveData({ state, commit }, id) {
@@ -60759,8 +60807,13 @@ let initialState = {
             if (payload.id !== state.proposition_id) {
                 //retrieve data only we don't have it or we need to refresh it
                 __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/api/proposition/' + payload.id + '/start').then(res => {
+                    console.log('then');
                     commit('initData', res.data);
                     commit('proposition/initData', res.data, { root: true });
+                }).catch(err => {
+                    if (err.response.status === 403) {
+                        window.location.href = '/propositions';
+                    }
                 });
             } else {
                 state = __WEBPACK_IMPORTED_MODULE_1_vue___default.a.util.extend({}, initialState);
@@ -60873,6 +60926,11 @@ let initialState = {
                     __WEBPACK_IMPORTED_MODULE_0_axios_index___default.a.get('/api/proposition/' + payload.id + '/technical_data').then(res => {
                         commit('initData', res.data);
                         resolve();
+                    }).catch(err => {
+                        if (err.response.status === 403) {
+                            window.location.href = '/propositions';
+                        }
+                        reject();
                     });
                 } else {
                     resolve();
