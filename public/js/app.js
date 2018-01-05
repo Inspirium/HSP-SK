@@ -45307,7 +45307,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             return false;
         },
         fileDelete: function (index, type) {
-            this[this.type_to_delete].splice(this.index_to_delete, 1);
+            this.task.files[this.type_to_delete].splice(this.index_to_delete, 1);
         },
         fileAdd: function (data) {
             if (data.isFinal) {
