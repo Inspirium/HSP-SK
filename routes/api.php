@@ -68,10 +68,10 @@ Route::group(['namespace' => 'Api\BookManagement'], function() {
 });
 
 Route::group(['prefix' => 'file', 'namespace' => 'Api\FileManagement'], function() {
-	Route::get('{id?}', 'FileController@getFileInfo');
+	Route::get('{file?}', 'FileController@getFileInfo');
 	Route::post('/', 'FileController@postFile');
-	Route::patch('{id}', 'FileController@updateFile');
-	Route::delete('{id}', 'FileController@deleteFile');
+	Route::patch('{file}', 'FileController@updateFile');
+	Route::delete('{file}', 'FileController@deleteFile');
 });
 
 Route::group(['namespace' => 'Api\Messaging', 'prefix' => 'thread'], function() {

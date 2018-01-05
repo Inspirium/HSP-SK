@@ -45223,7 +45223,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 medium: 'Medium',
                 low: 'Low'
             },
-            comment: ''
+            comment: '',
+            index_to_delete: 0,
+            type_to_delete: 0
         };
     },
     components: {
@@ -45326,7 +45328,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 }
             });
         },
-        fileWarning(id) {
+        fileWarning(id, type) {
+            this.type_to_delete = type;
             this.index_to_delete = id;
             jQuery('#modal-warning').modal('show');
         },
@@ -87007,7 +87010,7 @@ var render = function() {
                                   staticClass: "file-box-sty icon icon-cancel",
                                   on: {
                                     click: function($event) {
-                                      _vm.fileWarning(document.id)
+                                      _vm.fileWarning(document.id, "initial")
                                     }
                                   }
                                 },
@@ -87124,7 +87127,7 @@ var render = function() {
                                   staticClass: "file-box-sty icon icon-cancel",
                                   on: {
                                     click: function($event) {
-                                      _vm.fileWarning(document.id)
+                                      _vm.fileWarning(document.id, "final")
                                     }
                                   }
                                 },

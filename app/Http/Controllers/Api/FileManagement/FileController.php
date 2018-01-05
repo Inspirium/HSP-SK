@@ -9,8 +9,7 @@ use Inspirium\Models\FileManagement\File;
 
 class FileController extends Controller {
 
-    public function getFileInfo($id = null) {
-        $file = File::firstOrFail($id);
+    public function getFileInfo(File $file) {
         return response()->json($file);
     }
 
@@ -44,13 +43,14 @@ class FileController extends Controller {
         return response()->json(['result' => 'success', 'message' => 'File succesfully uploaded', 'data' => $f]);
     }
 
-    public function updateFile(Request $request, $id) {
-        $file = File::findOrFail($id);
+    public function updateFile(Request $request, File $file) {
         $file->title = $request->get('title');
+        $file->save();
     }
 
-    public function deleteFile($id) {
-    	File::destroy($id);
+    public function deleteFile(File $file) {
+    	Storage::delete($file->location);
+    	$file->delete();
     	return response()->json(['message' => 'success']);
     }
 }
