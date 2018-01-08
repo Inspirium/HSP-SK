@@ -32,7 +32,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Book extends Model {
     use SoftDeletes;
 
-    protected $fillable = ['title', 'description', 'cover'];
+    protected $guarded = [];
 
     protected $dates = ['deleted_at'];
 
