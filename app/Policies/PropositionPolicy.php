@@ -20,7 +20,14 @@ class PropositionPolicy
 	 */
     public function view( Employee $user, BookProposition $proposition)
     {
-        //
+        if ($user->id === $proposition->owner_id) {
+        	return true;
+        }
+        if ($user->hasRole('access_all_propositions')) {
+        	return true;
+        }
+
+        return false;
     }
 
     /**

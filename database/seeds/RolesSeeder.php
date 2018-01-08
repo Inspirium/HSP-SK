@@ -25,6 +25,7 @@ class RolesSeeder extends Seeder
 		    ['name' => 'employee_update_roles', 'description' => 'Update Employee Roles'],
 		    ['name' => 'department_tasks_order_edit', 'description' => 'Reorder employee tasks'],
 		    ['name' => 'department_tasks_order_approve', 'description' => 'Approve new order of tasks'],
+		    ['name' => 'access_all_propositions', 'description' => 'Access all propositions'],
 	    ];
 	    DB::table('roles')->insert($roles);
 
