@@ -45735,7 +45735,12 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     title: this.lang('Deadline'),
                     field: 'deadline',
                     sortable: true,
-                    tdComp: 'Deadline'
+                    tdComp: 'DateCell'
+                }, {
+                    title: this.lang('Waiting time'),
+                    field: 'created_at',
+                    sortable: true,
+                    tdComp: 'WaitingTime'
                 }],
                 data: [],
                 total: 0,
