@@ -77447,7 +77447,7 @@ var render = function() {
             _c(
               "a",
               {
-                staticClass: "nav-link active",
+                staticClass: "nav-link position-relative active",
                 attrs: { "data-toggle": "tab", href: "#tasks", role: "tab" }
               },
               [_vm._v(_vm._s(_vm.lang("Tasks")))]
@@ -77458,7 +77458,7 @@ var render = function() {
             _c(
               "a",
               {
-                staticClass: "nav-link",
+                staticClass: "nav-link position-relative",
                 attrs: {
                   "data-toggle": "tab",
                   href: "#sent_tasks",
@@ -77473,7 +77473,7 @@ var render = function() {
             _c(
               "a",
               {
-                staticClass: "nav-link",
+                staticClass: "nav-link position-relative",
                 attrs: {
                   "data-toggle": "tab",
                   href: "#completed_tasks",
@@ -77488,7 +77488,7 @@ var render = function() {
             _c(
               "a",
               {
-                staticClass: "nav-link",
+                staticClass: "nav-link position-relative",
                 attrs: {
                   "data-toggle": "tab",
                   href: "#rejected_tasks",
@@ -77514,7 +77514,7 @@ var render = function() {
             "div",
             {
               staticClass:
-                "justify-content-center mt-1 mb-2 flex-column flex-md-row d-flex p-2"
+                "justify-content-center mt-2 mb-2 flex-column flex-md-row d-flex p-2"
             },
             [
               _c(
@@ -77564,7 +77564,7 @@ var render = function() {
             "div",
             {
               staticClass:
-                "justify-content-center mt-1 mb-2 flex-column flex-md-row d-flex p-2"
+                "justify-content-center mt-2 mb-2 flex-column flex-md-row d-flex p-2"
             },
             [
               _c(
