@@ -38,7 +38,7 @@ class PropositionPolicy
      */
     public function create(Employee $user)
     {
-        //
+	    return true;
     }
 
 	/**
@@ -51,7 +51,14 @@ class PropositionPolicy
 	 */
     public function update(Employee $user, BookProposition $proposition)
     {
-        //
+	    if ($user->id === $proposition->owner_id) {
+		    return true;
+	    }
+	    if ($user->hasRole('access_all_propositions')) {
+		    return true;
+	    }
+
+	    return false;
     }
 
     /**
@@ -63,10 +70,13 @@ class PropositionPolicy
      */
     public function delete(Employee $user, BookProposition $proposition)
     {
-        //
-    }
+	    if ($user->id === $proposition->owner_id) {
+		    return true;
+	    }
+	    if ($user->hasRole('access_all_propositions')) {
+		    return true;
+	    }
 
-    public function viewStep(Employee $user, BookProposition $proposition) {
-
+	    return false;
     }
 }
