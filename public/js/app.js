@@ -79106,7 +79106,7 @@ var render = function() {
               _c(
                 "a",
                 {
-                  staticClass: "nav-link active",
+                  staticClass: "nav-link position-relative active",
                   attrs: { href: "#panel0", id: "tab0", role: "tab" },
                   on: {
                     click: function($event) {
@@ -79120,7 +79120,7 @@ var render = function() {
             ]),
             _vm._v(" "),
             _vm._l(_vm.offers, function(option, key, index) {
-              return _c("li", { staticClass: "nav-item" }, [
+              return _c("li", { staticClass: "nav-item position-relative" }, [
                 _c(
                   "a",
                   {
@@ -93670,27 +93670,31 @@ var render = function() {
                   attrs: { id: "tabs", role: "tablist" }
                 },
                 _vm._l(_vm.offers, function(offer, key, index) {
-                  return _c("li", { staticClass: "nav-item" }, [
-                    _c(
-                      "a",
-                      {
-                        key: key,
-                        class: ["nav-link", !index ? "active" : ""],
-                        attrs: {
-                          "data-toggle": "tab",
-                          href: "#panel" + index,
-                          "data-index": key,
-                          role: "tab"
-                        },
-                        on: {
-                          click: function($event) {
-                            _vm.switchTab($event)
+                  return _c(
+                    "li",
+                    { staticClass: "nav-item position-relative" },
+                    [
+                      _c(
+                        "a",
+                        {
+                          key: key,
+                          class: ["nav-link", !index ? "active" : ""],
+                          attrs: {
+                            "data-toggle": "tab",
+                            href: "#panel" + index,
+                            "data-index": key,
+                            role: "tab"
+                          },
+                          on: {
+                            click: function($event) {
+                              _vm.switchTab($event)
+                            }
                           }
-                        }
-                      },
-                      [_vm._v(_vm._s(offer.title))]
-                    )
-                  ])
+                        },
+                        [_vm._v(_vm._s(offer.title))]
+                      )
+                    ]
+                  )
                 })
               )
             ]),
