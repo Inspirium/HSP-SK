@@ -42023,9 +42023,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__table_components_TitleCell__ = __webpack_require__(38);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__table_components_AuthorCell__ = __webpack_require__(37);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__table_components_WaitingTime__ = __webpack_require__(39);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__table_components__ = __webpack_require__(276);
 //
 //
 //
@@ -42068,21 +42066,16 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-
-
-
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
-    components: {
-        TitleCell: __WEBPACK_IMPORTED_MODULE_0__table_components_TitleCell__["default"], AuthorCell: __WEBPACK_IMPORTED_MODULE_1__table_components_AuthorCell__["default"], WaitingTime: __WEBPACK_IMPORTED_MODULE_2__table_components_WaitingTime__["default"]
-    },
+    components: __WEBPACK_IMPORTED_MODULE_0__table_components__["a" /* default */],
     data: function () {
         return {
             approval: {
                 supportNested: true,
                 tblClass: 'table table-hover',
-                columns: [{ title: '#', field: 'id', sortable: true }, { title: this.lang('Title'), field: 'project_name', sortable: true, tdComp: __WEBPACK_IMPORTED_MODULE_0__table_components_TitleCell__["default"], tdClass: 'table-title' }, { title: this.lang('Author'), field: 'owner', tdComp: __WEBPACK_IMPORTED_MODULE_1__table_components_AuthorCell__["default"] }, { title: this.lang('Creation Date'), field: 'created_at', sortable: true }, { title: this.lang('Waiting Approval'), field: 'approved_on', sortable: true, tdComp: __WEBPACK_IMPORTED_MODULE_2__table_components_WaitingTime__["default"] }],
+                columns: [{ title: '#', field: 'id', sortable: true }, { title: this.lang('Title'), field: 'project_name', sortable: true, tdComp: 'TitleCell', tdClass: 'table-title' }, { title: this.lang('Author'), field: 'owner', tdComp: 'AuthorCell' }, { title: this.lang('Creation Date'), field: 'created_at', sortable: true }, { title: this.lang('Waiting Approval'), field: 'approved_on', sortable: true, tdComp: 'WaitingTime' }],
                 data: [],
                 total: 0,
                 query: {},
@@ -42091,7 +42084,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             unfinished: {
                 supportNested: true,
                 tblClass: 'table table-hover',
-                columns: [{ title: '#', field: 'id', sortable: true }, { title: this.lang('Title'), field: 'project_name', sortable: true, tdComp: __WEBPACK_IMPORTED_MODULE_0__table_components_TitleCell__["default"], tdClass: 'table-title' }, { title: this.lang('Author'), field: 'owner', tdComp: __WEBPACK_IMPORTED_MODULE_1__table_components_AuthorCell__["default"] }, { title: this.lang('Creation Date'), field: 'created_at', sortable: true }],
+                columns: [{ title: '#', field: 'id', sortable: true }, { title: this.lang('Title'), field: 'project_name', sortable: true, tdComp: 'TitleCell', tdClass: 'table-title' }, { title: this.lang('Author'), field: 'owner', tdComp: 'AuthorCell' }, { title: this.lang('Creation Date'), field: 'created_at', sortable: true }],
                 data: [],
                 total: 0,
                 query: {},
@@ -42100,7 +42093,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             deleted: {
                 supportNested: true,
                 tblClass: 'table table-hover',
-                columns: [{ title: '#', field: 'id', sortable: true }, { title: this.lang('Title'), field: 'project_name', sortable: true, tdComp: __WEBPACK_IMPORTED_MODULE_0__table_components_TitleCell__["default"], tdClass: 'table-title' }, { title: this.lang('Author'), field: 'owner', tdComp: __WEBPACK_IMPORTED_MODULE_1__table_components_AuthorCell__["default"] }, { title: this.lang('Creation Date'), field: 'created_at', sortable: true }, { title: this.lang('Deleted Date'), field: 'deleted_at', sortable: true }],
+                columns: [{ title: '#', field: 'id', sortable: true }, { title: this.lang('Title'), field: 'project_name', sortable: true, tdComp: 'TitleCell', tdClass: 'table-title' }, { title: this.lang('Author'), field: 'owner', tdComp: 'AuthorCell' }, { title: this.lang('Creation Date'), field: 'created_at', sortable: true }, { title: this.lang('Deleted Date'), field: 'deleted_at', sortable: true }],
                 data: [],
                 total: 0,
                 query: {},
@@ -42109,7 +42102,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             active: {
                 supportNested: true,
                 tblClass: 'table table-hover',
-                columns: [{ title: '#', field: 'id', sortable: true }, { title: this.lang('Title'), field: 'project_name', sortable: true, tdComp: __WEBPACK_IMPORTED_MODULE_0__table_components_TitleCell__["default"], tdClass: 'table-title' }, { title: this.lang('Author'), field: 'owner', tdComp: __WEBPACK_IMPORTED_MODULE_1__table_components_AuthorCell__["default"] }, { title: this.lang('Creation Date'), field: 'created_at', sortable: true }, { title: this.lang('Current Status'), field: 'step', sortable: true }],
+                columns: [{ title: '#', field: 'id', sortable: true }, { title: this.lang('Title'), field: 'project_name', sortable: true, tdComp: 'TitleCell', tdClass: 'table-title' }, { title: this.lang('Author'), field: 'owner', tdComp: 'AuthorCell' }, { title: this.lang('Creation Date'), field: 'created_at', sortable: true }, { title: this.lang('Current Status'), field: 'step', sortable: true }],
                 data: [],
                 total: 0,
                 query: {},
@@ -42118,7 +42111,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             rejected: {
                 supportNested: true,
                 tblClass: 'table table-hover',
-                columns: [{ title: '#', field: 'id', sortable: true }, { title: this.lang('Title'), field: 'project_name', sortable: true, tdComp: __WEBPACK_IMPORTED_MODULE_0__table_components_TitleCell__["default"], tdClass: 'table-title' }, { title: this.lang('Author'), field: 'owner', tdComp: __WEBPACK_IMPORTED_MODULE_1__table_components_AuthorCell__["default"] }, { title: this.lang('Creation Date'), field: 'created_at', sortable: true }, { title: this.lang('Rejected'), field: 'approved_on', sortable: true }],
+                columns: [{ title: '#', field: 'id', sortable: true }, { title: this.lang('Title'), field: 'project_name', sortable: true, tdComp: 'TitleCell', tdClass: 'table-title' }, { title: this.lang('Author'), field: 'owner', tdComp: 'AuthorCell' }, { title: this.lang('Creation Date'), field: 'created_at', sortable: true }, { title: this.lang('Rejected'), field: 'approved_on', sortable: true }],
                 data: [],
                 total: 0,
                 query: {},
@@ -42127,7 +42120,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             archive: {
                 supportNested: true,
                 tblClass: 'table table-hover',
-                columns: [{ title: '#', field: 'id', sortable: true }, { title: this.lang('Title'), field: 'project_name', sortable: true, tdComp: __WEBPACK_IMPORTED_MODULE_0__table_components_TitleCell__["default"], tdClass: 'table-title' }, { title: this.lang('Author'), field: 'owner', tdComp: __WEBPACK_IMPORTED_MODULE_1__table_components_AuthorCell__["default"] }, { title: this.lang('Creation Date'), field: 'created_at', sortable: true }, { title: this.lang('Completion Date'), field: 'completed_at', sortable: true }],
+                columns: [{ title: '#', field: 'id', sortable: true }, { title: this.lang('Title'), field: 'project_name', sortable: true, tdComp: 'TitleCell', tdClass: 'table-title' }, { title: this.lang('Author'), field: 'owner', tdComp: 'AuthorCell' }, { title: this.lang('Creation Date'), field: 'created_at', sortable: true }, { title: this.lang('Completion Date'), field: 'completed_at', sortable: true }],
                 data: [],
                 total: 0,
                 query: {},
@@ -44713,7 +44706,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             if (this.can('department_tasks_order_approve')) {
                 return false;
             }
-            if (this.can('department_tasks_order_edit')) {
+            if (this.can('department_tasks_order_edit') && (!this.query.sort || this.query.sort === 'order')) {
                 let e = _.filter(this.data, (t, index) => {
                     if (t.order !== Number(index) + 1) {
                         return true;
@@ -44721,9 +44714,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 });
                 return e.length;
             }
+            return false;
         },
         shouldApprove() {
-            if (this.can('department_tasks_order_approve')) {
+            if (this.can('department_tasks_order_approve') && (!this.query.sort || this.query.sort === 'new_order')) {
                 let e = _.filter(this.data, (t, index) => {
                     if (t.order !== t.new_order || t.order !== Number(index) + 1) {
                         return true;
@@ -61442,7 +61436,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(3)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
 /* 312 */
