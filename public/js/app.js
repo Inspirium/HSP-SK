@@ -42609,6 +42609,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         axios.get('/api/proposition/' + this.$route.params.id + '/files/' + this.$route.meta.dir).then(res => {
             this.files = res.data.files;
             this.final = res.data.final;
+        }).catch(err => {
+            if (err.response.status === 403) {
+                window.location.href = '/propositions';
+            }
         });
     }
 });
