@@ -59991,10 +59991,6 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
         updated_at: 0,
         deleted_at: 0,
         loaded: false,
-        assigned: {
-            departments: [],
-            employees: []
-        },
         retail_price: 0,
         error: ''
     },
@@ -60004,6 +60000,29 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
             state.created_at = payload.created_at;
             state.updated_at = payload.updated_at;
             state.deleted_at = payload.deleted_at;
+        },
+        clearData(state) {
+            state.start = {};
+            state.basic_data = {};
+            state.categorization = {};
+            state.deadline = {};
+            state.distribution_expense = {};
+            state.layout_expense = {};
+            state.market_potential = {};
+            state.marketing_expense = {};
+            state.print = {};
+            state.production_expense = {};
+            state.technical_data = {};
+            state.authors_expense = {};
+            state.calculation = {};
+            state.compare = {};
+            state.price_definition = {};
+            state.owner = {};
+
+            state.proposition_id = 0;
+            state.created_at = 0;
+            state.updated_at = 0;
+            state.deleted_at = 0;
         }
     },
     actions: {
@@ -60014,6 +60033,9 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
                     commit('proposition/owner/initData', res.data.owner, { root: true });
                 });
             }
+        },
+        clearProposition({ commit }) {
+            commit('clearData');
         }
 
     }
@@ -60646,7 +60668,7 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
     },
     getters: {
         number_of_hours: state => {
-            if (!state.group.parent) {
+            if (!state.group || !state.group.parent) {
                 return 0;
             }
             let category = state.group.parent.coefficient / 60,
@@ -61160,11 +61182,19 @@ let initialState = {
             state.project_name = payload.project_name;
             state.note = payload.note;
             state.status = payload.status;
+        },
+        initializeEmpty(state) {
+            state.proposition_id = 0;
+            state.project_number = '';
+            state.project_name = '';
+            state.additional_project_number = '';
+            state.note = '';
+            state.status = '';
         }
     },
     actions: {
-        getData({ commit, state }, payload) {
-            if (payload.id !== state.proposition_id) {
+        getData({ commit, dispatch, state }, payload) {
+            if (payload.id && payload.id !== state.proposition_id) {
                 //retrieve data only we don't have it or we need to refresh it
                 __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/api/proposition/' + payload.id + '/start').then(res => {
                     commit('initData', res.data);
@@ -61175,7 +61205,7 @@ let initialState = {
                     }
                 });
             } else {
-                state = __WEBPACK_IMPORTED_MODULE_1_vue___default.a.util.extend({}, initialState);
+                dispatch('proposition/clearProposition', {}, { root: true });
             }
         },
         saveData({ state, commit }, id) {
