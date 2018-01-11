@@ -39161,11 +39161,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             this.$store.commit('proposition/authors_expense/deleteOtherExpense', index);
         }
     },
-    mounted: function () {
-        if (this.$route.params.id != 0) {
-            this.$store.dispatch('proposition/authors_expense/getData', { id: this.$route.params.id });
-        }
-    },
     beforeRouteLeave(to, from, next) {
         if (this.$store.state.edited) {
             this.next = next;
@@ -39403,11 +39398,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     computed: {
         basic_data() {
             return this.$deepModel('proposition.basic_data');
-        }
-    },
-    mounted: function () {
-        if (this.$route.params.id != 0) {
-            this.$store.dispatch('proposition/basic_data/getData', { id: this.$route.params.id });
         }
     },
     beforeRouteLeave(to, from, next) {
@@ -39914,14 +39904,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             this.activeEdit = '';
         }
     },
-    mounted: function () {
-        if (this.$route.params.id != 0) {
-            this.$store.dispatch('proposition/calculation/getData', { id: this.$route.params.id, force: true }).then(() => {
-                $('.mdb-select').material_select('destroy');
-                $('.mdb-select').material_select();
-            });
-        }
-    },
     beforeRouteLeave(to, from, next) {
         if (this.$store.state.edited) {
             this.next = next;
@@ -40141,14 +40123,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             next: false
         };
     },
-    mounted: function () {
-        if (this.$route.params.id != 0) {
-            Promise.all([this.$store.dispatch('proposition/categorization/getData', { id: this.$route.params.id }), this.$store.dispatch('categorization/getData')]).then(() => {
-                $('.mdb-select').material_select('destroy');
-                $('.mdb-select').material_select();
-            });
-        }
-    },
     computed: {
         categories() {
             return this.$store.state.categorization.categories;
@@ -40241,6 +40215,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             }, 500);
         }
     },
+    mounted() {},
     beforeRouteLeave(to, from, next) {
         if (this.$store.state.edited) {
             this.next = next;
@@ -40324,9 +40299,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         vuexSet: __WEBPACK_IMPORTED_MODULE_0_vue_deepset__["vuexSet"]
     },
     mounted: function () {
-        if (this.$route.params.id != 0) {
-            this.$store.dispatch('proposition/deadline/getData', { id: this.$route.params.id });
-        }
         $('.datepicker1').pickadate({
             format: 'dd. mm. yyyy.',
             onSet: context => {
@@ -40393,12 +40365,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     computed: {
         distribution() {
             return this.$deepModel('proposition.distribution_expense');
-        }
-    },
-    methods: {},
-    mounted: function () {
-        if (this.$route.params.id != 0) {
-            this.$store.dispatch('proposition/distribution_expense/getData', { id: this.$route.params.id });
         }
     },
     beforeRouteLeave(to, from, next) {
@@ -40535,15 +40501,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         layout_total: 'proposition/layout_expense/layout_total',
         design_total: 'proposition/layout_expense/design_total'
     })),
-    methods: {},
-    mounted: function () {
-        if (this.$route.params.id != 0) {
-            this.$store.dispatch('proposition/layout_expense/getData', { id: this.$route.params.id }).then(() => {
-                $('.mdb-select').material_select('destroy');
-                $('.mdb-select').material_select();
-            });
-        }
-    },
     beforeRouteLeave(to, from, next) {
         if (this.$store.state.edited) {
             this.next = next;
@@ -40645,11 +40602,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         },
         fileNameSave: function (data) {
             this.$store.dispatch('proposition/market_potential/filenameSave', { id: data.file.id, title: data.file.title });
-        }
-    },
-    mounted: function () {
-        if (this.$route.params.id != 0) {
-            this.$store.dispatch('proposition/market_potential/getData', { id: this.$route.params.id });
         }
     },
     beforeRouteLeave(to, from, next) {
@@ -40757,6 +40709,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         }
     },
     mounted() {
+        //TODO: move to store
         axios.get('/api/proposition/' + this.$route.params.id + '/files/marketing').then(res => {
             this.cover = res.data.cover;
             this.leaflet = res.data.leaflet;
@@ -40769,11 +40722,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-//
-//
-//
-//
-//
 //
 //
 //
@@ -40856,11 +40804,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         },
         deleteExpense: function (index) {
             this.$store.commit('proposition/marketing_expense/deleteExpense', index);
-        }
-    },
-    mounted: function () {
-        if (this.$route.params.id != 0) {
-            this.$store.dispatch('proposition/marketing_expense/getData', { id: this.$route.params.id });
         }
     },
     beforeRouteLeave(to, from, next) {
@@ -40999,6 +40942,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         }
     },
     mounted() {
+        //TODO: move to store
         axios.get('/api/proposition/' + this.$route.params.id + '/files/multimedia').then(res => {
             this.jpg = res.data.jpg;
             this.psd = res.data.psd;
@@ -41126,12 +41070,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         },
         total2() {
             return Number(this.price_definition.price_second_year.retail) + Number(this.price_definition.price_second_year.wholesale) + Number(this.price_definition.price_second_year.direct) + Number(this.price_definition.price_second_year.field) + Number(this.price_definition.price_second_year.promotors) + Number(this.price_definition.price_second_year.export);
-        }
-    },
-    methods: {},
-    mounted() {
-        if (this.$route.params.id != 0) {
-            this.$store.dispatch('proposition/price_definition/getData', { id: this.$route.params.id });
         }
     },
     beforeRouteLeave(to, from, next) {
@@ -41390,7 +41328,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 /* harmony default export */ __webpack_exports__["a"] = ({
     data: function () {
         return {
-            active_offer: 0,
             next: false,
             option_colors: ['One Colour', 'Two Colours', 'Three Colours', 'Full Colour', 'Fifth Colour']
         };
@@ -41399,6 +41336,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         uploadModal: __WEBPACK_IMPORTED_MODULE_0__general_UploadModal_vue__["a" /* default */]
     },
     computed: {
+        active_offer() {
+            return this.$deepModel('proposition.print.active_offer');
+        },
         offers() {
             return this.$deepModel('proposition.print.offers');
         }
@@ -41434,15 +41374,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         },
         fileNameSave: function (data) {
             this.$store.dispatch('proposition/basic_data/filenameSave', { id: data.file.id, title: data.file.title });
-        }
-    },
-    mounted: function () {
-        if (this.$route.params.id != 0) {
-            this.$store.dispatch('proposition/print/getData', { id: this.$route.params.id }).then(() => {
-                $('.mdb-select').material_select('destroy');
-                $('.mdb-select').material_select();
-                this.active_offer = Object.keys(this.offers)[0];
-            });
         }
     },
     beforeRouteLeave(to, from, next) {
@@ -41810,11 +41741,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             this.$store.commit('proposition/production_expense/deleteExpense', index);
         }
     },
-    mounted: function () {
-        if (this.$route.params.id != 0) {
-            this.$store.dispatch('proposition/production_expense/getData', { id: this.$route.params.id, type: 'budget' });
-        }
-    },
     beforeRouteLeave(to, from, next) {
         if (this.$store.state.edited) {
             this.next = next;
@@ -41835,16 +41761,56 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["a"] = ({
     data: function () {
-        return {};
+        return {
+            loading: true,
+            authorized: true
+        };
     },
     computed: {},
-    methods: {},
+    methods: {
+        loadStep() {
+            this.loading = true;
+            //we are moving to other step
+            //load step data
+            this.$store.dispatch('proposition/getData').then(() => {
+                this.loading = false;
+                this.authorized = true;
+                //for screen that need special loading
+                setTimeout(() => {
+                    $('.mdb-select').material_select('destroy');
+                    $('.mdb-select').material_select();
+                }, 200);
+            }).catch(err => {
+                if (err === 403) {
+                    this.loading = false;
+                    this.authorized = false;
+                }
+            });
+        }
+    },
+    watch: {
+        '$route'(to, from) {
+            if (to.matched[0].name === 'proposition') {
+                this.loadStep();
+            }
+        }
+    },
     mounted() {
         if (this.$route.params.id != 0) {
-            this.$store.dispatch('proposition/initData', { id: this.$route.params.id });
+            this.$store.dispatch('proposition/initData').then(this.loadStep());
         } else {
             this.$router.push({ path: '/proposition/start' });
         }
@@ -42180,9 +42146,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             this.next();
         }
     },
-    mounted: function () {
-        this.$store.dispatch('proposition/start/getData', { id: this.$route.params.id });
-    },
     beforeRouteLeave(to, from, next) {
         if (this.$store.state.edited) {
             this.next = next;
@@ -42463,15 +42426,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             }
         }
     },
-    mounted: function () {
-        if (this.$route.params.id != 0) {
-            console.log(this.$route.params.id);
-            this.$store.dispatch('proposition/technical_data/getData', { id: this.$route.params.id }).then(() => {
-                $('.mdb-select').material_select('destroy');
-                $('.mdb-select').material_select();
-            });
-        }
-    },
     beforeRouteLeave(to, from, next) {
         if (this.$store.state.edited) {
             this.next = next;
@@ -42606,6 +42560,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         }
     },
     mounted() {
+        //TODO: move to store
         axios.get('/api/proposition/' + this.$route.params.id + '/files/' + this.$route.meta.dir).then(res => {
             this.files = res.data.files;
             this.final = res.data.final;
@@ -42792,11 +42747,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         },
         deleteOtherExpense: function (index) {
             this.$store.commit('proposition/authors_expense/deleteOtherExpense', index);
-        }
-    },
-    mounted: function () {
-        if (this.$route.params.id != 0) {
-            this.$store.dispatch('proposition/authors_expense/getData', { id: this.$route.params.id, type: 'expense' });
         }
     },
     beforeRouteLeave(to, from, next) {
@@ -43259,11 +43209,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             }
         }
     },
-    mounted() {
-        if (this.$route.params.id != 0) {
-            this.$store.dispatch('proposition/compare/getData', { id: this.$route.params.id });
-        }
-    },
     beforeRouteLeave(to, from, next) {
         if (this.$store.state.edited) {
             this.next = next;
@@ -43329,11 +43274,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         'footer-buttons': __WEBPACK_IMPORTED_MODULE_0__partials_FooterButtons_vue__["default"]
     },
     methods: {},
-    mounted: function () {
-        if (this.$route.params.id != 0) {
-            this.$store.dispatch('proposition/distribution_expense/getData', { id: this.$route.params.id, type: 'expense' });
-        }
-    },
     beforeRouteLeave(to, from, next) {
         if (this.$store.state.edited) {
             this.next = next;
@@ -43472,14 +43412,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         'footer-buttons': __WEBPACK_IMPORTED_MODULE_0__partials_FooterButtons_vue__["default"]
     },
     methods: {},
-    mounted: function () {
-        if (this.$route.params.id != 0) {
-            this.$store.dispatch('proposition/layout_expense/getData', { id: this.$route.params.id, type: 'expense' }).then(() => {
-                $('.mdb-select').material_select('destroy');
-                $('.mdb-select').material_select();
-            });
-        }
-    },
     beforeRouteLeave(to, from, next) {
         if (this.$store.state.edited) {
             this.next = next;
@@ -43581,11 +43513,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         },
         deleteExpense: function (index) {
             this.$store.commit('proposition/marketing_expense/deleteExpense', index);
-        }
-    },
-    mounted: function () {
-        if (this.$route.params.id != 0) {
-            this.$store.dispatch('proposition/marketing_expense/getData', { id: this.$route.params.id, type: 'expense' });
         }
     },
     beforeRouteLeave(to, from, next) {
@@ -43956,11 +43883,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             this.$store.commit('proposition/production_expense/deleteExpense', index);
         }
     },
-    mounted: function () {
-        if (this.$route.params.id != 0) {
-            this.$store.dispatch('proposition/production_expense/getData', { id: this.$route.params.id, type: 'expense' });
-        }
-    },
     beforeRouteLeave(to, from, next) {
         if (this.$store.state.edited) {
             this.next = next;
@@ -44294,7 +44216,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     className: ''
                 },
                 1: {
-                    title: 'Project',
+                    title: 'Proposition task',
                     className: 'tasktype-1'
                 },
                 2: {
@@ -44302,19 +44224,19 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     className: 'tasktype-2'
                 },
                 3: {
-                    title: 'Project',
+                    title: 'Approval Request',
                     className: 'tasktype-3'
                 },
                 4: {
-                    title: 'Assignment',
-                    className: 'tasktype-4'
+                    title: 'Proposition task',
+                    className: 'tasktype-1'
                 },
                 5: {
-                    title: 'Project',
+                    title: 'Proposition Approval',
                     className: 'tasktype-5'
                 },
                 6: {
-                    title: 'Task order',
+                    title: 'Task Order',
                     className: 'tasktype-6'
                 }
             }
@@ -45184,7 +45106,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             clock: false,
             task_types: {
                 1: {
-                    title: 'Project',
+                    title: 'Proposition task',
                     className: 'tasktype-1'
                 },
                 2: {
@@ -45196,11 +45118,11 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     className: 'tasktype-3'
                 },
                 4: {
-                    title: 'Assignment',
-                    className: 'tasktype-4'
+                    title: 'Proposition task',
+                    className: 'tasktype-1'
                 },
                 5: {
-                    title: 'Approval Request',
+                    title: 'Proposition Approval',
                     className: 'tasktype-5'
                 },
                 6: {
@@ -58757,11 +58679,13 @@ const router = new __WEBPACK_IMPORTED_MODULE_3_vue_router__["a" /* default */]({
 });
 
 router.beforeEach((to, from, next) => {
-    if (typeof to.meta.validate !== 'undefined' && typeof to.meta.validate.id !== 'undefined' && to.params.id === 'undefined') {
-        next('/proposition/start');
-    } else {
+    if (to.matched.length && to.matched[0].name === 'proposition') {
+        if (typeof to.meta.validate !== 'undefined' && typeof to.meta.validate.id !== 'undefined' && to.params.id === 'undefined') {
+            next('/proposition/start');
+        }
         next();
     }
+    next();
 });
 
 __WEBPACK_IMPORTED_MODULE_5__vuex_store__["a" /* default */].subscribe((mutation, state) => {
@@ -59774,8 +59698,8 @@ window.Echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default.a({
 
 
 
-const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31__components_proposition_PropositionList__["a" /* default */] }, { path: '/proposition/start', component: __WEBPACK_IMPORTED_MODULE_18__components_proposition_PropositionStart__["a" /* default */] }, { path: '/proposition/:id', component: __WEBPACK_IMPORTED_MODULE_0__components_proposition_Proposition__["a" /* default */],
-    children: [{ path: 'edit/start', component: __WEBPACK_IMPORTED_MODULE_18__components_proposition_PropositionStart__["a" /* default */], meta: { save: 'start', validate: { id: 'int' }, breadcrumb: 'Start' } }, { path: 'edit/basic_data', component: __WEBPACK_IMPORTED_MODULE_1__components_proposition_BasicData__["a" /* default */], meta: { save: 'basic_data', validate: { id: 'int' }, breadcrumb: 'Basic Data' } }, { path: 'edit/categorization', component: __WEBPACK_IMPORTED_MODULE_2__components_proposition_Categorization__["a" /* default */], meta: { save: 'categorization', validate: { id: 'int' }, breadcrumb: 'Categorization' } }, { path: 'edit/market_potential', component: __WEBPACK_IMPORTED_MODULE_3__components_proposition_MarketPotential__["a" /* default */], meta: { save: 'market_potential', validate: { id: 'int' }, breadcrumb: 'Market Potential' } }, { path: 'edit/technical_data', component: __WEBPACK_IMPORTED_MODULE_4__components_proposition_TechnicalData__["a" /* default */], meta: { save: 'technical_data', validate: { id: 'int' }, breadcrumb: 'Technical Data' } }, { path: 'edit/print', component: __WEBPACK_IMPORTED_MODULE_7__components_proposition_Print__["a" /* default */], meta: { save: 'print', validate: { id: 'int' }, breadcrumb: 'Print' } }, { path: 'edit/authors_expense', component: __WEBPACK_IMPORTED_MODULE_5__components_proposition_AuthorsExpense__["a" /* default */], meta: { save: 'authors_expense', validate: { id: 'int' }, breadcrumb: 'Authors Expense' } }, { path: 'edit/production_expense', component: __WEBPACK_IMPORTED_MODULE_9__components_proposition_ProductionExpense__["a" /* default */], meta: { save: 'production_expense', validate: { id: 'int' }, breadcrumb: 'Production Expense' } }, { path: 'edit/marketing_expense', component: __WEBPACK_IMPORTED_MODULE_10__components_proposition_MarketingExpense__["a" /* default */], meta: { save: 'marketing_expense', validate: { id: 'int' }, breadcrumb: 'Marketing Expense' } }, { path: 'edit/distribution_expense', component: __WEBPACK_IMPORTED_MODULE_12__components_proposition_DistributionExpense__["a" /* default */], meta: { save: 'distribution_expense', validate: { id: 'int' }, breadcrumb: 'Distribution Expense' } }, { path: 'edit/layout_expense', component: __WEBPACK_IMPORTED_MODULE_14__components_proposition_LayoutExpense__["a" /* default */], meta: { save: 'layout_expense', validate: { id: 'int' }, breadcrumb: 'Layout Expense' } }, { path: 'edit/deadline', component: __WEBPACK_IMPORTED_MODULE_16__components_proposition_Deadline__["a" /* default */], meta: { save: 'deadline', validate: { id: 'int' }, breadcrumb: 'Deadline' } }, { path: 'edit/calculation', component: __WEBPACK_IMPORTED_MODULE_17__components_proposition_Calculation__["a" /* default */], meta: { save: 'calculation', validate: { id: 'int' }, breadcrumb: 'Calculation' } }, { path: 'preparation/translation', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'translation', validate: { id: 'int' }, breadcrumb: 'Translation' } }, { path: 'preparation/technical_preparation', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'technical_preparation', validate: { id: 'int' }, breadcrumb: 'Technical Preparation' } }, { path: 'preparation/proofreading', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'proofreading', validate: { id: 'int' }, breadcrumb: 'Proofreading' } }, { path: 'preparation/additional_materials', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'additional_materials', validate: { id: 'int' }, breadcrumb: 'Additional Materials' } }, { path: 'preparation/reviews', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'reviews', validate: { id: 'int' }, breadcrumb: 'Reviews' } }, { path: 'preparation/lecture', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'lecture', validate: { id: 'int' }, breadcrumb: 'Lecture' } }, { path: 'preparation/technical_correction', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'technical_correction', validate: { id: 'int' }, breadcrumb: 'Technical Correction' } }, { path: 'preparation/final_review', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'final_review', validate: { id: 'int' }, breadcrumb: 'Final Review' } }, { path: 'expenses/authors_expense', component: __WEBPACK_IMPORTED_MODULE_6__components_proposition_expenses_AuthorsExpense__["a" /* default */], meta: { save: 'authors_expense', validate: { id: 'int' }, breadcrumb: 'Authors Expense' } }, { path: 'expenses/production_expense', component: __WEBPACK_IMPORTED_MODULE_8__components_proposition_expenses_ProductionExpense__["a" /* default */], meta: { save: 'production_expense', validate: { id: 'int' }, breadcrumb: 'Production Expense' } }, { path: 'expenses/marketing_expense', component: __WEBPACK_IMPORTED_MODULE_11__components_proposition_expenses_MarketingExpense__["a" /* default */], meta: { save: 'marketing_expense', validate: { id: 'int' }, breadcrumb: 'Marketing Expense' } }, { path: 'expenses/distribution_expense', component: __WEBPACK_IMPORTED_MODULE_13__components_proposition_expenses_DistributionExpense__["a" /* default */], meta: { save: 'distribution_expense', validate: { id: 'int' }, breadcrumb: 'Distribution Expense' } }, { path: 'expenses/layout_expense', component: __WEBPACK_IMPORTED_MODULE_15__components_proposition_expenses_LayoutExpense__["a" /* default */], meta: { save: 'layout_expense', validate: { id: 'int' }, breadcrumb: 'Layout Expense' } }, { path: 'expenses/compare', component: __WEBPACK_IMPORTED_MODULE_19__components_proposition_expenses_Compare__["a" /* default */], meta: { validate: { id: 'int' }, breadcrumb: 'Compare' } }, { path: 'design/cover_design', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'cover_design', validate: { id: 'int' }, breadcrumb: 'Cover Design' } }, { path: 'design/layout_design', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'layout_design', validate: { id: 'int' }, breadcrumb: 'Layout Design' } }, { path: 'layout/first_block_layout', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'first_block_layout', validate: { id: 'int' }, breadcrumb: 'First Block Layout' } }, { path: 'layout/cover', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'cover', validate: { id: 'int' }, breadcrumb: 'Cover' } }, { path: 'layout/layout', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'layout', validate: { id: 'int' }, breadcrumb: 'Layout' } }, { path: 'layout/first_revision', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'first_revision', validate: { id: 'int' }, breadcrumb: 'First Revision' } }, { path: 'layout/correction', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'correction', validate: { id: 'int' }, breadcrumb: 'Correction' } }, { path: 'layout/correction_input', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'correction_input', validate: { id: 'int' }, breadcrumb: 'Correction Input' } }, { path: 'layout/revisions', component: __WEBPACK_IMPORTED_MODULE_21__components_proposition_Revisions__["a" /* default */], meta: { validate: { id: 'int' }, breadcrumb: 'Revisions' } }, { path: 'final_price/price_definition', component: __WEBPACK_IMPORTED_MODULE_22__components_proposition_PriceDefinition__["a" /* default */], meta: { save: 'price_definition', validate: { id: 'int' }, breadcrumb: 'Price Definition' } }, { path: 'prepress/print_proof', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'print_proof', validate: { id: 'int' }, breadcrumb: 'Print Proof' } }, { path: 'prepress/print_proof_correction', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'print_proof_correction', validate: { id: 'int' }, breadcrumb: 'Print Proof Correction' } }, { path: 'prepress/print', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'print', validate: { id: 'int' }, breadcrumb: 'Print' } }, { path: 'prepress/warehouse', component: __WEBPACK_IMPORTED_MODULE_23__components_proposition_Warehouse__["a" /* default */], meta: { validate: { id: 'int' }, breadcrumb: 'Warehouse' } }, { path: 'additionals/multimedia', component: __WEBPACK_IMPORTED_MODULE_25__components_proposition_Multimedia__["a" /* default */], meta: { validate: { id: 'int' }, breadcrumb: 'Multimedia' } }, { path: 'additionals/marketing', component: __WEBPACK_IMPORTED_MODULE_24__components_proposition_Marketing__["a" /* default */], meta: { validate: { id: 'int' }, breadcrumb: 'Marketing' } }]
+const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31__components_proposition_PropositionList__["a" /* default */] }, { path: '/proposition/start', component: __WEBPACK_IMPORTED_MODULE_18__components_proposition_PropositionStart__["a" /* default */] }, { path: '/proposition/:id', component: __WEBPACK_IMPORTED_MODULE_0__components_proposition_Proposition__["a" /* default */], name: 'proposition',
+    children: [{ path: 'edit/start', component: __WEBPACK_IMPORTED_MODULE_18__components_proposition_PropositionStart__["a" /* default */], meta: { save: 'start', validate: { id: 'int' }, breadcrumb: 'Start' } }, { path: 'edit/basic_data', component: __WEBPACK_IMPORTED_MODULE_1__components_proposition_BasicData__["a" /* default */], meta: { save: 'basic_data', validate: { id: 'int' }, breadcrumb: 'Basic Data' } }, { path: 'edit/categorization', component: __WEBPACK_IMPORTED_MODULE_2__components_proposition_Categorization__["a" /* default */], meta: { save: 'categorization', validate: { id: 'int' }, breadcrumb: 'Categorization' } }, { path: 'edit/market_potential', component: __WEBPACK_IMPORTED_MODULE_3__components_proposition_MarketPotential__["a" /* default */], meta: { save: 'market_potential', validate: { id: 'int' }, breadcrumb: 'Market Potential' } }, { path: 'edit/technical_data', component: __WEBPACK_IMPORTED_MODULE_4__components_proposition_TechnicalData__["a" /* default */], meta: { save: 'technical_data', validate: { id: 'int' }, breadcrumb: 'Technical Data' } }, { path: 'edit/print', component: __WEBPACK_IMPORTED_MODULE_7__components_proposition_Print__["a" /* default */], meta: { save: 'print', validate: { id: 'int' }, breadcrumb: 'Print' } }, { path: 'edit/authors_expense', component: __WEBPACK_IMPORTED_MODULE_5__components_proposition_AuthorsExpense__["a" /* default */], meta: { save: 'authors_expense', validate: { id: 'int' }, breadcrumb: 'Authors Expense' } }, { path: 'edit/production_expense', component: __WEBPACK_IMPORTED_MODULE_9__components_proposition_ProductionExpense__["a" /* default */], meta: { save: 'production_expense', validate: { id: 'int' }, breadcrumb: 'Production Expense' } }, { path: 'edit/marketing_expense', component: __WEBPACK_IMPORTED_MODULE_10__components_proposition_MarketingExpense__["a" /* default */], meta: { save: 'marketing_expense', validate: { id: 'int' }, breadcrumb: 'Marketing Expense' } }, { path: 'edit/distribution_expense', component: __WEBPACK_IMPORTED_MODULE_12__components_proposition_DistributionExpense__["a" /* default */], meta: { save: 'distribution_expense', validate: { id: 'int' }, breadcrumb: 'Distribution Expense' } }, { path: 'edit/layout_expense', component: __WEBPACK_IMPORTED_MODULE_14__components_proposition_LayoutExpense__["a" /* default */], meta: { save: 'layout_expense', validate: { id: 'int' }, breadcrumb: 'Layout Expense' } }, { path: 'edit/deadline', component: __WEBPACK_IMPORTED_MODULE_16__components_proposition_Deadline__["a" /* default */], meta: { save: 'deadline', validate: { id: 'int' }, breadcrumb: 'Deadline' } }, { path: 'edit/calculation', component: __WEBPACK_IMPORTED_MODULE_17__components_proposition_Calculation__["a" /* default */], meta: { save: 'calculation', validate: { id: 'int' }, breadcrumb: 'Calculation' } }, { path: 'preparation/translation', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'translation', validate: { id: 'int' }, breadcrumb: 'Translation' } }, { path: 'preparation/technical_preparation', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'technical_preparation', validate: { id: 'int' }, breadcrumb: 'Technical Preparation' } }, { path: 'preparation/proofreading', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'proofreading', validate: { id: 'int' }, breadcrumb: 'Proofreading' } }, { path: 'preparation/additional_materials', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'additional_materials', validate: { id: 'int' }, breadcrumb: 'Additional Materials' } }, { path: 'preparation/reviews', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'reviews', validate: { id: 'int' }, breadcrumb: 'Reviews' } }, { path: 'preparation/lecture', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'lecture', validate: { id: 'int' }, breadcrumb: 'Lecture' } }, { path: 'preparation/technical_correction', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'technical_correction', validate: { id: 'int' }, breadcrumb: 'Technical Correction' } }, { path: 'preparation/final_review', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'final_review', validate: { id: 'int' }, breadcrumb: 'Final Review' } }, { path: 'expenses/authors_expense', component: __WEBPACK_IMPORTED_MODULE_6__components_proposition_expenses_AuthorsExpense__["a" /* default */], meta: { save: 'authors_expense', validate: { id: 'int' }, breadcrumb: 'Authors Expense', 'type': 'expense' } }, { path: 'expenses/production_expense', component: __WEBPACK_IMPORTED_MODULE_8__components_proposition_expenses_ProductionExpense__["a" /* default */], meta: { save: 'production_expense', validate: { id: 'int' }, breadcrumb: 'Production Expense', 'type': 'expense' } }, { path: 'expenses/marketing_expense', component: __WEBPACK_IMPORTED_MODULE_11__components_proposition_expenses_MarketingExpense__["a" /* default */], meta: { save: 'marketing_expense', validate: { id: 'int' }, breadcrumb: 'Marketing Expense', 'type': 'expense' } }, { path: 'expenses/distribution_expense', component: __WEBPACK_IMPORTED_MODULE_13__components_proposition_expenses_DistributionExpense__["a" /* default */], meta: { save: 'distribution_expense', validate: { id: 'int' }, breadcrumb: 'Distribution Expense', 'type': 'expense' } }, { path: 'expenses/layout_expense', component: __WEBPACK_IMPORTED_MODULE_15__components_proposition_expenses_LayoutExpense__["a" /* default */], meta: { save: 'layout_expense', validate: { id: 'int' }, breadcrumb: 'Layout Expense', 'type': 'expense' } }, { path: 'expenses/compare', component: __WEBPACK_IMPORTED_MODULE_19__components_proposition_expenses_Compare__["a" /* default */], meta: { validate: { id: 'int' }, breadcrumb: 'Compare' } }, { path: 'design/cover_design', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'cover_design', validate: { id: 'int' }, breadcrumb: 'Cover Design' } }, { path: 'design/layout_design', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'layout_design', validate: { id: 'int' }, breadcrumb: 'Layout Design' } }, { path: 'layout/first_block_layout', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'first_block_layout', validate: { id: 'int' }, breadcrumb: 'First Block Layout' } }, { path: 'layout/cover', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'cover', validate: { id: 'int' }, breadcrumb: 'Cover' } }, { path: 'layout/layout', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'layout', validate: { id: 'int' }, breadcrumb: 'Layout' } }, { path: 'layout/first_revision', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'first_revision', validate: { id: 'int' }, breadcrumb: 'First Revision' } }, { path: 'layout/correction', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'correction', validate: { id: 'int' }, breadcrumb: 'Correction' } }, { path: 'layout/correction_input', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'correction_input', validate: { id: 'int' }, breadcrumb: 'Correction Input' } }, { path: 'layout/revisions', component: __WEBPACK_IMPORTED_MODULE_21__components_proposition_Revisions__["a" /* default */], meta: { validate: { id: 'int' }, breadcrumb: 'Revisions' } }, { path: 'final_price/price_definition', component: __WEBPACK_IMPORTED_MODULE_22__components_proposition_PriceDefinition__["a" /* default */], meta: { save: 'price_definition', validate: { id: 'int' }, breadcrumb: 'Price Definition' } }, { path: 'prepress/print_proof', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'print_proof', validate: { id: 'int' }, breadcrumb: 'Print Proof' } }, { path: 'prepress/print_proof_correction', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'print_proof_correction', validate: { id: 'int' }, breadcrumb: 'Print Proof Correction' } }, { path: 'prepress/print', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { dir: 'print', validate: { id: 'int' }, breadcrumb: 'Print' } }, { path: 'prepress/warehouse', component: __WEBPACK_IMPORTED_MODULE_23__components_proposition_Warehouse__["a" /* default */], meta: { validate: { id: 'int' }, breadcrumb: 'Warehouse' } }, { path: 'additionals/multimedia', component: __WEBPACK_IMPORTED_MODULE_25__components_proposition_Multimedia__["a" /* default */], meta: { validate: { id: 'int' }, breadcrumb: 'Multimedia' } }, { path: 'additionals/marketing', component: __WEBPACK_IMPORTED_MODULE_24__components_proposition_Marketing__["a" /* default */], meta: { validate: { id: 'int' }, breadcrumb: 'Marketing' } }]
 }, { path: '/tasks', component: __WEBPACK_IMPORTED_MODULE_27__components_tasks_Tasks__["a" /* default */] }, { path: '/task/edit/:id(\\d+)?', component: __WEBPACK_IMPORTED_MODULE_28__components_tasks_TaskEdit__["a" /* default */] }, { path: '/task/show/:id(\\d+)', component: __WEBPACK_IMPORTED_MODULE_29__components_tasks_TaskShow__["a" /* default */] }, { path: '/tasks/department/:id(\\d+)', component: __WEBPACK_IMPORTED_MODULE_30__components_tasks_DepartmentTasks__["a" /* default */] }, { path: '/human_resources/employee/new', component: __WEBPACK_IMPORTED_MODULE_26__components_hr_EditProfile__["a" /* default */] }, { path: '/human_resources/employee/:id(\\d+)/edit', component: __WEBPACK_IMPORTED_MODULE_26__components_hr_EditProfile__["a" /* default */] }, { path: '/human_resources/employee/:id(\\d+)', component: __WEBPACK_IMPORTED_MODULE_26__components_hr_EditProfile__["a" /* default */] }];
 /* harmony export (immutable) */ __webpack_exports__["a"] = routes;
 
@@ -60032,13 +59956,34 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
         }
     },
     actions: {
-        initData({ commit, state }, payload) {
-            if (!state.proposition_id || state.proposition_id != payload.id || payload.force) {
-                __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/api/proposition/' + payload.id + '/init').then(res => {
-                    commit('initData', res.data);
-                    commit('proposition/owner/initData', res.data.owner, { root: true });
-                });
-            }
+        initData({ commit, state, dispatch, rootState }, payload) {
+            return new Promise((resolve, reject) => {
+                if (!state.proposition_id || state.proposition_id != rootState.route.params.id) {
+                    __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/api/proposition/' + rootState.route.params.id + '/init').then(res => {
+                        commit('initData', res.data);
+                        commit('owner/initData', res.data.owner);
+                        dispatch('getData').then(resolve).catch(reject);
+                    }).catch(reject);
+                } else {
+                    dispatch('getData').then(resolve).catch(reject);
+                }
+            });
+        },
+        getData({ state, rootState, commit, dispatch }, payload) {
+            return new Promise((resolve, reject) => {
+                Promise.all([dispatch('categorization/getData', {}, { root: true }), new Promise((resolve, reject) => {
+                    let path = '/api/proposition/' + state.proposition_id + '/' + rootState.route.meta.save;
+                    if (rootState.route.meta.type) {
+                        path += rootState.route.meta.type;
+                    }
+                    __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get(path).then(res => {
+                        commit(rootState.route.meta.save + '/initData', res.data);
+                        resolve();
+                    }).catch(err => {
+                        reject(403);
+                    });
+                })]).then(resolve).catch(reject);
+            });
         },
         clearProposition({ commit }) {
             commit('clearData');
@@ -60384,21 +60329,6 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
         }
     },
     actions: {
-        getData({ commit, state }, payload) {
-            return new Promise((resolve, reject) => {
-                if (!state.id || state.id != payload.id || payload.force) {
-                    //retrieve data only we don't have it or we need to refresh it
-                    __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/api/proposition/' + payload.id + '/categorization').then(res => {
-                        commit('initData', res.data);
-                        resolve();
-                    }).catch(err => {
-                        if (err.response.status === 403) {
-                            window.location.href = '/propositions';
-                        }
-                    });;
-                }
-            });
-        },
         saveData({ state, commit }, id) {
             return new Promise((resolve, reject) => {
                 if (id) {
@@ -60960,14 +60890,18 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
     namespaced: true,
     state: {
         id: 0,
-        offers: {}
+        offers: {},
+        active_offer: 0
     },
     mutations: {
         initData(state, payload) {
             for (let i in Object.keys(state)) {
                 let key = Object.keys(state)[i];
-                state[key] = payload[key];
+                if (payload.hasOwnProperty(key)) {
+                    state[key] = payload[key];
+                }
             }
+            state.active_offer = Object.keys(state.offers)[0];
         },
         addFile(state, payload) {
             state.offers[payload.offer].files.push(payload.file);
@@ -88406,9 +88340,28 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_c("router-view", { key: _vm.$route.fullPath })], 1)
+  return _c(
+    "div",
+    [
+      _vm.loading
+        ? [_vm._m(0)]
+        : !_vm.authorized
+          ? [_vm._v("\n        Not authorized\n    ")]
+          : [_c("router-view", { key: _vm.$route.fullPath })]
+    ],
+    2
+  )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "loading-motion" }, [
+      _c("div", { staticClass: "spinner" })
+    ])
+  }
+]
 render._withStripped = true
 var esExports = { render: render, staticRenderFns: staticRenderFns }
 /* harmony default export */ __webpack_exports__["a"] = (esExports);
@@ -90649,21 +90602,12 @@ var render = function() {
             _vm._v(" "),
             _c("proposition-footer-buttons", { on: { warningSaved: _vm.next } })
           ]
-        : [_vm._m(0)]
+        : _vm._e()
     ],
     2
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "loading-motion" }, [
-      _c("div", { staticClass: "spinner" })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 var esExports = { render: render, staticRenderFns: staticRenderFns }
 /* harmony default export */ __webpack_exports__["a"] = (esExports);
