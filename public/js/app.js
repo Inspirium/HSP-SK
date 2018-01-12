@@ -41771,6 +41771,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["a"] = ({
     data: function () {
@@ -79179,12 +79183,12 @@ var render = function() {
             ]),
             _vm._v(" "),
             _vm._l(_vm.offers, function(option, key, index) {
-              return _c("li", { staticClass: "nav-item position-relative" }, [
+              return _c("li", { staticClass: "nav-item" }, [
                 _c(
                   "a",
                   {
                     key: key,
-                    staticClass: "nav-link",
+                    staticClass: "nav-link position-relative",
                     attrs: {
                       id: "tab" + (index + 1),
                       href: "#panel" + (index + 1),
@@ -88346,7 +88350,38 @@ var render = function() {
       _vm.loading
         ? [_vm._m(0)]
         : !_vm.authorized
-          ? [_vm._v("\n        Not authorized\n    ")]
+          ? [
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "d-flex justify-content-center align-items-center flex-column mt-5"
+                },
+                [
+                  _c("i", {
+                    staticClass:
+                      "fa fa-exclamation-triangle fa-5x mb-3 color-nav-sub",
+                    attrs: { "aria-hidden": "true" }
+                  }),
+                  _vm._v(" "),
+                  _c("h1", { staticClass: "text-center mt-5" }, [
+                    _vm._v(
+                      _vm._s(
+                        _vm.lang("You are not authorized to view this page")
+                      )
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("h5", { staticClass: "text-center mt-2" }, [
+                    _vm._v(
+                      _vm._s(
+                        _vm.lang("Contact proposition's author to gain access")
+                      )
+                    )
+                  ])
+                ]
+              )
+            ]
           : [_c("router-view", { key: _vm.$route.fullPath })]
     ],
     2
@@ -90416,10 +90451,7 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("h1", { staticClass: "text-center display-2" }, [
-                    _vm._v(
-                      _vm._s(_vm._f("flexCurrency")(_vm.total, " kn", 2)) +
-                        " kn"
-                    )
+                    _vm._v(_vm._s(_vm._f("flexCurrency")(_vm.total, " kn", 2)))
                   ])
                 ]),
                 _vm._v(" "),
@@ -93742,31 +93774,31 @@ var render = function() {
                   attrs: { id: "tabs", role: "tablist" }
                 },
                 _vm._l(_vm.offers, function(offer, key, index) {
-                  return _c(
-                    "li",
-                    { staticClass: "nav-item position-relative" },
-                    [
-                      _c(
-                        "a",
-                        {
-                          key: key,
-                          class: ["nav-link", !index ? "active" : ""],
-                          attrs: {
-                            "data-toggle": "tab",
-                            href: "#panel" + index,
-                            "data-index": key,
-                            role: "tab"
-                          },
-                          on: {
-                            click: function($event) {
-                              _vm.switchTab($event)
-                            }
-                          }
+                  return _c("li", { staticClass: "nav-item" }, [
+                    _c(
+                      "a",
+                      {
+                        key: key,
+                        class: [
+                          "nav-link",
+                          "position-relative",
+                          !index ? "active" : ""
+                        ],
+                        attrs: {
+                          "data-toggle": "tab",
+                          href: "#panel" + index,
+                          "data-index": key,
+                          role: "tab"
                         },
-                        [_vm._v(_vm._s(offer.title))]
-                      )
-                    ]
-                  )
+                        on: {
+                          click: function($event) {
+                            _vm.switchTab($event)
+                          }
+                        }
+                      },
+                      [_vm._v(_vm._s(offer.title))]
+                    )
+                  ])
                 })
               )
             ]),
@@ -94960,7 +94992,7 @@ var render = function() {
                   attrs: { "aria-hidden": "true" }
                 }),
                 _vm._v(" "),
-                _c("h1", { staticClass: "text-center mt-5" }, [
+                _c("h1", { staticClass: "text-center mt-2" }, [
                   _vm._v(_vm._s(_vm.lang("No print offers created")))
                 ])
               ]
