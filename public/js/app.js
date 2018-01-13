@@ -38951,6 +38951,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     methods: {
         emitWarningConfirmation() {
             this.$eventHub.emit('warningConfirmed');
+            this.$emit('warningConfirmed');
         }
     }
 });
@@ -44777,8 +44778,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 low: 'Low'
             },
             comment: '',
-            index_to_delete: 0,
-            type_to_delete: 0
+            index_to_delete: false,
+            type_to_delete: false,
+            task_to_delete: false
         };
     },
     components: {
@@ -44888,10 +44890,27 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             this.index_to_delete = id;
             jQuery('#modal-warning').modal('show');
         },
+        listenForWarning() {
+            if (this.task_to_delete) {
+                this.taskDelete();
+            }
+            if (this.index_to_delete) {
+                this.fileDelete();
+            }
+        },
+        taskWarning(id, type) {
+            this.task_to_delete = true;
+            jQuery('#modal-warning').modal('show');
+        },
         taskDelete() {
             axios.delete('/api/task/' + this.task.id).then(() => {
                 this.$router.push('/tasks');
             });
+        },
+        clearDelete() {
+            this.type_to_delete = false;
+            this.index_to_delete = false;
+            this.task_to_delete = false;
         }
     },
     mounted: function () {
@@ -44986,32 +45005,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     data: function () {
         return {
             authority: false,
-            task_types: {
-                1: {
-                    title: 'Project',
-                    className: 'tasktype-1'
-                },
-                2: {
-                    title: 'Assignment',
-                    className: 'tasktype-2'
-                },
-                3: {
-                    title: 'Approval Request',
-                    className: 'tasktype-3'
-                },
-                4: {
-                    title: 'Assignment',
-                    className: 'tasktype-4'
-                },
-                5: {
-                    title: 'Approval Request',
-                    className: 'tasktype-5'
-                },
-                6: {
-                    title: 'Task Order Request',
-                    className: 'tasktype-6'
-                }
-            },
             new: {
                 supportNested: true,
                 tblClass: 'table',
@@ -77612,9 +77605,28 @@ var render = function() {
                       : _vm._e(),
                     _vm._v(" "),
                     _c("div", { staticClass: "activity-content" }, [
-                      _c("div", { staticClass: "activity-label tasktype-1" }, [
-                        _vm._v(_vm._s(item.data.tasktype))
-                      ]),
+                      _c(
+                        "div",
+                        {
+                          class: [
+                            "activity-label",
+                            item.data.tasktype.className
+                              ? item.data.tasktype.className
+                              : "tasktype-1"
+                          ]
+                        },
+                        [
+                          _vm._v(
+                            _vm._s(
+                              _vm.lang(
+                                item.data.tasktype.title
+                                  ? item.data.tasktype.title
+                                  : item.data.tasktype
+                              )
+                            )
+                          )
+                        ]
+                      ),
                       _vm._v(" "),
                       _c("div", { staticClass: "activity-time" }, [
                         _vm._v(
@@ -77913,7 +77925,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { class: _vm.task_types[_vm.value].className }, [
-    _vm._v(_vm._s(_vm.task_types[_vm.value].title))
+    _vm._v(_vm._s(_vm.lang(_vm.task_types[_vm.value].title)))
   ])
 }
 var staticRenderFns = []
@@ -78885,7 +78897,9 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _c("inspirium-warning-modal", { on: { warning: _vm.deleteUser } })
+      _c("inspirium-warning-modal", {
+        on: { warningConfirmed: _vm.deleteUser }
+      })
     ],
     1
   )
@@ -85541,7 +85555,9 @@ var render = function() {
                             },
                             [
                               _vm._v(
-                                _vm._s(_vm.task_types[_vm.task.type].title)
+                                _vm._s(
+                                  _vm.lang(_vm.task_types[_vm.task.type].title)
+                                )
                               )
                             ]
                           )
@@ -85796,7 +85812,11 @@ var render = function() {
                               },
                               [
                                 _vm._v(
-                                  _vm._s(_vm.task_types[_vm.task.type].title)
+                                  _vm._s(
+                                    _vm.lang(
+                                      _vm.task_types[_vm.task.type].title
+                                    )
+                                  )
                                 )
                               ]
                             )
@@ -86107,7 +86127,11 @@ var render = function() {
                               },
                               [
                                 _vm._v(
-                                  _vm._s(_vm.task_types[_vm.task.type].title)
+                                  _vm._s(
+                                    _vm.lang(
+                                      _vm.task_types[_vm.task.type].title
+                                    )
+                                  )
                                 )
                               ]
                             )
@@ -86490,7 +86514,7 @@ var render = function() {
                                 "button",
                                 {
                                   staticClass: "btn btn-lg btn-cancel",
-                                  on: { click: _vm.taskDelete }
+                                  on: { click: _vm.taskWarning }
                                 },
                                 [_vm._v(_vm._s(_vm.lang("Delete")))]
                               )
@@ -86534,7 +86558,12 @@ var render = function() {
                       on: { reassign: _vm.reassignTask }
                     }),
                     _vm._v(" "),
-                    _c("warning-modal", { on: { warning: _vm.fileDelete } })
+                    _c("warning-modal", {
+                      on: {
+                        warningConfirmed: _vm.listenForWarning,
+                        warningCanceled: _vm.clearDelete
+                      }
+                    })
                   ]
           ]
         : [_vm._m(1)]
@@ -93085,7 +93114,12 @@ var render = function() {
               "button",
               {
                 staticClass: "btn btn-lg btn-cancel",
-                attrs: { type: "button", "data-dismiss": "modal" }
+                attrs: { type: "button", "data-dismiss": "modal" },
+                on: {
+                  click: function($event) {
+                    _vm.$emit("warningCanceled")
+                  }
+                }
               },
               [_vm._v(_vm._s(_vm.lang("No")))]
             )
