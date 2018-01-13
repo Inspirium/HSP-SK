@@ -37486,6 +37486,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["a"] = ({
     data: function () {
@@ -43857,7 +43860,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             }
         };
     },
-    props: ['value']
+    props: ['value'],
+    mounted() {
+        console.log(this.value);
+    }
 });
 
 /***/ }),
@@ -44042,7 +44048,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 tdClass: 'table-title'
             }, {
                 title: this.lang('Task Type'),
-                field: 'type',
+                field: 'formatted_type',
                 sortable: true,
                 tdComp: __WEBPACK_IMPORTED_MODULE_6__table_components_TaskType__["default"]
             }, {
@@ -45026,7 +45032,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     tdClass: 'table-title'
                 }, {
                     title: this.lang('Task Type'),
-                    field: 'type',
+                    field: 'formatted_type',
                     sortable: true,
                     tdComp: 'TaskType'
                 }, {
@@ -45060,7 +45066,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     tdClass: 'table-title'
                 }, {
                     title: this.lang('Task Type'),
-                    field: 'type',
+                    field: 'formatted_type',
                     sortable: true,
                     tdComp: 'TaskType'
                 }, {
@@ -45094,7 +45100,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     tdClass: 'table-title'
                 }, {
                     title: this.lang('Task Type'),
-                    field: 'type',
+                    field: 'formatted_type',
                     sortable: true,
                     tdComp: 'TaskType'
                 }, {
@@ -45138,7 +45144,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     tdClass: 'table-title'
                 }, {
                     title: this.lang('Task Type'),
-                    field: 'type',
+                    field: 'formatted_type',
                     sortable: true,
                     tdComp: 'TaskType'
                 }, {
@@ -45172,7 +45178,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     tdClass: 'table-title'
                 }, {
                     title: this.lang('Task Type'),
-                    field: 'type',
+                    field: 'formatted_type',
                     sortable: true,
                     tdComp: 'TaskType'
                 }, {
@@ -61256,7 +61262,7 @@ exports.push([module.i, "\n.-page-size-select {\n  display: inline-block;\n  wid
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(3)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
 /* 306 */
@@ -77821,28 +77827,44 @@ var render = function() {
                       : _vm._e(),
                     _vm._v(" "),
                     _c("div", { staticClass: "activity-content" }, [
-                      _c(
-                        "div",
-                        {
-                          class: [
-                            "activity-label",
-                            item.data.tasktype.className
-                              ? item.data.tasktype.className
-                              : "tasktype-1"
-                          ]
-                        },
-                        [
-                          _vm._v(
-                            _vm._s(
-                              _vm.lang(
-                                item.data.tasktype.title
-                                  ? item.data.tasktype.title
-                                  : item.data.tasktype
+                      typeof item.data.tasktype === "object"
+                        ? _c(
+                            "div",
+                            {
+                              class: [
+                                "activity-label",
+                                item.data.tasktype.className
+                                  ? item.data.tasktype.className
+                                  : "tasktype-1"
+                              ]
+                            },
+                            [
+                              _vm._v(
+                                _vm._s(
+                                  _vm.lang(
+                                    item.data.tasktype.title
+                                      ? item.data.tasktype.title
+                                      : item.data.tasktype
+                                  )
+                                )
                               )
-                            )
+                            ]
                           )
-                        ]
-                      ),
+                        : _vm._e(),
+                      _vm._v(" "),
+                      typeof item.data.tasktype === "string"
+                        ? _c(
+                            "div",
+                            { staticClass: "activity-label tasktype-1" },
+                            [
+                              _vm._v(
+                                "\n                            " +
+                                  _vm._s(_vm.lang(item.data.tasktype)) +
+                                  "\n                        "
+                              )
+                            ]
+                          )
+                        : _vm._e(),
                       _vm._v(" "),
                       _c("div", { staticClass: "activity-time" }, [
                         _vm._v(
@@ -78140,8 +78162,8 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { class: _vm.task_types[_vm.value].className }, [
-    _vm._v(_vm._s(_vm.lang(_vm.task_types[_vm.value].title)))
+  return _c("div", { class: _vm.value.className }, [
+    _vm._v(_vm._s(_vm.lang(_vm.value.title)))
   ])
 }
 var staticRenderFns = []
