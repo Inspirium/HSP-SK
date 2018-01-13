@@ -41588,17 +41588,28 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             this.$store.dispatch('proposition/getData').then(() => {
                 this.loading = false;
                 this.authorized = true;
+                this.notAvailable = false;
                 //for screen that need special loading
                 setTimeout(() => {
                     $('.mdb-select').material_select('destroy');
                     $('.mdb-select').material_select();
+                    $('.datepicker1').pickadate({
+                        format: 'dd. mm. yyyy.',
+                        onSet: context => {
+                            let date = new Date(context.select);
+                            date = this.$options.filters.moment(date, 'DD. MM. YYYY.');
+                            this.$store.commit('proposition/deadline/saveDate', date);
+                        }
+                    });
                 }, 200);
             }).catch(err => {
                 if (err === 403) {
                     this.loading = false;
                     this.authorized = false;
+                    this.notAvailable = false;
                 } else {
                     this.loading = false;
+                    this.authorized = true;
                     this.notAvailable = true;
                 }
             });
@@ -59637,6 +59648,13 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios_index___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios_index__);
 
 
+let initialState = {
+    id: 0,
+    type: '',
+    authors: [],
+    note: '',
+    other: []
+};
 /* harmony default export */ __webpack_exports__["a"] = ({
     namespaced: true,
     state: {
@@ -59667,21 +59685,6 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
         }
     },
     actions: {
-        getData({ commit, state }, payload) {
-            if (!state.id || state.id != payload.id || payload.force) {
-                let path = '/api/proposition/' + payload.id + '/authors_expense/';
-                if (payload.type) {
-                    path += payload.type;
-                }
-                __WEBPACK_IMPORTED_MODULE_0_axios_index___default.a.get(path).then(res => {
-                    commit('initData', res.data);
-                }).catch(err => {
-                    if (err.response.status === 403) {
-                        window.location.href = '/propositions';
-                    }
-                });
-            }
-        },
         saveData({ state, commit }, id) {
             return new Promise((resolve, reject) => {
                 if (id) {
@@ -59699,6 +59702,12 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
                     reject();
                 }
             });
+        },
+        initClear({ commit }) {
+            return new Promise((resolve, reject) => {
+                commit('initData', initialState);
+                resolve();
+            });
         }
     }
 });
@@ -59714,7 +59723,19 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_lodash__);
 
 
-
+let initialState = {
+    id: 0,
+    title: '',
+    authors: [],
+    concept: '',
+    note: '',
+    possible_products: [],
+    dotation: 'no',
+    dotation_amount: '',
+    dotation_origin: '',
+    manuscript: '',
+    manuscript_documents: []
+};
 /* harmony default export */ __webpack_exports__["a"] = ({
     namespaced: true,
     state: {
@@ -59768,18 +59789,6 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
         }
     },
     actions: {
-        getData({ commit, state }, payload) {
-            if (!state.id || state.id != payload.id || payload.force) {
-                //retrieve data only we don't have it or we need to refresh it
-                __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/api/proposition/' + payload.id + '/basic_data').then(res => {
-                    commit('initData', res.data);
-                }).catch(err => {
-                    if (err.response.status === 403) {
-                        window.location.href = '/propositions';
-                    }
-                });
-            }
-        },
         saveData({ state }, id) {
             return new Promise((resolve, reject) => {
                 if (id) {
@@ -59801,6 +59810,12 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
         filenameSave({ commit }, payload) {
             commit('filenameSave', payload);
             //TODO: make request to change in system
+        },
+        initClear({ commit }) {
+            return new Promise((resolve, reject) => {
+                commit('initData', initialState);
+                resolve();
+            });
         }
     }
 });
@@ -59813,7 +59828,19 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios_index__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios_index___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios_index__);
 
-
+let initialState = {
+    id: 0,
+    author_expenses: [],
+    offers: [],
+    authors_expenses: [],
+    authors_total: 0,
+    authors_advance: 0,
+    authors_other: 0,
+    marketing_expense: 0,
+    production_expense: 0,
+    design_layout_expense: 0,
+    dotation: 0
+};
 /* harmony default export */ __webpack_exports__["a"] = ({
     namespaced: true,
     state: {
@@ -59838,18 +59865,6 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
         }
     },
     actions: {
-        getData({ commit, state, dispatch }, payload) {
-            if (!state.id || state.id != payload.id || payload.force) {
-                //retrieve data only we don't have it or we need to refresh it
-                __WEBPACK_IMPORTED_MODULE_0_axios_index___default.a.get('/api/proposition/' + payload.id + '/calculation').then(res => {
-                    commit('initData', res.data);
-                }).catch(err => {
-                    if (err.response.status === 403) {
-                        window.location.href = '/propositions';
-                    }
-                });;
-            }
-        },
         saveData({ state, commit }, id) {
             return new Promise((resolve, reject) => {
                 if (id) {
@@ -59861,6 +59876,12 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
                 } else {
                     reject();
                 }
+            });
+        },
+        initClear({ commit }) {
+            return new Promise((resolve, reject) => {
+                commit('initData', initialState);
+                resolve();
             });
         }
     },
@@ -59921,10 +59942,25 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
 
 
+let initialState = {
+    proposition_id: 0,
+    supergroup: 0,
+    upgroup: 0,
+    group: 0,
+    note: '',
+    book_type_group: 0,
+    book_type: 0,
+    school_type: [],
+    school_level: [],
+    school_assignment: 0,
+    school_subject: 0,
+    school_subject_detailed: 0,
+    biblioteca: 0
+};
 /* harmony default export */ __webpack_exports__["a"] = ({
     namespaced: true,
     state: {
-        id: 0,
+        proposition_id: 0,
         supergroup: 0,
         upgroup: 0,
         group: 0,
@@ -59944,22 +59980,33 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
                 state.supergroup = payload.group.parent.parent_id;
                 state.upgroup = payload.group.parent.id;
                 state.group = payload.group.id;
+            } else {
+                state.supergroup = 0;
+                state.upgroup = 0;
+                state.group = 0;
             }
             if (payload.book_type) {
                 state.book_type_group = payload.book_type.parent_id;
                 state.book_type = payload.book_type.id;
+            } else {
+                state.book_type_group = 0;
+                state.book_type = 0;
             }
-            if (payload.school_type) {
-                state.school_type = payload.school_type;
-            }
+            state.school_type = payload.school_type;
+
             state.school_level = payload.school_level;
             state.school_assignment = payload.school_assignment;
             if (payload.school_subject) {
                 state.school_subject = payload.school_subject.parent_id;
                 state.school_subject_detailed = payload.school_subject.id;
+            } else {
+                state.school_subject = 0;
+                state.school_subject_detailed = 0;
             }
             if (payload.biblioteca) {
                 state.biblioteca = payload.biblioteca.id;
+            } else {
+                state.biblioteca = 0;
             }
             state.note = payload.note;
         }
@@ -59977,6 +60024,12 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
                     reject();
                 }
             });
+        },
+        initClear({ commit }) {
+            return new Promise((resolve, reject) => {
+                commit('initData', initialState);
+                resolve();
+            });
         }
     }
 });
@@ -59989,7 +60042,26 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios_index__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios_index___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios_index__);
 
-
+let initialState = {
+    marketing_expense: {
+        budget: {
+            totals: {}
+        },
+        expense: {
+            totals: {}
+        }
+    },
+    production_expense: {
+        budget: {
+            totals: {}
+        },
+        expense: {
+            totals: {}
+        }
+    },
+    authors: [],
+    requests: {}
+};
 /* harmony default export */ __webpack_exports__["a"] = ({
     namespaced: true,
     state: {
@@ -60021,18 +60093,6 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
         }
     },
     actions: {
-        getData({ commit, state }, payload) {
-            if (!state.id || state.id != payload.id || payload.force) {
-                //retrieve data only we don't have it or we need to refresh it
-                __WEBPACK_IMPORTED_MODULE_0_axios_index___default.a.get('/api/proposition/' + payload.id + '/compare').then(res => {
-                    commit('initData', res.data);
-                }).catch(err => {
-                    if (err.response.status === 403) {
-                        window.location.href = '/propositions';
-                    }
-                });;
-            }
-        },
         saveData({ state, commit }, id) {
             return new Promise((resolve, reject) => {
                 if (id) {
@@ -60044,6 +60104,12 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
                 } else {
                     reject();
                 }
+            });
+        },
+        initClear({ commit }) {
+            return new Promise((resolve, reject) => {
+                commit('initData', initialState);
+                resolve();
             });
         }
     }
@@ -60057,7 +60123,12 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios_index__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios_index___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios_index__);
 
-
+let initialState = {
+    id: 0,
+    date: '',
+    priority: '',
+    note: ''
+};
 /* harmony default export */ __webpack_exports__["a"] = ({
     namespaced: true,
     state: {
@@ -60078,18 +60149,6 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
         }
     },
     actions: {
-        getData({ commit, state }, payload) {
-            if (!state.id || state.id != payload.id || payload.force) {
-                //retrieve data only we don't have it or we need to refresh it
-                __WEBPACK_IMPORTED_MODULE_0_axios_index___default.a.get('/api/proposition/' + payload.id + '/deadline').then(res => {
-                    commit('initData', res.data);
-                }).catch(err => {
-                    if (err.response.status === 403) {
-                        window.location.href = '/propositions';
-                    }
-                });;
-            }
-        },
         saveData({ state, commit }, id) {
             return new Promise((resolve, reject) => {
                 if (id) {
@@ -60101,6 +60160,12 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
                 } else {
                     reject();
                 }
+            });
+        },
+        initClear({ commit }) {
+            return new Promise((resolve, reject) => {
+                commit('initData', initialState);
+                resolve();
             });
         }
     }
@@ -60114,7 +60179,12 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios_index__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios_index___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios_index__);
 
-
+let initialState = {
+    id: 0,
+    type: '',
+    note: '',
+    margin: ''
+};
 /* harmony default export */ __webpack_exports__["a"] = ({
     namespaced: true,
     state: {
@@ -60132,20 +60202,6 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
         }
     },
     actions: {
-        getData({ commit, state }, payload) {
-            //retrieve data only we don't have it or we need to refresh it
-            let path = '/api/proposition/' + payload.id + '/distribution_expense/';
-            if (payload.type) {
-                path += payload.type;
-            }
-            __WEBPACK_IMPORTED_MODULE_0_axios_index___default.a.get(path).then(res => {
-                commit('initData', res.data);
-            }).catch(err => {
-                if (err.response.status === 403) {
-                    window.location.href = '/propositions';
-                }
-            });
-        },
         saveData({ state, commit }, id) {
             return new Promise((resolve, reject) => {
                 if (id) {
@@ -60162,6 +60218,12 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
                     reject();
                 }
             });
+        },
+        initClear({ commit }) {
+            return new Promise((resolve, reject) => {
+                commit('initData', initialState);
+                resolve();
+            });
         }
     }
 });
@@ -60174,7 +60236,12 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios_index__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios_index___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios_index__);
 
-
+let initialState = {
+    proposition_id: 0,
+    files: [],
+    final: [],
+    dir: ''
+};
 /* harmony default export */ __webpack_exports__["a"] = ({
     namespaced: true,
     state: {
@@ -60237,6 +60304,12 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
             commit('deleteFile', payload.data);
             //make request to remove from system
             __WEBPACK_IMPORTED_MODULE_0_axios_index___default.a.delete('/api/file/' + payload.data.id);
+        },
+        initClear({ commit }) {
+            return new Promise((resolve, reject) => {
+                commit('initData', initialState);
+                resolve();
+            });
         }
     }
 });
@@ -60249,7 +60322,23 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios_index__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios_index___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios_index__);
 
-
+let initialState = {
+    type: '',
+    proposition_id: 0,
+    layout_complexity: '',
+    layout_include: '',
+    layout_note: '',
+    layout_exact_price: '',
+    design_complexity: '',
+    design_include: '',
+    design_note: '',
+    design_exact_price: '',
+    number_of_pages: 0,
+    photos_amount: 0,
+    illustrations_amount: 0,
+    technical_drawings_amount: 0,
+    group: {}
+};
 /* harmony default export */ __webpack_exports__["a"] = ({
     namespaced: true,
     state: {
@@ -60278,23 +60367,6 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
         }
     },
     actions: {
-        getData({ commit, state }, payload) {
-            return new Promise((resolve, reject) => {
-                let path = '/api/proposition/' + payload.id + '/layout_expense/';
-                if (payload.type) {
-                    path += payload.type;
-                }
-                __WEBPACK_IMPORTED_MODULE_0_axios_index___default.a.get(path).then(res => {
-                    commit('initData', res.data);
-                    resolve();
-                }).catch(err => {
-                    if (err.response.status === 403) {
-                        window.location.href = '/propositions';
-                    }
-                    reject();
-                });
-            });
-        },
         saveData({ state, commit }, id) {
             return new Promise((resolve, reject) => {
                 if (id) {
@@ -60310,6 +60382,12 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
                 } else {
                     reject();
                 }
+            });
+        },
+        initClear({ commit }) {
+            return new Promise((resolve, reject) => {
+                commit('initData', initialState);
+                resolve();
             });
         }
     },
@@ -60358,7 +60436,12 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios_index__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios_index___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios_index__);
 
-
+let initialState = {
+    id: 0,
+    main_target: '',
+    note: '',
+    market_potential_documents: []
+};
 /* harmony default export */ __webpack_exports__["a"] = ({
     namespaced: true,
     state: {
@@ -60390,17 +60473,11 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
         }
     },
     actions: {
-        getData({ commit, state }, payload) {
-            if (!state.id || state.id != payload.id || payload.force) {
-                //retrieve data only we don't have it or we need to refresh it
-                __WEBPACK_IMPORTED_MODULE_0_axios_index___default.a.get('/api/proposition/' + payload.id + '/market_potential').then(res => {
-                    commit('initData', res.data);
-                }).catch(err => {
-                    if (err.response.status === 403) {
-                        window.location.href = '/propositions';
-                    }
-                });
-            }
+        initClear({ commit }) {
+            return new Promise((resolve, reject) => {
+                commit('initData', initialState);
+                resolve();
+            });
         },
         saveData({ state }, id) {
             return new Promise((resolve, reject) => {
@@ -60435,7 +60512,10 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios_index__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios_index___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios_index__);
 
-
+let initialState = {
+    cover: [],
+    leaflet: []
+};
 /* harmony default export */ __webpack_exports__["a"] = ({
     namespaced: true,
     state: {
@@ -60488,6 +60568,12 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
             commit('deleteFile', payload.data);
             //make request to remove from system
             __WEBPACK_IMPORTED_MODULE_0_axios_index___default.a.delete('/api/file/' + payload.data.id);
+        },
+        initClear({ commit }) {
+            return new Promise((resolve, reject) => {
+                commit('initData', initialState);
+                resolve();
+            });
         }
     }
 });
@@ -60500,7 +60586,14 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios_index__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios_index___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios_index__);
 
-
+let initialState = {
+    proposition_id: 0,
+    type: '',
+    expense: '',
+    note: '',
+    additional_expenses: [],
+    parent: {}
+};
 /* harmony default export */ __webpack_exports__["a"] = ({
     namespaced: true,
     state: {
@@ -60529,18 +60622,10 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
         }
     },
     actions: {
-        getData({ commit, state }, payload) {
-            //retrieve data only we don't have it or we need to refresh it
-            let path = '/api/proposition/' + payload.id + '/marketing_expense/';
-            if (payload.type) {
-                path += payload.type;
-            }
-            __WEBPACK_IMPORTED_MODULE_0_axios_index___default.a.get(path).then(res => {
-                commit('initData', res.data);
-            }).catch(err => {
-                if (err.response.status === 403) {
-                    window.location.href = '/propositions';
-                }
+        initClear({ commit }) {
+            return new Promise((resolve, reject) => {
+                commit('initData', initialState);
+                resolve();
             });
         },
         saveData({ state, commit }, id) {
@@ -60572,7 +60657,11 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios_index__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios_index___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios_index__);
 
-
+let initialState = {
+    webshop: '',
+    jpg: [],
+    psd: []
+};
 /* harmony default export */ __webpack_exports__["a"] = ({
     namespaced: true,
     state: {
@@ -60626,6 +60715,12 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
             commit('deleteFile', payload.data);
             //make request to remove from system
             __WEBPACK_IMPORTED_MODULE_0_axios_index___default.a.delete('/api/file/' + payload.data.id);
+        },
+        initClear({ commit }) {
+            return new Promise((resolve, reject) => {
+                commit('initData', initialState);
+                resolve();
+            });
         }
     }
 });
@@ -60666,7 +60761,27 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
 
-
+let initialState = {
+    price_first_year: {
+        retail: 0,
+        wholesale: 0,
+        direct: 0,
+        field: 0,
+        promotors: 0,
+        export: 0
+    },
+    price_second_year: {
+        retail: 0,
+        wholesale: 0,
+        direct: 0,
+        field: 0,
+        promotors: 0,
+        export: 0
+    },
+    retail_price: 0,
+    selected_circulation: 0,
+    offers: {}
+};
 /* harmony default export */ __webpack_exports__["a"] = ({
     namespaced: true,
     state: {
@@ -60698,17 +60813,11 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
         }
     },
     actions: {
-        getData({ commit, state }, payload) {
-            if (!state.id || state.id != payload.id || payload.force) {
-                //retrieve data only we don't have it or we need to refresh it
-                __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/api/proposition/' + payload.id + '/price_definition').then(res => {
-                    commit('initData', res.data);
-                }).catch(err => {
-                    if (err.response.status === 403) {
-                        window.location.href = '/propositions';
-                    }
-                });
-            }
+        initClear({ commit }) {
+            return new Promise((resolve, reject) => {
+                commit('initData', initialState);
+                resolve();
+            });
         },
         saveData({ state, commit }, id) {
             return new Promise((resolve, reject) => {
@@ -60732,7 +60841,11 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios_index__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios_index___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios_index__);
 
-
+let initialState = {
+    id: 0,
+    offers: {},
+    active_offer: 0
+};
 /* harmony default export */ __webpack_exports__["a"] = ({
     namespaced: true,
     state: {
@@ -60767,22 +60880,10 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
         }
     },
     actions: {
-        getData({ commit, state }, payload) {
+        initClear({ commit }) {
             return new Promise((resolve, reject) => {
-                if (!state.id || state.id != payload.id || payload.force) {
-                    //retrieve data only we don't have it or we need to refresh it
-                    __WEBPACK_IMPORTED_MODULE_0_axios_index___default.a.get('/api/proposition/' + payload.id + '/print').then(res => {
-                        commit('initData', res.data);
-                        resolve();
-                    }).catch(err => {
-                        if (err.response.status === 403) {
-                            window.location.href = '/propositions';
-                        }
-                        reject();
-                    });
-                } else {
-                    resolve();
-                }
+                commit('initData', initialState);
+                resolve();
             });
         },
         saveData({ state }, id) {
@@ -60818,7 +60919,72 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios_index__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios_index___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios_index__);
 
-
+let initialState = {
+    id: 0,
+    type: '',
+    text_price: '',
+    text_price_amount: '',
+    note: '',
+    accontation: '',
+    netto_price_percentage: '',
+    reviews: '',
+    lecture: '',
+    lecture_amount: '',
+    correction: '',
+    correction_amount: '',
+    proofreading: '',
+    proofreading_amount: '',
+    translation: '',
+    translation_amount: '',
+    index: '',
+    index_amount: '',
+    epilogue: '',
+    photos: '',
+    photos_amount: '',
+    illustrations: '',
+    illustrations_amount: '',
+    technical_drawings: '',
+    technical_drawings_amount: '',
+    expert_report: '',
+    copyright: '',
+    copyright_mediator: '',
+    selection: '',
+    powerpoint_presentation: '',
+    methodical_instrumentarium: '',
+    additional_expenses: [],
+    parent: {
+        text_price: '',
+        text_price_amount: '',
+        note: '',
+        accontation: '',
+        netto_price_percentage: '',
+        reviews: '',
+        lecture: '',
+        lecture_amount: '',
+        correction: '',
+        correction_amount: '',
+        proofreading: '',
+        proofreading_amount: '',
+        translation: '',
+        translation_amount: '',
+        index: '',
+        index_amount: '',
+        epilogue: '',
+        photos: '',
+        photos_amount: '',
+        illustrations: '',
+        illustrations_amount: '',
+        technical_drawings: '',
+        technical_drawings_amount: '',
+        expert_report: '',
+        copyright: '',
+        copyright_mediator: '',
+        selection: '',
+        powerpoint_presentation: '',
+        methodical_instrumentarium: '',
+        additional_expenses: []
+    }
+};
 /* harmony default export */ __webpack_exports__["a"] = ({
     namespaced: true,
     state: {
@@ -60905,17 +61071,10 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
         }
     },
     actions: {
-        getData({ commit, state }, payload) {
-            let path = '/api/proposition/' + payload.id + '/production_expense/';
-            if (payload.type) {
-                path += payload.type;
-            }
-            __WEBPACK_IMPORTED_MODULE_0_axios_index___default.a.get(path).then(res => {
-                commit('initData', res.data);
-            }).catch(err => {
-                if (err.response.status === 403) {
-                    window.location.href = '/propositions';
-                }
+        initClear({ commit }) {
+            return new Promise((resolve, reject) => {
+                commit('initData', initialState);
+                resolve();
             });
         },
         saveData({ state, commit }, id) {
@@ -61025,7 +61184,28 @@ let initialState = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios_index__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios_index___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios_index__);
 
-
+let initialState = {
+    id: 0,
+    circulations: [],
+    additions: [],
+    number_of_pages: 0,
+    width: 0,
+    height: 0,
+    paper_type: '',
+    additional_work: '',
+    colors: '',
+    colors_first_page: '',
+    colors_last_page: '',
+    cover_type: '',
+    cover_paper_type: '',
+    cover_colors: '',
+    cover_plastification: '',
+    film_print: 0,
+    blind_print: 0,
+    uv_print: 0,
+    book_binding: '',
+    note: ''
+};
 /* harmony default export */ __webpack_exports__["a"] = ({
     namespaced: true,
     state: {
@@ -61094,22 +61274,10 @@ let initialState = {
         }
     },
     actions: {
-        getData({ commit, state }, payload) {
+        initClear({ commit }) {
             return new Promise((resolve, reject) => {
-                if (!state.id || state.id != payload.id || payload.force) {
-                    //retrieve data only we don't have it or we need to refresh it
-                    __WEBPACK_IMPORTED_MODULE_0_axios_index___default.a.get('/api/proposition/' + payload.id + '/technical_data').then(res => {
-                        commit('initData', res.data);
-                        resolve();
-                    }).catch(err => {
-                        if (err.response.status === 403) {
-                            window.location.href = '/propositions';
-                        }
-                        reject();
-                    });
-                } else {
-                    resolve();
-                }
+                commit('initData', initialState);
+                resolve();
             });
         },
         saveData({ commit, state }, id) {
@@ -78404,7 +78572,7 @@ var render = function() {
             _vm._v(_vm._s(_vm.lang("Category")))
           ]),
           _vm._v(" "),
-          _vm.data.group.parent
+          _vm.data.group
             ? _c("h3", { staticClass: "mb-1 text-white" }, [
                 _vm._v(_vm._s(_vm.data.group.parent.parent.name))
               ])
