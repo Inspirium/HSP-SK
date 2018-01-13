@@ -8,6 +8,8 @@ use Intervention\Image\Facades\Image;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
+use OwenIt\Auditing\Contracts\Auditable;
+use OwenIt\Auditing\Contracts\UserResolver;
 
 
 /**
@@ -74,14 +76,19 @@ use Laravel\Passport\HasApiTokens;
  * @method static \Illuminate\Database\Eloquent\Builder|\Inspirium\Models\HumanResources\Employee wherePassword($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Inspirium\Models\HumanResources\Employee whereRememberToken($value)
  */
-class Employee extends Authenticatable {
+class Employee extends Authenticatable implements Auditable, UserResolver{
 
-	use Notifiable, HasApiTokens;
+	use Notifiable, HasApiTokens, \OwenIt\Auditing\Auditable;
 
     protected $guarded = [ 'created_at', 'update_at', 'deleted_at' ];
     protected $appends = [ 'name', 'department_name', 'phone_merged', 'mobile_merged', 'link' ];
 
 	protected $hidden = [ 'password', 'remember_token' ];
+
+	public static function resolveId()
+	{
+		return \Auth::check() ? \Auth::user()->getAuthIdentifier() : null;
+	}
 
     public function department() {
         return $this->belongsTo('Inspirium\Models\HumanResources\Department');
