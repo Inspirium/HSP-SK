@@ -40492,9 +40492,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
@@ -40516,37 +40513,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             window.open(link, "_blank");
             return false;
         },
-        fileDelete: function (index, type) {
-            this[type].splice(index, 1);
-        },
-        fileAdd: function (data) {
-            if (data.isFinal) {
-                this.leaflet.push(data.file);
-            } else {
-                this.cover.push(data.file);
-            }
-        },
-        fileNameSave: function (data) {
-            let files = this.files;
-            if (data.isFinal) {
-                files = this.final;
-            }
-            _.forEach(files, o => {
-                if (o.id === payload.id) {
-                    o.title = data.file.title;
-                }
-            });
-        },
-        saveFiles: function () {
-            axios.post('/api/proposition/' + this.$route.params.id + '/files/marketing', { cover: this.cover, leaflet: this.leaflet }).then(res => {});
+        fileWarning(data) {
+            this.$store.dispatch('proposition/listenForWarning', { vue: this, data: data });
+            jQuery('#modal-warning').modal('show');
         }
-    },
-    mounted() {
-        //TODO: move to store
-        axios.get('/api/proposition/' + this.$route.params.id + '/files/marketing').then(res => {
-            this.cover = res.data.cover;
-            this.leaflet = res.data.leaflet;
-        });
     }
 });
 
@@ -59518,6 +59488,10 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__proposition_compare__ = __webpack_require__(286);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__proposition_price_definition__ = __webpack_require__(293);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__proposition_files__ = __webpack_require__(584);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__proposition_multimedia__ = __webpack_require__(586);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__proposition_marketing__ = __webpack_require__(585);
+
+
 
 
 
@@ -59558,7 +59532,9 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
         compare: __WEBPACK_IMPORTED_MODULE_16__proposition_compare__["a" /* default */],
         price_definition: __WEBPACK_IMPORTED_MODULE_17__proposition_price_definition__["a" /* default */],
         owner: __WEBPACK_IMPORTED_MODULE_14__proposition_owner__["a" /* default */],
-        files: __WEBPACK_IMPORTED_MODULE_18__proposition_files__["a" /* default */]
+        files: __WEBPACK_IMPORTED_MODULE_18__proposition_files__["a" /* default */],
+        marketing: __WEBPACK_IMPORTED_MODULE_20__proposition_marketing__["a" /* default */],
+        multimedia: __WEBPACK_IMPORTED_MODULE_19__proposition_multimedia__["a" /* default */]
     },
     state: {
         proposition_id: 0,
@@ -80916,7 +80892,7 @@ var render = function() {
                   staticClass: "file-box-sty icon icon-cancel",
                   on: {
                     click: function($event) {
-                      _vm.fileDelete(index, "cover")
+                      _vm.fileWarning({ id: file.id, type: "cover" })
                     }
                   }
                 },
@@ -81014,7 +80990,7 @@ var render = function() {
                   staticClass: "file-box-sty icon icon-cancel",
                   on: {
                     click: function($event) {
-                      _vm.fileDelete(index, "leaflet")
+                      _vm.fileWarning({ id: file.id, type: "leaflet" })
                     }
                   }
                 },
@@ -81038,18 +81014,6 @@ var render = function() {
             }
           },
           [_vm._v(_vm._s(_vm.lang("Upload")))]
-        )
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "modal-footer btn-footer" }, [
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-lg btn-save",
-            attrs: { type: "button" },
-            on: { click: _vm.saveFiles }
-          },
-          [_vm._v(_vm._s(_vm.lang("Save")))]
         )
       ]),
       _vm._v(" "),
@@ -100026,6 +99990,137 @@ module.exports = __webpack_require__(259);
                     let path = '/api/proposition/' + id + '/files/' + rootState.route.meta.dir;
                     __WEBPACK_IMPORTED_MODULE_0_axios_index___default.a.post(path, state).then(res => {
                         commit('initData', res.data);
+                        resolve();
+                    }).catch(() => {
+                        reject();
+                    });
+                } else {
+                    reject();
+                }
+            });
+        },
+        deleteFile({ commit }, payload) {
+            commit('deleteFile', payload.data);
+            //make request to remove from system
+            __WEBPACK_IMPORTED_MODULE_0_axios_index___default.a.delete('/api/file/' + payload.data.id);
+        }
+    }
+});
+
+/***/ }),
+/* 585 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios_index__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios_index___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios_index__);
+
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+    namespaced: true,
+    state: {
+        cover: [],
+        leaflet: []
+    },
+    mutations: {
+        initData(state, payload) {
+            for (let i in Object.keys(state)) {
+                let key = Object.keys(state)[i];
+                state[key] = payload[key];
+            }
+        },
+        addFile(state, data) {
+            if (data.isFinal) {
+                state.leaflet.push(data.file);
+            } else {
+                state.cover.push(data.file);
+            }
+        },
+        deleteFile(state, payload) {
+            state[payload.type] = _.filter(state[payload.type], file => {
+                return file.id !== payload.id;
+            });
+        },
+        filenameSave(state, payload) {
+            let files = payload.isFinal ? state.leaflet : state.cover;
+            _.forEach(files, o => {
+                if (o.id === payload.id) {
+                    o.title = payload.file.title;
+                }
+            });
+        }
+    },
+    actions: {
+        saveData({ state, commit }, id) {
+            return new Promise((resolve, reject) => {
+                if (id) {
+                    __WEBPACK_IMPORTED_MODULE_0_axios_index___default.a.post('/api/proposition/' + id + '/files/marketing', state).then(res => {
+                        resolve();
+                    }).catch(() => {
+                        reject();
+                    });
+                } else {
+                    reject();
+                }
+            });
+        },
+        deleteFile({ commit }, payload) {
+            commit('deleteFile', payload.data);
+            //make request to remove from system
+            __WEBPACK_IMPORTED_MODULE_0_axios_index___default.a.delete('/api/file/' + payload.data.id);
+        }
+    }
+});
+
+/***/ }),
+/* 586 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios_index__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios_index___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios_index__);
+
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+    namespaced: true,
+    state: {
+        webshop: '',
+        jpg: [],
+        psd: []
+    },
+    mutations: {
+        initData(state, payload) {
+            for (let i in Object.keys(state)) {
+                let key = Object.keys(state)[i];
+                state[key] = payload[key];
+            }
+        },
+        addFile(state, data) {
+            if (data.isFinal) {
+                state.psd.push(data.file);
+            } else {
+                state.jpg.push(data.file);
+            }
+        },
+        deleteFile(state, payload) {
+            state[payload.type] = _.filter(state[payload.type], file => {
+                return file.id !== payload.id;
+            });
+        },
+        filenameSave(state, payload) {
+            let files = payload.isFinal ? state.psd : state.jpg;
+            _.forEach(files, o => {
+                if (o.id === payload.id) {
+                    o.title = payload.file.title;
+                }
+            });
+        }
+    },
+    actions: {
+        saveData({ state, commit }, id) {
+            return new Promise((resolve, reject) => {
+                if (id) {
+                    __WEBPACK_IMPORTED_MODULE_0_axios_index___default.a.post('/api/proposition/' + id + '/files/multimedia', state).then(res => {
                         resolve();
                     }).catch(() => {
                         reject();
