@@ -38348,12 +38348,41 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             }
         },
         assignValues: function () {
-            axios.post('/api/proposition/' + this.$route.params.id + '/assign/document', { employees: this.employees, departments: this.departments, description: this.description, date: this.date, access: this.access, priority: this.priority, dir: this.$route.meta.dir, path: this.$route.path, step: this.$route.meta.dir }).then(() => {
-                toastr.success(this.lang('Uspješno obavljeno'));
-                $('#centralModalAssign').modal('hide');
-            }).catch(() => {
-                toastr.error(this.lang('Došlo je do problema. Pokušajte ponovno'));
-            });
+            if (this.employees.length) {
+                let saveButton = jQuery(event.target);
+                saveButton.toggleClass('spinner-loading');
+                this.isSpinnerHidden = '';
+
+                axios.post('/api/proposition/' + this.$route.params.id + '/assign/document', {
+                    employees: this.employees,
+                    departments: this.departments,
+                    description: this.description,
+                    date: this.date,
+                    access: this.access,
+                    priority: this.priority,
+                    dir: this.$route.meta.dir,
+                    path: this.$route.path,
+                    step: this.$route.meta.dir
+                }).then(() => {
+                    this.spinnerType = 'fa-check spinner-success';
+                    setTimeout(() => {
+                        this.spinnerType = 'fa-refresh spinner-delay-rotate spinner-loader';
+                        this.isSpinnerHidden = 'hide';
+                        saveButton.toggleClass("spinner-loading");
+
+                        $('#centralModalAssign').modal('hide');
+                    }, 1000);
+                    toastr.success(this.lang('Uspješno obavljeno'));
+                }).catch(() => {
+                    this.spinnerType = 'fa-times spinner-fail';
+                    setTimeout(() => {
+                        this.spinnerType = 'fa-refresh spinner-delay-rotate spinner-loader';
+                        this.isSpinnerHidden = 'hide';
+                        saveButton.toggleClass("spinner-loading");
+                    }, 1000);
+                    toastr.error(this.lang('Došlo je do problema. Pokušajte ponovno'));
+                });
+            }
         }
     },
     mounted() {
@@ -38530,29 +38559,40 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             }
         },
         assignValues: function (event) {
-            let saveButton = jQuery(event.target);
-            saveButton.toggleClass('spinner-loading');
-            this.isSpinnerHidden = '';
+            if (this.employees.length) {
+                let saveButton = jQuery(event.target);
+                saveButton.toggleClass('spinner-loading');
+                this.isSpinnerHidden = '';
 
-            axios.post('/api/proposition/' + this.$route.params.id + '/assign', { employees: this.employees, departments: this.departments, description: this.description, date: this.date, access: this.access, priority: this.priority, path: window.location.href, step: this.$route.meta.save }).then(() => {
-                this.spinnerType = 'fa-check spinner-success';
-                setTimeout(() => {
-                    this.spinnerType = 'fa-refresh spinner-delay-rotate spinner-loader';
-                    this.isSpinnerHidden = 'hide';
-                    saveButton.toggleClass("spinner-loading");
+                axios.post('/api/proposition/' + this.$route.params.id + '/assign', {
+                    employees: this.employees,
+                    departments: this.departments,
+                    description: this.description,
+                    date: this.date,
+                    access: this.access,
+                    priority: this.priority,
+                    path: window.location.href,
+                    step: this.$route.meta.save
+                }).then(() => {
+                    this.spinnerType = 'fa-check spinner-success';
+                    setTimeout(() => {
+                        this.spinnerType = 'fa-refresh spinner-delay-rotate spinner-loader';
+                        this.isSpinnerHidden = 'hide';
+                        saveButton.toggleClass("spinner-loading");
 
-                    $('#centralModalAssign').modal('hide');
-                }, 1000);
-                toastr.success(this.lang('Uspješno obavljeno'));
-            }).catch(() => {
-                this.spinnerType = 'fa-times spinner-fail';
-                setTimeout(() => {
-                    this.spinnerType = 'fa-refresh spinner-delay-rotate spinner-loader';
-                    this.isSpinnerHidden = 'hide';
-                    saveButton.toggleClass("spinner-loading");
-                }, 1000);
-                toastr.error(this.lang('Došlo je do problema. Pokušajte ponovno'));
-            });
+                        $('#centralModalAssign').modal('hide');
+                    }, 1000);
+                    toastr.success(this.lang('Uspješno obavljeno'));
+                }).catch(() => {
+                    this.spinnerType = 'fa-times spinner-fail';
+                    setTimeout(() => {
+                        this.spinnerType = 'fa-refresh spinner-delay-rotate spinner-loader';
+                        this.isSpinnerHidden = 'hide';
+                        saveButton.toggleClass("spinner-loading");
+                    }, 1000);
+                    toastr.error(this.lang('Došlo je do problema. Pokušajte ponovno'));
+                });
+            }
         }
     },
     mounted() {
@@ -38675,27 +38715,33 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             }
         },
         assignValues: function () {
-            let saveButton = jQuery(event.target);
-            saveButton.toggleClass('spinner-loading');
-            this.isSpinnerHidden = '';
-            axios.post('/api/proposition/' + this.$route.params.id + '/approval', { employees: this.employees, departments: this.departments, description: this.description }).then(() => {
-                this.spinnerType = 'fa-check spinner-success';
-                setTimeout(() => {
-                    this.spinnerType = 'fa-refresh spinner-delay-rotate spinner-loader';
-                    this.isSpinnerHidden = 'hide';
-                    saveButton.toggleClass("spinner-loading");
-                    $('#propositionApprovalModal').modal('hide');
-                }, 1000);
-                toastr.success(this.lang('Uspješno obavljeno'));
-            }).catch(() => {
-                this.spinnerType = 'fa-times spinner-fail';
-                setTimeout(() => {
-                    this.spinnerType = 'fa-refresh spinner-delay-rotate spinner-loader';
-                    this.isSpinnerHidden = 'hide';
-                    saveButton.toggleClass("spinner-loading");
-                }, 1000);
-                toastr.error(this.lang('Došlo je do problema. Pokušajte ponovno'));
-            });
+            if (this.employees.length) {
+                let saveButton = jQuery(event.target);
+                saveButton.toggleClass('spinner-loading');
+                this.isSpinnerHidden = '';
+                axios.post('/api/proposition/' + this.$route.params.id + '/approval', {
+                    employees: this.employees,
+                    departments: this.departments,
+                    description: this.description
+                }).then(() => {
+                    this.spinnerType = 'fa-check spinner-success';
+                    setTimeout(() => {
+                        this.spinnerType = 'fa-refresh spinner-delay-rotate spinner-loader';
+                        this.isSpinnerHidden = 'hide';
+                        saveButton.toggleClass("spinner-loading");
+                        $('#propositionApprovalModal').modal('hide');
+                    }, 1000);
+                    toastr.success(this.lang('Uspješno obavljeno'));
+                }).catch(() => {
+                    this.spinnerType = 'fa-times spinner-fail';
+                    setTimeout(() => {
+                        this.spinnerType = 'fa-refresh spinner-delay-rotate spinner-loader';
+                        this.isSpinnerHidden = 'hide';
+                        saveButton.toggleClass("spinner-loading");
+                    }, 1000);
+                    toastr.error(this.lang('Došlo je do problema. Pokušajte ponovno'));
+                });
+            }
         }
     }
 });
@@ -38807,12 +38853,17 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             }
         },
         assignValues: function () {
-            let saveButton = document.getElementById('save-btn');
-            saveButton.setAttribute('style', 'color: #92C100 !important; position: relative');
-            $("i.spinner-loader").toggleClass("hide");
+            if (this.employees.length) {
+                let saveButton = document.getElementById('save-btn');
+                saveButton.setAttribute('style', 'color: #92C100 !important; position: relative');
+                $("i.spinner-loader").toggleClass("hide");
 
-            this.$emit('sendForApproval', { employees: this.employees, description: this.description });
-            $('#taskOrderApprovalModal').modal('hide');
+                this.$emit('sendForApproval', {
+                    employees: this.employees,
+                    description: this.description
+                });
+                $('#taskOrderApprovalModal').modal('hide');
+            }
         }
     }
 });
@@ -38879,9 +38930,11 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     },
     methods: {
         confirm() {
-            this.$emit('reassign', this.employees);
-            this.employees = [];
-            this.employee = '';
+            if (this.employees.length) {
+                this.$emit('reassign', this.employees);
+                this.employees = [];
+                this.employee = '';
+            }
         },
         autocomplete: function (event, type) {
             if (this.cancel) {
@@ -42390,6 +42443,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_lodash__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modals_ExpenseApprovalModal__ = __webpack_require__(589);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 //
@@ -42608,72 +42662,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
 
 
 
@@ -42687,9 +42676,11 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             employees: [],
             description: '',
             cancel: false,
-            line_title: '',
-            line_budget: '',
-            line_expense: '',
+            line: {
+                title: '',
+                budget: '',
+                expense: ''
+            },
             titles: {
                 text_price: 'Text',
                 reviews: 'Reviews',
@@ -42712,6 +42703,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             },
             expense: ''
         };
+    },
+    components: {
+        ExpenseApprovalModal: __WEBPACK_IMPORTED_MODULE_2__modals_ExpenseApprovalModal__["a" /* default */]
     },
     computed: _extends({
         total_budget() {
@@ -42744,86 +42738,29 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         },
         sendForApproval: function (what) {
             if (what === 'marketing_expense') {
-                this.line_title = 'Marketing budget';
-                this.line_budget = this.marketing_expense.budget.totals;
-                this.line_expense = this.marketing_expense.expense.totals;
+                this.line.title = 'Marketing budget';
+                this.line.budget = this.marketing_expense.budget.totals;
+                this.line.expense = this.marketing_expense.expense.totals;
             }
             if (what === 'layout_expense') {
-                this.line_title = 'Layout and Design budget';
-                this.line_budget = this.production_expense.budget.totals.layout;
-                this.line_expense = this.production_expense.expense.totals.layout;
+                this.line.title = 'Layout and Design budget';
+                this.line.budget = this.production_expense.budget.totals.layout;
+                this.line.expense = this.production_expense.expense.totals.layout;
             }
             if (what.includes('production_expense.')) {
                 let vars = what.split('.');
-                this.line_title = this.titles[vars[1]];
-                this.line_budget = this.production_expense.budget.totals[vars[1]];
-                this.line_expense = this.production_expense.expense.totals[vars[1]];
+                this.line.title = this.titles[vars[1]];
+                this.line.budget = this.production_expense.budget.totals[vars[1]];
+                this.line.expense = this.production_expense.expense.totals[vars[1]];
             }
             if (what.includes('author_expense.')) {
                 let vars = what.split('.');
-                this.line_title = this.authors[vars[1]].name;
-                this.line_budget = this.authors[vars[1]].expenses[0].totals;
-                this.line_expense = this.authors[vars[1]].expenses[1].totals;
+                this.line.title = this.authors[vars[1]].name;
+                this.line.budget = this.authors[vars[1]].expenses[0].totals;
+                this.line.expense = this.authors[vars[1]].expenses[1].totals;
             }
             this.expense = what;
             $('#ModalCostApprove').modal('show');
-        },
-        autocomplete: function (event, type) {
-            if (this.cancel) {
-                this.cancel();
-                this.cancel = false;
-            }
-            let CancelToken = axios.CancelToken;
-            if (this[type].length > 2) {
-                axios.get('/api/human_resources/' + type + '/search/' + this[type], {
-                    cancelToken: new CancelToken(c => {
-                        this.cancel = c;
-                    })
-                }).then(response => {
-                    if (type === 'department') {
-                        this.d_suggestions = response.data;
-                    } else {
-                        this.e_suggestions = response.data;
-                    }
-                }).catch(error => {});
-            }
-        },
-        autocomplete_select: function (index, type) {
-            if (type === 'department') {
-                //this.$store.commit('proposition/pushToArray', {key: 'departments', group: 'assigned', value: this.d_suggestions[index]});
-                this.departments.push(this.d_suggestions[index]);
-                this.d_suggestions = [];
-                this.department = '';
-            } else {
-                //this.$store.commit('proposition/pushToArray', {key: 'employees', group: 'assigned', value: this.e_suggestions[index]});
-                this.employees.push(this.e_suggestions[index]);
-                this.e_suggestions = [];
-                this.employee = '';
-            }
-        },
-        assignValues: function () {
-            if (this.employees.length && this.expense) {
-                axios.post('/api/proposition/' + this.$route.params.id + '/request_approval', {
-                    requestees: this.employees,
-                    description: this.description,
-                    expense: this.line_expense,
-                    budget: this.line_budget,
-                    name: this.line_title,
-                    designation: this.expense
-                }).then(() => {
-                    this.employees = [];
-                    this.description = '';
-                    this.line_expense = '';
-                    this.line_budget = '';
-                    this.line_title = '';
-                    this.expense = '';
-                    $('#ModalCostApprove').modal('hide');
-                }).catch(err => {
-                    this.error = 'Error in request. Try again.';
-                });
-            } else {
-                this.error = 'Missing data';
-            }
         }
     }
 });
@@ -61290,7 +61227,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(3)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
 /* 310 */
@@ -61332,7 +61269,7 @@ exports.push([module.i, "\n.-col-group {\n  display: inline-block;\n  width: 150
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(3)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
 /* 316 */
@@ -95126,223 +95063,194 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "content" }, [
-    _c(
-      "div",
-      {
-        staticClass:
-          "row profile-head py-4 d-flex flex-column justify-content-center align-items-center"
-      },
-      [
-        _c("div", { staticClass: "col-md-12" }, [
-          _c("h1", { staticClass: "display-3 text-white text-center" }, [
-            _vm._v(_vm._s(_vm.lang("Budget vs. Expenses")))
+  return _c(
+    "div",
+    { staticClass: "content" },
+    [
+      _c(
+        "div",
+        {
+          staticClass:
+            "row profile-head py-4 d-flex flex-column justify-content-center align-items-center"
+        },
+        [
+          _c("div", { staticClass: "col-md-12" }, [
+            _c("h1", { staticClass: "display-3 text-white text-center" }, [
+              _vm._v(_vm._s(_vm.lang("Budget vs. Expenses")))
+            ])
           ])
-        ])
-      ]
-    ),
-    _vm._v(" "),
-    _c("div", { staticClass: "profile-head pb-2 row" }, [
-      _c("div", { staticClass: "col-md-3" }, [
-        _c("h6", { staticClass: "white-label" }, [
-          _vm._v(_vm._s(_vm.lang("Budget")))
-        ]),
-        _vm._v(" "),
-        _c("h3", { staticClass: "mb-1 text-white" }, [
-          _vm._v(_vm._s(_vm._f("flexCurrency")(_vm.total_budget, " kn", 2)))
-        ])
-      ]),
+        ]
+      ),
       _vm._v(" "),
-      _c("div", { staticClass: "col-md-3" }, [
-        _c("h6", { staticClass: "white-label" }, [
-          _vm._v(_vm._s(_vm.lang("Expenses")))
-        ]),
-        _vm._v(" "),
-        _c("h3", { staticClass: "mb-1 text-white" }, [
-          _vm._v(_vm._s(_vm._f("flexCurrency")(_vm.total_expenses, " kn", 2)))
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-3" }, [
-        _c("h6", { staticClass: "white-label" }, [
-          _vm._v(_vm._s(_vm.lang("Difference")))
-        ]),
-        _vm._v(" "),
-        _c("h3", { staticClass: "mb-1 text-white" }, [
-          _vm._v(
-            _vm._s(
-              _vm._f("flexCurrency")(Math.abs(_vm.total_difference), " kn", 2)
-            )
-          )
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-3" }, [
-        _c("h6", { staticClass: "white-label" }, [
-          _vm._v(_vm._s(_vm.lang("Difference in precentage")))
-        ]),
-        _vm._v(" "),
-        _c("h3", { staticClass: "mb-1 text-white" }, [
-          _vm._v(_vm._s(Math.abs(_vm.total_percent_difference)) + "%")
-        ])
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "page-name-xl mb-3 mt-3" }, [
-      _vm._v(_vm._s(_vm.lang("Authors Expenses")))
-    ]),
-    _vm._v(" "),
-    _c("table", { staticClass: "table" }, [
-      _c("thead", { staticClass: "thead-inverse" }, [
-        _c("tr", [
-          _c("th", [_vm._v("#")]),
-          _vm._v(" "),
-          _c("th", [_vm._v(_vm._s(_vm.lang("Item")))]),
-          _vm._v(" "),
-          _c("th", { staticClass: "text-right" }, [
+      _c("div", { staticClass: "profile-head pb-2 row" }, [
+        _c("div", { staticClass: "col-md-3" }, [
+          _c("h6", { staticClass: "white-label" }, [
             _vm._v(_vm._s(_vm.lang("Budget")))
           ]),
           _vm._v(" "),
-          _c("th", { staticClass: "text-right" }, [
-            _vm._v(_vm._s(_vm.lang("Expense Total")))
+          _c("h3", { staticClass: "mb-1 text-white" }, [
+            _vm._v(_vm._s(_vm._f("flexCurrency")(_vm.total_budget, " kn", 2)))
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-3" }, [
+          _c("h6", { staticClass: "white-label" }, [
+            _vm._v(_vm._s(_vm.lang("Expenses")))
           ]),
           _vm._v(" "),
-          _c("th", { staticClass: "text-right" }, [
+          _c("h3", { staticClass: "mb-1 text-white" }, [
+            _vm._v(_vm._s(_vm._f("flexCurrency")(_vm.total_expenses, " kn", 2)))
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-3" }, [
+          _c("h6", { staticClass: "white-label" }, [
             _vm._v(_vm._s(_vm.lang("Difference")))
           ]),
           _vm._v(" "),
-          _c("th", { staticClass: "text-right" }, [
-            _vm._v(_vm._s(_vm.lang("Cost Approval")))
+          _c("h3", { staticClass: "mb-1 text-white" }, [
+            _vm._v(
+              _vm._s(
+                _vm._f("flexCurrency")(Math.abs(_vm.total_difference), " kn", 2)
+              )
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-3" }, [
+          _c("h6", { staticClass: "white-label" }, [
+            _vm._v(_vm._s(_vm.lang("Difference in precentage")))
+          ]),
+          _vm._v(" "),
+          _c("h3", { staticClass: "mb-1 text-white" }, [
+            _vm._v(_vm._s(Math.abs(_vm.total_percent_difference)) + "%")
           ])
         ])
       ]),
       _vm._v(" "),
-      _c(
-        "tbody",
-        { staticClass: "white" },
-        _vm._l(_vm.authors, function(author, i) {
-          return _c(
-            "tr",
-            [
-              _c("th", { attrs: { scope: "row" } }, [_vm._v("1")]),
-              _vm._v(" "),
-              _c("td", { attrs: { "data-title": _vm.lang("Title") } }, [
-                _vm._v(_vm._s(author.name))
-              ]),
-              _vm._v(" "),
-              _c(
-                "td",
-                {
-                  staticClass: "text-right",
-                  attrs: { "data-title": _vm.lang("Budget") }
-                },
-                [
-                  _vm._v(
-                    _vm._s(
-                      _vm._f("flexCurrency")(
-                        author.expenses[0].totals,
-                        " kn",
-                        2
-                      )
-                    )
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "td",
-                {
-                  staticClass: "text-right",
-                  attrs: { "data-title": _vm.lang("Expense Total") }
-                },
-                [
-                  _vm._v(
-                    _vm._s(
-                      _vm._f("flexCurrency")(
-                        author.expenses[1].totals,
-                        " kn",
-                        2
-                      )
-                    )
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "td",
-                {
-                  staticClass: "text-right",
-                  attrs: { "data-title": _vm.lang("Difference") }
-                },
-                [
-                  _vm._v(
-                    _vm._s(
-                      _vm._f("flexCurrency")(
-                        Math.abs(
-                          (_vm.diff =
-                            author.expenses[0].totals -
-                            author.expenses[1].totals)
-                        ),
-                        " kn",
-                        2
-                      )
-                    )
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _vm.requests["author_expense." + i] &&
-              _vm.requests["author_expense." + i][0] &&
-              _vm.requests["author_expense." + i][0].status === "requested"
-                ? [
-                    _c(
-                      "td",
-                      {
-                        staticClass: "text-right",
-                        attrs: { "data-title": _vm.lang("Cost pending") }
-                      },
-                      [
-                        _c(
-                          "div",
-                          {
-                            staticClass: "file-box-sty icon icon-cost-pending"
-                          },
-                          [
-                            _vm._v(
-                              _vm._s(_vm.lang("Cost Approval Pending")) +
-                                "\n\n                    "
-                            )
-                          ]
+      _c("div", { staticClass: "page-name-xl mb-3 mt-3" }, [
+        _vm._v(_vm._s(_vm.lang("Authors Expenses")))
+      ]),
+      _vm._v(" "),
+      _c("table", { staticClass: "table" }, [
+        _c("thead", { staticClass: "thead-inverse" }, [
+          _c("tr", [
+            _c("th", [_vm._v("#")]),
+            _vm._v(" "),
+            _c("th", [_vm._v(_vm._s(_vm.lang("Item")))]),
+            _vm._v(" "),
+            _c("th", { staticClass: "text-right" }, [
+              _vm._v(_vm._s(_vm.lang("Budget")))
+            ]),
+            _vm._v(" "),
+            _c("th", { staticClass: "text-right" }, [
+              _vm._v(_vm._s(_vm.lang("Expense Total")))
+            ]),
+            _vm._v(" "),
+            _c("th", { staticClass: "text-right" }, [
+              _vm._v(_vm._s(_vm.lang("Difference")))
+            ]),
+            _vm._v(" "),
+            _c("th", { staticClass: "text-right" }, [
+              _vm._v(_vm._s(_vm.lang("Cost Approval")))
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c(
+          "tbody",
+          { staticClass: "white" },
+          _vm._l(_vm.authors, function(author, i) {
+            return _c(
+              "tr",
+              [
+                _c("th", { attrs: { scope: "row" } }, [_vm._v("1")]),
+                _vm._v(" "),
+                _c("td", { attrs: { "data-title": _vm.lang("Title") } }, [
+                  _vm._v(_vm._s(author.name))
+                ]),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  {
+                    staticClass: "text-right",
+                    attrs: { "data-title": _vm.lang("Budget") }
+                  },
+                  [
+                    _vm._v(
+                      _vm._s(
+                        _vm._f("flexCurrency")(
+                          author.expenses[0].totals,
+                          " kn",
+                          2
                         )
-                      ]
+                      )
                     )
                   ]
-                : _vm.requests["author_expense." + i] &&
-                  _vm.requests["author_expense." + i][0] &&
-                  _vm.requests["author_expense." + i][0].status === "denied"
+                ),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  {
+                    staticClass: "text-right",
+                    attrs: { "data-title": _vm.lang("Expense Total") }
+                  },
+                  [
+                    _vm._v(
+                      _vm._s(
+                        _vm._f("flexCurrency")(
+                          author.expenses[1].totals,
+                          " kn",
+                          2
+                        )
+                      )
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  {
+                    staticClass: "text-right",
+                    attrs: { "data-title": _vm.lang("Difference") }
+                  },
+                  [
+                    _vm._v(
+                      _vm._s(
+                        _vm._f("flexCurrency")(
+                          Math.abs(
+                            (_vm.diff =
+                              author.expenses[0].totals -
+                              author.expenses[1].totals)
+                          ),
+                          " kn",
+                          2
+                        )
+                      )
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _vm.requests["author_expense." + i] &&
+                _vm.requests["author_expense." + i][0] &&
+                _vm.requests["author_expense." + i][0].status === "requested"
                   ? [
                       _c(
                         "td",
                         {
                           staticClass: "text-right",
-                          attrs: { "data-title": _vm.lang("Cost Rejected") }
+                          attrs: { "data-title": _vm.lang("Cost pending") }
                         },
                         [
                           _c(
                             "div",
                             {
-                              staticClass:
-                                "file-box-sty icon icon-cost-rejected",
-                              on: {
-                                click: function($event) {
-                                  _vm.sendForApproval("author_expense." + i)
-                                }
-                              }
+                              staticClass: "file-box-sty icon icon-cost-pending"
                             },
                             [
                               _vm._v(
-                                _vm._s(_vm.lang("Cost Rejected")) +
-                                  "\n                    "
+                                _vm._s(_vm.lang("Cost Approval Pending")) +
+                                  "\n\n                    "
                               )
                             ]
                           )
@@ -95351,24 +95259,29 @@ var render = function() {
                     ]
                   : _vm.requests["author_expense." + i] &&
                     _vm.requests["author_expense." + i][0] &&
-                    _vm.requests["author_expense." + i][0].status === "accepted"
+                    _vm.requests["author_expense." + i][0].status === "denied"
                     ? [
                         _c(
                           "td",
                           {
                             staticClass: "text-right",
-                            attrs: { "data-title": _vm.lang("Cost Approved") }
+                            attrs: { "data-title": _vm.lang("Cost Rejected") }
                           },
                           [
                             _c(
                               "div",
                               {
                                 staticClass:
-                                  "file-box-sty icon icon-cost-approved"
+                                  "file-box-sty icon icon-cost-rejected",
+                                on: {
+                                  click: function($event) {
+                                    _vm.sendForApproval("author_expense." + i)
+                                  }
+                                }
                               },
                               [
                                 _vm._v(
-                                  _vm._s(_vm.lang("Cost Approved")) +
+                                  _vm._s(_vm.lang("Cost Rejected")) +
                                     "\n                    "
                                 )
                               ]
@@ -95376,214 +95289,207 @@ var render = function() {
                           ]
                         )
                       ]
-                    : [
-                        _c(
-                          "td",
-                          {
-                            staticClass: "text-right",
-                            attrs: {
-                              "data-title": _vm.lang("Send for Approval")
-                            }
-                          },
-                          [
-                            _vm.diff < 0
-                              ? _c(
-                                  "div",
-                                  {
-                                    staticClass:
-                                      "file-box-sty icon icon-cost-approval",
-                                    on: {
-                                      click: function($event) {
-                                        _vm.sendForApproval(
-                                          "author_expense." + i
-                                        )
+                    : _vm.requests["author_expense." + i] &&
+                      _vm.requests["author_expense." + i][0] &&
+                      _vm.requests["author_expense." + i][0].status ===
+                        "accepted"
+                      ? [
+                          _c(
+                            "td",
+                            {
+                              staticClass: "text-right",
+                              attrs: { "data-title": _vm.lang("Cost Approved") }
+                            },
+                            [
+                              _c(
+                                "div",
+                                {
+                                  staticClass:
+                                    "file-box-sty icon icon-cost-approved"
+                                },
+                                [
+                                  _vm._v(
+                                    _vm._s(_vm.lang("Cost Approved")) +
+                                      "\n                    "
+                                  )
+                                ]
+                              )
+                            ]
+                          )
+                        ]
+                      : [
+                          _c(
+                            "td",
+                            {
+                              staticClass: "text-right",
+                              attrs: {
+                                "data-title": _vm.lang("Send for Approval")
+                              }
+                            },
+                            [
+                              _vm.diff < 0
+                                ? _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "file-box-sty icon icon-cost-approval",
+                                      on: {
+                                        click: function($event) {
+                                          _vm.sendForApproval(
+                                            "author_expense." + i
+                                          )
+                                        }
                                       }
-                                    }
-                                  },
-                                  [
-                                    _vm._v(
-                                      _vm._s(_vm.lang("Send for Approval"))
-                                    )
-                                  ]
-                                )
-                              : _vm._e()
-                          ]
-                        )
-                      ]
-            ],
-            2
-          )
-        })
-      )
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "page-name-xl mb-3 mt-3" }, [
-      _vm._v(_vm._s(_vm.lang("Production Expenses")))
-    ]),
-    _vm._v(" "),
-    _c("table", { staticClass: "table" }, [
-      _c("thead", { staticClass: "thead-inverse" }, [
-        _c("tr", [
-          _c("th", [_vm._v("#")]),
-          _vm._v(" "),
-          _c("th", [_vm._v(_vm._s(_vm.lang("Item")))]),
-          _vm._v(" "),
-          _c("th", { staticClass: "text-right" }, [
-            _vm._v(_vm._s(_vm.lang("Budget")))
-          ]),
-          _vm._v(" "),
-          _c("th", { staticClass: "text-right" }, [
-            _vm._v(_vm._s(_vm.lang("Expense Total")))
-          ]),
-          _vm._v(" "),
-          _c("th", { staticClass: "text-right" }, [
-            _vm._v(_vm._s(_vm.lang("Difference")))
-          ]),
-          _vm._v(" "),
-          _c("th", { staticClass: "text-right" }, [
-            _vm._v(_vm._s(_vm.lang("Cost Approval")))
-          ])
-        ])
+                                    },
+                                    [
+                                      _vm._v(
+                                        _vm._s(_vm.lang("Send for Approval"))
+                                      )
+                                    ]
+                                  )
+                                : _vm._e()
+                            ]
+                          )
+                        ]
+              ],
+              2
+            )
+          })
+        )
       ]),
       _vm._v(" "),
-      _c(
-        "tbody",
-        { staticClass: "white" },
-        _vm._l(_vm.production_expenses, function(row, i) {
-          return _c(
-            "tr",
-            [
-              _c("th", { attrs: { scope: "row" } }, [_vm._v(_vm._s(i + 1))]),
-              _vm._v(" "),
-              _c("td", { attrs: { "data-title": _vm.lang("Title") } }, [
-                _vm._v(_vm._s(_vm.lang(row["title"])))
-              ]),
-              _vm._v(" "),
-              _c(
-                "td",
-                {
-                  staticClass: "text-right",
-                  attrs: { "data-title": _vm.lang("Budget") }
-                },
-                [
-                  _vm._v(
-                    _vm._s(
-                      _vm._f("flexCurrency")(
-                        _vm.production_expense.budget.totals[
-                          row["designation"]
-                        ],
-                        " kn",
-                        2
-                      )
-                    )
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "td",
-                {
-                  staticClass: "text-right",
-                  attrs: { "data-title": _vm.lang("Expense Total") }
-                },
-                [
-                  _vm._v(
-                    _vm._s(
-                      _vm._f("flexCurrency")(
-                        _vm.production_expense.expense.totals[
-                          row["designation"]
-                        ],
-                        " kn",
-                        2
-                      )
-                    )
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "td",
-                {
-                  staticClass: "text-right",
-                  attrs: { "data-title": _vm.lang("Difference") }
-                },
-                [
-                  _vm._v(
-                    _vm._s(
-                      _vm._f("flexCurrency")(
-                        Math.abs(
-                          (_vm.diff =
-                            _vm.production_expense.budget.totals[
-                              row["designation"]
-                            ] -
-                            _vm.production_expense.expense.totals[
-                              row["designation"]
-                            ])
-                        ),
-                        " kn",
-                        2
-                      )
-                    )
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _vm.requests["production_expense." + row["designation"]] &&
-              _vm.requests["production_expense." + row["designation"]][0] &&
-              _vm.requests["production_expense." + row["designation"]][0]
-                .status === "requested"
-                ? [
-                    _c(
-                      "td",
-                      {
-                        staticClass: "text-right",
-                        attrs: { "data-title": _vm.lang("Cost pending") }
-                      },
-                      [
-                        _c(
-                          "div",
-                          {
-                            staticClass: "file-box-sty icon icon-cost-pending"
-                          },
-                          [
-                            _vm._v(
-                              _vm._s(_vm.lang("Cost Approval Pending")) +
-                                "\n\n                    "
-                            )
-                          ]
+      _c("div", { staticClass: "page-name-xl mb-3 mt-3" }, [
+        _vm._v(_vm._s(_vm.lang("Production Expenses")))
+      ]),
+      _vm._v(" "),
+      _c("table", { staticClass: "table" }, [
+        _c("thead", { staticClass: "thead-inverse" }, [
+          _c("tr", [
+            _c("th", [_vm._v("#")]),
+            _vm._v(" "),
+            _c("th", [_vm._v(_vm._s(_vm.lang("Item")))]),
+            _vm._v(" "),
+            _c("th", { staticClass: "text-right" }, [
+              _vm._v(_vm._s(_vm.lang("Budget")))
+            ]),
+            _vm._v(" "),
+            _c("th", { staticClass: "text-right" }, [
+              _vm._v(_vm._s(_vm.lang("Expense Total")))
+            ]),
+            _vm._v(" "),
+            _c("th", { staticClass: "text-right" }, [
+              _vm._v(_vm._s(_vm.lang("Difference")))
+            ]),
+            _vm._v(" "),
+            _c("th", { staticClass: "text-right" }, [
+              _vm._v(_vm._s(_vm.lang("Cost Approval")))
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c(
+          "tbody",
+          { staticClass: "white" },
+          _vm._l(_vm.production_expenses, function(row, i) {
+            return _c(
+              "tr",
+              [
+                _c("th", { attrs: { scope: "row" } }, [_vm._v(_vm._s(i + 1))]),
+                _vm._v(" "),
+                _c("td", { attrs: { "data-title": _vm.lang("Title") } }, [
+                  _vm._v(_vm._s(_vm.lang(row["title"])))
+                ]),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  {
+                    staticClass: "text-right",
+                    attrs: { "data-title": _vm.lang("Budget") }
+                  },
+                  [
+                    _vm._v(
+                      _vm._s(
+                        _vm._f("flexCurrency")(
+                          _vm.production_expense.budget.totals[
+                            row["designation"]
+                          ],
+                          " kn",
+                          2
                         )
-                      ]
+                      )
                     )
                   ]
-                : _vm.requests["production_expense." + row["designation"]] &&
-                  _vm.requests["production_expense." + row["designation"]][0] &&
-                  _vm.requests["production_expense." + row["designation"]][0]
-                    .status === "denied"
+                ),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  {
+                    staticClass: "text-right",
+                    attrs: { "data-title": _vm.lang("Expense Total") }
+                  },
+                  [
+                    _vm._v(
+                      _vm._s(
+                        _vm._f("flexCurrency")(
+                          _vm.production_expense.expense.totals[
+                            row["designation"]
+                          ],
+                          " kn",
+                          2
+                        )
+                      )
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  {
+                    staticClass: "text-right",
+                    attrs: { "data-title": _vm.lang("Difference") }
+                  },
+                  [
+                    _vm._v(
+                      _vm._s(
+                        _vm._f("flexCurrency")(
+                          Math.abs(
+                            (_vm.diff =
+                              _vm.production_expense.budget.totals[
+                                row["designation"]
+                              ] -
+                              _vm.production_expense.expense.totals[
+                                row["designation"]
+                              ])
+                          ),
+                          " kn",
+                          2
+                        )
+                      )
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _vm.requests["production_expense." + row["designation"]] &&
+                _vm.requests["production_expense." + row["designation"]][0] &&
+                _vm.requests["production_expense." + row["designation"]][0]
+                  .status === "requested"
                   ? [
                       _c(
                         "td",
                         {
                           staticClass: "text-right",
-                          attrs: { "data-title": _vm.lang("Cost Rejected") }
+                          attrs: { "data-title": _vm.lang("Cost pending") }
                         },
                         [
                           _c(
                             "div",
                             {
-                              staticClass:
-                                "file-box-sty icon icon-cost-rejected",
-                              on: {
-                                click: function($event) {
-                                  _vm.sendForApproval(
-                                    "production_expense." + row["designation"]
-                                  )
-                                }
-                              }
+                              staticClass: "file-box-sty icon icon-cost-pending"
                             },
                             [
                               _vm._v(
-                                _vm._s(_vm.lang("Cost Rejected")) +
-                                  "\n                    "
+                                _vm._s(_vm.lang("Cost Approval Pending")) +
+                                  "\n\n                    "
                               )
                             ]
                           )
@@ -95595,7 +95501,274 @@ var render = function() {
                       "production_expense." + row["designation"]
                     ][0] &&
                     _vm.requests["production_expense." + row["designation"]][0]
-                      .status === "accepted"
+                      .status === "denied"
+                    ? [
+                        _c(
+                          "td",
+                          {
+                            staticClass: "text-right",
+                            attrs: { "data-title": _vm.lang("Cost Rejected") }
+                          },
+                          [
+                            _c(
+                              "div",
+                              {
+                                staticClass:
+                                  "file-box-sty icon icon-cost-rejected",
+                                on: {
+                                  click: function($event) {
+                                    _vm.sendForApproval(
+                                      "production_expense." + row["designation"]
+                                    )
+                                  }
+                                }
+                              },
+                              [
+                                _vm._v(
+                                  _vm._s(_vm.lang("Cost Rejected")) +
+                                    "\n                    "
+                                )
+                              ]
+                            )
+                          ]
+                        )
+                      ]
+                    : _vm.requests[
+                        "production_expense." + row["designation"]
+                      ] &&
+                      _vm.requests[
+                        "production_expense." + row["designation"]
+                      ][0] &&
+                      _vm.requests[
+                        "production_expense." + row["designation"]
+                      ][0].status === "accepted"
+                      ? [
+                          _c(
+                            "td",
+                            {
+                              staticClass: "text-right",
+                              attrs: { "data-title": _vm.lang("Cost Approved") }
+                            },
+                            [
+                              _c(
+                                "div",
+                                {
+                                  staticClass:
+                                    "file-box-sty icon icon-cost-approved"
+                                },
+                                [
+                                  _vm._v(
+                                    _vm._s(_vm.lang("Cost Approved")) +
+                                      "\n                    "
+                                  )
+                                ]
+                              )
+                            ]
+                          )
+                        ]
+                      : [
+                          _c(
+                            "td",
+                            {
+                              staticClass: "text-right",
+                              attrs: {
+                                "data-title": _vm.lang("Send for Approval")
+                              }
+                            },
+                            [
+                              _vm.diff < 0
+                                ? _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "file-box-sty icon icon-cost-approval",
+                                      on: {
+                                        click: function($event) {
+                                          _vm.sendForApproval(
+                                            "production_expense." +
+                                              row["designation"]
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        _vm._s(_vm.lang("Send for Approval"))
+                                      )
+                                    ]
+                                  )
+                                : _vm._e()
+                            ]
+                          )
+                        ]
+              ],
+              2
+            )
+          })
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "page-name-xl mb-3 mt-3" }, [
+        _vm._v(_vm._s(_vm.lang("Layout and Design Expense")))
+      ]),
+      _vm._v(" "),
+      _c("table", { staticClass: "table" }, [
+        _c("thead", { staticClass: "thead-inverse" }, [
+          _c("tr", [
+            _c("th", [_vm._v("#")]),
+            _vm._v(" "),
+            _c("th", [_vm._v(_vm._s(_vm.lang("Item")))]),
+            _vm._v(" "),
+            _c("th", { staticClass: "text-right" }, [
+              _vm._v(_vm._s(_vm.lang("Budget")))
+            ]),
+            _vm._v(" "),
+            _c("th", { staticClass: "text-right" }, [
+              _vm._v(_vm._s(_vm.lang("Expense Total")))
+            ]),
+            _vm._v(" "),
+            _c("th", { staticClass: "text-right" }, [
+              _vm._v(_vm._s(_vm.lang("Difference")))
+            ]),
+            _vm._v(" "),
+            _c("th", { staticClass: "text-right" }, [
+              _vm._v(_vm._s(_vm.lang("Cost Approval")))
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("tbody", { staticClass: "white" }, [
+          _c(
+            "tr",
+            [
+              _c("th", { attrs: { scope: "row" } }, [_vm._v("1")]),
+              _vm._v(" "),
+              _c("td", { attrs: { "data-title": _vm.lang("Title") } }, [
+                _vm._v(_vm._s(_vm.lang("Layout and Design budget")))
+              ]),
+              _vm._v(" "),
+              _c(
+                "td",
+                {
+                  staticClass: "text-right",
+                  attrs: { "data-title": _vm.lang("Budget") }
+                },
+                [
+                  _vm._v(
+                    _vm._s(
+                      _vm._f("flexCurrency")(
+                        _vm.production_expense.budget.totals.layout,
+                        " kn",
+                        2
+                      )
+                    )
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "td",
+                {
+                  staticClass: "text-right",
+                  attrs: { "data-title": _vm.lang("Expense Total") }
+                },
+                [
+                  _vm._v(
+                    _vm._s(
+                      _vm._f("flexCurrency")(
+                        _vm.production_expense.expense.totals.layout,
+                        " kn",
+                        2
+                      )
+                    )
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "td",
+                {
+                  staticClass: "text-right",
+                  attrs: { "data-title": _vm.lang("Difference") }
+                },
+                [
+                  _vm._v(
+                    _vm._s(
+                      _vm._f("flexCurrency")(
+                        Math.abs(
+                          (_vm.diff =
+                            _vm.production_expense.budget.totals.layout -
+                            _vm.production_expense.expense.totals.layout)
+                        ),
+                        " kn",
+                        2
+                      )
+                    )
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _vm.requests["layout_expense"] &&
+              _vm.requests["layout_expense"][0] &&
+              _vm.requests["layout_expense"][0].status === "requested"
+                ? [
+                    _c(
+                      "td",
+                      {
+                        staticClass: "text-right",
+                        attrs: { "data-title": _vm.lang("Cost pending") }
+                      },
+                      [
+                        _c(
+                          "div",
+                          {
+                            staticClass: "file-box-sty icon icon-cost-pending"
+                          },
+                          [
+                            _vm._v(
+                              _vm._s(_vm.lang("Cost Approval Pending")) +
+                                "\n\n                    "
+                            )
+                          ]
+                        )
+                      ]
+                    )
+                  ]
+                : _vm.requests["layout_expense"] &&
+                  _vm.requests["layout_expense"][0] &&
+                  _vm.requests["layout_expense"][0].status === "denied"
+                  ? [
+                      _c(
+                        "td",
+                        {
+                          staticClass: "text-right",
+                          attrs: { "data-title": _vm.lang("Cost Rejected") }
+                        },
+                        [
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "file-box-sty icon icon-cost-rejected",
+                              on: {
+                                click: function($event) {
+                                  _vm.sendForApproval("layout_expense")
+                                }
+                              }
+                            },
+                            [
+                              _vm._v(
+                                _vm._s(_vm.lang("Cost Rejected")) +
+                                  "\n                    "
+                              )
+                            ]
+                          )
+                        ]
+                      )
+                    ]
+                  : _vm.requests["layout_expense"] &&
+                    _vm.requests["layout_expense"][0] &&
+                    _vm.requests["layout_expense"][0].status === "accepted"
                     ? [
                         _c(
                           "td",
@@ -95638,10 +95811,7 @@ var render = function() {
                                       "file-box-sty icon icon-cost-approval",
                                     on: {
                                       click: function($event) {
-                                        _vm.sendForApproval(
-                                          "production_expense." +
-                                            row["designation"]
-                                        )
+                                        _vm.sendForApproval("layout_expense")
                                       }
                                     }
                                   },
@@ -95658,377 +95828,133 @@ var render = function() {
             ],
             2
           )
-        })
-      )
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "page-name-xl mb-3 mt-3" }, [
-      _vm._v(_vm._s(_vm.lang("Layout and Design Expense")))
-    ]),
-    _vm._v(" "),
-    _c("table", { staticClass: "table" }, [
-      _c("thead", { staticClass: "thead-inverse" }, [
-        _c("tr", [
-          _c("th", [_vm._v("#")]),
-          _vm._v(" "),
-          _c("th", [_vm._v(_vm._s(_vm.lang("Item")))]),
-          _vm._v(" "),
-          _c("th", { staticClass: "text-right" }, [
-            _vm._v(_vm._s(_vm.lang("Budget")))
-          ]),
-          _vm._v(" "),
-          _c("th", { staticClass: "text-right" }, [
-            _vm._v(_vm._s(_vm.lang("Expense Total")))
-          ]),
-          _vm._v(" "),
-          _c("th", { staticClass: "text-right" }, [
-            _vm._v(_vm._s(_vm.lang("Difference")))
-          ]),
-          _vm._v(" "),
-          _c("th", { staticClass: "text-right" }, [
-            _vm._v(_vm._s(_vm.lang("Cost Approval")))
-          ])
         ])
       ]),
       _vm._v(" "),
-      _c("tbody", { staticClass: "white" }, [
-        _c(
-          "tr",
-          [
-            _c("th", { attrs: { scope: "row" } }, [_vm._v("1")]),
+      _c("div", { staticClass: "page-name-xl mb-3 mt-3" }, [
+        _vm._v(_vm._s(_vm.lang("Marketing Expenses")))
+      ]),
+      _vm._v(" "),
+      _c("table", { staticClass: "table" }, [
+        _c("thead", { staticClass: "thead-inverse" }, [
+          _c("tr", [
+            _c("th", [_vm._v("#")]),
             _vm._v(" "),
-            _c("td", { attrs: { "data-title": _vm.lang("Title") } }, [
-              _vm._v(_vm._s(_vm.lang("Layout and Design budget")))
+            _c("th", [_vm._v(_vm._s(_vm.lang("Item")))]),
+            _vm._v(" "),
+            _c("th", { staticClass: "text-right" }, [
+              _vm._v(_vm._s(_vm.lang("Budget")))
             ]),
             _vm._v(" "),
-            _c(
-              "td",
-              {
-                staticClass: "text-right",
-                attrs: { "data-title": _vm.lang("Budget") }
-              },
-              [
-                _vm._v(
-                  _vm._s(
-                    _vm._f("flexCurrency")(
-                      _vm.production_expense.budget.totals.layout,
-                      " kn",
-                      2
-                    )
-                  )
-                )
-              ]
-            ),
+            _c("th", { staticClass: "text-right" }, [
+              _vm._v(_vm._s(_vm.lang("Expense Total")))
+            ]),
             _vm._v(" "),
-            _c(
-              "td",
-              {
-                staticClass: "text-right",
-                attrs: { "data-title": _vm.lang("Expense Total") }
-              },
-              [
-                _vm._v(
-                  _vm._s(
-                    _vm._f("flexCurrency")(
-                      _vm.production_expense.expense.totals.layout,
-                      " kn",
-                      2
-                    )
-                  )
-                )
-              ]
-            ),
+            _c("th", { staticClass: "text-right" }, [
+              _vm._v(_vm._s(_vm.lang("Difference")))
+            ]),
             _vm._v(" "),
-            _c(
-              "td",
-              {
-                staticClass: "text-right",
-                attrs: { "data-title": _vm.lang("Difference") }
-              },
-              [
-                _vm._v(
-                  _vm._s(
-                    _vm._f("flexCurrency")(
-                      Math.abs(
-                        (_vm.diff =
-                          _vm.production_expense.budget.totals.layout -
-                          _vm.production_expense.expense.totals.layout)
-                      ),
-                      " kn",
-                      2
-                    )
-                  )
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _vm.requests["layout_expense"] &&
-            _vm.requests["layout_expense"][0] &&
-            _vm.requests["layout_expense"][0].status === "requested"
-              ? [
-                  _c(
-                    "td",
-                    {
-                      staticClass: "text-right",
-                      attrs: { "data-title": _vm.lang("Cost pending") }
-                    },
-                    [
-                      _c(
-                        "div",
-                        { staticClass: "file-box-sty icon icon-cost-pending" },
-                        [
-                          _vm._v(
-                            _vm._s(_vm.lang("Cost Approval Pending")) +
-                              "\n\n                    "
-                          )
-                        ]
+            _c("th", { staticClass: "text-right" }, [
+              _vm._v(_vm._s(_vm.lang("Cost Approval")))
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("tbody", { staticClass: "white" }, [
+          _c(
+            "tr",
+            [
+              _c("th", { attrs: { scope: "row" } }, [_vm._v("1")]),
+              _vm._v(" "),
+              _c("td", { attrs: { "data-title": _vm.lang("Title") } }, [
+                _vm._v("Marketing budget")
+              ]),
+              _vm._v(" "),
+              _c(
+                "td",
+                {
+                  staticClass: "text-right",
+                  attrs: { "data-title": _vm.lang("Budget") }
+                },
+                [
+                  _vm._v(
+                    _vm._s(
+                      _vm._f("flexCurrency")(
+                        _vm.marketing_expense.budget
+                          ? _vm.marketing_expense.budget.totals
+                          : 0,
+                        " kn",
+                        2
                       )
-                    ]
+                    )
                   )
                 ]
-              : _vm.requests["layout_expense"] &&
-                _vm.requests["layout_expense"][0] &&
-                _vm.requests["layout_expense"][0].status === "denied"
+              ),
+              _vm._v(" "),
+              _c(
+                "td",
+                {
+                  staticClass: "text-right",
+                  attrs: { "data-title": _vm.lang("Expense Total") }
+                },
+                [
+                  _vm._v(
+                    _vm._s(
+                      _vm._f("flexCurrency")(
+                        _vm.marketing_expense.expense
+                          ? _vm.marketing_expense.expense.totals
+                          : 0,
+                        " kn",
+                        2
+                      )
+                    )
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "td",
+                {
+                  staticClass: "text-right",
+                  attrs: { "data-title": _vm.lang("Difference") }
+                },
+                [
+                  _vm._v(
+                    _vm._s(
+                      _vm._f("flexCurrency")(
+                        Math.abs(
+                          (_vm.diff =
+                            _vm.marketing_expense.budget.totals -
+                            _vm.marketing_expense.expense.totals)
+                        ),
+                        " kn",
+                        2
+                      )
+                    )
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _vm.requests["marketing_expense"] &&
+              _vm.requests["marketing_expense"][0] &&
+              _vm.requests["marketing_expense"][0].status === "requested"
                 ? [
                     _c(
                       "td",
                       {
                         staticClass: "text-right",
-                        attrs: { "data-title": _vm.lang("Cost Rejected") }
+                        attrs: { "data-title": _vm.lang("Cost pending") }
                       },
                       [
                         _c(
                           "div",
                           {
-                            staticClass: "file-box-sty icon icon-cost-rejected",
-                            on: {
-                              click: function($event) {
-                                _vm.sendForApproval("layout_expense")
-                              }
-                            }
+                            staticClass: "file-box-sty icon icon-cost-pending"
                           },
                           [
                             _vm._v(
-                              _vm._s(_vm.lang("Cost Rejected")) +
-                                "\n                    "
-                            )
-                          ]
-                        )
-                      ]
-                    )
-                  ]
-                : _vm.requests["layout_expense"] &&
-                  _vm.requests["layout_expense"][0] &&
-                  _vm.requests["layout_expense"][0].status === "accepted"
-                  ? [
-                      _c(
-                        "td",
-                        {
-                          staticClass: "text-right",
-                          attrs: { "data-title": _vm.lang("Cost Approved") }
-                        },
-                        [
-                          _c(
-                            "div",
-                            {
-                              staticClass:
-                                "file-box-sty icon icon-cost-approved"
-                            },
-                            [
-                              _vm._v(
-                                _vm._s(_vm.lang("Cost Approved")) +
-                                  "\n                    "
-                              )
-                            ]
-                          )
-                        ]
-                      )
-                    ]
-                  : [
-                      _c(
-                        "td",
-                        {
-                          staticClass: "text-right",
-                          attrs: { "data-title": _vm.lang("Send for Approval") }
-                        },
-                        [
-                          _vm.diff < 0
-                            ? _c(
-                                "div",
-                                {
-                                  staticClass:
-                                    "file-box-sty icon icon-cost-approval",
-                                  on: {
-                                    click: function($event) {
-                                      _vm.sendForApproval("layout_expense")
-                                    }
-                                  }
-                                },
-                                [_vm._v(_vm._s(_vm.lang("Send for Approval")))]
-                              )
-                            : _vm._e()
-                        ]
-                      )
-                    ]
-          ],
-          2
-        )
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "page-name-xl mb-3 mt-3" }, [
-      _vm._v(_vm._s(_vm.lang("Marketing Expenses")))
-    ]),
-    _vm._v(" "),
-    _c("table", { staticClass: "table" }, [
-      _c("thead", { staticClass: "thead-inverse" }, [
-        _c("tr", [
-          _c("th", [_vm._v("#")]),
-          _vm._v(" "),
-          _c("th", [_vm._v(_vm._s(_vm.lang("Item")))]),
-          _vm._v(" "),
-          _c("th", { staticClass: "text-right" }, [
-            _vm._v(_vm._s(_vm.lang("Budget")))
-          ]),
-          _vm._v(" "),
-          _c("th", { staticClass: "text-right" }, [
-            _vm._v(_vm._s(_vm.lang("Expense Total")))
-          ]),
-          _vm._v(" "),
-          _c("th", { staticClass: "text-right" }, [
-            _vm._v(_vm._s(_vm.lang("Difference")))
-          ]),
-          _vm._v(" "),
-          _c("th", { staticClass: "text-right" }, [
-            _vm._v(_vm._s(_vm.lang("Cost Approval")))
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("tbody", { staticClass: "white" }, [
-        _c(
-          "tr",
-          [
-            _c("th", { attrs: { scope: "row" } }, [_vm._v("1")]),
-            _vm._v(" "),
-            _c("td", { attrs: { "data-title": _vm.lang("Title") } }, [
-              _vm._v("Marketing budget")
-            ]),
-            _vm._v(" "),
-            _c(
-              "td",
-              {
-                staticClass: "text-right",
-                attrs: { "data-title": _vm.lang("Budget") }
-              },
-              [
-                _vm._v(
-                  _vm._s(
-                    _vm._f("flexCurrency")(
-                      _vm.marketing_expense.budget
-                        ? _vm.marketing_expense.budget.totals
-                        : 0,
-                      " kn",
-                      2
-                    )
-                  )
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "td",
-              {
-                staticClass: "text-right",
-                attrs: { "data-title": _vm.lang("Expense Total") }
-              },
-              [
-                _vm._v(
-                  _vm._s(
-                    _vm._f("flexCurrency")(
-                      _vm.marketing_expense.expense
-                        ? _vm.marketing_expense.expense.totals
-                        : 0,
-                      " kn",
-                      2
-                    )
-                  )
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "td",
-              {
-                staticClass: "text-right",
-                attrs: { "data-title": _vm.lang("Difference") }
-              },
-              [
-                _vm._v(
-                  _vm._s(
-                    _vm._f("flexCurrency")(
-                      Math.abs(
-                        (_vm.diff =
-                          _vm.marketing_expense.budget.totals -
-                          _vm.marketing_expense.expense.totals)
-                      ),
-                      " kn",
-                      2
-                    )
-                  )
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _vm.requests["marketing_expense"] &&
-            _vm.requests["marketing_expense"][0] &&
-            _vm.requests["marketing_expense"][0].status === "requested"
-              ? [
-                  _c(
-                    "td",
-                    {
-                      staticClass: "text-right",
-                      attrs: { "data-title": _vm.lang("Cost pending") }
-                    },
-                    [
-                      _c(
-                        "div",
-                        { staticClass: "file-box-sty icon icon-cost-pending" },
-                        [
-                          _vm._v(
-                            _vm._s(_vm.lang("Cost Approval Pending")) +
-                              "\n\n                    "
-                          )
-                        ]
-                      )
-                    ]
-                  )
-                ]
-              : _vm.requests["marketing_expense"] &&
-                _vm.requests["marketing_expense"][0] &&
-                _vm.requests["marketing_expense"][0].status === "denied"
-                ? [
-                    _c(
-                      "td",
-                      {
-                        staticClass: "text-right",
-                        attrs: { "data-title": _vm.lang("Cost Denied") }
-                      },
-                      [
-                        _c(
-                          "div",
-                          {
-                            staticClass: "file-box-sty icon icon-cost-rejected",
-                            on: {
-                              click: function($event) {
-                                _vm.sendForApproval("marketing_expense")
-                              }
-                            }
-                          },
-                          [
-                            _vm._v(
-                              _vm._s(_vm.lang("Cost Rejected")) +
-                                "\n                    "
+                              _vm._s(_vm.lang("Cost Approval Pending")) +
+                                "\n\n                    "
                             )
                           ]
                         )
@@ -96037,24 +95963,29 @@ var render = function() {
                   ]
                 : _vm.requests["marketing_expense"] &&
                   _vm.requests["marketing_expense"][0] &&
-                  _vm.requests["marketing_expense"][0].status === "accepted"
+                  _vm.requests["marketing_expense"][0].status === "denied"
                   ? [
                       _c(
                         "td",
                         {
                           staticClass: "text-right",
-                          attrs: { "data-title": _vm.lang("Cost Approved") }
+                          attrs: { "data-title": _vm.lang("Cost Denied") }
                         },
                         [
                           _c(
                             "div",
                             {
                               staticClass:
-                                "file-box-sty icon icon-cost-approved"
+                                "file-box-sty icon icon-cost-rejected",
+                              on: {
+                                click: function($event) {
+                                  _vm.sendForApproval("marketing_expense")
+                                }
+                              }
                             },
                             [
                               _vm._v(
-                                _vm._s(_vm.lang("Cost Approved")) +
+                                _vm._s(_vm.lang("Cost Rejected")) +
                                   "\n                    "
                               )
                             ]
@@ -96062,330 +95993,79 @@ var render = function() {
                         ]
                       )
                     ]
-                  : [
-                      _c(
-                        "td",
-                        {
-                          staticClass: "text-right",
-                          attrs: { "data-title": _vm.lang("Send for Approval") }
-                        },
-                        [
-                          _vm.diff < 0
-                            ? _c(
-                                "div",
-                                {
-                                  staticClass:
-                                    "file-box-sty icon icon-cost-approval",
-                                  on: {
-                                    click: function($event) {
-                                      _vm.sendForApproval("marketing_expense")
-                                    }
-                                  }
-                                },
-                                [_vm._v(_vm._s(_vm.lang("Send for Approval")))]
-                              )
-                            : _vm._e()
-                        ]
-                      )
-                    ]
-          ],
-          2
-        )
-      ])
-    ]),
-    _vm._v(" "),
-    _c(
-      "div",
-      {
-        staticClass: "modal fade",
-        attrs: {
-          id: "ModalCostApprove",
-          tabindex: "-1",
-          role: "dialog",
-          "aria-hidden": "true"
-        }
-      },
-      [
-        _c(
-          "div",
-          {
-            staticClass: "modal-dialog modal-notify modal-warning",
-            attrs: { role: "document" }
-          },
-          [
-            _c("div", { staticClass: "modal-content" }, [
-              _c("div", { staticClass: "modal-header flex-column px-3 pt-3" }, [
-                _vm._m(0),
-                _vm._v(" "),
-                _c("div", { staticClass: "d-flex mx-auto" }, [
-                  _c("i", {
-                    staticClass:
-                      "fa fa-magic fa-4x mb-1 animated rotateInDownLeft"
-                  }),
-                  _vm._v(" "),
-                  _c("h1", { staticClass: "modal-title w-100 text-center" }, [
-                    _vm._v(_vm._s(_vm.lang("Cost Approve")))
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("h6", { staticClass: "w-100 text-center mb-2" }, [
-                  _vm._v(_vm._s(_vm.lang("Assign employee")))
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "modal-body" }, [
-                _c("div", { staticClass: "row" }, [
-                  _c(
-                    "div",
-                    { staticClass: "col-md-12" },
-                    [
-                      _c("div", { staticClass: "md-form d-flex addon" }, [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.employee,
-                              expression: "employee"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: {
-                            type: "text",
-                            name: "employee",
-                            placeholder: _vm.lang("Find employee")
+                  : _vm.requests["marketing_expense"] &&
+                    _vm.requests["marketing_expense"][0] &&
+                    _vm.requests["marketing_expense"][0].status === "accepted"
+                    ? [
+                        _c(
+                          "td",
+                          {
+                            staticClass: "text-right",
+                            attrs: { "data-title": _vm.lang("Cost Approved") }
                           },
-                          domProps: { value: _vm.employee },
-                          on: {
-                            keyup: function($event) {
-                              _vm.autocomplete($event, "employee")
-                            },
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.employee = $event.target.value
+                          [
+                            _c(
+                              "div",
+                              {
+                                staticClass:
+                                  "file-box-sty icon icon-cost-approved"
+                              },
+                              [
+                                _vm._v(
+                                  _vm._s(_vm.lang("Cost Approved")) +
+                                    "\n                    "
+                                )
+                              ]
+                            )
+                          ]
+                        )
+                      ]
+                    : [
+                        _c(
+                          "td",
+                          {
+                            staticClass: "text-right",
+                            attrs: {
+                              "data-title": _vm.lang("Send for Approval")
                             }
-                          }
-                        }),
-                        _vm._v(" "),
-                        _vm.e_suggestions.length
-                          ? _c(
-                              "ul",
-                              { staticClass: "mdb-autocomplete-wrap" },
-                              _vm._l(_vm.e_suggestions, function(item, index) {
-                                return _c(
-                                  "li",
+                          },
+                          [
+                            _vm.diff < 0
+                              ? _c(
+                                  "div",
                                   {
+                                    staticClass:
+                                      "file-box-sty icon icon-cost-approval",
                                     on: {
                                       click: function($event) {
-                                        _vm.autocomplete_select(
-                                          index,
-                                          "employee"
-                                        )
+                                        _vm.sendForApproval("marketing_expense")
                                       }
                                     }
                                   },
-                                  [_vm._v(_vm._s(item.name))]
-                                )
-                              })
-                            )
-                          : _vm._e()
-                      ]),
-                      _vm._v(" "),
-                      _vm._l(_vm.employees, function(employee) {
-                        return _c("div", { staticClass: "chip mb-5" }, [
-                          _c("img", {
-                            attrs: {
-                              src:
-                                "https://mdbootstrap.com/img/Photos/Avatars/avatar-6.jpg"
-                            }
-                          }),
-                          _vm._v(_vm._s(employee.name)),
-                          _c("i", { staticClass: "close fa fa-times" })
-                        ])
-                      }),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "page-name-m" }, [
-                        _vm._v(_vm._s(_vm.lang("Expense")))
-                      ]),
-                      _vm._v(" "),
-                      _c("table", { staticClass: "table" }, [
-                        _c("thead", { staticClass: "thead-inverse" }, [
-                          _c("tr", [
-                            _c("th", [_vm._v(_vm._s(_vm.lang("Item")))]),
-                            _vm._v(" "),
-                            _c("th", { staticClass: "text-right" }, [
-                              _vm._v(_vm._s(_vm.lang("Budget")))
-                            ]),
-                            _vm._v(" "),
-                            _c("th", { staticClass: "text-right" }, [
-                              _vm._v(_vm._s(_vm.lang("Expense Total")))
-                            ]),
-                            _vm._v(" "),
-                            _c("th", { staticClass: "text-right" }, [
-                              _vm._v(_vm._s(_vm.lang("Difference")))
-                            ])
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("tbody", { staticClass: "white" }, [
-                          _c("tr", [
-                            _c(
-                              "td",
-                              { attrs: { "data-title": _vm.lang("Title") } },
-                              [_vm._v(_vm._s(_vm.lang(_vm.line_title)))]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "td",
-                              {
-                                staticClass: "text-right",
-                                attrs: { "data-title": _vm.lang("Budget") }
-                              },
-                              [
-                                _vm._v(
-                                  _vm._s(
-                                    _vm._f("flexCurrency")(
-                                      _vm.line_budget,
-                                      " kn",
-                                      2
+                                  [
+                                    _vm._v(
+                                      _vm._s(_vm.lang("Send for Approval"))
                                     )
-                                  )
+                                  ]
                                 )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "td",
-                              {
-                                staticClass: "text-right",
-                                attrs: {
-                                  "data-title": _vm.lang("Expense Total")
-                                }
-                              },
-                              [
-                                _vm._v(
-                                  _vm._s(
-                                    _vm._f("flexCurrency")(
-                                      _vm.line_expense,
-                                      " kn",
-                                      2
-                                    )
-                                  )
-                                )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "td",
-                              {
-                                staticClass: "text-right",
-                                attrs: { "data-title": _vm.lang("Difference") }
-                              },
-                              [
-                                _vm._v(
-                                  _vm._s(
-                                    _vm._f("flexCurrency")(
-                                      Math.abs(
-                                        _vm.line_budget - _vm.line_expense
-                                      ),
-                                      " kn",
-                                      2
-                                    )
-                                  )
-                                )
-                              ]
-                            )
-                          ])
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "md-form mt-5 mb-2" }, [
-                        _c("textarea", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.description,
-                              expression: "description"
-                            }
-                          ],
-                          staticClass: "md-textarea",
-                          attrs: { id: "form76" },
-                          domProps: { value: _vm.description },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.description = $event.target.value
-                            }
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c("label", { attrs: { for: "form76" } }, [
-                          _vm._v(_vm._s(_vm.lang("Task Description")))
-                        ])
-                      ])
-                    ],
-                    2
-                  )
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "modal-footer btn-footer" }, [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-lg btn-save",
-                    attrs: { type: "button" },
-                    on: { click: _vm.assignValues }
-                  },
-                  [_vm._v(_vm._s(_vm.lang("Assign")))]
-                ),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-lg btn-cancel",
-                    attrs: { type: "button", "data-dismiss": "modal" }
-                  },
-                  [_vm._v(_vm._s(_vm.lang("Cancel")))]
-                )
-              ])
-            ])
-          ]
-        )
-      ]
-    )
-  ])
+                              : _vm._e()
+                          ]
+                        )
+                      ]
+            ],
+            2
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _c("expense-approval-modal", {
+        attrs: { line: _vm.line, expense: _vm.expense }
+      })
+    ],
+    1
+  )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      {
-        staticClass: "close",
-        attrs: {
-          type: "button",
-          "data-dismiss": "modal",
-          "aria-label": "Close"
-        }
-      },
-      [
-        _c(
-          "span",
-          { staticClass: "white-text", attrs: { "aria-hidden": "true" } },
-          [_vm._v("×")]
-        )
-      ]
-    )
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 var esExports = { render: render, staticRenderFns: staticRenderFns }
 /* harmony default export */ __webpack_exports__["a"] = (esExports);
@@ -100212,6 +99892,577 @@ function cloneRoute (to, from) {
 __webpack_require__(259);
 module.exports = __webpack_require__(260);
 
+
+/***/ }),
+/* 567 */,
+/* 568 */,
+/* 569 */,
+/* 570 */,
+/* 571 */,
+/* 572 */,
+/* 573 */,
+/* 574 */,
+/* 575 */,
+/* 576 */,
+/* 577 */,
+/* 578 */,
+/* 579 */,
+/* 580 */,
+/* 581 */,
+/* 582 */,
+/* 583 */,
+/* 584 */,
+/* 585 */,
+/* 586 */,
+/* 587 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+    name: "expense-approval-modal",
+    props: ['line', 'expense'],
+    data() {
+        return {
+            employee: '',
+            employees: [],
+            description: ''
+        };
+    },
+    methods: {
+        autocomplete: function (event, type) {
+            if (this.cancel) {
+                this.cancel();
+                this.cancel = false;
+            }
+            let CancelToken = axios.CancelToken;
+            if (this[type].length > 2) {
+                axios.get('/api/human_resources/' + type + '/search/' + this[type], {
+                    cancelToken: new CancelToken(c => {
+                        this.cancel = c;
+                    })
+                }).then(response => {
+                    if (type === 'department') {
+                        this.d_suggestions = response.data;
+                    } else {
+                        this.e_suggestions = response.data;
+                    }
+                }).catch(error => {});
+            }
+        },
+        autocomplete_select: function (index, type) {
+            if (type === 'department') {
+                //this.$store.commit('proposition/pushToArray', {key: 'departments', group: 'assigned', value: this.d_suggestions[index]});
+                this.departments.push(this.d_suggestions[index]);
+                this.d_suggestions = [];
+                this.department = '';
+            } else {
+                //this.$store.commit('proposition/pushToArray', {key: 'employees', group: 'assigned', value: this.e_suggestions[index]});
+                this.employees.push(this.e_suggestions[index]);
+                this.e_suggestions = [];
+                this.employee = '';
+            }
+        },
+        assignValues: function () {
+            if (this.employees.length && this.expense) {
+                let saveButton = jQuery(event.target);
+                saveButton.toggleClass('spinner-loading');
+                this.isSpinnerHidden = '';
+
+                axios.post('/api/proposition/' + this.$route.params.id + '/request_approval', {
+                    requestees: this.employees,
+                    description: this.description,
+                    expense: this.line.expense,
+                    budget: this.line.budget,
+                    name: this.line.title,
+                    designation: this.expense
+                }).then(() => {
+                    this.employees = [];
+                    this.description = '';
+
+                    this.spinnerType = 'fa-check spinner-success';
+                    setTimeout(() => {
+                        this.spinnerType = 'fa-refresh spinner-delay-rotate spinner-loader';
+                        this.isSpinnerHidden = 'hide';
+                        saveButton.toggleClass("spinner-loading");
+
+                        $('#ModalCostApprove').modal('hide');
+                    }, 1000);
+                    toastr.success(this.lang('Uspješno obavljeno'));
+                }).catch(err => {
+                    this.spinnerType = 'fa-times spinner-fail';
+                    setTimeout(() => {
+                        this.spinnerType = 'fa-refresh spinner-delay-rotate spinner-loader';
+                        this.isSpinnerHidden = 'hide';
+                        saveButton.toggleClass("spinner-loading");
+                    }, 1000);
+                    toastr.error(this.lang('Došlo je do problema. Pokušajte ponovno'));
+                });
+            } else {
+                this.error = 'Missing data';
+            }
+        }
+    }
+});
+
+/***/ }),
+/* 588 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(3)();
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+
+/***/ }),
+/* 589 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_ExpenseApprovalModal_vue__ = __webpack_require__(587);
+/* unused harmony namespace reexport */
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_7ccc92d7_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_ExpenseApprovalModal_vue__ = __webpack_require__(590);
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(591)
+}
+var normalizeComponent = __webpack_require__(1)
+/* script */
+
+
+/* template */
+
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-7ccc92d7"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_ExpenseApprovalModal_vue__["a" /* default */],
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_7ccc92d7_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_ExpenseApprovalModal_vue__["a" /* default */],
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "packages/Inspirium/SKTemplate/src/assets/js/components/modals/ExpenseApprovalModal.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-loader/node_modules/vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-7ccc92d7", Component.options)
+  } else {
+    hotAPI.reload("data-v-7ccc92d7", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+/* harmony default export */ __webpack_exports__["a"] = (Component.exports);
+
+
+/***/ }),
+/* 590 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "modal fade",
+      attrs: {
+        id: "ModalCostApprove",
+        tabindex: "-1",
+        role: "dialog",
+        "aria-hidden": "true"
+      }
+    },
+    [
+      _c(
+        "div",
+        {
+          staticClass: "modal-dialog modal-notify modal-warning",
+          attrs: { role: "document" }
+        },
+        [
+          _c("div", { staticClass: "modal-content" }, [
+            _c("div", { staticClass: "modal-header flex-column px-3 pt-3" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c("div", { staticClass: "d-flex mx-auto" }, [
+                _c("i", {
+                  staticClass:
+                    "fa fa-magic fa-4x mb-1 animated rotateInDownLeft"
+                }),
+                _vm._v(" "),
+                _c("h1", { staticClass: "modal-title w-100 text-center" }, [
+                  _vm._v(_vm._s(_vm.lang("Cost Approve")))
+                ])
+              ]),
+              _vm._v(" "),
+              _c("h6", { staticClass: "w-100 text-center mb-2" }, [
+                _vm._v(_vm._s(_vm.lang("Assign employee")))
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-body" }, [
+              _c("div", { staticClass: "row" }, [
+                _c(
+                  "div",
+                  { staticClass: "col-md-12" },
+                  [
+                    _c("div", { staticClass: "md-form d-flex addon" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.employee,
+                            expression: "employee"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "text",
+                          name: "employee",
+                          placeholder: _vm.lang("Find employee")
+                        },
+                        domProps: { value: _vm.employee },
+                        on: {
+                          keyup: function($event) {
+                            _vm.autocomplete($event, "employee")
+                          },
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.employee = $event.target.value
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm.e_suggestions.length
+                        ? _c(
+                            "ul",
+                            { staticClass: "mdb-autocomplete-wrap" },
+                            _vm._l(_vm.e_suggestions, function(item, index) {
+                              return _c(
+                                "li",
+                                {
+                                  on: {
+                                    click: function($event) {
+                                      _vm.autocomplete_select(index, "employee")
+                                    }
+                                  }
+                                },
+                                [_vm._v(_vm._s(item.name))]
+                              )
+                            })
+                          )
+                        : _vm._e()
+                    ]),
+                    _vm._v(" "),
+                    _vm._l(_vm.employees, function(employee) {
+                      return _c("div", { staticClass: "chip mb-5" }, [
+                        _c("img", { attrs: { src: employee.image } }),
+                        _vm._v(_vm._s(employee.name)),
+                        _c("i", { staticClass: "close fa fa-times" })
+                      ])
+                    }),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "page-name-m" }, [
+                      _vm._v(_vm._s(_vm.lang("Expense")))
+                    ]),
+                    _vm._v(" "),
+                    _c("table", { staticClass: "table" }, [
+                      _c("thead", { staticClass: "thead-inverse" }, [
+                        _c("tr", [
+                          _c("th", [_vm._v(_vm._s(_vm.lang("Item")))]),
+                          _vm._v(" "),
+                          _c("th", { staticClass: "text-right" }, [
+                            _vm._v(_vm._s(_vm.lang("Budget")))
+                          ]),
+                          _vm._v(" "),
+                          _c("th", { staticClass: "text-right" }, [
+                            _vm._v(_vm._s(_vm.lang("Expense Total")))
+                          ]),
+                          _vm._v(" "),
+                          _c("th", { staticClass: "text-right" }, [
+                            _vm._v(_vm._s(_vm.lang("Difference")))
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("tbody", { staticClass: "white" }, [
+                        _c("tr", [
+                          _c(
+                            "td",
+                            { attrs: { "data-title": _vm.lang("Title") } },
+                            [_vm._v(_vm._s(_vm.lang(_vm.line.title)))]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "td",
+                            {
+                              staticClass: "text-right",
+                              attrs: { "data-title": _vm.lang("Budget") }
+                            },
+                            [
+                              _vm._v(
+                                _vm._s(
+                                  _vm._f("flexCurrency")(
+                                    _vm.line.budget,
+                                    " kn",
+                                    2
+                                  )
+                                )
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "td",
+                            {
+                              staticClass: "text-right",
+                              attrs: { "data-title": _vm.lang("Expense Total") }
+                            },
+                            [
+                              _vm._v(
+                                _vm._s(
+                                  _vm._f("flexCurrency")(
+                                    _vm.line.expense,
+                                    " kn",
+                                    2
+                                  )
+                                )
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "td",
+                            {
+                              staticClass: "text-right",
+                              attrs: { "data-title": _vm.lang("Difference") }
+                            },
+                            [
+                              _vm._v(
+                                _vm._s(
+                                  _vm._f("flexCurrency")(
+                                    Math.abs(
+                                      _vm.line.budget - _vm.line.expense
+                                    ),
+                                    " kn",
+                                    2
+                                  )
+                                )
+                              )
+                            ]
+                          )
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "md-form mt-5 mb-2" }, [
+                      _c("textarea", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.description,
+                            expression: "description"
+                          }
+                        ],
+                        staticClass: "md-textarea",
+                        attrs: { id: "form76" },
+                        domProps: { value: _vm.description },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.description = $event.target.value
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("label", { attrs: { for: "form76" } }, [
+                        _vm._v(_vm._s(_vm.lang("Task Description")))
+                      ])
+                    ])
+                  ],
+                  2
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-footer btn-footer" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-lg btn-save",
+                  attrs: { type: "button" },
+                  on: { click: _vm.assignValues }
+                },
+                [_vm._v(_vm._s(_vm.lang("Assign")))]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-lg btn-cancel",
+                  attrs: { type: "button", "data-dismiss": "modal" }
+                },
+                [_vm._v(_vm._s(_vm.lang("Cancel")))]
+              )
+            ])
+          ])
+        ]
+      )
+    ]
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "close",
+        attrs: {
+          type: "button",
+          "data-dismiss": "modal",
+          "aria-label": "Close"
+        }
+      },
+      [
+        _c(
+          "span",
+          { staticClass: "white-text", attrs: { "aria-hidden": "true" } },
+          [_vm._v("×")]
+        )
+      ]
+    )
+  }
+]
+render._withStripped = true
+var esExports = { render: render, staticRenderFns: staticRenderFns }
+/* harmony default export */ __webpack_exports__["a"] = (esExports);
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-loader/node_modules/vue-hot-reload-api")      .rerender("data-v-7ccc92d7", esExports)
+  }
+}
+
+/***/ }),
+/* 591 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(588);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(4)("26b551c7", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../../../../node_modules/css-loader/index.js!../../../../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-7ccc92d7\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ExpenseApprovalModal.vue", function() {
+     var newContent = require("!!../../../../../../../../node_modules/css-loader/index.js!../../../../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-7ccc92d7\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ExpenseApprovalModal.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
 
 /***/ })
 /******/ ]);
