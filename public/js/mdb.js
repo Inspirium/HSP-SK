@@ -19154,7 +19154,6 @@ $.fn.easyPieChart = function(options) {
       });
       //FIX - not the  most elegant but works
       dropdownIcon.on('click', function (){
-          console.log('test');
           if ($('ul.select-dropdown').not(options[0]).is(':visible')) {
               $('input.select-dropdown').trigger('close');
           }

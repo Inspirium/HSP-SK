@@ -38295,7 +38295,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["a"] = ({
     name: "assign-documents",
@@ -38311,9 +38310,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             access: 0,
             priority: 0,
             departments: [],
-            cancel: false,
-            spinnerType: 'fa-refresh spinner-delay-rotate spinner-loader',
-            isSpinnerHidden: 'hide'
+            cancel: false
         };
     },
     methods: {
@@ -38352,10 +38349,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         },
         assignValues: function () {
             if (this.employees.length) {
-                let saveButton = jQuery(event.target);
-                saveButton.toggleClass('spinner-loading');
-                this.isSpinnerHidden = '';
-
                 axios.post('/api/proposition/' + this.$route.params.id + '/assign/document', {
                     employees: this.employees,
                     departments: this.departments,
@@ -38367,25 +38360,16 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     path: this.$route.path,
                     step: this.$route.meta.dir
                 }).then(() => {
-                    this.spinnerType = 'fa-check spinner-success';
-                    setTimeout(() => {
-                        this.spinnerType = 'fa-refresh spinner-delay-rotate spinner-loader';
-                        this.isSpinnerHidden = 'hide';
-                        saveButton.toggleClass("spinner-loading");
-
-                        $('#centralModalAssign').modal('hide');
-                    }, 1000);
+                    this.$eventHub.emit('BUTTON_LISTEN_FOR_SUCCESS');
                     toastr.success(this.lang('Uspješno obavljeno'));
                 }).catch(() => {
-                    this.spinnerType = 'fa-times spinner-fail';
-                    setTimeout(() => {
-                        this.spinnerType = 'fa-refresh spinner-delay-rotate spinner-loader';
-                        this.isSpinnerHidden = 'hide';
-                        saveButton.toggleClass("spinner-loading");
-                    }, 1000);
+                    this.$eventHub.emit('BUTTON_LISTEN_FOR_FAILURE');
                     toastr.error(this.lang('Došlo je do problema. Pokušajte ponovno'));
                 });
             }
+        },
+        hideModal() {
+            $('#assign-documents').modal('hide');
         }
     },
     mounted() {
@@ -38506,7 +38490,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["a"] = ({
     name: "assign-proposition",
@@ -38522,9 +38505,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             access: 0,
             priority: 0,
             departments: [],
-            cancel: false,
-            spinnerType: 'fa-refresh spinner-delay-rotate spinner-loader',
-            isSpinnerHidden: 'hide'
+            cancel: false
         };
     },
     methods: {
@@ -38563,10 +38544,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         },
         assignValues: function (event) {
             if (this.employees.length) {
-                let saveButton = jQuery(event.target);
-                saveButton.toggleClass('spinner-loading');
-                this.isSpinnerHidden = '';
-
                 axios.post('/api/proposition/' + this.$route.params.id + '/assign', {
                     employees: this.employees,
                     departments: this.departments,
@@ -38577,25 +38554,16 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     path: window.location.href,
                     step: this.$route.meta.save
                 }).then(() => {
-                    this.spinnerType = 'fa-check spinner-success';
-                    setTimeout(() => {
-                        this.spinnerType = 'fa-refresh spinner-delay-rotate spinner-loader';
-                        this.isSpinnerHidden = 'hide';
-                        saveButton.toggleClass("spinner-loading");
-
-                        $('#centralModalAssign').modal('hide');
-                    }, 1000);
+                    this.$eventHub.emit('BUTTON_LISTEN_FOR_SUCCESS');
                     toastr.success(this.lang('Uspješno obavljeno'));
                 }).catch(() => {
-                    this.spinnerType = 'fa-times spinner-fail';
-                    setTimeout(() => {
-                        this.spinnerType = 'fa-refresh spinner-delay-rotate spinner-loader';
-                        this.isSpinnerHidden = 'hide';
-                        saveButton.toggleClass("spinner-loading");
-                    }, 1000);
+                    this.$eventHub.emit('BUTTON_LISTEN_FOR_FAILURE');
                     toastr.error(this.lang('Došlo je do problema. Pokušajte ponovno'));
                 });
             }
+        },
+        hideModal() {
+            $('#centralModalAssign').modal('hide');
         }
     },
     mounted() {
@@ -38684,7 +38652,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["a"] = ({
     name: "expense-approval-modal",
@@ -38695,9 +38662,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             employee: '',
             employees: [],
             description: '',
-            cancel: false,
-            spinnerType: 'fa-refresh spinner-delay-rotate spinner-loader',
-            isSpinnerHidden: 'hide'
+            cancel: false
         };
     },
     methods: {
@@ -38736,9 +38701,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         },
         assignValues: function () {
             if (this.employees.length && this.expense) {
-                let saveButton = jQuery(event.target);
-                saveButton.toggleClass('spinner-loading');
-                this.isSpinnerHidden = '';
 
                 axios.post('/api/proposition/' + this.$route.params.id + '/request_approval', {
                     requestees: this.employees,
@@ -38750,28 +38712,20 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 }).then(() => {
                     this.employees = [];
                     this.description = '';
+                    this.$eventHub.emit('BUTTON_LISTEN_FOR_SUCCESS');
 
-                    this.spinnerType = 'fa-check spinner-success';
-                    setTimeout(() => {
-                        this.spinnerType = 'fa-refresh spinner-delay-rotate spinner-loader';
-                        this.isSpinnerHidden = 'hide';
-                        saveButton.toggleClass("spinner-loading");
-
-                        $('#ModalCostApprove').modal('hide');
-                    }, 1000);
                     toastr.success(this.lang('Uspješno obavljeno'));
                 }).catch(err => {
-                    this.spinnerType = 'fa-times spinner-fail';
-                    setTimeout(() => {
-                        this.spinnerType = 'fa-refresh spinner-delay-rotate spinner-loader';
-                        this.isSpinnerHidden = 'hide';
-                        saveButton.toggleClass("spinner-loading");
-                    }, 1000);
+                    this.$eventHub.emit('BUTTON_LISTEN_FOR_FAILURE');
+
                     toastr.error(this.lang('Došlo je do problema. Pokušajte ponovno'));
                 });
             } else {
                 this.error = 'Missing data';
             }
+        },
+        hideModal() {
+            $('#ModalCostApprove').modal('hide');
         }
     }
 });
@@ -38781,8 +38735,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-//
-//
 //
 //
 //
@@ -38845,9 +38797,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             description: '',
 
             departments: [],
-            cancel: false,
-            spinnerType: 'fa-refresh spinner-delay-rotate spinner-loader',
-            isSpinnerHidden: 'hide'
+            cancel: false
         };
     },
     methods: {
@@ -38886,32 +38836,21 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         },
         assignValues: function () {
             if (this.employees.length) {
-                let saveButton = jQuery(event.target);
-                saveButton.toggleClass('spinner-loading');
-                this.isSpinnerHidden = '';
                 axios.post('/api/proposition/' + this.$route.params.id + '/approval', {
                     employees: this.employees,
                     departments: this.departments,
                     description: this.description
                 }).then(() => {
-                    this.spinnerType = 'fa-check spinner-success';
-                    setTimeout(() => {
-                        this.spinnerType = 'fa-refresh spinner-delay-rotate spinner-loader';
-                        this.isSpinnerHidden = 'hide';
-                        saveButton.toggleClass("spinner-loading");
-                        $('#propositionApprovalModal').modal('hide');
-                    }, 1000);
+                    this.$eventHub.emit('BUTTON_LISTEN_FOR_SUCCESS');
                     toastr.success(this.lang('Uspješno obavljeno'));
                 }).catch(() => {
-                    this.spinnerType = 'fa-times spinner-fail';
-                    setTimeout(() => {
-                        this.spinnerType = 'fa-refresh spinner-delay-rotate spinner-loader';
-                        this.isSpinnerHidden = 'hide';
-                        saveButton.toggleClass("spinner-loading");
-                    }, 1000);
+                    this.$eventHub.emit('BUTTON_LISTEN_FOR_FAILURE');
                     toastr.error(this.lang('Došlo je do problema. Pokušajte ponovno'));
                 });
             }
+        },
+        hideModal() {
+            $('#propositionApprovalModal').modal('hide');
         }
     }
 });
@@ -39025,6 +38964,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             }
         },
         assignValues: function () {
+            //TODO
             if (this.employees.length) {
                 let saveButton = document.getElementById('save-btn');
                 saveButton.setAttribute('style', 'color: #92C100 !important; position: relative');
@@ -40671,7 +40611,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             return false;
         },
         fileWarning(id) {
-            this.$store.dispatch('proposition/listenForWarning', { vue: this, data: { id: id } });
+            console.log(id);
+            this.$store.dispatch('proposition/listenForWarning', { vue: this, data: id });
             jQuery('#modal-warning').modal('show');
         },
         fileAdd: function (data) {
@@ -41323,18 +41264,11 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             return false;
         },
         fileWarning(id, offer) {
-            this.index_to_delete = { id: id, offer: offer };
+            this.$store.dispatch('proposition/listenForWarning', { vue: this, data: { id: id, offer: offer } });
             jQuery('#modal-warning').modal('show');
         },
-        fileDelete: function (id) {
-            if (!id) {
-                id = this.index_to_delete;
-            }
-            this.$store.dispatch('proposition/print/deleteFile', id);
-            this.index_to_delete = 0;
-        },
         fileAdd: function (data) {
-            this.$store.commit('proposition/print/addFile', { file: data.file, offer: this.active_offer });
+            this.$store.commit('proposition/print/addFile', { file: data.file });
         },
         fileNameSave: function (data) {
             this.$store.dispatch('proposition/basic_data/filenameSave', { id: data.file.id, title: data.file.title });
@@ -42470,39 +42404,24 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["a"] = ({
     data: function () {
-        return {
-            spinnerType: 'fa-refresh spinner-delay-rotate spinner-loader',
-            isSpinnerHidden: 'hide'
-        };
+        return {};
     },
     computed: {},
     methods: {
         sendToWarehouse() {
-            let saveButton = jQuery(event.target);
-            saveButton.toggleClass('spinner-loading-blue');
-            this.isSpinnerHidden = '';
             axios.post('/api/proposition/' + this.$route.params.id + '/warehouse').then(res => {
-                this.spinnerType = 'fa-check spinner-success';
-                setTimeout(() => {
-                    this.spinnerType = 'fa-refresh spinner-delay-rotate spinner-loader';
-                    this.isSpinnerHidden = 'hide';
-                    saveButton.toggleClass("spinner-loading-blue");
-                    window.location.href = '/propositions';
-                }, 1000);
+                this.$eventHub.emit('BUTTON_LISTEN_FOR_SUCCESS');
                 toastr.success(this.lang('Uspješno obavljeno'));
             }).catch(() => {
-                this.spinnerType = 'fa-times spinner-fail';
+                this.$eventHub.emit('BUTTON_LISTEN_FOR_FAILURE');
                 toastr.success(this.lang('Došlo je do problema. Pokušajte ponovno'));
-                setTimeout(() => {
-                    this.spinnerType = 'fa-refresh spinner-delay-rotate spinner-loader';
-                    this.isSpinnerHidden = 'hide';
-                    saveButton.toggleClass("spinner-loading-blue");
-                }, 1000);
             });
+        },
+        redirect() {
+            this.$router.push('/propositions');
         }
     }
 });
@@ -43628,8 +43547,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["a"] = ({
     data: function () {
@@ -43638,17 +43555,12 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             last_name: '',
             occupation: '',
             title: '',
-            work: '',
-            spinnerType: 'fa-refresh spinner-delay-rotate spinner-loader',
-            isSpinnerHidden: 'hide'
+            work: ''
         };
     },
     computed: {},
     methods: {
         saveAuthor() {
-            let saveButton = jQuery(event.target);
-            saveButton.toggleClass('spinner-loading');
-            this.isSpinnerHidden = '';
             axios.post('/api/author', {
                 first_name: this.first_name,
                 last_name: this.last_name,
@@ -43656,14 +43568,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 occupation: this.occupation,
                 work: this.work
             }).then(res => {
-                this.spinnerType = 'fa-check spinner-success';
-                setTimeout(() => {
-                    this.spinnerType = 'fa-refresh spinner-delay-rotate spinner-loader';
-                    this.isSpinnerHidden = 'hide';
-                    saveButton.toggleClass("spinner-loading");
-                    //close modal
-                    jQuery('#centralModalAuthors').modal('hide');
-                }, 1000);
+                this.$eventHub.emit('BUTTON_LISTEN_FOR_SUCCESS');
                 //emit event upstream
                 this.$emit('authorAdded', res.data);
                 //clear data
@@ -43673,13 +43578,11 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 this.title = '';
                 this.work = '';
             }).catch(err => {
-                this.spinnerType = 'fa-times spinner-fail';
-                setTimeout(() => {
-                    this.spinnerType = 'fa-refresh spinner-delay-rotate spinner-loader';
-                    this.isSpinnerHidden = 'hide';
-                    saveButton.toggleClass("spinner-loading");
-                }, 1000);
+                this.$eventHub.emit('BUTTON_LISTEN_FOR_FAILURE');
             });
+        },
+        hideModal() {
+            jQuery('#centralModalAuthors').modal('hide');
         }
     }
 });
@@ -43694,8 +43597,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modals_WarningNotSavedModal__ = __webpack_require__(250);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modals_PropositionApprovalModal__ = __webpack_require__(441);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__modals_AssignDocuments__ = __webpack_require__(249);
-//
-//
 //
 //
 //
@@ -43762,9 +43663,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             access: 0,
             priority: 0,
             departments: [],
-            cancel: false,
-            spinnerType: 'fa-refresh spinner-delay-rotate spinner-loader',
-            isSpinnerHidden: 'hide'
+            cancel: false
         };
     },
     components: {
@@ -43789,27 +43688,13 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             });
         },
         saveProposition: function (event) {
-            let saveButton = jQuery(event.target);
-            saveButton.toggleClass('spinner-loading');
-            this.isSpinnerHidden = '';
-
             this.$store.dispatch('proposition/' + this.$route.meta.save + '/saveData', this.$route.params.id).then(() => {
-                this.spinnerType = 'fa-check spinner-success';
-                setTimeout(() => {
-                    this.spinnerType = 'fa-refresh spinner-delay-rotate spinner-loader';
-                    this.isSpinnerHidden = 'hide';
-                    saveButton.toggleClass("spinner-loading");
-                }, 1000);
+                this.$eventHub.emit('BUTTON_LISTEN_FOR_SUCCESS');
                 toastr.success(this.lang('Uspješno obavljeno'));
                 this.$store.commit('editedFalse');
             }).catch(err => {
                 toastr.error(this.lang('Došlo je do problema. Pokušajte ponovno'));
-                this.spinnerType = 'fa-times spinner-fail';
-                setTimeout(() => {
-                    this.spinnerType = 'fa-refresh spinner-delay-rotate spinner-loader';
-                    this.isSpinnerHidden = 'hide';
-                    saveButton.toggleClass("spinner-loading");
-                }, 1000);
+                this.$eventHub.emit('BUTTON_LISTEN_FOR_FAILURE');
             });
         },
         assignModalOpen: function () {
@@ -43948,44 +43833,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 /* harmony default export */ __webpack_exports__["a"] = ({
     name: "task-type",
-    data() {
-        return {
-            task_types: {
-                0: {
-                    title: '',
-                    className: ''
-                },
-                1: {
-                    title: 'Proposition task',
-                    className: 'tasktype-1'
-                },
-                2: {
-                    title: 'Assignment',
-                    className: 'tasktype-2'
-                },
-                3: {
-                    title: 'Approval Request',
-                    className: 'tasktype-3'
-                },
-                4: {
-                    title: 'Proposition task',
-                    className: 'tasktype-1'
-                },
-                5: {
-                    title: 'Proposition Approval',
-                    className: 'tasktype-5'
-                },
-                6: {
-                    title: 'Task Order',
-                    className: 'tasktype-6'
-                }
-            }
-        };
-    },
-    props: ['value'],
-    mounted() {
-        console.log(this.value);
-    }
+    props: ['value']
 });
 
 /***/ }),
@@ -44091,6 +43939,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 this.$eventHub.emit('UPDATE_DEPARTMENT_EMPLOYEE_TASKS', { employee: data.employee });
             }).catch(err => {
                 toastr.error(this.lang('Greška'));
+                this.$eventHub.emit('UPDATE_DEPARTMENT_EMPLOYEE_TASKS', { employee: data.employee, error: true });
             });
         },
         rejectOrder(data) {
@@ -44099,6 +43948,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 this.$eventHub.emit('UPDATE_DEPARTMENT_EMPLOYEE_TASKS', { employee: data.employee });
             }).catch(err => {
                 toastr.error(this.lang('Greška'));
+                this.$eventHub.emit('UPDATE_DEPARTMENT_EMPLOYEE_TASKS', { employee: data.employee, error: true });
             });
         }
 
@@ -44127,6 +43977,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__table_components_NewOrder__ = __webpack_require__(254);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__table_components_DateCell__ = __webpack_require__(252);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__table_components_TaskType__ = __webpack_require__(255);
+//
+//
 //
 //
 //
@@ -44195,7 +44047,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             draggableOptions: {
                 disabled: false,
                 handle: '.icon-handler'
-            }
+            },
+            spinnerType: 'fa-refresh spinner-delay-rotate spinner-loader',
+            isSpinnerHidden: 'hide',
+            saveButton: null
         };
     },
     created() {
@@ -44248,8 +44103,16 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     methods: {
         refreshTasks(payload) {
             if (payload.employee === this.employee.id) {
-                this.query.sort = 'order';
-                this.query.order = 'asc';
+                if (!payload.error) {
+                    this.query.sort = 'order';
+                    this.query.order = 'asc';
+                }
+                this.spinnerType = 'fa-check spinner-success';
+                setTimeout(() => {
+                    this.spinnerType = 'fa-refresh spinner-delay-rotate spinner-loader';
+                    this.isSpinnerHidden = 'hide';
+                    this.saveButton.toggleClass("spinner-loading");
+                }, 1000);
             }
         },
         can(role) {
@@ -44264,6 +44127,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             this.$emit('openModal', { employee: this.employee.id, tasks: data });
         },
         approveOrder() {
+            this.saveButton = jQuery(event.target);
+            this.saveButton.toggleClass('spinner-loading');
+            this.isSpinnerHidden = '';
             let data = _.map(this.data, o => {
                 return o.id;
             });
@@ -44283,8 +44149,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-//
-//
 //
 //
 //
@@ -44456,32 +44320,25 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             this.department = '';
         },
         submitTask() {
-            let saveButton = document.getElementById('save-btn');
-            saveButton.setAttribute('style', 'color: #92C100 !important; position: relative');
-            $("i.spinner-loader").toggleClass("hide");
-
             if (typeof this.$route.params.id !== 'undefined') {
                 axios.put('/api/task/' + this.$route.params.id, this.task).then(res => {
-                    saveButton.setAttribute('style', 'color: #FFFFFF !important');
-                    $("i.spinner-loader").addClass("hide");
-                    toastr.success(this.lang('Uspješno obavljeno'));
-
-                    this.$router.push('/tasks');
+                    this.$eventHub.emit('BUTTON_LISTEN_FOR_SUCCESS');
                 }).catch(err => {
+                    this.$eventHub.emit('BUTTON_LISTEN_FOR_FAILURE');
                     toastr.error(this.lang('Došlo je do problema. Pokušajte ponovno'));
-                    $("i.spinner-loader").addClass("hide");
                 });
             } else {
                 axios.post('/api/task', this.task).then(res => {
-                    saveButton.setAttribute('style', 'color: #FFFFFF !important');
-                    $("i.spinner-loader").addClass("hide");
+                    this.$eventHub.emit('BUTTON_LISTEN_FOR_SUCCESS');
                     toastr.success(this.lang('Zadatak poslan'));
-
-                    this.$router.push('/tasks');
                 }).catch(err => {
+                    this.$eventHub.emit('BUTTON_LISTEN_FOR_FAILURE');
                     toastr.error(this.lang('Došlo je do problema. Pokušajte ponovno'));
                 });
             }
+        },
+        redirect() {
+            this.$router.push('/tasks');
         }
     },
     mounted: function () {
@@ -58454,6 +58311,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('inspirium-breadcrumbs', _
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('not-saved-modal', __webpack_require__(250).default);
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('inspirium-warning-modal', __webpack_require__(35).default);
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('proposition-footer-buttons', __webpack_require__(472).default);
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('spinner-button', __webpack_require__(594).default);
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vue_moment___default.a, { moment: __WEBPACK_IMPORTED_MODULE_1_moment___default.a });
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_3_vue_router__["a" /* default */]);
@@ -59496,7 +59354,7 @@ window.Echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default.a({
 
 
 const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31__components_proposition_PropositionList__["a" /* default */] }, { path: '/proposition', component: __WEBPACK_IMPORTED_MODULE_0__components_proposition_Proposition__["a" /* default */], name: 'proposition',
-    children: [{ path: 'start', component: __WEBPACK_IMPORTED_MODULE_18__components_proposition_PropositionStart__["a" /* default */], meta: { save: 'start', breadcrumb: 'Start', warning: 'proposition/deleteProposition' } }, { path: ':id/edit/start', component: __WEBPACK_IMPORTED_MODULE_18__components_proposition_PropositionStart__["a" /* default */], meta: { save: 'start', validate: { id: 'int' }, breadcrumb: 'Start', warning: 'proposition/deleteProposition' } }, { path: ':id/edit/basic_data', component: __WEBPACK_IMPORTED_MODULE_1__components_proposition_BasicData__["a" /* default */], meta: { save: 'basic_data', validate: { id: 'int' }, breadcrumb: 'Basic Data', warning: 'proposition/basic_data/deleteFile' } }, { path: ':id/edit/categorization', component: __WEBPACK_IMPORTED_MODULE_2__components_proposition_Categorization__["a" /* default */], meta: { save: 'categorization', validate: { id: 'int' }, breadcrumb: 'Categorization' } }, { path: ':id/edit/market_potential', component: __WEBPACK_IMPORTED_MODULE_3__components_proposition_MarketPotential__["a" /* default */], meta: { save: 'market_potential', validate: { id: 'int' }, breadcrumb: 'Market Potential', warning: 'proposition/market_potential/deleteFile' } }, { path: ':id/edit/technical_data', component: __WEBPACK_IMPORTED_MODULE_4__components_proposition_TechnicalData__["a" /* default */], meta: { save: 'technical_data', validate: { id: 'int' }, breadcrumb: 'Technical Data' } }, { path: ':id/edit/print', component: __WEBPACK_IMPORTED_MODULE_7__components_proposition_Print__["a" /* default */], meta: { save: 'print', validate: { id: 'int' }, breadcrumb: 'Print' } }, { path: ':id/edit/authors_expense', component: __WEBPACK_IMPORTED_MODULE_5__components_proposition_AuthorsExpense__["a" /* default */], meta: { save: 'authors_expense', validate: { id: 'int' }, breadcrumb: 'Authors Expense' } }, { path: ':id/edit/production_expense', component: __WEBPACK_IMPORTED_MODULE_9__components_proposition_ProductionExpense__["a" /* default */], meta: { save: 'production_expense', validate: { id: 'int' }, breadcrumb: 'Production Expense' } }, { path: ':id/edit/marketing_expense', component: __WEBPACK_IMPORTED_MODULE_10__components_proposition_MarketingExpense__["a" /* default */], meta: { save: 'marketing_expense', validate: { id: 'int' }, breadcrumb: 'Marketing Expense' } }, { path: ':id/edit/distribution_expense', component: __WEBPACK_IMPORTED_MODULE_12__components_proposition_DistributionExpense__["a" /* default */], meta: { save: 'distribution_expense', validate: { id: 'int' }, breadcrumb: 'Distribution Expense' } }, { path: ':id/edit/layout_expense', component: __WEBPACK_IMPORTED_MODULE_14__components_proposition_LayoutExpense__["a" /* default */], meta: { save: 'layout_expense', validate: { id: 'int' }, breadcrumb: 'Layout Expense' } }, { path: ':id/edit/deadline', component: __WEBPACK_IMPORTED_MODULE_16__components_proposition_Deadline__["a" /* default */], meta: { save: 'deadline', validate: { id: 'int' }, breadcrumb: 'Deadline' } }, { path: ':id/edit/calculation', component: __WEBPACK_IMPORTED_MODULE_17__components_proposition_Calculation__["a" /* default */], meta: { save: 'calculation', validate: { id: 'int' }, breadcrumb: 'Calculation' } }, { path: ':id/preparation/translation', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { save: 'files', dir: 'translation', validate: { id: 'int' }, breadcrumb: 'Translation', warning: 'proposition/files/deleteFile' } }, { path: ':id/preparation/technical_preparation', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { save: 'files', dir: 'technical_preparation', validate: { id: 'int' }, breadcrumb: 'Technical Preparation', warning: 'proposition/files/deleteFile' } }, { path: ':id/preparation/proofreading', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { save: 'files', dir: 'proofreading', validate: { id: 'int' }, breadcrumb: 'Proofreading', warning: 'proposition/files/deleteFile' } }, { path: ':id/preparation/additional_materials', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { save: 'files', dir: 'additional_materials', validate: { id: 'int' }, breadcrumb: 'Additional Materials', warning: 'proposition/files/deleteFile' } }, { path: ':id/preparation/reviews', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { save: 'files', dir: 'reviews', validate: { id: 'int' }, breadcrumb: 'Reviews', warning: 'proposition/files/deleteFile' } }, { path: ':id/preparation/lecture', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { save: 'files', dir: 'lecture', validate: { id: 'int' }, breadcrumb: 'Lecture', warning: 'proposition/files/deleteFile' } }, { path: ':id/preparation/technical_correction', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { save: 'files', dir: 'technical_correction', validate: { id: 'int' }, breadcrumb: 'Technical Correction', warning: 'proposition/files/deleteFile' } }, { path: ':id/preparation/final_review', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { save: 'files', dir: 'final_review', validate: { id: 'int' }, breadcrumb: 'Final Review', warning: 'proposition/files/deleteFile' } }, { path: ':id/expenses/authors_expense', component: __WEBPACK_IMPORTED_MODULE_6__components_proposition_expenses_AuthorsExpense__["a" /* default */], meta: { save: 'authors_expense', validate: { id: 'int' }, breadcrumb: 'Authors Expense', 'type': 'expense' } }, { path: ':id/expenses/production_expense', component: __WEBPACK_IMPORTED_MODULE_8__components_proposition_expenses_ProductionExpense__["a" /* default */], meta: { save: 'production_expense', validate: { id: 'int' }, breadcrumb: 'Production Expense', 'type': 'expense' } }, { path: ':id/expenses/marketing_expense', component: __WEBPACK_IMPORTED_MODULE_11__components_proposition_expenses_MarketingExpense__["a" /* default */], meta: { save: 'marketing_expense', validate: { id: 'int' }, breadcrumb: 'Marketing Expense', 'type': 'expense' } }, { path: ':id/expenses/distribution_expense', component: __WEBPACK_IMPORTED_MODULE_13__components_proposition_expenses_DistributionExpense__["a" /* default */], meta: { save: 'distribution_expense', validate: { id: 'int' }, breadcrumb: 'Distribution Expense', 'type': 'expense' } }, { path: ':id/expenses/layout_expense', component: __WEBPACK_IMPORTED_MODULE_15__components_proposition_expenses_LayoutExpense__["a" /* default */], meta: { save: 'layout_expense', validate: { id: 'int' }, breadcrumb: 'Layout Expense', 'type': 'expense' } }, { path: ':id/expenses/compare', component: __WEBPACK_IMPORTED_MODULE_19__components_proposition_expenses_Compare__["a" /* default */], meta: { save: 'compare', validate: { id: 'int' }, breadcrumb: 'Compare' } }, { path: ':id/design/cover_design', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { save: 'files', dir: 'cover_design', validate: { id: 'int' }, breadcrumb: 'Cover Design', warning: 'proposition/files/deleteFile' } }, { path: ':id/design/layout_design', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { save: 'files', dir: 'layout_design', validate: { id: 'int' }, breadcrumb: 'Layout Design', warning: 'proposition/files/deleteFile' } }, { path: ':id/layout/first_block_layout', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { save: 'files', dir: 'first_block_layout', validate: { id: 'int' }, breadcrumb: 'First Block Layout', warning: 'proposition/files/deleteFile' } }, { path: ':id/layout/cover', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { save: 'files', dir: 'cover', validate: { id: 'int' }, breadcrumb: 'Cover', warning: 'proposition/files/deleteFile' } }, { path: ':id/layout/layout', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { save: 'files', dir: 'layout', validate: { id: 'int' }, breadcrumb: 'Layout', warning: 'proposition/files/deleteFile' } }, { path: ':id/layout/first_revision', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { save: 'files', dir: 'first_revision', validate: { id: 'int' }, breadcrumb: 'First Revision', warning: 'proposition/files/deleteFile' } }, { path: ':id/layout/correction', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { save: 'files', dir: 'correction', validate: { id: 'int' }, breadcrumb: 'Correction', warning: 'proposition/files/deleteFile' } }, { path: ':id/layout/correction_input', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { save: 'files', dir: 'correction_input', validate: { id: 'int' }, breadcrumb: 'Correction Input', warning: 'proposition/files/deleteFile' } }, { path: ':id/layout/revisions', component: __WEBPACK_IMPORTED_MODULE_21__components_proposition_Revisions__["a" /* default */], meta: { save: 'revisions', validate: { id: 'int' }, breadcrumb: 'Revisions' } }, { path: ':id/final_price/price_definition', component: __WEBPACK_IMPORTED_MODULE_22__components_proposition_PriceDefinition__["a" /* default */], meta: { save: 'price_definition', validate: { id: 'int' }, breadcrumb: 'Price Definition' } }, { path: ':id/prepress/print_proof', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { save: 'files', dir: 'print_proof', validate: { id: 'int' }, breadcrumb: 'Print Proof', warning: 'proposition/files/deleteFile' } }, { path: ':id/prepress/print_proof_correction', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { save: 'files', dir: 'print_proof_correction', validate: { id: 'int' }, breadcrumb: 'Print Proof Correction', warning: 'proposition/files/deleteFile' } }, { path: ':id/prepress/print', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { save: 'files', dir: 'print', validate: { id: 'int' }, breadcrumb: 'Print', warning: 'proposition/files/deleteFile' } }, { path: ':id/prepress/warehouse', component: __WEBPACK_IMPORTED_MODULE_23__components_proposition_Warehouse__["a" /* default */], meta: { save: 'warehouse', validate: { id: 'int' }, breadcrumb: 'Warehouse' } }, { path: ':id/additionals/multimedia', component: __WEBPACK_IMPORTED_MODULE_25__components_proposition_Multimedia__["a" /* default */], meta: { save: 'files', dir: 'multimedia', validate: { id: 'int' }, breadcrumb: 'Multimedia', warning: 'proposition/multimedia/deleteFile' } }, { path: ':id/additionals/marketing', component: __WEBPACK_IMPORTED_MODULE_24__components_proposition_Marketing__["a" /* default */], meta: { save: 'files', dir: 'marketing', validate: { id: 'int' }, breadcrumb: 'Marketing', warning: 'proposition/marketing/deleteFile' } }]
+    children: [{ path: 'start', component: __WEBPACK_IMPORTED_MODULE_18__components_proposition_PropositionStart__["a" /* default */], meta: { save: 'start', breadcrumb: 'Start', warning: 'proposition/deleteProposition' } }, { path: ':id/edit/start', component: __WEBPACK_IMPORTED_MODULE_18__components_proposition_PropositionStart__["a" /* default */], meta: { save: 'start', validate: { id: 'int' }, breadcrumb: 'Start', warning: 'proposition/deleteProposition' } }, { path: ':id/edit/basic_data', component: __WEBPACK_IMPORTED_MODULE_1__components_proposition_BasicData__["a" /* default */], meta: { save: 'basic_data', validate: { id: 'int' }, breadcrumb: 'Basic Data', warning: 'proposition/basic_data/deleteFile' } }, { path: ':id/edit/categorization', component: __WEBPACK_IMPORTED_MODULE_2__components_proposition_Categorization__["a" /* default */], meta: { save: 'categorization', validate: { id: 'int' }, breadcrumb: 'Categorization' } }, { path: ':id/edit/market_potential', component: __WEBPACK_IMPORTED_MODULE_3__components_proposition_MarketPotential__["a" /* default */], meta: { save: 'market_potential', validate: { id: 'int' }, breadcrumb: 'Market Potential', warning: 'proposition/market_potential/deleteFile' } }, { path: ':id/edit/technical_data', component: __WEBPACK_IMPORTED_MODULE_4__components_proposition_TechnicalData__["a" /* default */], meta: { save: 'technical_data', validate: { id: 'int' }, breadcrumb: 'Technical Data' } }, { path: ':id/edit/print', component: __WEBPACK_IMPORTED_MODULE_7__components_proposition_Print__["a" /* default */], meta: { save: 'print', validate: { id: 'int' }, breadcrumb: 'Print', warning: 'proposition/print/deleteFile' } }, { path: ':id/edit/authors_expense', component: __WEBPACK_IMPORTED_MODULE_5__components_proposition_AuthorsExpense__["a" /* default */], meta: { save: 'authors_expense', validate: { id: 'int' }, breadcrumb: 'Authors Expense' } }, { path: ':id/edit/production_expense', component: __WEBPACK_IMPORTED_MODULE_9__components_proposition_ProductionExpense__["a" /* default */], meta: { save: 'production_expense', validate: { id: 'int' }, breadcrumb: 'Production Expense' } }, { path: ':id/edit/marketing_expense', component: __WEBPACK_IMPORTED_MODULE_10__components_proposition_MarketingExpense__["a" /* default */], meta: { save: 'marketing_expense', validate: { id: 'int' }, breadcrumb: 'Marketing Expense' } }, { path: ':id/edit/distribution_expense', component: __WEBPACK_IMPORTED_MODULE_12__components_proposition_DistributionExpense__["a" /* default */], meta: { save: 'distribution_expense', validate: { id: 'int' }, breadcrumb: 'Distribution Expense' } }, { path: ':id/edit/layout_expense', component: __WEBPACK_IMPORTED_MODULE_14__components_proposition_LayoutExpense__["a" /* default */], meta: { save: 'layout_expense', validate: { id: 'int' }, breadcrumb: 'Layout Expense' } }, { path: ':id/edit/deadline', component: __WEBPACK_IMPORTED_MODULE_16__components_proposition_Deadline__["a" /* default */], meta: { save: 'deadline', validate: { id: 'int' }, breadcrumb: 'Deadline' } }, { path: ':id/edit/calculation', component: __WEBPACK_IMPORTED_MODULE_17__components_proposition_Calculation__["a" /* default */], meta: { save: 'calculation', validate: { id: 'int' }, breadcrumb: 'Calculation' } }, { path: ':id/preparation/translation', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { save: 'files', dir: 'translation', validate: { id: 'int' }, breadcrumb: 'Translation', warning: 'proposition/files/deleteFile' } }, { path: ':id/preparation/technical_preparation', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { save: 'files', dir: 'technical_preparation', validate: { id: 'int' }, breadcrumb: 'Technical Preparation', warning: 'proposition/files/deleteFile' } }, { path: ':id/preparation/proofreading', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { save: 'files', dir: 'proofreading', validate: { id: 'int' }, breadcrumb: 'Proofreading', warning: 'proposition/files/deleteFile' } }, { path: ':id/preparation/additional_materials', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { save: 'files', dir: 'additional_materials', validate: { id: 'int' }, breadcrumb: 'Additional Materials', warning: 'proposition/files/deleteFile' } }, { path: ':id/preparation/reviews', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { save: 'files', dir: 'reviews', validate: { id: 'int' }, breadcrumb: 'Reviews', warning: 'proposition/files/deleteFile' } }, { path: ':id/preparation/lecture', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { save: 'files', dir: 'lecture', validate: { id: 'int' }, breadcrumb: 'Lecture', warning: 'proposition/files/deleteFile' } }, { path: ':id/preparation/technical_correction', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { save: 'files', dir: 'technical_correction', validate: { id: 'int' }, breadcrumb: 'Technical Correction', warning: 'proposition/files/deleteFile' } }, { path: ':id/preparation/final_review', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { save: 'files', dir: 'final_review', validate: { id: 'int' }, breadcrumb: 'Final Review', warning: 'proposition/files/deleteFile' } }, { path: ':id/expenses/authors_expense', component: __WEBPACK_IMPORTED_MODULE_6__components_proposition_expenses_AuthorsExpense__["a" /* default */], meta: { save: 'authors_expense', validate: { id: 'int' }, breadcrumb: 'Authors Expense', 'type': 'expense' } }, { path: ':id/expenses/production_expense', component: __WEBPACK_IMPORTED_MODULE_8__components_proposition_expenses_ProductionExpense__["a" /* default */], meta: { save: 'production_expense', validate: { id: 'int' }, breadcrumb: 'Production Expense', 'type': 'expense' } }, { path: ':id/expenses/marketing_expense', component: __WEBPACK_IMPORTED_MODULE_11__components_proposition_expenses_MarketingExpense__["a" /* default */], meta: { save: 'marketing_expense', validate: { id: 'int' }, breadcrumb: 'Marketing Expense', 'type': 'expense' } }, { path: ':id/expenses/distribution_expense', component: __WEBPACK_IMPORTED_MODULE_13__components_proposition_expenses_DistributionExpense__["a" /* default */], meta: { save: 'distribution_expense', validate: { id: 'int' }, breadcrumb: 'Distribution Expense', 'type': 'expense' } }, { path: ':id/expenses/layout_expense', component: __WEBPACK_IMPORTED_MODULE_15__components_proposition_expenses_LayoutExpense__["a" /* default */], meta: { save: 'layout_expense', validate: { id: 'int' }, breadcrumb: 'Layout Expense', 'type': 'expense' } }, { path: ':id/expenses/compare', component: __WEBPACK_IMPORTED_MODULE_19__components_proposition_expenses_Compare__["a" /* default */], meta: { save: 'compare', validate: { id: 'int' }, breadcrumb: 'Compare' } }, { path: ':id/design/cover_design', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { save: 'files', dir: 'cover_design', validate: { id: 'int' }, breadcrumb: 'Cover Design', warning: 'proposition/files/deleteFile' } }, { path: ':id/design/layout_design', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { save: 'files', dir: 'layout_design', validate: { id: 'int' }, breadcrumb: 'Layout Design', warning: 'proposition/files/deleteFile' } }, { path: ':id/layout/first_block_layout', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { save: 'files', dir: 'first_block_layout', validate: { id: 'int' }, breadcrumb: 'First Block Layout', warning: 'proposition/files/deleteFile' } }, { path: ':id/layout/cover', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { save: 'files', dir: 'cover', validate: { id: 'int' }, breadcrumb: 'Cover', warning: 'proposition/files/deleteFile' } }, { path: ':id/layout/layout', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { save: 'files', dir: 'layout', validate: { id: 'int' }, breadcrumb: 'Layout', warning: 'proposition/files/deleteFile' } }, { path: ':id/layout/first_revision', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { save: 'files', dir: 'first_revision', validate: { id: 'int' }, breadcrumb: 'First Revision', warning: 'proposition/files/deleteFile' } }, { path: ':id/layout/correction', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { save: 'files', dir: 'correction', validate: { id: 'int' }, breadcrumb: 'Correction', warning: 'proposition/files/deleteFile' } }, { path: ':id/layout/correction_input', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { save: 'files', dir: 'correction_input', validate: { id: 'int' }, breadcrumb: 'Correction Input', warning: 'proposition/files/deleteFile' } }, { path: ':id/layout/revisions', component: __WEBPACK_IMPORTED_MODULE_21__components_proposition_Revisions__["a" /* default */], meta: { save: 'revisions', validate: { id: 'int' }, breadcrumb: 'Revisions' } }, { path: ':id/final_price/price_definition', component: __WEBPACK_IMPORTED_MODULE_22__components_proposition_PriceDefinition__["a" /* default */], meta: { save: 'price_definition', validate: { id: 'int' }, breadcrumb: 'Price Definition' } }, { path: ':id/prepress/print_proof', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { save: 'files', dir: 'print_proof', validate: { id: 'int' }, breadcrumb: 'Print Proof', warning: 'proposition/files/deleteFile' } }, { path: ':id/prepress/print_proof_correction', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { save: 'files', dir: 'print_proof_correction', validate: { id: 'int' }, breadcrumb: 'Print Proof Correction', warning: 'proposition/files/deleteFile' } }, { path: ':id/prepress/print', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument__["a" /* default */], meta: { save: 'files', dir: 'print', validate: { id: 'int' }, breadcrumb: 'Print', warning: 'proposition/files/deleteFile' } }, { path: ':id/prepress/warehouse', component: __WEBPACK_IMPORTED_MODULE_23__components_proposition_Warehouse__["a" /* default */], meta: { save: 'warehouse', validate: { id: 'int' }, breadcrumb: 'Warehouse' } }, { path: ':id/additionals/multimedia', component: __WEBPACK_IMPORTED_MODULE_25__components_proposition_Multimedia__["a" /* default */], meta: { save: 'files', dir: 'multimedia', validate: { id: 'int' }, breadcrumb: 'Multimedia', warning: 'proposition/multimedia/deleteFile' } }, { path: ':id/additionals/marketing', component: __WEBPACK_IMPORTED_MODULE_24__components_proposition_Marketing__["a" /* default */], meta: { save: 'files', dir: 'marketing', validate: { id: 'int' }, breadcrumb: 'Marketing', warning: 'proposition/marketing/deleteFile' } }]
 }, { path: '/tasks', component: __WEBPACK_IMPORTED_MODULE_27__components_tasks_Tasks__["a" /* default */] }, { path: '/task/edit/:id(\\d+)?', component: __WEBPACK_IMPORTED_MODULE_28__components_tasks_TaskEdit__["a" /* default */] }, { path: '/task/show/:id(\\d+)', component: __WEBPACK_IMPORTED_MODULE_29__components_tasks_TaskShow__["a" /* default */] }, { path: '/tasks/department/:id(\\d+)', component: __WEBPACK_IMPORTED_MODULE_30__components_tasks_DepartmentTasks__["a" /* default */] }, { path: '/human_resources/employee/new', component: __WEBPACK_IMPORTED_MODULE_26__components_hr_EditProfile__["a" /* default */] }, { path: '/human_resources/employee/:id(\\d+)/edit', component: __WEBPACK_IMPORTED_MODULE_26__components_hr_EditProfile__["a" /* default */] }, { path: '/human_resources/employee/:id(\\d+)', component: __WEBPACK_IMPORTED_MODULE_26__components_hr_EditProfile__["a" /* default */] }];
 /* harmony export (immutable) */ __webpack_exports__["a"] = routes;
 
@@ -60633,9 +60491,9 @@ let initialState = {
         addFile(state, file) {
             state.market_potential_documents.push(file);
         },
-        deleteFile(state, id) {
+        deleteFile(state, data) {
             state.market_potential_documents = _.filter(state.market_potential_documents, file => {
-                return file.id != id;
+                return file.id != data.data;
             });
         },
         filenameSave(state, payload) {
@@ -60666,10 +60524,11 @@ let initialState = {
                 }
             });
         },
-        deleteFile({ commit }, id) {
-            commit('deleteFile', id);
+        deleteFile({ commit }, data) {
+            console.log(data);
+            commit('deleteFile', data);
             //make request to remove from system
-            __WEBPACK_IMPORTED_MODULE_0_axios_index___default.a.delete('/api/file/' + id);
+            __WEBPACK_IMPORTED_MODULE_0_axios_index___default.a.delete('/api/file/' + data.data);
         },
         filenameSave({ commit }, payload) {
             commit('filenameSave', payload);
@@ -61038,7 +60897,7 @@ let initialState = {
             state.active_offer = Object.keys(state.offers)[0];
         },
         addFile(state, payload) {
-            state.offers[payload.offer].files.push(payload.file);
+            state.offers[state.active_offer].files.push(payload.file);
         },
         deleteFile(state, payload) {
             state.offers[payload.offer].files = _.filter(state.offers[payload.offer].files, file => {
@@ -61046,7 +60905,7 @@ let initialState = {
             });
         },
         filenameSave(state, payload) {
-            _.forEach(state.offers[payload.offer].files, o => {
+            _.forEach(state.offers[state.active_offer].files, o => {
                 if (o.id === payload.id) {
                     o.title = payload.title;
                 }
@@ -61074,9 +60933,9 @@ let initialState = {
             });
         },
         deleteFile({ commit }, payload) {
-            commit('deleteFile', payload);
+            commit('deleteFile', payload.data);
             //make request to remove from system
-            __WEBPACK_IMPORTED_MODULE_0_axios_index___default.a.delete('/api/file/' + payload.id);
+            __WEBPACK_IMPORTED_MODULE_0_axios_index___default.a.delete('/api/file/' + payload.data.id);
         },
         filenameSave({ commit }, payload) {
             commit('filenameSave', payload);
@@ -61539,7 +61398,7 @@ exports.push([module.i, "\n.-page-size-select {\n  display: inline-block;\n  wid
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(3)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
 /* 307 */
@@ -61567,7 +61426,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(3)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
 /* 311 */
@@ -61602,7 +61461,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(3)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
 /* 316 */
@@ -61616,14 +61475,14 @@ exports.push([module.i, "\n.-col-group {\n  display: inline-block;\n  width: 150
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(3)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
 /* 318 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(3)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
 /* 319 */
@@ -77450,29 +77309,23 @@ var render = function() {
       _vm._v(_vm._s(_vm.lang("Završni dokument")))
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "justify-content-center d-flex mb-4" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-l btn-neutral",
-          attrs: { type: "button" },
-          on: { click: _vm.sendToWarehouse }
-        },
-        [
-          _vm._v(_vm._s(_vm.lang("Recieved in Warehouse")) + "\n            "),
-          _c("i", {
-            class: [
-              "fa",
-              "fa-5x",
-              "fa-fw",
-              "text-white",
-              _vm.spinnerType,
-              _vm.isSpinnerHidden
-            ]
-          })
-        ]
-      )
-    ])
+    _c(
+      "div",
+      { staticClass: "justify-content-center d-flex mb-4" },
+      [
+        _c("spinner-button", {
+          attrs: {
+            title: _vm.Recieved in _vm.Warehouse,
+            classes: "btn btn-l btn-neutral"
+          },
+          on: {
+            button_clicked: _vm.sendToWarehouse,
+            button_cleanup_success: _vm.redirect
+          }
+        })
+      ],
+      1
+    )
   ])
 }
 var staticRenderFns = []
@@ -83083,38 +82936,28 @@ var render = function() {
               )
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "modal-footer btn-footer" }, [
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-lg btn-save",
-                  attrs: { type: "button", "data-dismiss": "modal" },
-                  on: { click: _vm.assignValues }
-                },
-                [
-                  _vm._v(_vm._s(_vm.lang("Assign")) + "\n                    "),
-                  _c("i", {
-                    class: [
-                      "fa",
-                      "fa-5x",
-                      "fa-fw",
-                      "text-white",
-                      _vm.spinnerType,
-                      _vm.isSpinnerHidden
-                    ]
-                  })
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-lg btn-cancel",
-                  attrs: { type: "button", "data-dismiss": "modal" }
-                },
-                [_vm._v(_vm._s(_vm.lang("Cancel")))]
-              )
-            ])
+            _c(
+              "div",
+              { staticClass: "modal-footer btn-footer" },
+              [
+                _c("spinner-button", {
+                  on: {
+                    button_clicked: _vm.assignValues,
+                    button_cleanup_success: _vm.hideModal
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-lg btn-cancel",
+                    attrs: { type: "button", "data-dismiss": "modal" }
+                  },
+                  [_vm._v(_vm._s(_vm.lang("Cancel")))]
+                )
+              ],
+              1
+            )
           ])
         ]
       )
@@ -88496,38 +88339,28 @@ var render = function() {
               ])
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "modal-footer btn-footer" }, [
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-lg btn-save",
-                  attrs: { type: "button" },
-                  on: { click: _vm.assignValues }
-                },
-                [
-                  _vm._v(_vm._s(_vm.lang("Assign")) + "\n                    "),
-                  _c("i", {
-                    class: [
-                      "fa",
-                      "fa-5x",
-                      "fa-fw",
-                      "text-white",
-                      _vm.spinnerType,
-                      _vm.isSpinnerHidden
-                    ]
-                  })
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-lg btn-cancel",
-                  attrs: { type: "button", "data-dismiss": "modal" }
-                },
-                [_vm._v(_vm._s(_vm.lang("Cancel")))]
-              )
-            ])
+            _c(
+              "div",
+              { staticClass: "modal-footer btn-footer" },
+              [
+                _c("spinner-button", {
+                  on: {
+                    button_clicked: _vm.assignValues,
+                    button_cleanup_success: _vm.hideModal
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-lg btn-cancel",
+                    attrs: { type: "button", "data-dismiss": "modal" }
+                  },
+                  [_vm._v(_vm._s(_vm.lang("Cancel")))]
+                )
+              ],
+              1
+            )
           ])
         ]
       )
@@ -90631,22 +90464,15 @@ var render = function() {
           staticClass: "btn-footer mt-2 mb-5 flex-column flex-md-row d-flex p-2"
         },
         [
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-lg btn-save",
-              attrs: { id: "save-btn", type: "submit" },
-              on: { click: _vm.submitTask }
-            },
-            [
-              _vm._v(_vm._s(_vm.lang("Submit")) + "\n            "),
-              _c("i", {
-                staticClass:
-                  "fa fa-refresh fa-5x fa-fw spinner-delay-rotate spinner-loader text-white hide"
-              })
-            ]
-          )
-        ]
+          _c("spinner-button", {
+            attrs: { title: "Submit" },
+            on: {
+              button_clicked: _vm.submitTask,
+              button_cleanup_success: _vm.redirect
+            }
+          })
+        ],
+        1
       )
     ])
   ])
@@ -91242,38 +91068,28 @@ var render = function() {
               ])
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "modal-footer btn-footer" }, [
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-lg btn-save",
-                  attrs: { type: "button" },
-                  on: { click: _vm.assignValues }
-                },
-                [
-                  _vm._v(_vm._s(_vm.lang("Assign")) + "\n                    "),
-                  _c("i", {
-                    class: [
-                      "fa",
-                      "fa-5x",
-                      "fa-fw",
-                      "text-white",
-                      _vm.spinnerType,
-                      _vm.isSpinnerHidden
-                    ]
-                  })
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-lg btn-cancel",
-                  attrs: { type: "button", "data-dismiss": "modal" }
-                },
-                [_vm._v(_vm._s(_vm.lang("Cancel")))]
-              )
-            ])
+            _c(
+              "div",
+              { staticClass: "modal-footer btn-footer" },
+              [
+                _c("spinner-button", {
+                  on: {
+                    button_clicked: _vm.assignValues,
+                    button_cleanup_success: _vm.hideModal
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-lg btn-cancel",
+                    attrs: { type: "button", "data-dismiss": "modal" }
+                  },
+                  [_vm._v(_vm._s(_vm.lang("Cancel")))]
+                )
+              ],
+              1
+            )
           ])
         ]
       )
@@ -92143,38 +91959,28 @@ var render = function() {
               )
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "modal-footer btn-footer" }, [
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-lg btn-save",
-                  attrs: { type: "button", "data-dismiss": "modal" },
-                  on: { click: _vm.assignValues }
-                },
-                [
-                  _vm._v(_vm._s(_vm.lang("Assign")) + "\n                    "),
-                  _c("i", {
-                    class: [
-                      "fa",
-                      "fa-5x",
-                      "fa-fw",
-                      "text-white",
-                      _vm.spinnerType,
-                      _vm.isSpinnerHidden
-                    ]
-                  })
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-lg btn-cancel",
-                  attrs: { type: "button", "data-dismiss": "modal" }
-                },
-                [_vm._v(_vm._s(_vm.lang("Cancel")))]
-              )
-            ])
+            _c(
+              "div",
+              { staticClass: "modal-footer btn-footer" },
+              [
+                _c("spinner-button", {
+                  on: {
+                    button_clicked: _vm.assignValues,
+                    button_cleanup_success: _vm.hideModal
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-lg btn-cancel",
+                    attrs: { type: "button", "data-dismiss": "modal" }
+                  },
+                  [_vm._v(_vm._s(_vm.lang("Cancel")))]
+                )
+              ],
+              1
+            )
           ])
         ]
       )
@@ -95408,11 +95214,7 @@ var render = function() {
                 disk: "proposition",
                 dir: "print"
               },
-              on: {
-                fileDelete: _vm.fileDelete,
-                fileAdd: _vm.fileAdd,
-                fileNameSave: _vm.fileNameSave
-              }
+              on: { fileAdd: _vm.fileAdd, fileNameSave: _vm.fileNameSave }
             })
           ]
         : [
@@ -95520,7 +95322,19 @@ var render = function() {
               attrs: { type: "button" },
               on: { click: _vm.approveOrder }
             },
-            [_vm._v(_vm._s(_vm.lang("Approve task priority")))]
+            [
+              _vm._v(_vm._s(_vm.lang("Approve task priority")) + "\n        "),
+              _c("i", {
+                class: [
+                  "fa",
+                  "fa-5x",
+                  "fa-fw",
+                  "text-white",
+                  _vm.spinnerType,
+                  _vm.isSpinnerHidden
+                ]
+              })
+            ]
           )
         : _vm._e(),
       _vm._v(" "),
@@ -95533,7 +95347,19 @@ var render = function() {
               attrs: { type: "button" },
               on: { click: _vm.rejectOrder }
             },
-            [_vm._v(_vm._s(_vm.lang("Reject task priority")))]
+            [
+              _vm._v(_vm._s(_vm.lang("Reject task priority")) + "\n        "),
+              _c("i", {
+                class: [
+                  "fa",
+                  "fa-5x",
+                  "fa-fw",
+                  "text-white",
+                  _vm.spinnerType,
+                  _vm.isSpinnerHidden
+                ]
+              })
+            ]
           )
         : _vm._e()
     ],
@@ -95569,28 +95395,7 @@ var render = function() {
           staticClass: "btn-footer mt-4 mb-5 flex-column flex-md-row d-flex p-2"
         },
         [
-          _vm.save
-            ? _c(
-                "button",
-                {
-                  staticClass: "btn btn-lg btn-save",
-                  on: { click: _vm.saveProposition }
-                },
-                [
-                  _vm._v(_vm._s(_vm.lang("Save")) + "\n        "),
-                  _c("i", {
-                    class: [
-                      "fa",
-                      "fa-5x",
-                      "fa-fw",
-                      "text-white",
-                      _vm.spinnerType,
-                      _vm.isSpinnerHidden
-                    ]
-                  })
-                ]
-              )
-            : _vm._e(),
+          _c("spinner-button", { on: { button_clicked: _vm.saveProposition } }),
           _vm._v(" "),
           _vm.assign
             ? _c(
@@ -97148,38 +96953,28 @@ var render = function() {
               ])
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "modal-footer btn-footer" }, [
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-lg btn-save",
-                  attrs: { type: "button" },
-                  on: { click: _vm.saveAuthor }
-                },
-                [
-                  _vm._v(_vm._s(_vm.lang("Save")) + "\n                    "),
-                  _c("i", {
-                    class: [
-                      "fa",
-                      "fa-5x",
-                      "fa-fw",
-                      "text-white",
-                      _vm.spinnerType,
-                      _vm.isSpinnerHidden
-                    ]
-                  })
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-lg btn-cancel",
-                  attrs: { type: "button", "data-dismiss": "modal" }
-                },
-                [_vm._v(_vm._s(_vm.lang("Cancel")))]
-              )
-            ])
+            _c(
+              "div",
+              { staticClass: "modal-footer btn-footer" },
+              [
+                _c("spinner-button", {
+                  on: {
+                    button_clicked: _vm.saveAuthor,
+                    button_cleanup_success: _vm.hideModal
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-lg btn-cancel",
+                    attrs: { type: "button", "data-dismiss": "modal" }
+                  },
+                  [_vm._v(_vm._s(_vm.lang("Cancel")))]
+                )
+              ],
+              1
+            )
           ])
         ]
       )
@@ -100650,6 +100445,227 @@ function cloneRoute (to, from) {
 __webpack_require__(260);
 module.exports = __webpack_require__(261);
 
+
+/***/ }),
+/* 572 */,
+/* 573 */,
+/* 574 */,
+/* 575 */,
+/* 576 */,
+/* 577 */,
+/* 578 */,
+/* 579 */,
+/* 580 */,
+/* 581 */,
+/* 582 */,
+/* 583 */,
+/* 584 */,
+/* 585 */,
+/* 586 */,
+/* 587 */,
+/* 588 */,
+/* 589 */,
+/* 590 */,
+/* 591 */,
+/* 592 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+    name: "spinner-button",
+    data() {
+        return {
+            spinnerType: ' fa-refresh spinner-delay-rotate spinner-loader',
+            isSpinnerHidden: ' hide',
+            spinnerLoading: ''
+        };
+    },
+    props: {
+        classes: {
+            type: String,
+            default: 'btn btn-lg btn-save'
+        },
+        title: {
+            type: String,
+            default: 'Save'
+        },
+        spinnerClasses: {
+            type: String,
+            default: 'fa fa-5x fa-fw text-white'
+        }
+
+    },
+    computed: {
+        bClasses() {
+            return this.classes + this.spinnerLoading;
+        },
+        sClasses() {
+            return this.spinnerClasses + this.spinnerType + this.isSpinnerHidden;
+        }
+    },
+    methods: {
+        click() {
+            this.spinnerLoading = ' spinner-loading';
+            this.isSpinnerHidden = '';
+            this.$eventHub.on('BUTTON_LISTEN_FOR_SUCCESS', this.success);
+            this.$eventHub.on('BUTTON_LISTEN_FOR_FAILURE', this.failure);
+            this.$emit('button_clicked');
+        },
+        success() {
+
+            this.spinnerType = ' fa-check spinner-success';
+            setTimeout(() => {
+                this.spinnerType = ' fa-refresh spinner-delay-rotate spinner-loader';
+                this.isSpinnerHidden = ' hide';
+                this.spinnerLoading = '';
+                this.$emit('button_cleanup_success');
+            }, 1000);
+            this.$eventHub.off('BUTTON_LISTEN_FOR_SUCCESS', this.success);
+            this.$eventHub.off('BUTTON_LISTEN_FOR_FAILURE', this.failure);
+        },
+        failure() {
+            this.spinnerType = 'fa-times spinner-fail';
+            setTimeout(() => {
+                this.spinnerType = ' fa-refresh spinner-delay-rotate spinner-loader';
+                this.isSpinnerHidden = ' hide';
+                this.spinnerLoading = '';
+                this.$emit('button_cleanup_failure');
+            }, 1000);
+            this.$eventHub.off('BUTTON_LISTEN_FOR_SUCCESS', this.success);
+            this.$eventHub.off('BUTTON_LISTEN_FOR_FAILURE', this.failure);
+        }
+    }
+});
+
+/***/ }),
+/* 593 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(3)();
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+
+/***/ }),
+/* 594 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_SpinnerButton_vue__ = __webpack_require__(592);
+/* empty harmony namespace reexport */
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_189c6320_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_SpinnerButton_vue__ = __webpack_require__(595);
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(596)
+}
+var normalizeComponent = __webpack_require__(1)
+/* script */
+
+
+/* template */
+
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-189c6320"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_SpinnerButton_vue__["a" /* default */],
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_189c6320_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_SpinnerButton_vue__["a" /* default */],
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "packages/Inspirium/SKTemplate/src/assets/js/components/general/SpinnerButton.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-loader/node_modules/vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-189c6320", Component.options)
+  } else {
+    hotAPI.reload("data-v-189c6320", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+/* harmony default export */ __webpack_exports__["default"] = (Component.exports);
+
+
+/***/ }),
+/* 595 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "button",
+    {
+      class: _vm.bClasses,
+      attrs: { type: "button" },
+      on: { click: _vm.click }
+    },
+    [
+      _vm._v(_vm._s(_vm.lang(_vm.title)) + "\n    "),
+      _c("i", { class: _vm.sClasses })
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+var esExports = { render: render, staticRenderFns: staticRenderFns }
+/* harmony default export */ __webpack_exports__["a"] = (esExports);
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-loader/node_modules/vue-hot-reload-api")      .rerender("data-v-189c6320", esExports)
+  }
+}
+
+/***/ }),
+/* 596 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(593);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(4)("789e77c8", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../../../../node_modules/css-loader/index.js!../../../../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-189c6320\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./SpinnerButton.vue", function() {
+     var newContent = require("!!../../../../../../../../node_modules/css-loader/index.js!../../../../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-189c6320\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./SpinnerButton.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
 
 /***/ })
 /******/ ]);
