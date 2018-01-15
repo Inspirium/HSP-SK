@@ -37448,7 +37448,14 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         }
     },
     mounted: function () {
-        this.$store.dispatch('employee/initUser');
+        this.$store.dispatch('employee/initUser').then(() => {});
+    },
+    watch: {
+        lroutes() {
+            setTimeout(() => {
+                $('.collapsible').collapsible();
+            }, 300);
+        }
     }
 });
 
@@ -58499,7 +58506,7 @@ if (window.translations.datepicker) {
 }
 
 // SideNav init
-$(".button-collapse").sideNav();
+//$(".button-collapse").sideNav();
 
 // Custom scrollbar init
 var el = document.querySelector('.custom-scrollbar');
@@ -59619,11 +59626,15 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
     getters: {},
     actions: {
         initUser({ state, commit }) {
-            if (!state.id || state.id !== window.Laravel.userId) {
-                __WEBPACK_IMPORTED_MODULE_0_axios_index___default.a.get('/api/me').then(res => {
-                    commit('setUser', res.data);
-                });
-            }
+            return new Promise((resolve, reject) => {
+                if (!state.id || state.id !== window.Laravel.userId) {
+                    __WEBPACK_IMPORTED_MODULE_0_axios_index___default.a.get('/api/me').then(res => {
+                        commit('setUser', res.data);
+                        resolve();
+                    });
+                }
+                resolve();
+            });
         }
     }
 });
@@ -60703,7 +60714,7 @@ let initialState = {
             }
         },
         deleteFile(state, payload) {
-            if (data.isFinal) {
+            if (payload.isFinal) {
                 state.leaflet = _.filter(state.leaflet, file => {
                     return file.id !== payload.id;
                 });
