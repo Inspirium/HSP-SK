@@ -37033,7 +37033,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     final_price: {
                         enabled: true,
                         title: 'Final Price',
-                        order: 5,
+                        order: 1,
                         key: 'final_price',
                         children: {
                             price_definition: {
@@ -37047,7 +37047,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     expenses: {
                         enabled: true,
                         title: 'Expenses',
-                        order: 1,
+                        order: 2,
                         key: 'expenses',
                         children: {
                             authors_expense: {
@@ -37091,7 +37091,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     text_preparation: {
                         enabled: true,
                         title: 'Text Preparation',
-                        order: 2,
+                        order: 3,
                         key: 'preparation',
                         children: {
                             translation: {
@@ -37147,7 +37147,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     design: {
                         enabled: true,
                         title: 'Design',
-                        order: 3,
+                        order: 4,
                         key: 'design',
                         children: {
                             cover_design: {
@@ -37167,7 +37167,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     layout: {
                         enabled: true,
                         title: 'Layout',
-                        order: 4,
+                        order: 5,
                         key: 'layout',
                         children: {
                             first_block_layout: {
@@ -41771,6 +41771,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     deleteRestore: true,
                     approval: true
                 };
+            }
+            if (this.$route.meta.save === 'warehouse') {
+                return {};
             }
             if (this.$route.meta.dir) {
                 return {
