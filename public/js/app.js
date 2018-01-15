@@ -87157,7 +87157,7 @@ var render = function() {
                                 "button",
                                 {
                                   staticClass:
-                                    "btn btn-lg btn-assign btn-assign-icon",
+                                    "btn btn-lg btn-save btn-complete-icon",
                                   on: { click: _vm.completeTask }
                                 },
                                 [_vm._v(_vm._s(_vm.lang("Complete")))]
