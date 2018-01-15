@@ -37990,8 +37990,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             });
         },
         fileDelete: function (index) {
-            this.files.splice(index, 1);
             this.$store.dispatch(this.$route.meta.warning, { vue: this, data: { id: this.files[index].id, isFinal: this.isFinal } });
+            this.files.splice(index, 1);
         },
         fileInputChange: function () {
             _.forEach(this.$refs.fileInput.files, (file, index) => {
@@ -40751,15 +40751,16 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 /* harmony default export */ __webpack_exports__["a"] = ({
     data: function () {
-        return {
-            cover: [],
-            leaflet: []
-        };
+        return {};
     },
     components: {
         'upload-modal': __WEBPACK_IMPORTED_MODULE_0__general_UploadModal_vue__["a" /* default */]
     },
-    computed: {},
+    computed: {
+        marketing() {
+            return this.$deepModel('proposition.marketing');
+        }
+    },
     methods: {
         documentAdd: function (modal) {
             jQuery('#' + modal).modal('show');
@@ -40771,6 +40772,12 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         fileWarning(data) {
             this.$store.dispatch('proposition/listenForWarning', { vue: this, data: data });
             jQuery('#modal-warning').modal('show');
+        },
+        fileAdd: function (data) {
+            this.$store.commit('proposition/marketing/addFile', data);
+        },
+        fileNameSave: function (data) {
+            this.$store.dispatch('proposition/marketing/filenameSave', data);
         }
     }
 });
@@ -40923,7 +40930,11 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     components: {
         'upload-modal': __WEBPACK_IMPORTED_MODULE_0__general_UploadModal_vue__["a" /* default */]
     },
-    computed: {},
+    computed: {
+        multimedia() {
+            return this.$deepModel('proposition.multimedia');
+        }
+    },
     methods: {
         documentAdd: function (modal) {
             jQuery('#' + modal).modal('show');
@@ -40935,15 +40946,13 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         fileWarning(data) {
             this.$store.dispatch('proposition/listenForWarning', { vue: this, data: data });
             jQuery('#modal-warning').modal('show');
+        },
+        fileAdd: function (data) {
+            this.$store.commit('proposition/multimedia/addFile', data);
+        },
+        fileNameSave: function (data) {
+            this.$store.dispatch('proposition/multimedia/filenameSave', data);
         }
-    },
-    mounted() {
-        //TODO: move to store
-        axios.get('/api/proposition/' + this.$route.params.id + '/files/multimedia').then(res => {
-            this.jpg = res.data.jpg;
-            this.psd = res.data.psd;
-            this.webshop = res.data.webshop;
-        });
     }
 });
 
@@ -60437,20 +60446,24 @@ let initialState = {
         }
     },
     actions: {
-        saveData({ state, commit, rootState }, id) {
-            return new Promise((resolve, reject) => {
-                if (id) {
-                    let path = '/api/proposition/' + id + '/files/' + rootState.route.meta.dir;
-                    __WEBPACK_IMPORTED_MODULE_0_axios_index___default.a.post(path, state).then(res => {
-                        commit('initData', res.data);
-                        resolve();
-                    }).catch(() => {
+        saveData({ state, commit, rootState, dispatch }, id) {
+            if (rootState.route.meta.dir === 'marketing' || rootState.route.meta.dir === 'multimedia') {
+                return dispatch('proposition/' + rootState.route.meta.dir + '/saveData', id, { root: true });
+            } else {
+                return new Promise((resolve, reject) => {
+                    if (id) {
+                        let path = '/api/proposition/' + id + '/files/' + rootState.route.meta.dir;
+                        __WEBPACK_IMPORTED_MODULE_0_axios_index___default.a.post(path, state).then(res => {
+                            commit('initData', res.data);
+                            resolve();
+                        }).catch(() => {
+                            reject();
+                        });
+                    } else {
                         reject();
-                    });
-                } else {
-                    reject();
-                }
-            });
+                    }
+                });
+            }
         },
         deleteFile({ commit }, payload) {
             commit('deleteFile', payload.data);
@@ -81488,7 +81501,7 @@ var render = function() {
       _c(
         "div",
         { staticClass: "files mt-2 mb-2" },
-        _vm._l(_vm.cover, function(file, index) {
+        _vm._l(_vm.marketing.cover, function(file, index) {
           return _c(
             "div",
             { staticClass: "file-box file-box-l d-flex align-items-center" },
@@ -81586,7 +81599,7 @@ var render = function() {
       _c(
         "div",
         { staticClass: "files mt-2 mb-2" },
-        _vm._l(_vm.leaflet, function(file, index) {
+        _vm._l(_vm.marketing.leaflet, function(file, index) {
           return _c(
             "div",
             { staticClass: "file-box file-box-l d-flex align-items-center" },
@@ -81681,31 +81694,23 @@ var render = function() {
         attrs: {
           id: "cover-pdf",
           action: "/api/file",
-          accept: ".pdf, .doc, .docx, .xls, .xlsx",
+          accept: ".pdf",
           disk: "proposition",
           dir: "marketing.cover"
         },
-        on: {
-          fileDelete: _vm.fileDelete,
-          fileAdd: _vm.fileAdd,
-          fileNameSave: _vm.fileNameSave
-        }
+        on: { fileAdd: _vm.fileAdd, fileNameSave: _vm.fileNameSave }
       }),
       _vm._v(" "),
       _c("upload-modal", {
         attrs: {
           id: "leaflet",
           action: "/api/file",
-          accept: ".pdf, .doc, .docx, .xls, .xlsx",
+          accept: ".pdf, .doc, .docx",
           disk: "proposition",
           dir: "marketing.leaflet",
           isFinal: true
         },
-        on: {
-          fileDelete: _vm.fileDelete,
-          fileAdd: _vm.fileAdd,
-          fileNameSave: _vm.fileNameSave
-        }
+        on: { fileAdd: _vm.fileAdd, fileNameSave: _vm.fileNameSave }
       })
     ],
     1
@@ -92439,19 +92444,19 @@ var render = function() {
             {
               name: "model",
               rawName: "v-model",
-              value: _vm.webshop,
-              expression: "webshop"
+              value: _vm.multimedia.webshop,
+              expression: "multimedia.webshop"
             }
           ],
           staticClass: "md-textarea",
           attrs: { id: "note", name: "note" },
-          domProps: { value: _vm.webshop },
+          domProps: { value: _vm.multimedia.webshop },
           on: {
             input: function($event) {
               if ($event.target.composing) {
                 return
               }
-              _vm.webshop = $event.target.value
+              _vm.$set(_vm.multimedia, "webshop", $event.target.value)
             }
           }
         }),
@@ -92468,7 +92473,7 @@ var render = function() {
       _c(
         "div",
         { staticClass: "files mt-2 mb-2" },
-        _vm._l(_vm.jpg, function(file, index) {
+        _vm._l(_vm.multimedia.jpg, function(file, index) {
           return _c(
             "div",
             { staticClass: "file-box file-box-l d-flex align-items-center" },
@@ -92566,7 +92571,7 @@ var render = function() {
       _c(
         "div",
         { staticClass: "files mt-2 mb-2" },
-        _vm._l(_vm.psd, function(file, index) {
+        _vm._l(_vm.multimedia.psd, function(file, index) {
           return _c(
             "div",
             { staticClass: "file-box file-box-l d-flex align-items-center" },
@@ -92665,11 +92670,7 @@ var render = function() {
           disk: "proposition",
           dir: "multimedia.jpg"
         },
-        on: {
-          fileDelete: _vm.fileDelete,
-          fileAdd: _vm.fileAdd,
-          fileNameSave: _vm.fileNameSave
-        }
+        on: { fileAdd: _vm.fileAdd, fileNameSave: _vm.fileNameSave }
       }),
       _vm._v(" "),
       _c("upload-modal", {
@@ -92681,11 +92682,7 @@ var render = function() {
           dir: "multimedia.psd",
           isFinal: true
         },
-        on: {
-          fileDelete: _vm.fileDelete,
-          fileAdd: _vm.fileAdd,
-          fileNameSave: _vm.fileNameSave
-        }
+        on: { fileAdd: _vm.fileAdd, fileNameSave: _vm.fileNameSave }
       })
     ],
     1
