@@ -83,7 +83,7 @@ class ImportEmployees extends Command
 	            'city' => $employee['city'],
 	            'postal_code' => $employee['postal_code'],
 	            'room' => $employee['room'],
-	            'password' => bcrypt('secret')
+	            'password' => bcrypt($employee['email'])
             ]);
         }
     }
