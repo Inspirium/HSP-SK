@@ -10301,6 +10301,30 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -10316,8 +10340,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 departments: [],
                 priority: '',
                 deadline: '',
-                documents: []
-            }
+                files: {
+                    initial: [],
+                    final: [],
+                    path: 'tasks'
+                }
+            },
+            type_to_delete: false,
+            index_to_delete: false
         };
     },
     computed: {},
@@ -10390,17 +10420,64 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         redirect: function redirect() {
             this.$router.push('/tasks');
+        },
+
+        documentAdd: function documentAdd(modal) {
+            jQuery('#' + modal).modal('show');
+        },
+        documentDownload: function documentDownload(link) {
+            window.open(link, "_blank");
+            return false;
+        },
+        fileDelete: function fileDelete(index, type) {
+            var _this4 = this;
+
+            axios.delete('/api/file/' + this.task.files[this.type_to_delete][this.index_to_delete].id).then(function () {
+                _this4.task.files[_this4.type_to_delete].splice(_this4.index_to_delete, 1);
+            });
+        },
+        fileAdd: function fileAdd(data) {
+            if (data.isFinal) {
+                this.task.files.final.push(data.file);
+            } else {
+                this.task.files.initial.push(data.file);
+            }
+        },
+        fileNameSave: function fileNameSave(data) {
+            var files = this.task.files.initial;
+            if (data.isFinal) {
+                files = this.task.files.final;
+            }
+            _.forEach(files, function (o) {
+                if (o.id === payload.id) {
+                    o.title = data.file.title;
+                }
+            });
+        },
+        fileWarning: function fileWarning(id, type) {
+            this.type_to_delete = type;
+            this.index_to_delete = id;
+            jQuery('#modal-warning').modal('show');
+        },
+        listenForWarning: function listenForWarning() {
+            if (this.index_to_delete) {
+                this.fileDelete();
+            }
+        },
+        clearDelete: function clearDelete() {
+            this.type_to_delete = false;
+            this.index_to_delete = false;
         }
     },
     mounted: function mounted() {
-        var _this4 = this;
+        var _this5 = this;
 
         $('.datepicker').pickadate({
             format: 'dd. mm. yyyy.',
             onSet: function onSet(context) {
                 var date = new Date(context.select);
-                date = _this4.$options.filters.moment(date, 'DD. MM. YYYY.');
-                _this4.task.deadline = date;
+                date = _this5.$options.filters.moment(date, 'DD. MM. YYYY.');
+                _this5.task.deadline = date;
                 //this.vuexSet('proposition.proposition.deadline.date', date);
             }
         });
@@ -72857,359 +72934,607 @@ var render = function() {
       ]
     ),
     _vm._v(" "),
-    _c("div", { staticClass: "content" }, [
-      _c("div", { staticClass: "page-name-xl mb-4 mt-3" }, [
-        _vm._v(_vm._s(_vm.lang("Task Details")))
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "row" }, [
-        _c(
-          "div",
-          { staticClass: "col-md-6" },
-          [
-            _c("div", { staticClass: "md-form" }, [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.task.name,
-                    expression: "task.name"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: { type: "text", id: "name" },
-                domProps: { value: _vm.task.name },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.$set(_vm.task, "name", $event.target.value)
-                  }
-                }
-              }),
-              _vm._v(" "),
-              _c("label", { attrs: { for: "name" } }, [
-                _vm._v(_vm._s(_vm.lang("Task Name")))
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "md-form d-flex mt-5 addon" }, [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.user,
-                    expression: "user"
-                  }
-                ],
-                staticClass: "form-control mdb-autocomplete",
-                attrs: {
-                  type: "text",
-                  id: "users",
-                  placeholder: "Pronađi osobu"
-                },
-                domProps: { value: _vm.user },
-                on: {
-                  keyup: function($event) {
-                    _vm.employeeComplete($event)
-                  },
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.user = $event.target.value
-                  }
-                }
-              }),
-              _vm._v(" "),
-              _vm.e_suggestions.length
-                ? _c(
-                    "ul",
-                    { staticClass: "mdb-autocomplete-wrap" },
-                    _vm._l(_vm.e_suggestions, function(item, index) {
-                      return _c(
-                        "li",
-                        {
-                          on: {
-                            click: function($event) {
-                              _vm.employeeCompleteSelect(index)
-                            }
-                          }
-                        },
-                        [
-                          _vm._v(
-                            _vm._s(item.first_name) +
-                              " " +
-                              _vm._s(item.last_name)
-                          )
-                        ]
-                      )
-                    })
-                  )
-                : _vm._e(),
-              _vm._v(" "),
-              _c("label", { attrs: { for: "users" } }, [
-                _vm._v(_vm._s(_vm.lang("Assign Person")))
-              ])
-            ]),
-            _vm._v(" "),
-            _vm._l(_vm.task.users, function(user) {
-              return _c("div", { key: user.id, staticClass: "chip mb-3" }, [
-                _c("img", { attrs: { src: user.image } }),
-                _vm._v(" " + _vm._s(user.name)),
-                _c("i", { staticClass: "close fa fa-times" })
-              ])
-            }),
-            _vm._v(" "),
-            _c("div", { staticClass: "md-form d-flex mt-5 addon" }, [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.department,
-                    expression: "department"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: {
-                  type: "text",
-                  id: "form1",
-                  placeholder: "Pronađi odjeljenje"
-                },
-                domProps: { value: _vm.department },
-                on: {
-                  keyup: function($event) {
-                    _vm.departmentComplete($event)
-                  },
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.department = $event.target.value
-                  }
-                }
-              }),
-              _vm._v(" "),
-              _vm.d_suggestions.length
-                ? _c(
-                    "ul",
-                    { staticClass: "mdb-autocomplete-wrap" },
-                    _vm._l(_vm.d_suggestions, function(item, index) {
-                      return _c(
-                        "li",
-                        {
-                          on: {
-                            click: function($event) {
-                              _vm.departmentCompleteSelect(index)
-                            }
-                          }
-                        },
-                        [_vm._v(_vm._s(item.title))]
-                      )
-                    })
-                  )
-                : _vm._e(),
-              _vm._v(" "),
-              _c("label", { attrs: { for: "form1" } }, [
-                _vm._v(_vm._s(_vm.lang("Assign Department")))
-              ])
-            ]),
-            _vm._v(" "),
-            _vm._l(_vm.task.departments, function(department) {
-              return _c(
-                "div",
-                { key: department.id, staticClass: "chip mb-3" },
-                [
-                  _vm._v("\n                " + _vm._s(department.name)),
-                  _c("i", { staticClass: "close fa fa-times" })
-                ]
-              )
-            })
-          ],
-          2
-        ),
+    _c(
+      "div",
+      { staticClass: "content" },
+      [
+        _c("div", { staticClass: "page-name-xl mb-4 mt-3" }, [
+          _vm._v(_vm._s(_vm.lang("Task Details")))
+        ]),
         _vm._v(" "),
-        _c("div", { staticClass: "col-md-6" }, [
-          _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-md-5" }, [
+        _c("div", { staticClass: "row" }, [
+          _c(
+            "div",
+            { staticClass: "col-md-6" },
+            [
               _c("div", { staticClass: "md-form" }, [
                 _c("input", {
                   directives: [
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.task.deadline,
-                      expression: "task.deadline"
+                      value: _vm.task.name,
+                      expression: "task.name"
                     }
                   ],
-                  staticClass: "form-control datepicker btn-white",
-                  attrs: {
-                    placeholder: "Odaberi datum",
-                    type: "text",
-                    id: "date-picker-example"
-                  },
-                  domProps: { value: _vm.task.deadline },
+                  staticClass: "form-control",
+                  attrs: { type: "text", id: "name" },
+                  domProps: { value: _vm.task.name },
                   on: {
                     input: function($event) {
                       if ($event.target.composing) {
                         return
                       }
-                      _vm.$set(_vm.task, "deadline", $event.target.value)
+                      _vm.$set(_vm.task, "name", $event.target.value)
                     }
                   }
                 }),
                 _vm._v(" "),
-                _c("label", { attrs: { for: "date-picker-example" } }, [
-                  _vm._v(_vm._s(_vm.lang("Deadline")))
+                _c("label", { attrs: { for: "name" } }, [
+                  _vm._v(_vm._s(_vm.lang("Task Name")))
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "md-form d-flex mt-5 addon" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.user,
+                      expression: "user"
+                    }
+                  ],
+                  staticClass: "form-control mdb-autocomplete",
+                  attrs: {
+                    type: "text",
+                    id: "users",
+                    placeholder: "Pronađi osobu"
+                  },
+                  domProps: { value: _vm.user },
+                  on: {
+                    keyup: function($event) {
+                      _vm.employeeComplete($event)
+                    },
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.user = $event.target.value
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _vm.e_suggestions.length
+                  ? _c(
+                      "ul",
+                      { staticClass: "mdb-autocomplete-wrap" },
+                      _vm._l(_vm.e_suggestions, function(item, index) {
+                        return _c(
+                          "li",
+                          {
+                            on: {
+                              click: function($event) {
+                                _vm.employeeCompleteSelect(index)
+                              }
+                            }
+                          },
+                          [
+                            _vm._v(
+                              _vm._s(item.first_name) +
+                                " " +
+                                _vm._s(item.last_name)
+                            )
+                          ]
+                        )
+                      })
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("label", { attrs: { for: "users" } }, [
+                  _vm._v(_vm._s(_vm.lang("Assign Person")))
+                ])
+              ]),
+              _vm._v(" "),
+              _vm._l(_vm.task.users, function(user) {
+                return _c("div", { key: user.id, staticClass: "chip mb-3" }, [
+                  _c("img", { attrs: { src: user.image } }),
+                  _vm._v(" " + _vm._s(user.name)),
+                  _c("i", { staticClass: "close fa fa-times" })
+                ])
+              }),
+              _vm._v(" "),
+              _c("div", { staticClass: "md-form d-flex mt-5 addon" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.department,
+                      expression: "department"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    type: "text",
+                    id: "form1",
+                    placeholder: "Pronađi odjeljenje"
+                  },
+                  domProps: { value: _vm.department },
+                  on: {
+                    keyup: function($event) {
+                      _vm.departmentComplete($event)
+                    },
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.department = $event.target.value
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _vm.d_suggestions.length
+                  ? _c(
+                      "ul",
+                      { staticClass: "mdb-autocomplete-wrap" },
+                      _vm._l(_vm.d_suggestions, function(item, index) {
+                        return _c(
+                          "li",
+                          {
+                            on: {
+                              click: function($event) {
+                                _vm.departmentCompleteSelect(index)
+                              }
+                            }
+                          },
+                          [_vm._v(_vm._s(item.title))]
+                        )
+                      })
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("label", { attrs: { for: "form1" } }, [
+                  _vm._v(_vm._s(_vm.lang("Assign Department")))
+                ])
+              ]),
+              _vm._v(" "),
+              _vm._l(_vm.task.departments, function(department) {
+                return _c(
+                  "div",
+                  { key: department.id, staticClass: "chip mb-3" },
+                  [
+                    _vm._v("\n                " + _vm._s(department.name)),
+                    _c("i", { staticClass: "close fa fa-times" })
+                  ]
+                )
+              })
+            ],
+            2
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-6" }, [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-5" }, [
+                _c("div", { staticClass: "md-form" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.task.deadline,
+                        expression: "task.deadline"
+                      }
+                    ],
+                    staticClass: "form-control datepicker btn-white",
+                    attrs: {
+                      placeholder: "Odaberi datum",
+                      type: "text",
+                      id: "date-picker-example"
+                    },
+                    domProps: { value: _vm.task.deadline },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.task, "deadline", $event.target.value)
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("label", { attrs: { for: "date-picker-example" } }, [
+                    _vm._v(_vm._s(_vm.lang("Deadline")))
+                  ])
                 ])
               ])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "page-name-m" }, [
-            _vm._v(_vm._s(_vm.lang("Priority")))
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-inline mb-3" }, [
-            _c("fieldset", { staticClass: "form-group" }, [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.task.priority,
-                    expression: "task.priority"
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "page-name-m" }, [
+              _vm._v(_vm._s(_vm.lang("Priority")))
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-inline mb-3" }, [
+              _c("fieldset", { staticClass: "form-group" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.task.priority,
+                      expression: "task.priority"
+                    }
+                  ],
+                  attrs: {
+                    name: "priority",
+                    type: "radio",
+                    id: "radio11",
+                    value: "high"
+                  },
+                  domProps: { checked: _vm._q(_vm.task.priority, "high") },
+                  on: {
+                    change: function($event) {
+                      _vm.$set(_vm.task, "priority", "high")
+                    }
                   }
-                ],
-                attrs: {
-                  name: "priority",
-                  type: "radio",
-                  id: "radio11",
-                  value: "high"
-                },
-                domProps: { checked: _vm._q(_vm.task.priority, "high") },
-                on: {
-                  change: function($event) {
-                    _vm.$set(_vm.task, "priority", "high")
-                  }
-                }
-              }),
+                }),
+                _vm._v(" "),
+                _c("label", { attrs: { for: "radio11" } }, [
+                  _vm._v(_vm._s(_vm.lang("High")))
+                ])
+              ]),
               _vm._v(" "),
-              _c("label", { attrs: { for: "radio11" } }, [
-                _vm._v(_vm._s(_vm.lang("High")))
+              _c("fieldset", { staticClass: "form-group" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.task.priority,
+                      expression: "task.priority"
+                    }
+                  ],
+                  attrs: {
+                    name: "priority",
+                    type: "radio",
+                    id: "radio21",
+                    value: "medium"
+                  },
+                  domProps: { checked: _vm._q(_vm.task.priority, "medium") },
+                  on: {
+                    change: function($event) {
+                      _vm.$set(_vm.task, "priority", "medium")
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("label", { attrs: { for: "radio21" } }, [
+                  _vm._v(_vm._s(_vm.lang("Medium")))
+                ])
+              ]),
+              _vm._v(" "),
+              _c("fieldset", { staticClass: "form-group" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.task.priority,
+                      expression: "task.priority"
+                    }
+                  ],
+                  attrs: {
+                    name: "priority",
+                    type: "radio",
+                    id: "radio31",
+                    value: "low"
+                  },
+                  domProps: { checked: _vm._q(_vm.task.priority, "low") },
+                  on: {
+                    change: function($event) {
+                      _vm.$set(_vm.task, "priority", "low")
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("label", { attrs: { for: "radio31" } }, [
+                  _vm._v(_vm._s(_vm.lang("Low")))
+                ])
               ])
             ]),
             _vm._v(" "),
-            _c("fieldset", { staticClass: "form-group" }, [
-              _c("input", {
+            _c("div", { staticClass: "md-form mt-5" }, [
+              _c("textarea", {
                 directives: [
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.task.priority,
-                    expression: "task.priority"
+                    value: _vm.task.description,
+                    expression: "task.description"
                   }
                 ],
-                attrs: {
-                  name: "priority",
-                  type: "radio",
-                  id: "radio21",
-                  value: "medium"
-                },
-                domProps: { checked: _vm._q(_vm.task.priority, "medium") },
+                staticClass: "md-textarea",
+                attrs: { id: "form76" },
+                domProps: { value: _vm.task.description },
                 on: {
-                  change: function($event) {
-                    _vm.$set(_vm.task, "priority", "medium")
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.task, "description", $event.target.value)
                   }
                 }
               }),
               _vm._v(" "),
-              _c("label", { attrs: { for: "radio21" } }, [
-                _vm._v(_vm._s(_vm.lang("Medium")))
+              _c("label", { attrs: { for: "form76" } }, [
+                _vm._v(_vm._s(_vm.lang("Task Description")))
               ])
-            ]),
-            _vm._v(" "),
-            _c("fieldset", { staticClass: "form-group" }, [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.task.priority,
-                    expression: "task.priority"
-                  }
-                ],
-                attrs: {
-                  name: "priority",
-                  type: "radio",
-                  id: "radio31",
-                  value: "low"
-                },
-                domProps: { checked: _vm._q(_vm.task.priority, "low") },
-                on: {
-                  change: function($event) {
-                    _vm.$set(_vm.task, "priority", "low")
-                  }
-                }
-              }),
-              _vm._v(" "),
-              _c("label", { attrs: { for: "radio31" } }, [
-                _vm._v(_vm._s(_vm.lang("Low")))
-              ])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "md-form mt-5" }, [
-            _c("textarea", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.task.description,
-                  expression: "task.description"
-                }
-              ],
-              staticClass: "md-textarea",
-              attrs: { id: "form76" },
-              domProps: { value: _vm.task.description },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(_vm.task, "description", $event.target.value)
-                }
-              }
-            }),
-            _vm._v(" "),
-            _c("label", { attrs: { for: "form76" } }, [
-              _vm._v(_vm._s(_vm.lang("Task Description")))
             ])
           ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass: "btn-footer mt-2 mb-5 flex-column flex-md-row d-flex p-2"
-        },
-        [
-          _c("spinner-button", {
-            attrs: { title: "Submit" },
-            on: {
-              button_clicked: _vm.submitTask,
-              button_cleanup_success: _vm.redirect
-            }
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "page-name-xl mt-4" }, [
+          _vm._v(_vm._s(_vm.lang("Initial Documents")))
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "files mt-2 mb-2" },
+          _vm._l(_vm.task.files.initial, function(document, index) {
+            return _c(
+              "div",
+              { staticClass: "file-box file-box-l d-flex align-items-center" },
+              [
+                _c(
+                  "a",
+                  {
+                    staticClass: "file-icon",
+                    attrs: { href: document.link },
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        _vm.documentDownload(document.link)
+                      }
+                    }
+                  },
+                  [_vm._v(_vm._s(document.title))]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "file-box-sty ml-auto d-flex" }, [
+                  _c(
+                    "a",
+                    {
+                      attrs: {
+                        href:
+                          "/human_resources/employee/" +
+                          document.owner.id +
+                          "/show"
+                      }
+                    },
+                    [
+                      _c("img", {
+                        staticClass: "profile-m-1 mr-1 align-self-center",
+                        attrs: { src: document.owner.image }
+                      }),
+                      _vm._v(
+                        "\n                    " +
+                          _vm._s(document.owner.name) +
+                          "\n                "
+                      )
+                    ]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "file-box-sty" }, [
+                  _vm._v(_vm._s(document.date))
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "file-box-sty icon icon-download",
+                    on: {
+                      click: function($event) {
+                        _vm.documentDownload(document.link)
+                      }
+                    }
+                  },
+                  [_vm._v(_vm._s(_vm.lang("Download")))]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "file-box-sty icon icon-cancel",
+                    on: {
+                      click: function($event) {
+                        _vm.fileWarning(index, "initial")
+                      }
+                    }
+                  },
+                  [_vm._v(_vm._s(_vm.lang("Delete")))]
+                )
+              ]
+            )
           })
-        ],
-        1
-      )
-    ])
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "justify-content-center d-flex mt-2 mb-4" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-neutral",
+              attrs: { type: "button" },
+              on: {
+                click: function($event) {
+                  _vm.documentAdd("initial-documents")
+                }
+              }
+            },
+            [_vm._v(_vm._s(_vm.lang("Upload")))]
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "page-name-xl mt-4" }, [
+          _vm._v(_vm._s(_vm.lang("Final Documents")))
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "files mt-2 mb-2" },
+          _vm._l(_vm.task.files.final, function(document, index) {
+            return _c(
+              "div",
+              { staticClass: "file-box file-box-l d-flex align-items-center" },
+              [
+                _c(
+                  "a",
+                  {
+                    staticClass: "file-icon",
+                    attrs: { href: document.link },
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        _vm.documentDownload(document.link)
+                      }
+                    }
+                  },
+                  [_vm._v(_vm._s(document.title))]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "file-box-sty ml-auto d-flex" }, [
+                  _c(
+                    "a",
+                    {
+                      attrs: {
+                        href:
+                          "/human_resources/employee/" +
+                          document.owner.id +
+                          "/show"
+                      }
+                    },
+                    [
+                      _c("img", {
+                        staticClass: "profile-m-1 mr-1 align-self-center",
+                        attrs: { src: document.owner.image }
+                      }),
+                      _vm._v(
+                        "\n                    " +
+                          _vm._s(document.owner.name) +
+                          "\n                "
+                      )
+                    ]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "file-box-sty" }, [
+                  _vm._v(_vm._s(document.date))
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "file-box-sty icon icon-download",
+                    on: {
+                      click: function($event) {
+                        _vm.documentDownload(document.link)
+                      }
+                    }
+                  },
+                  [_vm._v(_vm._s(_vm.lang("Download")))]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "file-box-sty icon icon-cancel",
+                    on: {
+                      click: function($event) {
+                        _vm.fileWarning(index, "final")
+                      }
+                    }
+                  },
+                  [_vm._v(_vm._s(_vm.lang("Delete")))]
+                )
+              ]
+            )
+          })
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "justify-content-center d-flex mt-2 mb-4" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-neutral",
+              attrs: { type: "button" },
+              on: {
+                click: function($event) {
+                  _vm.documentAdd("final-documents")
+                }
+              }
+            },
+            [_vm._v(_vm._s(_vm.lang("Upload")))]
+          )
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass:
+              "btn-footer mt-2 mb-5 flex-column flex-md-row d-flex p-2"
+          },
+          [
+            _c("spinner-button", {
+              attrs: { title: "Submit" },
+              on: {
+                button_clicked: _vm.submitTask,
+                button_cleanup_success: _vm.redirect
+              }
+            })
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c("warning-modal", {
+          on: {
+            warningConfirmed: _vm.listenForWarning,
+            warningCanceled: _vm.clearDelete
+          }
+        }),
+        _vm._v(" "),
+        _c("upload-modal", {
+          attrs: {
+            id: "initial-documents",
+            action: "/api/file",
+            accept: ".pdf, .doc, .docx, .xls, .xlsx",
+            disk: "proposition",
+            dir: _vm.task.files.path
+          },
+          on: {
+            fileDelete: _vm.fileDelete,
+            fileAdd: _vm.fileAdd,
+            fileNameSave: _vm.fileNameSave
+          }
+        }),
+        _vm._v(" "),
+        _c("upload-modal", {
+          attrs: {
+            id: "final-documents",
+            action: "/api/file",
+            accept: ".pdf, .doc, .docx, .xls, .xlsx",
+            disk: "proposition",
+            dir: _vm.task.files.path,
+            isFinal: true
+          },
+          on: {
+            fileDelete: _vm.fileDelete,
+            fileAdd: _vm.fileAdd,
+            fileNameSave: _vm.fileNameSave
+          }
+        })
+      ],
+      1
+    )
   ])
 }
 var staticRenderFns = []
