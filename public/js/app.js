@@ -93751,7 +93751,7 @@ var render = function() {
   return _c(
     "div",
     {
-      staticClass: "modal fade",
+      staticClass: "modal fade upload-style",
       attrs: {
         id: _vm.id,
         tabindex: "-1",
