@@ -59781,7 +59781,11 @@ const routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31
                             path += '/' + rootState.route.meta.dir;
                         }
                         __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get(path).then(res => {
-                            commit(rootState.route.meta.save + '/initData', res.data);
+                            if (rootState.route.meta.dir === 'multimedia' || rootState.route.meta.dir === 'marketing') {
+                                commit(rootState.route.meta.dir + '/initData', res.data);
+                            } else {
+                                commit(rootState.route.meta.save + '/initData', res.data);
+                            }
                             resolve();
                         }).catch(err => {
                             reject(err.response.status);
