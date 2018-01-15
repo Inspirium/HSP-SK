@@ -10860,6 +10860,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -10958,6 +10959,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         canDelete: function canDelete() {
             return this.task.assigner.id === window.Laravel.userId;
         },
+        canResend: function canResend() {
+            return this.task.status === 'completed' && this.task.assigner.id === window.Laravel.userId;
+        },
         acceptTask: function acceptTask() {
             var _this = this;
 
@@ -11001,26 +11005,33 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this6.$router.push('/tasks');
             });
         },
+        resendTask: function resendTask() {
+            var _this7 = this;
+
+            axios.post('/api/task/' + this.task.id + '/resend').then(function () {
+                _this7.$router.push('/tasks');
+            });
+        },
         openModal: function openModal(modal) {
             $('#' + modal).modal('show');
         },
         startClock: function startClock() {
-            var _this7 = this;
+            var _this8 = this;
 
             if (!this.task.is_running) {
                 axios.post('/api/task/' + this.task.id + '/clock/start').then(function () {
-                    _this7.task.is_running = true;
-                    _this7.clock.start();
+                    _this8.task.is_running = true;
+                    _this8.clock.start();
                 });
             }
         },
         stopClock: function stopClock() {
-            var _this8 = this;
+            var _this9 = this;
 
             if (this.task.is_running) {
                 axios.post('/api/task/' + this.task.id + '/clock/stop').then(function () {
-                    _this8.task.is_running = false;
-                    _this8.clock.stop();
+                    _this9.task.is_running = false;
+                    _this9.clock.stop();
                 });
             }
         },
@@ -11033,10 +11044,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             return false;
         },
         fileDelete: function fileDelete(index, type) {
-            var _this9 = this;
+            var _this10 = this;
 
             axios.delete('/api/file/' + this.task.files[this.type_to_delete][this.index_to_delete].id).then(function () {
-                _this9.task.files[_this9.type_to_delete].splice(_this9.index_to_delete, 1);
+                _this10.task.files[_this10.type_to_delete].splice(_this10.index_to_delete, 1);
             });
         },
         fileAdd: function fileAdd(data) {
@@ -11076,10 +11087,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             jQuery('#modal-warning').modal('show');
         },
         taskDelete: function taskDelete() {
-            var _this10 = this;
+            var _this11 = this;
 
             axios.delete('/api/task/' + this.task.id).then(function () {
-                _this10.$router.push('/tasks');
+                _this11.$router.push('/tasks');
             });
         },
         clearDelete: function clearDelete() {
@@ -11089,16 +11100,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     },
     mounted: function mounted() {
-        var _this11 = this;
+        var _this12 = this;
 
         var id = this.$route.params.id;
         axios.get('/api/task/' + id).then(function (res) {
-            _this11.task = res.data.task;
+            _this12.task = res.data.task;
             setTimeout(function () {
                 //TODO: fix
-                _this11.clock = new FlipClock($('.clock'), _this11.task.running_elapsed, {
-                    autoPlay: _this11.task.is_running,
-                    autoStart: _this11.task.is_running,
+                _this12.clock = new FlipClock($('.clock'), _this12.task.running_elapsed, {
+                    autoPlay: _this12.task.is_running,
+                    autoStart: _this12.task.is_running,
                     language: 'Croatian'
                 });
             }, 1000);
@@ -69506,6 +69517,17 @@ var render = function() {
                                   on: { click: _vm.completeTask }
                                 },
                                 [_vm._v(_vm._s(_vm.lang("Complete")))]
+                              )
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _vm.canResend()
+                            ? _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-lg btn-save",
+                                  on: { click: _vm.resendTask }
+                                },
+                                [_vm._v(_vm._s(_vm.lang("Resend")))]
                               )
                             : _vm._e(),
                           _vm._v(" "),
