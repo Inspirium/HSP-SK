@@ -3645,8 +3645,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         spinnerClasses: {
             type: String,
             default: 'fa fa-5x fa-fw text-white'
+        },
+        enabled: {
+            type: Boolean,
+            default: true
         }
-
     },
     computed: {
         bClasses: function bClasses() {
@@ -3658,11 +3661,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     methods: {
         click: function click() {
-            this.spinnerLoading = ' spinner-loading';
-            this.isSpinnerHidden = '';
-            this.$eventHub.on('BUTTON_LISTEN_FOR_SUCCESS', this.success);
-            this.$eventHub.on('BUTTON_LISTEN_FOR_FAILURE', this.failure);
-            this.$emit('button_clicked');
+            if (this.enabled) {
+                this.spinnerLoading = ' spinner-loading';
+                this.isSpinnerHidden = '';
+                this.$eventHub.on('BUTTON_LISTEN_FOR_SUCCESS', this.success);
+                this.$eventHub.on('BUTTON_LISTEN_FOR_FAILURE', this.failure);
+                this.$emit('button_clicked');
+            } else {
+                this.$emit('button_not_enabled');
+            }
         },
         success: function success() {
             var _this = this;
@@ -4036,6 +4043,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         };
     },
 
+    computed: {
+        enabledAssign: function enabledAssign() {
+            return !!this.employees.length;
+        }
+    },
     methods: {
         autocomplete: function autocomplete(event, type) {
             var _this = this;
@@ -4240,6 +4252,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         };
     },
 
+    computed: {
+        enabledAssign: function enabledAssign() {
+            return !!this.employees.length;
+        }
+    },
     methods: {
         autocomplete: function autocomplete(event, type) {
             var _this = this;
@@ -4300,6 +4317,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         hideModal: function hideModal() {
             $('#centralModalAssign').modal('hide');
+        },
+        error: function error() {
+            //TODO:
         }
     },
     mounted: function mounted() {
@@ -4523,6 +4543,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         };
     },
 
+    computed: {
+        enabledAssign: function enabledAssign() {
+            return !!this.employees.length;
+        }
+    },
     methods: {
         autocomplete: function autocomplete(event, type) {
             var _this = this;
@@ -4665,6 +4690,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         };
     },
 
+    computed: {
+        enabledAssign: function enabledAssign() {
+            return !!this.employees.length;
+        }
+    },
     methods: {
         autocomplete: function autocomplete(event, type) {
             var _this = this;
@@ -4801,6 +4831,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         };
     },
 
+    computed: {
+        enabledAssign: function enabledAssign() {
+            return !!this.employees.length;
+        }
+    },
     methods: {
         autocomplete: function autocomplete(event, type) {
             var _this = this;
@@ -11416,7 +11451,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -11506,7 +11541,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -11581,7 +11616,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -11611,7 +11646,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -65469,6 +65504,7 @@ var render = function() {
               { staticClass: "modal-footer btn-footer" },
               [
                 _c("spinner-button", {
+                  attrs: { enabled: _vm.enableAssign },
                   on: {
                     button_clicked: _vm.assignValues,
                     button_cleanup_success: _vm.hideModal
@@ -70860,6 +70896,7 @@ var render = function() {
               { staticClass: "modal-footer btn-footer" },
               [
                 _c("spinner-button", {
+                  attrs: { enabled: _vm.enabledAssign },
                   on: {
                     button_clicked: _vm.assignValues,
                     button_cleanup_success: _vm.hideModal
@@ -73375,107 +73412,123 @@ var render = function() {
           )
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "page-name-xl mt-4" }, [
-          _vm._v(_vm._s(_vm.lang("Final Documents")))
-        ]),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "files mt-2 mb-2" },
-          _vm._l(_vm.task.files.final, function(document, index) {
-            return _c(
-              "div",
-              { staticClass: "file-box file-box-l d-flex align-items-center" },
-              [
-                _c(
-                  "a",
-                  {
-                    staticClass: "file-icon",
-                    attrs: { href: document.link },
-                    on: {
-                      click: function($event) {
-                        $event.preventDefault()
-                        _vm.documentDownload(document.link)
-                      }
-                    }
-                  },
-                  [_vm._v(_vm._s(document.title))]
-                ),
-                _vm._v(" "),
-                _c("div", { staticClass: "file-box-sty ml-auto d-flex" }, [
-                  _c(
-                    "a",
+        _vm.task.id
+          ? [
+              _c("div", { staticClass: "page-name-xl mt-4" }, [
+                _vm._v(_vm._s(_vm.lang("Final Documents")))
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "files mt-2 mb-2" },
+                _vm._l(_vm.task.files.final, function(document, index) {
+                  return _c(
+                    "div",
                     {
-                      attrs: {
-                        href:
-                          "/human_resources/employee/" +
-                          document.owner.id +
-                          "/show"
-                      }
+                      staticClass:
+                        "file-box file-box-l d-flex align-items-center"
                     },
                     [
-                      _c("img", {
-                        staticClass: "profile-m-1 mr-1 align-self-center",
-                        attrs: { src: document.owner.image }
-                      }),
-                      _vm._v(
-                        "\n                    " +
-                          _vm._s(document.owner.name) +
-                          "\n                "
+                      _c(
+                        "a",
+                        {
+                          staticClass: "file-icon",
+                          attrs: { href: document.link },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              _vm.documentDownload(document.link)
+                            }
+                          }
+                        },
+                        [_vm._v(_vm._s(document.title))]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "file-box-sty ml-auto d-flex" },
+                        [
+                          _c(
+                            "a",
+                            {
+                              attrs: {
+                                href:
+                                  "/human_resources/employee/" +
+                                  document.owner.id +
+                                  "/show"
+                              }
+                            },
+                            [
+                              _c("img", {
+                                staticClass:
+                                  "profile-m-1 mr-1 align-self-center",
+                                attrs: { src: document.owner.image }
+                              }),
+                              _vm._v(
+                                "\n                    " +
+                                  _vm._s(document.owner.name) +
+                                  "\n                "
+                              )
+                            ]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "file-box-sty" }, [
+                        _vm._v(_vm._s(document.date))
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "file-box-sty icon icon-download",
+                          on: {
+                            click: function($event) {
+                              _vm.documentDownload(document.link)
+                            }
+                          }
+                        },
+                        [_vm._v(_vm._s(_vm.lang("Download")))]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "file-box-sty icon icon-cancel",
+                          on: {
+                            click: function($event) {
+                              _vm.fileWarning(index, "final")
+                            }
+                          }
+                        },
+                        [_vm._v(_vm._s(_vm.lang("Delete")))]
                       )
                     ]
                   )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "file-box-sty" }, [
-                  _vm._v(_vm._s(document.date))
-                ]),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "file-box-sty icon icon-download",
-                    on: {
-                      click: function($event) {
-                        _vm.documentDownload(document.link)
+                })
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "justify-content-center d-flex mt-2 mb-4" },
+                [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-neutral",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          _vm.documentAdd("final-documents")
+                        }
                       }
-                    }
-                  },
-                  [_vm._v(_vm._s(_vm.lang("Download")))]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "file-box-sty icon icon-cancel",
-                    on: {
-                      click: function($event) {
-                        _vm.fileWarning(index, "final")
-                      }
-                    }
-                  },
-                  [_vm._v(_vm._s(_vm.lang("Delete")))]
-                )
-              ]
-            )
-          })
-        ),
-        _vm._v(" "),
-        _c("div", { staticClass: "justify-content-center d-flex mt-2 mb-4" }, [
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-neutral",
-              attrs: { type: "button" },
-              on: {
-                click: function($event) {
-                  _vm.documentAdd("final-documents")
-                }
-              }
-            },
-            [_vm._v(_vm._s(_vm.lang("Upload")))]
-          )
-        ]),
+                    },
+                    [_vm._v(_vm._s(_vm.lang("Upload")))]
+                  )
+                ]
+              )
+            ]
+          : _vm._e(),
         _vm._v(" "),
         _c(
           "div",
@@ -73533,7 +73586,7 @@ var render = function() {
           }
         })
       ],
-      1
+      2
     )
   ])
 }
@@ -74129,6 +74182,7 @@ var render = function() {
               { staticClass: "modal-footer btn-footer" },
               [
                 _c("spinner-button", {
+                  attrs: { enabled: _vm.enabledAssign },
                   on: {
                     button_clicked: _vm.assignValues,
                     button_cleanup_success: _vm.hideModal
@@ -75015,9 +75069,11 @@ var render = function() {
               { staticClass: "modal-footer btn-footer" },
               [
                 _c("spinner-button", {
+                  attrs: { enabled: _vm.enabledAssign },
                   on: {
                     button_clicked: _vm.assignValues,
-                    button_cleanup_success: _vm.hideModal
+                    button_cleanup_success: _vm.hideModal,
+                    button_not_enabled: _vm.error
                   }
                 }),
                 _vm._v(" "),
