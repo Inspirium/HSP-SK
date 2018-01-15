@@ -58400,6 +58400,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_vue2_datatable_component__ = __webpack_require__(574);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_vue_event_hub__ = __webpack_require__(424);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_vue_event_hub___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_vue_event_hub__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__fixes_datatable_hr__ = __webpack_require__(597);
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -58415,6 +58416,7 @@ window.breakpoints = {
     'lg': 992,
     'xl': 1200
 };
+
 
 
 
@@ -58447,7 +58449,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('spinner-button', __webpac
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vue_moment___default.a, { moment: __WEBPACK_IMPORTED_MODULE_1_moment___default.a });
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_3_vue_router__["a" /* default */]);
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_4_vue_deepset__);
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_8_vue2_datatable_component__["a" /* default */]);
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_8_vue2_datatable_component__["a" /* default */], { locale: __WEBPACK_IMPORTED_MODULE_10__fixes_datatable_hr__["a" /* default */] });
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_9_vue_event_hub___default.a);
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.config.productionTip = false;
@@ -100925,6 +100927,49 @@ function cloneRoute (to, from) {
 __webpack_require__(261);
 module.exports = __webpack_require__(262);
 
+
+/***/ }),
+/* 577 */,
+/* 578 */,
+/* 579 */,
+/* 580 */,
+/* 581 */,
+/* 582 */,
+/* 583 */,
+/* 584 */,
+/* 585 */,
+/* 586 */,
+/* 587 */,
+/* 588 */,
+/* 589 */,
+/* 590 */,
+/* 591 */,
+/* 592 */,
+/* 593 */,
+/* 594 */,
+/* 595 */,
+/* 596 */,
+/* 597 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony default export */ __webpack_exports__["a"] = ({
+  /* HeaderSettings/index.vue */
+  'Apply': 'Potvrdi',
+  'Apply and backup settings to local': 'Potvrdi i spremi postavke',
+  'Clear local settings backup and restore': 'Očisti spremljene postavke',
+  'Using local settings': 'Koristi lokalne postavke',
+
+  /* Table/TableBody.vue */
+  'No Data': 'Nema podataka',
+
+  /* index.vue */
+  'Total': 'Ukupno',
+  ',': ',',
+
+  /* PageSizeSelect.vue */
+  'items / page': 'elemenata / stranica'
+});
 
 /***/ })
 /******/ ]);
