@@ -7428,8 +7428,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         };
     },
     computed: {
-        active_offer: function active_offer() {
-            return this.$deepModel('proposition.print.active_offer');
+        print: function print() {
+            return this.$deepModel('proposition.print');
         },
         offers: function offers() {
             return this.$deepModel('proposition.print.offers');
@@ -7437,7 +7437,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     methods: {
         switchTab: function switchTab(e) {
-            this.active_offer = $(e.target).data('index');
+            this.print.active_offer = $(e.target).data('index');
             $(e.target).tab('show');
         },
         downloadOffer: function downloadOffer(id, type) {
