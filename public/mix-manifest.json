@@ -1,6 +1,11 @@
 {
-  "/js/app.js": "/js/app.js",
-  "/css/app.css": "/css/app.css",
-  "/js/mdb.js": "/js/mdb.js",
-  "/js/flipclock.js": "/js/flipclock.js"
+    "/js/app.js": "/js/app.js?id=10cbf55747058a3b547b",
+    "/css/app.css": "/css/app.css?id=afd171fb25a70d28da7b",
+    "/js/jquery.js": "/js/jquery.js?id=09dd64a64ba840c31a81",
+    "/js/popper.js": "/js/popper.js?id=a546ff488825e6259808",
+    "/js/bootstrap.js": "/js/bootstrap.js?id=ffbac364dfe403592978",
+    "/js/chartist.js": "/js/chartist.js?id=06b81d355aa76f9908f7",
+    "/js/scripts.js": "/js/scripts.js?id=1c5a7fc61b7a55255939",
+    "/js/flipclock.js": "/js/flipclock.js?id=375cf29443e58ff5b8b9",
+    "/js/mdb.js": "/js/mdb.js?id=d36592fde48ab8ec7b1a"
 }
