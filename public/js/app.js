@@ -60703,9 +60703,15 @@ let initialState = {
             }
         },
         deleteFile(state, payload) {
-            state[payload.type] = _.filter(state[payload.type], file => {
-                return file.id !== payload.id;
-            });
+            if (data.isFinal) {
+                state.leaflet = _.filter(state.leaflet, file => {
+                    return file.id !== payload.id;
+                });
+            } else {
+                state.cover = _.filter(state.cover, file => {
+                    return file.id !== payload.id;
+                });
+            }
         },
         filenameSave(state, payload) {
             let files = payload.isFinal ? state.leaflet : state.cover;
@@ -60850,9 +60856,15 @@ let initialState = {
             }
         },
         deleteFile(state, payload) {
-            state[payload.type] = _.filter(state[payload.type], file => {
-                return file.id !== payload.id;
-            });
+            if (payload.isFinal) {
+                state.psd = _.filter(state.psd, file => {
+                    return file.id !== payload.id;
+                });
+            } else {
+                state.jpg = _.filter(state.jpg, file => {
+                    return file.id !== payload.id;
+                });
+            }
         },
         filenameSave(state, payload) {
             let files = payload.isFinal ? state.psd : state.jpg;
@@ -81565,7 +81577,7 @@ var render = function() {
                   staticClass: "file-box-sty icon icon-cancel",
                   on: {
                     click: function($event) {
-                      _vm.fileWarning({ id: file.id, type: "cover" })
+                      _vm.fileWarning({ id: file.id, isFinal: false })
                     }
                   }
                 },
@@ -81663,7 +81675,7 @@ var render = function() {
                   staticClass: "file-box-sty icon icon-cancel",
                   on: {
                     click: function($event) {
-                      _vm.fileWarning({ id: file.id, type: "leaflet" })
+                      _vm.fileWarning({ id: file.id, isFinal: true })
                     }
                   }
                 },
@@ -92537,7 +92549,7 @@ var render = function() {
                   staticClass: "file-box-sty icon icon-cancel",
                   on: {
                     click: function($event) {
-                      _vm.fileWarning({ id: file.id, type: "jpg" })
+                      _vm.fileWarning({ id: file.id, isFinal: false })
                     }
                   }
                 },
@@ -92635,7 +92647,7 @@ var render = function() {
                   staticClass: "file-box-sty icon icon-cancel",
                   on: {
                     click: function($event) {
-                      _vm.fileWarning({ id: file.id, type: "psd" })
+                      _vm.fileWarning({ id: file.id, isFinal: true })
                     }
                   }
                 },
