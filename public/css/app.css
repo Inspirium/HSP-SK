@@ -32593,7 +32593,7 @@ input.md-form.addon {
 }
 
 .spinner-loading {
-  color: #92C100 !important;
+  color: transparent !important;
   position: relative;
 }
 
