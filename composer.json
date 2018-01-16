@@ -27,47 +27,50 @@
     "jeroen-g/laravel-packager": "^1.5",
     "laravel/dusk": "^2.0",
     "laravel/homestead": "^5.1",
-    "mockery/mockery": "0.9.*",
     "phpunit/phpunit": "~6.0",
-    "vimeo/psalm": "^0"
+    "vimeo/psalm": "^0",
+    "filp/whoops": "~2.0",
+    "mockery/mockery": "~1.0",
+    "symfony/thanks": "^1.0"
   },
   "autoload": {
     "classmap": [
-      "database"
+      "database/seeds",
+      "database/factories"
     ],
     "psr-4": {
-            "Inspirium\\TaskManagement\\": "packages/Inspirium/TaskManagement/src",
-            "Inspirium\\BookProposition\\": "packages/Inspirium/BookProposition/src",
-            "Inspirium\\SKTemplate\\": "packages/Inspirium/SKTemplate/src",
+      "Inspirium\\TaskManagement\\": "packages/Inspirium/TaskManagement/src",
+      "Inspirium\\BookProposition\\": "packages/Inspirium/BookProposition/src",
+      "Inspirium\\SKTemplate\\": "packages/Inspirium/SKTemplate/src",
       "Inspirium\\": "app/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-            "Inspirium\\TaskManagement\\": "packages/Inspirium/TaskManagement/src",
-            "Inspirium\\BookProposition\\": "packages/Inspirium/BookProposition/src",
-            "Inspirium\\SKTemplate\\": "packages/Inspirium/SKTemplate/src",
       "Tests\\": "tests/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "dont-discover": [
+      ]
     }
   },
   "scripts": {
     "post-root-package-install": [
-      "php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+      "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
     ],
     "post-create-project-cmd": [
-      "php artisan key:generate"
+      "@php artisan key:generate"
     ],
-    "post-install-cmd": [
-      "Illuminate\\Foundation\\ComposerScripts::postInstall",
-      "php artisan optimize"
-    ],
-    "post-update-cmd": [
-      "Illuminate\\Foundation\\ComposerScripts::postUpdate",
-      "php artisan optimize"
+    "post-autoload-dump": [
+      "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+      "@php artisan package:discover"
     ]
   },
   "config": {
     "preferred-install": "dist",
-    "sort-packages": true
+    "sort-packages": true,
+    "optimize-autoloader": true
   }
 }
