@@ -89,4 +89,11 @@ Route::group( [ 'middleware' => [ 'auth:api' ], ], function () {
 		Route::post( '{id}/message', 'ThreadController@postMessage' );
 	} );
 
+	Route::group([
+		'namespace' => 'Api\BookManagement',
+		'prefix' => 'books'
+	], function() {
+		Route::post('/', 'BookController@getBooks');
+	});
+
 } );

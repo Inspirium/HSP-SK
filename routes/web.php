@@ -62,7 +62,9 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'human_resources'], function
 
 Route::group(['prefix' => 'books', 'namespace' => 'BookManagement'], function() {
 
-	Route::get('/', 'BookController@showBooks');
+	Route::get('/', function() {
+		return view(config('app.template') . '::router-view');
+	});
 	Route::group(['prefix' => 'book'], function() {
 		Route::get('{id}/show', 'BookController@showBook');
 		Route::get('{id}/edit', 'BookController@editBook');

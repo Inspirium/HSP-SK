@@ -47,7 +47,7 @@ class Book extends Model {
 	}
 
 	public function proposition() {
-    	return $this->hasOne('Inspirium\BookProposition\Models\BookProposition', 'proposition_id');
+    	return $this->hasOne('Inspirium\BookProposition\Models\BookProposition', 'id', 'proposition_id');
 	}
 
 	public function bibliotecas() {
