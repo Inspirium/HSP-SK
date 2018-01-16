@@ -10517,6 +10517,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__general_SpinnerButton__ = __webpack_require__("./packages/Inspirium/SKTemplate/src/assets/js/components/general/SpinnerButton.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__general_SpinnerButton___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__general_SpinnerButton__);
 //
 //
 //
@@ -10850,7 +10852,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+    components: { SpinnerButton: __WEBPACK_IMPORTED_MODULE_0__general_SpinnerButton___default.a },
     data: function data() {
         return {
             clock: false,
@@ -10970,7 +10975,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             axios.post('/api/thread/' + this.task.thread.id + '/message', { message: this.comment }).then(function (res) {
                 _this3.task.thread.messages = res.data;
                 _this3.comment = '';
-            }).catch(function (err) {});
+                _this3.$eventHub.emit('BUTTON_LISTEN_FOR_SUCCESS');
+            }).catch(function (err) {
+                _this3.$eventHub.emit('BUTTON_LISTEN_FOR_FAILURE');
+            });
         },
         reassignTask: function reassignTask(employees) {
             var _this4 = this;
@@ -68575,20 +68583,15 @@ var render = function() {
                           "div",
                           { staticClass: "justify-content-end d-flex mb-2" },
                           [
-                            _c(
-                              "button",
-                              {
-                                staticClass: "btn btn-neutral",
-                                attrs: { type: "button" },
-                                on: {
-                                  click: function($event) {
-                                    _vm.commentTask()
-                                  }
-                                }
+                            _c("spinner-button", {
+                              attrs: {
+                                classes: "btn btn-neutral",
+                                title: "Send"
                               },
-                              [_vm._v(_vm._s(_vm.lang("Send")))]
-                            )
-                          ]
+                              on: { button_clicked: _vm.commentTask }
+                            })
+                          ],
+                          1
                         ),
                         _vm._v(" "),
                         _vm.task.thread
@@ -68834,20 +68837,15 @@ var render = function() {
                             "div",
                             { staticClass: "justify-content-end d-flex mb-2" },
                             [
-                              _c(
-                                "button",
-                                {
-                                  staticClass: "btn btn-neutral",
-                                  attrs: { type: "button" },
-                                  on: {
-                                    click: function($event) {
-                                      _vm.commentTask()
-                                    }
-                                  }
+                              _c("spinner-button", {
+                                attrs: {
+                                  classes: "btn btn-neutral",
+                                  title: "Send"
                                 },
-                                [_vm._v(_vm._s(_vm.lang("Send")))]
-                              )
-                            ]
+                                on: { button_clicked: _vm.commentTask }
+                              })
+                            ],
+                            1
                           ),
                           _vm._v(" "),
                           _vm.task.thread
@@ -69386,20 +69384,15 @@ var render = function() {
                             "div",
                             { staticClass: "justify-content-end d-flex mb-2" },
                             [
-                              _c(
-                                "button",
-                                {
-                                  staticClass: "btn btn-neutral",
-                                  attrs: { type: "button" },
-                                  on: {
-                                    click: function($event) {
-                                      _vm.commentTask()
-                                    }
-                                  }
+                              _c("spinner-button", {
+                                attrs: {
+                                  classes: "btn btn-neutral",
+                                  title: "Send"
                                 },
-                                [_vm._v(_vm._s(_vm.lang("Send")))]
-                              )
-                            ]
+                                on: { button_clicked: _vm.commentTask }
+                              })
+                            ],
+                            1
                           ),
                           _vm._v(" "),
                           _vm.task.thread
