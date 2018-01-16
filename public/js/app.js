@@ -64946,6 +64946,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
+    { staticClass: "content" },
     [
       _c("div", { staticClass: "page-name-xl mb-2 mt-3" }, [
         _vm._v(_vm._s(_vm.lang("Books")))
