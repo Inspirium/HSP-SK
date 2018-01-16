@@ -1704,10 +1704,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ColumnGroup_vue__ = __webpack_require__("./node_modules/vue2-datatable-component/src/HeaderSettings/ColumnGroup.vue");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ColumnGroup_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__ColumnGroup_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_replace_with__ = __webpack_require__("./node_modules/replace-with/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_replace_with___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_replace_with__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_lodash_groupBy__ = __webpack_require__("./node_modules/lodash/groupBy.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_lodash_groupBy___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_lodash_groupBy__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash_groupBy__ = __webpack_require__("./node_modules/lodash/groupBy.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash_groupBy___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_lodash_groupBy__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils_keyGen__ = __webpack_require__("./node_modules/vue2-datatable-component/src/_utils/keyGen.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_replaceWith__ = __webpack_require__("./node_modules/vue2-datatable-component/src/_utils/replaceWith.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils_localstorage__ = __webpack_require__("./node_modules/vue2-datatable-component/src/_utils/localstorage.js");
 //
 //
 //
@@ -1757,28 +1758,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-var LS = localStorage;
-var parseStr = JSON.parse;
-var stringify = JSON.stringify;
-var rmFromLS = function rmFromLS(k) {
-  return LS.removeItem(k);
-};
-var saveToLS = function saveToLS(k, v) {
-  return LS.setItem(k, stringify(v));
-};
-var getFromLS = function getFromLS(k) {
-  try {
-    return parseStr(LS.getItem(k));
-  } catch (e) {
-    rmFromLS(k);
-  }
-};
-var hash = function hash(s) {
-  return '' + s.split('').reduce(function (a, b) {
-    return a = (a << 5) - a + b.charCodeAt(0), a & a;
-  }, 0);
-};
-// the hash algorithm above refers to http://stackoverflow.com/a/15710692/5172890
+
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'HeaderSettings',
@@ -1788,21 +1769,21 @@ var hash = function hash(s) {
     supportBackup: { type: Boolean, required: true }
   },
   data: function data() {
-    var origSettings = stringify(this.columns);
+    var origSettings = Object(__WEBPACK_IMPORTED_MODULE_4__utils_localstorage__["e" /* stringify */])(this.columns);
     return {
       origSettings: origSettings,
       usingBak: false, // is using backup
       processingCls: '',
-      storageKey: this.supportBackup && hash(origSettings)
+      storageKey: this.supportBackup && Object(__WEBPACK_IMPORTED_MODULE_2__utils_keyGen__["a" /* default */])(origSettings)
     };
   },
   created: function created() {
     if (!this.supportBackup) return;
 
-    var backup = getFromLS(this.storageKey);
+    var backup = Object(__WEBPACK_IMPORTED_MODULE_4__utils_localstorage__["a" /* getFromLS */])(this.storageKey);
     if (!backup) return; // no backup found
 
-    __WEBPACK_IMPORTED_MODULE_1_replace_with___default()(this.columns, backup);
+    Object(__WEBPACK_IMPORTED_MODULE_3__utils_replaceWith__["a" /* default */])(this.columns, backup);
     this.usingBak = true;
   },
   mounted: function mounted() {
@@ -1816,7 +1797,7 @@ var hash = function hash(s) {
 
   computed: {
     colGroups: function colGroups() {
-      return __WEBPACK_IMPORTED_MODULE_2_lodash_groupBy___default()(this.columns.filter(function (col) {
+      return __WEBPACK_IMPORTED_MODULE_1_lodash_groupBy___default()(this.columns.filter(function (col) {
         return col.label || col.title;
       }), 'group');
     },
@@ -1838,16 +1819,16 @@ var hash = function hash(s) {
       alsoBackup && this.$nextTick(this.backup);
     },
     backup: function backup() {
-      saveToLS(this.storageKey, this.columns);
+      Object(__WEBPACK_IMPORTED_MODULE_4__utils_localstorage__["d" /* saveToLS */])(this.storageKey, this.columns);
       this.showProcessing();
       this.usingBak = true;
     },
     rmBackup: function rmBackup() {
-      rmFromLS(this.storageKey);
+      Object(__WEBPACK_IMPORTED_MODULE_4__utils_localstorage__["c" /* rmFromLS */])(this.storageKey);
       this.showProcessing();
       this.usingBak = false;
 
-      __WEBPACK_IMPORTED_MODULE_1_replace_with___default()(this.columns, parseStr(this.origSettings)); // restore
+      Object(__WEBPACK_IMPORTED_MODULE_3__utils_replaceWith__["a" /* default */])(this.columns, Object(__WEBPACK_IMPORTED_MODULE_4__utils_localstorage__["b" /* parseStr */])(this.origSettings)); // restore
     },
     toggle: function toggle() {
       $(this.$el).toggleClass('open');
@@ -2030,8 +2011,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_replace_with__ = __webpack_require__("./node_modules/replace-with/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_replace_with___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_replace_with__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_replaceWith__ = __webpack_require__("./node_modules/vue2-datatable-component/src/_utils/replaceWith.js");
 //
 //
 //
@@ -2070,7 +2050,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           pos = this.pos;
 
       if (rows) {
-        __WEBPACK_IMPORTED_MODULE_0_replace_with___default()(selection, status ? rows : []);
+        Object(__WEBPACK_IMPORTED_MODULE_0__utils_replaceWith__["a" /* default */])(selection, status ? rows : []);
         return;
       }
       if (row) {
@@ -2081,7 +2061,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
   watch: {
     rows: function rows() {
-      __WEBPACK_IMPORTED_MODULE_0_replace_with___default()(this.selection, []);
+      Object(__WEBPACK_IMPORTED_MODULE_0__utils_replaceWith__["a" /* default */])(this.selection, []);
     },
     selection: function selection(_selection) {
       if (this.row) {
@@ -2111,6 +2091,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vuedraggable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_vuedraggable__);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+//
 //
 //
 //
@@ -2501,9 +2482,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         // support nested components feature with extra magic
 
         if (supportNested) {
+          var MAGIC_FIELD = '__nested__';
           data.forEach(function (item) {
-            if (!item.__nested__) {
-              _this2.$set(item, '__nested__', {
+            if (!item[MAGIC_FIELD]) {
+              _this2.$set(item, MAGIC_FIELD, {
                 comp: undefined, // current nested component
                 visible: false,
                 $toggle: function $toggle(comp, visible) {
@@ -2532,24 +2514,21 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
               });
               if (supportNested === 'accordion') {
                 _this2.$watch(function () {
-                  return item.__nested__;
+                  return item[MAGIC_FIELD];
                 }, function (nested) {
                   // only one nested component can be expanded at the same time
-                  if (data.filter(function (_ref) {
-                    var __nested__ = _ref.__nested__;
-                    return __nested__.visible;
+                  if (data.filter(function (item) {
+                    return item[MAGIC_FIELD].visible;
                   }).length < 2) return;
 
-                  data.forEach(function (_ref2) {
-                    var __nested__ = _ref2.__nested__;
-
-                    if (__nested__.visible && __nested__ !== nested) {
-                      __nested__.visible = false;
+                  data.forEach(function (item) {
+                    if (item[MAGIC_FIELD].visible && item[MAGIC_FIELD] !== nested) {
+                      item[MAGIC_FIELD].visible = false;
                     }
                   });
                 }, { deep: true });
               }
-              Object.defineProperty(item, '__nested__', { enumerable: false });
+              Object.defineProperty(item, MAGIC_FIELD, { enumerable: false });
             }
           });
         }
@@ -9829,11 +9808,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: "new-order",
-    props: ['row', 'nested'],
+    props: ['row', 'index'],
     computed: {
         newOrderValue: function newOrderValue() {
-            var val = this.row.new_order;
-
+            var val = Number(this.row.new_order);
+            console.log(this.row.order + ' ' + val + ' ' + this.index);
+            if (val !== this.index + 1) {
+                val = this.index + 1;
+            }
             var r = -(Number(val) - Number(this.row.order));
             if (!r) {
                 return '';
@@ -9841,7 +9823,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             return r;
         },
         newOrderClass: function newOrderClass() {
-            var val = this.row.new_order;
+            var val = Number(this.row.new_order);
+            if (val !== this.index + 1) {
+                val = this.index + 1;
+            }
             var number = Number(val) - Number(this.row.order);
             if (number === 0) {
                 return 'new-order';
@@ -11447,7 +11432,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* transition effect: fade */\n.fade-enter-active, .fade-leave-active {\n  -webkit-transition: opacity .2s;\n  transition: opacity .2s;\n}\n.fade-enter, .fade-leave-active {\n  opacity: 0;\n}\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* transition effect: fade */\n.fade-enter-active, .fade-leave-active {\n  -webkit-transition: opacity .2s;\n  transition: opacity .2s;\n}\n.fade-enter, .fade-leave-active {\n  opacity: 0;\n}\n", ""]);
 
 // exports
 
@@ -11582,7 +11567,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -11642,7 +11627,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n.-col-group {\n  display: inline-block;\n  width: 150px;\n  padding: 0;\n  vertical-align: top;\n}\n.-col-group-title {\n  display: block;\n  margin: 5px;\n  padding: 5px;\n  border-bottom: 1px solid #ddd;\n  font-size: 18px;\n}\n.-col-group > li {\n  margin-bottom: 2px;\n  padding-left: 10px;\n  list-style: none;\n  line-height: 20px;\n  font-size: 12px;\n}\n.-col-group > li > input {\n  vertical-align: -2px;\n}\n", ""]);
+exports.push([module.i, "\n.-col-group {\n  display: inline-block;\n  margin-bottom: 5px;\n  padding: 0;\n  width: 150px;\n  vertical-align: top;\n}\n.-col-group-title {\n  display: block;\n  margin: 5px;\n  padding: 5px;\n  border-bottom: 1px solid #ddd;\n  font-size: 18px;\n}\n.-col-group > li {\n  margin-bottom: 5px;\n  padding-left: 10px;\n  list-style: none;\n  line-height: 20px;\n  font-size: 12px;\n}\n.-col-group > li > * {\n  margin: 0;\n  vertical-align: middle;\n}\n", ""]);
 
 // exports
 
@@ -55389,32 +55374,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ }),
 
-/***/ "./node_modules/replace-with/index.js":
-/***/ (function(module, exports) {
-
-/**
- * Replace an array|object's content with the other one's while keeping the reference
- * @param  {Array|Object} orig
- * @param  {Array|Object} other
- * @return {Array|Object} orig
- */
-var keys = Object.keys;
-
-module.exports = function replaceWith(orig, other) {
-  if (Array.isArray(orig)) {
-    // for Array
-    orig.splice.apply(orig, [0, orig.length].concat(other));
-  } else {
-    // for Object
-    keys(orig).forEach(function (k) { delete orig[k] });
-    keys(other).forEach(function (k) { orig[k] = other[k] });
-  }
-  return orig;
-};
-
-
-/***/ }),
-
 /***/ "./node_modules/setimmediate/setImmediate.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -64136,7 +64095,7 @@ var render = function() {
           _vm._v(" "),
           _c(
             "div",
-            { staticClass: "clearfix", staticStyle: { margin: "10px" } },
+            { staticClass: "clearfix", staticStyle: { margin: "10px 0" } },
             [
               _c(
                 "div",
@@ -71522,7 +71481,8 @@ var render = function() {
                                     attrs: {
                                       row: item,
                                       field: col.field,
-                                      value: item[col.field]
+                                      value: item[col.field],
+                                      index: index
                                     }
                                   },
                                   "component",
@@ -74347,6 +74307,7 @@ var render = function() {
         ? _c(
             "li",
             {
+              staticClass: "page-item",
               on: {
                 click: function($event) {
                   _vm.turnPage(-1)
@@ -74357,6 +74318,7 @@ var render = function() {
               _c(
                 "a",
                 {
+                  staticClass: "page-link",
                   attrs: { href: "#" },
                   on: {
                     click: function($event) {
@@ -74371,29 +74333,37 @@ var render = function() {
         : _vm._e(),
       _vm._v(" "),
       _vm._l(_vm.dspBtns, function(i) {
-        return _c("li", { class: { active: i === _vm.curPage } }, [
-          i
-            ? _c(
-                "a",
-                {
-                  attrs: { href: "#" },
-                  on: {
-                    click: function($event) {
-                      $event.preventDefault()
-                      _vm.handleClick(i)
+        return _c(
+          "li",
+          { class: ["page-item", { active: i === _vm.curPage }] },
+          [
+            i
+              ? _c(
+                  "a",
+                  {
+                    staticClass: "page-link",
+                    attrs: { href: "#" },
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        _vm.handleClick(i)
+                      }
                     }
-                  }
-                },
-                [_vm._v("\n      " + _vm._s(i) + "\n    ")]
-              )
-            : _c("a", [_c("i", { staticClass: "fa fa-ellipsis-h" })])
-        ])
+                  },
+                  [_vm._v("\n      " + _vm._s(i) + "\n    ")]
+                )
+              : _c("a", { staticClass: "page-link" }, [
+                  _c("i", { staticClass: "fa fa-ellipsis-h" })
+                ])
+          ]
+        )
       }),
       _vm._v(" "),
       !_vm.isLastPage
         ? _c(
             "li",
             {
+              staticClass: "page-item",
               on: {
                 click: function($event) {
                   _vm.turnPage(1)
@@ -74404,6 +74374,7 @@ var render = function() {
               _c(
                 "a",
                 {
+                  staticClass: "page-link",
                   attrs: { href: "#" },
                   on: {
                     click: function($event) {
@@ -94994,6 +94965,78 @@ let scrollWidth
 "use strict";
 /* harmony default export */ __webpack_exports__["a"] = (function (col) {
   return typeof col.visible === 'undefined' || '' + col.visible === 'true'
+});
+
+
+/***/ }),
+
+/***/ "./node_modules/vue2-datatable-component/src/_utils/keyGen.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+// https://stackoverflow.com/a/7616484/5172890
+/* harmony default export */ __webpack_exports__["a"] = (function (s) {
+  let hash = 0
+  for (let i = 0; i < s.length; i++) {
+    hash = ((hash << 5) - hash) + s.charCodeAt(i)
+    hash |= 0
+  }
+  return '' + hash
+});
+
+
+/***/ }),
+
+/***/ "./node_modules/vue2-datatable-component/src/_utils/localstorage.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+const LS = localStorage
+
+const parseStr = JSON.parse
+/* harmony export (immutable) */ __webpack_exports__["b"] = parseStr;
+
+
+const stringify = JSON.stringify
+/* harmony export (immutable) */ __webpack_exports__["e"] = stringify;
+
+
+const saveToLS = (k, v) => {
+  LS.setItem(k, stringify(v))
+}
+/* harmony export (immutable) */ __webpack_exports__["d"] = saveToLS;
+
+
+const rmFromLS = k => {
+  LS.removeItem(k)
+}
+/* harmony export (immutable) */ __webpack_exports__["c"] = rmFromLS;
+
+
+const getFromLS = k => {
+  try {
+    return parseStr(LS.getItem(k))
+  } catch (e) {
+    rmFromLS(k)
+  }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = getFromLS;
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue2-datatable-component/src/_utils/replaceWith.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/**
+ * replace all the elements of target with source's
+ * @param {Array} target
+ * @param {Array} source
+ */
+/* harmony default export */ __webpack_exports__["a"] = ((target, source) => {
+  target.splice(0, target.length, ...source)
 });
 
 

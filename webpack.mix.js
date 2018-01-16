@@ -12,7 +12,8 @@ const { mix } = require('laravel-mix');
  */
 mix.js(['packages/Inspirium/SKTemplate/src/assets/js/app.js'], 'public/js/app.js')
     .sass('packages/Inspirium/SKTemplate/src/assets/sass/app.scss', 'public/css/app.css', {
-        includePaths: ["node_modules"]
+        includePaths: ["node_modules"],
+        linefeed: 'lf'
     })
     .copy('node_modules/jquery/dist/jquery.js', 'public/js/jquery.js')
     .copy('node_modules/popper.js/dist/umd/popper.js', 'public/js/popper.js')
