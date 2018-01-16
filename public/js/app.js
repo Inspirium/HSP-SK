@@ -9982,9 +9982,11 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             axios.post('/api/tasks/updateOrder', data).then(function (res) {
                 toastr.success(_this2.lang('Uspješno obavljeno'));
                 _this2.$eventHub.emit('UPDATE_DEPARTMENT_EMPLOYEE_TASKS', { employee: data.employee });
+                _this2.$eventHub.emit('BUTTON_LISTEN_FOR_SUCCESS');
             }).catch(function (err) {
                 toastr.error(_this2.lang('Greška'));
                 _this2.$eventHub.emit('UPDATE_DEPARTMENT_EMPLOYEE_TASKS', { employee: data.employee, error: true });
+                _this2.$eventHub.emit('BUTTON_LISTEN_FOR_FAILURE');
             });
         },
         rejectOrder: function rejectOrder(data) {
@@ -9993,9 +9995,11 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             axios.post('/api/tasks/rejectOrder', data).then(function (res) {
                 toastr.success(_this3.lang('Uspješno obavljeno'));
                 _this3.$eventHub.emit('UPDATE_DEPARTMENT_EMPLOYEE_TASKS', { employee: data.employee });
+                _this3.$eventHub.emit('BUTTON_LISTEN_FOR_SUCCESS');
             }).catch(function (err) {
                 toastr.error(_this3.lang('Greška'));
                 _this3.$eventHub.emit('UPDATE_DEPARTMENT_EMPLOYEE_TASKS', { employee: data.employee, error: true });
+                _this3.$eventHub.emit('BUTTON_LISTEN_FOR_FAILURE');
             });
         }
     },
@@ -10034,6 +10038,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__table_components_DateCell___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__table_components_DateCell__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__table_components_TaskType__ = __webpack_require__("./packages/Inspirium/SKTemplate/src/assets/js/components/table_components/TaskType.vue");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__table_components_TaskType___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__table_components_TaskType__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__general_SpinnerButton__ = __webpack_require__("./packages/Inspirium/SKTemplate/src/assets/js/components/general/SpinnerButton.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__general_SpinnerButton___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__general_SpinnerButton__);
 //
 //
 //
@@ -10053,8 +10059,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
+
 
 
 
@@ -10065,6 +10070,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+    components: { SpinnerButton: __WEBPACK_IMPORTED_MODULE_7__general_SpinnerButton___default.a },
     name: "employee-tasks",
     props: ['employee'],
     data: function data() {
@@ -10104,10 +10110,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             draggableOptions: {
                 disabled: false,
                 handle: '.icon-handler'
-            },
-            spinnerType: 'fa-refresh spinner-delay-rotate spinner-loader',
-            isSpinnerHidden: 'hide',
-            saveButton: null
+            }
         };
     },
     created: function created() {
@@ -11657,7 +11660,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -78522,53 +78525,25 @@ var render = function() {
         : _vm._e(),
       _vm._v(" "),
       _vm.shouldApprove
-        ? _c(
-            "button",
-            {
-              staticClass:
+        ? _c("spinner-button", {
+            attrs: {
+              classes:
                 "btn btn-success btn-addon d-block ml-auto waves-effect waves-light",
-              attrs: { type: "button" },
-              on: { click: _vm.approveOrder }
+              title: "Approve task priority"
             },
-            [
-              _vm._v(_vm._s(_vm.lang("Approve task priority")) + "\n        "),
-              _c("i", {
-                class: [
-                  "fa",
-                  "fa-5x",
-                  "fa-fw",
-                  "text-white",
-                  _vm.spinnerType,
-                  _vm.isSpinnerHidden
-                ]
-              })
-            ]
-          )
+            on: { button_clicked: _vm.approveOrder }
+          })
         : _vm._e(),
       _vm._v(" "),
       _vm.shouldApprove
-        ? _c(
-            "button",
-            {
-              staticClass:
+        ? _c("spinner-button", {
+            attrs: {
+              classes:
                 "btn btn-danger btn-addon d-block ml-auto waves-effect waves-light",
-              attrs: { type: "button" },
-              on: { click: _vm.rejectOrder }
+              title: "Reject task priority"
             },
-            [
-              _vm._v(_vm._s(_vm.lang("Reject task priority")) + "\n        "),
-              _c("i", {
-                class: [
-                  "fa",
-                  "fa-5x",
-                  "fa-fw",
-                  "text-white",
-                  _vm.spinnerType,
-                  _vm.isSpinnerHidden
-                ]
-              })
-            ]
-          )
+            on: { button_clicked: _vm.rejectOrder }
+          })
         : _vm._e()
     ],
     1
