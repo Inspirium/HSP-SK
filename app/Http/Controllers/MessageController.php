@@ -1,8 +1,6 @@
 <?php
 
-namespace Inspirium\Messaging\Controllers;
-
-use Inspirium\Http\Controllers\Controller;
+namespace Inspirium\Http\Controllers;
 
 class MessageController extends Controller {
 

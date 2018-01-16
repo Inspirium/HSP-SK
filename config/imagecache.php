@@ -31,7 +31,7 @@ return array(
     */
 
     'paths' => array(
-        'storage/app/public/avatars'
+	    public_path('storage')
     ),
 
     /*

@@ -61982,9 +61982,7 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _c("inspirium-warning-modal", {
-        on: { warningConfirmed: _vm.deleteUser }
-      })
+      _c("warning-modal", { on: { warningConfirmed: _vm.deleteUser } })
     ],
     1
   )

@@ -83,7 +83,7 @@ Route::group(['prefix' => 'books', 'namespace' => 'BookManagement'], function() 
 	});
 });
 
-Route::group(['prefix' => 'message', 'namespace' => 'Messaging', 'middleware' => ['auth']], function() {
+Route::group(['prefix' => 'message', 'middleware' => ['auth']], function() {
 	Route::get('thread/{id}', 'MessageController@showThread');
 });
 
