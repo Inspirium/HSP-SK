@@ -151,7 +151,7 @@ class Employee extends Authenticatable implements Auditable, UserResolver{
     }
 
     public function getLinkAttribute() {
-    	return '/human_resources/employee/show/'.$this->id;
+    	return '/human_resources/employee/'.$this->id.'/show';
     }
 
 	public function receivesBroadcastNotificationsOn()
