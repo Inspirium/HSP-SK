@@ -4740,8 +4740,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__general_SpinnerButton__ = __webpack_require__("./packages/Inspirium/SKTemplate/src/assets/js/components/general/SpinnerButton.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__general_SpinnerButton___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__general_SpinnerButton__);
 //
 //
 //
@@ -4792,7 +4792,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+    components: { SpinnerButton: __WEBPACK_IMPORTED_MODULE_0__general_SpinnerButton___default.a },
     name: "proposition-approval-modal",
     data: function data() {
         return {
@@ -4852,12 +4855,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
         },
         assignValues: function assignValues() {
-            //TODO
             if (this.employees.length) {
-                var saveButton = document.getElementById('save-btn');
-                saveButton.setAttribute('style', 'color: #92C100 !important; position: relative');
-                $("i.spinner-loader").toggleClass("hide");
-
                 this.$emit('sendForApproval', {
                     employees: this.employees,
                     description: this.description
@@ -4865,11 +4863,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 this.employees = [];
                 this.employee = '';
                 this.description = '';
-                this.spinnerType = 'fa-refresh spinner-delay-rotate spinner-loader';
-                this.isSpinnerHidden = 'hide';
-                saveButton.toggleClass("spinner-loading");
-                $('#taskOrderApprovalModal').modal('hide');
             }
+        },
+        hideModal: function hideModal() {
+            $('#taskOrderApprovalModal').modal('hide');
         }
     }
 });
@@ -9968,8 +9965,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 _this.employee_index = {};
                 toastr.success(_this.lang('Uspješno obavljeno'));
                 _this.$eventHub.emit('UPDATE_DEPARTMENT_EMPLOYEE_TASKS', { employee: _this.employee_index.employee });
+                _this.$eventHub.emit('BUTTON_LISTEN_FOR_SUCCESS');
             }).catch(function (err) {
                 toastr.error(_this.lang('Greška'));
+                _this.$eventHub.emit('BUTTON_LISTEN_FOR_FAILURE');
             });
         },
         openModalForApproval: function openModalForApproval(payload) {
@@ -58311,32 +58310,26 @@ var render = function() {
               ])
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "modal-footer btn-footer" }, [
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-lg btn-save",
-                  attrs: { id: "save-btn", type: "button" },
-                  on: { click: _vm.assignValues }
-                },
-                [
-                  _vm._v(_vm._s(_vm.lang("Assign")) + "\n                    "),
-                  _c("i", {
-                    staticClass:
-                      "fa fa-refresh fa-5x fa-fw spinner-delay-rotate spinner-loader text-white hide"
-                  })
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-lg btn-cancel",
-                  attrs: { type: "button", "data-dismiss": "modal" }
-                },
-                [_vm._v(_vm._s(_vm.lang("Cancel")))]
-              )
-            ])
+            _c(
+              "div",
+              { staticClass: "modal-footer btn-footer" },
+              [
+                _c("spinner-button", {
+                  attrs: { title: "Assign", enabled: _vm.enabledAssign },
+                  on: { button_clicked: _vm.assignValues }
+                }),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-lg btn-cancel",
+                    attrs: { type: "button", "data-dismiss": "modal" }
+                  },
+                  [_vm._v(_vm._s(_vm.lang("Cancel")))]
+                )
+              ],
+              1
+            )
           ])
         ]
       )
