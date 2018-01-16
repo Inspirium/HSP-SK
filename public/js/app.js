@@ -58316,7 +58316,10 @@ var render = function() {
               [
                 _c("spinner-button", {
                   attrs: { title: "Assign", enabled: _vm.enabledAssign },
-                  on: { button_clicked: _vm.assignValues }
+                  on: {
+                    button_clicked: _vm.assignValues,
+                    button_cleanup_success: _vm.hideModal
+                  }
                 }),
                 _vm._v(" "),
                 _c(
