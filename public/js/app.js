@@ -60561,73 +60561,70 @@ var render = function() {
                         )
                       : _vm._e(),
                     _vm._v(" "),
-                    _c("div", { staticClass: "activity-content" }, [
-                      typeof item.data.tasktype === "object"
-                        ? _c(
-                            "div",
-                            {
-                              class: [
-                                "activity-label",
-                                item.data.tasktype.className
-                                  ? item.data.tasktype.className
-                                  : "tasktype-1"
-                              ]
-                            },
-                            [
-                              _vm._v(
-                                _vm._s(
-                                  _vm.lang(
-                                    item.data.tasktype.title
-                                      ? item.data.tasktype.title
-                                      : item.data.tasktype
+                    _c(
+                      "a",
+                      {
+                        staticClass: "activity-content",
+                        attrs: { href: item.data.link ? item.data.link : "#" },
+                        on: {
+                          click: function($event) {
+                            _vm.markAsRead(item)
+                          }
+                        }
+                      },
+                      [
+                        typeof item.data.tasktype === "object"
+                          ? _c(
+                              "div",
+                              {
+                                class: [
+                                  "activity-label",
+                                  item.data.tasktype.className
+                                    ? item.data.tasktype.className
+                                    : "tasktype-1"
+                                ]
+                              },
+                              [
+                                _vm._v(
+                                  _vm._s(
+                                    _vm.lang(
+                                      item.data.tasktype.title
+                                        ? item.data.tasktype.title
+                                        : item.data.tasktype
+                                    )
                                   )
                                 )
-                              )
-                            ]
+                              ]
+                            )
+                          : _vm._e(),
+                        _vm._v(" "),
+                        typeof item.data.tasktype === "string"
+                          ? _c(
+                              "div",
+                              { staticClass: "activity-label tasktype-1" },
+                              [
+                                _vm._v(
+                                  "\n                            " +
+                                    _vm._s(_vm.lang(item.data.tasktype)) +
+                                    "\n                        "
+                                )
+                              ]
+                            )
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "activity-time" }, [
+                          _vm._v(
+                            _vm._s(
+                              _vm._f("moment")(item.created_at, "from", "now")
+                            )
                           )
-                        : _vm._e(),
-                      _vm._v(" "),
-                      typeof item.data.tasktype === "string"
-                        ? _c(
-                            "div",
-                            { staticClass: "activity-label tasktype-1" },
-                            [
-                              _vm._v(
-                                "\n                            " +
-                                  _vm._s(_vm.lang(item.data.tasktype)) +
-                                  "\n                        "
-                              )
-                            ]
-                          )
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "activity-time" }, [
-                        _vm._v(
-                          _vm._s(
-                            _vm._f("moment")(item.created_at, "from", "now")
-                          )
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("h4", { staticClass: "activitiy-user" }, [
-                        _c(
-                          "a",
-                          {
-                            attrs: {
-                              href: item.data.link ? item.data.link : "#"
-                            },
-                            on: {
-                              click: function($event) {
-                                _vm.markAsRead(item)
-                              }
-                            }
-                          },
-                          [_vm._v(_vm._s(_vm.lang(item.data.title)))]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("h5", [_vm._v(_vm._s(_vm.lang(item.data.message)))])
-                    ])
+                        ]),
+                        _vm._v(" "),
+                        _c("h4", { staticClass: "activitiy-user" }),
+                        _vm._v(" "),
+                        _c("h5", [_vm._v(_vm._s(_vm.lang(item.data.message)))])
+                      ]
+                    )
                   ]
                 )
               })
