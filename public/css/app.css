@@ -27757,6 +27757,8 @@ button.toast-close-button {
 
 .sk-skin .activity-box .activity-item:first-child {
   border-top: none;
+  text-transform: uppercase;
+  font-weight: 700;
 }
 
 .sk-skin .activity-box .activity-item:first-child:hover:before {
@@ -27796,9 +27798,9 @@ button.toast-close-button {
 }
 
 .sk-skin .activity-box h5 {
-  font-size: .75rem;
+  font-size: .85rem;
   font-weight: normal;
-  line-height: 1rem;
+  line-height: 1.2rem;
   color: #818a91;
 }
 
@@ -27806,6 +27808,7 @@ button.toast-close-button {
   color: #aeb5c3;
   display: inline-block;
   font-size: .65rem;
+  line-height: 0.9rem;
   text-transform: uppercase;
   vertical-align: text-bottom;
 }

@@ -76424,16 +76424,16 @@ var render = function() {
                         _vm._v(_vm._s(_vm.lang("None")))
                       ]),
                       _vm._v(" "),
-                      _c("option", { attrs: { value: "hard" } }, [
-                        _vm._v(_vm._s(_vm.lang("Hard book binding")))
+                      _c("option", { attrs: { value: "stitch" } }, [
+                        _vm._v(_vm._s(_vm.lang("Stitch Binding")))
                       ]),
                       _vm._v(" "),
-                      _c("option", { attrs: { value: "soft" } }, [
-                        _vm._v(_vm._s(_vm.lang("Soft book binding")))
+                      _c("option", { attrs: { value: "glue" } }, [
+                        _vm._v(_vm._s(_vm.lang("Glue Binding")))
                       ]),
                       _vm._v(" "),
-                      _c("option", { attrs: { value: "both" } }, [
-                        _vm._v(_vm._s(_vm.lang("Spiral book binding")))
+                      _c("option", { attrs: { value: "clasp" } }, [
+                        _vm._v(_vm._s(_vm.lang("Clasp Binding")))
                       ])
                     ]
                   ),
@@ -77532,26 +77532,26 @@ var render = function() {
                                       _vm._v(_vm._s(_vm.lang("None")))
                                     ]),
                                     _vm._v(" "),
-                                    _c("option", { attrs: { value: "hard" } }, [
-                                      _vm._v(
-                                        _vm._s(_vm.lang("Hard book binding"))
-                                      )
-                                    ]),
+                                    _c(
+                                      "option",
+                                      { attrs: { value: "stitch" } },
+                                      [
+                                        _vm._v(
+                                          _vm._s(_vm.lang("Stitch Binding"))
+                                        )
+                                      ]
+                                    ),
                                     _vm._v(" "),
-                                    _c("option", { attrs: { value: "soft" } }, [
-                                      _vm._v(
-                                        _vm._s(_vm.lang("Soft book binding"))
-                                      )
+                                    _c("option", { attrs: { value: "glue" } }, [
+                                      _vm._v(_vm._s(_vm.lang("Glue Binding")))
                                     ]),
                                     _vm._v(" "),
                                     _c(
                                       "option",
-                                      { attrs: { value: "spiral" } },
+                                      { attrs: { value: "clasp" } },
                                       [
                                         _vm._v(
-                                          _vm._s(
-                                            _vm.lang("Spiral book binding")
-                                          )
+                                          _vm._s(_vm.lang("Clasp Binding"))
                                         )
                                       ]
                                     )
