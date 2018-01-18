@@ -4,6 +4,7 @@ namespace Inspirium\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Inspirium\Console\Commands\AssignRoleToDepartment;
 
 class Kernel extends ConsoleKernel
 {
@@ -13,7 +14,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        ImportEmployees::class
+        ImportEmployees::class,
+	    AssignRoleToDepartment::class
     ];
 
     /**
