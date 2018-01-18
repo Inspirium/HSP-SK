@@ -3884,6 +3884,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -3910,7 +3914,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 department_id: ''
             },
             new_image: false,
-            password: ''
+            password: '',
+            password2: ''
         };
     },
 
@@ -3938,15 +3943,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 data.append('new_image', this.new_image.files[0], this.new_image.files[0].name);
             }
             if (this.password) {
-                data.append('password', this.password);
+                if (this.password === this.password2) {
+                    data.append('password', this.password);
+                } else {
+                    toastr.error(this.lang('Password must match'));
+                    return;
+                }
             }
             if (this.$route.params.id) {
                 axios.post('/api/human_resources/employee/' + this.$route.params.id, data).then(function () {
                     toastr.success(_this.lang('Succesfully saved an employee'));
+                    window.location.href = '/human_resources/employee/' + _this.$route.params.id + '/show';
                 });
             } else {
-                axios.post('/api/human_resources/employee', data).then(function () {
+                axios.post('/api/human_resources/employee', data).then(function (res) {
                     toastr.success(_this.lang('Succesfully saved an employee'));
+                    window.location.href = '/human_resources/employee/' + res.data.id + '/show';
                 });
             }
         }
@@ -70748,24 +70760,50 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.employee.password,
-                expression: "employee.password"
+                value: _vm.password,
+                expression: "password"
               }
             ],
             staticClass: "form-control",
             attrs: { type: "password", name: "password" },
-            domProps: { value: _vm.employee.password },
+            domProps: { value: _vm.password },
             on: {
               input: function($event) {
                 if ($event.target.composing) {
                   return
                 }
-                _vm.$set(_vm.employee, "password", $event.target.value)
+                _vm.password = $event.target.value
               }
             }
           }),
           _vm._v(" "),
           _c("label", [_vm._v(_vm._s(_vm.lang("Password")))])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "md-form" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.password2,
+                expression: "password2"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: { type: "password", name: "password2" },
+            domProps: { value: _vm.password2 },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.password2 = $event.target.value
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("label", [_vm._v(_vm._s(_vm.lang("Repeat Password")))])
         ])
       ]),
       _vm._v(" "),
