@@ -4646,7 +4646,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this2 = this;
 
             if (this.employees.length && this.expense) {
-
                 axios.post('/api/proposition/' + this.$route.params.id + '/request_approval', {
                     requestees: this.employees,
                     description: this.description,
@@ -4658,12 +4657,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     _this2.employees = [];
                     _this2.description = '';
                     _this2.$eventHub.emit('BUTTON_LISTEN_FOR_SUCCESS');
-
-                    toastr.success(_this2.lang('Uspješno obavljeno'));
+                    toastr.success(_this2.lang('Successfully requested'));
+                    _this2.$store.commit('proposition/compare/requestsUpdate', _this2.expense);
                 }).catch(function (err) {
                     _this2.$eventHub.emit('BUTTON_LISTEN_FOR_FAILURE');
 
-                    toastr.error(_this2.lang('Došlo je do problema. Pokušajte ponovno'));
+                    toastr.error(_this2.lang('There was an error. Please try again'));
                 });
             } else {
                 this.error = 'Missing data';
@@ -10286,9 +10285,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.$emit('openModal', { employee: this.employee.id, tasks: data });
         },
         approveOrder: function approveOrder() {
-            this.saveButton = jQuery(event.target);
-            this.saveButton.toggleClass('spinner-loading');
-            this.isSpinnerHidden = '';
             var data = _.map(this.data, function (o) {
                 return o.id;
             });
@@ -10610,8 +10606,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__general_SpinnerButton__ = __webpack_require__("./packages/Inspirium/SKTemplate/src/assets/js/components/general/SpinnerButton.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__general_SpinnerButton___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__general_SpinnerButton__);
 //
 //
 //
@@ -10944,11 +10938,135 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-
-
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    components: { SpinnerButton: __WEBPACK_IMPORTED_MODULE_0__general_SpinnerButton___default.a },
     data: function data() {
         return {
             clock: false,
@@ -11066,7 +11184,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this3 = this;
 
             axios.post('/api/thread/' + this.task.thread.id + '/message', { message: this.comment }).then(function (res) {
-                _this3.task.thread.messages = res.data;
+                //this.task.thread.messages = res.data;
                 _this3.comment = '';
                 _this3.$eventHub.emit('BUTTON_LISTEN_FOR_SUCCESS');
             }).catch(function (err) {
@@ -11084,14 +11202,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this5 = this;
 
             axios.post('/api/task/' + this.task.id + '/accept').then(function () {
+                _this5.$eventHub.emit('BUTTON_LISTEN_FOR_SUCCESS');
+                toastr.success(_this5.lang('Successfully approved'));
                 _this5.$router.push('/tasks');
+            }).catch(function () {
+                _this5.$eventHub.emit('BUTTON_LISTEN_FOR_FAILURE');
+                toastr.error(_this5.lang('There was an error. Please try again'));
             });
         },
         rejectRequest: function rejectRequest() {
             var _this6 = this;
 
             axios.post('/api/task/' + this.task.id + '/reject').then(function () {
+                _this6.$eventHub.emit('BUTTON_LISTEN_FOR_SUCCESS');
+                toastr.success(_this6.lang('Successfully rejected'));
                 _this6.$router.push('/tasks');
+            }).catch(function () {
+                _this6.$eventHub.emit('BUTTON_LISTEN_FOR_FAILURE');
+                toastr.error(_this6.lang('There was an error. Please try again'));
             });
         },
         resendTask: function resendTask() {
@@ -11202,6 +11330,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     language: 'Croatian'
                 });
             }, 1000);
+            Echo.private('thread.' + _this12.task.thread.id).notification(function (comment) {
+                _this12.task.thread.messages.push(comment.data);
+            });
         }).catch(function (err) {});
     }
 });
@@ -11731,7 +11862,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -11776,7 +11907,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -68528,9 +68659,9 @@ var render = function() {
                             _vm._v(
                               "\n                                " +
                                 _vm._s(_vm.task.assigner.name) +
-                                " has requested an expense approval for " +
+                                " has requested an\n                                expense approval for " +
                                 _vm._s(_vm.task.related.name) +
-                                " expense."
+                                "\n                                expense."
                             ),
                             _c("br"),
                             _vm._v(
@@ -68559,15 +68690,24 @@ var render = function() {
                               _c("th", [_vm._v(_vm._s(_vm.lang("Item")))]),
                               _vm._v(" "),
                               _c("th", { staticClass: "text-right" }, [
-                                _vm._v(_vm._s(_vm.lang("Budget")))
+                                _vm._v(
+                                  _vm._s(_vm.lang("Budget")) +
+                                    "\n                                "
+                                )
                               ]),
                               _vm._v(" "),
                               _c("th", { staticClass: "text-right" }, [
-                                _vm._v(_vm._s(_vm.lang("Expense Total")))
+                                _vm._v(
+                                  _vm._s(_vm.lang("Expense Total")) +
+                                    "\n                                "
+                                )
                               ]),
                               _vm._v(" "),
                               _c("th", { staticClass: "text-right" }, [
-                                _vm._v(_vm._s(_vm.lang("Difference")))
+                                _vm._v(
+                                  _vm._s(_vm.lang("Difference")) +
+                                    "\n                                "
+                                )
                               ])
                             ])
                           ]),
@@ -68579,7 +68719,8 @@ var render = function() {
                                 { attrs: { "data-title": _vm.lang("Title") } },
                                 [
                                   _vm._v(
-                                    _vm._s(_vm.lang(_vm.task.related.name))
+                                    _vm._s(_vm.lang(_vm.task.related.name)) +
+                                      "\n                                "
                                   )
                                 ]
                               ),
@@ -68595,10 +68736,10 @@ var render = function() {
                                     _vm._s(
                                       _vm._f("flexCurrency")(
                                         _vm.task.related.budget,
-                                        " kn",
+                                        "kn",
                                         2
                                       )
-                                    )
+                                    ) + "\n                                "
                                   )
                                 ]
                               ),
@@ -68613,13 +68754,15 @@ var render = function() {
                                 },
                                 [
                                   _vm._v(
-                                    _vm._s(
-                                      _vm._f("flexCurrency")(
-                                        _vm.task.related.expense,
-                                        " kn",
-                                        2
-                                      )
-                                    )
+                                    "\n                                    " +
+                                      _vm._s(
+                                        _vm._f("flexCurrency")(
+                                          _vm.task.related.expense,
+                                          " kn",
+                                          2
+                                        )
+                                      ) +
+                                      "\n                                "
                                   )
                                 ]
                               ),
@@ -68634,16 +68777,18 @@ var render = function() {
                                 },
                                 [
                                   _vm._v(
-                                    _vm._s(
-                                      _vm._f("flexCurrency")(
-                                        Math.abs(
-                                          _vm.task.related.budget -
-                                            _vm.task.related.expense
-                                        ),
-                                        " kn",
-                                        2
-                                      )
-                                    )
+                                    "\n                                    " +
+                                      _vm._s(
+                                        _vm._f("flexCurrency")(
+                                          Math.abs(
+                                            _vm.task.related.budget -
+                                              _vm.task.related.expense
+                                          ),
+                                          " kn",
+                                          2
+                                        )
+                                      ) +
+                                      "\n                                "
                                   )
                                 ]
                               )
@@ -68654,7 +68799,10 @@ var render = function() {
                       _vm._v(" "),
                       _c("div", { staticClass: "col-md-3" }, [
                         _c("div", { staticClass: "page-name-l mt-2 mb-1" }, [
-                          _vm._v(_vm._s(_vm.lang("Task Type")))
+                          _vm._v(
+                            _vm._s(_vm.lang("Task Type")) +
+                              "\n                        "
+                          )
                         ]),
                         _vm._v(" "),
                         _c("div", [
@@ -68668,9 +68816,12 @@ var render = function() {
                             },
                             [
                               _vm._v(
-                                _vm._s(
-                                  _vm.lang(_vm.task_types[_vm.task.type].title)
-                                )
+                                "\n                                " +
+                                  _vm._s(
+                                    _vm.lang(
+                                      _vm.task_types[_vm.task.type].title
+                                    )
+                                  )
                               )
                             ]
                           )
@@ -68683,7 +68834,10 @@ var render = function() {
                       { staticClass: "comments" },
                       [
                         _c("div", { staticClass: "page-name-xl mb-3" }, [
-                          _vm._v(_vm._s(_vm.lang("Comments")))
+                          _vm._v(
+                            _vm._s(_vm.lang("Comments")) +
+                              "\n                    "
+                          )
                         ]),
                         _vm._v(" "),
                         _c("div", { staticClass: "content" }, [
@@ -68734,7 +68888,7 @@ var render = function() {
                                     _vm._v(_vm._s(message.sender.name) + ",")
                                   ]),
                                   _vm._v(
-                                    " " +
+                                    "\n                                " +
                                       _vm._s(
                                         _vm._f("moment")(
                                           message.created_at,
@@ -68762,29 +68916,23 @@ var render = function() {
                       },
                       [
                         _vm.task.related.status === "requested"
-                          ? _c(
-                              "button",
-                              {
-                                staticClass: "btn btn-lg btn-save",
-                                attrs: { type: "submit" },
-                                on: { click: _vm.approveRequest }
-                              },
-                              [_vm._v(_vm._s(_vm.lang("Approve")))]
-                            )
+                          ? _c("spinner-button", {
+                              attrs: { title: "Approve" },
+                              on: { button_clicked: _vm.approveRequest }
+                            })
                           : _vm._e(),
                         _vm._v(" "),
                         _vm.task.related.status === "requested"
-                          ? _c(
-                              "button",
-                              {
-                                staticClass: "btn btn-lg btn-cancel",
-                                attrs: { type: "submit" },
-                                on: { click: _vm.rejectRequest }
+                          ? _c("spinner-button", {
+                              attrs: {
+                                classes: "btn btn-lg btn-cancel",
+                                title: "Reject"
                               },
-                              [_vm._v(_vm._s(_vm.lang("Reject")))]
-                            )
+                              on: { button_clicked: _vm.rejectRequest }
+                            })
                           : _vm._e()
-                      ]
+                      ],
+                      1
                     )
                   ])
                 ]
@@ -68867,7 +69015,10 @@ var render = function() {
                       _c("div", { staticClass: "showdata-box row" }, [
                         _c("div", { staticClass: "col-md-9" }, [
                           _c("div", { staticClass: "page-name-l mt-2 mb-1" }, [
-                            _vm._v(_vm._s(_vm.lang("Task Description")))
+                            _vm._v(
+                              _vm._s(_vm.lang("Task Description")) +
+                                "\n                        "
+                            )
                           ]),
                           _vm._v(" "),
                           _c("div", [
@@ -68906,7 +69057,10 @@ var render = function() {
                         _vm._v(" "),
                         _c("div", { staticClass: "col-md-3" }, [
                           _c("div", { staticClass: "page-name-l mt-2 mb-1" }, [
-                            _vm._v(_vm._s(_vm.lang("Task Type")))
+                            _vm._v(
+                              _vm._s(_vm.lang("Task Type")) +
+                                "\n                        "
+                            )
                           ]),
                           _vm._v(" "),
                           _c("div", [
@@ -68920,11 +69074,12 @@ var render = function() {
                               },
                               [
                                 _vm._v(
-                                  _vm._s(
-                                    _vm.lang(
-                                      _vm.task_types[_vm.task.type].title
+                                  "\n                                " +
+                                    _vm._s(
+                                      _vm.lang(
+                                        _vm.task_types[_vm.task.type].title
+                                      )
                                     )
-                                  )
                                 )
                               ]
                             )
@@ -68937,7 +69092,10 @@ var render = function() {
                         { staticClass: "comments" },
                         [
                           _c("div", { staticClass: "page-name-xl mb-3" }, [
-                            _vm._v(_vm._s(_vm.lang("Comments")))
+                            _vm._v(
+                              _vm._s(_vm.lang("Comments")) +
+                                "\n                    "
+                            )
                           ]),
                           _vm._v(" "),
                           _c("div", { staticClass: "content" }, [
@@ -68993,7 +69151,7 @@ var render = function() {
                                         )
                                       ]),
                                       _vm._v(
-                                        " " +
+                                        "\n                                " +
                                           _vm._s(
                                             _vm._f("moment")(
                                               message.created_at,
@@ -69022,29 +69180,23 @@ var render = function() {
                         },
                         [
                           _vm.task.related.status === "requested"
-                            ? _c(
-                                "button",
-                                {
-                                  staticClass: "btn btn-lg btn-save",
-                                  attrs: { type: "submit" },
-                                  on: { click: _vm.approveRequest }
-                                },
-                                [_vm._v(_vm._s(_vm.lang("Approve")))]
-                              )
+                            ? _c("spinner-button", {
+                                attrs: { title: "Approve" },
+                                on: { button_clicked: _vm.approveRequest }
+                              })
                             : _vm._e(),
                           _vm._v(" "),
                           _vm.task.related.status === "requested"
-                            ? _c(
-                                "button",
-                                {
-                                  staticClass: "btn btn-lg btn-cancel",
-                                  attrs: { type: "submit" },
-                                  on: { click: _vm.rejectRequest }
+                            ? _c("spinner-button", {
+                                attrs: {
+                                  classes: "btn btn-lg btn-cancel",
+                                  title: "Reject"
                                 },
-                                [_vm._v(_vm._s(_vm.lang("Reject")))]
-                              )
+                                on: { button_clicked: _vm.rejectRequest }
+                              })
                             : _vm._e()
-                        ]
+                        ],
+                        1
                       )
                     ])
                   ]
@@ -69150,7 +69302,10 @@ var render = function() {
                       ]),
                       _vm._v(" "),
                       _c("div", { staticClass: "page-name-xl mt-2 mb-4" }, [
-                        _vm._v(_vm._s(_vm.lang("Working Time")))
+                        _vm._v(
+                          _vm._s(_vm.lang("Working Time")) +
+                            "\n                "
+                        )
                       ]),
                       _vm._v(" "),
                       _c("div", { staticClass: "stopwatch mt-3" }, [
@@ -69171,7 +69326,12 @@ var render = function() {
                                   attrs: { id: "play" },
                                   on: { click: _vm.startClock }
                                 },
-                                [_vm._v(_vm._s(_vm.lang("Play")))]
+                                [
+                                  _vm._v(
+                                    _vm._s(_vm.lang("Play")) +
+                                      "\n                            "
+                                  )
+                                ]
                               ),
                               _vm._v(" "),
                               _c(
@@ -69182,7 +69342,12 @@ var render = function() {
                                   attrs: { id: "stop" },
                                   on: { click: _vm.stopClock }
                                 },
-                                [_vm._v(_vm._s(_vm.lang("Stop")))]
+                                [
+                                  _vm._v(
+                                    _vm._s(_vm.lang("Stop")) +
+                                      "\n                            "
+                                  )
+                                ]
                               )
                             ]
                           )
@@ -69192,7 +69357,10 @@ var render = function() {
                       _c("div", { staticClass: "showdata-box row" }, [
                         _c("div", { staticClass: "col-md-9" }, [
                           _c("div", { staticClass: "page-name-l mt-2 mb-1" }, [
-                            _vm._v(_vm._s(_vm.lang("Task Description")))
+                            _vm._v(
+                              _vm._s(_vm.lang("Task Description")) +
+                                "\n                        "
+                            )
                           ]),
                           _vm._v(" "),
                           _c("div", [
@@ -69216,7 +69384,10 @@ var render = function() {
                         _vm._v(" "),
                         _c("div", { staticClass: "col-md-3" }, [
                           _c("div", { staticClass: "page-name-l mt-2 mb-1" }, [
-                            _vm._v(_vm._s(_vm.lang("Task Type")))
+                            _vm._v(
+                              _vm._s(_vm.lang("Task Type")) +
+                                "\n                        "
+                            )
                           ]),
                           _vm._v(" "),
                           _c("div", [
@@ -69230,11 +69401,12 @@ var render = function() {
                               },
                               [
                                 _vm._v(
-                                  _vm._s(
-                                    _vm.lang(
-                                      _vm.task_types[_vm.task.type].title
+                                  "\n                                " +
+                                    _vm._s(
+                                      _vm.lang(
+                                        _vm.task_types[_vm.task.type].title
+                                      )
                                     )
-                                  )
                                 )
                               ]
                             )
@@ -69243,7 +69415,10 @@ var render = function() {
                       ]),
                       _vm._v(" "),
                       _c("div", { staticClass: "page-name-xl mt-4" }, [
-                        _vm._v(_vm._s(_vm.lang("Initial Documents")))
+                        _vm._v(
+                          _vm._s(_vm.lang("Initial Documents")) +
+                            "\n                "
+                        )
                       ]),
                       _vm._v(" "),
                       _c(
@@ -69320,7 +69495,12 @@ var render = function() {
                                     }
                                   }
                                 },
-                                [_vm._v(_vm._s(_vm.lang("Download")))]
+                                [
+                                  _vm._v(
+                                    _vm._s(_vm.lang("Download")) +
+                                      "\n                        "
+                                  )
+                                ]
                               ),
                               _vm._v(" "),
                               _c(
@@ -69333,7 +69513,12 @@ var render = function() {
                                     }
                                   }
                                 },
-                                [_vm._v(_vm._s(_vm.lang("Delete")))]
+                                [
+                                  _vm._v(
+                                    _vm._s(_vm.lang("Delete")) +
+                                      "\n                        "
+                                  )
+                                ]
                               )
                             ]
                           )
@@ -69357,13 +69542,21 @@ var render = function() {
                                 }
                               }
                             },
-                            [_vm._v(_vm._s(_vm.lang("Upload")))]
+                            [
+                              _vm._v(
+                                _vm._s(_vm.lang("Upload")) +
+                                  "\n                    "
+                              )
+                            ]
                           )
                         ]
                       ),
                       _vm._v(" "),
                       _c("div", { staticClass: "page-name-xl mt-4" }, [
-                        _vm._v(_vm._s(_vm.lang("Final Documents")))
+                        _vm._v(
+                          _vm._s(_vm.lang("Final Documents")) +
+                            "\n                "
+                        )
                       ]),
                       _vm._v(" "),
                       _c(
@@ -69437,7 +69630,12 @@ var render = function() {
                                     }
                                   }
                                 },
-                                [_vm._v(_vm._s(_vm.lang("Download")))]
+                                [
+                                  _vm._v(
+                                    _vm._s(_vm.lang("Download")) +
+                                      "\n                        "
+                                  )
+                                ]
                               ),
                               _vm._v(" "),
                               _c(
@@ -69450,7 +69648,12 @@ var render = function() {
                                     }
                                   }
                                 },
-                                [_vm._v(_vm._s(_vm.lang("Delete")))]
+                                [
+                                  _vm._v(
+                                    _vm._s(_vm.lang("Delete")) +
+                                      "\n                        "
+                                  )
+                                ]
                               )
                             ]
                           )
@@ -69474,7 +69677,12 @@ var render = function() {
                                 }
                               }
                             },
-                            [_vm._v(_vm._s(_vm.lang("Upload")))]
+                            [
+                              _vm._v(
+                                _vm._s(_vm.lang("Upload")) +
+                                  "\n                    "
+                              )
+                            ]
                           )
                         ]
                       ),
@@ -69484,7 +69692,10 @@ var render = function() {
                         { staticClass: "comments" },
                         [
                           _c("div", { staticClass: "page-name-xl mb-3" }, [
-                            _vm._v(_vm._s(_vm.lang("Comments")))
+                            _vm._v(
+                              _vm._s(_vm.lang("Comments")) +
+                                "\n                    "
+                            )
                           ]),
                           _vm._v(" "),
                           _c("div", { staticClass: "content" }, [
@@ -69540,7 +69751,7 @@ var render = function() {
                                         )
                                       ]),
                                       _vm._v(
-                                        " " +
+                                        "\n                                " +
                                           _vm._s(
                                             _vm._f("moment")(
                                               message.created_at,
@@ -69575,7 +69786,12 @@ var render = function() {
                                   staticClass: "btn btn-lg btn-save",
                                   on: { click: _vm.acceptTask }
                                 },
-                                [_vm._v(_vm._s(_vm.lang("Accept")))]
+                                [
+                                  _vm._v(
+                                    _vm._s(_vm.lang("Accept")) +
+                                      "\n                    "
+                                  )
+                                ]
                               )
                             : _vm._e(),
                           _vm._v(" "),
@@ -69591,7 +69807,12 @@ var render = function() {
                                     }
                                   }
                                 },
-                                [_vm._v(_vm._s(_vm.lang("Assign to...")))]
+                                [
+                                  _vm._v(
+                                    _vm._s(_vm.lang("Assign to...")) +
+                                      "\n                    "
+                                  )
+                                ]
                               )
                             : _vm._e(),
                           _vm._v(" "),
@@ -69603,7 +69824,12 @@ var render = function() {
                                     "btn btn-lg btn-save btn-complete-icon",
                                   on: { click: _vm.completeTask }
                                 },
-                                [_vm._v(_vm._s(_vm.lang("Complete")))]
+                                [
+                                  _vm._v(
+                                    _vm._s(_vm.lang("Complete")) +
+                                      "\n                    "
+                                  )
+                                ]
                               )
                             : _vm._e(),
                           _vm._v(" "),
@@ -69614,7 +69840,12 @@ var render = function() {
                                   staticClass: "btn btn-lg btn-save",
                                   on: { click: _vm.resendTask }
                                 },
-                                [_vm._v(_vm._s(_vm.lang("Resend")))]
+                                [
+                                  _vm._v(
+                                    _vm._s(_vm.lang("Resend")) +
+                                      "\n                    "
+                                  )
+                                ]
                               )
                             : _vm._e(),
                           _vm._v(" "),
@@ -69625,7 +69856,12 @@ var render = function() {
                                   staticClass: "btn btn-lg btn-cancel",
                                   on: { click: _vm.taskWarning }
                                 },
-                                [_vm._v(_vm._s(_vm.lang("Delete")))]
+                                [
+                                  _vm._v(
+                                    _vm._s(_vm.lang("Delete")) +
+                                      "\n                    "
+                                  )
+                                ]
                               )
                             : _vm._e()
                         ]
@@ -101108,6 +101344,10 @@ var initialState = {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios_index__ = __webpack_require__("./node_modules/axios/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios_index___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios_index__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue__ = __webpack_require__("./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue__);
+
+
 
 var initialState = {
     marketing_expense: {
@@ -101165,6 +101405,9 @@ var initialState = {
                 var key = Object.keys(state)[i];
                 state[key] = payload[key];
             }
+        },
+        requestsUpdate: function requestsUpdate(state, payload) {
+            __WEBPACK_IMPORTED_MODULE_1_vue___default.a.set(state.requests, payload, [{ status: 'requested' }]);
         }
     },
     actions: {

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Inspirium\Models\Messaging\Message;
 use Inspirium\Models\Messaging\Thread;
 use Inspirium\Notifications\NewMessage;
+use Inspirium\Notifications\NewThreadMessage;
 
 class ThreadController extends Controller {
 
@@ -22,8 +23,8 @@ class ThreadController extends Controller {
 					$user->notify(new NewMessage($message));
 				}
 			}
-			$thread->load('messages');
-			return response()->json($thread->messages);
+			$thread->notify(new NewThreadMessage($message));
+			return response()->json([]);
 		}
 		return false;
 	}

@@ -4,6 +4,7 @@ namespace Inspirium\Models\Messaging;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Notifications\Notifiable;
 
 /**
  * Inspirium\Messaging\Models\Thread
@@ -35,7 +36,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder|\Inspirium\Messaging\Models\Thread whereUpdatedAt($value)
  */
 class Thread extends Model {
-	use SoftDeletes;
+	use SoftDeletes, Notifiable;
 
 	protected $table = 'threads';
 
@@ -57,6 +58,11 @@ class Thread extends Model {
 
 	public function triggerAssigned() {
 		$this->fireModelEvent('assigned');
+	}
+
+	public function receivesBroadcastNotificationsOn()
+	{
+		return 'thread.'.$this->id;
 	}
 
 }

@@ -14,3 +14,7 @@
 Broadcast::channel('users.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
+
+Broadcast::channel('thread.{id}', function ($user, $id) {
+	return true;
+});
