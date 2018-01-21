@@ -12,12 +12,25 @@ class BookController extends Controller {
 		$offset = $request->input('offset');
 		$order = $request->input('order');
 		$sort = $request->input('sort');
-		$books = Book::orderBy($sort?$sort:'id', $order)
-		             ->with('proposition.owner')
-					 ->limit($limit)
-					 ->offset($offset)
-		             ->get();
-		$total = Book::count();
+		$filter = $request->input('filter');
+		if ($filter) {
+			$books = Book::orderBy( $sort ? $sort : 'id', $order )
+			             ->with( 'proposition.owner' )
+						 ->where('title', 'LIKE', "%$filter%")
+			             ->limit( $limit )
+			             ->offset( $offset )
+			             ->get();
+			$total = Book::where('title', 'LIKE', "%$filter%")->count();
+		}
+		else {
+			$books = Book::orderBy( $sort ? $sort : 'id', $order )
+			             ->with( 'proposition.owner' )
+			             ->limit( $limit )
+			             ->offset( $offset )
+			             ->get();
+			$total = Book::count();
+		}
+
 		return response()->json(['rows' => $books, 'total' => $total]);
 	}
 }

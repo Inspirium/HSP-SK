@@ -36,6 +36,7 @@ Route::group( [ 'middleware' => [ 'auth:api' ], ], function () {
 		'prefix'    => 'human_resources',
 		'namespace' => 'Api\HumanResources'
 	], function () {
+		Route::post( 'employees', 'EmployeeController@getEmployees' );
 		Route::get( 'employee/{employee}', 'EmployeeController@getEmployee' );
 		Route::post( 'employee/{employee}', 'EmployeeController@saveEmployee' );
 		Route::delete( 'employee/{employee}', 'EmployeeController@deleteEmployee' );

@@ -16,7 +16,7 @@ class Employee extends Authenticatable implements Auditable, UserResolver{
 	use Notifiable, HasApiTokens, \OwenIt\Auditing\Auditable;
 
     protected $guarded = [ 'created_at', 'update_at', 'deleted_at' ];
-    protected $appends = [ 'name', 'department_name', 'phone_merged', 'mobile_merged', 'link' ];
+    protected $appends = [ 'name', 'department_name', 'phone_merged', 'mobile_merged', 'link', 'links' ];
 
 	protected $hidden = [ 'password', 'remember_token' ];
 
@@ -87,6 +87,19 @@ class Employee extends Authenticatable implements Auditable, UserResolver{
 
     public function getLinkAttribute() {
     	return '/human_resources/employee/'.$this->id.'/show';
+    }
+
+    public function getLinksAttribute() {
+		return [
+			'edit' => [
+				'method' => 'GET',
+				'link' => '/human_resouces/employee/'.$this->id.'/edit'
+			],
+			'delete' => [
+				'method' => 'DELETE',
+				'link' => '/api/human_resources/employee/'.$this->id
+			],
+		];
     }
 
 	public function receivesBroadcastNotificationsOn()

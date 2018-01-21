@@ -29,7 +29,9 @@ Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm
 Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 
 Route::group(['middleware' => ['auth'], 'prefix' => 'human_resources'], function() {
-	Route::get('employees', 'HumanResources\EmployeeController@showEmployees');
+	Route::get('employees', function() {
+		return view(config('app.template') . '::router-view');
+	});
 	Route::group(['prefix' => 'employee'], function () {
 		Route::get('{employee}/show', 'HumanResources\EmployeeController@showEmployee');
 		Route::get('{employee}/roles', 'HumanResources\EmployeeController@employeeRoles')->middleware('can:viewRoles,employee');

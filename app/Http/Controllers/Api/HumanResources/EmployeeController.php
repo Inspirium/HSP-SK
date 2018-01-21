@@ -116,4 +116,29 @@ class EmployeeController extends Controller {
 
 		return response()->json([]);
 	}
+
+	public function getEmployees(Request $request) {
+		$limit = $request->input('limit');
+		$offset = $request->input('offset');
+		$order = $request->input('order');
+		$sort = $request->input('sort');
+		$filter = $request->input('filter');
+		if ($filter) {
+			$employees = Employee::orderBy( $sort ? $sort : 'id', $order )
+			                     ->limit( $limit )
+			                     ->offset( $offset )
+								 ->where('first_name', 'LIKE', "%$filter%")
+								 ->orWhere('last_name', 'LIKE', "%$filter%")
+			                     ->get();
+			$total     = Employee::where('first_name', 'LIKE', "%$filter%")->orWhere('last_name', 'LIKE', "%$filter%")->count();
+		}
+		else {
+			$employees = Employee::orderBy( $sort ? $sort : 'id', $order )
+			                     ->limit( $limit )
+			                     ->offset( $offset )
+			                     ->get();
+			$total     = Employee::count();
+		}
+		return response()->json(['rows' => $employees, 'total' => $total]);
+	}
 }

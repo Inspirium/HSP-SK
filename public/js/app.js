@@ -2459,7 +2459,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     var _this = this;
 
     // init query (make all the properties observable by using `$set`)
-    var q = _extends({ limit: 10, offset: 0, sort: '', order: '' }, this.query);
+    var q = _extends({ limit: 10, offset: 0, sort: '', order: '', filter: '' }, this.query);
     Object.keys(q).forEach(function (key) {
       _this.$set(_this.query, key, q[key]);
     });
@@ -3358,6 +3358,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 
 
@@ -3387,7 +3390,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             data: [],
             total: 0,
             PageSizeSelect: [50],
-            query: {},
+            query: { filter: '' },
             HeaderSettings: false
         };
     },
@@ -3983,6 +3986,102 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }, 300);
             }).catch(function () {});
         }
+    }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}],\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./packages/Inspirium/SKTemplate/src/assets/js/components/hr/Employees.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__table_components__ = __webpack_require__("./packages/Inspirium/SKTemplate/src/assets/js/components/table_components/index.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    name: "employees",
+    components: __WEBPACK_IMPORTED_MODULE_0__table_components__["a" /* default */],
+    data: function data() {
+        return {
+            supportNested: true,
+            tblClass: 'table',
+            columns: [{ title: '#', field: 'id', sortable: true }, {
+                title: this.lang('Image'),
+                field: 'image',
+                tdComp: 'ImageCell'
+            }, {
+                title: this.lang('Name'),
+                field: 'name',
+                sortable: true,
+                tdComp: 'TitleCell',
+                tdClass: 'table-title'
+            }, {
+                title: this.lang('Department'),
+                field: 'department_name'
+            }, {
+                title: this.lang('Phone'),
+                field: 'phone_merged'
+            }, {
+                title: this.lang('Mobile'),
+                field: 'mobile_merged'
+            }, {
+                title: this.lang('Room'),
+                field: 'room'
+            }, {
+                title: this.lang('Actions'),
+                tdComp: 'Actions',
+                field: 'links'
+            }],
+            data: [],
+            total: 0,
+            PageSizeSelect: [50],
+            query: { filter: '' },
+            HeaderSettings: false
+        };
+    },
+
+    watch: {
+        'query': {
+            handler: function handler() {
+                this.queryHandler();
+            },
+
+            deep: true
+        }
+    },
+    methods: {
+        queryHandler: function queryHandler() {
+            var _this = this;
+
+            axios.post('/api/human_resources/employees', this.query).then(function (res) {
+                _this.data = res.data.rows;
+                _this.total = res.data.total;
+            });
+        }
+    },
+    created: function created() {
+        this.$eventHub.on('updateQuery', this.queryHandler);
+    },
+    beforeDestroy: function beforeDestroy() {
+        this.$eventHub.off('updateQuery', this.queryHandler);
     }
 });
 
@@ -5351,6 +5450,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         emitWarningConfirmation: function emitWarningConfirmation() {
             this.$eventHub.emit('warningConfirmed');
             this.$emit('warningConfirmed');
+        },
+        emitWarningCancel: function emitWarningCancel() {
+            this.$emit('warningCanceled');
+            this.$eventHub.emit('warningCanceled');
         }
     }
 });
@@ -9804,6 +9907,47 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}],\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./packages/Inspirium/SKTemplate/src/assets/js/components/table_components/Actions.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    name: "actions",
+    props: ['value'],
+    methods: {
+        deleteWarning: function deleteWarning() {
+            $('#modal-warning').modal('show');
+            this.$eventHub.on('warningConfirmed', this.delete);
+            this.$eventHub.on('warningCanceled', this.cancel);
+        },
+        delete: function _delete() {
+            var _this = this;
+
+            axios.delete(this.value['delete']['link']).then(function () {
+                toastr.success(_this.lang('Success'));
+                _this.$eventHub.emit('updateQuery');
+            }).catch(function () {
+                toastr.error(_this.lang('Action failed'));
+            });
+        },
+        cancel: function cancel() {
+            this.$eventHub.off('warningConfirmed');
+            this.$eventHub.off('warningCanceled');
+        }
+    }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}],\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./packages/Inspirium/SKTemplate/src/assets/js/components/table_components/AuthorCell.vue":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -9899,6 +10043,27 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['row', 'nested', 'field', 'value']
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}],\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./packages/Inspirium/SKTemplate/src/assets/js/components/table_components/ImageCell.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash__ = __webpack_require__("./node_modules/lodash/lodash.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_lodash__);
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    name: "image-cell",
+    props: ['value']
 });
 
 /***/ }),
@@ -11447,7 +11612,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             new: {
                 supportNested: true,
                 tblClass: 'table',
-                columns: [{ title: '#', field: 'order', sortable: true }, {
+                columns: [{ title: '#', field: 'id', sortable: true }, {
                     title: this.lang('Task'),
                     field: 'name',
                     sortable: true,
@@ -11481,7 +11646,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             accepted: {
                 supportNested: true,
                 tblClass: 'table',
-                columns: [{ title: '#', field: 'order', sortable: true }, {
+                columns: [{ title: '#', field: 'id', sortable: true }, {
                     title: this.lang('Task'),
                     field: 'name',
                     sortable: true,
@@ -11515,7 +11680,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             sent: {
                 supportNested: true,
                 tblClass: 'table',
-                columns: [{ title: '#', field: 'order', sortable: true }, {
+                columns: [{ title: '#', field: 'id', sortable: true }, {
                     title: this.lang('Task'),
                     field: 'name',
                     sortable: true,
@@ -11559,7 +11724,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             completed: {
                 supportNested: true,
                 tblClass: 'table',
-                columns: [{ title: '#', field: 'order', sortable: true }, {
+                columns: [{ title: '#', field: 'id', sortable: true }, {
                     title: this.lang('Task'),
                     field: 'name',
                     sortable: true,
@@ -11593,7 +11758,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             rejected: {
                 supportNested: true,
                 tblClass: 'table',
-                columns: [{ title: '#', field: 'order', sortable: true }, {
+                columns: [{ title: '#', field: 'id', sortable: true }, {
                     title: this.lang('Task'),
                     field: 'name',
                     sortable: true,
@@ -11786,7 +11951,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -11832,6 +11997,21 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 // module
 exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-55e65309\",\"scoped\":true,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./packages/Inspirium/SKTemplate/src/assets/js/components/table_components/ImageCell.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -60576,6 +60756,55 @@ if (false) {
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-216cc0ae\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./packages/Inspirium/SKTemplate/src/assets/js/components/table_components/Actions.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _vm.value["edit"]["link"]
+      ? _c(
+          "a",
+          {
+            staticClass: "color-grey",
+            attrs: { href: _vm.value["edit"]["link"], title: _vm.lang("Edit") }
+          },
+          [_c("i", { staticClass: "fa fa-pencil" })]
+        )
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.value["delete"]["link"]
+      ? _c(
+          "a",
+          {
+            staticClass: "color-grey",
+            attrs: { title: _vm.lang("Delete") },
+            on: {
+              click: function($event) {
+                $event.preventDefault()
+                _vm.deleteWarning($event)
+              }
+            }
+          },
+          [_c("i", { staticClass: "fa fa-times" })]
+        )
+      : _vm._e()
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-loader/node_modules/vue-hot-reload-api")      .rerender("data-v-216cc0ae", module.exports)
+  }
+}
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-238aee48\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./packages/Inspirium/SKTemplate/src/assets/js/components/table_components/Deadline.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -65115,6 +65344,30 @@ var render = function() {
     [
       _c("div", { staticClass: "page-name-xl mb-2 mt-3" }, [
         _vm._v(_vm._s(_vm.lang("Books")))
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "md-form input-group search-big" }, [
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.query.filter,
+              expression: "query.filter"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: { type: "search", placeholder: _vm.lang("Search...") },
+          domProps: { value: _vm.query.filter },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.query, "filter", $event.target.value)
+            }
+          }
+        })
       ]),
       _vm._v(" "),
       _c("datatable", _vm._b({}, "datatable", _vm.$data, false))
@@ -70368,6 +70621,27 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-loader/node_modules/vue-hot-reload-api")      .rerender("data-v-53dd41c6", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-55e65309\",\"hasScoped\":true,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./packages/Inspirium/SKTemplate/src/assets/js/components/table_components/ImageCell.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("img", { staticClass: "profile-m mr-2", attrs: { src: _vm.value } })
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-loader/node_modules/vue-hot-reload-api")      .rerender("data-v-55e65309", module.exports)
   }
 }
 
@@ -77485,11 +77759,7 @@ var render = function() {
               {
                 staticClass: "btn btn-lg btn-cancel",
                 attrs: { type: "button", "data-dismiss": "modal" },
-                on: {
-                  click: function($event) {
-                    _vm.$emit("warningCanceled")
-                  }
-                }
+                on: { click: _vm.emitWarningCancel }
               },
               [_vm._v(_vm._s(_vm.lang("No")))]
             )
@@ -77619,6 +77889,83 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-loader/node_modules/vue-hot-reload-api")      .rerender("data-v-caacec8c", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-cd42bc58\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./packages/Inspirium/SKTemplate/src/assets/js/components/hr/Employees.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "content" },
+    [
+      _c("div", { staticClass: "page-name-xl mb-2 mt-3" }, [
+        _vm._v(_vm._s(_vm.lang("Employees")))
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "md-form input-group search-big" }, [
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.query.filter,
+              expression: "query.filter"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: { type: "search", placeholder: _vm.lang("Search...") },
+          domProps: { value: _vm.query.filter },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.query, "filter", $event.target.value)
+            }
+          }
+        })
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "btn-header d-flex p-2" },
+        [
+          _c(
+            "router-link",
+            {
+              staticClass: "btn btn-lg btn-blank",
+              attrs: { to: "/human_resources/employee/new" }
+            },
+            [
+              _c("i", { staticClass: "fa fa-plus left" }),
+              _vm._v(_vm._s(_vm.lang("Add New Employee")))
+            ]
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("datatable", _vm._b({}, "datatable", _vm.$data, false)),
+      _vm._v(" "),
+      _c("warning-modal")
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-loader/node_modules/vue-hot-reload-api")      .rerender("data-v-cd42bc58", module.exports)
   }
 }
 
@@ -83454,6 +83801,33 @@ if(false) {
  if(!content.locals) {
    module.hot.accept("!!../../../../../../../../node_modules/css-loader/index.js!../../../../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-52a12e98\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./DateCell.vue", function() {
      var newContent = require("!!../../../../../../../../node_modules/css-loader/index.js!../../../../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-52a12e98\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./DateCell.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-55e65309\",\"scoped\":true,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./packages/Inspirium/SKTemplate/src/assets/js/components/table_components/ImageCell.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__("./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-55e65309\",\"scoped\":true,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./packages/Inspirium/SKTemplate/src/assets/js/components/table_components/ImageCell.vue");
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__("./node_modules/vue-style-loader/lib/addStylesClient.js")("b5a11c44", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../../../../node_modules/css-loader/index.js!../../../../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-55e65309\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ImageCell.vue", function() {
+     var newContent = require("!!../../../../../../../../node_modules/css-loader/index.js!../../../../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-55e65309\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ImageCell.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -97887,6 +98261,54 @@ module.exports = Component.exports
 
 /***/ }),
 
+/***/ "./packages/Inspirium/SKTemplate/src/assets/js/components/hr/Employees.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}],\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./packages/Inspirium/SKTemplate/src/assets/js/components/hr/Employees.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-cd42bc58\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./packages/Inspirium/SKTemplate/src/assets/js/components/hr/Employees.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "packages/Inspirium/SKTemplate/src/assets/js/components/hr/Employees.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-loader/node_modules/vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-cd42bc58", Component.options)
+  } else {
+    hotAPI.reload("data-v-cd42bc58", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
 /***/ "./packages/Inspirium/SKTemplate/src/assets/js/components/modals/AssignDocuments.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -99723,6 +100145,54 @@ module.exports = Component.exports
 
 /***/ }),
 
+/***/ "./packages/Inspirium/SKTemplate/src/assets/js/components/table_components/Actions.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}],\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./packages/Inspirium/SKTemplate/src/assets/js/components/table_components/Actions.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-216cc0ae\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./packages/Inspirium/SKTemplate/src/assets/js/components/table_components/Actions.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "packages/Inspirium/SKTemplate/src/assets/js/components/table_components/Actions.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-loader/node_modules/vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-216cc0ae", Component.options)
+  } else {
+    hotAPI.reload("data-v-216cc0ae", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
 /***/ "./packages/Inspirium/SKTemplate/src/assets/js/components/table_components/AuthorCell.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -99912,6 +100382,58 @@ if (false) {(function () {
     hotAPI.createRecord("data-v-85ca80a8", Component.options)
   } else {
     hotAPI.reload("data-v-85ca80a8", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ "./packages/Inspirium/SKTemplate/src/assets/js/components/table_components/ImageCell.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__("./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-55e65309\",\"scoped\":true,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./packages/Inspirium/SKTemplate/src/assets/js/components/table_components/ImageCell.vue")
+}
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}],\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./packages/Inspirium/SKTemplate/src/assets/js/components/table_components/ImageCell.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-55e65309\",\"hasScoped\":true,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./packages/Inspirium/SKTemplate/src/assets/js/components/table_components/ImageCell.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-55e65309"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "packages/Inspirium/SKTemplate/src/assets/js/components/table_components/ImageCell.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-loader/node_modules/vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-55e65309", Component.options)
+  } else {
+    hotAPI.reload("data-v-55e65309", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -100188,7 +100710,9 @@ module.exports = Component.exports
     TaskType: __webpack_require__("./packages/Inspirium/SKTemplate/src/assets/js/components/table_components/TaskType.vue"),
     WaitingTime: __webpack_require__("./packages/Inspirium/SKTemplate/src/assets/js/components/table_components/WaitingTime.vue"),
     Deadline: __webpack_require__("./packages/Inspirium/SKTemplate/src/assets/js/components/table_components/Deadline.vue"),
-    TaskStatus: __webpack_require__("./packages/Inspirium/SKTemplate/src/assets/js/components/table_components/TaskStatus.vue")
+    TaskStatus: __webpack_require__("./packages/Inspirium/SKTemplate/src/assets/js/components/table_components/TaskStatus.vue"),
+    ImageCell: __webpack_require__("./packages/Inspirium/SKTemplate/src/assets/js/components/table_components/ImageCell.vue"),
+    Actions: __webpack_require__("./packages/Inspirium/SKTemplate/src/assets/js/components/table_components/Actions.vue")
 });
 
 /***/ }),
@@ -100520,18 +101044,20 @@ module.exports = Component.exports
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__components_proposition_Multimedia___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_25__components_proposition_Multimedia__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__components_hr_EditProfile__ = __webpack_require__("./packages/Inspirium/SKTemplate/src/assets/js/components/hr/EditProfile.vue");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__components_hr_EditProfile___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_26__components_hr_EditProfile__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__components_tasks_Tasks__ = __webpack_require__("./packages/Inspirium/SKTemplate/src/assets/js/components/tasks/Tasks.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__components_tasks_Tasks___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_27__components_tasks_Tasks__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__components_tasks_TaskEdit__ = __webpack_require__("./packages/Inspirium/SKTemplate/src/assets/js/components/tasks/TaskEdit.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__components_tasks_TaskEdit___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_28__components_tasks_TaskEdit__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__components_tasks_TaskShow__ = __webpack_require__("./packages/Inspirium/SKTemplate/src/assets/js/components/tasks/TaskShow.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__components_tasks_TaskShow___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_29__components_tasks_TaskShow__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__components_tasks_DepartmentTasks__ = __webpack_require__("./packages/Inspirium/SKTemplate/src/assets/js/components/tasks/DepartmentTasks.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__components_tasks_DepartmentTasks___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_30__components_tasks_DepartmentTasks__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_31__components_proposition_PropositionList__ = __webpack_require__("./packages/Inspirium/SKTemplate/src/assets/js/components/proposition/PropositionList.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_31__components_proposition_PropositionList___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_31__components_proposition_PropositionList__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_32__components_books_Books__ = __webpack_require__("./packages/Inspirium/SKTemplate/src/assets/js/components/books/Books.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_32__components_books_Books___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_32__components_books_Books__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__components_hr_Employees__ = __webpack_require__("./packages/Inspirium/SKTemplate/src/assets/js/components/hr/Employees.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__components_hr_Employees___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_27__components_hr_Employees__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__components_tasks_Tasks__ = __webpack_require__("./packages/Inspirium/SKTemplate/src/assets/js/components/tasks/Tasks.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__components_tasks_Tasks___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_28__components_tasks_Tasks__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__components_tasks_TaskEdit__ = __webpack_require__("./packages/Inspirium/SKTemplate/src/assets/js/components/tasks/TaskEdit.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__components_tasks_TaskEdit___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_29__components_tasks_TaskEdit__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__components_tasks_TaskShow__ = __webpack_require__("./packages/Inspirium/SKTemplate/src/assets/js/components/tasks/TaskShow.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__components_tasks_TaskShow___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_30__components_tasks_TaskShow__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_31__components_tasks_DepartmentTasks__ = __webpack_require__("./packages/Inspirium/SKTemplate/src/assets/js/components/tasks/DepartmentTasks.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_31__components_tasks_DepartmentTasks___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_31__components_tasks_DepartmentTasks__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_32__components_proposition_PropositionList__ = __webpack_require__("./packages/Inspirium/SKTemplate/src/assets/js/components/proposition/PropositionList.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_32__components_proposition_PropositionList___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_32__components_proposition_PropositionList__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_33__components_books_Books__ = __webpack_require__("./packages/Inspirium/SKTemplate/src/assets/js/components/books/Books.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_33__components_books_Books___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_33__components_books_Books__);
 
 
 
@@ -100569,9 +101095,10 @@ module.exports = Component.exports
 
 
 
-var routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_31__components_proposition_PropositionList___default.a }, { path: '/proposition', component: __WEBPACK_IMPORTED_MODULE_0__components_proposition_Proposition___default.a, name: 'proposition',
+
+var routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_32__components_proposition_PropositionList___default.a }, { path: '/proposition', component: __WEBPACK_IMPORTED_MODULE_0__components_proposition_Proposition___default.a, name: 'proposition',
     children: [{ path: 'start', component: __WEBPACK_IMPORTED_MODULE_18__components_proposition_PropositionStart___default.a, meta: { save: 'start', breadcrumb: 'Start', warning: 'proposition/deleteProposition' } }, { path: ':id/edit/start', component: __WEBPACK_IMPORTED_MODULE_18__components_proposition_PropositionStart___default.a, meta: { save: 'start', validate: { id: 'int' }, breadcrumb: 'Start', warning: 'proposition/deleteProposition' } }, { path: ':id/edit/basic_data', component: __WEBPACK_IMPORTED_MODULE_1__components_proposition_BasicData___default.a, meta: { save: 'basic_data', validate: { id: 'int' }, breadcrumb: 'Basic Data', warning: 'proposition/basic_data/deleteFile' } }, { path: ':id/edit/categorization', component: __WEBPACK_IMPORTED_MODULE_2__components_proposition_Categorization___default.a, meta: { save: 'categorization', validate: { id: 'int' }, breadcrumb: 'Categorization' } }, { path: ':id/edit/market_potential', component: __WEBPACK_IMPORTED_MODULE_3__components_proposition_MarketPotential___default.a, meta: { save: 'market_potential', validate: { id: 'int' }, breadcrumb: 'Market Potential', warning: 'proposition/market_potential/deleteFile' } }, { path: ':id/edit/technical_data', component: __WEBPACK_IMPORTED_MODULE_4__components_proposition_TechnicalData___default.a, meta: { save: 'technical_data', validate: { id: 'int' }, breadcrumb: 'Technical Data' } }, { path: ':id/edit/print', component: __WEBPACK_IMPORTED_MODULE_7__components_proposition_Print___default.a, meta: { save: 'print', validate: { id: 'int' }, breadcrumb: 'Print', warning: 'proposition/print/deleteFile' } }, { path: ':id/edit/authors_expense', component: __WEBPACK_IMPORTED_MODULE_5__components_proposition_AuthorsExpense___default.a, meta: { save: 'authors_expense', validate: { id: 'int' }, breadcrumb: 'Authors Expense' } }, { path: ':id/edit/production_expense', component: __WEBPACK_IMPORTED_MODULE_9__components_proposition_ProductionExpense___default.a, meta: { save: 'production_expense', validate: { id: 'int' }, breadcrumb: 'Production Expense' } }, { path: ':id/edit/marketing_expense', component: __WEBPACK_IMPORTED_MODULE_10__components_proposition_MarketingExpense___default.a, meta: { save: 'marketing_expense', validate: { id: 'int' }, breadcrumb: 'Marketing Expense' } }, { path: ':id/edit/distribution_expense', component: __WEBPACK_IMPORTED_MODULE_12__components_proposition_DistributionExpense___default.a, meta: { save: 'distribution_expense', validate: { id: 'int' }, breadcrumb: 'Distribution Expense' } }, { path: ':id/edit/layout_expense', component: __WEBPACK_IMPORTED_MODULE_14__components_proposition_LayoutExpense___default.a, meta: { save: 'layout_expense', validate: { id: 'int' }, breadcrumb: 'Layout Expense' } }, { path: ':id/edit/deadline', component: __WEBPACK_IMPORTED_MODULE_16__components_proposition_Deadline___default.a, meta: { save: 'deadline', validate: { id: 'int' }, breadcrumb: 'Deadline' } }, { path: ':id/edit/calculation', component: __WEBPACK_IMPORTED_MODULE_17__components_proposition_Calculation___default.a, meta: { save: 'calculation', validate: { id: 'int' }, breadcrumb: 'Calculation' } }, { path: ':id/preparation/translation', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'translation', validate: { id: 'int' }, breadcrumb: 'Translation', warning: 'proposition/files/deleteFile' } }, { path: ':id/preparation/technical_preparation', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'technical_preparation', validate: { id: 'int' }, breadcrumb: 'Technical Preparation', warning: 'proposition/files/deleteFile' } }, { path: ':id/preparation/proofreading', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'proofreading', validate: { id: 'int' }, breadcrumb: 'Proofreading', warning: 'proposition/files/deleteFile' } }, { path: ':id/preparation/additional_materials', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'additional_materials', validate: { id: 'int' }, breadcrumb: 'Additional Materials', warning: 'proposition/files/deleteFile' } }, { path: ':id/preparation/reviews', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'reviews', validate: { id: 'int' }, breadcrumb: 'Reviews', warning: 'proposition/files/deleteFile' } }, { path: ':id/preparation/lecture', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'lecture', validate: { id: 'int' }, breadcrumb: 'Lecture', warning: 'proposition/files/deleteFile' } }, { path: ':id/preparation/technical_correction', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'technical_correction', validate: { id: 'int' }, breadcrumb: 'Technical Correction', warning: 'proposition/files/deleteFile' } }, { path: ':id/preparation/final_review', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'final_review', validate: { id: 'int' }, breadcrumb: 'Final Review', warning: 'proposition/files/deleteFile' } }, { path: ':id/expenses/authors_expense', component: __WEBPACK_IMPORTED_MODULE_6__components_proposition_expenses_AuthorsExpense___default.a, meta: { save: 'authors_expense', validate: { id: 'int' }, breadcrumb: 'Authors Expense', 'type': 'expense' } }, { path: ':id/expenses/production_expense', component: __WEBPACK_IMPORTED_MODULE_8__components_proposition_expenses_ProductionExpense___default.a, meta: { save: 'production_expense', validate: { id: 'int' }, breadcrumb: 'Production Expense', 'type': 'expense' } }, { path: ':id/expenses/marketing_expense', component: __WEBPACK_IMPORTED_MODULE_11__components_proposition_expenses_MarketingExpense___default.a, meta: { save: 'marketing_expense', validate: { id: 'int' }, breadcrumb: 'Marketing Expense', 'type': 'expense' } }, { path: ':id/expenses/distribution_expense', component: __WEBPACK_IMPORTED_MODULE_13__components_proposition_expenses_DistributionExpense___default.a, meta: { save: 'distribution_expense', validate: { id: 'int' }, breadcrumb: 'Distribution Expense', 'type': 'expense' } }, { path: ':id/expenses/layout_expense', component: __WEBPACK_IMPORTED_MODULE_15__components_proposition_expenses_LayoutExpense___default.a, meta: { save: 'layout_expense', validate: { id: 'int' }, breadcrumb: 'Layout Expense', 'type': 'expense' } }, { path: ':id/expenses/compare', component: __WEBPACK_IMPORTED_MODULE_19__components_proposition_expenses_Compare___default.a, meta: { save: 'compare', validate: { id: 'int' }, breadcrumb: 'Compare' } }, { path: ':id/design/cover_design', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'cover_design', validate: { id: 'int' }, breadcrumb: 'Cover Design', warning: 'proposition/files/deleteFile' } }, { path: ':id/design/layout_design', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'layout_design', validate: { id: 'int' }, breadcrumb: 'Layout Design', warning: 'proposition/files/deleteFile' } }, { path: ':id/layout/first_block_layout', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'first_block_layout', validate: { id: 'int' }, breadcrumb: 'First Block Layout', warning: 'proposition/files/deleteFile' } }, { path: ':id/layout/cover', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'cover', validate: { id: 'int' }, breadcrumb: 'Cover', warning: 'proposition/files/deleteFile' } }, { path: ':id/layout/layout', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'layout', validate: { id: 'int' }, breadcrumb: 'Layout', warning: 'proposition/files/deleteFile' } }, { path: ':id/layout/first_revision', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'first_revision', validate: { id: 'int' }, breadcrumb: 'First Revision', warning: 'proposition/files/deleteFile' } }, { path: ':id/layout/correction', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'correction', validate: { id: 'int' }, breadcrumb: 'Correction', warning: 'proposition/files/deleteFile' } }, { path: ':id/layout/correction_input', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'correction_input', validate: { id: 'int' }, breadcrumb: 'Correction Input', warning: 'proposition/files/deleteFile' } }, { path: ':id/layout/revisions', component: __WEBPACK_IMPORTED_MODULE_21__components_proposition_Revisions___default.a, meta: { save: 'revisions', validate: { id: 'int' }, breadcrumb: 'Revisions' } }, { path: ':id/final_price/price_definition', component: __WEBPACK_IMPORTED_MODULE_22__components_proposition_PriceDefinition___default.a, meta: { save: 'price_definition', validate: { id: 'int' }, breadcrumb: 'Price Definition' } }, { path: ':id/prepress/print_proof', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'print_proof', validate: { id: 'int' }, breadcrumb: 'Print Proof', warning: 'proposition/files/deleteFile' } }, { path: ':id/prepress/print_proof_correction', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'print_proof_correction', validate: { id: 'int' }, breadcrumb: 'Print Proof Correction', warning: 'proposition/files/deleteFile' } }, { path: ':id/prepress/print', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'print', validate: { id: 'int' }, breadcrumb: 'Print', warning: 'proposition/files/deleteFile' } }, { path: ':id/prepress/warehouse', component: __WEBPACK_IMPORTED_MODULE_23__components_proposition_Warehouse___default.a, meta: { validate: { id: 'int' }, breadcrumb: 'Warehouse' } }, { path: ':id/additionals/multimedia', component: __WEBPACK_IMPORTED_MODULE_25__components_proposition_Multimedia___default.a, meta: { save: 'files', dir: 'multimedia', validate: { id: 'int' }, breadcrumb: 'Multimedia', warning: 'proposition/multimedia/deleteFile' } }, { path: ':id/additionals/marketing', component: __WEBPACK_IMPORTED_MODULE_24__components_proposition_Marketing___default.a, meta: { save: 'files', dir: 'marketing', validate: { id: 'int' }, breadcrumb: 'Marketing', warning: 'proposition/marketing/deleteFile' } }]
-}, { path: '/tasks', component: __WEBPACK_IMPORTED_MODULE_27__components_tasks_Tasks___default.a }, { path: '/task/edit/:id(\\d+)?', component: __WEBPACK_IMPORTED_MODULE_28__components_tasks_TaskEdit___default.a }, { path: '/task/show/:id(\\d+)', component: __WEBPACK_IMPORTED_MODULE_29__components_tasks_TaskShow___default.a }, { path: '/tasks/department/:id(\\d+)', component: __WEBPACK_IMPORTED_MODULE_30__components_tasks_DepartmentTasks___default.a }, { path: '/human_resources/employee/new', component: __WEBPACK_IMPORTED_MODULE_26__components_hr_EditProfile___default.a }, { path: '/human_resources/employee/:id(\\d+)/edit', component: __WEBPACK_IMPORTED_MODULE_26__components_hr_EditProfile___default.a }, { path: '/human_resources/employee/:id(\\d+)', component: __WEBPACK_IMPORTED_MODULE_26__components_hr_EditProfile___default.a }, { path: '/books', component: __WEBPACK_IMPORTED_MODULE_32__components_books_Books___default.a }];
+}, { path: '/tasks', component: __WEBPACK_IMPORTED_MODULE_28__components_tasks_Tasks___default.a }, { path: '/task/edit/:id(\\d+)?', component: __WEBPACK_IMPORTED_MODULE_29__components_tasks_TaskEdit___default.a }, { path: '/task/show/:id(\\d+)', component: __WEBPACK_IMPORTED_MODULE_30__components_tasks_TaskShow___default.a }, { path: '/tasks/department/:id(\\d+)', component: __WEBPACK_IMPORTED_MODULE_31__components_tasks_DepartmentTasks___default.a }, { path: '/human_resources/employees', component: __WEBPACK_IMPORTED_MODULE_27__components_hr_Employees___default.a }, { path: '/human_resources/employee/new', component: __WEBPACK_IMPORTED_MODULE_26__components_hr_EditProfile___default.a }, { path: '/human_resources/employee/:id(\\d+)/edit', component: __WEBPACK_IMPORTED_MODULE_26__components_hr_EditProfile___default.a }, { path: '/human_resources/employee/:id(\\d+)', component: __WEBPACK_IMPORTED_MODULE_26__components_hr_EditProfile___default.a }, { path: '/books', component: __WEBPACK_IMPORTED_MODULE_33__components_books_Books___default.a }];
 
 /***/ }),
 
