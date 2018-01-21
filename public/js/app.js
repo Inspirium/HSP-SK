@@ -9848,7 +9848,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: "date-cell",
-    props: ['value']
+    props: ['value'],
+    computed: {
+        time: function time() {
+            if (!this.value) {
+                return '';
+            }
+            return this.$options.filters.moment(this.value, "DD.MM.YYYY.");
+        }
+    }
 });
 
 /***/ }),
@@ -9865,7 +9873,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: "deadline",
-    props: ['value']
+    props: ['value'],
+    computed: {
+        time: function time() {
+            if (!this.value) {
+                return '';
+            }
+
+            return this.$options.filters.moment(this.value, "from", "now");
+        }
+    }
 });
 
 /***/ }),
@@ -9990,7 +10007,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: "waiting-time",
-    props: ['value']
+    props: ['value', 'row'],
+    computed: {
+        time: function time() {
+            if (!this.value) {
+                return '';
+            }
+            if (this.row.status === 'completed') {
+                return this.$options.filters.moment(this.value, "from", this.row.updated_at, true);
+            } else {
+                return this.$options.filters.moment(this.value, "from", true);
+            }
+        }
+    }
 });
 
 /***/ }),
@@ -11802,7 +11831,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -60554,9 +60583,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("span", [
-    _vm._v(_vm._s(_vm._f("moment")(_vm.value, "from", "now")))
-  ])
+  return _c("span", [_vm._v(_vm._s(_vm.time))])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -61134,7 +61161,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("span", [_vm._v(_vm._s(_vm._f("moment")(_vm.value, "from", true)))])
+  return _c("span", [_vm._v(_vm._s(_vm.time))])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -68546,9 +68573,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("span", [
-    _vm._v(_vm._s(_vm._f("moment")(_vm.value, "DD.MM.YYYY.")))
-  ])
+  return _c("span", [_vm._v(_vm._s(_vm.time))])
 }
 var staticRenderFns = []
 render._withStripped = true
