@@ -129,6 +129,9 @@ class EmployeeController extends Controller {
 			                     ->offset( $offset )
 								 ->where('first_name', 'LIKE', "%$filter%")
 								 ->orWhere('last_name', 'LIKE', "%$filter%")
+								 ->orWhereHas('department', function($query) use ($filter) {
+								 	$query->where('name', 'LIKE', "%$filter%");
+								 })
 			                     ->get();
 			$total     = Employee::where('first_name', 'LIKE', "%$filter%")->orWhere('last_name', 'LIKE', "%$filter%")->count();
 		}
