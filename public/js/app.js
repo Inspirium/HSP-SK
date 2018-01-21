@@ -4053,7 +4053,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             data: [],
             total: 0,
             PageSizeSelect: [50],
-            query: { filter: '' },
+            query: { filter: '', limit: 50 },
             HeaderSettings: false
         };
     },
@@ -9938,6 +9938,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }).catch(function () {
                 toastr.error(_this.lang('Action failed'));
             });
+            this.$eventHub.off('warningConfirmed');
+            this.$eventHub.off('warningCanceled');
         },
         cancel: function cancel() {
             this.$eventHub.off('warningConfirmed');
