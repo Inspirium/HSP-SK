@@ -66020,7 +66020,7 @@ var render = function() {
               { staticClass: "modal-footer btn-footer" },
               [
                 _c("spinner-button", {
-                  attrs: { enabled: _vm.enableAssign },
+                  attrs: { enabled: _vm.enabledAssign },
                   on: {
                     button_clicked: _vm.assignValues,
                     button_cleanup_success: _vm.hideModal
