@@ -26854,7 +26854,7 @@ button.toast-close-button {
   padding: 0 15px;
 }
 
-@media only screen and (max-width: 1440px) {
+@media only screen and (max-width: 1200px) {
   .sk-skin header,
   .sk-skin .container-fluid,
   .sk-skin .main-content {
@@ -31543,7 +31543,7 @@ header .tag {
   background-color: #35A1C7;
 }
 
-@media only screen and (max-width: 1440px) {
+@media only screen and (max-width: 1200px) {
   .navbar .button-collapse {
     display: block;
     position: relative;
