@@ -129,6 +129,11 @@ class EmployeeController extends Controller {
 			                     ->offset( $offset )
 								 ->where('first_name', 'LIKE', "%$filter%")
 								 ->orWhere('last_name', 'LIKE', "%$filter%")
+								 ->orWhere('phone', 'LIKE', "%$filter%")
+								 ->orWhere('mobile', 'LIKE', "%$filter%")
+								 ->orWhere('mobile_vpn', 'LIKE', "%$filter%")
+								 ->orWhere('phone_vpn', 'LIKE', "%$filter%")
+								 ->orWhere('room', 'LIKE', "%$filter%")
 								 ->orWhereHas('department', function($query) use ($filter) {
 								 	$query->where('name', 'LIKE', "%$filter%");
 								 })
