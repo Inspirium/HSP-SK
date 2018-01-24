@@ -60365,12 +60365,7 @@ var render = function() {
                     _vm._v(" "),
                     _vm._l(_vm.employees, function(employee) {
                       return _c("div", { staticClass: "chip mb-5" }, [
-                        _c("img", {
-                          attrs: {
-                            src:
-                              "https://mdbootstrap.com/img/Photos/Avatars/avatar-6.jpg"
-                          }
-                        }),
+                        _c("img", { attrs: { src: employee.image } }),
                         _vm._v(_vm._s(employee.name)),
                         _c("i", { staticClass: "close fa fa-times" })
                       ])
@@ -65843,12 +65838,7 @@ var render = function() {
                         _vm._v(" "),
                         _vm._l(_vm.employees, function(employee) {
                           return _c("div", { staticClass: "chip mb-5" }, [
-                            _c("img", {
-                              attrs: {
-                                src:
-                                  "https://mdbootstrap.com/img/Photos/Avatars/avatar-6.jpg"
-                              }
-                            }),
+                            _c("img", { attrs: { src: employee.image } }),
                             _vm._v(_vm._s(employee.name)),
                             _c("i", { staticClass: "close fa fa-times" })
                           ])
@@ -71519,12 +71509,7 @@ var render = function() {
                     _vm._v(" "),
                     _vm._l(_vm.employees, function(employee) {
                       return _c("div", { staticClass: "chip mb-5" }, [
-                        _c("img", {
-                          attrs: {
-                            src:
-                              "https://mdbootstrap.com/img/Photos/Avatars/avatar-6.jpg"
-                          }
-                        }),
+                        _c("img", { attrs: { src: employee.image } }),
                         _vm._v(_vm._s(employee.name)),
                         _c("i", { staticClass: "close fa fa-times" })
                       ])
@@ -75497,12 +75482,7 @@ var render = function() {
                         _vm._v(" "),
                         _vm._l(_vm.employees, function(employee) {
                           return _c("div", { staticClass: "chip mb-5" }, [
-                            _c("img", {
-                              attrs: {
-                                src:
-                                  "https://mdbootstrap.com/img/Photos/Avatars/avatar-6.jpg"
-                              }
-                            }),
+                            _c("img", { attrs: { src: employee.image } }),
                             _vm._v(_vm._s(employee.name)),
                             _c("i", { staticClass: "close fa fa-times" })
                           ])
