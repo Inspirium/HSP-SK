@@ -3569,6 +3569,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: "proposition-footerbuttons",
@@ -3592,6 +3595,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         deleteRestore: {
             type: Boolean,
             default: false
+        },
+        forceDelete: {
+            Boolean: Boolean,
+            default: false
         }
     },
     data: function data() {
@@ -3612,6 +3619,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     computed: {
         canSendForApproval: function canSendForApproval() {
             return this.$store.state.proposition.start.status !== 'requested' && this.$store.state.proposition.start.status !== 'approved' && !this.$store.state.proposition.deleted_at;
+        },
+        canForceDelete: function canForceDelete() {
+            if (this.forceDelete) {
+                return _.find(this.$store.state.employee.roles, function (o) {
+                    return o.name === 'delete_propositions';
+                });
+            }
+            return false;
         }
     },
     methods: {
@@ -3653,6 +3668,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         warningModalOpen: function warningModalOpen() {
             this.$store.dispatch('proposition/listenForWarning', { vue: this, data: {} });
+            jQuery('#modal-warning').modal('show');
+        },
+        warningModalOpenForced: function warningModalOpenForced() {
+            this.$store.dispatch('proposition/listenForForcedDelete', { vue: this, data: {} });
             jQuery('#modal-warning').modal('show');
         }
     }
@@ -8028,7 +8047,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     save: true,
                     assign: true,
                     deleteRestore: true,
-                    approval: true
+                    approval: true,
+                    forceDelete: true
                 };
             }
             if (this.$route.meta.dir) {
@@ -76343,6 +76363,20 @@ var render = function() {
                           )
                         ]
                   ]
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.canForceDelete
+                ? [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-lg btn-cancel",
+                        attrs: { type: "button" },
+                        on: { click: _vm.warningModalOpenForced }
+                      },
+                      [_vm._v(_vm._s(_vm.lang("Permanently Delete")))]
+                    )
+                  ]
                 : _vm._e()
             ],
             2
@@ -101432,15 +101466,31 @@ var routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_32__
                 dispatch(rootState.route.meta.warning, payload, { root: true });
             });
         },
-        deleteProposition: function deleteProposition(_ref4, payload) {
-            var state = _ref4.state;
+        listenForForcedDelete: function listenForForcedDelete(_ref4, payload) {
+            var state = _ref4.state,
+                rootState = _ref4.rootState,
+                dispatch = _ref4.dispatch;
+
+            payload.vue.$eventHub.on('warningConfirmed', function () {
+                dispatch('forceDelete', payload);
+            });
+        },
+        deleteProposition: function deleteProposition(_ref5, payload) {
+            var state = _ref5.state;
 
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.delete('/api/proposition/' + state.proposition_id).then(function (res) {
                 payload.vue.$router.push('/propositions');
             });
         },
-        initClear: function initClear(_ref5) {
-            var dispatch = _ref5.dispatch;
+        forceDelete: function forceDelete(_ref6, payload) {
+            var state = _ref6.state;
+
+            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.delete('/api/proposition/' + state.proposition_id + '/force').then(function (res) {
+                payload.vue.$router.push('/propositions');
+            });
+        },
+        initClear: function initClear(_ref7) {
+            var dispatch = _ref7.dispatch;
 
             dispatch('owner/initClear');
             dispatch('start/initClear');

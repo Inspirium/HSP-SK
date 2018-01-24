@@ -79,4 +79,10 @@ class PropositionPolicy
 
 	    return false;
     }
+
+    public function forceDelete(Employee $user, BookProposition $proposition) {
+	    if ($user->hasRole('delete_propositions')) {
+		    return true;
+	    }
+    }
 }
