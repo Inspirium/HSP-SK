@@ -4,6 +4,7 @@ namespace Inspirium\Models\HumanResources;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use Inspirium\Notifications\ResetPassword;
 use Intervention\Image\Facades\Image;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -113,5 +114,10 @@ class Employee extends Authenticatable implements Auditable, UserResolver{
 
 	public function getMobileMergedAttribute() {
 		return $this->mobile_pre . ' ' . $this->mobile;
+	}
+
+	public function sendPasswordResetNotification($token)
+	{
+		$this->notify(new ResetPassword($token));
 	}
 }
