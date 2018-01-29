@@ -17840,7 +17840,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 (function ($) {
 
   var MENU_WIDTH = 240;
-  var SN_BREAKPOINT = 1440;
+  var SN_BREAKPOINT = 1200;
   var MENU_WIDTH_HALF = 2;
   var MENU_LEFT_MIN_BORDER = 0.3;
   var MENU_LEFT_MAX_BORDER = -0.5;

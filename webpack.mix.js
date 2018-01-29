@@ -46,7 +46,7 @@ mix.js(['packages/Inspirium/SKTemplate/src/assets/js/app.js'], 'public/js/app.js
         'node_modules/mdb-pro/js/modules (optional)/buttons.js',
         'node_modules/mdb-pro/js/modules (optional)/hammer.js',
         'node_modules/mdb-pro/js/modules (optional)/jquery.hammer.js',
-        'node_modules/mdb-pro/js/modules (optional)/sideNav.js',
+        'packages/Inspirium/SKTemplate/src/assets/js/fixes/sideNav.js',
         'node_modules/mdb-pro/js/modules (optional)/collapsible.js',
         'node_modules/mdb-pro/js/modules (optional)/jquery.easypiechart.js',
         'node_modules/mdb-pro/js/modules (optional)/range-input.js',
