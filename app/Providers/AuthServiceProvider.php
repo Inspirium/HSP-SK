@@ -17,7 +17,8 @@ class AuthServiceProvider extends ServiceProvider
         'Inspirium\Models\HumanResources\Employee' => 'Inspirium\Policies\EmployeePolicy',
         'Inspirium\Models\HumanResources\Department' => 'Inspirium\Policies\DepartmentPolicy',
         'Inspirium\Models\HumanResources\Role' => 'Inspirium\Policies\RolePolicy',
-	    'Inspirium\BookProposition\Models\BookProposition' => 'Inspirium\Policies\PropositionPolicy'
+	    'Inspirium\BookProposition\Models\BookProposition' => 'Inspirium\Policies\PropositionPolicy',
+	    'Inspirium\Models\BookManagement\Author' => 'Inspirium\Policies\AuthorPolicy'
     ];
 
     /**

@@ -24,4 +24,45 @@ class AuthorController extends Controller {
 
 		return response()->json($author);
     }
+
+    public function deleteAuthor(Author $author) {
+	    try {
+		    $this->authorize( 'delete', $author );
+	    }
+	    catch (AuthorizationException $e) {
+		    return response()->json(['error' => 'unauthorized'], 403);
+	    }
+
+	    $author->delete();
+
+	    return response()->json([]);
+
+    }
+
+	public function getAuthors(Request $request) {
+		$limit = $request->input('limit');
+		$offset = $request->input('offset');
+		$order = $request->input('order');
+		$sort = $request->input('sort');
+		$filter = $request->input('filter');
+		if ($filter) {
+			$books = Author::orderBy( $sort ? $sort : 'id', $order )
+			             ->where('first_name', 'LIKE', "%$filter%")
+						 ->orWhere('last_name', 'LIKE', "%$filter%")
+			             ->limit( $limit )
+			             ->offset( $offset )
+			             ->get();
+			$total = Author::where('first_name', 'LIKE', "%$filter%")
+			               ->orWhere('last_name', 'LIKE', "%$filter%")->count();
+		}
+		else {
+			$books = Author::orderBy( $sort ? $sort : 'id', $order )
+			             ->limit( $limit )
+			             ->offset( $offset )
+			             ->get();
+			$total = Author::count();
+		}
+
+		return response()->json(['rows' => $books, 'total' => $total]);
+	}
 }

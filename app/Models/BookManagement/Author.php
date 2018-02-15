@@ -44,7 +44,7 @@ class Author extends Model {
 
     protected $dates = ['deleted_at'];
 
-    protected $appends = ['name'];
+    protected $appends = ['name', 'links'];
 
 	public function books() {
 		return $this->morphedByMany('Inspirium\Models\BookManagement\Book', 'connection', 'author_pivot', 'author_id');
@@ -64,5 +64,18 @@ class Author extends Model {
 
     public function getImageAttribute() {
         return 'https://mdbootstrap.com/img/Photos/Avatars/avatar-6.jpg';
+    }
+
+    public function getLinksAttribute() {
+	    return [
+		    'edit' => [
+			    'method' => 'GET',
+			    'link' => '/books/author/'.$this->id.'/edit'
+		    ],
+		    'delete' => [
+			    'method' => 'DELETE',
+			    'link' => '/api/author/'.$this->id
+		    ],
+	    ];
     }
 }
