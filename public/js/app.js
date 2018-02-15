@@ -102585,10 +102585,16 @@ var initialState = {
             return (category * pages + photos + illustrations + drawings) * complexity[state.layout_complexity];
         },
         layout_total: function layout_total(state, getters) {
+            if (state.layout_exact_price) {
+                return state.layout_exact_price;
+            }
             var price = 8000 / 175;
             return getters.number_of_hours * price;
         },
         design_total: function design_total(state, getters) {
+            if (state.design_exact_price) {
+                return state.layout_exact_price;
+            }
             var price = 15000 / 175;
             var complexity = {
                 1: 0.4,
