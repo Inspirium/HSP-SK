@@ -78,6 +78,9 @@ Route::group(['prefix' => 'books', 'namespace' => 'BookManagement'], function() 
 	Route::group(['prefix' => 'author'], function() {
 		Route::get('{id}/show', 'AuthorController@showAuthor');
 		Route::get('{id}/edit', 'AuthorController@editAuthor');
+		Route::get('{author}/related/propositions', function() {
+			return view(config('app.template') . '::router-view');
+		});
 	});
 
 	Route::get('categories', 'CategoryController@showCategories');

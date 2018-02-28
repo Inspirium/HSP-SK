@@ -65,4 +65,20 @@ class AuthorController extends Controller {
 
 		return response()->json(['rows' => $books, 'total' => $total]);
 	}
+
+	public function getRelatedPropositions(Request $request, Author $author) {
+		$limit = $request->input('limit');
+		$offset = $request->input('offset');
+		$order = $request->input('order');
+		$sort = $request->input('sort');
+		$filter = $request->input('filter');
+
+		$author->load(['propositions' => function($query) use($limit, $offset, $order, $sort, $filter) {
+			$query->orderBy( $sort ? $sort : 'id', $order )
+			      ->limit( $limit )
+			      ->offset( $offset );
+		}]);
+
+		return response()->json(['rows' => $author->propositions, 'total' => $author->propositions()->count()]);
+	}
 }

@@ -102,6 +102,7 @@ Route::group( [ 'middleware' => [ 'auth:api' ], ], function () {
 		'prefix' => 'authors'
 	], function() {
 		Route::post('/', 'AuthorController@getAuthors');
+		Route::post('{author}/related/propositions', 'AuthorController@getRelatedPropositions');
 	});
 
 } );

@@ -67,15 +67,22 @@ class Author extends Model {
     }
 
     public function getLinksAttribute() {
-	    return [
+	    $out = [
 		    'edit' => [
 			    'method' => 'GET',
 			    'link' => '/books/author/'.$this->id.'/edit'
 		    ],
-		    'delete' => [
+		    'related' => [
+			    'method' => 'GET',
+			    'link' => '/books/author/'.$this->id.'/related/propositions'
+		    ]
+	    ];
+	    if (\Auth::user()->can('delete', $this)) {
+	    	$out['delete'] = [
 			    'method' => 'DELETE',
 			    'link' => '/api/author/'.$this->id
-		    ],
-	    ];
+		    ];
+	    }
+	    return $out;
     }
 }

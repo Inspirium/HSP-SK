@@ -3150,6 +3150,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -3390,7 +3391,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             data: [],
             total: 0,
             PageSizeSelect: [50],
-            query: { filter: '' },
+            query: { filter: '', limit: 50 },
             HeaderSettings: false
         };
     },
@@ -3409,6 +3410,77 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this = this;
 
             axios.post('/api/authors', this.query).then(function (res) {
+                _this.data = res.data.rows;
+                _this.total = res.data.total;
+            });
+        }
+    },
+    created: function created() {
+        this.$eventHub.on('updateQuery', this.queryHandler);
+    },
+    beforeDestroy: function beforeDestroy() {
+        this.$eventHub.off('updateQuery', this.queryHandler);
+    }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}],\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./packages/Inspirium/SKTemplate/src/assets/js/components/books/AuthorsRelated.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__table_components__ = __webpack_require__("./packages/Inspirium/SKTemplate/src/assets/js/components/table_components/index.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    name: "authors-related",
+    components: __WEBPACK_IMPORTED_MODULE_0__table_components__["a" /* default */],
+    data: function data() {
+        return {
+            supportNested: true,
+            tblClass: 'table',
+            columns: [{ title: '#', field: 'id', sortable: true }, {
+                title: this.lang('Proposition'),
+                field: 'project_name',
+                sortable: true,
+                tdComp: 'TitleCell'
+            }],
+            data: [],
+            total: 0,
+            PageSizeSelect: [50],
+            query: { filter: '', limit: 50 },
+            HeaderSettings: false
+        };
+    },
+
+    watch: {
+        'query': {
+            handler: function handler() {
+                this.queryHandler();
+            },
+
+            deep: true
+        }
+    },
+    methods: {
+        queryHandler: function queryHandler() {
+            var _this = this;
+
+            axios.post('/api/authors/' + this.$route.params.id + '/related/propositions', this.query).then(function (res) {
                 _this.data = res.data.rows;
                 _this.total = res.data.total;
             });
@@ -5724,6 +5796,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
 //
 //
 //
@@ -10012,6 +10087,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
 //
 //
 //
@@ -58606,9 +58682,25 @@ var render = function() {
               _c("div", { staticClass: "col-md-12" }, [
                 _c("div", { staticClass: "md-form mt-4" }, [
                   _c("textarea", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.expenses.note,
+                        expression: "expenses.note"
+                      }
+                    ],
                     staticClass: "md-textarea",
                     attrs: { id: "form76" },
-                    domProps: { value: _vm.expenses.note }
+                    domProps: { value: _vm.expenses.note },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.expenses, "note", $event.target.value)
+                      }
+                    }
                   }),
                   _vm._v(" "),
                   _c("label", { attrs: { for: "form76" } }, [
@@ -60876,7 +60968,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _vm.value["edit"]["link"]
+    _vm.value["edit"] && _vm.value["edit"]["link"]
       ? _c(
           "a",
           {
@@ -60887,7 +60979,7 @@ var render = function() {
         )
       : _vm._e(),
     _vm._v(" "),
-    _vm.value["delete"]["link"]
+    _vm.value["delete"] && _vm.value["delete"]["link"]
       ? _c(
           "a",
           {
@@ -60901,6 +60993,20 @@ var render = function() {
             }
           },
           [_c("i", { staticClass: "fa fa-times" })]
+        )
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.value["related"] && _vm.value["related"]["link"]
+      ? _c(
+          "a",
+          {
+            staticClass: "color-grey",
+            attrs: {
+              title: _vm.lang("Related"),
+              href: _vm.value["related"]["link"]
+            }
+          },
+          [_c("i", { staticClass: "fa fa-list" })]
         )
       : _vm._e()
   ])
@@ -61138,7 +61244,16 @@ var render = function() {
                     )
                   ]
                 )
-              })
+              }),
+              _vm._v(" "),
+              _c(
+                "a",
+                {
+                  staticClass: "activity-item p-1 text-center d-block",
+                  attrs: { href: "#" }
+                },
+                [_vm._v("Označi sve kao pročitano")]
+              )
             ],
             2
           )
@@ -70448,7 +70563,7 @@ var render = function() {
                         ],
                         staticClass: "form-control",
                         attrs: {
-                          type: "text",
+                          type: "number",
                           id: "form2",
                           placeholder: _vm.lang("Precentage")
                         },
@@ -70486,7 +70601,7 @@ var render = function() {
                         ],
                         staticClass: "form-control",
                         attrs: {
-                          type: "text",
+                          type: "number",
                           id: "form3",
                           placeholder: _vm.lang("Accontation")
                         },
@@ -70613,9 +70728,25 @@ var render = function() {
               _c("div", { staticClass: "col-md-12" }, [
                 _c("div", { staticClass: "md-form mt-4" }, [
                   _c("textarea", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.expenses.note,
+                        expression: "expenses.note"
+                      }
+                    ],
                     staticClass: "md-textarea",
                     attrs: { id: "form76" },
-                    domProps: { value: _vm.expenses.note }
+                    domProps: { value: _vm.expenses.note },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.expenses, "note", $event.target.value)
+                      }
+                    }
                   }),
                   _vm._v(" "),
                   _c("label", { attrs: { for: "form76" } }, [
@@ -72423,8 +72554,8 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-md-12" }, [
-                  _c("div", { staticClass: "md-form d-flex addon" }, [
+                _c("div", { staticClass: "col-md-5" }, [
+                  _c("div", { staticClass: "md-form d-flex addon--small" }, [
                     _c("input", {
                       directives: [
                         {
@@ -72439,7 +72570,7 @@ var render = function() {
                         type: "text",
                         id: "author",
                         name: "author",
-                        placeholder: _vm.lang("Author")
+                        placeholder: _vm.lang("Search for Author")
                       },
                       domProps: { value: _vm.author },
                       on: {
@@ -72483,6 +72614,17 @@ var render = function() {
                     _vm._v(" "),
                     _c("label", { attrs: { for: "author" } }, [
                       _vm._v(_vm._s(_vm.lang("Author")))
+                    ]),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "d-flex" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-neutral btn-addon--small",
+                          attrs: { type: "button" }
+                        },
+                        [_vm._v(_vm._s(_vm.lang("Add")))]
+                      )
                     ])
                   ])
                 ])
@@ -72491,7 +72633,7 @@ var render = function() {
               _c(
                 "button",
                 {
-                  staticClass: "btn btn-neutral btn-addon mb-4 mr-5",
+                  staticClass: "btn btn-assign btn-addon mb-4 mr-5",
                   attrs: { type: "button" },
                   on: { click: _vm.openAuthorModal }
                 },
@@ -74651,6 +74793,64 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-loader/node_modules/vue-hot-reload-api")      .rerender("data-v-75e95d3f", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-78d74a1c\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./packages/Inspirium/SKTemplate/src/assets/js/components/books/AuthorsRelated.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "content" },
+    [
+      _c("div", { staticClass: "page-name-xl mb-2 mt-3" }, [
+        _vm._v(_vm._s(_vm.lang("Authors")))
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "md-form input-group search-big" }, [
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.query.filter,
+              expression: "query.filter"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: { type: "search", placeholder: _vm.lang("Search...") },
+          domProps: { value: _vm.query.filter },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.query, "filter", $event.target.value)
+            }
+          }
+        })
+      ]),
+      _vm._v(" "),
+      _c("datatable", _vm._b({}, "datatable", _vm.$data, false)),
+      _vm._v(" "),
+      _c("warning-modal")
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-loader/node_modules/vue-hot-reload-api")      .rerender("data-v-78d74a1c", module.exports)
   }
 }
 
@@ -76863,7 +77063,7 @@ var render = function() {
         [
           _c("div", { staticClass: "row" }, [
             _c("div", { staticClass: "col-md-10" }, [
-              _c("div", { staticClass: "md-form d-flex addon" }, [
+              _c("div", { staticClass: "md-form d-flex addon--small" }, [
                 _c("input", {
                   directives: [
                     {
@@ -76910,7 +77110,7 @@ var render = function() {
                   _c(
                     "button",
                     {
-                      staticClass: "btn btn-neutral btn-addon p-1 ml-1",
+                      staticClass: "btn btn-neutral btn-addon--small",
                       attrs: { type: "button" },
                       on: { click: _vm.addCirculation }
                     },
@@ -76938,8 +77138,8 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-md-10" }, [
-              _c("div", { staticClass: "md-form d-flex addon" }, [
+            _c("div", { staticClass: "col-md-10 mt-3" }, [
+              _c("div", { staticClass: "md-form d-flex addon--small" }, [
                 _c("input", {
                   directives: [
                     {
@@ -76980,7 +77180,7 @@ var render = function() {
                   _c(
                     "button",
                     {
-                      staticClass: "btn btn-neutral btn-addon p-1 ml-1",
+                      staticClass: "btn btn-neutral btn-addon--small",
                       attrs: { type: "button" },
                       on: { click: _vm.addAddition }
                     },
@@ -98261,6 +98461,54 @@ module.exports = Component.exports
 
 /***/ }),
 
+/***/ "./packages/Inspirium/SKTemplate/src/assets/js/components/books/AuthorsRelated.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}],\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./packages/Inspirium/SKTemplate/src/assets/js/components/books/AuthorsRelated.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-78d74a1c\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./packages/Inspirium/SKTemplate/src/assets/js/components/books/AuthorsRelated.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "packages/Inspirium/SKTemplate/src/assets/js/components/books/AuthorsRelated.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-loader/node_modules/vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-78d74a1c", Component.options)
+  } else {
+    hotAPI.reload("data-v-78d74a1c", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
 /***/ "./packages/Inspirium/SKTemplate/src/assets/js/components/books/Books.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -101308,6 +101556,9 @@ module.exports = Component.exports
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_33__components_books_Books___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_33__components_books_Books__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_34__components_books_Authors__ = __webpack_require__("./packages/Inspirium/SKTemplate/src/assets/js/components/books/Authors.vue");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_34__components_books_Authors___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_34__components_books_Authors__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_35__components_books_AuthorsRelated__ = __webpack_require__("./packages/Inspirium/SKTemplate/src/assets/js/components/books/AuthorsRelated.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_35__components_books_AuthorsRelated___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_35__components_books_AuthorsRelated__);
+
 
 
 
@@ -101349,7 +101600,7 @@ module.exports = Component.exports
 
 var routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_32__components_proposition_PropositionList___default.a }, { path: '/proposition', component: __WEBPACK_IMPORTED_MODULE_0__components_proposition_Proposition___default.a, name: 'proposition',
     children: [{ path: 'start', component: __WEBPACK_IMPORTED_MODULE_18__components_proposition_PropositionStart___default.a, meta: { save: 'start', breadcrumb: 'Start', warning: 'proposition/deleteProposition' } }, { path: ':id/edit/start', component: __WEBPACK_IMPORTED_MODULE_18__components_proposition_PropositionStart___default.a, meta: { save: 'start', validate: { id: 'int' }, breadcrumb: 'Start', warning: 'proposition/deleteProposition' } }, { path: ':id/edit/basic_data', component: __WEBPACK_IMPORTED_MODULE_1__components_proposition_BasicData___default.a, meta: { save: 'basic_data', validate: { id: 'int' }, breadcrumb: 'Basic Data', warning: 'proposition/basic_data/deleteFile' } }, { path: ':id/edit/categorization', component: __WEBPACK_IMPORTED_MODULE_2__components_proposition_Categorization___default.a, meta: { save: 'categorization', validate: { id: 'int' }, breadcrumb: 'Categorization' } }, { path: ':id/edit/market_potential', component: __WEBPACK_IMPORTED_MODULE_3__components_proposition_MarketPotential___default.a, meta: { save: 'market_potential', validate: { id: 'int' }, breadcrumb: 'Market Potential', warning: 'proposition/market_potential/deleteFile' } }, { path: ':id/edit/technical_data', component: __WEBPACK_IMPORTED_MODULE_4__components_proposition_TechnicalData___default.a, meta: { save: 'technical_data', validate: { id: 'int' }, breadcrumb: 'Technical Data' } }, { path: ':id/edit/print', component: __WEBPACK_IMPORTED_MODULE_7__components_proposition_Print___default.a, meta: { save: 'print', validate: { id: 'int' }, breadcrumb: 'Print', warning: 'proposition/print/deleteFile' } }, { path: ':id/edit/authors_expense', component: __WEBPACK_IMPORTED_MODULE_5__components_proposition_AuthorsExpense___default.a, meta: { save: 'authors_expense', validate: { id: 'int' }, breadcrumb: 'Authors Expense' } }, { path: ':id/edit/production_expense', component: __WEBPACK_IMPORTED_MODULE_9__components_proposition_ProductionExpense___default.a, meta: { save: 'production_expense', validate: { id: 'int' }, breadcrumb: 'Production Expense' } }, { path: ':id/edit/marketing_expense', component: __WEBPACK_IMPORTED_MODULE_10__components_proposition_MarketingExpense___default.a, meta: { save: 'marketing_expense', validate: { id: 'int' }, breadcrumb: 'Marketing Expense' } }, { path: ':id/edit/distribution_expense', component: __WEBPACK_IMPORTED_MODULE_12__components_proposition_DistributionExpense___default.a, meta: { save: 'distribution_expense', validate: { id: 'int' }, breadcrumb: 'Distribution Expense' } }, { path: ':id/edit/layout_expense', component: __WEBPACK_IMPORTED_MODULE_14__components_proposition_LayoutExpense___default.a, meta: { save: 'layout_expense', validate: { id: 'int' }, breadcrumb: 'Layout Expense' } }, { path: ':id/edit/deadline', component: __WEBPACK_IMPORTED_MODULE_16__components_proposition_Deadline___default.a, meta: { save: 'deadline', validate: { id: 'int' }, breadcrumb: 'Deadline' } }, { path: ':id/edit/calculation', component: __WEBPACK_IMPORTED_MODULE_17__components_proposition_Calculation___default.a, meta: { save: 'calculation', validate: { id: 'int' }, breadcrumb: 'Calculation' } }, { path: ':id/preparation/translation', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'translation', validate: { id: 'int' }, breadcrumb: 'Translation', warning: 'proposition/files/deleteFile' } }, { path: ':id/preparation/technical_preparation', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'technical_preparation', validate: { id: 'int' }, breadcrumb: 'Technical Preparation', warning: 'proposition/files/deleteFile' } }, { path: ':id/preparation/proofreading', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'proofreading', validate: { id: 'int' }, breadcrumb: 'Proofreading', warning: 'proposition/files/deleteFile' } }, { path: ':id/preparation/additional_materials', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'additional_materials', validate: { id: 'int' }, breadcrumb: 'Additional Materials', warning: 'proposition/files/deleteFile' } }, { path: ':id/preparation/reviews', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'reviews', validate: { id: 'int' }, breadcrumb: 'Reviews', warning: 'proposition/files/deleteFile' } }, { path: ':id/preparation/lecture', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'lecture', validate: { id: 'int' }, breadcrumb: 'Lecture', warning: 'proposition/files/deleteFile' } }, { path: ':id/preparation/technical_correction', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'technical_correction', validate: { id: 'int' }, breadcrumb: 'Technical Correction', warning: 'proposition/files/deleteFile' } }, { path: ':id/preparation/final_review', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'final_review', validate: { id: 'int' }, breadcrumb: 'Final Review', warning: 'proposition/files/deleteFile' } }, { path: ':id/expenses/authors_expense', component: __WEBPACK_IMPORTED_MODULE_6__components_proposition_expenses_AuthorsExpense___default.a, meta: { save: 'authors_expense', validate: { id: 'int' }, breadcrumb: 'Authors Expense', 'type': 'expense' } }, { path: ':id/expenses/production_expense', component: __WEBPACK_IMPORTED_MODULE_8__components_proposition_expenses_ProductionExpense___default.a, meta: { save: 'production_expense', validate: { id: 'int' }, breadcrumb: 'Production Expense', 'type': 'expense' } }, { path: ':id/expenses/marketing_expense', component: __WEBPACK_IMPORTED_MODULE_11__components_proposition_expenses_MarketingExpense___default.a, meta: { save: 'marketing_expense', validate: { id: 'int' }, breadcrumb: 'Marketing Expense', 'type': 'expense' } }, { path: ':id/expenses/distribution_expense', component: __WEBPACK_IMPORTED_MODULE_13__components_proposition_expenses_DistributionExpense___default.a, meta: { save: 'distribution_expense', validate: { id: 'int' }, breadcrumb: 'Distribution Expense', 'type': 'expense' } }, { path: ':id/expenses/layout_expense', component: __WEBPACK_IMPORTED_MODULE_15__components_proposition_expenses_LayoutExpense___default.a, meta: { save: 'layout_expense', validate: { id: 'int' }, breadcrumb: 'Layout Expense', 'type': 'expense' } }, { path: ':id/expenses/compare', component: __WEBPACK_IMPORTED_MODULE_19__components_proposition_expenses_Compare___default.a, meta: { save: 'compare', validate: { id: 'int' }, breadcrumb: 'Compare' } }, { path: ':id/design/cover_design', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'cover_design', validate: { id: 'int' }, breadcrumb: 'Cover Design', warning: 'proposition/files/deleteFile' } }, { path: ':id/design/layout_design', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'layout_design', validate: { id: 'int' }, breadcrumb: 'Layout Design', warning: 'proposition/files/deleteFile' } }, { path: ':id/layout/first_block_layout', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'first_block_layout', validate: { id: 'int' }, breadcrumb: 'First Block Layout', warning: 'proposition/files/deleteFile' } }, { path: ':id/layout/cover', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'cover', validate: { id: 'int' }, breadcrumb: 'Cover', warning: 'proposition/files/deleteFile' } }, { path: ':id/layout/layout', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'layout', validate: { id: 'int' }, breadcrumb: 'Layout', warning: 'proposition/files/deleteFile' } }, { path: ':id/layout/first_revision', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'first_revision', validate: { id: 'int' }, breadcrumb: 'First Revision', warning: 'proposition/files/deleteFile' } }, { path: ':id/layout/correction', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'correction', validate: { id: 'int' }, breadcrumb: 'Correction', warning: 'proposition/files/deleteFile' } }, { path: ':id/layout/correction_input', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'correction_input', validate: { id: 'int' }, breadcrumb: 'Correction Input', warning: 'proposition/files/deleteFile' } }, { path: ':id/layout/revisions', component: __WEBPACK_IMPORTED_MODULE_21__components_proposition_Revisions___default.a, meta: { save: 'revisions', validate: { id: 'int' }, breadcrumb: 'Revisions' } }, { path: ':id/final_price/price_definition', component: __WEBPACK_IMPORTED_MODULE_22__components_proposition_PriceDefinition___default.a, meta: { save: 'price_definition', validate: { id: 'int' }, breadcrumb: 'Price Definition' } }, { path: ':id/prepress/print_proof', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'print_proof', validate: { id: 'int' }, breadcrumb: 'Print Proof', warning: 'proposition/files/deleteFile' } }, { path: ':id/prepress/print_proof_correction', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'print_proof_correction', validate: { id: 'int' }, breadcrumb: 'Print Proof Correction', warning: 'proposition/files/deleteFile' } }, { path: ':id/prepress/print', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'print', validate: { id: 'int' }, breadcrumb: 'Print', warning: 'proposition/files/deleteFile' } }, { path: ':id/prepress/warehouse', component: __WEBPACK_IMPORTED_MODULE_23__components_proposition_Warehouse___default.a, meta: { validate: { id: 'int' }, breadcrumb: 'Warehouse' } }, { path: ':id/additionals/multimedia', component: __WEBPACK_IMPORTED_MODULE_25__components_proposition_Multimedia___default.a, meta: { save: 'files', dir: 'multimedia', validate: { id: 'int' }, breadcrumb: 'Multimedia', warning: 'proposition/multimedia/deleteFile' } }, { path: ':id/additionals/marketing', component: __WEBPACK_IMPORTED_MODULE_24__components_proposition_Marketing___default.a, meta: { save: 'files', dir: 'marketing', validate: { id: 'int' }, breadcrumb: 'Marketing', warning: 'proposition/marketing/deleteFile' } }]
-}, { path: '/tasks', component: __WEBPACK_IMPORTED_MODULE_28__components_tasks_Tasks___default.a }, { path: '/task/edit/:id(\\d+)?', component: __WEBPACK_IMPORTED_MODULE_29__components_tasks_TaskEdit___default.a }, { path: '/task/show/:id(\\d+)', component: __WEBPACK_IMPORTED_MODULE_30__components_tasks_TaskShow___default.a }, { path: '/tasks/department/:id(\\d+)', component: __WEBPACK_IMPORTED_MODULE_31__components_tasks_DepartmentTasks___default.a }, { path: '/human_resources/employees', component: __WEBPACK_IMPORTED_MODULE_27__components_hr_Employees___default.a }, { path: '/human_resources/employee/new', component: __WEBPACK_IMPORTED_MODULE_26__components_hr_EditProfile___default.a }, { path: '/human_resources/employee/:id(\\d+)/edit', component: __WEBPACK_IMPORTED_MODULE_26__components_hr_EditProfile___default.a }, { path: '/human_resources/employee/:id(\\d+)', component: __WEBPACK_IMPORTED_MODULE_26__components_hr_EditProfile___default.a }, { path: '/books', component: __WEBPACK_IMPORTED_MODULE_33__components_books_Books___default.a }, { path: '/books/authors', component: __WEBPACK_IMPORTED_MODULE_34__components_books_Authors___default.a }];
+}, { path: '/tasks', component: __WEBPACK_IMPORTED_MODULE_28__components_tasks_Tasks___default.a }, { path: '/task/edit/:id(\\d+)?', component: __WEBPACK_IMPORTED_MODULE_29__components_tasks_TaskEdit___default.a }, { path: '/task/show/:id(\\d+)', component: __WEBPACK_IMPORTED_MODULE_30__components_tasks_TaskShow___default.a }, { path: '/tasks/department/:id(\\d+)', component: __WEBPACK_IMPORTED_MODULE_31__components_tasks_DepartmentTasks___default.a }, { path: '/human_resources/employees', component: __WEBPACK_IMPORTED_MODULE_27__components_hr_Employees___default.a }, { path: '/human_resources/employee/new', component: __WEBPACK_IMPORTED_MODULE_26__components_hr_EditProfile___default.a }, { path: '/human_resources/employee/:id(\\d+)/edit', component: __WEBPACK_IMPORTED_MODULE_26__components_hr_EditProfile___default.a }, { path: '/human_resources/employee/:id(\\d+)', component: __WEBPACK_IMPORTED_MODULE_26__components_hr_EditProfile___default.a }, { path: '/books', component: __WEBPACK_IMPORTED_MODULE_33__components_books_Books___default.a }, { path: '/books/authors', component: __WEBPACK_IMPORTED_MODULE_34__components_books_Authors___default.a }, { path: '/books/author/:id(\\d+)/related/propositions', component: __WEBPACK_IMPORTED_MODULE_35__components_books_AuthorsRelated___default.a }];
 
 /***/ }),
 
@@ -102593,7 +102844,7 @@ var initialState = {
         },
         design_total: function design_total(state, getters) {
             if (state.design_exact_price) {
-                return state.layout_exact_price;
+                return state.design_exact_price;
             }
             var price = 15000 / 175;
             var complexity = {

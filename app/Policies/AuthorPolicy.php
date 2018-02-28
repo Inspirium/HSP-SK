@@ -59,6 +59,10 @@ class AuthorPolicy
     public function delete(Employee $user, Author $author)
     {
     	//TODO: check if linked to proposition
+	    $author->load('propositions');
+	    if ($author->propositions()) {
+	    	return false;
+	    }
 	    if ($user->hasRole('author_delete')) {
 		    return true;
 	    }
