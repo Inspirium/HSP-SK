@@ -28,6 +28,7 @@ Route::group( [ 'middleware' => [ 'auth:api' ], ], function () {
 	Route::group( [ 'prefix' => 'user' ], function () {
 
 		Route::get( 'notifications', 'Api\HumanResources\NotificationController@getNotifications' );
+		Route::post( 'notifications/all', 'Api\HumanResources\NotificationController@markAllAsRead' );
 		Route::post( 'notifications/{notification}', 'Api\HumanResources\NotificationController@markAsRead' );
 
 	} );

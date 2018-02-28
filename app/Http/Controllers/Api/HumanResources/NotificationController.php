@@ -13,6 +13,11 @@ class NotificationController extends Controller {
         return response()->json($notifications);
     }
 
+    public function markAllAsRead() {
+    	\Auth::user()->unreadNotifications->markAsRead();
+	    return response()->json([]);
+    }
+
     public function markAsRead(DatabaseNotification $notification) {
     	$notification->markAsRead();
     	return response()->json([]);

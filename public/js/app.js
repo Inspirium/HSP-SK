@@ -3193,6 +3193,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         markAsRead: function markAsRead(item) {
             axios.post('/api/user/notifications/' + item.id);
+        },
+        markAllAsRead: function markAllAsRead() {
+            var _this2 = this;
+
+            axios.post('/api/user/notifications/all').then(function () {
+                _this2.notifications = [];
+            });
         }
     }
 
@@ -61246,14 +61253,17 @@ var render = function() {
                 )
               }),
               _vm._v(" "),
-              _c(
-                "a",
-                {
-                  staticClass: "activity-item p-1 text-center d-block",
-                  attrs: { href: "#" }
-                },
-                [_vm._v("Označi sve kao pročitano")]
-              )
+              _vm.notifications.length
+                ? _c(
+                    "a",
+                    {
+                      staticClass: "activity-item p-1 text-center d-block",
+                      attrs: { href: "#" },
+                      on: { click: _vm.markAllAsRead }
+                    },
+                    [_vm._v("Označi sve kao pročitano")]
+                  )
+                : _vm._e()
             ],
             2
           )

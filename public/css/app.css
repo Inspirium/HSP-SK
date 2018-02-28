@@ -27742,7 +27742,7 @@ button.toast-close-button {
 
 .sk-skin .activity-box .activity-container {
   max-height: 60vh;
-  overflow: hidden;
+  overflow: scroll;
 }
 
 .sk-skin .activity-box .tasktype-1,
