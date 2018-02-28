@@ -60,7 +60,7 @@ class AuthorPolicy
     {
     	//TODO: check if linked to proposition
 	    $author->load('propositions');
-	    if ($author->propositions()) {
+	    if ($author->propositions->count()) {
 	    	return false;
 	    }
 	    if ($user->hasRole('author_delete')) {
