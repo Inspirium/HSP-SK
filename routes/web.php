@@ -94,3 +94,4 @@ Route::group(['prefix' => 'message', 'middleware' => ['auth']], function() {
 	Route::get('thread/{id}', 'MessageController@showThread');
 });
 
+Route::get('/file/{file}/download', 'Api\FileManagement\FileController@getFile');

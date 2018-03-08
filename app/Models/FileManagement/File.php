@@ -49,4 +49,8 @@ class File extends Model {
     public function propositions() {
 		return $this->morphedByMany('Inspirium\BookProposition\Models\BookProposition', 'fileable')->withPivot('type');
     }
+
+    public function getLinkAttribute() {
+    	return url('/file/'.$this->id.'/download');
+    }
 }

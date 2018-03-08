@@ -78,6 +78,7 @@ Route::group( [ 'middleware' => [ 'auth:api' ], ], function () {
 		'namespace' => 'Api\FileManagement'
 	], function () {
 		Route::get( '{file?}', 'FileController@getFileInfo' );
+		Route::get( '{file}/download', 'FileController@getFile' );
 		Route::post( '/', 'FileController@postFile' );
 		Route::patch( '{file}', 'FileController@updateFile' );
 		Route::delete( '{file}', 'FileController@deleteFile' );

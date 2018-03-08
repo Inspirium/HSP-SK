@@ -54,4 +54,9 @@ class FileController extends Controller {
     	$file->delete();
     	return response()->json(['message' => 'success']);
     }
+
+    public function getFile(File $file) {
+    	$path = Storage::disk($file->disk)->path($file->location);
+    	return response()->download($path, $file->title);
+    }
 }
