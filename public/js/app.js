@@ -8964,10 +8964,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
-        return {};
+        return {
+            validated: false,
+            fields: []
+        };
     },
     computed: {},
     methods: {
@@ -8985,6 +8992,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         redirect: function redirect() {
             this.$router.push('/propositions');
         }
+    },
+    mounted: function mounted() {
+        var _this2 = this;
+
+        axios.get('/api/proposition/' + this.$route.params.id + '/warehouse').then(function (res) {
+            _this2.validated = true;
+        }).catch(function (err) {
+            _this2.validated = false;
+            _this2.fields = err.response.data.validated;
+        });
     }
 });
 
@@ -60392,23 +60409,40 @@ var render = function() {
       _vm._v(_vm._s(_vm.lang("Završni dokument")))
     ]),
     _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "justify-content-center d-flex mb-4" },
-      [
-        _c("spinner-button", {
-          attrs: {
-            title: "Recieved in Warehouse",
-            classes: "btn btn-l btn-neutral"
-          },
-          on: {
-            button_clicked: _vm.sendToWarehouse,
-            button_cleanup_success: _vm.redirect
-          }
-        })
-      ],
-      1
-    )
+    _vm.validated
+      ? _c(
+          "div",
+          { staticClass: "justify-content-center d-flex mb-4" },
+          [
+            _c("spinner-button", {
+              attrs: {
+                title: "Recieved in Warehouse",
+                classes: "btn btn-l btn-neutral"
+              },
+              on: {
+                button_clicked: _vm.sendToWarehouse,
+                button_cleanup_success: _vm.redirect
+              }
+            })
+          ],
+          1
+        )
+      : _c("div", { staticClass: "justify-content-center d-flex mb-4" }, [
+          _c(
+            "ul",
+            _vm._l(_vm.fields, function(field) {
+              return _c(
+                "li",
+                [
+                  _c("router-link", { attrs: { to: field.link } }, [
+                    _vm._v(_vm._s(_vm.lang(field.title)))
+                  ])
+                ],
+                1
+              )
+            })
+          )
+        ])
   ])
 }
 var staticRenderFns = []
