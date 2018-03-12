@@ -31345,6 +31345,19 @@ h6 {
   background-color: #0085B2;
 }
 
+.warehouse-list {
+  list-style-position: inside;
+  text-align: center;
+}
+
+.warehouse-list a {
+  color: #0085B2;
+}
+
+.warehouse-list a:hover {
+  color: #262A33;
+}
+
 .tasktype,
 .tasktype-1,
 .tasktype-2,

@@ -8968,6 +8968,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -60406,7 +60412,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "content" }, [
     _c("div", { staticClass: "page-name-xl mb-4 mt-3" }, [
-      _vm._v(_vm._s(_vm.lang("Završni dokument")))
+      _vm._v(_vm._s(_vm.lang("Završetak projekta")))
     ]),
     _vm._v(" "),
     _vm.validated
@@ -60430,17 +60436,46 @@ var render = function() {
       : _c("div", { staticClass: "justify-content-center d-flex mb-4" }, [
           _c(
             "ul",
-            _vm._l(_vm.fields, function(field) {
-              return _c(
-                "li",
+            [
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "d-flex justify-content-center align-items-center flex-column mt-2"
+                },
                 [
-                  _c("router-link", { attrs: { to: field.link } }, [
-                    _vm._v(_vm._s(_vm.lang(field.title)))
+                  _c("i", {
+                    staticClass:
+                      "fa fa-exclamation-triangle fa-5x mb-3 color-nav-sub",
+                    attrs: { "aria-hidden": "true" }
+                  }),
+                  _vm._v(" "),
+                  _c("h1", { staticClass: "text-center mt-2" }, [
+                    _vm._v(
+                      _vm._s(
+                        _vm.lang(
+                          "Da biste uspješno završili projekt, potrebni su sljedeći podaci:"
+                        )
+                      )
+                    )
                   ])
-                ],
-                1
-              )
-            })
+                ]
+              ),
+              _vm._v(" "),
+              _vm._l(_vm.fields, function(field) {
+                return _c(
+                  "li",
+                  { staticClass: "warehouse-list mt-3" },
+                  [
+                    _c("router-link", { attrs: { to: field.link } }, [
+                      _vm._v(_vm._s(_vm.lang(field.title)))
+                    ])
+                  ],
+                  1
+                )
+              })
+            ],
+            2
           )
         ])
   ])
