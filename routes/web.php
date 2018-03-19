@@ -44,11 +44,16 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'human_resources'], function
 		});
 	});
 
-	Route::get('departments', 'HumanResources\DepartmentController@showDepartments');
+	Route::get('departments', function() {
+		return view(config('app.template') . '::router-view');
+	});
 	Route::group(['prefix' => 'department'], function() {
-		Route::get('{department?}/edit', 'HumanResources\DepartmentController@showDepartment');
-		Route::post('{department?}/edit', 'HumanResources\DepartmentController@submitDepartment');
-		Route::get('{department}/delete/', 'HumanResources\DepartmentController@deleteDepartment');
+		Route::any('{all}', function() {
+			return view(config('app.template') . '::router-view');
+		});
+		Route::any('{id}/{all}', function() {
+			return view(config('app.template') . '::router-view');
+		});
 	});
 
 	Route::get('roles', 'HumanResources\RoleController@showRoles');
@@ -76,8 +81,9 @@ Route::group(['prefix' => 'books', 'namespace' => 'BookManagement'], function() 
 		return view(config('app.template') . '::router-view');
 	});
 	Route::group(['prefix' => 'author'], function() {
-		Route::get('{id}/show', 'AuthorController@showAuthor');
-		Route::get('{id}/edit', 'AuthorController@editAuthor');
+		Route::get('{id}', function() {
+			return view(config('app.template') . '::router-view');
+		});
 		Route::get('{author}/related/propositions', function() {
 			return view(config('app.template') . '::router-view');
 		});

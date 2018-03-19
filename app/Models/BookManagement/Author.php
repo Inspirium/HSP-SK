@@ -44,7 +44,7 @@ class Author extends Model {
 
     protected $dates = ['deleted_at'];
 
-    protected $appends = ['name', 'links'];
+    protected $appends = ['name', 'links', 'link'];
 
 	public function books() {
 		return $this->morphedByMany('Inspirium\Models\BookManagement\Book', 'connection', 'author_pivot', 'author_id');
@@ -84,5 +84,9 @@ class Author extends Model {
 		    ];
 	    }
 	    return $out;
+    }
+
+    public function getLinkAttribute() {
+		return '/books/author/' . $this->id;
     }
 }

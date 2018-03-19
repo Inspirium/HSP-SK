@@ -45,14 +45,15 @@ Route::group( [ 'middleware' => [ 'auth:api' ], ], function () {
 		Route::get( 'employee/search/{term}', 'EmployeeController@searchEmployee' );
 
 		Route::get( 'department/{department}', 'DepartmentController@getDepartment' );
-		Route::get( 'departments', 'DepartmentController@getDepartments' );
-		Route::get( 'department/search/{term}', 'DepartmentController@searchDepartment' );
+		Route::put( 'department/{department}', 'DepartmentController@putDepartment' );
+		Route::post( 'department', 'DepartmentController@postDepartment' );
+		Route::post('departments', 'DepartmentController@getDepartments');
 	} );
 
 	Route::group( [ 'namespace' => 'Api\BookManagement' ], function () {
 
 		Route::group( [ 'prefix' => 'author' ], function () {
-			Route::get( '/{id}', 'AuthorController@getAuthor' );
+			Route::get( '/{author}', 'AuthorController@getAuthor' );
 			Route::get( 'search/{term}', 'AuthorController@search' );
 			Route::post( '/', 'AuthorController@postAuthor' );
 			Route::delete('{author}', 'AuthorController@deleteAuthor');

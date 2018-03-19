@@ -19,10 +19,15 @@ class AuthorController extends Controller {
 			'last_name' => $request->input('last_name'),
 			'work' => $request->input('work'),
 			'occupation' => $request->input('occupation'),
-			'title' => $request->input('title')
+			'title' => $request->input('title'),
+			'note' => $request->input('note')
 		]);
 
 		return response()->json($author);
+    }
+
+    public function getAuthor(Author $author) {
+    	return response()->json($author);
     }
 
     public function deleteAuthor(Author $author) {
