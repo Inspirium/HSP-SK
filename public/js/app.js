@@ -3449,6 +3449,87 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}],\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./packages/Inspirium/SKTemplate/src/assets/js/components/books/AuthorShow.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    name: "AuthorShow",
+    data: function data() {
+        return {
+            first_name: '',
+            last_name: '',
+            occupation: '',
+            title: '',
+            work: '',
+            note: ''
+        };
+    },
+    mounted: function mounted() {
+        var _this = this;
+
+        axios.get('/api/author/' + this.$route.params.id).then(function (res) {
+            _this.first_name = res.data.first_name;
+            _this.last_name = res.data.last_name;
+            _this.occupation = res.data.occupation;
+            _this.title = res.data.title;
+            _this.work = res.data.work;
+            _this.note = res.data.note;
+        }).catch();
+    }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}],\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./packages/Inspirium/SKTemplate/src/assets/js/components/books/Authors.vue":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -77162,6 +77243,223 @@ if (false) {
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-a44e6efe\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./packages/Inspirium/SKTemplate/src/assets/js/components/books/AuthorShow.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "content" }, [
+    _c("div", { staticClass: "page-name-xl mb-2 mt-3" }, [
+      _vm._v(_vm._s(_vm.lang("Authors")))
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-12" }, [
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-md-6" }, [
+            _c("div", { staticClass: "md-form" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.first_name,
+                    expression: "first_name"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", id: "form_author_name", required: "" },
+                domProps: { value: _vm.first_name },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.first_name = $event.target.value
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("label", { attrs: { for: "form_author_name" } }, [
+                _vm._v(_vm._s(_vm.lang("First Name")))
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-6" }, [
+            _c("div", { staticClass: "md-form" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.last_name,
+                    expression: "last_name"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: {
+                  type: "text",
+                  id: "form_author_lastname",
+                  required: ""
+                },
+                domProps: { value: _vm.last_name },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.last_name = $event.target.value
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("label", { attrs: { for: "form_author_lastname" } }, [
+                _vm._v(_vm._s(_vm.lang("Last Name")))
+              ])
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-md-6" }, [
+            _c("div", { staticClass: "md-form" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.title,
+                    expression: "title"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", id: "form_author_title", required: "" },
+                domProps: { value: _vm.title },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.title = $event.target.value
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("label", { attrs: { for: "form_author_title" } }, [
+                _vm._v(_vm._s(_vm.lang("Formal title")))
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-6" }, [
+            _c("div", { staticClass: "md-form" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.occupation,
+                    expression: "occupation"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: {
+                  type: "text",
+                  id: "form_author_occupation",
+                  required: ""
+                },
+                domProps: { value: _vm.occupation },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.occupation = $event.target.value
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("label", { attrs: { for: "form_author_occupation" } }, [
+                _vm._v(_vm._s(_vm.lang("Occupation")))
+              ])
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "md-form" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.work,
+                expression: "work"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: { type: "text", id: "form_author_work", required: "" },
+            domProps: { value: _vm.work },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.work = $event.target.value
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("label", { attrs: { for: "form_author_work" } }, [
+            _vm._v(_vm._s(_vm.lang("Working in")))
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "md-form mt-3" }, [
+          _c("textarea", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.note,
+                expression: "note"
+              }
+            ],
+            staticClass: "md-textarea",
+            attrs: { id: "note" },
+            domProps: { value: _vm.note },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.note = $event.target.value
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("label", { attrs: { for: "note" } }, [
+            _vm._v(_vm._s(_vm.lang("Note")))
+          ])
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-loader/node_modules/vue-hot-reload-api")      .rerender("data-v-a44e6efe", module.exports)
+  }
+}
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-a59b2b76\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./packages/Inspirium/SKTemplate/src/assets/js/components/proposition/Deadline.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -100328,6 +100626,54 @@ module.exports = Component.exports
 
 /***/ }),
 
+/***/ "./packages/Inspirium/SKTemplate/src/assets/js/components/books/AuthorShow.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}],\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./packages/Inspirium/SKTemplate/src/assets/js/components/books/AuthorShow.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-a44e6efe\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./packages/Inspirium/SKTemplate/src/assets/js/components/books/AuthorShow.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "packages/Inspirium/SKTemplate/src/assets/js/components/books/AuthorShow.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-loader/node_modules/vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-a44e6efe", Component.options)
+  } else {
+    hotAPI.reload("data-v-a44e6efe", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
 /***/ "./packages/Inspirium/SKTemplate/src/assets/js/components/books/Authors.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -103527,8 +103873,11 @@ module.exports = Component.exports
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_35__components_books_Authors___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_35__components_books_Authors__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_36__components_books_AuthorEdit__ = __webpack_require__("./packages/Inspirium/SKTemplate/src/assets/js/components/books/AuthorEdit.vue");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_36__components_books_AuthorEdit___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_36__components_books_AuthorEdit__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_37__components_books_AuthorsRelated__ = __webpack_require__("./packages/Inspirium/SKTemplate/src/assets/js/components/books/AuthorsRelated.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_37__components_books_AuthorsRelated___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_37__components_books_AuthorsRelated__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_37__components_books_AuthorShow__ = __webpack_require__("./packages/Inspirium/SKTemplate/src/assets/js/components/books/AuthorShow.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_37__components_books_AuthorShow___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_37__components_books_AuthorShow__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_38__components_books_AuthorsRelated__ = __webpack_require__("./packages/Inspirium/SKTemplate/src/assets/js/components/books/AuthorsRelated.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_38__components_books_AuthorsRelated___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_38__components_books_AuthorsRelated__);
+
 
 
 
@@ -103573,7 +103922,7 @@ module.exports = Component.exports
 
 var routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_33__components_proposition_PropositionList___default.a }, { path: '/proposition', component: __WEBPACK_IMPORTED_MODULE_0__components_proposition_Proposition___default.a, name: 'proposition',
     children: [{ path: 'start', component: __WEBPACK_IMPORTED_MODULE_18__components_proposition_PropositionStart___default.a, meta: { save: 'start', breadcrumb: 'Start', warning: 'proposition/deleteProposition' } }, { path: ':id/edit/start', component: __WEBPACK_IMPORTED_MODULE_18__components_proposition_PropositionStart___default.a, meta: { save: 'start', validate: { id: 'int' }, breadcrumb: 'Start', warning: 'proposition/deleteProposition' } }, { path: ':id/edit/basic_data', component: __WEBPACK_IMPORTED_MODULE_1__components_proposition_BasicData___default.a, meta: { save: 'basic_data', validate: { id: 'int' }, breadcrumb: 'Basic Data', warning: 'proposition/basic_data/deleteFile' } }, { path: ':id/edit/categorization', component: __WEBPACK_IMPORTED_MODULE_2__components_proposition_Categorization___default.a, meta: { save: 'categorization', validate: { id: 'int' }, breadcrumb: 'Categorization' } }, { path: ':id/edit/market_potential', component: __WEBPACK_IMPORTED_MODULE_3__components_proposition_MarketPotential___default.a, meta: { save: 'market_potential', validate: { id: 'int' }, breadcrumb: 'Market Potential', warning: 'proposition/market_potential/deleteFile' } }, { path: ':id/edit/technical_data', component: __WEBPACK_IMPORTED_MODULE_4__components_proposition_TechnicalData___default.a, meta: { save: 'technical_data', validate: { id: 'int' }, breadcrumb: 'Technical Data' } }, { path: ':id/edit/print', component: __WEBPACK_IMPORTED_MODULE_7__components_proposition_Print___default.a, meta: { save: 'print', validate: { id: 'int' }, breadcrumb: 'Print', warning: 'proposition/print/deleteFile' } }, { path: ':id/edit/authors_expense', component: __WEBPACK_IMPORTED_MODULE_5__components_proposition_AuthorsExpense___default.a, meta: { save: 'authors_expense', validate: { id: 'int' }, breadcrumb: 'Authors Expense' } }, { path: ':id/edit/production_expense', component: __WEBPACK_IMPORTED_MODULE_9__components_proposition_ProductionExpense___default.a, meta: { save: 'production_expense', validate: { id: 'int' }, breadcrumb: 'Production Expense' } }, { path: ':id/edit/marketing_expense', component: __WEBPACK_IMPORTED_MODULE_10__components_proposition_MarketingExpense___default.a, meta: { save: 'marketing_expense', validate: { id: 'int' }, breadcrumb: 'Marketing Expense' } }, { path: ':id/edit/distribution_expense', component: __WEBPACK_IMPORTED_MODULE_12__components_proposition_DistributionExpense___default.a, meta: { save: 'distribution_expense', validate: { id: 'int' }, breadcrumb: 'Distribution Expense' } }, { path: ':id/edit/layout_expense', component: __WEBPACK_IMPORTED_MODULE_14__components_proposition_LayoutExpense___default.a, meta: { save: 'layout_expense', validate: { id: 'int' }, breadcrumb: 'Layout Expense' } }, { path: ':id/edit/deadline', component: __WEBPACK_IMPORTED_MODULE_16__components_proposition_Deadline___default.a, meta: { save: 'deadline', validate: { id: 'int' }, breadcrumb: 'Deadline' } }, { path: ':id/edit/calculation', component: __WEBPACK_IMPORTED_MODULE_17__components_proposition_Calculation___default.a, meta: { save: 'calculation', validate: { id: 'int' }, breadcrumb: 'Calculation' } }, { path: ':id/preparation/translation', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'translation', validate: { id: 'int' }, breadcrumb: 'Translation', warning: 'proposition/files/deleteFile' } }, { path: ':id/preparation/technical_preparation', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'technical_preparation', validate: { id: 'int' }, breadcrumb: 'Technical Preparation', warning: 'proposition/files/deleteFile' } }, { path: ':id/preparation/proofreading', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'proofreading', validate: { id: 'int' }, breadcrumb: 'Proofreading', warning: 'proposition/files/deleteFile' } }, { path: ':id/preparation/additional_materials', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'additional_materials', validate: { id: 'int' }, breadcrumb: 'Additional Materials', warning: 'proposition/files/deleteFile' } }, { path: ':id/preparation/reviews', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'reviews', validate: { id: 'int' }, breadcrumb: 'Reviews', warning: 'proposition/files/deleteFile' } }, { path: ':id/preparation/lecture', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'lecture', validate: { id: 'int' }, breadcrumb: 'Lecture', warning: 'proposition/files/deleteFile' } }, { path: ':id/preparation/technical_correction', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'technical_correction', validate: { id: 'int' }, breadcrumb: 'Technical Correction', warning: 'proposition/files/deleteFile' } }, { path: ':id/preparation/final_review', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'final_review', validate: { id: 'int' }, breadcrumb: 'Final Review', warning: 'proposition/files/deleteFile' } }, { path: ':id/expenses/authors_expense', component: __WEBPACK_IMPORTED_MODULE_6__components_proposition_expenses_AuthorsExpense___default.a, meta: { save: 'authors_expense', validate: { id: 'int' }, breadcrumb: 'Authors Expense', 'type': 'expense' } }, { path: ':id/expenses/production_expense', component: __WEBPACK_IMPORTED_MODULE_8__components_proposition_expenses_ProductionExpense___default.a, meta: { save: 'production_expense', validate: { id: 'int' }, breadcrumb: 'Production Expense', 'type': 'expense' } }, { path: ':id/expenses/marketing_expense', component: __WEBPACK_IMPORTED_MODULE_11__components_proposition_expenses_MarketingExpense___default.a, meta: { save: 'marketing_expense', validate: { id: 'int' }, breadcrumb: 'Marketing Expense', 'type': 'expense' } }, { path: ':id/expenses/distribution_expense', component: __WEBPACK_IMPORTED_MODULE_13__components_proposition_expenses_DistributionExpense___default.a, meta: { save: 'distribution_expense', validate: { id: 'int' }, breadcrumb: 'Distribution Expense', 'type': 'expense' } }, { path: ':id/expenses/layout_expense', component: __WEBPACK_IMPORTED_MODULE_15__components_proposition_expenses_LayoutExpense___default.a, meta: { save: 'layout_expense', validate: { id: 'int' }, breadcrumb: 'Layout Expense', 'type': 'expense' } }, { path: ':id/expenses/compare', component: __WEBPACK_IMPORTED_MODULE_19__components_proposition_expenses_Compare___default.a, meta: { save: 'compare', validate: { id: 'int' }, breadcrumb: 'Compare' } }, { path: ':id/design/cover_design', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'cover_design', validate: { id: 'int' }, breadcrumb: 'Cover Design', warning: 'proposition/files/deleteFile' } }, { path: ':id/design/layout_design', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'layout_design', validate: { id: 'int' }, breadcrumb: 'Layout Design', warning: 'proposition/files/deleteFile' } }, { path: ':id/layout/first_block_layout', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'first_block_layout', validate: { id: 'int' }, breadcrumb: 'First Block Layout', warning: 'proposition/files/deleteFile' } }, { path: ':id/layout/cover', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'cover', validate: { id: 'int' }, breadcrumb: 'Cover', warning: 'proposition/files/deleteFile' } }, { path: ':id/layout/layout', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'layout', validate: { id: 'int' }, breadcrumb: 'Layout', warning: 'proposition/files/deleteFile' } }, { path: ':id/layout/first_revision', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'first_revision', validate: { id: 'int' }, breadcrumb: 'First Revision', warning: 'proposition/files/deleteFile' } }, { path: ':id/layout/correction', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'correction', validate: { id: 'int' }, breadcrumb: 'Correction', warning: 'proposition/files/deleteFile' } }, { path: ':id/layout/correction_input', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'correction_input', validate: { id: 'int' }, breadcrumb: 'Correction Input', warning: 'proposition/files/deleteFile' } }, { path: ':id/layout/revisions', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'revisions', validate: { id: 'int' }, breadcrumb: 'Revisions', warning: 'proposition/files/deleteFile' } }, { path: ':id/final_price/price_definition', component: __WEBPACK_IMPORTED_MODULE_21__components_proposition_PriceDefinition___default.a, meta: { save: 'price_definition', validate: { id: 'int' }, breadcrumb: 'Price Definition' } }, { path: ':id/prepress/print_proof', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'print_proof', validate: { id: 'int' }, breadcrumb: 'Print Proof', warning: 'proposition/files/deleteFile' } }, { path: ':id/prepress/print_proof_correction', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'print_proof_correction', validate: { id: 'int' }, breadcrumb: 'Print Proof Correction', warning: 'proposition/files/deleteFile' } }, { path: ':id/prepress/print', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'print', validate: { id: 'int' }, breadcrumb: 'Print', warning: 'proposition/files/deleteFile' } }, { path: ':id/prepress/warehouse', component: __WEBPACK_IMPORTED_MODULE_22__components_proposition_Warehouse___default.a, meta: { validate: { id: 'int' }, breadcrumb: 'Warehouse' } }, { path: ':id/additionals/multimedia', component: __WEBPACK_IMPORTED_MODULE_24__components_proposition_Multimedia___default.a, meta: { save: 'files', dir: 'multimedia', validate: { id: 'int' }, breadcrumb: 'Multimedia', warning: 'proposition/multimedia/deleteFile' } }, { path: ':id/additionals/marketing', component: __WEBPACK_IMPORTED_MODULE_23__components_proposition_Marketing___default.a, meta: { save: 'files', dir: 'marketing', validate: { id: 'int' }, breadcrumb: 'Marketing', warning: 'proposition/marketing/deleteFile' } }]
-}, { path: '/tasks', component: __WEBPACK_IMPORTED_MODULE_29__components_tasks_Tasks___default.a }, { path: '/task/edit/:id(\\d+)?', component: __WEBPACK_IMPORTED_MODULE_30__components_tasks_TaskEdit___default.a }, { path: '/task/show/:id(\\d+)', component: __WEBPACK_IMPORTED_MODULE_31__components_tasks_TaskShow___default.a }, { path: '/tasks/department/:id(\\d+)', component: __WEBPACK_IMPORTED_MODULE_32__components_tasks_DepartmentTasks___default.a }, { path: '/human_resources/employees', component: __WEBPACK_IMPORTED_MODULE_26__components_hr_Employees___default.a }, { path: '/human_resources/employee/new', component: __WEBPACK_IMPORTED_MODULE_25__components_hr_EditProfile___default.a }, { path: '/human_resources/employee/:id(\\d+)/edit', component: __WEBPACK_IMPORTED_MODULE_25__components_hr_EditProfile___default.a }, { path: '/human_resources/employee/:id(\\d+)', component: __WEBPACK_IMPORTED_MODULE_25__components_hr_EditProfile___default.a }, { path: '/human_resources/departments', component: __WEBPACK_IMPORTED_MODULE_27__components_hr_Departments___default.a }, { path: '/human_resources/department/:id(\\d+)/edit', component: __WEBPACK_IMPORTED_MODULE_28__components_hr_DepartmentEdit___default.a }, { path: '/human_resources/department/new', component: __WEBPACK_IMPORTED_MODULE_28__components_hr_DepartmentEdit___default.a }, { path: '/books', component: __WEBPACK_IMPORTED_MODULE_34__components_books_Books___default.a }, { path: '/books/authors', component: __WEBPACK_IMPORTED_MODULE_35__components_books_Authors___default.a }, { path: '/books/author/:id(\\d+)', component: __WEBPACK_IMPORTED_MODULE_36__components_books_AuthorEdit___default.a }, { path: '/books/author/:id(\\d+)/related/propositions', component: __WEBPACK_IMPORTED_MODULE_37__components_books_AuthorsRelated___default.a }];
+}, { path: '/tasks', component: __WEBPACK_IMPORTED_MODULE_29__components_tasks_Tasks___default.a }, { path: '/task/edit/:id(\\d+)?', component: __WEBPACK_IMPORTED_MODULE_30__components_tasks_TaskEdit___default.a }, { path: '/task/show/:id(\\d+)', component: __WEBPACK_IMPORTED_MODULE_31__components_tasks_TaskShow___default.a }, { path: '/tasks/department/:id(\\d+)', component: __WEBPACK_IMPORTED_MODULE_32__components_tasks_DepartmentTasks___default.a }, { path: '/human_resources/employees', component: __WEBPACK_IMPORTED_MODULE_26__components_hr_Employees___default.a }, { path: '/human_resources/employee/new', component: __WEBPACK_IMPORTED_MODULE_25__components_hr_EditProfile___default.a }, { path: '/human_resources/employee/:id(\\d+)/edit', component: __WEBPACK_IMPORTED_MODULE_25__components_hr_EditProfile___default.a }, { path: '/human_resources/employee/:id(\\d+)', component: __WEBPACK_IMPORTED_MODULE_25__components_hr_EditProfile___default.a }, { path: '/human_resources/departments', component: __WEBPACK_IMPORTED_MODULE_27__components_hr_Departments___default.a }, { path: '/human_resources/department/:id(\\d+)/edit', component: __WEBPACK_IMPORTED_MODULE_28__components_hr_DepartmentEdit___default.a }, { path: '/human_resources/department/new', component: __WEBPACK_IMPORTED_MODULE_28__components_hr_DepartmentEdit___default.a }, { path: '/books', component: __WEBPACK_IMPORTED_MODULE_34__components_books_Books___default.a }, { path: '/books/authors', component: __WEBPACK_IMPORTED_MODULE_35__components_books_Authors___default.a }, { path: '/books/author/:id(\\d+)', component: __WEBPACK_IMPORTED_MODULE_37__components_books_AuthorShow___default.a }, { path: '/books/author/:id(\\d+)/edit', component: __WEBPACK_IMPORTED_MODULE_36__components_books_AuthorEdit___default.a }, { path: '/books/author/:id(\\d+)/related/propositions', component: __WEBPACK_IMPORTED_MODULE_38__components_books_AuthorsRelated___default.a }];
 
 /***/ }),
 

@@ -84,6 +84,9 @@ Route::group(['prefix' => 'books', 'namespace' => 'BookManagement'], function() 
 		Route::get('{id}', function() {
 			return view(config('app.template') . '::router-view');
 		});
+		Route::get('{id}/edit', function() {
+			return view(config('app.template') . '::router-view');
+		});
 		Route::get('{author}/related/propositions', function() {
 			return view(config('app.template') . '::router-view');
 		});

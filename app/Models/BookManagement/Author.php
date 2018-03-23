@@ -70,7 +70,7 @@ class Author extends Model {
 	    $out = [
 		    'edit' => [
 			    'method' => 'GET',
-			    'link' => '/books/author/'.$this->id
+			    'link' => '/books/author/'.$this->id.'/edit'
 		    ],
 		    'related' => [
 			    'method' => 'GET',
