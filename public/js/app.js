@@ -3418,19 +3418,35 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         saveAuthor: function saveAuthor() {
             var _this = this;
 
-            axios.post('/api/author', {
-                first_name: this.first_name,
-                last_name: this.last_name,
-                title: this.title,
-                occupation: this.occupation,
-                work: this.work,
-                note: this.note
-            }).then(function (res) {
-                _this.$eventHub.emit('BUTTON_LISTEN_FOR_SUCCESS');
-                _this.$router.go(res.data.link);
-            }).catch(function (err) {
-                _this.$eventHub.emit('BUTTON_LISTEN_FOR_FAILURE');
-            });
+            if (this.$route.params.id) {
+                axios.put('/api/author/' + this.$route.params.id, {
+                    first_name: this.first_name,
+                    last_name: this.last_name,
+                    title: this.title,
+                    occupation: this.occupation,
+                    work: this.work,
+                    note: this.note
+                }).then(function (res) {
+                    _this.$eventHub.emit('BUTTON_LISTEN_FOR_SUCCESS');
+                    _this.$router.go(res.data.link);
+                }).catch(function (err) {
+                    _this.$eventHub.emit('BUTTON_LISTEN_FOR_FAILURE');
+                });
+            } else {
+                axios.post('/api/author', {
+                    first_name: this.first_name,
+                    last_name: this.last_name,
+                    title: this.title,
+                    occupation: this.occupation,
+                    work: this.work,
+                    note: this.note
+                }).then(function (res) {
+                    _this.$eventHub.emit('BUTTON_LISTEN_FOR_SUCCESS');
+                    _this.$router.go(res.data.link);
+                }).catch(function (err) {
+                    _this.$eventHub.emit('BUTTON_LISTEN_FOR_FAILURE');
+                });
+            }
         }
     },
     mounted: function mounted() {

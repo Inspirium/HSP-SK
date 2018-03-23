@@ -53,9 +53,10 @@ Route::group( [ 'middleware' => [ 'auth:api' ], ], function () {
 	Route::group( [ 'namespace' => 'Api\BookManagement' ], function () {
 
 		Route::group( [ 'prefix' => 'author' ], function () {
-			Route::get( '/{author}', 'AuthorController@getAuthor' );
+			Route::get( '{author}', 'AuthorController@getAuthor' );
 			Route::get( 'search/{term}', 'AuthorController@search' );
 			Route::post( '/', 'AuthorController@postAuthor' );
+			Route::put( '{author}', 'AuthorController@putAuthor' );
 			Route::delete('{author}', 'AuthorController@deleteAuthor');
 		} );
 

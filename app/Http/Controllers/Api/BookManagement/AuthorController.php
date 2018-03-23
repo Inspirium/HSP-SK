@@ -26,6 +26,17 @@ class AuthorController extends Controller {
 		return response()->json($author);
     }
 
+	public function putAuthor(Request $request, Author $author) {
+		$author->first_name = $request->input('first_name');
+		$author->last_name = $request->input('last_name');
+		$author->work = $request->input('work');
+		$author->occupation = $request->input('occupation');
+		$author->title = $request->input('title');
+		$author->note = $request->input('note');
+		$author->save();
+		return response()->json($author);
+	}
+
     public function getAuthor(Author $author) {
     	return response()->json($author);
     }
