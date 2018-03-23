@@ -3927,6 +3927,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: "proposition-footerbuttons",
@@ -3956,6 +3958,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             default: false
         },
         requestCode: {
+            type: Boolean,
+            default: false
+        },
+        skip: {
+            type: Boolean,
+            default: false
+        },
+        finish: {
             type: Boolean,
             default: false
         }
@@ -4032,6 +4042,26 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         warningModalOpenForced: function warningModalOpenForced() {
             this.$store.dispatch('proposition/listenForForcedDelete', { vue: this, data: {} });
             jQuery('#modal-warning').modal('show');
+        },
+        skipStep: function skipStep() {
+            var _this4 = this;
+
+            this.$store.dispatch('proposition/' + this.$route.meta.save + '/skipStep', this.$route).then(function () {
+                toastr.success(_this4.lang('Uspješno obavljeno'));
+                _this4.$store.commit('editedFalse');
+            }).catch(function () {
+                toastr.error(_this4.lang('Došlo je do problema. Pokušajte ponovno'));
+            });
+        },
+        markFinished: function markFinished() {
+            var _this5 = this;
+
+            this.$store.dispatch('proposition/' + this.$route.meta.save + '/markFinished', this.$route).then(function () {
+                toastr.success(_this5.lang('Uspješno obavljeno'));
+                _this5.$store.commit('editedFalse');
+            }).catch(function () {
+                toastr.error(_this5.lang('Došlo je do problema. Pokušajte ponovno'));
+            });
         }
     }
 });
@@ -8628,7 +8658,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             if (this.$route.meta.dir) {
                 return {
                     save: true,
-                    assignDocuments: true
+                    assignDocuments: true,
+                    skip: true,
+                    finish: true
                 };
             }
             return {
@@ -9379,6 +9411,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -9390,6 +9423,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         final: function final() {
             return this.$deepModel('proposition.files.final');
+        },
+        status: function status() {
+            switch (this.$store.state.proposition.files.step_status) {
+                case 'skipped':
+                    return 'User has skipped this step';
+                case 'finished':
+                    return 'User has finished this step';
+                default:
+                    return '';
+            }
         }
     },
     methods: {
@@ -66755,6 +66798,10 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
+      _c("div", { staticClass: "justify-content-center d-flex" }, [
+        _vm._v("\n        " + _vm._s(_vm.lang(_vm.status)) + "\n    ")
+      ]),
+      _vm._v(" "),
       _c("upload-modal", {
         attrs: {
           id: "initial-documents",
@@ -66776,35 +66823,7 @@ var render = function() {
           isFinal: "final"
         },
         on: { fileAdd: _vm.fileAdd, fileNameSave: _vm.fileNameSave }
-      }),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-lg btn-assign btn-assign-icon",
-          attrs: { type: "button" },
-          on: {
-            click: function($event) {
-              _vm.documentAdd("initial-documents")
-            }
-          }
-        },
-        [_vm._v(_vm._s(_vm.lang("Skip Step")))]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-lg btn-assign btn-assign-icon",
-          attrs: { type: "button" },
-          on: {
-            click: function($event) {
-              _vm.documentAdd("initial-documents")
-            }
-          }
-        },
-        [_vm._v(_vm._s(_vm.lang("Step Done")))]
-      )
+      })
     ],
     1
   )
@@ -78050,6 +78069,30 @@ var render = function() {
                       [_vm._v(_vm._s(_vm.lang("Permanently Delete")))]
                     )
                   ]
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.skip
+                ? _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-lg btn-assign btn-assign-icon",
+                      attrs: { type: "button" },
+                      on: { click: _vm.skipStep }
+                    },
+                    [_vm._v(_vm._s(_vm.lang("Skip Step")))]
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.finish
+                ? _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-lg btn-assign btn-assign-icon",
+                      attrs: { type: "button" },
+                      on: { click: _vm.markFinished }
+                    },
+                    [_vm._v(_vm._s(_vm.lang("Step Done")))]
+                  )
                 : _vm._e()
             ],
             2
@@ -105008,7 +105051,8 @@ var initialState = {
         proposition_id: 0,
         files: [],
         final: [],
-        dir: ''
+        dir: '',
+        step_status: ''
     },
     mutations: {
         initData: function initData(state, payload) {
@@ -105082,6 +105126,31 @@ var initialState = {
             return new Promise(function (resolve, reject) {
                 commit('initData', initialState);
                 resolve();
+            });
+        },
+        skipStep: function skipStep(_ref4) {
+            var rootState = _ref4.rootState;
+
+            return new Promise(function (resolve, reject) {
+                var path = '/api/proposition/' + rootState.route.params.id + '/files/' + rootState.route.meta.dir;
+                console.log(path);
+                __WEBPACK_IMPORTED_MODULE_0_axios_index___default.a.post(path, { status: 'skipped' }).then(function () {
+                    resolve();
+                }).catch(function () {
+                    reject();
+                });
+            });
+        },
+        markFinished: function markFinished(_ref5) {
+            var rootState = _ref5.rootState;
+
+            return new Promise(function (resolve, reject) {
+                var path = '/api/proposition/' + rootState.route.params.id + '/files/' + rootState.route.meta.dir;
+                __WEBPACK_IMPORTED_MODULE_0_axios_index___default.a.post(path, { status: 'finished' }).then(function () {
+                    resolve();
+                }).catch(function () {
+                    reject();
+                });
             });
         }
     }
@@ -105310,7 +105379,8 @@ var initialState = {
 
 var initialState = {
     cover: [],
-    leaflet: []
+    leaflet: [],
+    step_status: ''
 };
 /* harmony default export */ __webpack_exports__["a"] = ({
     namespaced: true,
@@ -105477,7 +105547,8 @@ var initialState = {
     webshop: '',
     jpg: [],
     psd: [],
-    preview: []
+    preview: [],
+    step_status: ''
 };
 /* harmony default export */ __webpack_exports__["a"] = ({
     namespaced: true,

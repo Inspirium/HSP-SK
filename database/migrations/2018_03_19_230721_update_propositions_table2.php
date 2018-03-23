@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class UpdatePropositionsTable extends Migration
+class UpdatePropositionsTable2 extends Migration
 {
     /**
      * Run the migrations.
@@ -21,6 +21,7 @@ class UpdatePropositionsTable extends Migration
 	        $table->string('coverpaper_uv_print')->nullable();
 	        $table->boolean('coverpaper_film_print')->nullable();
 	        $table->boolean('coverpaper_blind_print')->nullable();
+	        $table->text('step_status')->nullable();
         });
     }
 
@@ -38,6 +39,7 @@ class UpdatePropositionsTable extends Migration
             $table->dropColumn('coverpaper_uv_print');
             $table->dropColumn('coverpaper_blind_print');
             $table->dropColumn('coverpaper_film_print');
+            $table->dropColumn('step_status');
         });
     }
 }
