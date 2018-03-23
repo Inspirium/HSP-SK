@@ -9,7 +9,7 @@ class HomeController extends Controller {
 	public function home() {
 		$total = BookProposition::count();
 		$approval = BookProposition::where('status', 'requested')->count();
-		$files = \DB::table('fileables')->where('fileable_type', 'Inspirium\BookProposition\Models\BookProposition')->join('propositions', 'id', 'fileable_id')->whereNull('propositions.deleted_at')->get(['fileable_id', 'type']);
+		$active = BookProposition::where('status', 'unfinished')->get();
 		$latest = [];
 		$order = [
 			'translation', 'technical_preparation', 'proofreading', 'additional_materials', 'reviews', 'lecture', 'technical_correction', 'final_review',
@@ -18,17 +18,23 @@ class HomeController extends Controller {
 			'print_proof', 'print_proof_correction',
 			'print'
 		];
-		foreach ($files as $file) {
-			if (isset($latest[$file->fileable_id])) {
-				$new_key = array_search($file->type, $order);
-				$old_key = array_search($latest[$file->fileable_id], $order);
-				if ($new_key>$old_key) {
-					$latest[$file->fileable_id] = $file->type;
+		foreach ($active as $one) {
+			$steps = $one->step_status;
+			if (is_array($steps)) {
+				foreach ( $steps as $step => $value ) {
+					if (isset($latest[$one->id])) {
+						$new_key = array_search( $step, $order );
+						$old_key = array_search( $latest[ $one->id ], $order );
+						if ( $new_key > $old_key ) {
+							$latest[ $one->id ] = $step;
+						}
+					}
+					else {
+						$latest[$one->id] = $step;
+					}
 				}
 			}
-			else {
-				$latest[$file->fileable_id] = $file->type;
-			}
+
 		}
 		$totals = [
 			'text' => 0,
