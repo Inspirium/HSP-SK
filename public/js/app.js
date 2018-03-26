@@ -7876,6 +7876,35 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -74955,7 +74984,7 @@ var render = function() {
           }
         ],
         staticClass: "form-control",
-        attrs: { type: "text", id: "form15", name: "final_price" },
+        attrs: { type: "text", name: "final_price" },
         domProps: { value: _vm.price_definition.retail_price },
         on: {
           input: function($event) {
@@ -74967,9 +74996,156 @@ var render = function() {
         }
       }),
       _vm._v(" "),
-      _c("label", { attrs: { for: "form15" } }, [
-        _vm._v(_vm._s(_vm.lang("Retail Price")))
-      ])
+      _c("label", {}, [_vm._v(_vm._s(_vm.lang("Retail Price")))])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "md-form" }, [
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.price_definition.retail_price,
+            expression: "price_definition.retail_price"
+          }
+        ],
+        staticClass: "form-control",
+        attrs: { type: "text", name: "final_price" },
+        domProps: { value: _vm.price_definition.retail_price },
+        on: {
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.$set(_vm.price_definition, "retail_price", $event.target.value)
+          }
+        }
+      }),
+      _vm._v(" "),
+      _c("label", {}, [_vm._v(_vm._s(_vm.lang("Final Circulation")))])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "md-form" }, [
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.price_definition.retail_price,
+            expression: "price_definition.retail_price"
+          }
+        ],
+        staticClass: "form-control",
+        attrs: { type: "text", name: "final_price" },
+        domProps: { value: _vm.price_definition.retail_price },
+        on: {
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.$set(_vm.price_definition, "retail_price", $event.target.value)
+          }
+        }
+      }),
+      _vm._v(" "),
+      _c("label", {}, [_vm._v(_vm._s(_vm.lang("Final Print Price")))])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "page-name-xl mb-4 mt-3" }, [
+      _vm._v(_vm._s(_vm.lang("Add Print Offers")))
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "files mt-2 mb-2" },
+      _vm._l(_vm.offer.files, function(file, index) {
+        return _c(
+          "div",
+          { staticClass: "file-box file-box-l d-flex align-items-center" },
+          [
+            _c(
+              "a",
+              {
+                staticClass: "file-icon",
+                attrs: { href: file.link },
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    _vm.documentDownload(file.link)
+                  }
+                }
+              },
+              [_vm._v(_vm._s(file.title))]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "file-box-sty ml-auto d-flex" }, [
+              _c(
+                "a",
+                {
+                  attrs: {
+                    href: "human_resources/employee/" + file.owner.id + "/show"
+                  }
+                },
+                [
+                  _c("img", {
+                    staticClass: "profile-m-1 mr-1 align-self-center",
+                    attrs: { src: file.owner.image }
+                  }),
+                  _vm._v(_vm._s(file.owner.name))
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "file-box-sty" }, [
+              _vm._v(
+                _vm._s(_vm._f("moment")(file.created_at.date, "DD.MM.YYYY."))
+              )
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "file-box-sty icon icon-download",
+                on: {
+                  click: function($event) {
+                    _vm.documentDownload(file.link)
+                  }
+                }
+              },
+              [_vm._v("Preuzmi")]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "file-box-sty icon icon-cancel",
+                on: {
+                  click: function($event) {
+                    _vm.fileWarning(file.id, _vm.offer.id)
+                  }
+                }
+              },
+              [_vm._v("Obriši")]
+            )
+          ]
+        )
+      })
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "justify-content-center d-flex mb-4" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-neutral",
+          attrs: { type: "button" },
+          on: {
+            click: function($event) {
+              _vm.documentAdd("initial-documents")
+            }
+          }
+        },
+        [_vm._v(_vm._s(_vm.lang("Upload")))]
+      )
     ])
   ])
 }

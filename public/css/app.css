@@ -26800,11 +26800,11 @@ button.toast-close-button {
 }
 
 .sk-skin .steps-notif {
-  background-color: #262A33;
-  opacity: .85;
-  padding: 9.6rem;
-  color: white;
-  margin-top: -319px;
+  font-size: 2rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: -.15rem;
+  color: #D93600;
 }
 
 .sk-skin .file-box a {
@@ -26949,11 +26949,26 @@ button.toast-close-button {
 
 .sk-skin .side-nav .brand {
   height: 160px;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 
 .sk-skin .side-nav .brand a {
   height: auto;
   padding-left: 0;
+}
+
+.sk-skin .side-nav .brand a:last-child {
+  font-size: .75rem;
+  margin-top: .5rem;
+  line-height: 1rem;
+  color: #fff;
+}
+
+.sk-skin .side-nav .brand a:last-child:hover {
+  color: #6FBAD5;
 }
 
 .sk-skin .side-nav .brand > div {
