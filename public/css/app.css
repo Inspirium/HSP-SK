@@ -32372,7 +32372,9 @@ input.md-form.addon {
 .btn-start-icon:before,
 .btn-stop-icon:before,
 .btn-plus-icon:before,
-.btn-clock-icon:before {
+.btn-clock-icon:before,
+.btn-skip-icon:before,
+.btn-done-icon:before {
   color: #fff;
   font-family: FontAwesome;
   margin-right: 1.1rem;
@@ -32409,6 +32411,16 @@ input.md-form.addon {
 .btn-clock-icon:before {
   content: "\F017";
   font-size: 3.6rem;
+}
+
+.btn-skip-icon:before {
+  content: "\F01E";
+  font-size: 2.4rem;
+}
+
+.btn-done-icon:before {
+  content: "\F058";
+  font-size: 2.4rem;
 }
 
 .color-grey i {
