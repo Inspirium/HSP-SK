@@ -7920,6 +7920,26 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         total2: function total2() {
             return Number(this.price_definition.price_second_year.retail) + Number(this.price_definition.price_second_year.wholesale) + Number(this.price_definition.price_second_year.direct) + Number(this.price_definition.price_second_year.field) + Number(this.price_definition.price_second_year.promotors) + Number(this.price_definition.price_second_year.export);
         }
+    },
+    methods: {
+        documentAdd: function documentAdd(id) {
+            jQuery('#' + id).modal('show');
+        },
+        documentDownload: function documentDownload(link) {
+            window.open(link, "_blank");
+            return false;
+        },
+        fileWarning: function fileWarning(id, isFinal) {
+            this.$store.dispatch('proposition/listenForWarning', { vue: this, data: { id: id, isFinal: isFinal } });
+            jQuery('#modal-warning').modal('show');
+        },
+
+        fileAdd: function fileAdd(data) {
+            this.$store.commit('proposition/price_definition/addFile', data);
+        },
+        fileNameSave: function fileNameSave(data) {
+            this.$store.dispatch('proposition/price_definition/filenameSave', { id: data.file.id, title: data.file.title });
+        }
     }
 });
 
@@ -74501,653 +74521,696 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "content" }, [
-    _c("div", { staticClass: "page-name-xl mb-4 mt-3" }, [
-      _vm._v(_vm._s(_vm.lang("Circulation")))
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-md-6" }, [
-        _c("div", { staticClass: "page-name-l mb-4" }, [
-          _vm._v(_vm._s(_vm.lang("0-12 Months")))
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "md-form" }, [
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.price_definition.price_first_year.retail,
-                expression: "price_definition.price_first_year.retail"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: { type: "text", id: "retail", name: "retail" },
-            domProps: { value: _vm.price_definition.price_first_year.retail },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(
-                  _vm.price_definition.price_first_year,
-                  "retail",
-                  $event.target.value
-                )
-              }
-            }
-          }),
+  return _c(
+    "div",
+    { staticClass: "content" },
+    [
+      _c("div", { staticClass: "page-name-xl mb-4 mt-3" }, [
+        _vm._v(_vm._s(_vm.lang("Circulation")))
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-md-6" }, [
+          _c("div", { staticClass: "page-name-l mb-4" }, [
+            _vm._v(_vm._s(_vm.lang("0-12 Months")))
+          ]),
           _vm._v(" "),
-          _c("label", { attrs: { for: "retail" } }, [
-            _vm._v(_vm._s(_vm.lang("Retail")))
+          _c("div", { staticClass: "md-form" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.price_definition.price_first_year.retail,
+                  expression: "price_definition.price_first_year.retail"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", id: "retail", name: "retail" },
+              domProps: { value: _vm.price_definition.price_first_year.retail },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(
+                    _vm.price_definition.price_first_year,
+                    "retail",
+                    $event.target.value
+                  )
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("label", { attrs: { for: "retail" } }, [
+              _vm._v(_vm._s(_vm.lang("Retail")))
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "md-form" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.price_definition.price_first_year.wholesale,
+                  expression: "price_definition.price_first_year.wholesale"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", id: "wholesale", name: "wholesale" },
+              domProps: {
+                value: _vm.price_definition.price_first_year.wholesale
+              },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(
+                    _vm.price_definition.price_first_year,
+                    "wholesale",
+                    $event.target.value
+                  )
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("label", { attrs: { for: "wholesale" } }, [
+              _vm._v(_vm._s(_vm.lang("Wholesale")))
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "md-form" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.price_definition.price_first_year.field,
+                  expression: "price_definition.price_first_year.field"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", id: "field", name: "field" },
+              domProps: { value: _vm.price_definition.price_first_year.field },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(
+                    _vm.price_definition.price_first_year,
+                    "field",
+                    $event.target.value
+                  )
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("label", { attrs: { for: "field" } }, [
+              _vm._v(_vm._s(_vm.lang("Field Sales")))
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "md-form" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.price_definition.price_first_year.direct,
+                  expression: "price_definition.price_first_year.direct"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", id: "direct", name: "direct" },
+              domProps: { value: _vm.price_definition.price_first_year.direct },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(
+                    _vm.price_definition.price_first_year,
+                    "direct",
+                    $event.target.value
+                  )
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("label", { attrs: { for: "direct" } }, [
+              _vm._v(_vm._s(_vm.lang("Direct Sales")))
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "md-form" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.price_definition.price_first_year.promotors,
+                  expression: "price_definition.price_first_year.promotors"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", id: "promotors", name: "promotors" },
+              domProps: {
+                value: _vm.price_definition.price_first_year.promotors
+              },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(
+                    _vm.price_definition.price_first_year,
+                    "promotors",
+                    $event.target.value
+                  )
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("label", { attrs: { for: "promotors" } }, [
+              _vm._v(_vm._s(_vm.lang("Promotors")))
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "md-form" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.price_definition.price_first_year.export,
+                  expression: "price_definition.price_first_year.export"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", id: "export", name: "export" },
+              domProps: { value: _vm.price_definition.price_first_year.export },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(
+                    _vm.price_definition.price_first_year,
+                    "export",
+                    $event.target.value
+                  )
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("label", { attrs: { for: "export" } }, [
+              _vm._v(_vm._s(_vm.lang("Export")))
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "page-name-m mt-4" }, [
+            _vm._v(_vm._s(_vm.lang("Total")))
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-inline mb-3 display-4" }, [
+            _vm._v(_vm._s(_vm.total))
           ])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "md-form" }, [
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.price_definition.price_first_year.wholesale,
-                expression: "price_definition.price_first_year.wholesale"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: { type: "text", id: "wholesale", name: "wholesale" },
-            domProps: {
-              value: _vm.price_definition.price_first_year.wholesale
-            },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(
-                  _vm.price_definition.price_first_year,
-                  "wholesale",
-                  $event.target.value
-                )
-              }
-            }
-          }),
+        _c("div", { staticClass: "col-md-6" }, [
+          _c("div", { staticClass: "page-name-l mb-4" }, [
+            _vm._v(_vm._s(_vm.lang("12-24 Months")))
+          ]),
           _vm._v(" "),
-          _c("label", { attrs: { for: "wholesale" } }, [
-            _vm._v(_vm._s(_vm.lang("Wholesale")))
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "md-form" }, [
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.price_definition.price_first_year.field,
-                expression: "price_definition.price_first_year.field"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: { type: "text", id: "field", name: "field" },
-            domProps: { value: _vm.price_definition.price_first_year.field },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
+          _c("div", { staticClass: "md-form" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.price_definition.price_second_year.retail,
+                  expression: "price_definition.price_second_year.retail"
                 }
-                _vm.$set(
-                  _vm.price_definition.price_first_year,
-                  "field",
-                  $event.target.value
-                )
-              }
-            }
-          }),
-          _vm._v(" "),
-          _c("label", { attrs: { for: "field" } }, [
-            _vm._v(_vm._s(_vm.lang("Field Sales")))
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "md-form" }, [
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.price_definition.price_first_year.direct,
-                expression: "price_definition.price_first_year.direct"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: { type: "text", id: "direct", name: "direct" },
-            domProps: { value: _vm.price_definition.price_first_year.direct },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", id: "retail2", name: "retail_24" },
+              domProps: {
+                value: _vm.price_definition.price_second_year.retail
+              },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(
+                    _vm.price_definition.price_second_year,
+                    "retail",
+                    $event.target.value
+                  )
                 }
-                _vm.$set(
-                  _vm.price_definition.price_first_year,
-                  "direct",
-                  $event.target.value
-                )
               }
-            }
-          }),
+            }),
+            _vm._v(" "),
+            _c("label", { attrs: { for: "retail2" } }, [
+              _vm._v(_vm._s(_vm.lang("Retail")))
+            ])
+          ]),
           _vm._v(" "),
-          _c("label", { attrs: { for: "direct" } }, [
-            _vm._v(_vm._s(_vm.lang("Direct Sales")))
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "md-form" }, [
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.price_definition.price_first_year.promotors,
-                expression: "price_definition.price_first_year.promotors"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: { type: "text", id: "promotors", name: "promotors" },
-            domProps: {
-              value: _vm.price_definition.price_first_year.promotors
-            },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
+          _c("div", { staticClass: "md-form" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.price_definition.price_second_year.wholesale,
+                  expression: "price_definition.price_second_year.wholesale"
                 }
-                _vm.$set(
-                  _vm.price_definition.price_first_year,
-                  "promotors",
-                  $event.target.value
-                )
-              }
-            }
-          }),
-          _vm._v(" "),
-          _c("label", { attrs: { for: "promotors" } }, [
-            _vm._v(_vm._s(_vm.lang("Promotors")))
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "md-form" }, [
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.price_definition.price_first_year.export,
-                expression: "price_definition.price_first_year.export"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: { type: "text", id: "export", name: "export" },
-            domProps: { value: _vm.price_definition.price_first_year.export },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", id: "wholesale2", name: "wholesale_24" },
+              domProps: {
+                value: _vm.price_definition.price_second_year.wholesale
+              },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(
+                    _vm.price_definition.price_second_year,
+                    "wholesale",
+                    $event.target.value
+                  )
                 }
-                _vm.$set(
-                  _vm.price_definition.price_first_year,
-                  "export",
-                  $event.target.value
-                )
               }
-            }
-          }),
+            }),
+            _vm._v(" "),
+            _c("label", { attrs: { for: "wholesale2" } }, [
+              _vm._v(_vm._s(_vm.lang("Wholesale")))
+            ])
+          ]),
           _vm._v(" "),
-          _c("label", { attrs: { for: "export" } }, [
-            _vm._v(_vm._s(_vm.lang("Export")))
+          _c("div", { staticClass: "md-form" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.price_definition.price_second_year.field,
+                  expression: "price_definition.price_second_year.field"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", id: "field2", name: "field_24" },
+              domProps: { value: _vm.price_definition.price_second_year.field },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(
+                    _vm.price_definition.price_second_year,
+                    "field",
+                    $event.target.value
+                  )
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("label", { attrs: { for: "field2" } }, [
+              _vm._v(_vm._s(_vm.lang("Field Sales")))
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "md-form" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.price_definition.price_second_year.direct,
+                  expression: "price_definition.price_second_year.direct"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", id: "direct2", name: "direct_24" },
+              domProps: {
+                value: _vm.price_definition.price_second_year.direct
+              },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(
+                    _vm.price_definition.price_second_year,
+                    "direct",
+                    $event.target.value
+                  )
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("label", { attrs: { for: "direct2" } }, [
+              _vm._v(_vm._s(_vm.lang("Direct Sales")))
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "md-form" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.price_definition.price_second_year.promotors,
+                  expression: "price_definition.price_second_year.promotors"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", id: "promotors2", name: "promotors_24" },
+              domProps: {
+                value: _vm.price_definition.price_second_year.promotors
+              },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(
+                    _vm.price_definition.price_second_year,
+                    "promotors",
+                    $event.target.value
+                  )
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("label", { attrs: { for: "promotors2" } }, [
+              _vm._v(_vm._s(_vm.lang("Promotors")))
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "md-form" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.price_definition.price_second_year.export,
+                  expression: "price_definition.price_second_year.export"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", id: "export2", name: "export_24" },
+              domProps: {
+                value: _vm.price_definition.price_second_year.export
+              },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(
+                    _vm.price_definition.price_second_year,
+                    "export",
+                    $event.target.value
+                  )
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("label", { attrs: { for: "export2" } }, [
+              _vm._v(_vm._s(_vm.lang("Export")))
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "page-name-m mt-4" }, [
+            _vm._v(_vm._s(_vm.lang("Total")))
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-inline mb-3 display-4" }, [
+            _vm._v(_vm._s(_vm.total2))
           ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "page-name-m mt-4" }, [
-          _vm._v(_vm._s(_vm.lang("Total")))
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "form-inline mb-3 display-4" }, [
-          _vm._v(_vm._s(_vm.total))
         ])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "col-md-6" }, [
-        _c("div", { staticClass: "page-name-l mb-4" }, [
-          _vm._v(_vm._s(_vm.lang("12-24 Months")))
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "md-form" }, [
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.price_definition.price_second_year.retail,
-                expression: "price_definition.price_second_year.retail"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: { type: "text", id: "retail2", name: "retail_24" },
-            domProps: { value: _vm.price_definition.price_second_year.retail },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(
-                  _vm.price_definition.price_second_year,
-                  "retail",
-                  $event.target.value
-                )
-              }
-            }
-          }),
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-md-12" }, [
+          _c("div", { staticClass: "page-name-l mt-4 mb-3" }, [
+            _vm._v(_vm._s(_vm.lang("Circulation")))
+          ]),
           _vm._v(" "),
-          _c("label", { attrs: { for: "retail2" } }, [
-            _vm._v(_vm._s(_vm.lang("Retail")))
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "md-form" }, [
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.price_definition.price_second_year.wholesale,
-                expression: "price_definition.price_second_year.wholesale"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: { type: "text", id: "wholesale2", name: "wholesale_24" },
-            domProps: {
-              value: _vm.price_definition.price_second_year.wholesale
-            },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(
-                  _vm.price_definition.price_second_year,
-                  "wholesale",
-                  $event.target.value
-                )
-              }
-            }
-          }),
-          _vm._v(" "),
-          _c("label", { attrs: { for: "wholesale2" } }, [
-            _vm._v(_vm._s(_vm.lang("Wholesale")))
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "md-form" }, [
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.price_definition.price_second_year.field,
-                expression: "price_definition.price_second_year.field"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: { type: "text", id: "field2", name: "field_24" },
-            domProps: { value: _vm.price_definition.price_second_year.field },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(
-                  _vm.price_definition.price_second_year,
-                  "field",
-                  $event.target.value
-                )
-              }
-            }
-          }),
-          _vm._v(" "),
-          _c("label", { attrs: { for: "field2" } }, [
-            _vm._v(_vm._s(_vm.lang("Field Sales")))
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "md-form" }, [
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.price_definition.price_second_year.direct,
-                expression: "price_definition.price_second_year.direct"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: { type: "text", id: "direct2", name: "direct_24" },
-            domProps: { value: _vm.price_definition.price_second_year.direct },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(
-                  _vm.price_definition.price_second_year,
-                  "direct",
-                  $event.target.value
-                )
-              }
-            }
-          }),
-          _vm._v(" "),
-          _c("label", { attrs: { for: "direct2" } }, [
-            _vm._v(_vm._s(_vm.lang("Direct Sales")))
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "md-form" }, [
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.price_definition.price_second_year.promotors,
-                expression: "price_definition.price_second_year.promotors"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: { type: "text", id: "promotors2", name: "promotors_24" },
-            domProps: {
-              value: _vm.price_definition.price_second_year.promotors
-            },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(
-                  _vm.price_definition.price_second_year,
-                  "promotors",
-                  $event.target.value
-                )
-              }
-            }
-          }),
-          _vm._v(" "),
-          _c("label", { attrs: { for: "promotors2" } }, [
-            _vm._v(_vm._s(_vm.lang("Promotors")))
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "md-form" }, [
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.price_definition.price_second_year.export,
-                expression: "price_definition.price_second_year.export"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: { type: "text", id: "export2", name: "export_24" },
-            domProps: { value: _vm.price_definition.price_second_year.export },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(
-                  _vm.price_definition.price_second_year,
-                  "export",
-                  $event.target.value
-                )
-              }
-            }
-          }),
-          _vm._v(" "),
-          _c("label", { attrs: { for: "export2" } }, [
-            _vm._v(_vm._s(_vm.lang("Export")))
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "page-name-m mt-4" }, [
-          _vm._v(_vm._s(_vm.lang("Total")))
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "form-inline mb-3 display-4" }, [
-          _vm._v(_vm._s(_vm.total2))
-        ])
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-md-12" }, [
-        _c("div", { staticClass: "page-name-l mt-4 mb-3" }, [
-          _vm._v(_vm._s(_vm.lang("Circulation")))
-        ]),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "mb-3" },
-          _vm._l(_vm.price_definition.offers, function(title, id) {
-            return _c("fieldset", { staticClass: "form-group" }, [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.price_definition.selected_circulation,
-                    expression: "price_definition.selected_circulation"
+          _c(
+            "div",
+            { staticClass: "mb-3" },
+            _vm._l(_vm.price_definition.offers, function(title, id) {
+              return _c("fieldset", { staticClass: "form-group" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.price_definition.selected_circulation,
+                      expression: "price_definition.selected_circulation"
+                    }
+                  ],
+                  attrs: {
+                    type: "radio",
+                    id: "cir-" + id,
+                    name: "circulations"
+                  },
+                  domProps: {
+                    value: id,
+                    checked: _vm._q(
+                      _vm.price_definition.selected_circulation,
+                      id
+                    )
+                  },
+                  on: {
+                    change: function($event) {
+                      _vm.$set(_vm.price_definition, "selected_circulation", id)
+                    }
                   }
-                ],
-                attrs: { type: "radio", id: "cir-" + id, name: "circulations" },
-                domProps: {
-                  value: id,
-                  checked: _vm._q(_vm.price_definition.selected_circulation, id)
-                },
-                on: {
-                  change: function($event) {
-                    _vm.$set(_vm.price_definition, "selected_circulation", id)
-                  }
-                }
-              }),
-              _vm._v(" "),
-              _c("label", { attrs: { for: "cir-" + id } }, [
-                _vm._v(_vm._s(title))
+                }),
+                _vm._v(" "),
+                _c("label", { attrs: { for: "cir-" + id } }, [
+                  _vm._v(_vm._s(title))
+                ])
               ])
-            ])
-          })
-        )
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "page-name-xl mb-4 mt-3" }, [
-      _vm._v(_vm._s(_vm.lang("Retail price definition")))
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "md-form" }, [
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.price_definition.retail_price,
-            expression: "price_definition.retail_price"
-          }
-        ],
-        staticClass: "form-control",
-        attrs: { type: "text", name: "final_price" },
-        domProps: { value: _vm.price_definition.retail_price },
-        on: {
-          input: function($event) {
-            if ($event.target.composing) {
-              return
-            }
-            _vm.$set(_vm.price_definition, "retail_price", $event.target.value)
-          }
-        }
-      }),
+            })
+          )
+        ])
+      ]),
       _vm._v(" "),
-      _c("label", {}, [_vm._v(_vm._s(_vm.lang("Retail Price")))])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "md-form" }, [
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.price_definition.retail_price,
-            expression: "price_definition.retail_price"
-          }
-        ],
-        staticClass: "form-control",
-        attrs: { type: "text", name: "final_price" },
-        domProps: { value: _vm.price_definition.retail_price },
-        on: {
-          input: function($event) {
-            if ($event.target.composing) {
-              return
-            }
-            _vm.$set(_vm.price_definition, "retail_price", $event.target.value)
-          }
-        }
-      }),
+      _c("div", { staticClass: "page-name-xl mb-4 mt-3" }, [
+        _vm._v(_vm._s(_vm.lang("Retail price definition")))
+      ]),
       _vm._v(" "),
-      _c("label", {}, [_vm._v(_vm._s(_vm.lang("Final Circulation")))])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "md-form" }, [
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.price_definition.retail_price,
-            expression: "price_definition.retail_price"
-          }
-        ],
-        staticClass: "form-control",
-        attrs: { type: "text", name: "final_price" },
-        domProps: { value: _vm.price_definition.retail_price },
-        on: {
-          input: function($event) {
-            if ($event.target.composing) {
-              return
+      _c("div", { staticClass: "md-form" }, [
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.price_definition.retail_price,
+              expression: "price_definition.retail_price"
             }
-            _vm.$set(_vm.price_definition, "retail_price", $event.target.value)
+          ],
+          staticClass: "form-control",
+          attrs: { type: "text" },
+          domProps: { value: _vm.price_definition.retail_price },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(
+                _vm.price_definition,
+                "retail_price",
+                $event.target.value
+              )
+            }
           }
-        }
-      }),
+        }),
+        _vm._v(" "),
+        _c("label", {}, [_vm._v(_vm._s(_vm.lang("Retail Price")))])
+      ]),
       _vm._v(" "),
-      _c("label", {}, [_vm._v(_vm._s(_vm.lang("Final Print Price")))])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "page-name-xl mb-4 mt-3" }, [
-      _vm._v(_vm._s(_vm.lang("Add Print Offers")))
-    ]),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "files mt-2 mb-2" },
-      _vm._l(_vm.offer.files, function(file, index) {
-        return _c(
-          "div",
-          { staticClass: "file-box file-box-l d-flex align-items-center" },
-          [
-            _c(
-              "a",
-              {
-                staticClass: "file-icon",
-                attrs: { href: file.link },
-                on: {
-                  click: function($event) {
-                    $event.preventDefault()
-                    _vm.documentDownload(file.link)
-                  }
-                }
-              },
-              [_vm._v(_vm._s(file.title))]
-            ),
-            _vm._v(" "),
-            _c("div", { staticClass: "file-box-sty ml-auto d-flex" }, [
+      _c("div", { staticClass: "md-form" }, [
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.price_definition.final_circulation,
+              expression: "price_definition.final_circulation"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: { type: "text" },
+          domProps: { value: _vm.price_definition.final_circulation },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(
+                _vm.price_definition,
+                "final_circulation",
+                $event.target.value
+              )
+            }
+          }
+        }),
+        _vm._v(" "),
+        _c("label", {}, [_vm._v(_vm._s(_vm.lang("Final Circulation")))])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "md-form" }, [
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.price_definition.final_print_price,
+              expression: "price_definition.final_print_price"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: { type: "text" },
+          domProps: { value: _vm.price_definition.final_print_price },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(
+                _vm.price_definition,
+                "final_print_price",
+                $event.target.value
+              )
+            }
+          }
+        }),
+        _vm._v(" "),
+        _c("label", {}, [_vm._v(_vm._s(_vm.lang("Final Print Price")))])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "page-name-xl mb-4 mt-3" }, [
+        _vm._v(_vm._s(_vm.lang("Add Print Offers")))
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "files mt-2 mb-2" },
+        _vm._l(_vm.price_definition.print_offers, function(file) {
+          return _c(
+            "div",
+            { staticClass: "file-box file-box-l d-flex align-items-center" },
+            [
               _c(
                 "a",
                 {
-                  attrs: {
-                    href: "human_resources/employee/" + file.owner.id + "/show"
+                  staticClass: "file-icon",
+                  attrs: { href: file.link },
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      _vm.documentDownload(file.link)
+                    }
                   }
                 },
-                [
-                  _c("img", {
-                    staticClass: "profile-m-1 mr-1 align-self-center",
-                    attrs: { src: file.owner.image }
-                  }),
-                  _vm._v(_vm._s(file.owner.name))
-                ]
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "file-box-sty" }, [
-              _vm._v(
-                _vm._s(_vm._f("moment")(file.created_at.date, "DD.MM.YYYY."))
-              )
-            ]),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "file-box-sty icon icon-download",
-                on: {
-                  click: function($event) {
-                    _vm.documentDownload(file.link)
+                [_vm._v(_vm._s(file.title))]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "file-box-sty ml-auto d-flex" }, [
+                _c(
+                  "a",
+                  {
+                    attrs: {
+                      href:
+                        "human_resources/employee/" + file.owner.id + "/show"
+                    }
+                  },
+                  [
+                    _c("img", {
+                      staticClass: "profile-m-1 mr-1 align-self-center",
+                      attrs: { src: file.owner.image }
+                    }),
+                    _vm._v(_vm._s(file.owner.name))
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "file-box-sty" }, [
+                _vm._v(
+                  _vm._s(_vm._f("moment")(file.created_at.date, "DD.MM.YYYY."))
+                )
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "file-box-sty icon icon-download",
+                  on: {
+                    click: function($event) {
+                      _vm.documentDownload(file.link)
+                    }
                   }
-                }
-              },
-              [_vm._v("Preuzmi")]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "file-box-sty icon icon-cancel",
-                on: {
-                  click: function($event) {
-                    _vm.fileWarning(file.id, _vm.offer.id)
+                },
+                [_vm._v("Preuzmi")]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "file-box-sty icon icon-cancel",
+                  on: {
+                    click: function($event) {
+                      _vm.fileWarning(file.id, "print_offers")
+                    }
                   }
-                }
-              },
-              [_vm._v("Obriši")]
-            )
-          ]
-        )
-      })
-    ),
-    _vm._v(" "),
-    _c("div", { staticClass: "justify-content-center d-flex mb-4" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-neutral",
-          attrs: { type: "button" },
-          on: {
-            click: function($event) {
-              _vm.documentAdd("initial-documents")
+                },
+                [_vm._v("Obriši")]
+              )
+            ]
+          )
+        })
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "justify-content-center d-flex mb-4" }, [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-neutral",
+            attrs: { type: "button" },
+            on: {
+              click: function($event) {
+                _vm.documentAdd("print_offers")
+              }
             }
-          }
+          },
+          [_vm._v(_vm._s(_vm.lang("Upload")))]
+        )
+      ]),
+      _vm._v(" "),
+      _c("upload-modal", {
+        attrs: {
+          id: "print_offers",
+          action: "/api/file",
+          accept: ".pdf, .doc, .docx, .xls, .xlsx",
+          disk: "proposition",
+          dir: "print_offers",
+          isFinal: "print_offers"
         },
-        [_vm._v(_vm._s(_vm.lang("Upload")))]
-      )
-    ])
-  ])
+        on: { fileAdd: _vm.fileAdd, fileNameSave: _vm.fileNameSave }
+      })
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -104399,7 +104462,7 @@ module.exports = Component.exports
 
 
 var routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_33__components_proposition_PropositionList___default.a }, { path: '/proposition', component: __WEBPACK_IMPORTED_MODULE_0__components_proposition_Proposition___default.a, name: 'proposition',
-    children: [{ path: 'start', component: __WEBPACK_IMPORTED_MODULE_18__components_proposition_PropositionStart___default.a, meta: { save: 'start', breadcrumb: 'Start', warning: 'proposition/deleteProposition' } }, { path: ':id/edit/start', component: __WEBPACK_IMPORTED_MODULE_18__components_proposition_PropositionStart___default.a, meta: { save: 'start', validate: { id: 'int' }, breadcrumb: 'Start', warning: 'proposition/deleteProposition' } }, { path: ':id/edit/basic_data', component: __WEBPACK_IMPORTED_MODULE_1__components_proposition_BasicData___default.a, meta: { save: 'basic_data', validate: { id: 'int' }, breadcrumb: 'Basic Data', warning: 'proposition/basic_data/deleteFile' } }, { path: ':id/edit/categorization', component: __WEBPACK_IMPORTED_MODULE_2__components_proposition_Categorization___default.a, meta: { save: 'categorization', validate: { id: 'int' }, breadcrumb: 'Categorization' } }, { path: ':id/edit/market_potential', component: __WEBPACK_IMPORTED_MODULE_3__components_proposition_MarketPotential___default.a, meta: { save: 'market_potential', validate: { id: 'int' }, breadcrumb: 'Market Potential', warning: 'proposition/market_potential/deleteFile' } }, { path: ':id/edit/technical_data', component: __WEBPACK_IMPORTED_MODULE_4__components_proposition_TechnicalData___default.a, meta: { save: 'technical_data', validate: { id: 'int' }, breadcrumb: 'Technical Data' } }, { path: ':id/edit/print', component: __WEBPACK_IMPORTED_MODULE_7__components_proposition_Print___default.a, meta: { save: 'print', validate: { id: 'int' }, breadcrumb: 'Print', warning: 'proposition/print/deleteFile' } }, { path: ':id/edit/authors_expense', component: __WEBPACK_IMPORTED_MODULE_5__components_proposition_AuthorsExpense___default.a, meta: { save: 'authors_expense', validate: { id: 'int' }, breadcrumb: 'Authors Expense' } }, { path: ':id/edit/production_expense', component: __WEBPACK_IMPORTED_MODULE_9__components_proposition_ProductionExpense___default.a, meta: { save: 'production_expense', validate: { id: 'int' }, breadcrumb: 'Production Expense' } }, { path: ':id/edit/marketing_expense', component: __WEBPACK_IMPORTED_MODULE_10__components_proposition_MarketingExpense___default.a, meta: { save: 'marketing_expense', validate: { id: 'int' }, breadcrumb: 'Marketing Expense' } }, { path: ':id/edit/distribution_expense', component: __WEBPACK_IMPORTED_MODULE_12__components_proposition_DistributionExpense___default.a, meta: { save: 'distribution_expense', validate: { id: 'int' }, breadcrumb: 'Distribution Expense' } }, { path: ':id/edit/layout_expense', component: __WEBPACK_IMPORTED_MODULE_14__components_proposition_LayoutExpense___default.a, meta: { save: 'layout_expense', validate: { id: 'int' }, breadcrumb: 'Layout Expense' } }, { path: ':id/edit/deadline', component: __WEBPACK_IMPORTED_MODULE_16__components_proposition_Deadline___default.a, meta: { save: 'deadline', validate: { id: 'int' }, breadcrumb: 'Deadline' } }, { path: ':id/edit/calculation', component: __WEBPACK_IMPORTED_MODULE_17__components_proposition_Calculation___default.a, meta: { save: 'calculation', validate: { id: 'int' }, breadcrumb: 'Calculation' } }, { path: ':id/preparation/translation', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'translation', validate: { id: 'int' }, breadcrumb: 'Translation', warning: 'proposition/files/deleteFile' } }, { path: ':id/preparation/technical_preparation', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'technical_preparation', validate: { id: 'int' }, breadcrumb: 'Technical Preparation', warning: 'proposition/files/deleteFile' } }, { path: ':id/preparation/proofreading', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'proofreading', validate: { id: 'int' }, breadcrumb: 'Proofreading', warning: 'proposition/files/deleteFile' } }, { path: ':id/preparation/additional_materials', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'additional_materials', validate: { id: 'int' }, breadcrumb: 'Additional Materials', warning: 'proposition/files/deleteFile' } }, { path: ':id/preparation/reviews', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'reviews', validate: { id: 'int' }, breadcrumb: 'Reviews', warning: 'proposition/files/deleteFile' } }, { path: ':id/preparation/lecture', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'lecture', validate: { id: 'int' }, breadcrumb: 'Lecture', warning: 'proposition/files/deleteFile' } }, { path: ':id/preparation/technical_correction', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'technical_correction', validate: { id: 'int' }, breadcrumb: 'Technical Correction', warning: 'proposition/files/deleteFile' } }, { path: ':id/preparation/final_review', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'final_review', validate: { id: 'int' }, breadcrumb: 'Final Review', warning: 'proposition/files/deleteFile' } }, { path: ':id/expenses/authors_expense', component: __WEBPACK_IMPORTED_MODULE_6__components_proposition_expenses_AuthorsExpense___default.a, meta: { save: 'authors_expense', validate: { id: 'int' }, breadcrumb: 'Authors Expense', 'type': 'expense' } }, { path: ':id/expenses/production_expense', component: __WEBPACK_IMPORTED_MODULE_8__components_proposition_expenses_ProductionExpense___default.a, meta: { save: 'production_expense', validate: { id: 'int' }, breadcrumb: 'Production Expense', 'type': 'expense' } }, { path: ':id/expenses/marketing_expense', component: __WEBPACK_IMPORTED_MODULE_11__components_proposition_expenses_MarketingExpense___default.a, meta: { save: 'marketing_expense', validate: { id: 'int' }, breadcrumb: 'Marketing Expense', 'type': 'expense' } }, { path: ':id/expenses/distribution_expense', component: __WEBPACK_IMPORTED_MODULE_13__components_proposition_expenses_DistributionExpense___default.a, meta: { save: 'distribution_expense', validate: { id: 'int' }, breadcrumb: 'Distribution Expense', 'type': 'expense' } }, { path: ':id/expenses/layout_expense', component: __WEBPACK_IMPORTED_MODULE_15__components_proposition_expenses_LayoutExpense___default.a, meta: { save: 'layout_expense', validate: { id: 'int' }, breadcrumb: 'Layout Expense', 'type': 'expense' } }, { path: ':id/expenses/compare', component: __WEBPACK_IMPORTED_MODULE_19__components_proposition_expenses_Compare___default.a, meta: { save: 'compare', validate: { id: 'int' }, breadcrumb: 'Compare' } }, { path: ':id/design/cover_design', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'cover_design', validate: { id: 'int' }, breadcrumb: 'Cover Design', warning: 'proposition/files/deleteFile' } }, { path: ':id/design/layout_design', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'layout_design', validate: { id: 'int' }, breadcrumb: 'Layout Design', warning: 'proposition/files/deleteFile' } }, { path: ':id/layout/first_block_layout', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'first_block_layout', validate: { id: 'int' }, breadcrumb: 'First Block Layout', warning: 'proposition/files/deleteFile' } }, { path: ':id/layout/cover', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'cover', validate: { id: 'int' }, breadcrumb: 'Cover', warning: 'proposition/files/deleteFile' } }, { path: ':id/layout/layout', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'layout', validate: { id: 'int' }, breadcrumb: 'Layout', warning: 'proposition/files/deleteFile' } }, { path: ':id/layout/first_revision', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'first_revision', validate: { id: 'int' }, breadcrumb: 'First Revision', warning: 'proposition/files/deleteFile' } }, { path: ':id/layout/correction', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'correction', validate: { id: 'int' }, breadcrumb: 'Correction', warning: 'proposition/files/deleteFile' } }, { path: ':id/layout/correction_input', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'correction_input', validate: { id: 'int' }, breadcrumb: 'Correction Input', warning: 'proposition/files/deleteFile' } }, { path: ':id/layout/revisions', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'revisions', validate: { id: 'int' }, breadcrumb: 'Revisions', warning: 'proposition/files/deleteFile' } }, { path: ':id/final_price/price_definition', component: __WEBPACK_IMPORTED_MODULE_21__components_proposition_PriceDefinition___default.a, meta: { save: 'price_definition', validate: { id: 'int' }, breadcrumb: 'Price Definition' } }, { path: ':id/prepress/print_proof', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'print_proof', validate: { id: 'int' }, breadcrumb: 'Print Proof', warning: 'proposition/files/deleteFile' } }, { path: ':id/prepress/print_proof_correction', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'print_proof_correction', validate: { id: 'int' }, breadcrumb: 'Print Proof Correction', warning: 'proposition/files/deleteFile' } }, { path: ':id/prepress/print', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'print', validate: { id: 'int' }, breadcrumb: 'Print', warning: 'proposition/files/deleteFile' } }, { path: ':id/prepress/warehouse', component: __WEBPACK_IMPORTED_MODULE_22__components_proposition_Warehouse___default.a, meta: { validate: { id: 'int' }, breadcrumb: 'Warehouse' } }, { path: ':id/additionals/multimedia', component: __WEBPACK_IMPORTED_MODULE_24__components_proposition_Multimedia___default.a, meta: { save: 'files', dir: 'multimedia', validate: { id: 'int' }, breadcrumb: 'Multimedia', warning: 'proposition/multimedia/deleteFile' } }, { path: ':id/additionals/marketing', component: __WEBPACK_IMPORTED_MODULE_23__components_proposition_Marketing___default.a, meta: { save: 'files', dir: 'marketing', validate: { id: 'int' }, breadcrumb: 'Marketing', warning: 'proposition/marketing/deleteFile' } }]
+    children: [{ path: 'start', component: __WEBPACK_IMPORTED_MODULE_18__components_proposition_PropositionStart___default.a, meta: { save: 'start', breadcrumb: 'Start', warning: 'proposition/deleteProposition' } }, { path: ':id/edit/start', component: __WEBPACK_IMPORTED_MODULE_18__components_proposition_PropositionStart___default.a, meta: { save: 'start', validate: { id: 'int' }, breadcrumb: 'Start', warning: 'proposition/deleteProposition' } }, { path: ':id/edit/basic_data', component: __WEBPACK_IMPORTED_MODULE_1__components_proposition_BasicData___default.a, meta: { save: 'basic_data', validate: { id: 'int' }, breadcrumb: 'Basic Data', warning: 'proposition/basic_data/deleteFile' } }, { path: ':id/edit/categorization', component: __WEBPACK_IMPORTED_MODULE_2__components_proposition_Categorization___default.a, meta: { save: 'categorization', validate: { id: 'int' }, breadcrumb: 'Categorization' } }, { path: ':id/edit/market_potential', component: __WEBPACK_IMPORTED_MODULE_3__components_proposition_MarketPotential___default.a, meta: { save: 'market_potential', validate: { id: 'int' }, breadcrumb: 'Market Potential', warning: 'proposition/market_potential/deleteFile' } }, { path: ':id/edit/technical_data', component: __WEBPACK_IMPORTED_MODULE_4__components_proposition_TechnicalData___default.a, meta: { save: 'technical_data', validate: { id: 'int' }, breadcrumb: 'Technical Data' } }, { path: ':id/edit/print', component: __WEBPACK_IMPORTED_MODULE_7__components_proposition_Print___default.a, meta: { save: 'print', validate: { id: 'int' }, breadcrumb: 'Print', warning: 'proposition/print/deleteFile' } }, { path: ':id/edit/authors_expense', component: __WEBPACK_IMPORTED_MODULE_5__components_proposition_AuthorsExpense___default.a, meta: { save: 'authors_expense', validate: { id: 'int' }, breadcrumb: 'Authors Expense' } }, { path: ':id/edit/production_expense', component: __WEBPACK_IMPORTED_MODULE_9__components_proposition_ProductionExpense___default.a, meta: { save: 'production_expense', validate: { id: 'int' }, breadcrumb: 'Production Expense' } }, { path: ':id/edit/marketing_expense', component: __WEBPACK_IMPORTED_MODULE_10__components_proposition_MarketingExpense___default.a, meta: { save: 'marketing_expense', validate: { id: 'int' }, breadcrumb: 'Marketing Expense' } }, { path: ':id/edit/distribution_expense', component: __WEBPACK_IMPORTED_MODULE_12__components_proposition_DistributionExpense___default.a, meta: { save: 'distribution_expense', validate: { id: 'int' }, breadcrumb: 'Distribution Expense' } }, { path: ':id/edit/layout_expense', component: __WEBPACK_IMPORTED_MODULE_14__components_proposition_LayoutExpense___default.a, meta: { save: 'layout_expense', validate: { id: 'int' }, breadcrumb: 'Layout Expense' } }, { path: ':id/edit/deadline', component: __WEBPACK_IMPORTED_MODULE_16__components_proposition_Deadline___default.a, meta: { save: 'deadline', validate: { id: 'int' }, breadcrumb: 'Deadline' } }, { path: ':id/edit/calculation', component: __WEBPACK_IMPORTED_MODULE_17__components_proposition_Calculation___default.a, meta: { save: 'calculation', validate: { id: 'int' }, breadcrumb: 'Calculation' } }, { path: ':id/preparation/translation', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'translation', validate: { id: 'int' }, breadcrumb: 'Translation', warning: 'proposition/files/deleteFile' } }, { path: ':id/preparation/technical_preparation', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'technical_preparation', validate: { id: 'int' }, breadcrumb: 'Technical Preparation', warning: 'proposition/files/deleteFile' } }, { path: ':id/preparation/proofreading', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'proofreading', validate: { id: 'int' }, breadcrumb: 'Proofreading', warning: 'proposition/files/deleteFile' } }, { path: ':id/preparation/additional_materials', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'additional_materials', validate: { id: 'int' }, breadcrumb: 'Additional Materials', warning: 'proposition/files/deleteFile' } }, { path: ':id/preparation/reviews', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'reviews', validate: { id: 'int' }, breadcrumb: 'Reviews', warning: 'proposition/files/deleteFile' } }, { path: ':id/preparation/lecture', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'lecture', validate: { id: 'int' }, breadcrumb: 'Lecture', warning: 'proposition/files/deleteFile' } }, { path: ':id/preparation/technical_correction', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'technical_correction', validate: { id: 'int' }, breadcrumb: 'Technical Correction', warning: 'proposition/files/deleteFile' } }, { path: ':id/preparation/final_review', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'final_review', validate: { id: 'int' }, breadcrumb: 'Final Review', warning: 'proposition/files/deleteFile' } }, { path: ':id/expenses/authors_expense', component: __WEBPACK_IMPORTED_MODULE_6__components_proposition_expenses_AuthorsExpense___default.a, meta: { save: 'authors_expense', validate: { id: 'int' }, breadcrumb: 'Authors Expense', 'type': 'expense' } }, { path: ':id/expenses/production_expense', component: __WEBPACK_IMPORTED_MODULE_8__components_proposition_expenses_ProductionExpense___default.a, meta: { save: 'production_expense', validate: { id: 'int' }, breadcrumb: 'Production Expense', 'type': 'expense' } }, { path: ':id/expenses/marketing_expense', component: __WEBPACK_IMPORTED_MODULE_11__components_proposition_expenses_MarketingExpense___default.a, meta: { save: 'marketing_expense', validate: { id: 'int' }, breadcrumb: 'Marketing Expense', 'type': 'expense' } }, { path: ':id/expenses/distribution_expense', component: __WEBPACK_IMPORTED_MODULE_13__components_proposition_expenses_DistributionExpense___default.a, meta: { save: 'distribution_expense', validate: { id: 'int' }, breadcrumb: 'Distribution Expense', 'type': 'expense' } }, { path: ':id/expenses/layout_expense', component: __WEBPACK_IMPORTED_MODULE_15__components_proposition_expenses_LayoutExpense___default.a, meta: { save: 'layout_expense', validate: { id: 'int' }, breadcrumb: 'Layout Expense', 'type': 'expense' } }, { path: ':id/expenses/compare', component: __WEBPACK_IMPORTED_MODULE_19__components_proposition_expenses_Compare___default.a, meta: { save: 'compare', validate: { id: 'int' }, breadcrumb: 'Compare' } }, { path: ':id/design/cover_design', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'cover_design', validate: { id: 'int' }, breadcrumb: 'Cover Design', warning: 'proposition/files/deleteFile' } }, { path: ':id/design/layout_design', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'layout_design', validate: { id: 'int' }, breadcrumb: 'Layout Design', warning: 'proposition/files/deleteFile' } }, { path: ':id/layout/first_block_layout', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'first_block_layout', validate: { id: 'int' }, breadcrumb: 'First Block Layout', warning: 'proposition/files/deleteFile' } }, { path: ':id/layout/cover', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'cover', validate: { id: 'int' }, breadcrumb: 'Cover', warning: 'proposition/files/deleteFile' } }, { path: ':id/layout/layout', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'layout', validate: { id: 'int' }, breadcrumb: 'Layout', warning: 'proposition/files/deleteFile' } }, { path: ':id/layout/first_revision', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'first_revision', validate: { id: 'int' }, breadcrumb: 'First Revision', warning: 'proposition/files/deleteFile' } }, { path: ':id/layout/correction', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'correction', validate: { id: 'int' }, breadcrumb: 'Correction', warning: 'proposition/files/deleteFile' } }, { path: ':id/layout/correction_input', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'correction_input', validate: { id: 'int' }, breadcrumb: 'Correction Input', warning: 'proposition/files/deleteFile' } }, { path: ':id/layout/revisions', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'revisions', validate: { id: 'int' }, breadcrumb: 'Revisions', warning: 'proposition/files/deleteFile' } }, { path: ':id/final_price/price_definition', component: __WEBPACK_IMPORTED_MODULE_21__components_proposition_PriceDefinition___default.a, meta: { save: 'price_definition', validate: { id: 'int' }, breadcrumb: 'Price Definition', warning: 'proposition/price_definition/deleteFile' } }, { path: ':id/prepress/print_proof', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'print_proof', validate: { id: 'int' }, breadcrumb: 'Print Proof', warning: 'proposition/files/deleteFile' } }, { path: ':id/prepress/print_proof_correction', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'print_proof_correction', validate: { id: 'int' }, breadcrumb: 'Print Proof Correction', warning: 'proposition/files/deleteFile' } }, { path: ':id/prepress/print', component: __WEBPACK_IMPORTED_MODULE_20__components_proposition_UploadDocument___default.a, meta: { save: 'files', dir: 'print', validate: { id: 'int' }, breadcrumb: 'Print', warning: 'proposition/files/deleteFile' } }, { path: ':id/prepress/warehouse', component: __WEBPACK_IMPORTED_MODULE_22__components_proposition_Warehouse___default.a, meta: { validate: { id: 'int' }, breadcrumb: 'Warehouse' } }, { path: ':id/additionals/multimedia', component: __WEBPACK_IMPORTED_MODULE_24__components_proposition_Multimedia___default.a, meta: { save: 'files', dir: 'multimedia', validate: { id: 'int' }, breadcrumb: 'Multimedia', warning: 'proposition/multimedia/deleteFile' } }, { path: ':id/additionals/marketing', component: __WEBPACK_IMPORTED_MODULE_23__components_proposition_Marketing___default.a, meta: { save: 'files', dir: 'marketing', validate: { id: 'int' }, breadcrumb: 'Marketing', warning: 'proposition/marketing/deleteFile' } }]
 }, { path: '/tasks', component: __WEBPACK_IMPORTED_MODULE_29__components_tasks_Tasks___default.a }, { path: '/task/edit/:id(\\d+)?', component: __WEBPACK_IMPORTED_MODULE_30__components_tasks_TaskEdit___default.a }, { path: '/task/show/:id(\\d+)', component: __WEBPACK_IMPORTED_MODULE_31__components_tasks_TaskShow___default.a }, { path: '/tasks/department/:id(\\d+)', component: __WEBPACK_IMPORTED_MODULE_32__components_tasks_DepartmentTasks___default.a }, { path: '/human_resources/employees', component: __WEBPACK_IMPORTED_MODULE_26__components_hr_Employees___default.a }, { path: '/human_resources/employee/new', component: __WEBPACK_IMPORTED_MODULE_25__components_hr_EditProfile___default.a }, { path: '/human_resources/employee/:id(\\d+)/edit', component: __WEBPACK_IMPORTED_MODULE_25__components_hr_EditProfile___default.a }, { path: '/human_resources/employee/:id(\\d+)', component: __WEBPACK_IMPORTED_MODULE_25__components_hr_EditProfile___default.a }, { path: '/human_resources/departments', component: __WEBPACK_IMPORTED_MODULE_27__components_hr_Departments___default.a }, { path: '/human_resources/department/:id(\\d+)/edit', component: __WEBPACK_IMPORTED_MODULE_28__components_hr_DepartmentEdit___default.a }, { path: '/human_resources/department/new', component: __WEBPACK_IMPORTED_MODULE_28__components_hr_DepartmentEdit___default.a }, { path: '/books', component: __WEBPACK_IMPORTED_MODULE_34__components_books_Books___default.a }, { path: '/books/authors', component: __WEBPACK_IMPORTED_MODULE_35__components_books_Authors___default.a }, { path: '/books/author/:id(\\d+)', component: __WEBPACK_IMPORTED_MODULE_37__components_books_AuthorShow___default.a }, { path: '/books/author/:id(\\d+)/edit', component: __WEBPACK_IMPORTED_MODULE_36__components_books_AuthorEdit___default.a }, { path: '/books/author/:id(\\d+)/related/propositions', component: __WEBPACK_IMPORTED_MODULE_38__components_books_AuthorsRelated___default.a }];
 
 /***/ }),
@@ -106100,6 +106163,9 @@ var initialState = {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__("./node_modules/axios/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash__ = __webpack_require__("./node_modules/lodash/lodash.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_lodash__);
+
 
 var initialState = {
     price_first_year: {
@@ -106142,14 +106208,38 @@ var initialState = {
             export: 0
         },
         retail_price: 0,
+        final_circulation: 0,
+        final_print_price: 0,
         selected_circulation: 0,
-        offers: {}
+        offers: {},
+        print_offers: []
     },
     mutations: {
         initData: function initData(state, payload) {
             for (var i in Object.keys(state)) {
                 var key = Object.keys(state)[i];state[key] = payload[key];
             }
+        },
+        addFile: function addFile(state, payload) {
+            var file = payload.file;
+            if (payload.isFinal === 'print_offers') {
+                state.print_offers.push(file);
+            }
+        },
+        deleteFile: function deleteFile(state, payload) {
+            var id = payload.id;
+            if (payload.isFinal === 'print_offers') {
+                state.print_offers = __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.filter(state.print_offers, function (file) {
+                    return file.id != id;
+                });
+            }
+        },
+        filenameSave: function filenameSave(state, payload) {
+            __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.forEach(state.print_offers, function (o) {
+                if (o.id === payload.id) {
+                    o.title = payload.title;
+                }
+            });
         }
     },
     actions: {
@@ -106174,6 +106264,19 @@ var initialState = {
                     reject();
                 }
             });
+        },
+        deleteFile: function deleteFile(_ref3, payload) {
+            var commit = _ref3.commit;
+
+            commit('deleteFile', payload.data);
+            //make request to remove from system
+            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.delete('/api/file/' + payload.data.id);
+        },
+        filenameSave: function filenameSave(_ref4, payload) {
+            var commit = _ref4.commit;
+
+            commit('filenameSave', payload);
+            //TODO: make request to change in system
         }
     }
 });

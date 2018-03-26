@@ -22,6 +22,8 @@ class UpdatePropositionsTable2 extends Migration
 	        $table->boolean('coverpaper_film_print')->nullable();
 	        $table->boolean('coverpaper_blind_print')->nullable();
 	        $table->text('step_status')->nullable();
+	        $table->string('final_print_price')->nullable();
+	        $table->string('final_circulation')->nullable();
         });
     }
 
