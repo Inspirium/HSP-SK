@@ -104533,7 +104533,7 @@ var initialState = {
             }
         },
         deleteFile: function deleteFile(state, payload) {
-            id = payload.file;
+            var id = payload.id;
             if (payload.isFinal === 'manuscripts') {
                 state.manuscript_documents = __WEBPACK_IMPORTED_MODULE_1_lodash___default.a.filter(state.manuscript_documents, function (file) {
                     return file.id != id;
@@ -104572,7 +104572,7 @@ var initialState = {
         deleteFile: function deleteFile(_ref2, payload) {
             var commit = _ref2.commit;
 
-            commit('deleteFile', payload.data.id);
+            commit('deleteFile', payload.data);
             //make request to remove from system
             __WEBPACK_IMPORTED_MODULE_0_axios___default.a.delete('/api/file/' + payload.data.id);
         },
