@@ -2,7 +2,7 @@
 
 This is the base repository for the project. Most of the logic is in the packages, but main setup information is in this project.
 
-This project is in development and is currently in pre-alpha state.
+This project is in development and is currently in beta state.
 
 
 ### Setup

@@ -104,3 +104,9 @@ Route::group(['prefix' => 'message', 'middleware' => ['auth']], function() {
 });
 
 Route::get('/file/{file}/download', 'Api\FileManagement\FileController@getFile');
+
+Route::get('changelog', function() {
+	$parser = new \cebe\markdown\GithubMarkdown();
+	$file = \Illuminate\Support\Facades\File::get('../CHANGELOG.md');
+	return $parser->parse($file);
+});
