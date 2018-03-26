@@ -26799,6 +26799,14 @@ button.toast-close-button {
   color: #6FBAD5;
 }
 
+.sk-skin .steps-notif {
+  background-color: #262A33;
+  opacity: .85;
+  padding: 9.6rem;
+  color: white;
+  margin-top: -319px;
+}
+
 .sk-skin .file-box a {
   color: #666;
 }

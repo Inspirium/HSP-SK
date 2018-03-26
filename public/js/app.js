@@ -8199,6 +8199,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -9041,6 +9047,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
 //
 //
 //
@@ -66801,7 +66809,7 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "justify-content-center d-flex" }, [
+      _c("div", { staticClass: "justify-content-center steps-notif d-flex" }, [
         _vm._v("\n        " + _vm._s(_vm.lang(_vm.status)) + "\n    ")
       ]),
       _vm._v(" "),
@@ -79907,7 +79915,9 @@ var render = function() {
       _c("label", { attrs: { for: "form76" } }, [
         _vm._v(_vm._s(_vm.lang("Note")))
       ])
-    ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "div" }, [_vm._v("Blablaval")])
   ])
 }
 var staticRenderFns = []
@@ -80315,7 +80325,7 @@ var render = function() {
                         ),
                         _vm._v(" "),
                         _c("div", { staticClass: "row" }, [
-                          _c("div", { staticClass: "col-md-6" }, [
+                          _c("div", { staticClass: "col-md-12" }, [
                             _c("div", { staticClass: "page-name-l mb-4" }, [
                               _vm._v(_vm._s(_vm.lang("Book Block")))
                             ]),
@@ -80655,956 +80665,1174 @@ var render = function() {
                                 _vm._v(_vm._s(_vm.lang("Additional Work")))
                               ])
                             ])
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "col-md-6" }, [
-                            _c("div", { staticClass: "page-name-l mb-4" }, [
-                              _vm._v(_vm._s(_vm.lang("Cover")))
-                            ]),
-                            _vm._v(" "),
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "row" }, [
+                          _c("div", { staticClass: "col-md-12" }, [
                             _c("div", { staticClass: "row" }, [
-                              _c("div", { staticClass: "col-md-12" }, [
-                                _c(
-                                  "select",
-                                  {
-                                    directives: [
+                              _c("div", { staticClass: "col-md-6" }, [
+                                _c("div", { staticClass: "page-name-l mb-4" }, [
+                                  _vm._v(_vm._s(_vm.lang("Cover")))
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "row" }, [
+                                  _c("div", { staticClass: "col-md-12" }, [
+                                    _c(
+                                      "select",
                                       {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: offer.cover_type,
-                                        expression: "offer.cover_type"
-                                      }
-                                    ],
-                                    staticClass: "mdb-select",
-                                    on: {
-                                      change: function($event) {
-                                        var $$selectedVal = Array.prototype.filter
-                                          .call($event.target.options, function(
-                                            o
-                                          ) {
-                                            return o.selected
-                                          })
-                                          .map(function(o) {
-                                            var val =
-                                              "_value" in o ? o._value : o.value
-                                            return val
-                                          })
-                                        _vm.$set(
-                                          offer,
-                                          "cover_type",
-                                          $event.target.multiple
-                                            ? $$selectedVal
-                                            : $$selectedVal[0]
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: offer.cover_type,
+                                            expression: "offer.cover_type"
+                                          }
+                                        ],
+                                        staticClass: "mdb-select",
+                                        on: {
+                                          change: function($event) {
+                                            var $$selectedVal = Array.prototype.filter
+                                              .call(
+                                                $event.target.options,
+                                                function(o) {
+                                                  return o.selected
+                                                }
+                                              )
+                                              .map(function(o) {
+                                                var val =
+                                                  "_value" in o
+                                                    ? o._value
+                                                    : o.value
+                                                return val
+                                              })
+                                            _vm.$set(
+                                              offer,
+                                              "cover_type",
+                                              $event.target.multiple
+                                                ? $$selectedVal
+                                                : $$selectedVal[0]
+                                            )
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _c(
+                                          "option",
+                                          { attrs: { disabled: "" } },
+                                          [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm.lang("Hard/Soft Cover")
+                                              )
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "option",
+                                          { attrs: { value: "none" } },
+                                          [_vm._v(_vm._s(_vm.lang("None")))]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "option",
+                                          { attrs: { value: "hard" } },
+                                          [
+                                            _vm._v(
+                                              _vm._s(_vm.lang("Hard Cover"))
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "option",
+                                          { attrs: { value: "soft" } },
+                                          [
+                                            _vm._v(
+                                              _vm._s(_vm.lang("Soft Cover"))
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "option",
+                                          { attrs: { value: "both" } },
+                                          [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm.lang("Hard and Soft Cover")
+                                              )
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "option",
+                                          { attrs: { value: "flex" } },
+                                          [
+                                            _vm._v(
+                                              _vm._s(_vm.lang("Flex Cover"))
+                                            )
+                                          ]
                                         )
-                                      }
-                                    }
-                                  },
-                                  [
-                                    _c("option", { attrs: { disabled: "" } }, [
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c("label", [
                                       _vm._v(
                                         _vm._s(_vm.lang("Hard/Soft Cover"))
                                       )
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("option", { attrs: { value: "none" } }, [
-                                      _vm._v(_vm._s(_vm.lang("None")))
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("option", { attrs: { value: "hard" } }, [
-                                      _vm._v(_vm._s(_vm.lang("Hard Cover")))
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("option", { attrs: { value: "soft" } }, [
-                                      _vm._v(_vm._s(_vm.lang("Soft Cover")))
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("option", { attrs: { value: "both" } }, [
-                                      _vm._v(
-                                        _vm._s(_vm.lang("Hard and Soft Cover"))
-                                      )
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("option", { attrs: { value: "flex" } }, [
-                                      _vm._v(_vm._s(_vm.lang("Flex Cover")))
                                     ])
-                                  ]
-                                ),
+                                  ])
+                                ]),
                                 _vm._v(" "),
-                                _c("label", [
-                                  _vm._v(_vm._s(_vm.lang("Hard/Soft Cover")))
-                                ])
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "row" }, [
-                              offer.cover_type === "both"
-                                ? _c("div", { staticClass: "col-md-6" }, [
-                                    _c("div", { staticClass: "md-form" }, [
-                                      _c("input", {
-                                        directives: [
-                                          {
-                                            name: "model",
-                                            rawName: "v-model",
-                                            value: offer.soft_cover_circulation,
-                                            expression:
-                                              "offer.soft_cover_circulation"
-                                          }
-                                        ],
-                                        staticClass: "form-control",
-                                        attrs: { type: "text" },
-                                        domProps: {
-                                          value: offer.soft_cover_circulation
-                                        },
-                                        on: {
-                                          input: function($event) {
-                                            if ($event.target.composing) {
-                                              return
+                                _c("div", { staticClass: "row" }, [
+                                  offer.cover_type === "both"
+                                    ? _c("div", { staticClass: "col-md-6" }, [
+                                        _c("div", { staticClass: "md-form" }, [
+                                          _c("input", {
+                                            directives: [
+                                              {
+                                                name: "model",
+                                                rawName: "v-model",
+                                                value:
+                                                  offer.soft_cover_circulation,
+                                                expression:
+                                                  "offer.soft_cover_circulation"
+                                              }
+                                            ],
+                                            staticClass: "form-control",
+                                            attrs: { type: "text" },
+                                            domProps: {
+                                              value:
+                                                offer.soft_cover_circulation
+                                            },
+                                            on: {
+                                              input: function($event) {
+                                                if ($event.target.composing) {
+                                                  return
+                                                }
+                                                _vm.$set(
+                                                  offer,
+                                                  "soft_cover_circulation",
+                                                  $event.target.value
+                                                )
+                                              }
                                             }
-                                            _vm.$set(
-                                              offer,
-                                              "soft_cover_circulation",
-                                              $event.target.value
+                                          }),
+                                          _vm._v(" "),
+                                          _c("label", [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm.lang(
+                                                  "Soft Cover Circulation"
+                                                )
+                                              )
                                             )
-                                          }
-                                        }
-                                      }),
-                                      _vm._v(" "),
-                                      _c("label", [
-                                        _vm._v(
-                                          _vm._s(
-                                            _vm.lang("Soft Cover Circulation")
-                                          )
-                                        )
+                                          ])
+                                        ])
                                       ])
-                                    ])
-                                  ])
-                                : _vm._e(),
-                              _vm._v(" "),
-                              offer.cover_type === "both"
-                                ? _c("div", { staticClass: "col-md-6" }, [
-                                    _c("div", { staticClass: "md-form" }, [
-                                      _c("input", {
-                                        directives: [
-                                          {
-                                            name: "model",
-                                            rawName: "v-model",
-                                            value: offer.hard_cover_circulation,
-                                            expression:
-                                              "offer.hard_cover_circulation"
-                                          }
-                                        ],
-                                        staticClass: "form-control",
-                                        attrs: { type: "text" },
-                                        domProps: {
-                                          value: offer.hard_cover_circulation
-                                        },
-                                        on: {
-                                          input: function($event) {
-                                            if ($event.target.composing) {
-                                              return
+                                    : _vm._e(),
+                                  _vm._v(" "),
+                                  offer.cover_type === "both"
+                                    ? _c("div", { staticClass: "col-md-6" }, [
+                                        _c("div", { staticClass: "md-form" }, [
+                                          _c("input", {
+                                            directives: [
+                                              {
+                                                name: "model",
+                                                rawName: "v-model",
+                                                value:
+                                                  offer.hard_cover_circulation,
+                                                expression:
+                                                  "offer.hard_cover_circulation"
+                                              }
+                                            ],
+                                            staticClass: "form-control",
+                                            attrs: { type: "text" },
+                                            domProps: {
+                                              value:
+                                                offer.hard_cover_circulation
+                                            },
+                                            on: {
+                                              input: function($event) {
+                                                if ($event.target.composing) {
+                                                  return
+                                                }
+                                                _vm.$set(
+                                                  offer,
+                                                  "hard_cover_circulation",
+                                                  $event.target.value
+                                                )
+                                              }
                                             }
-                                            _vm.$set(
-                                              offer,
-                                              "hard_cover_circulation",
-                                              $event.target.value
+                                          }),
+                                          _vm._v(" "),
+                                          _c("label", [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm.lang(
+                                                  "Hard Cover Circulation"
+                                                )
+                                              )
                                             )
-                                          }
-                                        }
-                                      }),
-                                      _vm._v(" "),
-                                      _c("label", [
-                                        _vm._v(
-                                          _vm._s(
-                                            _vm.lang("Hard Cover Circulation")
-                                          )
-                                        )
+                                          ])
+                                        ])
                                       ])
-                                    ])
-                                  ])
-                                : _vm._e()
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "md-form" }, [
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: offer.cover_paper_type,
-                                    expression: "offer.cover_paper_type"
-                                  }
-                                ],
-                                staticClass: "form-control",
-                                attrs: { type: "text" },
-                                domProps: { value: offer.cover_paper_type },
-                                on: {
-                                  input: function($event) {
-                                    if ($event.target.composing) {
-                                      return
-                                    }
-                                    _vm.$set(
-                                      offer,
-                                      "cover_paper_type",
-                                      $event.target.value
-                                    )
-                                  }
-                                }
-                              }),
-                              _vm._v(" "),
-                              _c("label", [
-                                _vm._v(_vm._s(_vm.lang("Paper Type")))
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "row" }, [
-                              _c("div", { staticClass: "col-md-12" }, [
-                                _c(
-                                  "select",
-                                  {
+                                    : _vm._e()
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "md-form" }, [
+                                  _c("input", {
                                     directives: [
                                       {
                                         name: "model",
                                         rawName: "v-model",
-                                        value: offer.cover_colors,
-                                        expression: "offer.cover_colors"
+                                        value: offer.cover_paper_type,
+                                        expression: "offer.cover_paper_type"
                                       }
                                     ],
-                                    staticClass: "mdb-select",
+                                    staticClass: "form-control",
+                                    attrs: { type: "text" },
+                                    domProps: { value: offer.cover_paper_type },
                                     on: {
-                                      change: function($event) {
-                                        var $$selectedVal = Array.prototype.filter
-                                          .call($event.target.options, function(
-                                            o
-                                          ) {
-                                            return o.selected
-                                          })
-                                          .map(function(o) {
-                                            var val =
-                                              "_value" in o ? o._value : o.value
-                                            return val
-                                          })
+                                      input: function($event) {
+                                        if ($event.target.composing) {
+                                          return
+                                        }
                                         _vm.$set(
                                           offer,
-                                          "cover_colors",
-                                          $event.target.multiple
-                                            ? $$selectedVal
-                                            : $$selectedVal[0]
+                                          "cover_paper_type",
+                                          $event.target.value
                                         )
                                       }
                                     }
-                                  },
-                                  [
-                                    _c("option", { attrs: { disabled: "" } }, [
-                                      _vm._v(_vm._s(_vm.lang("Choose Colors")))
-                                    ]),
-                                    _vm._v(" "),
-                                    _vm._l(_vm.option_colors, function(
-                                      color,
-                                      index
-                                    ) {
-                                      return _c(
-                                        "option",
-                                        { domProps: { value: index + 1 } },
-                                        [_vm._v(_vm._s(_vm.lang(color)))]
-                                      )
-                                    })
-                                  ],
-                                  2
-                                ),
+                                  }),
+                                  _vm._v(" "),
+                                  _c("label", [
+                                    _vm._v(_vm._s(_vm.lang("Paper Type")))
+                                  ])
+                                ]),
                                 _vm._v(" "),
-                                _c("label", [
-                                  _vm._v(_vm._s(_vm.lang("Colors")))
-                                ])
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "row" }, [
-                              _c("div", { staticClass: "col-md-12" }, [
-                                _c(
-                                  "select",
-                                  {
-                                    directives: [
+                                _c("div", { staticClass: "row" }, [
+                                  _c("div", { staticClass: "col-md-12" }, [
+                                    _c(
+                                      "select",
                                       {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: offer.cover_plastification,
-                                        expression: "offer.cover_plastification"
-                                      }
-                                    ],
-                                    staticClass: "mdb-select",
-                                    on: {
-                                      change: function($event) {
-                                        var $$selectedVal = Array.prototype.filter
-                                          .call($event.target.options, function(
-                                            o
-                                          ) {
-                                            return o.selected
-                                          })
-                                          .map(function(o) {
-                                            var val =
-                                              "_value" in o ? o._value : o.value
-                                            return val
-                                          })
-                                        _vm.$set(
-                                          offer,
-                                          "cover_plastification",
-                                          $event.target.multiple
-                                            ? $$selectedVal
-                                            : $$selectedVal[0]
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: offer.cover_colors,
+                                            expression: "offer.cover_colors"
+                                          }
+                                        ],
+                                        staticClass: "mdb-select",
+                                        on: {
+                                          change: function($event) {
+                                            var $$selectedVal = Array.prototype.filter
+                                              .call(
+                                                $event.target.options,
+                                                function(o) {
+                                                  return o.selected
+                                                }
+                                              )
+                                              .map(function(o) {
+                                                var val =
+                                                  "_value" in o
+                                                    ? o._value
+                                                    : o.value
+                                                return val
+                                              })
+                                            _vm.$set(
+                                              offer,
+                                              "cover_colors",
+                                              $event.target.multiple
+                                                ? $$selectedVal
+                                                : $$selectedVal[0]
+                                            )
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _c(
+                                          "option",
+                                          { attrs: { disabled: "" } },
+                                          [
+                                            _vm._v(
+                                              _vm._s(_vm.lang("Choose Colors"))
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _vm._l(_vm.option_colors, function(
+                                          color,
+                                          index
+                                        ) {
+                                          return _c(
+                                            "option",
+                                            { domProps: { value: index + 1 } },
+                                            [_vm._v(_vm._s(_vm.lang(color)))]
+                                          )
+                                        })
+                                      ],
+                                      2
+                                    ),
+                                    _vm._v(" "),
+                                    _c("label", [
+                                      _vm._v(_vm._s(_vm.lang("Colors")))
+                                    ])
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "row" }, [
+                                  _c("div", { staticClass: "col-md-12" }, [
+                                    _c(
+                                      "select",
+                                      {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: offer.cover_plastification,
+                                            expression:
+                                              "offer.cover_plastification"
+                                          }
+                                        ],
+                                        staticClass: "mdb-select",
+                                        on: {
+                                          change: function($event) {
+                                            var $$selectedVal = Array.prototype.filter
+                                              .call(
+                                                $event.target.options,
+                                                function(o) {
+                                                  return o.selected
+                                                }
+                                              )
+                                              .map(function(o) {
+                                                var val =
+                                                  "_value" in o
+                                                    ? o._value
+                                                    : o.value
+                                                return val
+                                              })
+                                            _vm.$set(
+                                              offer,
+                                              "cover_plastification",
+                                              $event.target.multiple
+                                                ? $$selectedVal
+                                                : $$selectedVal[0]
+                                            )
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _c(
+                                          "option",
+                                          { attrs: { disabled: "" } },
+                                          [
+                                            _vm._v(
+                                              _vm._s(_vm.lang("Plastification"))
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "option",
+                                          { attrs: { value: "none" } },
+                                          [_vm._v(_vm._s(_vm.lang("None")))]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "option",
+                                          { attrs: { value: "glossy" } },
+                                          [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm.lang(
+                                                  "Glossy plastification"
+                                                )
+                                              )
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "option",
+                                          { attrs: { value: "mat" } },
+                                          [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm.lang("Mat plastification")
+                                              )
+                                            )
+                                          ]
                                         )
-                                      }
-                                    }
-                                  },
-                                  [
-                                    _c("option", { attrs: { disabled: "" } }, [
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c("label", [
                                       _vm._v(_vm._s(_vm.lang("Plastification")))
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("option", { attrs: { value: "none" } }, [
-                                      _vm._v(_vm._s(_vm.lang("None")))
-                                    ]),
-                                    _vm._v(" "),
+                                    ])
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "row" }, [
+                                  _c("div", { staticClass: "col-md-12" }, [
                                     _c(
-                                      "option",
-                                      { attrs: { value: "glossy" } },
+                                      "select",
+                                      {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: offer.uv_print,
+                                            expression: "offer.uv_print"
+                                          }
+                                        ],
+                                        staticClass: "mdb-select",
+                                        on: {
+                                          change: function($event) {
+                                            var $$selectedVal = Array.prototype.filter
+                                              .call(
+                                                $event.target.options,
+                                                function(o) {
+                                                  return o.selected
+                                                }
+                                              )
+                                              .map(function(o) {
+                                                var val =
+                                                  "_value" in o
+                                                    ? o._value
+                                                    : o.value
+                                                return val
+                                              })
+                                            _vm.$set(
+                                              offer,
+                                              "uv_print",
+                                              $event.target.multiple
+                                                ? $$selectedVal
+                                                : $$selectedVal[0]
+                                            )
+                                          }
+                                        }
+                                      },
                                       [
-                                        _vm._v(
-                                          _vm._s(
-                                            _vm.lang("Glossy plastification")
-                                          )
+                                        _c(
+                                          "option",
+                                          { attrs: { disabled: "" } },
+                                          [_vm._v(_vm._s(_vm.lang("Varnishe")))]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "option",
+                                          { attrs: { value: "none" } },
+                                          [_vm._v(_vm._s(_vm.lang("None")))]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "option",
+                                          { attrs: { value: "glossy" } },
+                                          [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm.lang("Glossy Varnishe")
+                                              )
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "option",
+                                          { attrs: { value: "mat" } },
+                                          [
+                                            _vm._v(
+                                              _vm._s(_vm.lang("Mat Varnishe"))
+                                            )
+                                          ]
                                         )
                                       ]
                                     ),
                                     _vm._v(" "),
-                                    _c("option", { attrs: { value: "mat" } }, [
-                                      _vm._v(
-                                        _vm._s(_vm.lang("Mat plastification"))
-                                      )
-                                    ])
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c("label", [
-                                  _vm._v(_vm._s(_vm.lang("Plastification")))
-                                ])
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "page-name-m" }, [
-                              _vm._v(_vm._s(_vm.lang("Film Print")))
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "form-inline mb-3" }, [
-                              _c("fieldset", { staticClass: "form-group" }, [
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: offer.film_print,
-                                      expression: "offer.film_print"
-                                    }
-                                  ],
-                                  attrs: {
-                                    name: "film_print" + index,
-                                    type: "radio",
-                                    id: "film_print_no" + index,
-                                    value: "no"
-                                  },
-                                  domProps: {
-                                    checked: _vm._q(offer.film_print, "no")
-                                  },
-                                  on: {
-                                    change: function($event) {
-                                      _vm.$set(offer, "film_print", "no")
-                                    }
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _c(
-                                  "label",
-                                  { attrs: { for: "film_print_no" + index } },
-                                  [_vm._v(_vm._s(_vm.lang("No")))]
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("fieldset", { staticClass: "form-group" }, [
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: offer.film_print,
-                                      expression: "offer.film_print"
-                                    }
-                                  ],
-                                  attrs: {
-                                    name: "film_print" + index,
-                                    type: "radio",
-                                    id: "film_print_yes" + index,
-                                    value: "yes"
-                                  },
-                                  domProps: {
-                                    checked: _vm._q(offer.film_print, "yes")
-                                  },
-                                  on: {
-                                    change: function($event) {
-                                      _vm.$set(offer, "film_print", "yes")
-                                    }
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _c(
-                                  "label",
-                                  { attrs: { for: "film_print_yes" + index } },
-                                  [_vm._v(_vm._s(_vm.lang("Yes")))]
-                                )
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "page-name-m" }, [
-                              _vm._v(_vm._s(_vm.lang("Blind Print")))
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "form-inline mb-3" }, [
-                              _c("fieldset", { staticClass: "form-group" }, [
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: offer.blind_print,
-                                      expression: "offer.blind_print"
-                                    }
-                                  ],
-                                  attrs: {
-                                    name: "blind_print" + index,
-                                    type: "radio",
-                                    id: "blind_print_no" + index,
-                                    value: "no"
-                                  },
-                                  domProps: {
-                                    checked: _vm._q(offer.blind_print, "no")
-                                  },
-                                  on: {
-                                    change: function($event) {
-                                      _vm.$set(offer, "blind_print", "no")
-                                    }
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _c(
-                                  "label",
-                                  { attrs: { for: "blind_print_no" + index } },
-                                  [_vm._v(_vm._s(_vm.lang("No")))]
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("fieldset", { staticClass: "form-group" }, [
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: offer.blind_print,
-                                      expression: "offer.blind_print"
-                                    }
-                                  ],
-                                  attrs: {
-                                    name: "blind_print" + index,
-                                    type: "radio",
-                                    id: "blind_print_yes" + index,
-                                    value: "yes"
-                                  },
-                                  domProps: {
-                                    checked: _vm._q(offer.blind_print, "yes")
-                                  },
-                                  on: {
-                                    change: function($event) {
-                                      _vm.$set(offer, "blind_print", "yes")
-                                    }
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _c(
-                                  "label",
-                                  { attrs: { for: "blind_print_yes" + index } },
-                                  [_vm._v(_vm._s(_vm.lang("Yes")))]
-                                )
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "row" }, [
-                              _c("div", { staticClass: "col-md-12" }, [
-                                _c(
-                                  "select",
-                                  {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: offer.uv_print,
-                                        expression: "offer.uv_print"
-                                      }
-                                    ],
-                                    staticClass: "mdb-select",
-                                    on: {
-                                      change: function($event) {
-                                        var $$selectedVal = Array.prototype.filter
-                                          .call($event.target.options, function(
-                                            o
-                                          ) {
-                                            return o.selected
-                                          })
-                                          .map(function(o) {
-                                            var val =
-                                              "_value" in o ? o._value : o.value
-                                            return val
-                                          })
-                                        _vm.$set(
-                                          offer,
-                                          "uv_print",
-                                          $event.target.multiple
-                                            ? $$selectedVal
-                                            : $$selectedVal[0]
-                                        )
-                                      }
-                                    }
-                                  },
-                                  [
-                                    _c("option", { attrs: { disabled: "" } }, [
+                                    _c("label", [
                                       _vm._v(_vm._s(_vm.lang("Varnishe")))
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("option", { attrs: { value: "none" } }, [
-                                      _vm._v(_vm._s(_vm.lang("None")))
-                                    ]),
-                                    _vm._v(" "),
-                                    _c(
-                                      "option",
-                                      { attrs: { value: "glossy" } },
-                                      [
-                                        _vm._v(
-                                          _vm._s(_vm.lang("Glossy Varnishe"))
-                                        )
-                                      ]
-                                    ),
-                                    _vm._v(" "),
-                                    _c("option", { attrs: { value: "mat" } }, [
-                                      _vm._v(_vm._s(_vm.lang("Mat Varnishe")))
                                     ])
-                                  ]
-                                ),
+                                  ])
+                                ]),
                                 _vm._v(" "),
-                                _c("label", [
-                                  _vm._v(_vm._s(_vm.lang("Varnishe")))
-                                ])
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              { staticClass: "page-name-l mb-4 mt-5" },
-                              [_vm._v(_vm._s(_vm.lang("Cover Paper")))]
-                            ),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "md-form" }, [
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: offer.coverpaper_paper_type,
-                                    expression: "offer.coverpaper_paper_type"
-                                  }
-                                ],
-                                staticClass: "form-control",
-                                attrs: { type: "text", id: "form8" },
-                                domProps: {
-                                  value: offer.coverpaper_paper_type
-                                },
-                                on: {
-                                  input: function($event) {
-                                    if ($event.target.composing) {
-                                      return
-                                    }
-                                    _vm.$set(
-                                      offer,
-                                      "coverpaper_paper_type",
-                                      $event.target.value
-                                    )
-                                  }
-                                }
-                              }),
-                              _vm._v(" "),
-                              _c("label", { attrs: { for: "form8" } }, [
-                                _vm._v(_vm._s(_vm.lang("Paper Type")))
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "row" }, [
-                              _c("div", { staticClass: "col-md-12" }, [
-                                _c(
-                                  "select",
-                                  {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: offer.coverpaper_colors,
-                                        expression: "offer.coverpaper_colors"
-                                      }
-                                    ],
-                                    staticClass: "mdb-select",
-                                    on: {
-                                      change: function($event) {
-                                        var $$selectedVal = Array.prototype.filter
-                                          .call($event.target.options, function(
-                                            o
-                                          ) {
-                                            return o.selected
-                                          })
-                                          .map(function(o) {
-                                            var val =
-                                              "_value" in o ? o._value : o.value
-                                            return val
-                                          })
-                                        _vm.$set(
-                                          offer,
-                                          "coverpaper_colors",
-                                          $event.target.multiple
-                                            ? $$selectedVal
-                                            : $$selectedVal[0]
-                                        )
-                                      }
-                                    }
-                                  },
-                                  [
-                                    _c("option", { attrs: { disabled: "" } }, [
-                                      _vm._v(_vm._s(_vm.lang("Choose Colors")))
-                                    ]),
-                                    _vm._v(" "),
-                                    _vm._l(_vm.option_colors, function(
-                                      color,
-                                      index
-                                    ) {
-                                      return _c(
-                                        "option",
-                                        { domProps: { value: index + 1 } },
-                                        [_vm._v(_vm._s(_vm.lang(color)))]
+                                _c("div", { staticClass: "page-name-m" }, [
+                                  _vm._v(_vm._s(_vm.lang("Film Print")))
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "form-inline mb-3" }, [
+                                  _c(
+                                    "fieldset",
+                                    { staticClass: "form-group" },
+                                    [
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: offer.film_print,
+                                            expression: "offer.film_print"
+                                          }
+                                        ],
+                                        attrs: {
+                                          name: "film_print" + index,
+                                          type: "radio",
+                                          id: "film_print_no" + index,
+                                          value: "no"
+                                        },
+                                        domProps: {
+                                          checked: _vm._q(
+                                            offer.film_print,
+                                            "no"
+                                          )
+                                        },
+                                        on: {
+                                          change: function($event) {
+                                            _vm.$set(offer, "film_print", "no")
+                                          }
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _c(
+                                        "label",
+                                        {
+                                          attrs: {
+                                            for: "film_print_no" + index
+                                          }
+                                        },
+                                        [_vm._v(_vm._s(_vm.lang("No")))]
                                       )
-                                    })
-                                  ],
-                                  2
-                                ),
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "fieldset",
+                                    { staticClass: "form-group" },
+                                    [
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: offer.film_print,
+                                            expression: "offer.film_print"
+                                          }
+                                        ],
+                                        attrs: {
+                                          name: "film_print" + index,
+                                          type: "radio",
+                                          id: "film_print_yes" + index,
+                                          value: "yes"
+                                        },
+                                        domProps: {
+                                          checked: _vm._q(
+                                            offer.film_print,
+                                            "yes"
+                                          )
+                                        },
+                                        on: {
+                                          change: function($event) {
+                                            _vm.$set(offer, "film_print", "yes")
+                                          }
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _c(
+                                        "label",
+                                        {
+                                          attrs: {
+                                            for: "film_print_yes" + index
+                                          }
+                                        },
+                                        [_vm._v(_vm._s(_vm.lang("Yes")))]
+                                      )
+                                    ]
+                                  )
+                                ]),
                                 _vm._v(" "),
-                                _c("label", [
-                                  _vm._v(_vm._s(_vm.lang("Colors")))
+                                _c("div", { staticClass: "page-name-m" }, [
+                                  _vm._v(_vm._s(_vm.lang("Blind Print")))
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "form-inline mb-3" }, [
+                                  _c(
+                                    "fieldset",
+                                    { staticClass: "form-group" },
+                                    [
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: offer.blind_print,
+                                            expression: "offer.blind_print"
+                                          }
+                                        ],
+                                        attrs: {
+                                          name: "blind_print" + index,
+                                          type: "radio",
+                                          id: "blind_print_no" + index,
+                                          value: "no"
+                                        },
+                                        domProps: {
+                                          checked: _vm._q(
+                                            offer.blind_print,
+                                            "no"
+                                          )
+                                        },
+                                        on: {
+                                          change: function($event) {
+                                            _vm.$set(offer, "blind_print", "no")
+                                          }
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _c(
+                                        "label",
+                                        {
+                                          attrs: {
+                                            for: "blind_print_no" + index
+                                          }
+                                        },
+                                        [_vm._v(_vm._s(_vm.lang("No")))]
+                                      )
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "fieldset",
+                                    { staticClass: "form-group" },
+                                    [
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: offer.blind_print,
+                                            expression: "offer.blind_print"
+                                          }
+                                        ],
+                                        attrs: {
+                                          name: "blind_print" + index,
+                                          type: "radio",
+                                          id: "blind_print_yes" + index,
+                                          value: "yes"
+                                        },
+                                        domProps: {
+                                          checked: _vm._q(
+                                            offer.blind_print,
+                                            "yes"
+                                          )
+                                        },
+                                        on: {
+                                          change: function($event) {
+                                            _vm.$set(
+                                              offer,
+                                              "blind_print",
+                                              "yes"
+                                            )
+                                          }
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _c(
+                                        "label",
+                                        {
+                                          attrs: {
+                                            for: "blind_print_yes" + index
+                                          }
+                                        },
+                                        [_vm._v(_vm._s(_vm.lang("Yes")))]
+                                      )
+                                    ]
+                                  )
                                 ])
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "row" }, [
-                              _c("div", { staticClass: "col-md-12" }, [
-                                _c(
-                                  "select",
-                                  {
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "col-md-6" }, [
+                                _c("div", { staticClass: "page-name-l mb-4" }, [
+                                  _vm._v(_vm._s(_vm.lang("Cover Paper")))
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "md-form" }, [
+                                  _c("input", {
                                     directives: [
                                       {
                                         name: "model",
                                         rawName: "v-model",
-                                        value: offer.coverpaper_plastification,
+                                        value: offer.coverpaper_paper_type,
                                         expression:
-                                          "offer.coverpaper_plastification"
+                                          "offer.coverpaper_paper_type"
                                       }
                                     ],
-                                    staticClass: "mdb-select",
+                                    staticClass: "form-control",
+                                    attrs: { type: "text", id: "form8" },
+                                    domProps: {
+                                      value: offer.coverpaper_paper_type
+                                    },
                                     on: {
-                                      change: function($event) {
-                                        var $$selectedVal = Array.prototype.filter
-                                          .call($event.target.options, function(
-                                            o
-                                          ) {
-                                            return o.selected
-                                          })
-                                          .map(function(o) {
-                                            var val =
-                                              "_value" in o ? o._value : o.value
-                                            return val
-                                          })
+                                      input: function($event) {
+                                        if ($event.target.composing) {
+                                          return
+                                        }
                                         _vm.$set(
                                           offer,
-                                          "coverpaper_plastification",
-                                          $event.target.multiple
-                                            ? $$selectedVal
-                                            : $$selectedVal[0]
+                                          "coverpaper_paper_type",
+                                          $event.target.value
                                         )
                                       }
                                     }
-                                  },
-                                  [
-                                    _c("option", { attrs: { disabled: "" } }, [
-                                      _vm._v(_vm._s(_vm.lang("Plastification")))
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("option", { attrs: { value: "none" } }, [
-                                      _vm._v(_vm._s(_vm.lang("None")))
-                                    ]),
-                                    _vm._v(" "),
-                                    _c(
-                                      "option",
-                                      { attrs: { value: "glossy" } },
-                                      [
-                                        _vm._v(
-                                          _vm._s(
-                                            _vm.lang("Glossy plastification")
-                                          )
-                                        )
-                                      ]
-                                    ),
-                                    _vm._v(" "),
-                                    _c("option", { attrs: { value: "mat" } }, [
-                                      _vm._v(
-                                        _vm._s(_vm.lang("Mat plastification"))
-                                      )
-                                    ])
-                                  ]
-                                ),
+                                  }),
+                                  _vm._v(" "),
+                                  _c("label", { attrs: { for: "form8" } }, [
+                                    _vm._v(_vm._s(_vm.lang("Paper Type")))
+                                  ])
+                                ]),
                                 _vm._v(" "),
-                                _c("label", [
-                                  _vm._v(_vm._s(_vm.lang("Plastification")))
-                                ])
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "row" }, [
-                              _c("div", { staticClass: "col-md-12" }, [
-                                _c(
-                                  "select",
-                                  {
-                                    directives: [
+                                _c("div", { staticClass: "row" }, [
+                                  _c("div", { staticClass: "col-md-12" }, [
+                                    _c(
+                                      "select",
                                       {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: offer.coverpaper_uv_print,
-                                        expression: "offer.coverpaper_uv_print"
-                                      }
-                                    ],
-                                    staticClass: "mdb-select",
-                                    on: {
-                                      change: function($event) {
-                                        var $$selectedVal = Array.prototype.filter
-                                          .call($event.target.options, function(
-                                            o
-                                          ) {
-                                            return o.selected
-                                          })
-                                          .map(function(o) {
-                                            var val =
-                                              "_value" in o ? o._value : o.value
-                                            return val
-                                          })
-                                        _vm.$set(
-                                          offer,
-                                          "coverpaper_uv_print",
-                                          $event.target.multiple
-                                            ? $$selectedVal
-                                            : $$selectedVal[0]
-                                        )
-                                      }
-                                    }
-                                  },
-                                  [
-                                    _c("option", { attrs: { disabled: "" } }, [
-                                      _vm._v(_vm._s(_vm.lang("Varnishe")))
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("option", { attrs: { value: "none" } }, [
-                                      _vm._v(_vm._s(_vm.lang("None")))
-                                    ]),
-                                    _vm._v(" "),
-                                    _c(
-                                      "option",
-                                      { attrs: { value: "glossy" } },
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: offer.coverpaper_colors,
+                                            expression:
+                                              "offer.coverpaper_colors"
+                                          }
+                                        ],
+                                        staticClass: "mdb-select",
+                                        on: {
+                                          change: function($event) {
+                                            var $$selectedVal = Array.prototype.filter
+                                              .call(
+                                                $event.target.options,
+                                                function(o) {
+                                                  return o.selected
+                                                }
+                                              )
+                                              .map(function(o) {
+                                                var val =
+                                                  "_value" in o
+                                                    ? o._value
+                                                    : o.value
+                                                return val
+                                              })
+                                            _vm.$set(
+                                              offer,
+                                              "coverpaper_colors",
+                                              $event.target.multiple
+                                                ? $$selectedVal
+                                                : $$selectedVal[0]
+                                            )
+                                          }
+                                        }
+                                      },
                                       [
-                                        _vm._v(
-                                          _vm._s(_vm.lang("Glossy Varnishe"))
+                                        _c(
+                                          "option",
+                                          { attrs: { disabled: "" } },
+                                          [
+                                            _vm._v(
+                                              _vm._s(_vm.lang("Choose Colors"))
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _vm._l(_vm.option_colors, function(
+                                          color,
+                                          index
+                                        ) {
+                                          return _c(
+                                            "option",
+                                            { domProps: { value: index + 1 } },
+                                            [_vm._v(_vm._s(_vm.lang(color)))]
+                                          )
+                                        })
+                                      ],
+                                      2
+                                    ),
+                                    _vm._v(" "),
+                                    _c("label", [
+                                      _vm._v(_vm._s(_vm.lang("Colors")))
+                                    ])
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "row" }, [
+                                  _c("div", { staticClass: "col-md-12" }, [
+                                    _c(
+                                      "select",
+                                      {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value:
+                                              offer.coverpaper_plastification,
+                                            expression:
+                                              "offer.coverpaper_plastification"
+                                          }
+                                        ],
+                                        staticClass: "mdb-select",
+                                        on: {
+                                          change: function($event) {
+                                            var $$selectedVal = Array.prototype.filter
+                                              .call(
+                                                $event.target.options,
+                                                function(o) {
+                                                  return o.selected
+                                                }
+                                              )
+                                              .map(function(o) {
+                                                var val =
+                                                  "_value" in o
+                                                    ? o._value
+                                                    : o.value
+                                                return val
+                                              })
+                                            _vm.$set(
+                                              offer,
+                                              "coverpaper_plastification",
+                                              $event.target.multiple
+                                                ? $$selectedVal
+                                                : $$selectedVal[0]
+                                            )
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _c(
+                                          "option",
+                                          { attrs: { disabled: "" } },
+                                          [
+                                            _vm._v(
+                                              _vm._s(_vm.lang("Plastification"))
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "option",
+                                          { attrs: { value: "none" } },
+                                          [_vm._v(_vm._s(_vm.lang("None")))]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "option",
+                                          { attrs: { value: "glossy" } },
+                                          [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm.lang(
+                                                  "Glossy plastification"
+                                                )
+                                              )
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "option",
+                                          { attrs: { value: "mat" } },
+                                          [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm.lang("Mat plastification")
+                                              )
+                                            )
+                                          ]
                                         )
                                       ]
                                     ),
                                     _vm._v(" "),
-                                    _c("option", { attrs: { value: "mat" } }, [
-                                      _vm._v(_vm._s(_vm.lang("Mat Varnishe")))
+                                    _c("label", [
+                                      _vm._v(_vm._s(_vm.lang("Plastification")))
                                     ])
-                                  ]
-                                ),
+                                  ])
+                                ]),
                                 _vm._v(" "),
-                                _c("label", [
-                                  _vm._v(_vm._s(_vm.lang("Varnishe")))
-                                ])
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "page-name-m" }, [
-                              _vm._v(_vm._s(_vm.lang("Film Print")))
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "form-inline mb-3" }, [
-                              _c("fieldset", { staticClass: "form-group" }, [
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: offer.coverpaper_film_print,
-                                      expression: "offer.coverpaper_film_print"
-                                    }
-                                  ],
-                                  attrs: {
-                                    name: "film_coverpaper",
-                                    type: "radio",
-                                    id: "film12",
-                                    value: "no"
-                                  },
-                                  domProps: {
-                                    checked: _vm._q(
-                                      offer.coverpaper_film_print,
-                                      "no"
-                                    )
-                                  },
-                                  on: {
-                                    change: function($event) {
-                                      _vm.$set(
-                                        offer,
-                                        "coverpaper_film_print",
-                                        "no"
+                                _c("div", { staticClass: "row" }, [
+                                  _c("div", { staticClass: "col-md-12" }, [
+                                    _c(
+                                      "select",
+                                      {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: offer.coverpaper_uv_print,
+                                            expression:
+                                              "offer.coverpaper_uv_print"
+                                          }
+                                        ],
+                                        staticClass: "mdb-select",
+                                        on: {
+                                          change: function($event) {
+                                            var $$selectedVal = Array.prototype.filter
+                                              .call(
+                                                $event.target.options,
+                                                function(o) {
+                                                  return o.selected
+                                                }
+                                              )
+                                              .map(function(o) {
+                                                var val =
+                                                  "_value" in o
+                                                    ? o._value
+                                                    : o.value
+                                                return val
+                                              })
+                                            _vm.$set(
+                                              offer,
+                                              "coverpaper_uv_print",
+                                              $event.target.multiple
+                                                ? $$selectedVal
+                                                : $$selectedVal[0]
+                                            )
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _c(
+                                          "option",
+                                          { attrs: { disabled: "" } },
+                                          [_vm._v(_vm._s(_vm.lang("Varnishe")))]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "option",
+                                          { attrs: { value: "none" } },
+                                          [_vm._v(_vm._s(_vm.lang("None")))]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "option",
+                                          { attrs: { value: "glossy" } },
+                                          [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm.lang("Glossy Varnishe")
+                                              )
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "option",
+                                          { attrs: { value: "mat" } },
+                                          [
+                                            _vm._v(
+                                              _vm._s(_vm.lang("Mat Varnishe"))
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c("label", [
+                                      _vm._v(_vm._s(_vm.lang("Varnishe")))
+                                    ])
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "page-name-m" }, [
+                                  _vm._v(_vm._s(_vm.lang("Film Print")))
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "form-inline mb-3" }, [
+                                  _c(
+                                    "fieldset",
+                                    { staticClass: "form-group" },
+                                    [
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: offer.coverpaper_film_print,
+                                            expression:
+                                              "offer.coverpaper_film_print"
+                                          }
+                                        ],
+                                        attrs: {
+                                          name: "film_coverpaper",
+                                          type: "radio",
+                                          id: "film12",
+                                          value: "no"
+                                        },
+                                        domProps: {
+                                          checked: _vm._q(
+                                            offer.coverpaper_film_print,
+                                            "no"
+                                          )
+                                        },
+                                        on: {
+                                          change: function($event) {
+                                            _vm.$set(
+                                              offer,
+                                              "coverpaper_film_print",
+                                              "no"
+                                            )
+                                          }
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _c(
+                                        "label",
+                                        { attrs: { for: "film12" } },
+                                        [_vm._v(_vm._s(_vm.lang("No")))]
                                       )
-                                    }
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _c("label", { attrs: { for: "film12" } }, [
-                                  _vm._v(_vm._s(_vm.lang("No")))
-                                ])
-                              ]),
-                              _vm._v(" "),
-                              _c("fieldset", { staticClass: "form-group" }, [
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: offer.coverpaper_film_print,
-                                      expression: "offer.coverpaper_film_print"
-                                    }
-                                  ],
-                                  attrs: {
-                                    name: "film_coverpaper",
-                                    type: "radio",
-                                    id: "film22",
-                                    value: "yes"
-                                  },
-                                  domProps: {
-                                    checked: _vm._q(
-                                      offer.coverpaper_film_print,
-                                      "yes"
-                                    )
-                                  },
-                                  on: {
-                                    change: function($event) {
-                                      _vm.$set(
-                                        offer,
-                                        "coverpaper_film_print",
-                                        "yes"
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "fieldset",
+                                    { staticClass: "form-group" },
+                                    [
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: offer.coverpaper_film_print,
+                                            expression:
+                                              "offer.coverpaper_film_print"
+                                          }
+                                        ],
+                                        attrs: {
+                                          name: "film_coverpaper",
+                                          type: "radio",
+                                          id: "film22",
+                                          value: "yes"
+                                        },
+                                        domProps: {
+                                          checked: _vm._q(
+                                            offer.coverpaper_film_print,
+                                            "yes"
+                                          )
+                                        },
+                                        on: {
+                                          change: function($event) {
+                                            _vm.$set(
+                                              offer,
+                                              "coverpaper_film_print",
+                                              "yes"
+                                            )
+                                          }
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _c(
+                                        "label",
+                                        { attrs: { for: "film22" } },
+                                        [_vm._v(_vm._s(_vm.lang("Yes")))]
                                       )
-                                    }
-                                  }
-                                }),
+                                    ]
+                                  )
+                                ]),
                                 _vm._v(" "),
-                                _c("label", { attrs: { for: "film22" } }, [
-                                  _vm._v(_vm._s(_vm.lang("Yes")))
-                                ])
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "page-name-m" }, [
-                              _vm._v(_vm._s(_vm.lang("Blind Print")))
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "form-inline mb-3" }, [
-                              _c("fieldset", { staticClass: "form-group" }, [
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: offer.coverpaper_blind_print,
-                                      expression: "offer.coverpaper_blind_print"
-                                    }
-                                  ],
-                                  attrs: {
-                                    name: "blind_coverpaper",
-                                    type: "radio",
-                                    id: "blind12",
-                                    value: "no"
-                                  },
-                                  domProps: {
-                                    checked: _vm._q(
-                                      offer.coverpaper_blind_print,
-                                      "no"
-                                    )
-                                  },
-                                  on: {
-                                    change: function($event) {
-                                      _vm.$set(
-                                        offer,
-                                        "coverpaper_blind_print",
-                                        "no"
+                                _c("div", { staticClass: "page-name-m" }, [
+                                  _vm._v(_vm._s(_vm.lang("Blind Print")))
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "form-inline mb-3" }, [
+                                  _c(
+                                    "fieldset",
+                                    { staticClass: "form-group" },
+                                    [
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: offer.coverpaper_blind_print,
+                                            expression:
+                                              "offer.coverpaper_blind_print"
+                                          }
+                                        ],
+                                        attrs: {
+                                          name: "blind_coverpaper",
+                                          type: "radio",
+                                          id: "blind12",
+                                          value: "no"
+                                        },
+                                        domProps: {
+                                          checked: _vm._q(
+                                            offer.coverpaper_blind_print,
+                                            "no"
+                                          )
+                                        },
+                                        on: {
+                                          change: function($event) {
+                                            _vm.$set(
+                                              offer,
+                                              "coverpaper_blind_print",
+                                              "no"
+                                            )
+                                          }
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _c(
+                                        "label",
+                                        { attrs: { for: "blind12" } },
+                                        [_vm._v(_vm._s(_vm.lang("No")))]
                                       )
-                                    }
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _c("label", { attrs: { for: "blind12" } }, [
-                                  _vm._v(_vm._s(_vm.lang("No")))
-                                ])
-                              ]),
-                              _vm._v(" "),
-                              _c("fieldset", { staticClass: "form-group" }, [
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: offer.coverpaper_blind_print,
-                                      expression: "offer.coverpaper_blind_print"
-                                    }
-                                  ],
-                                  attrs: {
-                                    name: "blind_coverpaper",
-                                    type: "radio",
-                                    id: "blind22",
-                                    value: "yes"
-                                  },
-                                  domProps: {
-                                    checked: _vm._q(
-                                      offer.coverpaper_blind_print,
-                                      "yes"
-                                    )
-                                  },
-                                  on: {
-                                    change: function($event) {
-                                      _vm.$set(
-                                        offer,
-                                        "coverpaper_blind_print",
-                                        "yes"
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "fieldset",
+                                    { staticClass: "form-group" },
+                                    [
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: offer.coverpaper_blind_print,
+                                            expression:
+                                              "offer.coverpaper_blind_print"
+                                          }
+                                        ],
+                                        attrs: {
+                                          name: "blind_coverpaper",
+                                          type: "radio",
+                                          id: "blind22",
+                                          value: "yes"
+                                        },
+                                        domProps: {
+                                          checked: _vm._q(
+                                            offer.coverpaper_blind_print,
+                                            "yes"
+                                          )
+                                        },
+                                        on: {
+                                          change: function($event) {
+                                            _vm.$set(
+                                              offer,
+                                              "coverpaper_blind_print",
+                                              "yes"
+                                            )
+                                          }
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _c(
+                                        "label",
+                                        { attrs: { for: "blind22" } },
+                                        [_vm._v(_vm._s(_vm.lang("Yes")))]
                                       )
-                                    }
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _c("label", { attrs: { for: "blind22" } }, [
-                                  _vm._v(_vm._s(_vm.lang("Yes")))
+                                    ]
+                                  )
                                 ])
                               ])
                             ])
