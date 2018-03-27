@@ -75123,7 +75123,7 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "page-name-xl mb-4 mt-3" }, [
-        _vm._v(_vm._s(_vm.lang("Retail price definition")))
+        _vm._v(_vm._s(_vm.lang("Final Circulation")))
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "md-form" }, [
