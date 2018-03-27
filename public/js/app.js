@@ -4181,7 +4181,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             videos: {
                 'edit/basic_data': 'https://www.useloom.com/embed/7c0434f775b8417ca19a932f65cf3a5c'
-            }
+            },
+            show: false
         };
     },
 
@@ -4194,6 +4195,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 return this.videos[path];
             }
             return false;
+        }
+    },
+    methods: {
+        showVideo: function showVideo() {
+            this.show = !this.show;
         }
     }
 });
@@ -12853,7 +12859,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -73454,7 +73460,13 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _vm.video
     ? _c("div", [
-        _vm._m(0),
+        _c("a", { staticClass: "help", attrs: { href: "#help-content" } }, [
+          _c("i", {
+            staticClass: "fa fa-3x fa-question-circle",
+            on: { click: _vm.showVideo }
+          }),
+          _vm._v(" Trebaš pomoć")
+        ]),
         _vm._v(" "),
         _c("div", { attrs: { id: "help-content" } }, [
           _c("iframe", {
@@ -73472,17 +73484,7 @@ var render = function() {
       ])
     : _vm._e()
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("a", { staticClass: "help", attrs: { href: "#help-content" } }, [
-      _c("i", { staticClass: "fa fa-3x fa-question-circle" }),
-      _vm._v(" Trebaš pomoć")
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
