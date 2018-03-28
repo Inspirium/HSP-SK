@@ -8307,7 +8307,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            option_colors: ['No Colour', 'One Colour', 'Two Colours', 'Three Colours', 'Full Colour', 'Only One Color', 'Only Two Color', 'Only Three Color', 'Only Four Color', 'Fifth Colour']
+            option_colors: ['No Colour', 'Only One Colour', 'Only Two Colours', 'Only Three Colours', 'Only Four Colours', 'One Colour', 'Two Colours', 'Three Colours', 'Full Colour']
         };
     },
     computed: {
@@ -9442,7 +9442,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             circulation: '',
             addition: '',
-            option_colors: ['No Colour', 'Only One Color', 'Only Two Color', 'Only Three Color', 'Only Four Color', 'One Colour', 'Two Colours', 'Three Colours', 'Full Colour']
+            option_colors: ['No Colour', 'Only One Colour', 'Only Two Colours', 'Only Three Colours', 'Only Four Colours', 'One Colour', 'Two Colours', 'Three Colours', 'Full Colour']
         };
     },
     computed: {
