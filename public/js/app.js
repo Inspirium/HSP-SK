@@ -3024,7 +3024,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                             },
                             'izrada-sadrzaja': {
                                 enabled: this.canViewDepartmentTasks(93),
-                                path: '/tasks/department/93',
+                                path: '/tasks/department/95',
                                 title: 'Izrada sadržaja',
                                 component: false
                             },
@@ -3036,7 +3036,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                             },
                             mozabook: {
                                 enabled: this.canViewDepartmentTasks(95),
-                                path: '/tasks/department/95',
+                                path: '/tasks/department/93',
                                 title: 'Mozabook',
                                 component: false
                             }
