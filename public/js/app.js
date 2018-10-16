@@ -3024,7 +3024,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                             },
                             'izrada-sadrzaja': {
                                 enabled: this.canViewDepartmentTasks(93),
-                                path: '/tasks/department/03',
+                                path: '/tasks/department/93',
                                 title: 'Izrada sadržaja',
                                 component: false
                             },
@@ -4592,7 +4592,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     mounted: function mounted() {
         var _this2 = this;
 
-        axios.get('/api/human_resources/departments').then(function (res) {
+        axios.post('/api/human_resources/departments').then(function (res) {
             _this2.departments = res.data;
             setTimeout(function () {
                 $('.mdb-select').material_select('destroy');
