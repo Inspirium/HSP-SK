@@ -40,10 +40,13 @@ class DepartmentController extends Controller {
 			$total     = Department::where('name', 'LIKE', "%$filter%")->count();
 		}
 		else {
-			$deps = Department::orderBy( $sort ? $sort : 'id', $order )
-			                     ->limit( $limit )
-			                     ->offset( $offset )
-			                     ->get();
+			$deps = Department::orderBy( $sort ? $sort : 'id', $order );
+
+			if ($limit) {
+               $deps->limit( $limit )->offset( $offset );
+            }
+
+            $deps->get();
 			$total     = Department::count();
 		}
 		return response()->json(['rows' => $deps, 'total' => $total]);
