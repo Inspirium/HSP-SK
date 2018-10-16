@@ -25,7 +25,7 @@ class DepartmentController extends Controller {
 		return response()->json($department);
 	}
 
-	public function getDepartments(Request $request) {
+	public function postDepartments(Request $request) {
 		$limit = $request->input('limit');
 		$offset = $request->input('offset');
 		$order = $request->input('order');
@@ -40,15 +40,17 @@ class DepartmentController extends Controller {
 			$total     = Department::where('name', 'LIKE', "%$filter%")->count();
 		}
 		else {
-			$deps = Department::orderBy( $sort ? $sort : 'id', $order );
-
-			if ($limit) {
-               $deps->limit( $limit )->offset( $offset );
-            }
-
-            $deps->get();
+			$deps = Department::orderBy( $sort ? $sort : 'id', $order )
+               ->limit( $limit )->offset( $offset )->get();
 			$total     = Department::count();
 		}
 		return response()->json(['rows' => $deps, 'total' => $total]);
 	}
+
+    public function getDepartments(Request $request) {
+	    $deps = Department::orderBy('id', 'asc' )->get();
+	    $total     = Department::count();
+
+        return response()->json(['rows' => $deps, 'total' => $total]);
+    }
 }

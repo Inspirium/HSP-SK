@@ -4592,8 +4592,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     mounted: function mounted() {
         var _this2 = this;
 
-        axios.post('/api/human_resources/departments').then(function (res) {
-            _this2.departments = res.data;
+        axios.get('/api/human_resources/departments').then(function (res) {
+            _this2.departments = res.data.rows;
             setTimeout(function () {
                 $('.mdb-select').material_select('destroy');
                 $('.mdb-select').material_select();

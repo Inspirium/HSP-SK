@@ -47,7 +47,8 @@ Route::group( [ 'middleware' => [ 'auth:api' ], ], function () {
 		Route::get( 'department/{department}', 'DepartmentController@getDepartment' );
 		Route::put( 'department/{department}', 'DepartmentController@putDepartment' );
 		Route::post( 'department', 'DepartmentController@postDepartment' );
-		Route::post('departments', 'DepartmentController@getDepartments');
+		Route::post('departments', 'DepartmentController@postDepartments');
+		Route::get('departments', 'DepartmentController@getDepartments');
 	} );
 
 	Route::group( [ 'namespace' => 'Api\BookManagement' ], function () {
