@@ -1,11 +1,4 @@
 {
-    "/js/app.js": "/js/app.js?id=5a05dcbba39772a1d2ce",
-    "/css/app.css": "/css/app.css?id=35c95ca807c0432720c2",
-    "/js/jquery.js": "/js/jquery.js?id=6a07da9fae934baf3f74",
-    "/js/popper.js": "/js/popper.js?id=1fcb6222fd1e82eb9554",
-    "/js/bootstrap.js": "/js/bootstrap.js?id=4bc939cd6b79a562e8d1",
-    "/js/chartist.js": "/js/chartist.js?id=06b81d355aa76f9908f7",
-    "/js/scripts.js": "/js/scripts.js?id=1c5a7fc61b7a55255939",
-    "/js/flipclock.js": "/js/flipclock.js?id=375cf29443e58ff5b8b9",
-    "/js/mdb.js": "/js/mdb.js?id=6cdad92322c376b21a6b"
+    "/js/app.js": "/js/app.js",
+    "/css/app.css": "/css/app.css"
 }
