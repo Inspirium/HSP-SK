@@ -74397,11 +74397,11 @@ var render = function() {
             _vm._v(" "),
             _vm._l(_vm.book_tenders, function(item, key) {
               return _c("option", { domProps: { value: key } }, [
-                _vm._v(_vm._s(item.name))
+                _vm._v(_vm._s(item.title))
               ])
             }),
             _vm._v(" "),
-            _c("option", { attrs: { value: "other" } }, [_vm._v("Ostalo")])
+            _c("option", { attrs: { value: "0" } }, [_vm._v("Ostalo")])
           ],
           2
         ),
@@ -111042,7 +111042,7 @@ var initialState = {
             if (payload.book_tender) {
                 state.book_tender = payload.book_tender.id;
             } else {
-                state.biblioteca = 0;
+                state.book_tender = 0;
             }
             state.note = payload.note;
         }
