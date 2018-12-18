@@ -7145,6 +7145,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -7165,6 +7175,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         bibliotecas: function bibliotecas() {
             return this.$store.state.categorization.bibliotecas;
+        },
+        book_tenders: function book_tenders() {
+            return this.$store.state.categorization.book_tenders;
         },
         categorization: function categorization() {
             return this.$deepModel('proposition.categorization');
@@ -74345,6 +74358,58 @@ var render = function() {
       _vm._v(_vm._s(_vm.lang("Categorization")))
     ]),
     _vm._v(" "),
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-6 offset-md-3" }, [
+        _c(
+          "select",
+          {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.categorization.book_tender,
+                expression: "categorization.book_tender"
+              }
+            ],
+            staticClass: "mdb-select",
+            on: {
+              change: function($event) {
+                var $$selectedVal = Array.prototype.filter
+                  .call($event.target.options, function(o) {
+                    return o.selected
+                  })
+                  .map(function(o) {
+                    var val = "_value" in o ? o._value : o.value
+                    return val
+                  })
+                _vm.$set(
+                  _vm.categorization,
+                  "book_tender",
+                  $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                )
+              }
+            }
+          },
+          [
+            _c("option", { attrs: { value: "", selected: "" } }, [
+              _vm._v(_vm._s(_vm.lang("Choose")))
+            ]),
+            _vm._v(" "),
+            _vm._l(_vm.book_tenders, function(item, key) {
+              return _c("option", { domProps: { value: key } }, [
+                _vm._v(_vm._s(item.name))
+              ])
+            }),
+            _vm._v(" "),
+            _c("option", { attrs: { value: "other" } }, [_vm._v("Ostalo")])
+          ],
+          2
+        ),
+        _vm._v(" "),
+        _c("label", [_vm._v(_vm._s(_vm.lang("Tender type")))])
+      ])
+    ]),
+    _vm._v(" "),
     _c("div", { staticClass: "page-name-l mb-4" }, [
       _vm._v(_vm._s(_vm.lang("Basic Categorization")))
     ]),
@@ -110183,7 +110248,8 @@ var routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_33__
         types: 0,
         schools: 0,
         subjects: 0,
-        bibliotecas: 0
+        bibliotecas: 0,
+        book_tenders: 0
     },
     mutations: {
         setCategories: function setCategories(state, payload) {
@@ -110200,6 +110266,9 @@ var routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_33__
         },
         setBibliotecas: function setBibliotecas(state, payload) {
             state.bibliotecas = payload;
+        },
+        setBookTenders: function setBookTenders(state, payload) {
+            state.book_tenders = payload;
         }
     },
     actions: {
@@ -110278,13 +110347,28 @@ var routes = [{ path: '/propositions', component: __WEBPACK_IMPORTED_MODULE_33__
                 }
             });
         },
-        getData: function getData(_ref6) {
+        getBookTenders: function getBookTenders(_ref6) {
             var commit = _ref6.commit,
-                state = _ref6.state,
-                dispatch = _ref6.dispatch;
+                state = _ref6.state;
 
             return new Promise(function (resolve, reject) {
-                Promise.all([dispatch('getCategories'), dispatch('getTypes'), dispatch('getSchools'), dispatch('getSubjects'), dispatch('getBibliotecas')]).then(function () {
+                if (!state.book_tenders) {
+                    __WEBPACK_IMPORTED_MODULE_0_axios_index___default.a.get('/api/book/book_tenders').then(function (res) {
+                        commit('setBookTenders', res.data);
+                        resolve();
+                    });
+                } else {
+                    resolve();
+                }
+            });
+        },
+        getData: function getData(_ref7) {
+            var commit = _ref7.commit,
+                state = _ref7.state,
+                dispatch = _ref7.dispatch;
+
+            return new Promise(function (resolve, reject) {
+                Promise.all([dispatch('getCategories'), dispatch('getTypes'), dispatch('getSchools'), dispatch('getSubjects'), dispatch('getBibliotecas'), dispatch('getBookTenders')]).then(function () {
                     resolve();
                 });
             });
@@ -110900,7 +110984,8 @@ var initialState = {
     school_assignment: 0,
     school_subject: 0,
     school_subject_detailed: 0,
-    biblioteca: 0
+    biblioteca: 0,
+    book_tender: 0
 };
 /* harmony default export */ __webpack_exports__["a"] = ({
     namespaced: true,
@@ -110917,7 +111002,8 @@ var initialState = {
         school_assignment: 0,
         school_subject: 0,
         school_subject_detailed: 0,
-        biblioteca: 0
+        biblioteca: 0,
+        book_tender: 0
     },
     mutations: {
         initData: function initData(state, payload) {
@@ -110950,6 +111036,11 @@ var initialState = {
             }
             if (payload.biblioteca) {
                 state.biblioteca = payload.biblioteca.id;
+            } else {
+                state.biblioteca = 0;
+            }
+            if (payload.book_tender) {
+                state.book_tender = payload.book_tender.id;
             } else {
                 state.biblioteca = 0;
             }

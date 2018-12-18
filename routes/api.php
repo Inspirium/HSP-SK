@@ -70,6 +70,7 @@ Route::group( [ 'middleware' => [ 'auth:api' ], ], function () {
 			Route::get( 'schools', 'CategoryController@getSchools' );
 			Route::get( 'subjects', 'CategoryController@getSchoolSubjects' );
 			Route::get( 'bibliotecas', 'CategoryController@getBibliotecas' );
+			Route::get( 'book_tenders', 'CategoryController@getBookTenders' );
 
 			Route::get( 'categorization', 'CategoryController@getAll' );
 		} );
