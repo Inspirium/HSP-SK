@@ -22,18 +22,19 @@
     "pusher/pusher-php-server": "~3.0"
   },
   "require-dev": {
+    "ajthinking/tinx": "^2.1",
     "barryvdh/laravel-ide-helper": "^2.3",
+    "filp/whoops": "~2.0",
     "fzaninotto/faker": "~1.4",
     "jeroen-g/laravel-packager": "^1.5",
     "laravel/dusk": "^2.0",
     "laravel/homestead": "^7.0",
-    "phpunit/phpunit": "~6.0",
-    "vimeo/psalm": "^0",
-    "filp/whoops": "~2.0",
     "mockery/mockery": "~1.0",
-    "symfony/thanks": "^1.0",
+    "phpunit/phpunit": "~6.0",
     "roave/security-advisories": "dev-master",
-    "sllh/composer-versions-check": "^2.0"
+    "sllh/composer-versions-check": "^2.0",
+    "symfony/thanks": "^1.0",
+    "vimeo/psalm": "^0"
   },
   "autoload": {
     "classmap": [

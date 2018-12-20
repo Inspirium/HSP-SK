@@ -21,6 +21,10 @@ class Employee extends Authenticatable implements Auditable, UserResolver{
 
 	protected $hidden = [ 'password', 'remember_token' ];
 
+	protected $casts = [
+	    'notifications' => 'json'
+    ];
+
 	public static function resolveId()
 	{
 		return \Auth::check() ? \Auth::user()->getAuthIdentifier() : null;
