@@ -33,7 +33,7 @@ class NewMessage extends Notification
      */
     public function via($notifiable)
     {
-        $notifications = $notifiable->notifications;
+        $notifications = $notifiable->notification_settings;
         $out = ['database', 'broadcast'];
         if ( $notifications === 1 || (isset($notifications['new_message']) && $notifications['new_message'])) {
             $out[] = 'mail';
