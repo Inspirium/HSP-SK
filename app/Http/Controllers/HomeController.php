@@ -13,6 +13,6 @@ class HomeController extends Controller
     }
 
     public function getNotifications() {
-        return view(env('TEMPLATE') . '::activity_stream', ['notifications' => \Auth::user()->notifications]);
+        return view(env('TEMPLATE') . '::activity_stream', ['notifications' => \Auth::user()->notifications()]);
 	}
 }
