@@ -87,7 +87,8 @@ class EmployeeController extends Controller {
 			'postal_code' => $input['postal_code']?$input['postal_code']:'',
 			'room' => $input['room']?$input['room']:'',
 			'sex' => $input['sex']?$input['sex']:'',
-			'department_id' => $input['department_id']?$input['department_id']:0
+			'department_id' => $input['department_id']?$input['department_id']:0,
+            'notification_settings' => 1
 		];
 		if (isset($input['password']) && $input['password']) {
 			$user_array['password'] = bcrypt($input['password']);
