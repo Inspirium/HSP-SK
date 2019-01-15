@@ -79048,7 +79048,7 @@ var render = function() {
           _c(
             "div",
             {
-              staticClass: "tab-pane fade active",
+              staticClass: "tab-pane fade show active",
               attrs: { id: "panel1", role: "tabpanel" }
             },
             [
