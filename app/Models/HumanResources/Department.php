@@ -13,9 +13,13 @@ class Department extends Model {
         return $this->hasMany('Inspirium\Models\HumanResources\Employee');
     }
 
-	public function tasks() {
+	/*public function tasks() {
 		return $this->belongsToMany('Inspirium\TaskManagement\Models\Task', 'department_task_pivot', 'department_id', 'task_id')->with('assigner')->withPivot('order')->orderBy('pivot_order');
-	}
+	}*/
+
+	public function tasks() {
+	    return $this->hasMany('Inspirium\TaskManagement\Models\Task');
+    }
 
 	public function getLinkAttribute() {
     	return '/human_resources/department/'.$this->id . '/edit';

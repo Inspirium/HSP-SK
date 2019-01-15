@@ -11070,8 +11070,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__modals_TaskOrderApprovalModal___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__modals_TaskOrderApprovalModal__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__EmployeeTasks__ = __webpack_require__("./packages/Inspirium/SKTemplate/src/assets/js/components/tasks/EmployeeTasks.vue");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__EmployeeTasks___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__EmployeeTasks__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__table_components__ = __webpack_require__("./packages/Inspirium/SKTemplate/src/assets/js/components/table_components/index.js");
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -11093,15 +11116,63 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    components: {
+    components: _extends({
         EmployeeTasks: __WEBPACK_IMPORTED_MODULE_2__EmployeeTasks___default.a,
         taskOrderApproval: __WEBPACK_IMPORTED_MODULE_1__modals_TaskOrderApprovalModal___default.a
-    },
+    }, __WEBPACK_IMPORTED_MODULE_3__table_components__["a" /* default */]),
     data: function data() {
         return {
             employee_index: {},
             department: false,
-            employees: false
+            employees: false,
+            department_activity: {
+                supportNested: true,
+                tblClass: 'table',
+                columns: [{ title: '#', field: 'id', sortable: true }, {
+                    title: this.lang('Task'),
+                    field: 'name',
+                    sortable: true,
+                    tdComp: 'TitleCell',
+                    tdClass: 'table-title'
+                }, {
+                    title: this.lang('Task Type'),
+                    field: 'formatted_type',
+                    sortable: true,
+                    tdComp: 'TaskType'
+                }, {
+                    title: this.lang('Assign to'),
+                    field: 'assignee',
+                    tdComp: 'AuthorCell'
+                }, {
+                    title: this.lang('Assigner'),
+                    field: 'assigner',
+                    tdComp: 'AuthorCell'
+                }, {
+                    title: this.lang('Created'),
+                    field: 'created_at',
+                    sortable: true,
+                    tdComp: 'DateCell'
+                }, {
+                    title: this.lang('Deadline'),
+                    field: 'deadline',
+                    sortable: true,
+                    tdComp: 'DateCell'
+                }, {
+                    title: this.lang('Waiting time'),
+                    field: 'created_at',
+                    sortable: true,
+                    tdComp: 'WaitingTime'
+                }, {
+                    title: this.lang('Status'),
+                    field: 'status',
+                    sortable: false,
+                    tdComp: 'TaskStatus'
+                }],
+                data: [],
+                total: 0,
+                query: {},
+                HeaderSettings: false
+            }
         };
     },
     computed: {
@@ -11166,6 +11237,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             axios.get('/api/tasks/department/' + this.$route.params.id).then(function (res) {
                 _this4.department = res.data.department;
                 _this4.employees = res.data.employees;
+                _this4.department_activity.data = res.data.activity;
             });
         } else {
             window.location.href = "/tasks"; //TODO: fix
@@ -78954,47 +79026,117 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _vm.department
-    ? _c(
-        "div",
-        { staticClass: "content" },
-        [
+    ? _c("div", { staticClass: "content" }, [
+        _c(
+          "div",
+          {
+            staticClass:
+              "row profile-head py-4 d-flex flex-column justify-content-center align-items-center"
+          },
+          [
+            _c("div", { staticClass: "col-md-12" }, [
+              _c("h1", { staticClass: "display-3 text-white text-center" }, [
+                _vm._v(_vm._s(_vm.department.name))
+              ])
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _vm._m(0),
+        _vm._v(" "),
+        _c("div", { staticClass: "tab-content" }, [
           _c(
             "div",
             {
-              staticClass:
-                "row profile-head py-4 d-flex flex-column justify-content-center align-items-center"
+              staticClass: "tab-pane fade active",
+              attrs: { id: "panel1", role: "tabpanel" }
             },
             [
-              _c("div", { staticClass: "col-md-12" }, [
-                _c("h1", { staticClass: "display-3 text-white text-center" }, [
-                  _vm._v(_vm._s(_vm.department.name))
-                ])
-              ])
-            ]
+              _vm._l(_vm.employees, function(employee, index) {
+                return [
+                  _c("employee-tasks", {
+                    attrs: { employee: employee },
+                    on: {
+                      openModal: _vm.openModalForApproval,
+                      approveOrder: _vm.approveOrder,
+                      rejectOrder: _vm.rejectOrder
+                    }
+                  })
+                ]
+              }),
+              _vm._v(" "),
+              _c("task-order-approval", {
+                on: { sendForApproval: _vm.sendForApproval }
+              })
+            ],
+            2
           ),
           _vm._v(" "),
-          _vm._l(_vm.employees, function(employee, index) {
-            return [
-              _c("employee-tasks", {
-                attrs: { employee: employee },
-                on: {
-                  openModal: _vm.openModalForApproval,
-                  approveOrder: _vm.approveOrder,
-                  rejectOrder: _vm.rejectOrder
-                }
-              })
-            ]
-          }),
-          _vm._v(" "),
-          _c("task-order-approval", {
-            on: { sendForApproval: _vm.sendForApproval }
-          })
-        ],
-        2
-      )
+          _c(
+            "div",
+            {
+              staticClass: "tab-pane fade",
+              attrs: { id: "panel2", role: "tabpanel" }
+            },
+            [
+              _c(
+                "datatable",
+                _vm._b({}, "datatable", _vm.$data.department_activity, false)
+              )
+            ],
+            1
+          )
+        ])
+      ])
     : _vm._e()
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row tabs-wrapper" }, [
+      _c(
+        "ul",
+        {
+          staticClass: "col nav classic-tabs tabs-cyan",
+          attrs: { id: "tabs", role: "tablist" }
+        },
+        [
+          _c("li", { staticClass: "nav-item" }, [
+            _c(
+              "a",
+              {
+                staticClass: "nav-link position-relative active",
+                attrs: { "data-toggle": "tab", href: "#panel1", role: "tab" }
+              },
+              [
+                _vm._v(
+                  "\n                    Po djelatnicima\n                "
+                )
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("li", { staticClass: "nav-item" }, [
+            _c(
+              "a",
+              {
+                staticClass: "nav-link position-relative",
+                attrs: { "data-toggle": "tab", href: "#panel2", role: "tab" }
+              },
+              [
+                _vm._v(
+                  "\n                    Aktivnost odjela\n                "
+                )
+              ]
+            )
+          ])
+        ]
+      )
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
