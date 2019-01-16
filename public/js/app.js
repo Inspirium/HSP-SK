@@ -4199,7 +4199,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             videos: {
-                'edit/basic_data': 'https://www.useloom.com/embed/7c0434f775b8417ca19a932f65cf3a5c'
+                'edit/start': 'https://www.useloom.com/embed/7c0434f775b8417ca19a932f65cf3a5c',
+                'edit/basic_data': 'https://www.useloom.com/share/266f1b57c9344486bd57ca1977ab00f5',
+                'edit/categorization': 'https://www.useloom.com/share/5fb815908f3a4ad09b131c0d887434d0',
+                'edit/market_potential': 'https://www.useloom.com/share/7b58cee7367f4fe38fc92936f8da1108',
+                'edit/technical_data': 'https://www.useloom.com/share/92856778c4c34d1a9d69705bef4dc940',
+                'edit/print': 'https://www.useloom.com/share/b7c720c666b648dd8a1535bc5cbb5dfd',
+                'edit/authors_expense': 'https://www.useloom.com/share/28dd9230e7b44c489cbcbda66148b8ec',
+                'edit/production_expense': 'https://www.useloom.com/share/5d11a3b5dc824939ba22cff8e95d8322',
+                'edit/marketing_expense': 'https://www.useloom.com/share/5f38ca21e3a542a58eb061aac4cdc6d5',
+                'edit/layout_expense': 'https://www.useloom.com/share/55d45b4d8b3b43b7acb0d9a8aaa0eeef',
+                'edit/deadline': 'https://www.useloom.com/share/cfa45c85f54c4cbca8afbb6c2f59cd2f',
+                'edit/calculation': 'https://www.useloom.com/share/bc767833f4514124a929571792f0f9a5',
+                'final_price/price_definition': 'https://www.useloom.com/share/fb055f7a43b24aaf83218e7c5a18551b',
+                'expenses/authors_expense': 'https://www.useloom.com/share/ea5756e71553417ab6e583a665180e88',
+                'expenses/production_expense': 'https://www.useloom.com/share/6f1fa272bd594ceeb7d7ab41a47783cb',
+                'expenses/marketing_expense': 'https://www.useloom.com/share/6f9799fbcb40486295b54dedd480d2e9',
+                'expenses/layout_expense': 'https://www.useloom.com/share/d6db79cc128d4955a84292dd2fc42114',
+                'expenses/expenses/compare': 'https://www.useloom.com/share/495267d401324213aeced2e1b58e624a'
+
             },
             show: false
         };
@@ -9472,14 +9490,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
             circulation: '',
             addition: '',
-            option_colors: ['No Colour', 'Only One Colour', 'Only Two Colours', 'Only Three Colours', 'Only Four Colours', 'One Colour', 'Two Colours', 'Three Colours', 'Full Colour']
+            option_colors: ['No Colour', 'Only One Color', 'Only Two Colors', 'Only Three Colors', 'Only Four Colors', 'One Colour', 'Two Colours', 'Three Colours', 'Full Colour']
         };
     },
     computed: {
@@ -10424,6 +10441,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
 //
 //
 //
@@ -12966,7 +12985,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -73059,86 +73078,6 @@ var render = function() {
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.expense.accontation,
-                          expression: "expense.accontation"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      attrs: {
-                        type: "text",
-                        id: "accontation",
-                        placeholder: _vm.expense.parent.accontation
-                      },
-                      domProps: { value: _vm.expense.accontation },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(
-                            _vm.expense,
-                            "accontation",
-                            $event.target.value
-                          )
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c("label", { attrs: { for: "accontation" } }, [
-                      _vm._v(_vm._s(_vm.lang("Accontation")))
-                    ]),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "input-group-addon" }, [
-                      _vm._v(_vm._s(_vm.lang("Kn")))
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "md-form input-group" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.expense.netto_price_percentage,
-                          expression: "expense.netto_price_percentage"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      attrs: {
-                        type: "text",
-                        id: "netto-price-percentage",
-                        placeholder: _vm.expense.parent.netto_price_percentage
-                      },
-                      domProps: { value: _vm.expense.netto_price_percentage },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(
-                            _vm.expense,
-                            "netto_price_percentage",
-                            $event.target.value
-                          )
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c("label", { attrs: { for: "netto-price-percentage" } }, [
-                      _vm._v(_vm._s(_vm.lang("Netto Price Percentage")))
-                    ]),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "input-group-addon" }, [
-                      _vm._v(_vm._s(_vm.lang("%")))
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "md-form input-group" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
                           value: _vm.expense.reviews,
                           expression: "expense.reviews"
                         }
@@ -79161,7 +79100,6 @@ var render = function() {
           "a",
           {
             staticClass: "help",
-            attrs: { href: "#help-content" },
             on: {
               click: function($event) {
                 $event.preventDefault()
@@ -84096,7 +84034,7 @@ var render = function() {
                 ? _c(
                     "button",
                     {
-                      staticClass: "btn btn-lg btn-assign btn-assign-icon ",
+                      staticClass: "btn btn-lg btn-assign",
                       on: { click: _vm.assignModalOpen }
                     },
                     [_vm._v(_vm._s(_vm.lang("Request Code...")))]
@@ -86000,9 +85938,7 @@ var render = function() {
       _c("label", { attrs: { for: "form76" } }, [
         _vm._v(_vm._s(_vm.lang("Note")))
       ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "div" }, [_vm._v("Blablaval")])
+    ])
   ])
 }
 var staticRenderFns = []
