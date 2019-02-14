@@ -3,6 +3,7 @@
 namespace Inspirium\Models\HumanResources;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
 use Inspirium\Notifications\ResetPassword;
 use Intervention\Image\Facades\Image;
@@ -14,7 +15,7 @@ use OwenIt\Auditing\Contracts\UserResolver;
 
 class Employee extends Authenticatable implements Auditable, UserResolver{
 
-	use Notifiable, HasApiTokens, \OwenIt\Auditing\Auditable;
+	use Notifiable, HasApiTokens, \OwenIt\Auditing\Auditable, SoftDeletes;
 
     protected $guarded = [ 'created_at', 'update_at', 'deleted_at' ];
     protected $appends = [ 'name', 'department_name', 'phone_merged', 'mobile_merged', 'link', 'links' ];
@@ -25,7 +26,9 @@ class Employee extends Authenticatable implements Auditable, UserResolver{
 	    'notification_settings' => 'json'
     ];
 
-	public static function resolveId()
+    protected $dates = ['deleted_at'];
+
+    public static function resolveId()
 	{
 		return \Auth::check() ? \Auth::user()->getAuthIdentifier() : null;
 	}
