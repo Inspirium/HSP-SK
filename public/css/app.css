@@ -2716,7 +2716,7 @@ pre code {
   opacity: 1;
 }
 
-.form-control:-ms-input-placeholder {
+.form-control::-moz-placeholder {
   color: #6c757d;
   opacity: 1;
 }
@@ -5925,8 +5925,10 @@ input[type="button"].btn-block {
 @media (min-width: 544px) {
   .card-columns {
     -webkit-column-count: 3;
+       -moz-column-count: 3;
             column-count: 3;
     -webkit-column-gap: 1.25rem;
+       -moz-column-gap: 1.25rem;
             column-gap: 1.25rem;
     orphans: 1;
     widows: 1;
@@ -20325,7 +20327,7 @@ button:focus {
   font-weight: 300;
 }
 
-.navbar.navbar-light form .form-control:-ms-input-placeholder {
+.navbar.navbar-light form .form-control::-moz-placeholder {
   color: #000;
   font-weight: 300;
 }
@@ -20408,7 +20410,7 @@ button:focus {
   font-weight: 300;
 }
 
-.navbar.navbar-dark form .form-control:-ms-input-placeholder {
+.navbar.navbar-dark form .form-control::-moz-placeholder {
   color: #fff;
   font-weight: 300;
 }
@@ -22327,7 +22329,7 @@ textarea.md-textarea.input-alternate:focus {
   padding-top: 2px;
 }
 
-.md-form.input-group:-ms-input-placeholder {
+.md-form.input-group::-moz-placeholder {
   color: #999;
   padding-top: 2px;
 }
@@ -26274,7 +26276,7 @@ input[type=range]:focus::-ms-fill-upper {
   padding-left: 1rem;
 }
 
-.input-group .input-group-addon:-ms-input-placeholder {
+.input-group .input-group-addon::-moz-placeholder {
   padding-left: 1rem;
 }
 
@@ -26551,7 +26553,7 @@ input[type=range]:focus::-ms-fill-upper {
   color: #fff !important;
 }
 
-.side-nav .search-form input[type=text]:-ms-input-placeholder {
+.side-nav .search-form input[type=text]::-moz-placeholder {
   color: #fff !important;
 }
 
@@ -26711,7 +26713,7 @@ input[type=range]:focus::-ms-fill-upper {
   color: #555 !important;
 }
 
-.side-nav.side-nav-light .search-form input[type=text]:-ms-input-placeholder {
+.side-nav.side-nav-light .search-form input[type=text]::-moz-placeholder {
   color: #555 !important;
 }
 
@@ -28863,7 +28865,7 @@ button.toast-close-button {
 
 .sk-skin input,
 .sk-skin input[type=value],
-.sk-skin input:-ms-input-placeholder {
+.sk-skin input::-moz-placeholder {
   font-size: 1rem;
   font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
@@ -28888,7 +28890,7 @@ button.toast-close-button {
 }
 
 .sk-skin input[type=value],
-.sk-skin input:-ms-input-placeholder {
+.sk-skin input::-moz-placeholder {
   color: #ccc;
 }
 
@@ -29082,7 +29084,7 @@ button.toast-close-button {
   font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-.sk-skin .search-big input:-ms-input-placeholder {
+.sk-skin .search-big input::-moz-placeholder {
   font-size: 2rem;
   font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
@@ -33141,7 +33143,7 @@ h6 {
   font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-.search-big input:-ms-input-placeholder {
+.search-big input::-moz-placeholder {
   font-size: 2rem;
   font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
