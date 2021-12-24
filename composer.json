@@ -1,51 +1,46 @@
 {
-  "name": "Inspirium/HSP",
+  "name": "inspirium/hsp",
   "description": "Hollistic Solutions for Publishers",
   "keywords": ["framework", "laravel"],
   "license": "GPLv3",
   "type": "project",
   "require": {
-    "php": ">=7.0.0",
+    "php": ">=7.3.0",
     "cebe/markdown": "^1.2",
     "doctrine/dbal": "^2.6",
     "dompdf/dompdf": "^0.8.1",
-    "guzzlehttp/guzzle": "^6.3",
+    "guzzlehttp/guzzle": "^7.0.1",
     "intervention/image": "^2.4",
     "intervention/imagecache": "^2.3",
-    "laravel/framework": "5.5.*",
-    "laravel/passport": "^4.0",
-    "laravel/tinker": "~1.0",
-    "owen-it/laravel-auditing": "^5.0",
-    "php-unoconv/php-unoconv": "~0.2",
-    "phpoffice/phpspreadsheet": "dev-develop",
-    "phpoffice/phpword": "v0.14.*",
-    "pusher/pusher-php-server": "~3.0"
+    "laravel/framework": "^8.0",
+    "laravel/passport": "^10.0",
+    "laravel/ui": "^3.4",
+    "owen-it/laravel-auditing": "^12.0",
+    "phpoffice/phpspreadsheet": "^1.20.0",
+    "phpoffice/phpword": "^0.18.0",
+    "pusher/pusher-php-server": "^7.0"
   },
   "require-dev": {
-    "ajthinking/tinx": "^2.1",
-    "barryvdh/laravel-ide-helper": "^2.3",
-    "filp/whoops": "~2.0",
-    "fzaninotto/faker": "~1.4",
-    "jeroen-g/laravel-packager": "^1.5",
-    "laravel/dusk": "^2.0",
-    "laravel/homestead": "^7.0",
-    "mockery/mockery": "~1.0",
-    "phpunit/phpunit": "~6.0",
-    "roave/security-advisories": "dev-master",
-    "sllh/composer-versions-check": "^2.0",
-    "symfony/thanks": "^1.0",
-    "vimeo/psalm": "^0"
+    "phpunit/phpunit": "~9.0"
   },
   "autoload": {
-    "classmap": [
-      "database/seeds",
-      "database/factories"
-    ],
     "psr-4": {
       "Inspirium\\TaskManagement\\": "packages/Inspirium/TaskManagement/src",
       "Inspirium\\BookProposition\\": "packages/Inspirium/BookProposition/src",
       "Inspirium\\SKTemplate\\": "packages/Inspirium/SKTemplate/src",
-      "Inspirium\\": "app/"
+      "Inspirium\\": "app/",
+      "Database\\Factories\\": "database/factories/",
+      "Database\\Seeders\\": "database/seeders/"
+    }
+  },
+  "config": {
+    "optimize-autoloader": true,
+    "preferred-install": "dist",
+    "sort-packages": true
+  },
+  "extra": {
+    "laravel": {
+      "dont-discover": []
     }
   },
   "autoload-dev": {
@@ -53,27 +48,18 @@
       "Tests\\": "tests/"
     }
   },
-  "extra": {
-    "laravel": {
-      "dont-discover": [
-      ]
-    }
-  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
   "scripts": {
+    "post-autoload-dump": [
+      "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+      "@php artisan package:discover --ansi"
+    ],
     "post-root-package-install": [
       "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
     ],
     "post-create-project-cmd": [
-      "@php artisan key:generate"
-    ],
-    "post-autoload-dump": [
-      "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-      "@php artisan package:discover"
+      "@php artisan key:generate --ansi"
     ]
-  },
-  "config": {
-    "preferred-install": "dist",
-    "sort-packages": true,
-    "optimize-autoloader": true
   }
 }

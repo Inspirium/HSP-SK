@@ -14,6 +14,7 @@
 use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => 'auth'], function() {
+    Route::get('token', 'HomeController@getToken');
 	Route::get('/', 'HomeController@getIndex');
 	Route::get('notifications', 'HomeController@getNotifications');
 });

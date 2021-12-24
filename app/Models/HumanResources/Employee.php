@@ -13,9 +13,9 @@ use Laravel\Passport\HasApiTokens;
 use OwenIt\Auditing\Contracts\Auditable;
 use OwenIt\Auditing\Contracts\UserResolver;
 
-class Employee extends Authenticatable implements Auditable, UserResolver{
+class Employee extends Authenticatable {
 
-	use Notifiable, HasApiTokens, \OwenIt\Auditing\Auditable, SoftDeletes;
+	use Notifiable, HasApiTokens, SoftDeletes;
 
     protected $guarded = [ 'created_at', 'update_at', 'deleted_at' ];
     protected $appends = [ 'name', 'department_name', 'phone_merged', 'mobile_merged', 'link', 'links' ];

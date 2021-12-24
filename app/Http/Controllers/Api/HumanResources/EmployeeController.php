@@ -122,7 +122,10 @@ class EmployeeController extends Controller {
 	public function getEmployees(Request $request) {
 		$limit = $request->input('limit');
 		$offset = $request->input('offset');
-		$order = $request->input('order');
+		$order = $request->input('order', 'asc');
+        if (!$order) {
+            $order = 'asc';
+        }
 		$sort = $request->input('sort');
 		$filter = $request->input('filter');
 		if ($filter) {
