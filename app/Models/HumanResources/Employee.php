@@ -12,6 +12,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 use OwenIt\Auditing\Contracts\Auditable;
 use OwenIt\Auditing\Contracts\UserResolver;
+use Illuminate\Support\Arr;
 
 class Employee extends Authenticatable {
 
@@ -69,7 +70,7 @@ class Employee extends Authenticatable {
 	}
 
 	public function hasRole($check) {
-		return in_array($check, array_pluck($this->roles->toArray(), 'name'));
+		return in_array($check, Arr::pluck($this->roles->toArray(), 'name'));
 	}
 
     public function getDepartmentNameAttribute() {
