@@ -11,6 +11,9 @@ class BookController extends Controller {
 		$limit = $request->input('limit');
 		$offset = $request->input('offset');
 		$order = $request->input('order');
+        if (!$order) {
+            $order = 'asc';
+        }
 		$sort = $request->input('sort');
 		$filter = $request->input('filter');
 		if ($filter) {
