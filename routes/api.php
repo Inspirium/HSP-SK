@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Inspirium\Http\Controllers\WorkOrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -111,4 +112,10 @@ Route::group( [ 'middleware' => [ 'auth:api' ], ], function () {
 		Route::post('{author}/related/propositions', 'AuthorController@getRelatedPropositions');
 	});
 
+	Route::group([
+		'namespace' => 'Api\WorkOrder',
+		'prefix' => 'work_order',
+	], function() {
+		Route::apiResource('work_order', WorkOrderController::class);
+	});
 } );
