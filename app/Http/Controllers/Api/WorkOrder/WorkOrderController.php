@@ -25,7 +25,13 @@ class WorkOrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $workOrder = new WorkOrder;
+
+        $workOrder->dates = $request->dates;
+
+        $workOrder->save();
+
+        return response()->noContent();
     }
 
     /**
@@ -48,7 +54,11 @@ class WorkOrderController extends Controller
      */
     public function update(Request $request, WorkOrder $workOrder)
     {
-        //
+        $workOrder->dates = $request->dates;
+
+        $workOrder->save();
+
+        return response()->noContent();
     }
 
     /**
