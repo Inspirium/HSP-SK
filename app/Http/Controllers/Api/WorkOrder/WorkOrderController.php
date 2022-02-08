@@ -25,19 +25,27 @@ class WorkOrderController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'date' => 'required',
-            'with' => 'required'
+        $workOrder = WorkOrder::create([
+            'proposition' => $request->input('proposition'),
+            'task_content' => $request->input('task_content'),
+            'sifnatures' => $request->input('signatures'),
+            'assagnee' => $request->input('assagnee'),
+            'title' => $request->input('title'),
+            'edition' => $request->input('edition'),
+            'project_number' => $request->input('project_number'),
+            'project_subnumber' => $request->input('project_subnumber'),
+            'assigner' => $request->input('assigner'),
+            'type' => $request->input('type'),
+            'status' => $request->input('status'),
+            'deadline' => $request->input('deadline'),
+            'priority' => $request->input('priority'),
+            'files' => $request->input('files'),
+            'date_created' => $request->input('date_created'),
+            'date_finished' => $request->input('date_finished'),
+            'note' => $request->input('note'),
         ]);
 
-        $workOrder = new WorkOrder;
-
-        $workOrder->dates = $validated->dates;
-        $workOrder->with = $validated->with;
-
-        $workOrder->save();
-
-        return response()->noContent();
+        return response()->json($workOrder);
     }
 
     /**
