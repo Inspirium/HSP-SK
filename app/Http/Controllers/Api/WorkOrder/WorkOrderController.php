@@ -25,9 +25,15 @@ class WorkOrderController extends Controller
      */
     public function store(Request $request)
     {
+        $validated = $request->validate([
+            'date' => 'required',
+            'with' => 'required'
+        ]);
+
         $workOrder = new WorkOrder;
 
-        $workOrder->dates = $request->dates;
+        $workOrder->dates = $validated->dates;
+        $workOrder->with = $validated->with;
 
         $workOrder->save();
 
@@ -54,7 +60,14 @@ class WorkOrderController extends Controller
      */
     public function update(Request $request, WorkOrder $workOrder)
     {
-        $workOrder->dates = $request->dates;
+
+        $validated = $request->validate([
+            'date' => 'required',
+            'with' => 'required'
+        ]);
+
+        $workOrder->dates = $validated->dates;
+        $workOrder->with = $validated->with;
 
         $workOrder->save();
 
