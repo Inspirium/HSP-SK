@@ -1,8 +1,9 @@
 <?php
 
-namespace Inspirium\Http\Controllers;
+namespace Inspirium\Http\Controllers\Api\WorkOrder;
 
 use Illuminate\Http\Request;
+use Inspirium\Http\Controllers\Controller;
 use Inspirium\Models\WorkOrder;
 
 class WorkOrderController extends Controller
@@ -40,8 +41,6 @@ class WorkOrderController extends Controller
             'deadline' => $request->input('deadline'),
             'priority' => $request->input('priority'),
             'files' => $request->input('files'),
-            'date_created' => $request->input('date_created'),
-            'date_finished' => $request->input('date_finished'),
             'note' => $request->input('note'),
         ]);
 
