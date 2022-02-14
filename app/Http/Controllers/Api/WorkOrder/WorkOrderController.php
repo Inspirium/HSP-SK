@@ -25,25 +25,54 @@ class WorkOrderController extends Controller
      */
     public function store(Request $request)
     {
-        $workOrder = WorkOrder::create([
-            'proposition' => $request->input('proposition'),
-            'task_content' => $request->input('task_content'),
-            'sifnatures' => $request->input('signatures'),
-            'assagnee' => $request->input('assagnee'),
-            'title' => $request->input('title'),
-            'edition' => $request->input('edition'),
-            'project_number' => $request->input('project_number'),
-            'project_subnumber' => $request->input('project_subnumber'),
-            'assigner' => $request->input('assigner'),
-            'type' => $request->input('type'),
-            'status' => $request->input('status'),
-            'deadline' => $request->input('deadline'),
-            'priority' => $request->input('priority'),
-            'files' => $request->input('files'),
-            'date_created' => $request->input('date_created'),
-            'date_finished' => $request->input('date_finished'),
-            'note' => $request->input('note'),
-        ]);
+        $workOrder = new WorkOrder();
+
+
+        $workOrder->proposition()->associate($proposition);
+
+        $workOrder->signatures()->associate();
+
+        if (count($request->input('users'))) {
+			$assignee = Employee::find( $request->input( 'users' )[0]['id'] );
+		}
+		else {
+			$assignee = Auth::user();
+		}
+		$workOrder->assignee()->associate($assignee);
+
+        $workOrder->title = $request->input('title');
+
+        $workOrder->edition = $request->input('edition');
+
+        $workOrder->assigner()->associate(Auth::user());
+
+        $workOrder->type = $request->input('type');
+
+        $workOrder->status = 'new';
+
+        if ($request->input('deadline')) {
+			$deadline       = Carbon::createFromFormat( '!d. m. Y.', $request->input( 'deadline' ) );
+			$workOrder->deadline = $deadline->toDateTimeString();
+		}
+		else {
+			$workOrder->deadline = null;
+		}
+
+		$workOrder->priority = $request->input('priority')?$request->input('priority'):'low';
+
+        $workOrder->note = $request->input('note');
+
+        $workOrder->save();
+
+        $final = collect($request->input('files.final'))->mapWithKeys(function($el) {
+			return [$el['id'] => ['is_final' => true]];
+		});
+		$initial = collect($request->input('files.initial'))->mapWithKeys(function($el) {
+			return [$el['id'] => ['is_final' => false]];
+		});
+		$initial = $initial->all();
+		$final = $final->all();
+		$workOrder->documents()->sync($initial + $final);
 
         return response()->json($workOrder);
     }
