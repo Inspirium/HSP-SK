@@ -1,8 +1,9 @@
 <?php
 
-namespace Inspirium\Http\Controllers;
+namespace Inspirium\Http\Controllers\Api\WorkOrder;
 
 use Illuminate\Http\Request;
+use Inspirium\Http\Controllers\Controller;
 use Inspirium\Models\WorkOrder;
 
 class WorkOrderController extends Controller
