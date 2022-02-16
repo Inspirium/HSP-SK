@@ -13,26 +13,19 @@
     "guzzlehttp/guzzle": "^7.0.1",
     "intervention/image": "^2.4",
     "intervention/imagecache": "^2.3",
+    "laravel-json-api/laravel": "^2.0",
     "laravel/framework": "^9.0",
     "laravel/passport": "^10.0",
     "laravel/ui": "^3.4",
     "owen-it/laravel-auditing": "^12.0",
     "phpoffice/phpspreadsheet": "^1.20.0",
     "phpoffice/phpword": "^0.18.0",
-    "pusher/pusher-php-server": "^7.0",
-    "spatie/laravel-json-api-paginate": "^1.11",
-    "spatie/laravel-query-builder": "^5.0",
-    "timacdonald/json-api": "*"
+    "pusher/pusher-php-server": "^7.0"
   },
   "require-dev": {
+    "laravel-json-api/testing": "^1.1",
     "phpunit/phpunit": "~9.0"
   },
-  "repositories": [
-    {
-      "type": "git",
-      "url": "https://github.com/mbanusic/json-api"
-    }
-  ],
   "autoload": {
     "psr-4": {
       "Inspirium\\TaskManagement\\": "packages/Inspirium/TaskManagement/src",
