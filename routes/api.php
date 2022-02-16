@@ -19,7 +19,7 @@ use Inspirium\Http\Controllers\WorkOrderController;
         $server->resource('employees', \Inspirium\Http\Controllers\Api\V2\EmployeeController::class);
     });
 
-Route::group( [ 'middleware' => [ 'auth:api' ], ], function () {
+Route::group( [ 'middleware' => [ 'auth:api' ], 'namespace' => 'Inspirium\Http\Controllers' ], function () {
 
 	Route::get( 'home', 'Api\HomeController@home' );
 
