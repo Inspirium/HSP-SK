@@ -21,6 +21,11 @@ class EmployeePolicy
         return true;
     }
 
+    public function viewAny(Employee $user)
+    {
+        return true;
+    }
+
     /**
      * Determine whether the user can create employees.
      *

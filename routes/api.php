@@ -14,6 +14,11 @@ use Inspirium\Http\Controllers\WorkOrderController;
 |
 */
 
+\LaravelJsonApi\Laravel\Facades\JsonApiRoute::server('v2')->prefix('v2')
+    ->resources(function($server) {
+        $server->resource('employees', \Inspirium\Http\Controllers\Api\V2\EmployeeController::class);
+    });
+
 Route::group( [ 'middleware' => [ 'auth:api' ], ], function () {
 
 	Route::get( 'home', 'Api\HomeController@home' );
@@ -116,6 +121,6 @@ Route::group( [ 'middleware' => [ 'auth:api' ], ], function () {
 		'namespace' => 'Api\WorkOrder',
 		'prefix' => 'work_order',
 	], function() {
-		Route::apiResource('work_order', WorkOrderController::class);
+		Route::apiResource('work_order', 'WorkOrderController');
 	});
 } );
