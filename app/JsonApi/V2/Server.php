@@ -2,7 +2,13 @@
 
 namespace Inspirium\JsonApi\V2;
 
+use Inspirium\JsonApi\V2\Departments\DepartmentSchema;
 use Inspirium\JsonApi\V2\Employees\EmployeeSchema;
+use Inspirium\JsonApi\V2\Propositions\PropositionSchema;
+use Inspirium\JsonApi\V2\Roles\RoleSchema;
+use Inspirium\JsonApi\V2\Tasks\TaskSchema;
+use Inspirium\JsonApi\V2\Threads\ThreadSchema;
+use Inspirium\JsonApi\V2\WorkOrders\WorkOrderSchema;
 use LaravelJsonApi\Core\Server\Server as BaseServer;
 
 class Server extends BaseServer
@@ -38,7 +44,13 @@ class Server extends BaseServer
     protected function allSchemas(): array
     {
         return [
-            EmployeeSchema::class
+            EmployeeSchema::class,
+            DepartmentSchema::class,
+            RoleSchema::class,
+            PropositionSchema::class,
+            TaskSchema::class,
+            ThreadSchema::class,
+            WorkOrderSchema::class
         ];
     }
 }

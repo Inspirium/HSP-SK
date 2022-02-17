@@ -16,7 +16,12 @@ use Inspirium\Http\Controllers\WorkOrderController;
 
 \LaravelJsonApi\Laravel\Facades\JsonApiRoute::server('v2')->prefix('v2')
     ->resources(function($server) {
-        $server->resource('employees', \Inspirium\Http\Controllers\Api\V2\EmployeeController::class);
+        $server->resource('employees', \Inspirium\Http\Controllers\Api\V2\EmployeeController::class)
+        ->relationships(function($relations) {
+            $relations->hasOne('department');
+            $relations->hasMany('roles');
+        });
+        $server->resource('departments', \Inspirium\Http\Controllers\Api\V2\DepartmentController::class);
     });
 
 Route::group( [ 'middleware' => [ 'auth:api' ], 'namespace' => 'Inspirium\Http\Controllers' ], function () {

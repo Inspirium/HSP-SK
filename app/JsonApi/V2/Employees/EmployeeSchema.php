@@ -7,6 +7,8 @@ use Inspirium\Models\HumanResources\Employee;
 use LaravelJsonApi\Eloquent\Contracts\Paginator;
 use LaravelJsonApi\Eloquent\Fields\DateTime;
 use LaravelJsonApi\Eloquent\Fields\ID;
+use LaravelJsonApi\Eloquent\Fields\Relations\BelongsTo;
+use LaravelJsonApi\Eloquent\Fields\Relations\BelongsToMany;
 use LaravelJsonApi\Eloquent\Fields\Str;
 use LaravelJsonApi\Eloquent\Filters\Where;
 use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
@@ -24,6 +26,8 @@ class EmployeeSchema extends Schema
      * @var string
      */
     public static string $model = Employee::class;
+
+    protected int $maxDepth = 3;
 
     /**
      * Get the resource fields.
@@ -48,6 +52,8 @@ class EmployeeSchema extends Schema
             Str::make('department_name')->readOnly(),
             DateTime::make('created_at')->sortable()->readOnly(),
             DateTime::make('updated_at')->sortable()->readOnly(),
+            BelongsTo::make('department'),
+            BelongsToMany::make('roles')
         ];
     }
 
