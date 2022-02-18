@@ -42,8 +42,12 @@ class EmployeeSchema extends Schema
             Str::make('first_name')->sortable(),
             Str::make('last_name')->sortable(),
             Str::make('email')->sortable(),
-            Str::make('mobile')->readOnly(),
-            Str::make('phone')->readOnly(),
+            Str::make('mobile'),
+            Str::make('mobile_pre'),
+            Str::make('mobile_vpn'),
+            Str::make('phone'),
+            Str::make('phone_pre'),
+            Str::make('phone_vpn'),
             Str::make('address'),
             Str::make('city'),
             Str::make('postal_code'),
@@ -52,7 +56,7 @@ class EmployeeSchema extends Schema
             Str::make('department_name')->readOnly(),
             DateTime::make('created_at')->sortable()->readOnly(),
             DateTime::make('updated_at')->sortable()->readOnly(),
-            BelongsTo::make('department'),
+            BelongsTo::make('department')->type('departments'),
             BelongsToMany::make('roles')
         ];
     }
