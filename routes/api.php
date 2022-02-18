@@ -22,6 +22,7 @@ use Inspirium\Http\Controllers\WorkOrderController;
             $relations->hasMany('roles');
         });
         $server->resource('departments', \Inspirium\Http\Controllers\Api\V2\DepartmentController::class);
+        $server->resource('roles', \Inspirium\Http\Controllers\Api\V2\RoleController::class);
     });
 
 Route::group( [ 'middleware' => [ 'auth:api' ], 'namespace' => 'Inspirium\Http\Controllers' ], function () {
