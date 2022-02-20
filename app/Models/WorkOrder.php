@@ -24,7 +24,7 @@ class WorkOrder extends Model
 
     protected $casts = [
         'task_content' => 'json'
-    ]
+    ];
 
     public function proposition() {
         return $this->belongsTo(BookProposition::class);

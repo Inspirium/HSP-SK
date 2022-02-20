@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Http\Request;
-use Inspirium\Http\Controllers\WorkOrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +22,7 @@ use Inspirium\Http\Controllers\WorkOrderController;
         });
         $server->resource('departments', \Inspirium\Http\Controllers\Api\V2\DepartmentController::class);
         $server->resource('roles', \Inspirium\Http\Controllers\Api\V2\RoleController::class);
+        $server->resource('work-orders', \Inspirium\Http\Controllers\Api\V2\WorkOrderController::class);
     });
 
 Route::group( [ 'middleware' => [ 'auth:api' ], 'namespace' => 'Inspirium\Http\Controllers' ], function () {

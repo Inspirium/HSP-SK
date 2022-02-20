@@ -13,6 +13,15 @@ class CreateWorkOrdersTable extends Migration
      */
     public function up()
     {
+        Schema::table('propositions', function(Blueprint $table) {
+            $table->unsignedBigInteger('id')->change();
+        });
+        Schema::table('employees', function(Blueprint $table) {
+            $table->unsignedBigInteger('id')->change();
+        });
+        Schema::table('files', function(Blueprint $table) {
+            $table->unsignedBigInteger('id')->change();
+        });
         Schema::create('work_orders', function (Blueprint $table) {
             $table->id();
             $table->string('title')->nullable();
@@ -23,12 +32,12 @@ class CreateWorkOrdersTable extends Migration
             $table->string('status')->nullable();
             $table->string('priority')->nullable();
             $table->text('note')->nullable();
-            $table->foreignId('proposition_id')->constrained('propositions')->nullable();
-            $table->foreignId('assignee_id')->constrained('employees')->nullable();
-            $table->foreignId('assigner_id')->constrained('employees')->nullable();
+            $table->foreignId('proposition_id')->constrained();
+            $table->foreignId('assignee_id')->constrained('employees');
+            $table->foreignId('assigner_id')->constrained('employees');
             $table->json('task_content')->nullable();
             $table->timestamp('finished_at')->nullable();
-            $table->timestamp('deadline')->nullable();
+            $table->timestamp('deadline_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -58,5 +67,7 @@ class CreateWorkOrdersTable extends Migration
     public function down()
     {
         Schema::dropIfExists('work_orders');
+        Schema::dropIfExists('work_order_files');
+        Schema::dropIfExists('work_order_signatures');
     }
 }
