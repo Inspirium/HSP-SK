@@ -2,10 +2,12 @@
 
 namespace Inspirium\JsonApi\V2\Files;
 
+use LaravelJsonApi\Eloquent\Fields\Relations\BelongsTo;
 use Inspirium\Models\FileManagement\File;
 use LaravelJsonApi\Eloquent\Contracts\Paginator;
 use LaravelJsonApi\Eloquent\Fields\DateTime;
 use LaravelJsonApi\Eloquent\Fields\ID;
+use LaravelJsonApi\Eloquent\Fields\Str;
 use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
 use LaravelJsonApi\Eloquent\Pagination\PagePagination;
 use LaravelJsonApi\Eloquent\Schema;
@@ -29,8 +31,14 @@ class FileSchema extends Schema
     {
         return [
             ID::make(),
-            DateTime::make('createdAt')->sortable()->readOnly(),
-            DateTime::make('updatedAt')->sortable()->readOnly(),
+            Str::make('title'),
+            Str::make('location')->readOnly(),
+            Str::make('link')->readOnly(),
+            Str::make('file_type', 'type')->readOnly(),
+            Str::make('disk')->readOnly(),
+            BelongsTo::make('owner'),
+            DateTime::make('created_at')->sortable()->readOnly(),
+            DateTime::make('updated_at')->sortable()->readOnly(),
         ];
     }
 

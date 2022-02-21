@@ -18,9 +18,7 @@ class WorkOrderRequest extends ResourceRequest
     {
         return [
             'title' => ['required', 'string'],
-            'edition' => ['required', 'string'],
             'project_number' => ['required', 'string'],
-            'project_subnumber' => ['required', 'string'],
             'task_type' => ['required', 'string'],
             'status' => ['required', 'string'],
             'priority' => ['required', 'string'],
@@ -30,7 +28,7 @@ class WorkOrderRequest extends ResourceRequest
             'signatures' => [JsonApiRule::toMany()],
             'assignee' => [JsonApiRule::toOne()],
             'assigner' => [JsonApiRule::toOne()],
-            'documents' => [JsonApiRule::toMany()],
+            //'documents' => [JsonApiRule::toMany()],
         ];
     }
 

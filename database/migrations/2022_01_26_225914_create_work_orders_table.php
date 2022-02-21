@@ -14,27 +14,25 @@ class CreateWorkOrdersTable extends Migration
     public function up()
     {
         Schema::table('propositions', function(Blueprint $table) {
-            $table->unsignedBigInteger('id')->change();
+            $table->unsignedBigInteger('id', true)->change();
         });
         Schema::table('employees', function(Blueprint $table) {
-            $table->unsignedBigInteger('id')->change();
+            $table->unsignedBigInteger('id', true)->change();
         });
         Schema::table('files', function(Blueprint $table) {
-            $table->unsignedBigInteger('id')->change();
+            $table->unsignedBigInteger('id', true)->change();
         });
         Schema::create('work_orders', function (Blueprint $table) {
             $table->id();
             $table->string('title')->nullable();
-            $table->string('edition')->nullable();
             $table->string('project_number')->nullable();
-            $table->string('project_subnumber')->nullable();
             $table->string('type')->nullable();
             $table->string('status')->nullable();
             $table->string('priority')->nullable();
             $table->text('note')->nullable();
-            $table->foreignId('proposition_id')->constrained();
-            $table->foreignId('assignee_id')->constrained('employees');
-            $table->foreignId('assigner_id')->constrained('employees');
+            $table->foreignId('proposition_id')->nullable()->constrained();
+            $table->foreignId('assignee_id')->nullable()->constrained('employees');
+            $table->foreignId('assigner_id')->nullable()->constrained('employees');
             $table->json('task_content')->nullable();
             $table->timestamp('finished_at')->nullable();
             $table->timestamp('deadline_at')->nullable();
@@ -66,6 +64,7 @@ class CreateWorkOrdersTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('work_orders');
         Schema::dropIfExists('work_order_files');
         Schema::dropIfExists('work_order_signatures');
