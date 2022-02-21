@@ -4,6 +4,7 @@ namespace Inspirium\JsonApi\V2;
 
 use Inspirium\JsonApi\V2\Departments\DepartmentSchema;
 use Inspirium\JsonApi\V2\Employees\EmployeeSchema;
+use Inspirium\JsonApi\V2\Files\FileSchema;
 use Inspirium\JsonApi\V2\Propositions\PropositionSchema;
 use Inspirium\JsonApi\V2\Roles\RoleSchema;
 use Inspirium\JsonApi\V2\Tasks\TaskSchema;
@@ -50,7 +51,8 @@ class Server extends BaseServer
             PropositionSchema::class,
             TaskSchema::class,
             ThreadSchema::class,
-            WorkOrderSchema::class
+            WorkOrderSchema::class,
+            FileSchema::class,
         ];
     }
 }
