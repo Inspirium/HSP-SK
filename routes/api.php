@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
+Route::group(['middleware' => 'auth:api'], function() {
 \LaravelJsonApi\Laravel\Facades\JsonApiRoute::server('v2')->prefix('v2')
     ->resources(function($server) {
         $server->resource('employees', \Inspirium\Http\Controllers\Api\V2\EmployeeController::class)
@@ -25,7 +25,7 @@ use Illuminate\Http\Request;
         $server->resource('work-orders', \Inspirium\Http\Controllers\Api\V2\WorkOrderController::class);
         $server->resource('files', \Inspirium\Http\Controllers\Api\V2\FilesController::class);
     });
-
+});
 Route::group( [ 'middleware' => [ 'auth:api' ], 'namespace' => 'Inspirium\Http\Controllers' ], function () {
 
 	Route::get( 'home', 'Api\HomeController@home' );
