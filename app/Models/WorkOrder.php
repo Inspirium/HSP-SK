@@ -2,6 +2,7 @@
 
 namespace Inspirium\Models;
 
+use Illuminate\Database\Eloquent\Casts\AsArrayObject;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -12,20 +13,20 @@ class WorkOrder extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['title', 'project_number', 'type', 'status', 'priority', 'note', 'deadline_at'];
+    protected $fillable = ['title', 'project_number', 'type', 'status', 'priority', 'note', 'deadline_at', 'task_content'];
 
     protected $dates = [
         'created_at',
         'updated_at',
         'deleted_at',
         'finished_at',
-        'deadline',
+        'deadline_at',
     ];
 
-    protected $with = ['proposition', 'signatures', 'assignee', 'assigner', 'documents'];
+    //protected $with = ['proposition', 'signatures', 'assignee', 'assigner', 'documents'];
 
     protected $casts = [
-        'task_content' => 'json'
+        'task_content' => AsArrayObject::class,
     ];
 
     public function proposition() {
@@ -45,6 +46,6 @@ class WorkOrder extends Model
 	}
 
     public function documents() {
-		return $this->belongsToMany('Inspirium\Models\FileManagement\File', 'work_order_documents', 'work_order_id', 'file_id');
+		return $this->belongsToMany('Inspirium\Models\FileManagement\File', 'work_order_files', 'work_order_id', 'files_id');
 	}
 }

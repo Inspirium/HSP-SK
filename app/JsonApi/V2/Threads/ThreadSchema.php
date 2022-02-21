@@ -12,6 +12,7 @@ use LaravelJsonApi\Eloquent\Schema;
 
 class ThreadSchema extends Schema
 {
+    protected ?array $defaultPagination = ['number' => 1];
 
     /**
      * The model the schema corresponds to.

@@ -3,6 +3,7 @@
 namespace Inspirium\JsonApi\V2\WorkOrders;
 
 use Illuminate\Validation\Rule;
+use LaravelJsonApi\Eloquent\Fields\ArrayHash;
 use LaravelJsonApi\Laravel\Http\Requests\ResourceRequest;
 use LaravelJsonApi\Validation\Rule as JsonApiRule;
 
@@ -23,6 +24,7 @@ class WorkOrderRequest extends ResourceRequest
             'status' => ['required', 'string'],
             'priority' => ['required', 'string'],
             'note' => ['nullable', 'string'],
+            'task_content' => ['nullable', 'array'],
             'deadline_at' => ['required', JsonApiRule::dateTime()],
             'proposition' => [JsonApiRule::toOne()],
             'signatures' => [JsonApiRule::toMany()],

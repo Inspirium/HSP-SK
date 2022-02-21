@@ -5,7 +5,7 @@ namespace Inspirium\Http\Controllers\Api\V2;
 use Inspirium\Http\Controllers\Controller;
 use LaravelJsonApi\Laravel\Http\Controllers\Actions;
 
-class WorkOrderController extends Controller
+class FilesController extends Controller
 {
 
     use Actions\FetchMany;
@@ -18,7 +18,5 @@ class WorkOrderController extends Controller
     use Actions\UpdateRelationship;
     use Actions\AttachRelationship;
     use Actions\DetachRelationship;
-
-
 
 }

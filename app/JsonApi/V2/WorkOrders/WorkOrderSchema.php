@@ -18,6 +18,8 @@ use LaravelJsonApi\Eloquent\Schema;
 class WorkOrderSchema extends Schema
 {
 
+    protected ?array $defaultPagination = ['number' => 1];
+
     /**
      * The model the schema corresponds to.
      *
@@ -35,9 +37,7 @@ class WorkOrderSchema extends Schema
         return [
             ID::make(),
             Str::make('title')->sortable(),
-            Str::make('edition'),
             Str::make('project_number'),
-            Str::make('project_subnumber'),
             Str::make('task_type', 'type')->sortable(),
             Str::make('status')->sortable(),
             Str::make('priority')->sortable(),
