@@ -21,7 +21,7 @@ class WorkOrderRequest extends ResourceRequest
             'edition' => ['required', 'string'],
             'project_number' => ['required', 'string'],
             'project_subnumber' => ['required', 'string'],
-            'type' => ['required', 'string'],
+            'task_type' => ['required', 'string'],
             'status' => ['required', 'string'],
             'priority' => ['required', 'string'],
             'note' => ['nullable', 'string'],

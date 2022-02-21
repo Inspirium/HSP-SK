@@ -38,7 +38,7 @@ class WorkOrderSchema extends Schema
             Str::make('edition'),
             Str::make('project_number'),
             Str::make('project_subnumber'),
-            Str::make('type')->sortable(),
+            Str::make('task_type', 'type')->sortable(),
             Str::make('status')->sortable(),
             Str::make('priority')->sortable(),
             Str::make('note'),
