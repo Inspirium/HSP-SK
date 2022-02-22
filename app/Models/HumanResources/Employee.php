@@ -86,7 +86,7 @@ class Employee extends Authenticatable {
 
     public function getImageAttribute($value) {
     	if ($value) {
-		    return '/imagecache/avatar/'.$value;
+		    return 'http://cup.skolskaknjiga.hr:8080/imagecache/avatar/'.$value;
 	    }
 	    if ($this->email) {
 		    return 'https://www.gravatar.com/avatar/' . md5( $this->email ) . '?s=50&d=mm';
