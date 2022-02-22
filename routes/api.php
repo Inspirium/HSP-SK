@@ -25,7 +25,10 @@ Route::group(['middleware' => 'auth:api'], function() {
             });
             $server->resource('departments', \Inspirium\Http\Controllers\Api\V2\DepartmentController::class);
             $server->resource('roles', \Inspirium\Http\Controllers\Api\V2\RoleController::class);
-            $server->resource('work-orders', \Inspirium\Http\Controllers\Api\V2\WorkOrderController::class);
+            $server->resource('work-orders', \Inspirium\Http\Controllers\Api\V2\WorkOrderController::class)
+            ->actions(function ($actions) {
+                $actions->withId()->post('approve');
+            });
             $server->resource('files', \Inspirium\Http\Controllers\Api\V2\FilesController::class);
         });
 });
