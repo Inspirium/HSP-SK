@@ -2,6 +2,7 @@
 
 namespace Inspirium\JsonApi\V2\WorkOrders;
 
+use Inspirium\JsonApi\Filters\SignaturesFilter;
 use Inspirium\Models\WorkOrder;
 use LaravelJsonApi\Eloquent\Contracts\Paginator;
 use LaravelJsonApi\Eloquent\Fields\ArrayHash;
@@ -11,6 +12,8 @@ use LaravelJsonApi\Eloquent\Fields\ID;
 use LaravelJsonApi\Eloquent\Fields\Relations\BelongsTo;
 use LaravelJsonApi\Eloquent\Fields\Relations\BelongsToMany;
 use LaravelJsonApi\Eloquent\Fields\Str;
+use LaravelJsonApi\Eloquent\Filters\Has;
+use LaravelJsonApi\Eloquent\Filters\Where;
 use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
 use LaravelJsonApi\Eloquent\Pagination\PagePagination;
 use LaravelJsonApi\Eloquent\Schema;
@@ -64,6 +67,11 @@ class WorkOrderSchema extends Schema
     {
         return [
             WhereIdIn::make($this),
+            Where::make('task_type', 'type'),
+            Where::make('status'),
+            Where::make('assigner', 'assigner_id'),
+            Where::make('assignee', 'assignee_id'),
+            SignaturesFilter::make('signatures'),
         ];
     }
 
