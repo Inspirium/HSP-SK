@@ -13,19 +13,23 @@ use Illuminate\Http\Request;
 |
 */
 Route::group(['middleware' => 'auth:api'], function() {
+    \LaravelJsonApi\Laravel\Facades\JsonApiRoute::server('v2')->prefix('v2')
+        ->resources(function($server) {
+            $server->resource('employees', \Inspirium\Http\Controllers\Api\V2\EmployeeController::class)
+                ->relationships(function($relations) {
+                    $relations->hasOne('department');
+                    $relations->hasMany('roles');
+                });
+            $server->resource('departments', \Inspirium\Http\Controllers\Api\V2\DepartmentController::class);
+            $server->resource('roles', \Inspirium\Http\Controllers\Api\V2\RoleController::class);
+            $server->resource('work-orders', \Inspirium\Http\Controllers\Api\V2\WorkOrderController::class);
+            $server->resource('files', \Inspirium\Http\Controllers\Api\V2\FilesController::class);
+        });
+});
 \LaravelJsonApi\Laravel\Facades\JsonApiRoute::server('v2')->prefix('v2')
     ->resources(function($server) {
-        $server->resource('employees', \Inspirium\Http\Controllers\Api\V2\EmployeeController::class)
-        ->relationships(function($relations) {
-            $relations->hasOne('department');
-            $relations->hasMany('roles');
-        });
-        $server->resource('departments', \Inspirium\Http\Controllers\Api\V2\DepartmentController::class);
-        $server->resource('roles', \Inspirium\Http\Controllers\Api\V2\RoleController::class);
-        $server->resource('work-orders', \Inspirium\Http\Controllers\Api\V2\WorkOrderController::class);
         $server->resource('files', \Inspirium\Http\Controllers\Api\V2\FilesController::class);
     });
-});
 Route::group( [ 'middleware' => [ 'auth:api' ], 'namespace' => 'Inspirium\Http\Controllers' ], function () {
 
 	Route::get( 'home', 'Api\HomeController@home' );
