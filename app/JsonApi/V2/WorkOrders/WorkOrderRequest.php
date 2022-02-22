@@ -30,7 +30,7 @@ class WorkOrderRequest extends ResourceRequest
             'signatures' => [JsonApiRule::toMany()],
             'assignee' => [JsonApiRule::toOne()],
             'assigner' => [JsonApiRule::toOne()],
-            //'documents' => [JsonApiRule::toMany()],
+            'documents' => [JsonApiRule::toMany()],
         ];
     }
 

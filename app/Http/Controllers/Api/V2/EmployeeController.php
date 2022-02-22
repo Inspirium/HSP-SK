@@ -3,6 +3,7 @@
 namespace Inspirium\Http\Controllers\Api\V2;
 
 use Inspirium\Http\Controllers\Controller;
+use LaravelJsonApi\Core\Responses\DataResponse;
 use LaravelJsonApi\Laravel\Http\Controllers\Actions;
 
 class EmployeeController extends Controller
@@ -19,4 +20,7 @@ class EmployeeController extends Controller
     use Actions\AttachRelationship;
     use Actions\DetachRelationship;
 
+    public function me() {
+        return DataResponse::make(\Auth::user());
+    }
 }

@@ -53,6 +53,7 @@ class EmployeeSchema extends Schema
             Str::make('postal_code'),
             Str::make('room'),
             Str::make('sex'),
+            Str::make('image')->readOnly(),
             Str::make('department_name')->readOnly(),
             DateTime::make('created_at')->sortable()->readOnly(),
             DateTime::make('updated_at')->sortable()->readOnly(),

@@ -19,7 +19,10 @@ Route::group(['middleware' => 'auth:api'], function() {
                 ->relationships(function($relations) {
                     $relations->hasOne('department');
                     $relations->hasMany('roles');
-                });
+                })
+            ->actions(function($actions) {
+                $actions->get('me');
+            });
             $server->resource('departments', \Inspirium\Http\Controllers\Api\V2\DepartmentController::class);
             $server->resource('roles', \Inspirium\Http\Controllers\Api\V2\RoleController::class);
             $server->resource('work-orders', \Inspirium\Http\Controllers\Api\V2\WorkOrderController::class);
