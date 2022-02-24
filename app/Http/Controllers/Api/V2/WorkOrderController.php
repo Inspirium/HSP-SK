@@ -34,7 +34,7 @@ class WorkOrderController extends Controller
     }
 
     public function approve(WorkOrderSchema $orderSchema, WorkOrderQuery $query, WorkOrder $workOrder) {
-        $workOrder->signatures()->updateExistingPivot(Auth::id(), ['signed' => 1, 'signed_at' => Date::now()]);
+        $workOrder->signatures()->where('employee_id', Auth::id())->update(['signed' => true, 'signed_at' => Date::now()]);
     }
 
 }
