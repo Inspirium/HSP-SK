@@ -7,6 +7,7 @@ use LaravelJsonApi\Eloquent\Contracts\Paginator;
 use LaravelJsonApi\Eloquent\Fields\Boolean;
 use LaravelJsonApi\Eloquent\Fields\DateTime;
 use LaravelJsonApi\Eloquent\Fields\ID;
+use LaravelJsonApi\Eloquent\Fields\Number;
 use LaravelJsonApi\Eloquent\Fields\Relations\BelongsTo;
 use LaravelJsonApi\Eloquent\Fields\Str;
 use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
@@ -37,8 +38,9 @@ class SignatureSchema extends Schema
             ID::make(),
             ArrayHash::make('person'),
             Boolean::make('signed'),
-            BelongsTo::make('employee'),
-            BelongsTo::make('work-order'),
+            Number::make('order'),
+            BelongsTo::make('employee')->type('employees'),
+            BelongsTo::make('workOrder')->type('work-orders'),
             DateTime::make('signedAt')->sortable()->readOnly(),
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),

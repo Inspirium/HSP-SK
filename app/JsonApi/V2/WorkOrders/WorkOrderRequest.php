@@ -19,13 +19,13 @@ class WorkOrderRequest extends ResourceRequest
     {
         return [
             'title' => ['required', 'string'],
-            'project_number' => ['required', 'string'],
-            'task_type' => ['required', 'string'],
+            'projectNumber' => ['required', 'string'],
+            'taskType' => ['required', 'string'],
             'status' => ['required', 'string'],
             'priority' => ['required', 'string'],
             'note' => ['nullable', 'string'],
-            'task_content' => ['nullable', 'array'],
-            'deadline_at' => ['required', JsonApiRule::dateTime()],
+            'taskContent' => ['nullable', 'array'],
+            'deadlineAt' => ['required', JsonApiRule::dateTime()],
             'proposition' => [JsonApiRule::toOne()],
             'signatures' => [JsonApiRule::toMany()],
             'assignee' => [JsonApiRule::toOne()],

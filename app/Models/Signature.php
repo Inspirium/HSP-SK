@@ -7,11 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 use Inspirium\Models\HumanResources\Employee;
 
-class Signature extends Pivot
+class Signature extends Model
 {
     use HasFactory;
 
     protected $table = 'work_order_signatures';
+
+    protected $fillable = ['order', 'signed'];
 
     protected $with = ['employee'];
 

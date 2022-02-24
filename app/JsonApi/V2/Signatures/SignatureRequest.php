@@ -17,7 +17,10 @@ class SignatureRequest extends ResourceRequest
     public function rules(): array
     {
         return [
-            // @TODO
+            'workOrder' => JsonApiRule::toOne(),
+            'employee' => JsonApiRule::toOne(),
+            'signed' => ['nullable'],
+            'order' => ['nullable', 'integer'],
         ];
     }
 
