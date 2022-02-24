@@ -25,6 +25,7 @@ class WorkOrderRequest extends ResourceRequest
             'priority' => ['required', 'string'],
             'note' => ['nullable', 'string'],
             'taskContent' => ['nullable', 'array'],
+            'comment' => ['nullable', 'string'],
             'deadlineAt' => ['required', JsonApiRule::dateTime()],
             'proposition' => [JsonApiRule::toOne()],
             'signatures' => [JsonApiRule::toMany()],

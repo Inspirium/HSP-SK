@@ -47,6 +47,7 @@ class WorkOrderSchema extends Schema
             Str::make('status')->sortable(),
             Str::make('priority')->sortable(),
             Str::make('note'),
+            Str::make('comment'),
             ArrayHash::make('taskContent'),
             DateTime::make('finishedAt')->sortable()->readOnly(),
             DateTime::make('deadlineAt')->sortable(),
