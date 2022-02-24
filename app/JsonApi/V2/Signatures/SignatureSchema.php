@@ -1,26 +1,30 @@
 <?php
 
-namespace Inspirium\JsonApi\V2\Files;
+namespace Inspirium\JsonApi\V2\Signatures;
 
-use LaravelJsonApi\Eloquent\Fields\Relations\BelongsTo;
-use Inspirium\Models\FileManagement\File;
+use Inspirium\Models\Signature;
 use LaravelJsonApi\Eloquent\Contracts\Paginator;
+use LaravelJsonApi\Eloquent\Fields\Boolean;
 use LaravelJsonApi\Eloquent\Fields\DateTime;
 use LaravelJsonApi\Eloquent\Fields\ID;
+use LaravelJsonApi\Eloquent\Fields\Relations\BelongsTo;
 use LaravelJsonApi\Eloquent\Fields\Str;
 use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
 use LaravelJsonApi\Eloquent\Pagination\PagePagination;
 use LaravelJsonApi\Eloquent\Schema;
+use LaravelJsonApi\Eloquent\Fields\ArrayHash;
 
-class FileSchema extends Schema
+class SignatureSchema extends Schema
 {
+
+    protected int $maxDepth = 3;
 
     /**
      * The model the schema corresponds to.
      *
      * @var string
      */
-    public static string $model = File::class;
+    public static string $model = Signature::class;
 
     /**
      * Get the resource fields.
@@ -31,14 +35,13 @@ class FileSchema extends Schema
     {
         return [
             ID::make(),
-            Str::make('title'),
-            Str::make('location')->readOnly(),
-            Str::make('link')->readOnly(),
-            Str::make('file_type', 'type')->readOnly(),
-            Str::make('disk')->readOnly(),
-            BelongsTo::make('owner')->type('employees'),
-            DateTime::make('created_at')->sortable()->readOnly(),
-            DateTime::make('updated_at')->sortable()->readOnly(),
+            ArrayHash::make('person'),
+            Boolean::make('signed'),
+            BelongsTo::make('employee'),
+            BelongsTo::make('work-order'),
+            DateTime::make('signedAt')->sortable()->readOnly(),
+            DateTime::make('createdAt')->sortable()->readOnly(),
+            DateTime::make('updatedAt')->sortable()->readOnly(),
         ];
     }
 

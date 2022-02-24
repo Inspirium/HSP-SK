@@ -23,6 +23,8 @@ class WorkOrderSchema extends Schema
 
     protected ?array $defaultPagination = ['number' => 1];
 
+    protected int $maxDepth = 3;
+
     /**
      * The model the schema corresponds to.
      *

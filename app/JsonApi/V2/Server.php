@@ -7,6 +7,7 @@ use Inspirium\JsonApi\V2\Employees\EmployeeSchema;
 use Inspirium\JsonApi\V2\Files\FileSchema;
 use Inspirium\JsonApi\V2\Propositions\PropositionSchema;
 use Inspirium\JsonApi\V2\Roles\RoleSchema;
+use Inspirium\JsonApi\V2\Signatures\SignatureSchema;
 use Inspirium\JsonApi\V2\Tasks\TaskSchema;
 use Inspirium\JsonApi\V2\Threads\ThreadSchema;
 use Inspirium\JsonApi\V2\WorkOrders\WorkOrderSchema;
@@ -53,6 +54,7 @@ class Server extends BaseServer
             ThreadSchema::class,
             WorkOrderSchema::class,
             FileSchema::class,
+            SignatureSchema::class,
         ];
     }
 }

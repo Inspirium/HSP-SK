@@ -23,8 +23,6 @@ class WorkOrder extends Model
         'deadline_at',
     ];
 
-    //protected $with = ['proposition', 'signatures', 'assignee', 'assigner', 'documents'];
-
     protected $casts = [
         'task_content' => AsArrayObject::class,
     ];
@@ -32,9 +30,13 @@ class WorkOrder extends Model
     public function proposition() {
         return $this->belongsTo(BookProposition::class);
     }
-
+/*
     public function signatures() {
-        return $this->belongsToMany(Employee::class, 'work_order_signatures', 'work_order_id', 'employee_id')->withPivot(['signed', 'signed_at']);
+        return $this->belongsToMany(Employee::class, 'work_order_signatures', 'work_order_id', 'employee_id')->withPivot(['signed', 'signed_at'])->withTimestamps()->using(Signature::class);
+    }
+*/
+    public function signatures() {
+        return $this->hasMany(Signature::class);
     }
 
     public function assignee() {

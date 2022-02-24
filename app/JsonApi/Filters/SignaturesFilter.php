@@ -65,8 +65,8 @@ class SignaturesFilter implements Filter
      */
     public function apply($query, $value)
     {
-        $query->has('signatures', function($q) use ($value) {
-            $q->where('id', $value);
+        return $query->whereHas('signatures', function($q) use ($value) {
+            $q->where('employee_id', $value);
         });
     }
 }
