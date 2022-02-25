@@ -33,10 +33,6 @@ class WorkOrderController extends Controller
             $workOrder->assigner()->associate(\Auth::user());
             $workOrder->save();
         }
-        if ($workOrder->signatures) {
-            //send notification to first one
-            $workOrder->signatures()->orderBy('order')->first()->employee->notify(new WorkOrderSignatureRequested($workOrder));
-        }
     }
 
     public function approve(WorkOrderSchema $orderSchema, WorkOrderQuery $query, WorkOrder $workOrder) {
