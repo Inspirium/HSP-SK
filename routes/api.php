@@ -43,6 +43,7 @@ Route::group(['middleware' => 'auth:api'], function() {
             $server->resource('files', \Inspirium\Http\Controllers\Api\V2\FilesController::class);
             $server->resource('propositions', \Inspirium\Http\Controllers\Api\V2\PropositionController::class);
             $server->resource('signatures', \Inspirium\Http\Controllers\Api\V2\SignatureController::class);
+            $server->resource('authors', \Inspirium\Http\Controllers\Api\V2\AuthorController::class);
         });
 });
 \LaravelJsonApi\Laravel\Facades\JsonApiRoute::server('v2')->prefix('v2')
