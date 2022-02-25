@@ -19,7 +19,7 @@ class DepartmentRequest extends ResourceRequest
     public function rules(): array
     {
         return [
-            Str::make('name'),
+            'name' => ['string']
         ];
     }
 
