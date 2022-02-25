@@ -11,6 +11,7 @@ use LaravelJsonApi\Eloquent\Fields\DateTime;
 use LaravelJsonApi\Eloquent\Fields\ID;
 use LaravelJsonApi\Eloquent\Fields\Relations\BelongsTo;
 use LaravelJsonApi\Eloquent\Fields\Relations\BelongsToMany;
+use LaravelJsonApi\Eloquent\Fields\Relations\HasMany;
 use LaravelJsonApi\Eloquent\Fields\Str;
 use LaravelJsonApi\Eloquent\Filters\Has;
 use LaravelJsonApi\Eloquent\Filters\Where;
@@ -54,7 +55,7 @@ class WorkOrderSchema extends Schema
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
             BelongsTo::make('proposition')->type('propositions'),
-            BelongsToMany::make('signatures')->type('employees'),
+            HasMany::make('signatures')->type('signatures'),
             BelongsTo::make('assignee')->type('employees'),
             BelongsTo::make('assigner')->type('employees'),
             BelongsToMany::make('documents')->type('files'),
@@ -70,7 +71,7 @@ class WorkOrderSchema extends Schema
     {
         return [
             WhereIdIn::make($this),
-            Where::make('task_type', 'type'),
+            Where::make('taskType', 'type'),
             Where::make('status'),
             Where::make('assigner', 'assigner_id'),
             Where::make('assignee', 'assignee_id'),
