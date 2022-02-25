@@ -17,7 +17,8 @@ class RoleRequest extends ResourceRequest
     public function rules(): array
     {
         return [
-            // @TODO
+            'name' => ['string'],
+            'description' => ['string'],
         ];
     }
 
