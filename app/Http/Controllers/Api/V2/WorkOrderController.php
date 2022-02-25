@@ -35,7 +35,7 @@ class WorkOrderController extends Controller
         }
         if ($workOrder->signatures) {
             //send notification to first one
-            $workOrder->signatures[0]->employee->notify(new WorkOrderSignatureRequested($workOrder));
+            $workOrder->signatures()->orderBy('order')->first()->employee->notify(new WorkOrderSignatureRequested($workOrder));
         }
     }
 
