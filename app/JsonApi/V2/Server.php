@@ -2,9 +2,11 @@
 
 namespace Inspirium\JsonApi\V2;
 
+use Inspirium\JsonApi\V2\Authors\AuthorSchema;
 use Inspirium\JsonApi\V2\Departments\DepartmentSchema;
 use Inspirium\JsonApi\V2\Employees\EmployeeSchema;
 use Inspirium\JsonApi\V2\Files\FileSchema;
+use Inspirium\JsonApi\V2\Notifications\NotificationSchema;
 use Inspirium\JsonApi\V2\Propositions\PropositionSchema;
 use Inspirium\JsonApi\V2\Roles\RoleSchema;
 use Inspirium\JsonApi\V2\Signatures\SignatureSchema;
@@ -55,6 +57,8 @@ class Server extends BaseServer
             WorkOrderSchema::class,
             FileSchema::class,
             SignatureSchema::class,
+            AuthorSchema::class,
+            NotificationSchema::class
         ];
     }
 }
