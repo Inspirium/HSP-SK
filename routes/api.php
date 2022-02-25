@@ -12,6 +12,10 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::group(['prefix' => 'v2'], function() {
+    Route::post('login', [\Inspirium\Http\Controllers\Api\V2\AuthController::class, 'login']);
+});
+
 Route::group(['middleware' => 'auth:api'], function() {
     \LaravelJsonApi\Laravel\Facades\JsonApiRoute::server('v2')->prefix('v2')
         ->resources(function($server) {
