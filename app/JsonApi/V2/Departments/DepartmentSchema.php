@@ -33,8 +33,8 @@ class DepartmentSchema extends Schema
         return [
             ID::make(),
             Str::make('name'),
-            DateTime::make('created_at')->sortable()->readOnly(),
-            DateTime::make('updated_at')->sortable()->readOnly(),
+            DateTime::make('createdAt')->sortable()->readOnly(),
+            DateTime::make('updatedAt')->sortable()->readOnly(),
             HasMany::make('employees')
         ];
     }

@@ -34,11 +34,11 @@ class FileSchema extends Schema
             Str::make('title'),
             Str::make('location')->readOnly(),
             Str::make('link')->readOnly(),
-            Str::make('file_type', 'type')->readOnly(),
+            Str::make('fileType', 'type')->readOnly(),
             Str::make('disk')->readOnly(),
             BelongsTo::make('owner')->type('employees'),
-            DateTime::make('created_at')->sortable()->readOnly(),
-            DateTime::make('updated_at')->sortable()->readOnly(),
+            DateTime::make('createdAt')->sortable()->readOnly(),
+            DateTime::make('updatedAt')->sortable()->readOnly(),
         ];
     }
 

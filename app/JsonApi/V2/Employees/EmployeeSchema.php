@@ -55,8 +55,8 @@ class EmployeeSchema extends Schema
             Str::make('sex'),
             Str::make('image')->readOnly(),
             Str::make('department_name')->readOnly(),
-            DateTime::make('created_at')->sortable()->readOnly(),
-            DateTime::make('updated_at')->sortable()->readOnly(),
+            DateTime::make('createdAt')->sortable()->readOnly(),
+            DateTime::make('updatedAt')->sortable()->readOnly(),
             BelongsTo::make('department')->type('departments'),
             BelongsToMany::make('roles')
         ];
