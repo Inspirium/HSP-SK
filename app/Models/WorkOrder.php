@@ -13,7 +13,7 @@ class WorkOrder extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['title', 'project_number', 'type', 'status', 'priority', 'note', 'deadline_at', 'task_content'];
+    protected $fillable = ['title', 'project_number', 'type', 'status', 'priority', 'note', 'deadline_at', 'task_content', 'comment'];
 
     protected $dates = [
         'created_at',
