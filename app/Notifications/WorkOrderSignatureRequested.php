@@ -68,7 +68,7 @@ class WorkOrderSignatureRequested extends Notification
             'title' => __('Novi zahtjev za potpisom na radnom nalogu'),
             'message' => __(':assigner je zatražio potpis na radnom nalogu :task', ['assigner' => $this->workOrder->assigner->name, 'task' => $this->workOrder->title]),
             'tasktype' => 'tasktype-3',
-            'link' => '/task/'.$this->workOrder->id,
+            'link' => '/tasks/'.$this->workOrder->id,
             'sender' => [
                 'name' => $this->workOrder->assigner->name,
                 'image' => $this->workOrder->assigner->image,
