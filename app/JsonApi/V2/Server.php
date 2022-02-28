@@ -58,7 +58,6 @@ class Server extends BaseServer
             FileSchema::class,
             SignatureSchema::class,
             AuthorSchema::class,
-            NotificationSchema::class
         ];
     }
 }
