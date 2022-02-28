@@ -50,7 +50,11 @@ class ProcessSignatures extends Command
                 continue;
             }
             $signature->load(['workOrder']);
-            $signature->employee->notify(new WorkOrderSignatureRequested($signature->workOrder));
+            if ($signature->workOrder) {
+                $signature->employee->notify(new WorkOrderSignatureRequested($signature->workOrder));
+            } else {
+                //dd($signature->id);
+            }
         }
     }
 }
