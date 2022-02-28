@@ -48,6 +48,10 @@ class WorkOrder extends Model
 	}
 
     public function documents() {
-		return $this->belongsToMany('Inspirium\Models\FileManagement\File', 'work_order_files', 'work_order_id', 'files_id');
+		return $this->belongsToMany('Inspirium\Models\FileManagement\File', 'work_order_files', 'work_order_id', 'files_id')->withPivotValue('is_final', false);
 	}
+
+    public function finalDocuments() {
+        return $this->belongsToMany('Inspirium\Models\FileManagement\File', 'work_order_files', 'work_order_id', 'files_id')->withPivotValue('is_final', true);
+    }
 }

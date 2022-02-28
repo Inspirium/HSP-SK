@@ -59,6 +59,7 @@ class WorkOrderSchema extends Schema
             BelongsTo::make('assignee')->type('employees'),
             BelongsTo::make('assigner')->type('employees'),
             BelongsToMany::make('documents')->type('files'),
+            BelongsToMany::make('finalDocuments')->type('files'),
         ];
     }
 
