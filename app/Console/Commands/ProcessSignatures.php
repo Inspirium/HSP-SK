@@ -55,7 +55,7 @@ class ProcessSignatures extends Command
                 $signature->sent_notification = 1;
                 $signature->save();
             } else {
-                //dd($signature->id);
+                $orders[] = $signature->work_order_id;
             }
         }
     }
