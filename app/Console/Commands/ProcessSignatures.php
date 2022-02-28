@@ -52,6 +52,8 @@ class ProcessSignatures extends Command
             $signature->load(['workOrder']);
             if ($signature->workOrder) {
                 $signature->employee->notify(new WorkOrderSignatureRequested($signature->workOrder));
+                $signature->sent_notification = 1;
+                $signature->save();
             } else {
                 //dd($signature->id);
             }
