@@ -16,7 +16,8 @@ class EmployeeRequest extends ResourceRequest
      */
     public function rules(): array
     {
-        return [
+        $model = $this->model();
+        $rules = [
             'firstName' => ['required', 'string'],
             'lastName' => ['required', 'string'],
             'email' => ['required', 'email'],
@@ -33,7 +34,31 @@ class EmployeeRequest extends ResourceRequest
             'room' => ['nullable', 'string'],
             'department' => JsonApiRule::toOne(),
             'roles' => JsonApiRule::toMany(),
+            'password' => [
+                $model ? 'filled' : 'required',
+                'string',
+                'min:8'
+            ],
+            'passwordConfirmation' => "required_with:password|same:password"
         ];
+
+        // when creating, we do expect the password confirmation to always exist
+        if (!$model) {
+            $rules['passwordConfirmation'] = 'required_with:password|same:password';
+        }
+
+        return $rules;
+    }
+
+    public function withValidator($validator)
+    {
+        if ($this->isUpdating()) {
+            $validator->sometimes(
+                'passwordConfirmation',
+                'required_with:password|same:password',
+                fn($input) => isset($input['password']),
+            );
+        }
     }
 
 }

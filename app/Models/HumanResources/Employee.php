@@ -2,17 +2,14 @@
 
 namespace Inspirium\Models\HumanResources;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\Storage;
 use Inspirium\Notifications\ResetPassword;
-use Intervention\Image\Facades\Image;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
-use OwenIt\Auditing\Contracts\Auditable;
-use OwenIt\Auditing\Contracts\UserResolver;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Hash;
 
 class Employee extends Authenticatable {
 
@@ -128,4 +125,11 @@ class Employee extends Authenticatable {
 	{
 		$this->notify(new ResetPassword($token));
 	}
+
+    public function password(): Attribute {
+        return Attribute::make(
+            get: fn ($value) => $value,
+            set: fn ($value) => Hash::make($value),
+        );
+    }
 }

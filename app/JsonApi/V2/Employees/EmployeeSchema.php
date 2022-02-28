@@ -58,7 +58,9 @@ class EmployeeSchema extends Schema
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
             BelongsTo::make('department')->type('departments'),
-            BelongsToMany::make('roles')
+            BelongsToMany::make('roles'),
+            Str::make('password')->hidden(),
+            Str::make('passwordConfirmation')->hidden()->readOnly(),
         ];
     }
 
