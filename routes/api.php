@@ -49,7 +49,7 @@ Route::group(['middleware' => 'auth:api'], function() {
 });
 \LaravelJsonApi\Laravel\Facades\JsonApiRoute::server('v2')->prefix('v2')
     ->resources(function($server) {
-        //$server->resource('files', \Inspirium\Http\Controllers\Api\V2\FilesController::class);
+        $server->resource('files', \Inspirium\Http\Controllers\Api\V2\FilesController::class);
     });
 Route::group( [ 'middleware' => [ 'auth:api' ], 'namespace' => 'Inspirium\Http\Controllers' ], function () {
 
