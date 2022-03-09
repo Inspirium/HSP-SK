@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 */
 Route::group(['prefix' => 'v2'], function() {
     Route::post('login', [\Inspirium\Http\Controllers\Api\V2\AuthController::class, 'login']);
+    Route::get('logout', [\Inspirium\Http\Controllers\Api\V2\AuthController::class, 'logout']);
 });
 
 Route::group(['middleware' => 'auth:api'], function() {
@@ -35,6 +36,8 @@ Route::group(['middleware' => 'auth:api'], function() {
                     $relations->hasOne('assignee');
                     $relations->hasMany('signatures');
                     $relations->hasMany('documents');
+                    $relations->hasOne('thread');
+                    $relations->hasMany('finalDocuments');
                 })
                 ->actions(function ($actions) {
                     $actions->withId()->post('approve');
@@ -44,6 +47,7 @@ Route::group(['middleware' => 'auth:api'], function() {
             $server->resource('propositions', \Inspirium\Http\Controllers\Api\V2\PropositionController::class);
             $server->resource('signatures', \Inspirium\Http\Controllers\Api\V2\SignatureController::class);
             $server->resource('authors', \Inspirium\Http\Controllers\Api\V2\AuthorController::class);
+            $server->resource('threads', \LaravelJsonApi\Laravel\Http\Controllers\JsonApiController::class);
         });
 });
 \LaravelJsonApi\Laravel\Facades\JsonApiRoute::server('v2')->prefix('v2')
