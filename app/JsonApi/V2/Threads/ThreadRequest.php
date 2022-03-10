@@ -5,6 +5,7 @@ namespace Inspirium\JsonApi\V2\Threads;
 use Illuminate\Validation\Rule;
 use LaravelJsonApi\Laravel\Http\Requests\ResourceRequest;
 use LaravelJsonApi\Validation\Rule as JsonApiRule;
+use Psy\Util\Json;
 
 class ThreadRequest extends ResourceRequest
 {
@@ -17,7 +18,10 @@ class ThreadRequest extends ResourceRequest
     public function rules(): array
     {
         return [
-            // @TODO
+            'title' => ['nullable', 'string'],
+            'description' => ['nullable', 'string'],
+            'connection' => JsonApiRule::toOne(),
+
         ];
     }
 

@@ -33,6 +33,7 @@ class WorkOrderRequest extends ResourceRequest
             'assigner' => [JsonApiRule::toOne()],
             'documents' => [JsonApiRule::toMany()],
             'finalDocuments' => [JsonApiRule::toMany()],
+            'thread' => JsonApiRule::toOne(),
         ];
     }
 

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Inspirium\BookProposition\Models\BookProposition;
 use Inspirium\Models\HumanResources\Employee;
+use Inspirium\Models\Messaging\Thread;
 
 class WorkOrder extends Model
 {
@@ -30,11 +31,7 @@ class WorkOrder extends Model
     public function proposition() {
         return $this->belongsTo(BookProposition::class);
     }
-/*
-    public function signatures() {
-        return $this->belongsToMany(Employee::class, 'work_order_signatures', 'work_order_id', 'employee_id')->withPivot(['signed', 'signed_at'])->withTimestamps()->using(Signature::class);
-    }
-*/
+
     public function signatures() {
         return $this->hasMany(Signature::class);
     }
@@ -53,5 +50,9 @@ class WorkOrder extends Model
 
     public function finalDocuments() {
         return $this->belongsToMany('Inspirium\Models\FileManagement\File', 'work_order_files', 'work_order_id', 'files_id')->withPivotValue('is_final', true);
+    }
+
+    public function thread() {
+        return $this->morphOne(Thread::class, 'connection');
     }
 }

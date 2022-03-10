@@ -12,6 +12,7 @@ use LaravelJsonApi\Eloquent\Fields\ID;
 use LaravelJsonApi\Eloquent\Fields\Relations\BelongsTo;
 use LaravelJsonApi\Eloquent\Fields\Relations\BelongsToMany;
 use LaravelJsonApi\Eloquent\Fields\Relations\HasMany;
+use LaravelJsonApi\Eloquent\Fields\Relations\HasOne;
 use LaravelJsonApi\Eloquent\Fields\Str;
 use LaravelJsonApi\Eloquent\Filters\Has;
 use LaravelJsonApi\Eloquent\Filters\Where;
@@ -60,6 +61,7 @@ class WorkOrderSchema extends Schema
             BelongsTo::make('assigner')->type('employees'),
             BelongsToMany::make('documents')->type('files'),
             BelongsToMany::make('finalDocuments')->type('files'),
+            HasOne::make('thread')->type('threads'),
         ];
     }
 

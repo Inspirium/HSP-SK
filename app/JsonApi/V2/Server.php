@@ -6,6 +6,7 @@ use Inspirium\JsonApi\V2\Authors\AuthorSchema;
 use Inspirium\JsonApi\V2\Departments\DepartmentSchema;
 use Inspirium\JsonApi\V2\Employees\EmployeeSchema;
 use Inspirium\JsonApi\V2\Files\FileSchema;
+use Inspirium\JsonApi\V2\Messages\MessageSchema;
 use Inspirium\JsonApi\V2\Notifications\NotificationSchema;
 use Inspirium\JsonApi\V2\Propositions\PropositionSchema;
 use Inspirium\JsonApi\V2\Roles\RoleSchema;
@@ -58,6 +59,7 @@ class Server extends BaseServer
             FileSchema::class,
             SignatureSchema::class,
             AuthorSchema::class,
+            MessageSchema::class,
         ];
     }
 }
