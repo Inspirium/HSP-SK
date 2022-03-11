@@ -30,13 +30,19 @@ class AuthorSchema extends Schema
         return [
             ID::make(),
             Str::make('name')->sortable(),
+            Str::make('title')->sortable(),
             Str::make('firstName')->sortable(),
             Str::make('lastName')->sortable(),
+            Str::make('image')->sortable(),
+            Str::make('work')->sortable(),
+            Str::make('occupation')->sortable(),
             MorphByMany::make('books'),
             MorphByMany::make('proposition'),
             HasMany::mnake('expenses'),
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
+            DateTime::make('deletedAt')->sortable()->readOnly(),
+            Str::make('note')->sortable(),
         ];
     }
 
