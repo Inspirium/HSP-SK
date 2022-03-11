@@ -22,8 +22,8 @@ class AuthorRequest extends ResourceRequest
             'firstName' => ['required', 'string'],
             'lastName' => ['required', 'string'],
             'note' => ['nullable', 'string'],
-            'title' => ['required', 'string'],
-            'work' => ['required', 'string']
+            'title' => ['nullable', 'string'],
+            'work' => ['nullable', 'string']
         ];
 
 
