@@ -2,14 +2,26 @@
 
 namespace Inspirium\JsonApi\V2;
 
+use Inspirium\JsonApi\V2\AdditionalExpenses\AdditionalExpenseSchema;
+use Inspirium\JsonApi\V2\ApprovalRequests\ApprovalRequestSchema;
+use Inspirium\JsonApi\V2\AuthorExpenses\AuthorExpenseSchema;
 use Inspirium\JsonApi\V2\Authors\AuthorSchema;
+use Inspirium\JsonApi\V2\Bibliotecas\BibliotecaSchema;
+use Inspirium\JsonApi\V2\BookCategories\BookCategorySchema;
+use Inspirium\JsonApi\V2\BookTenders\BookTenderSchema;
+use Inspirium\JsonApi\V2\BookTypes\BookTypeSchema;
 use Inspirium\JsonApi\V2\Departments\DepartmentSchema;
 use Inspirium\JsonApi\V2\Employees\EmployeeSchema;
 use Inspirium\JsonApi\V2\Files\FileSchema;
+use Inspirium\JsonApi\V2\MarketingExpenses\MarketingExpenseSchema;
 use Inspirium\JsonApi\V2\Messages\MessageSchema;
 use Inspirium\JsonApi\V2\Notifications\NotificationSchema;
+use Inspirium\JsonApi\V2\ProductionExpenses\ProductionExpenseSchema;
+use Inspirium\JsonApi\V2\PropositionOptions\PropositionOptionSchema;
 use Inspirium\JsonApi\V2\Propositions\PropositionSchema;
 use Inspirium\JsonApi\V2\Roles\RoleSchema;
+use Inspirium\JsonApi\V2\SchoolSubjects\SchoolSubjectSchema;
+use Inspirium\JsonApi\V2\SchoolTypes\SchoolTypeSchema;
 use Inspirium\JsonApi\V2\Signatures\SignatureSchema;
 use Inspirium\JsonApi\V2\Tasks\TaskSchema;
 use Inspirium\JsonApi\V2\Threads\ThreadSchema;
@@ -60,6 +72,18 @@ class Server extends BaseServer
             SignatureSchema::class,
             AuthorSchema::class,
             MessageSchema::class,
+            AdditionalExpenseSchema::class,
+            SchoolTypeSchema::class,
+            SchoolSubjectSchema::class,
+            BookTypeSchema::class,
+            BookTenderSchema::class,
+            BibliotecaSchema::class,
+            BookCategorySchema::class,
+            ApprovalRequestSchema::class,
+            MarketingExpenseSchema::class,
+            ProductionExpenseSchema::class,
+            AuthorExpenseSchema::class,
+            PropositionOptionSchema::class,
         ];
     }
 }
