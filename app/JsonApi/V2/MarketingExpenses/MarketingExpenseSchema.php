@@ -2,7 +2,7 @@
 
 namespace Inspirium\JsonApi\V2\MarketingExpenses;
 
-use Inspirium\Models\MarketingExpense;
+use Inspirium\BookProposition\Models\MarketingExpense;
 use LaravelJsonApi\Eloquent\Contracts\Paginator;
 use LaravelJsonApi\Eloquent\Fields\DateTime;
 use LaravelJsonApi\Eloquent\Fields\ID;

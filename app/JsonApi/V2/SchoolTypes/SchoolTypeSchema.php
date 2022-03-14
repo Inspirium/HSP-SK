@@ -2,7 +2,7 @@
 
 namespace Inspirium\JsonApi\V2\SchoolTypes;
 
-use Inspirium\Models\SchoolType;
+use Inspirium\Models\BookManagement\SchoolType;
 use LaravelJsonApi\Eloquent\Contracts\Paginator;
 use LaravelJsonApi\Eloquent\Fields\DateTime;
 use LaravelJsonApi\Eloquent\Fields\ID;

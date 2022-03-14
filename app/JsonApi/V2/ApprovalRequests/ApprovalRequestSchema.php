@@ -2,7 +2,7 @@
 
 namespace Inspirium\JsonApi\V2\ApprovalRequests;
 
-use Inspirium\Models\ApprovalRequest;
+use Inspirium\BookProposition\Models\ApprovalRequest;
 use LaravelJsonApi\Eloquent\Contracts\Paginator;
 use LaravelJsonApi\Eloquent\Fields\DateTime;
 use LaravelJsonApi\Eloquent\Fields\ID;

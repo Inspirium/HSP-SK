@@ -2,7 +2,7 @@
 
 namespace Inspirium\JsonApi\V2\Bibliotecas;
 
-use Inspirium\Models\Biblioteca;
+use Inspirium\Models\BookManagement\BookBiblioteca;
 use LaravelJsonApi\Eloquent\Contracts\Paginator;
 use LaravelJsonApi\Eloquent\Fields\DateTime;
 use LaravelJsonApi\Eloquent\Fields\ID;
@@ -18,7 +18,7 @@ class BibliotecaSchema extends Schema
      *
      * @var string
      */
-    public static string $model = Biblioteca::class;
+    public static string $model = BookBiblioteca::class;
 
     /**
      * Get the resource fields.

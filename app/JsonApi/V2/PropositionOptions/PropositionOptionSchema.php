@@ -2,7 +2,7 @@
 
 namespace Inspirium\JsonApi\V2\PropositionOptions;
 
-use Inspirium\Models\PropositionOption;
+use Inspirium\BookProposition\Models\PropositionOption;
 use LaravelJsonApi\Eloquent\Contracts\Paginator;
 use LaravelJsonApi\Eloquent\Fields\DateTime;
 use LaravelJsonApi\Eloquent\Fields\ID;

@@ -2,7 +2,7 @@
 
 namespace Inspirium\JsonApi\V2\BookTypes;
 
-use Inspirium\Models\BookType;
+use Inspirium\Models\BookManagement\BookType;
 use LaravelJsonApi\Eloquent\Contracts\Paginator;
 use LaravelJsonApi\Eloquent\Fields\DateTime;
 use LaravelJsonApi\Eloquent\Fields\ID;
