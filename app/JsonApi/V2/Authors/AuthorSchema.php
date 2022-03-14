@@ -8,7 +8,10 @@ use LaravelJsonApi\Eloquent\Fields\DateTime;
 use LaravelJsonApi\Eloquent\Fields\ID;
 use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
 use LaravelJsonApi\Eloquent\Pagination\PagePagination;
+use LaravelJsonApi\Eloquent\Fields\Relations\HasMany;
 use LaravelJsonApi\Eloquent\Schema;
+use LaravelJsonApi\Eloquent\Fields\Str;
+use LaravelJsonApi\Eloquent\Fields\Relations\BelongsToMany;
 
 class AuthorSchema extends Schema
 {
@@ -29,8 +32,20 @@ class AuthorSchema extends Schema
     {
         return [
             ID::make(),
-            DateTime::make('createdAt')->sortable()->readOnly(),
-            DateTime::make('updatedAt')->sortable()->readOnly(),
+            Str::make('name'),
+            Str::make('title'),
+            Str::make('firstName'),
+            Str::make('lastName'),
+            Str::make('image'),
+            Str::make('work'),
+            Str::make('occupation'),
+            BelongsToMany::make('books'),
+            BelongsToMany::make('proposition'),
+            HasMany::make('expenses'),
+            DateTime::make('createdAt')->readOnly(),
+            DateTime::make('updatedAt')->readOnly(),
+            DateTime::make('deletedAt')->readOnly(),
+            Str::make('note'),
         ];
     }
 
