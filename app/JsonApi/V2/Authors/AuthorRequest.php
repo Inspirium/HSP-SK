@@ -16,9 +16,20 @@ class AuthorRequest extends ResourceRequest
      */
     public function rules(): array
     {
-        return [
-            // @TODO
+
+        $model = $this->model();
+        $rules = [
+            'firstName' => ['required', 'string'],
+            'lastName' => ['required', 'string'],
+            'note' => ['nullable', 'string'],
+            'title' => ['nullable', 'string'],
+            'work' => ['nullable', 'string']
         ];
+
+
+        return $rules;
+
+
     }
 
 }
