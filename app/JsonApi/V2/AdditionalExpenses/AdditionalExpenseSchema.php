@@ -9,6 +9,9 @@ use LaravelJsonApi\Eloquent\Fields\ID;
 use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
 use LaravelJsonApi\Eloquent\Pagination\PagePagination;
 use LaravelJsonApi\Eloquent\Schema;
+use LaravelJsonApi\Eloquent\Fields\Str;
+use LaravelJsonApi\Eloquent\Fields\Relations\BelongsToMany;
+use LaravelJsonApi\Eloquent\Fields\Relations\HasOne;
 
 class AdditionalExpenseSchema extends Schema
 {
@@ -29,6 +32,12 @@ class AdditionalExpenseSchema extends Schema
     {
         return [
             ID::make(),
+            Str::make('expense'),
+            Str::make('amount'),
+            Str::make('type'),
+            BelongsToMany::make('connection'),
+            BelongsToMany::make('parent'),
+            HasOne::make('child'),
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
         ];
