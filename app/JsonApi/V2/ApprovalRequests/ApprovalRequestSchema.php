@@ -9,6 +9,9 @@ use LaravelJsonApi\Eloquent\Fields\ID;
 use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
 use LaravelJsonApi\Eloquent\Pagination\PagePagination;
 use LaravelJsonApi\Eloquent\Schema;
+use LaravelJsonApi\Eloquent\Fields\Str;
+use LaravelJsonApi\Eloquent\Fields\Relations\BelongsToMany;
+use LaravelJsonApi\Eloquent\Fields\Relations\BelongsTo;
 
 class ApprovalRequestSchema extends Schema
 {
@@ -29,6 +32,16 @@ class ApprovalRequestSchema extends Schema
     {
         return [
             ID::make(),
+            Str::make('name'),
+            Str::make('description'),
+            Str::make('budget'),
+            Str::make('expense'),
+            Str::make('status'),
+            BelongsTo::make('proposition'),
+            BelongsTo::make('requester'),
+            BelongsTo::make('requestee'),
+            BelongsToMany::make('tasks'),
+            BelongsToMany::make('connection'),
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
         ];
