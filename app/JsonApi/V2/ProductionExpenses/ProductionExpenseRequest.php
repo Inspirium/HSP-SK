@@ -17,7 +17,7 @@ class ProductionExpenseRequest extends ResourceRequest
     public function rules(): array
     {
         return [
-            // @TODO
+            'type' => ['nullable', 'string']
         ];
     }
 
