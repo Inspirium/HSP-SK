@@ -6,6 +6,9 @@ use Inspirium\Models\BookManagement\BookType;
 use LaravelJsonApi\Eloquent\Contracts\Paginator;
 use LaravelJsonApi\Eloquent\Fields\DateTime;
 use LaravelJsonApi\Eloquent\Fields\ID;
+use LaravelJsonApi\Eloquent\Fields\Relations\BelongsTo;
+use LaravelJsonApi\Eloquent\Fields\Relations\HasMany;
+use LaravelJsonApi\Eloquent\Fields\Str;
 use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
 use LaravelJsonApi\Eloquent\Pagination\PagePagination;
 use LaravelJsonApi\Eloquent\Schema;
@@ -29,6 +32,12 @@ class BookTypeSchema extends Schema
     {
         return [
             ID::make(),
+            Str::make('name'),
+            Str::make('designation'),
+            HasMany::make('books'),
+            HasMany::make('propositions'),
+            HasMany::make('children'),
+            BelongsTo::make('parent'),
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
         ];
