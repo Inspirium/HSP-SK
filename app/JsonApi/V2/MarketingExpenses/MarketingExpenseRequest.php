@@ -17,7 +17,9 @@ class MarketingExpenseRequest extends ResourceRequest
     public function rules(): array
     {
         return [
-            // @TODO
+            'type' => ['nullable', 'string'],
+            'expense' => ['nullable', 'string'],
+            'total' => ['nullable', 'string']
         ];
     }
 

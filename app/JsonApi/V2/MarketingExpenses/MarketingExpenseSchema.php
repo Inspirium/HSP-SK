@@ -6,6 +6,9 @@ use Inspirium\BookProposition\Models\MarketingExpense;
 use LaravelJsonApi\Eloquent\Contracts\Paginator;
 use LaravelJsonApi\Eloquent\Fields\DateTime;
 use LaravelJsonApi\Eloquent\Fields\ID;
+use LaravelJsonApi\Eloquent\Fields\Relations\BelongsTo;
+use LaravelJsonApi\Eloquent\Fields\Relations\HasMany;
+use LaravelJsonAPi\Eloquent\Fields\Str;
 use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
 use LaravelJsonApi\Eloquent\Pagination\PagePagination;
 use LaravelJsonApi\Eloquent\Schema;
@@ -29,6 +32,11 @@ class MarketingExpenseSchema extends Schema
     {
         return [
             ID::make(),
+            Str::make('type'),
+            Str::make('expense'),
+            Str::make('total'),
+            HasMany::make('additionalExpenses'),
+            BelongsTo::make('parent'),
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
         ];
