@@ -17,7 +17,10 @@ class AuthorExpenseRequest extends ResourceRequest
     public function rules(): array
     {
         return [
-            // @TODO
+            'amount' => ['nullable', 'string'],
+            'percentage' => ['nullable', 'string'],
+            'accontation' => ['nullable', 'string'],
+            'type' => ['nullable', 'string'],
         ];
     }
 
