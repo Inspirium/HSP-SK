@@ -17,7 +17,9 @@ class BookCategoryRequest extends ResourceRequest
     public function rules(): array
     {
         return [
-            // @TODO
+            'name' => ['required', 'string'],
+            'designation' => ['nullable', 'string'],
+            'coefficient' => ['nullable', 'string'],
         ];
     }
 
