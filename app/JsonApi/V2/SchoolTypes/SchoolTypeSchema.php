@@ -6,6 +6,7 @@ use Inspirium\Models\BookManagement\SchoolType;
 use LaravelJsonApi\Eloquent\Contracts\Paginator;
 use LaravelJsonApi\Eloquent\Fields\DateTime;
 use LaravelJsonApi\Eloquent\Fields\ID;
+use LaravelJsonApi\Eloquent\Fields\Number;
 use LaravelJsonApi\Eloquent\Fields\Relations\HasMany;
 use LaravelJsonAPi\Eloquent\Fields\Str;
 use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
@@ -33,7 +34,7 @@ class SchoolTypeSchema extends Schema
             ID::make(),
             Str::make('name'),
             Str::make('designation'),
-            Int::make('order'),
+            Number::make('order'),
             HasMany::make('books'),
             HasMany::make('propositions'),
             DateTime::make('createdAt')->sortable()->readOnly(),
