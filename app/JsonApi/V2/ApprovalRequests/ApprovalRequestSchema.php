@@ -12,6 +12,7 @@ use LaravelJsonApi\Eloquent\Schema;
 use LaravelJsonApi\Eloquent\Fields\Str;
 use LaravelJsonApi\Eloquent\Fields\Relations\BelongsToMany;
 use LaravelJsonApi\Eloquent\Fields\Relations\BelongsTo;
+use LaravelJsonApi\Eloquent\Fields\Relations\MorphTo;
 
 class ApprovalRequestSchema extends Schema
 {
@@ -41,7 +42,7 @@ class ApprovalRequestSchema extends Schema
             BelongsTo::make('requester'),
             BelongsTo::make('requestee'),
             BelongsToMany::make('tasks'),
-            BelongsToMany::make('connection'),
+            MorphTo::make('connection'),
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
         ];
