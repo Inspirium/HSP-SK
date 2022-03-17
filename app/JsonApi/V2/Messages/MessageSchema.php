@@ -32,7 +32,7 @@ class MessageSchema extends Schema
         return [
             ID::make(),
             Str::make('message'),
-            BelongsTo::make('sender')->type('employee'),
+            BelongsTo::make('sender')->type('employees'),
             BelongsTo::make('thread')->type('threads'),
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),

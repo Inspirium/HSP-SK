@@ -47,7 +47,13 @@ Route::group(['middleware' => 'auth:api'], function() {
             $server->resource('propositions', \Inspirium\Http\Controllers\Api\V2\PropositionController::class);
             $server->resource('signatures', \Inspirium\Http\Controllers\Api\V2\SignatureController::class);
             $server->resource('authors', \Inspirium\Http\Controllers\Api\V2\AuthorController::class);
-            $server->resource('threads', \LaravelJsonApi\Laravel\Http\Controllers\JsonApiController::class);
+            $server->resource('threads', \Inspirium\Http\Controllers\Api\V2\ThreadController::class)
+                ->relationships(function ($relations) {
+                    $relations->hasMany('messages');
+                })
+                ->actions(function ($actions) {
+                    $actions->withid()->post('messages', 'newMessage');
+                });
         });
 });
 \LaravelJsonApi\Laravel\Facades\JsonApiRoute::server('v2')->prefix('v2')
