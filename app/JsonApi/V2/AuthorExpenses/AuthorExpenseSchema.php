@@ -38,7 +38,7 @@ class AuthorExpenseSchema extends Schema
             Str::make('type'),
             BelongsTo::make('author'),
             BelongsTo::make('proposition'),
-            BelongsTo::make('parent'),
+            BelongsTo::make('parent')->type('author-expense'),
             BelongsToMany::make('additionalExpenses'),
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),

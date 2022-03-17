@@ -36,8 +36,8 @@ class BookTypeSchema extends Schema
             Str::make('designation'),
             HasMany::make('books'),
             HasMany::make('propositions'),
-            HasMany::make('children'),
-            BelongsTo::make('parent'),
+            HasMany::make('children')->type('book-type'),
+            BelongsTo::make('parent')->type('book-type'),
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
         ];

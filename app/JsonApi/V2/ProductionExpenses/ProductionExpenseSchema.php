@@ -35,7 +35,7 @@ class ProductionExpenseSchema extends Schema
             Str::make('type'),
             BelongsTo::make('proposition'),
             HasMany::make('additionalExpenses'),
-            BelongsTo::make('parent'),
+            BelongsTo::make('parent')->type('production-expense'),
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
         ];

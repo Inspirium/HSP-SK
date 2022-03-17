@@ -8,6 +8,8 @@ use LaravelJsonApi\Eloquent\Fields\DateTime;
 use LaravelJsonApi\Eloquent\Fields\ID;
 use LaravelJsonApi\Eloquent\Fields\Relations\BelongsTo;
 use LaravelJsonApi\Eloquent\Fields\Relations\HasMany;
+use LaravelJsonApi\Eloquent\Fields\Relations\MorphTo;
+use LaravelJsonApi\Eloquent\Fields\Relations\MorphToMany;
 use LaravelJsonApi\Eloquent\Fields\Str;
 use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
 use LaravelJsonApi\Eloquent\Pagination\PagePagination;
@@ -35,10 +37,13 @@ class BookCategorySchema extends Schema
             Str::make('name'),
             Str::make('designation'),
             Str::make('coefficient'),
-            BelongsTo::make('parent'),
-            HasMany::make('children'),
-            HasMany::make('books'),
-            HasMany::make('propositions'),
+            BelongsTo::make('parent')->type('book-category'),
+            HasMany::make('children')->type('book-category'),
+            //MorphByMany::make('books'),
+            MorphToMany::make('propositions', [
+                HasMany::make('BookProposition'),
+                MorphTo::make('connection'),
+            ]),
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
         ];
