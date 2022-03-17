@@ -17,7 +17,9 @@ class AdditionalExpenseRequest extends ResourceRequest
     public function rules(): array
     {
         return [
-            // @TODO
+            'expense' => ['required', 'string'],
+            'amount' => ['required', 'string'],
+            'type' => ['nullable', 'string']
         ];
     }
 

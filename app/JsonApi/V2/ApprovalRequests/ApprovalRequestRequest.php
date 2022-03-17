@@ -17,7 +17,11 @@ class ApprovalRequestRequest extends ResourceRequest
     public function rules(): array
     {
         return [
-            // @TODO
+            'name' => ['required', 'string'],
+            'description' => ['required', 'string'],
+            'budget' => ['required', 'string'],
+            'expense' => ['required', 'string'],
+            'status' => ['required', 'string'],
         ];
     }
 

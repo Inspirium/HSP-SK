@@ -6,9 +6,13 @@ use Inspirium\BookProposition\Models\AdditionalExpense;
 use LaravelJsonApi\Eloquent\Contracts\Paginator;
 use LaravelJsonApi\Eloquent\Fields\DateTime;
 use LaravelJsonApi\Eloquent\Fields\ID;
+use LaravelJsonApi\Eloquent\Fields\Relations\BelongsTo;
 use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
 use LaravelJsonApi\Eloquent\Pagination\PagePagination;
 use LaravelJsonApi\Eloquent\Schema;
+use LaravelJsonApi\Eloquent\Fields\Str;
+use LaravelJsonApi\Eloquent\Fields\Relations\HasOne;
+use LaravelJsonApi\Eloquent\Fields\Relations\MorphTo;
 
 class AdditionalExpenseSchema extends Schema
 {
@@ -29,6 +33,12 @@ class AdditionalExpenseSchema extends Schema
     {
         return [
             ID::make(),
+            Str::make('expense'),
+            Str::make('amount'),
+            Str::make('type'),
+            MorphTo::make('connection'),
+            BelongsTo::make('parent')->type('additional-expenses'),
+            HasOne::make('child')->type('additional-expenses'),
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
         ];
