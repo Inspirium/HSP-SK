@@ -17,7 +17,9 @@ class BibliotecaRequest extends ResourceRequest
     public function rules(): array
     {
         return [
-            // @TODO
+            'name' => ['required', 'string'],
+            'designation' => ['required', 'string'],
+            'code' => ['required', 'string'],
         ];
     }
 

@@ -6,9 +6,11 @@ use Inspirium\Models\BookManagement\BookBiblioteca;
 use LaravelJsonApi\Eloquent\Contracts\Paginator;
 use LaravelJsonApi\Eloquent\Fields\DateTime;
 use LaravelJsonApi\Eloquent\Fields\ID;
+use LaravelJsonApi\Eloquent\Fields\Relations\BelongsToMany;
 use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
 use LaravelJsonApi\Eloquent\Pagination\PagePagination;
 use LaravelJsonApi\Eloquent\Schema;
+use LaravelJsonApi\Eloquent\Fields\Str;
 
 class BibliotecaSchema extends Schema
 {
@@ -29,6 +31,11 @@ class BibliotecaSchema extends Schema
     {
         return [
             ID::make(),
+            Str::make('name'),
+            Str::make('designation'),
+            Str::make('code'),
+            BelongsToMany::make('books'),
+            BelongsToMany::make('propositions'),
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
         ];

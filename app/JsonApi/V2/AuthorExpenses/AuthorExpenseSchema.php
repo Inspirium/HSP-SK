@@ -6,6 +6,9 @@ use Inspirium\BookProposition\Models\AuthorExpense;
 use LaravelJsonApi\Eloquent\Contracts\Paginator;
 use LaravelJsonApi\Eloquent\Fields\DateTime;
 use LaravelJsonApi\Eloquent\Fields\ID;
+use LaravelJsonApi\Eloquent\Fields\Relations\BelongsTo;
+use LaravelJsonApi\Eloquent\Fields\Relations\BelongsToMany;
+use LaravelJsonApi\Eloquent\Fields\Str;
 use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
 use LaravelJsonApi\Eloquent\Pagination\PagePagination;
 use LaravelJsonApi\Eloquent\Schema;
@@ -29,6 +32,14 @@ class AuthorExpenseSchema extends Schema
     {
         return [
             ID::make(),
+            Str::make('amount'),
+            Str::make('percentage'),
+            Str::make('accontation'),
+            Str::make('type'),
+            BelongsTo::make('author')->type('authors'),
+            BelongsTo::make('proposition'),
+            BelongsTo::make('parent')->type('author-expenses'),
+            BelongsToMany::make('additionalExpenses'),
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
         ];

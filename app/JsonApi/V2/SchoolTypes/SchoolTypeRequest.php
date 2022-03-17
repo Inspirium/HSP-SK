@@ -17,7 +17,9 @@ class SchoolTypeRequest extends ResourceRequest
     public function rules(): array
     {
         return [
-            // @TODO
+            'name' => ['rerquired', 'string'],
+            'designation' => ['rerquired', 'string'],
+            'order' => ['nullable', 'int']
         ];
     }
 

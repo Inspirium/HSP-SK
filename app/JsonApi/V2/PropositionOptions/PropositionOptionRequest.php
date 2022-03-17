@@ -17,7 +17,7 @@ class PropositionOptionRequest extends ResourceRequest
     public function rules(): array
     {
         return [
-            // @TODO
+            'title' => ['nullable','string']
         ];
     }
 
