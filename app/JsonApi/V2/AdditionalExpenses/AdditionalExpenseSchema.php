@@ -37,8 +37,8 @@ class AdditionalExpenseSchema extends Schema
             Str::make('amount'),
             Str::make('type'),
             MorphTo::make('connection'),
-            BelongsTo::make('parent')->type('additional-expense'),
-            HasOne::make('child')->type('additional-expense'),
+            BelongsTo::make('parent')->type('additional-expenses'),
+            HasOne::make('child')->type('additional-expenses'),
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
         ];

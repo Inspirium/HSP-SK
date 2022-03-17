@@ -35,8 +35,8 @@ class SchoolSubjectSchema extends Schema
             Str::make('name'),
             HasMany::make('books'),
             HasMany::make('propositions'),
-            BelongsTo::make('parent')->type('school-subject'),
-            HasMany::make('children')->type('school-subject'),
+            BelongsTo::make('parent')->type('school-subjects'),
+            HasMany::make('children')->type('school-subjects'),
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
         ];

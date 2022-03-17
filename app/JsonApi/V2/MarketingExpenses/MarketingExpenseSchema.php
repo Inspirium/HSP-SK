@@ -36,7 +36,7 @@ class MarketingExpenseSchema extends Schema
             Str::make('expense'),
             Str::make('total'),
             HasMany::make('additionalExpenses'),
-            BelongsTo::make('parent')->type('marketing-expense'),
+            BelongsTo::make('parent')->type('marketing-expenses'),
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
         ];
