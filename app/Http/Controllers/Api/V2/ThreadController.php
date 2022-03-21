@@ -2,7 +2,7 @@
 
 namespace Inspirium\Http\Controllers\Api\V2;
 
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 use Inspirium\Http\Controllers\Controller;
 use Inspirium\Models\Messaging\Message;
 use Inspirium\Models\Messaging\Thread;
