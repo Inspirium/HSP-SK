@@ -5,6 +5,7 @@ namespace Inspirium\Console;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Inspirium\Console\Commands\AssignRoleToDepartment;
+use Inspirium\Console\Commands\FixWorkOrders;
 use Inspirium\Console\Commands\ProcessSignatures;
 
 class Kernel extends ConsoleKernel
@@ -18,6 +19,7 @@ class Kernel extends ConsoleKernel
         ImportEmployees::class,
 	    AssignRoleToDepartment::class,
         ProcessSignatures::class,
+        FixWorkOrders::class,
     ];
 
     /**
