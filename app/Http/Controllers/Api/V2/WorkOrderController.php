@@ -33,6 +33,7 @@ class WorkOrderController extends Controller
             $workOrder->assigner()->associate(\Auth::user());
             $workOrder->save();
         }
+        $workOrder->assignNewThread();
     }
 
     public function approve(WorkOrderSchema $orderSchema, WorkOrderQuery $query, WorkOrder $workOrder) {

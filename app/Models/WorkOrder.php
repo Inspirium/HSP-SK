@@ -9,10 +9,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Inspirium\BookProposition\Models\BookProposition;
 use Inspirium\Models\HumanResources\Employee;
 use Inspirium\Models\Messaging\Thread;
+use Inspirium\TaskManagement\Notifications\WorkOrderAssigned;
+use Inspirium\Traits\HasThread;
 
 class WorkOrder extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, HasThread;
 
     protected $fillable = ['title', 'project_number', 'type', 'status', 'priority', 'note', 'deadline_at', 'task_content', 'comment'];
 
@@ -27,6 +29,8 @@ class WorkOrder extends Model
     protected $casts = [
         'task_content' => AsArrayObject::class,
     ];
+
+    protected $notification = WorkOrderAssigned::class;
 
     public function proposition() {
         return $this->belongsTo(BookProposition::class);
@@ -50,9 +54,5 @@ class WorkOrder extends Model
 
     public function finalDocuments() {
         return $this->belongsToMany('Inspirium\Models\FileManagement\File', 'work_order_files', 'work_order_id', 'files_id')->withPivotValue('is_final', true);
-    }
-
-    public function thread() {
-        return $this->morphOne(Thread::class, 'connection');
     }
 }
