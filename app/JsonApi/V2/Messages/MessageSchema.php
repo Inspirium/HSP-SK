@@ -15,6 +15,7 @@ use LaravelJsonApi\Eloquent\Schema;
 class MessageSchema extends Schema
 {
 
+protected array $with =['sender'];
     /**
      * The model the schema corresponds to.
      *
