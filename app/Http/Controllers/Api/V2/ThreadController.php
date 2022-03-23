@@ -4,6 +4,7 @@ namespace Inspirium\Http\Controllers\Api\V2;
 
 use Illuminate\Http\Request;
 use Inspirium\Http\Controllers\Controller;
+use Inspirium\JsonApi\V2\Messages\MessageQuery;
 use Inspirium\Models\Messaging\Message;
 use Inspirium\Models\Messaging\Thread;
 use Inspirium\Notifications\NewMessage;
@@ -38,8 +39,9 @@ class ThreadController extends Controller
             }
         }
         $thread->notify(new NewThreadMessage($message));
-
+        $query = new MessageQuery();
         return  DataResponse::make($message)
+            ->withQueryParameters($query)
             ->didCreate();
     }
 
