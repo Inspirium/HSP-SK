@@ -39,9 +39,8 @@ class ThreadController extends Controller
             }
         }
         $thread->notify(new NewThreadMessage($message));
-        $query = new MessageQuery();
         return  DataResponse::make($message)
-            ->withQueryParameters($query)
+            ->withIncludePaths(['sender'])
             ->didCreate();
     }
 
