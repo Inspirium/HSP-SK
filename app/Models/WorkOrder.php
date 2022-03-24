@@ -55,4 +55,8 @@ class WorkOrder extends Model
     public function finalDocuments() {
         return $this->belongsToMany('Inspirium\Models\FileManagement\File', 'work_order_files', 'work_order_id', 'files_id')->withPivotValue('is_final', true);
     }
+
+    public function getLinkAttribute() {
+        return '/tasks/'.$this->id;
+    }
 }
