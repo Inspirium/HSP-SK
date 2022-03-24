@@ -45,6 +45,7 @@ Route::group(['middleware' => 'auth:api'], function() {
                 });
             $server->resource('files', \Inspirium\Http\Controllers\Api\V2\FilesController::class);
             $server->resource('propositions', \Inspirium\Http\Controllers\Api\V2\PropositionController::class);
+            $server->resource('proposition-notes', \LaravelJsonApi\Laravel\Http\Controllers\JsonApiController::class);
             $server->resource('signatures', \Inspirium\Http\Controllers\Api\V2\SignatureController::class);
             $server->resource('authors', \Inspirium\Http\Controllers\Api\V2\AuthorController::class);
             $server->resource('threads', \Inspirium\Http\Controllers\Api\V2\ThreadController::class)

@@ -17,7 +17,31 @@ class PropositionRequest extends ResourceRequest
     public function rules(): array
     {
         return [
-            // @TODO
+            'projectName' => ['string'],
+            'projectNumber' => ['string'],
+            'additionalProjectNumber' => ['string'],
+            'title' => ['string'],
+            'isbn' => ['string'],
+            'edition' => ['string'],
+            'status' => ['string'],
+            'concept' => ['string'],
+            'manuscript' => ['string'],
+            'dotation' => ['boolean'],
+            'dotationOrigin' => ['string'],
+            'dotationAmount' => ['string'],
+            'schoolAssignment' => ['boolean'],
+            'mainTarget' => ['string'],
+            'possibleProducts' => ['array'],
+            'schoolLevel' => ['array'],
+            'additions' => ['array'],
+            'circulations' => ['string'],
+            'numberOfPages' => ['number'],
+            'width' => ['string'],
+            'height' => ['string'],
+            'paperType' => ['string'],
+            'additionalWork' => ['string'],
+            'colors' => ['number'],
+            'colorsFirstPage' => ['number'],
         ];
     }
 
