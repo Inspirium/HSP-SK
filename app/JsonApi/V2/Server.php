@@ -17,6 +17,7 @@ use Inspirium\JsonApi\V2\MarketingExpenses\MarketingExpenseSchema;
 use Inspirium\JsonApi\V2\Messages\MessageSchema;
 use Inspirium\JsonApi\V2\Notifications\NotificationSchema;
 use Inspirium\JsonApi\V2\ProductionExpenses\ProductionExpenseSchema;
+use Inspirium\JsonApi\V2\PropositionNotes\PropositionNoteSchema;
 use Inspirium\JsonApi\V2\PropositionOptions\PropositionOptionSchema;
 use Inspirium\JsonApi\V2\Propositions\PropositionSchema;
 use Inspirium\JsonApi\V2\Roles\RoleSchema;
@@ -84,6 +85,7 @@ class Server extends BaseServer
             ProductionExpenseSchema::class,
             AuthorExpenseSchema::class,
             PropositionOptionSchema::class,
+            PropositionNoteSchema::class,
         ];
     }
 }
