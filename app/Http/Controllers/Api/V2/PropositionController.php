@@ -26,6 +26,7 @@ class PropositionController extends Controller
     public function created(BookProposition $model, PropositionRequest $request, PropositionQuery $query) {
         if (!$model->owner_id) {
             $model->owner()->associate(Auth::user());
+            $model->save();
         }
     }
 

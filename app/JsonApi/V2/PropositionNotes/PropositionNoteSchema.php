@@ -32,7 +32,7 @@ class PropositionNoteSchema extends Schema
         return [
             ID::make(),
             Str::make('note'),
-            Str::make('type'),
+            Str::make('step', 'type'),
             BelongsTo::make('proposition')->type('propositions'),
             DateTime::make('createdAt')->sortable()->readOnly(),
             DateTime::make('updatedAt')->sortable()->readOnly(),
