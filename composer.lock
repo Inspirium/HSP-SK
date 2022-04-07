@@ -4,64 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "21145ac350ea8625965976724d11291b",
+    "content-hash": "c225854680fc4a50406b4d14be09540c",
     "packages": [
-        {
-            "name": "asm89/stack-cors",
-            "version": "v2.1.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/asm89/stack-cors.git",
-                "reference": "73e5b88775c64ccc0b84fb60836b30dc9d92ac4a"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/asm89/stack-cors/zipball/73e5b88775c64ccc0b84fb60836b30dc9d92ac4a",
-                "reference": "73e5b88775c64ccc0b84fb60836b30dc9d92ac4a",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.2|^8.0",
-                "symfony/http-foundation": "^4|^5|^6",
-                "symfony/http-kernel": "^4|^5|^6"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^7|^9",
-                "squizlabs/php_codesniffer": "^3.5"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.1-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Asm89\\Stack\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Alexander",
-                    "email": "iam.asm89@gmail.com"
-                }
-            ],
-            "description": "Cross-origin resource sharing library and stack middleware",
-            "homepage": "https://github.com/asm89/stack-cors",
-            "keywords": [
-                "cors",
-                "stack"
-            ],
-            "support": {
-                "issues": "https://github.com/asm89/stack-cors/issues",
-                "source": "https://github.com/asm89/stack-cors/tree/v2.1.1"
-            },
-            "time": "2022-01-18T09:12:03+00:00"
-        },
         {
             "name": "brick/math",
             "version": "0.9.3",
@@ -428,34 +372,37 @@
         },
         {
             "name": "doctrine/dbal",
-            "version": "2.13.8",
+            "version": "3.3.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "dc9b3c3c8592c935a6e590441f9abc0f9eba335b"
+                "reference": "719663b15983278227669c8595151586a2ff3327"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/dc9b3c3c8592c935a6e590441f9abc0f9eba335b",
-                "reference": "dc9b3c3c8592c935a6e590441f9abc0f9eba335b",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/719663b15983278227669c8595151586a2ff3327",
+                "reference": "719663b15983278227669c8595151586a2ff3327",
                 "shasum": ""
             },
             "require": {
-                "doctrine/cache": "^1.0|^2.0",
+                "composer-runtime-api": "^2",
+                "doctrine/cache": "^1.11|^2.0",
                 "doctrine/deprecations": "^0.5.3",
                 "doctrine/event-manager": "^1.0",
-                "ext-pdo": "*",
-                "php": "^7.1 || ^8"
+                "php": "^7.3 || ^8.0",
+                "psr/cache": "^1|^2|^3",
+                "psr/log": "^1|^2|^3"
             },
             "require-dev": {
                 "doctrine/coding-standard": "9.0.0",
                 "jetbrains/phpstorm-stubs": "2021.1",
-                "phpstan/phpstan": "1.4.6",
-                "phpunit/phpunit": "^7.5.20|^8.5|9.5.16",
+                "phpstan/phpstan": "1.5.3",
+                "phpstan/phpstan-strict-rules": "^1.1",
+                "phpunit/phpunit": "9.5.16",
                 "psalm/plugin-phpunit": "0.16.1",
                 "squizlabs/php_codesniffer": "3.6.2",
-                "symfony/cache": "^4.4",
-                "symfony/console": "^2.0.5|^3.0|^4.0|^5.0",
+                "symfony/cache": "^5.2|^6.0",
+                "symfony/console": "^2.7|^3.0|^4.0|^5.0|^6.0",
                 "vimeo/psalm": "4.22.0"
             },
             "suggest": {
@@ -467,7 +414,7 @@
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "Doctrine\\DBAL\\": "lib/Doctrine/DBAL"
+                    "Doctrine\\DBAL\\": "src"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -510,14 +457,13 @@
                 "queryobject",
                 "sasql",
                 "sql",
-                "sqlanywhere",
                 "sqlite",
                 "sqlserver",
                 "sqlsrv"
             ],
             "support": {
                 "issues": "https://github.com/doctrine/dbal/issues",
-                "source": "https://github.com/doctrine/dbal/tree/2.13.8"
+                "source": "https://github.com/doctrine/dbal/tree/3.3.5"
             },
             "funding": [
                 {
@@ -533,7 +479,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-03-09T15:25:46+00:00"
+            "time": "2022-04-05T09:50:18+00:00"
         },
         {
             "name": "doctrine/deprecations",
@@ -1075,85 +1021,6 @@
                 "source": "https://github.com/firebase/php-jwt/tree/v6.1.0"
             },
             "time": "2022-03-23T18:26:04+00:00"
-        },
-        {
-            "name": "fruitcake/laravel-cors",
-            "version": "v2.2.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/fruitcake/laravel-cors.git",
-                "reference": "783a74f5e3431d7b9805be8afb60fd0a8f743534"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/fruitcake/laravel-cors/zipball/783a74f5e3431d7b9805be8afb60fd0a8f743534",
-                "reference": "783a74f5e3431d7b9805be8afb60fd0a8f743534",
-                "shasum": ""
-            },
-            "require": {
-                "asm89/stack-cors": "^2.0.1",
-                "illuminate/contracts": "^6|^7|^8|^9",
-                "illuminate/support": "^6|^7|^8|^9",
-                "php": ">=7.2"
-            },
-            "require-dev": {
-                "laravel/framework": "^6|^7.24|^8",
-                "orchestra/testbench-dusk": "^4|^5|^6|^7",
-                "phpunit/phpunit": "^6|^7|^8|^9",
-                "squizlabs/php_codesniffer": "^3.5"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.1-dev"
-                },
-                "laravel": {
-                    "providers": [
-                        "Fruitcake\\Cors\\CorsServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Fruitcake\\Cors\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fruitcake",
-                    "homepage": "https://fruitcake.nl"
-                },
-                {
-                    "name": "Barry vd. Heuvel",
-                    "email": "barryvdh@gmail.com"
-                }
-            ],
-            "description": "Adds CORS (Cross-Origin Resource Sharing) headers support in your Laravel application",
-            "keywords": [
-                "api",
-                "cors",
-                "crossdomain",
-                "laravel"
-            ],
-            "support": {
-                "issues": "https://github.com/fruitcake/laravel-cors/issues",
-                "source": "https://github.com/fruitcake/laravel-cors/tree/v2.2.0"
-            },
-            "funding": [
-                {
-                    "url": "https://fruitcake.nl",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/barryvdh",
-                    "type": "github"
-                }
-            ],
-            "time": "2022-02-23T14:25:13+00:00"
         },
         {
             "name": "fruitcake/php-cors",
@@ -4270,29 +4137,29 @@
         },
         {
             "name": "owen-it/laravel-auditing",
-            "version": "v12.2.1",
+            "version": "v13.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/owen-it/laravel-auditing.git",
-                "reference": "98f1cfddbc4ed257e5644fe02e97db5674c7571a"
+                "reference": "f7cff2efd616541969655bcb674c460ab0018cc6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/owen-it/laravel-auditing/zipball/98f1cfddbc4ed257e5644fe02e97db5674c7571a",
-                "reference": "98f1cfddbc4ed257e5644fe02e97db5674c7571a",
+                "url": "https://api.github.com/repos/owen-it/laravel-auditing/zipball/f7cff2efd616541969655bcb674c460ab0018cc6",
+                "reference": "f7cff2efd616541969655bcb674c460ab0018cc6",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
-                "illuminate/console": "^6.0|^7.0|^8.0|^9.0",
-                "illuminate/database": "^6.0|^7.0|^8.0|^9.0",
-                "illuminate/filesystem": "^6.0|^7.0|^8.0|^9.0",
+                "illuminate/console": "^7.0|^8.0|^9.0",
+                "illuminate/database": "^7.0|^8.0|^9.0",
+                "illuminate/filesystem": "^7.0|^8.0|^9.0",
                 "php": "^7.3|^8.0"
             },
             "require-dev": {
                 "laravel/legacy-factories": "*",
                 "mockery/mockery": "^1.0",
-                "orchestra/testbench": "^4.0|^5.0|^6.0|^7.0",
+                "orchestra/testbench": "^5.0|^6.0|^7.0",
                 "phpunit/phpunit": "^9.0"
             },
             "suggest": {
@@ -4326,6 +4193,10 @@
                 {
                     "name": "Raphael França",
                     "email": "raphaelfrancabsb@gmail.com"
+                },
+                {
+                    "name": "Morten D. Hansen",
+                    "email": "morten@visia.dk"
                 }
             ],
             "description": "Audit changes of your Eloquent models in Laravel/Lumen",
@@ -4350,7 +4221,7 @@
                 "issues": "https://github.com/owen-it/laravel-auditing/issues",
                 "source": "https://github.com/owen-it/laravel-auditing"
             },
-            "time": "2022-02-22T13:39:06+00:00"
+            "time": "2022-03-14T22:26:32+00:00"
         },
         {
             "name": "paragonie/constant_time_encoding",
@@ -5004,6 +4875,55 @@
                 }
             ],
             "time": "2022-04-04T05:15:45+00:00"
+        },
+        {
+            "name": "psr/cache",
+            "version": "3.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/cache.git",
+                "reference": "aa5030cfa5405eccfdcb1083ce040c2cb8d253bf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/cache/zipball/aa5030cfa5405eccfdcb1083ce040c2cb8d253bf",
+                "reference": "aa5030cfa5405eccfdcb1083ce040c2cb8d253bf",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Psr\\Cache\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "https://www.php-fig.org/"
+                }
+            ],
+            "description": "Common interface for caching libraries",
+            "keywords": [
+                "cache",
+                "psr",
+                "psr-6"
+            ],
+            "support": {
+                "source": "https://github.com/php-fig/cache/tree/3.0.0"
+            },
+            "time": "2021-02-03T23:26:27+00:00"
         },
         {
             "name": "psr/container",
