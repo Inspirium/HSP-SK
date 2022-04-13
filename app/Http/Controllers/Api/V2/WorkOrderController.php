@@ -49,53 +49,325 @@ class WorkOrderController extends Controller
     }
 
     public function download(WorkOrder $workOrder){
-        $templateProcessor = new TemplateProcessor(resource_path(''));
-        $workOrder->proposition->load(['owner']);
 
-        $templateProcessor->setValue('project_name', $workOrder->proposition->project_name);
-        $templateProcessor->setValue('circulation', $workOrder->proposition->circulations);
-        $templateProcessor->setValue('owner', $workOrder->proposition->owner->name);
-        $templateProcessor->setValue('date', $workOrder->proposition->date);
-        $templateProcessor->setValue('note', $workOrder->note);
-        $templateProcessor->setValue('book_binding', $workOrder->proposition->book_binding);
-        $templateProcessor->setValue('colors', $workOrder->proposition->colors);
-        $templateProcessor->setValue('colors_first_page', $workOrder->proposition->colors_first_page);
-        $templateProcessor->setValue('colors_last_page', $workOrder->proposition->colors_last_page);
-        $templateProcessor->setValue('additional_work', $workOrder->proposition->additional_work);
-        $templateProcessor->setValue('task_type', $workOrder->type);
-        $templateProcessor->setValue('paper_type', $workOrder->proposition->options[0]->paper_type);
+        switch($workOrder->type){
+            case 'Sifra':
+                
+                $templateProcessor = new TemplateProcessor(resource_path('resources/nalog.anotacija.docx'));
+                $workOrder->proposition->load(['owner']);
 
-        $sum = 0;
-        foreach($workOrder->proposition->options()->where('cover_type', 'hard')->get() as $option) {
-            $sum += $option->hard_cover_circulation;
+                $templateProcessor->setValue('taskType', $workOrder->type);
+                $templateProcessor->setValue('assigner.name', $workOrder->assigner->name);
+                $templateProcessor->setValue('assignee.name', $workOrder->assignee->name);
+                $templateProcessor->setValue('createdAt', $workOrder->createdAt);
+                $templateProcessor->setValue('deadlineAt', $workOrder->deadlineAt);
+                $templateProcessor->setValue('title', $workOrder->proposition->title);
+                $templateProcessor->setValue('autor', $workOrder->proposition->author);
+                //$templateProcessor->setValue('podrucje', $workOrder->);
+                $templateProcessor->setValue('note', $workOrder->note);
+                $templateProcessor->setValue('owner', $workOrder->proposition->owner->name);
+                $templateProcessor->setValue('date', $workOrder->proposition->date);
+
+                ob_start();
+                $templateProcessor->saveAs("php://output");
+                $contents = ob_get_contents();
+                ob_end_clean();
+
+                return response()->streamDownload(function () use ($contents){
+                    echo $contents;
+                }, "nalog-{$workOrder->type}-{$workOrder->id}.docx");
+
+            case 'Ugovor':
+                
+                $templateProcessor = new TemplateProcessor(resource_path('resources/nalog.anotacija.docx'));
+                $workOrder->proposition->load(['owner']);
+
+                $templateProcessor->setValue('taskType', $workOrder->type);
+                $templateProcessor->setValue('assigner.name', $workOrder->assigner->name);
+                $templateProcessor->setValue('assignee.name', $workOrder->assignee->name);
+                $templateProcessor->setValue('createdAt', $workOrder->createdAt);
+                $templateProcessor->setValue('deadlineAt', $workOrder->deadlineAt);
+                $templateProcessor->setValue('title', $workOrder->proposition->title);
+                $templateProcessor->setValue('projectNumber', $workOrder->proposition->projectNumber);
+
+                //Podatci o djelu
+                $templateProcessor->setValue('autor', $workOrder->proposition->author);
+                $templateProcessor->setValue('izdanja', $workOrder->book->createdAt);
+                $templateProcessor->setValue('naklada', $workOrder->proposition->edition);
+                //$templateProcessor->setValue('vrstaPosla', $workOrder->);
+                //$templateProcessor->setValue('vrstaAutorskogUgovora', $workOrder->);
+
+                //Podatci o autoru/suradniku
+                //$templateProcessor->setValue('contractor.firstName', $workOrder->);
+                //$templateProcessor->setValue('contractor.lastName', $workOrder->);
+                //$templateProcessor->setValue('contractor.email', $workOrder->);
+                //$templateProcessor->setValue('contractor.phone', $workOrder->);
+                //$templateProcessor->setValue('contractor.address', $workOrder->);
+                //$templateProcessor->setValue('contracotr.city', $workOrder->);
+                //$templateProcessor->setValue('contractor.poslaCode', $workOrder->);
+                //$templateProcessor->setValue('percentageFee', $workOrder->);
+                //$templateProcessor->setValue('freeCopies', $workOrder->);
+                //$templateProcessor->setValue('freeCopiesReprint', $workOrder->);
+                //$templateProcessor->setValue('contractorNote', $workOrder->);
+
+                //Podatci o autorskom honoraru
+                //$templateProcessor->setValue('jednokratnaIsplata', $workOrder->);
+                //$templateProcessor->setValue('postotakIsplata', $workOrder->);
+                //$templateProcessor->setValue('jobDesc', $workOrder->);
+
+                //Podatci o rukopisu
+                //$templateProcessor->setValue('tipPredaje', $workOrder->);
+                $templateProcessor->setValue('rokPredaje', $workOrder->deadlineAt);
+                //$templateProcessor->setValue('dinamikaIsplate', $workOrder->);
+
+                //Napomena
+                $templateProcessor->setValue('note', $workOrder->note);
+                $templateProcessor->setValue('owner', $workOrder->proposition->owner->name);
+                $templateProcessor->setValue('date', $workOrder->proposition->date);
+
+                ob_start();
+                $templateProcessor->saveAs("php://output");
+                $contents = ob_get_contents();
+                ob_end_clean();
+
+                return response()->streamDownload(function () use ($contents){
+                    echo $contents;
+                }, "nalog-{$workOrder->type}-{$workOrder->id}.docx");
+
+            case 'Anotacija':
+
+                $templateProcessor = new TemplateProcessor(resource_path('resources/nalog.anotacija.docx'));
+                $workOrder->proposition->load(['owner']);
+
+                $templateProcessor->setValue('taskType', $workOrder->type);
+                $templateProcessor->setValue('assigner.name', $workOrder->assigner->name);
+                $templateProcessor->setValue('assignee.name', $workOrder->assignee->name);
+                $templateProcessor->setValue('createdAt', $workOrder->createdAt);
+                $templateProcessor->setValue('deadlineAt', $workOrder->deadlineAt);
+                $templateProcessor->setValue('title', $workOrder->proposition->title);
+                $templateProcessor->setValue('projectNumber', $workOrder->proposition->projectNumber);
+                $templateProcessor->setValue('urednik', $workOrder->proposition->editors->name);
+                $templateProcessor->setValue('autor', $workOrder->proposition->author);
+                $templateProcessor->setValue('naslov', $workOrder->proposition->title);
+                //$templateProcessor->setValue('izdavac', $workOrder->);
+                $templateProcessor->setValue('uvez', $workOrder->proposition->bookBinding);
+                $templateProcessor->setValue('broj_stranica', $workOrder->proposition->numberOfPages);
+                $templateProcessor->setValue('godina_izdanja', $workOrder->book->createdAt);
+                $templateProcessor->setValue('isbn', $workOrder->proposition->isbn);
+                //$templateProcessor->setValue('format', $workOrder->);
+                $templateProcessor->setValue('cijena', $workOrder->proposition->retailPrice);
+                //$templateProcessor->setValue('podrucje', $workOrder->);
+                $templateProcessor->setValue('prodajne_poruke', $workOrder->comment);
+                //$templateProcessor->setValue('posebnost', $workOrder->);
+                $templateProcessor->setValue('o_djelu', $workOrder->book->description);
+                $templateProcessor->setValue('o_autoru', $workOrder->proposition->author);
+                //$templateProcessor->setValue('iz_recenzije', $workOrder->);
+                //$templateProcessor->setValue('poglavlja', $workOrder->);
+                //$templateProcessor->setValue('prevoditelj', $workOrder->);
+                $templateProcessor->setValue('note', $workOrder->note);
+                $templateProcessor->setValue('owner', $workOrder->proposition->owner->name);
+                $templateProcessor->setValue('date', $workOrder->proposition->date);
+
+                ob_start();
+                $templateProcessor->saveAs("php://output");
+                $contents = ob_get_contents();
+                ob_end_clean();
+
+                return response()->streamDownload(function () use ($contents){
+                    echo $contents;
+                }, "nalog-{$workOrder->type}-{$workOrder->id}.docx");
+
+            case 'Lektura':
+
+                $templateProcessor = new TemplateProcessor(resource_path('resources/nalog.anotacija.docx'));
+                $workOrder->proposition->load(['owner']);
+
+                $templateProcessor->setValue('taskType', $workOrder->type);
+                $templateProcessor->setValue('assigner.name', $workOrder->assigner->name);
+                $templateProcessor->setValue('assignee.name', $workOrder->assignee->name);
+                $templateProcessor->setValue('createdAt', $workOrder->createdAt);
+                $templateProcessor->setValue('deadlineAt', $workOrder->deadlineAt);
+                $templateProcessor->setValue('title', $workOrder->proposition->title);
+                $templateProcessor->setValue('projectNumber', $workOrder->proposition->projectNumber);
+                //$templateProcessor->setValue('textCards',$workOrder);
+                $templateProcessor->setValue('title',$workOrder->proposition->title);
+                //$templateProcessor->setValue('pravopis',$workOrder);
+                $templateProcessor->setValue('note', $workOrder->note);
+                $templateProcessor->setValue('note', $workOrder->note);
+                $templateProcessor->setValue('owner', $workOrder->proposition->owner->name);
+                $templateProcessor->setValue('date', $workOrder->proposition->date);
+
+                ob_start();
+                $templateProcessor->saveAs("php://output");
+                $contents = ob_get_contents();
+                ob_end_clean();
+
+                return response()->streamDownload(function () use ($contents){
+                    echo $contents;
+                }, "nalog-{$workOrder->type}-{$workOrder->id}.docx");
+                
+            case 'Glr':
+
+                $templateProcessor = new TemplateProcessor(resource_path('resources/nalog.anotacija.docx'));
+                $workOrder->proposition->load(['owner']);
+
+                $templateProcessor->setValue('taskType', $workOrder->type);
+                $templateProcessor->setValue('assigner.name', $workOrder->assigner->name);
+                $templateProcessor->setValue('assignee.name', $workOrder->assignee->name);
+                $templateProcessor->setValue('createdAt', $workOrder->createdAt);
+                $templateProcessor->setValue('deadlineAt', $workOrder->deadlineAt);
+                $templateProcessor->setValue('title', $workOrder->proposition->title);
+                $templateProcessor->setValue('projectNumber', $workOrder->proposition->projectNumber);
+
+                //Dodatni podatci
+                $templateProcessor->setValue('urednik', $workOrder->proposition->editors->name);
+                $templateProcessor->setValue('autor', $workOrder->proposition->author);
+                $templateProcessor->setValue('godinaPosljednjegIzdanja', $workOrder->book->updateAt);
+                //$templateProcessor->setValue('vrstaPosla',$workdOrder->);
+                //$templateProcessor->setValue('razradaPosla',$workdOrder->);
+
+                //Tehnicki podatci
+                //$templateProcessor->setValue('format',$workdOrder->);
+                $templateProcessor->setValue('opseg',$workOrder->proposition->width * $workOrder->proposition->height);
+                $templateProcessor->setValue('rok',$workOrder->deadlineAt);
+                //$templateProcessor->setValue('bojeKnjBloka',$workOrder->);
+                //$templateProcessor->setValue('bojeOmota',$workOrder->);
+                $templateProcessor->setValue('uvez', $workOrder->proposition->bookBinding);
+
+                //Obogacivanje
+                //$templateProcessor->setValue('zappar',$workOrder->);
+                //$templateProcessor->setValue('mozzabook',$workOrder->);
+                //$templateProcessor->setValue('esfera',$workOrder->);
+                //$templateProcessor->setValue('listalica',$workOrder->);
+                $templateProcessor->setValue('odobrenje',$workOrder->proposition->approved);
+
+                //Napomena
+                $templateProcessor->setValue('note', $workOrder->note);
+                $templateProcessor->setValue('owner', $workOrder->proposition->owner->name);
+                $templateProcessor->setValue('date', $workOrder->proposition->date);
+
+                ob_start();
+                $templateProcessor->saveAs("php://output");
+                $contents = ob_get_contents();
+                ob_end_clean();
+
+                return response()->streamDownload(function () use ($contents){
+                    echo $contents;
+                }, "nalog-{$workOrder->type}-{$workOrder->id}.docx");
+                
+            case 'Redaktura':
+
+                $templateProcessor = new TemplateProcessor(resource_path('resources/nalog.anotacija.docx'));
+                $workOrder->proposition->load(['owner']);
+
+                $templateProcessor->setValue('taskType', $workOrder->type);
+                $templateProcessor->setValue('assigner.name', $workOrder->assigner->name);
+                $templateProcessor->setValue('assignee.name', $workOrder->assignee->name);
+                $templateProcessor->setValue('createdAt', $workOrder->createdAt);
+                $templateProcessor->setValue('deadlineAt', $workOrder->deadlineAt);
+                $templateProcessor->setValue('title', $workOrder->proposition->title);
+                $templateProcessor->setValue('projectNumber', $workOrder->proposition->projectNumber);
+                $templateProcessor->setValue('brojStranica', $workOrder->proposition->numberOfPages);
+                //$templateProcessor->setValue('nacinDostave',$workdOrder->);
+                $templateProcessor->setValue('note', $workOrder->note);
+                $templateProcessor->setValue('owner', $workOrder->proposition->owner->name);
+                $templateProcessor->setValue('date', $workOrder->proposition->date);
+
+                ob_start();
+                $templateProcessor->saveAs("php://output");
+                $contents = ob_get_contents();
+                ob_end_clean();
+
+                return response()->streamDownload(function () use ($contents){
+                    echo $contents;
+                }, "nalog-{$workOrder->type}-{$workOrder->id}.docx");
+
+            case 'Listalica':
+                
+                $templateProcessor = new TemplateProcessor(resource_path('resources/nalog.anotacija.docx'));
+                $workOrder->proposition->load(['owner']);
+
+                $templateProcessor->setValue('taskType', $workOrder->type);
+                $templateProcessor->setValue('assigner.name', $workOrder->assigner->name);
+                $templateProcessor->setValue('assignee.name', $workOrder->assignee->name);
+                $templateProcessor->setValue('createdAt', $workOrder->createdAt);
+                $templateProcessor->setValue('deadlineAt', $workOrder->deadlineAt);
+                $templateProcessor->setValue('title', $workOrder->proposition->title);
+                $templateProcessor->setValue('projectNumber', $workOrder->proposition->projectNumber);
+                //$templateProcessor->setValue('popisDuplerica',$workdOrder->);
+                $templateProcessor->setValue('note', $workOrder->note);
+                $templateProcessor->setValue('owner', $workOrder->proposition->owner->name);
+                $templateProcessor->setValue('date', $workOrder->proposition->date);
+
+                ob_start();
+                $templateProcessor->saveAs("php://output");
+                $contents = ob_get_contents();
+                ob_end_clean();
+
+                return response()->streamDownload(function () use ($contents){
+                    echo $contents;
+                }, "nalog-{$workOrder->type}-{$workOrder->id}.docx");
+
+            case 'Isporuka':
+                
+                $templateProcessor = new TemplateProcessor(resource_path('resources/nalog.anotacija.docx'));
+                $workOrder->proposition->load(['owner']);
+
+                $templateProcessor->setValue('taskType', $workOrder->type);
+                $templateProcessor->setValue('assigner.name', $workOrder->assigner->name);
+                $templateProcessor->setValue('assignee.name', $workOrder->assignee->name);
+                $templateProcessor->setValue('createdAt', $workOrder->createdAt);
+                $templateProcessor->setValue('deadlineAt', $workOrder->deadlineAt);
+                $templateProcessor->setValue('title', $workOrder->proposition->title);
+                $templateProcessor->setValue('projectNumber', $workOrder->proposition->projectNumber);
+                //$templateProcessor->setValue('ime',$workdOrder->);
+                //$templateProcessor->setValue('adresa',$workdOrder->);
+                //$templateProcessor->setValue('mobitel',$workdOrder->);
+                //$templateProcessor->setValue('svrha',$workdOrder->);
+                //$templateProcessor->setValue('kolicina',$workdOrder->);
+                $templateProcessor->setValue('note', $workOrder->note);
+                $templateProcessor->setValue('owner', $workOrder->proposition->owner->name);
+                $templateProcessor->setValue('date', $workOrder->proposition->date);
+
+                ob_start();
+                $templateProcessor->saveAs("php://output");
+                $contents = ob_get_contents();
+                ob_end_clean();
+
+                return response()->streamDownload(function () use ($contents){
+                    echo $contents;
+                }, "nalog-{$workOrder->type}-{$workOrder->id}.docx");
+
+            case 'Drim':
+
+                $templateProcessor = new TemplateProcessor(resource_path('resources/nalog.anotacija.docx'));
+                $workOrder->proposition->load(['owner']);
+
+                $templateProcessor->setValue('taskType', $workOrder->type);
+                $templateProcessor->setValue('assigner.name', $workOrder->assigner->name);
+                $templateProcessor->setValue('assignee.name', $workOrder->assignee->name);
+                $templateProcessor->setValue('createdAt', $workOrder->createdAt);
+                $templateProcessor->setValue('deadlineAt', $workOrder->deadlineAt);
+                $templateProcessor->setValue('title', $workOrder->proposition->title);
+                $templateProcessor->setValue('projectNumber', $workOrder->proposition->projectNumber);
+                //$templateProcessor->setValue('vrstaPlatforme', $workdOrder->);
+                //$templateProcessor->setValue('opisPosla', $workdOrder->);
+                $templateProcessor->setValue('note', $workOrder->note);
+                $templateProcessor->setValue('owner', $workOrder->proposition->owner->name);
+                $templateProcessor->setValue('date', $workOrder->proposition->date);
+
+                ob_start();
+                $templateProcessor->saveAs("php://output");
+                $contents = ob_get_contents();
+                ob_end_clean();
+
+                return response()->streamDownload(function () use ($contents){
+                    echo $contents;
+                }, "nalog-{$workOrder->type}-{$workOrder->id}.docx");
         }
-        $templateProcessor->setValue('hard_cover_circulation', $sum);
 
-        $sum = 0;
-        foreach($workOrder->proposition->options()->where('cover_type', 'soft')->get() as $option) {
-            $sum += $option->hard_cover_circulation;
-        }
-        $templateProcessor->setValue('soft_cover_circulation', $sum);
+        return response()->download(storage_path("downloadPDF"));
 
-        $templateProcessor->setValue('cover_paper_type', $workOrder->proposition->options[0]->cover_paper_type);
-        $templateProcessor->setValue('cover_colors', $workOrder->proposition->options[0]->cover_colors);
-        $templateProcessor->setValue('cover_plastification', $workOrder->proposition->options[0]->cover_plastification);
-        $templateProcessor->setValue('film_print', $workOrder->proposition->options[0]->film_print);
-        $templateProcessor->setValue('blind_print', $workOrder->proposition->options[0]->blind_print);
-        $templateProcessor->setValue('uv_print', $workOrder->proposition->options[0]->uv_print);
-        
-        /*
-        $templateProcessor->setValue('coverpaper_paper_type');
-        $templateProcessor->setValue('coverpaper_colors');
-        $templateProcessor->setValue('coverpaper_plastification');
-        $templateProcessor->setValue('coverpaper_film_print');
-        $templateProcessor->setValue('cpverpaper_blind_print');
-        $templateProcessor->setValue('coverpaper_uv_print');
-        */
-
-        $templateProcessor->saveAs(storage_path(""));
-
-        return response()->download(storage_path(""));
     }
 
 }
