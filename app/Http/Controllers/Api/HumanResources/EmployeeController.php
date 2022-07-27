@@ -49,7 +49,7 @@ class EmployeeController extends Controller {
             'notification_settings' => 1
 		];
 		if (isset($input['password']) && $input['password']) {
-			$user_array['password'] =  Hash::make($input['password']);
+			$user_array['password'] = $input['password'];
 		}
 		if ($request->hasFile('new_image') && $request->file('new_image')) {
 			$file = $request->file('new_image');
@@ -92,7 +92,7 @@ class EmployeeController extends Controller {
             'notification_settings' => 1
 		];
 		if (isset($input['password']) && $input['password']) {
-			$user_array['password'] = Hash::make($input['password']);
+			$user_array['password'] = $input['password'];
 		}
 		if ($request->hasFile('new_image') && $request->file('new_image')) {
 			$file = $request->file('new_image');
