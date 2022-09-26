@@ -4,6 +4,7 @@ namespace Inspirium\Models\HumanResources;
 
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 use Inspirium\Notifications\ResetPassword;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -131,5 +132,10 @@ class Employee extends Authenticatable {
             get: fn ($value) => $value,
             set: fn ($value) => Hash::make($value),
         );
+    }
+
+    public static function resolve()
+    {
+        return Auth::check() ? self::id : null;
     }
 }
